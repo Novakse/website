@@ -1,0 +1,6 @@
+.DS_Store
+
+# Ruwe bronbestanden (foto's, video's, referenties) - te groot voor GitHub
+brand_assets/
+reference_images/
+temporary_screenshots/

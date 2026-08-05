@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Novakse Reizen — lichte basis met ÉÉN donkergroen vlak
+   Laadt NA styles.css.
+
+   Opzet: je scrolt over een lichte pagina. "Waarom Novakse" is dan nog wit en
+   kleurt vanzelf langzaam door naar donkergroen zodra je erbij komt — geen
+   schuivende laag, maar de kleur die over het hele vlak tegelijk opkomt.
+   ========================================================================== */
+
+:root {
+  --green: #17231f;        /* hoofdgroen */
+  --green-deep: #101f1a;   /* diepste groen */
+  --paper-soft: #f1f3f1;   /* zeer licht groengrijs */
+  --ink: #17231f;          /* tekstkleur krijgt dezelfde groenzwarte ondertoon */
+  --ink-soft: #52615c;
+  --border: #dfe3df;
+}
+
+/* --------------------------------------------------------------------------
+   Header — licht met donkergroene tekst zodra hij dekt
+   -------------------------------------------------------------------------- */
+/* Boven de openingsfoto is de balk doorzichtig met witte tekst; zodra hij dekt
+   wordt hij gewoon wit met donkergroene tekst (zie styles.css). */
+.site-header:not(.is-solid) { color: #fff; }
+.site-header:not(.is-solid) .nav-toggle span { background: #fff; }
+.site-header:not(.is-solid) .main-nav__links a::after { background: var(--warm); }
+.header-cta { background: var(--warm); color: var(--green); }
+
+@media (max-width: 63.99rem) {
+  .main-nav { background: var(--green); color: #fff; }
+  .main-nav__close { color: #fff; }
+}
+
+/* --------------------------------------------------------------------------
+   Alle overige secties: licht
+   -------------------------------------------------------------------------- */
+.baanlijn--on-dark,
+.baanlijn--on-light { background: var(--paper); }
+.baanlijn svg path { stroke: var(--warm-deep); }
+
+.trips { background: var(--paper); }
+.story { background: var(--paper); }
+.reviews { background: var(--paper-soft); }
+.faq { background: var(--paper); }
+.services { background: var(--paper); }
+
+/* Reisaanvraag: licht, met lichte invoervelden */
+.request { background: var(--paper-soft); color: var(--ink); }
+.request .eyebrow--warm { color: var(--warm-deep); }
+.request__text,
+.request__points li { color: var(--ink-soft); }
+.request__points li::before { color: var(--warm-deep); }
+.request .form-field input,
+.request .form-field select,
+.request .form-field textarea {
+  background: var(--paper);
+  border-color: var(--border);
+  color: var(--ink);
+}
+.request .form-field input::placeholder,
+.request .form-field textarea::placeholder { color: #9aa19c; }
+.request .form-field select option { background: var(--paper); color: var(--ink); }
+.request .form-note { color: var(--ink-soft); }
+.request .btn--warm { background: var(--green); color: #fff; }
+.request .btn--warm:hover { background: var(--green-deep); }
+
+/* Footer: licht */
+.site-footer { background: var(--paper-soft); color: var(--ink-soft); }
+.footer__heading { color: var(--ink); }
+.footer__links a { color: var(--ink); }
+.footer__bottom { border-top-color: var(--border); color: var(--ink-soft); }
+
+/* ==========================================================================
+   Waarom Novakse — begint wit, kleurt langzaam vanzelf naar groen
+
+   Het groen zit in een aparte laag die over het hele vlak tegelijk opkomt
+   (opacity, geen schuivende beweging). De tekstkleuren wisselen pas in de
+   laatste fase mee, zodat tekst nooit wegvalt tegen een half doorgekleurde
+   achtergrond.
+   ========================================================================== */
+.why {
+  position: relative;
+  isolation: isolate;
+  background: var(--paper);
+  color: var(--ink);
+  padding-block: 5rem 1rem;
+}
+
+.why::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--green);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.js .why.is-snapped::before { opacity: 1; }
+
+/* Zonder JavaScript staat het groen er meteen; dan klopt de tekstkleur ook. */
+html:not(.js) .why::before { opacity: 1; }
+html:not(.js) .why { color: #fff; }
+
+/* Witte begintoestand */
+.why .eyebrow--warm { color: var(--warm-deep); }
+.why__text,
+.why__reason p { color: var(--ink-soft); }
+.why__reasons { border-top-color: var(--border); }
+.why__reason { border-bottom-color: var(--border); }
+
+/* Groene eindtoestand */
+.why.is-snapped { color: #fff; }
+.why.is-snapped .eyebrow--warm { color: var(--warm); }
+.why.is-snapped .why__text,
+.why.is-snapped .why__reason p { color: rgba(255, 255, 255, 0.72); }
+.why.is-snapped .why__reasons { border-top-color: rgba(255, 255, 255, 0.16); }
+.why.is-snapped .why__reason { border-bottom-color: rgba(255, 255, 255, 0.16); }
+
+/* De tekst wisselt pas in de laatste fase, als het groen al ver is doorgekomen.
+   Daardoor staat er nooit lichte tekst op een nog bijna witte achtergrond. */
+.why,
+.why .eyebrow--warm,
+.why__title,
+.why__text,
+.why__reason h3,
+.why__reason p,
+.why__reasons,
+.why__reason {
+  transition: color 0.2s ease 0.3s, border-color 0.2s ease 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .why::before { opacity: 1; transition: none; }
+  .why { color: #fff; }
+  .why .eyebrow--warm { color: var(--warm); }
+  .why__text,
+  .why__reason p { color: rgba(255, 255, 255, 0.72); }
+  .why__reasons { border-top-color: rgba(255, 255, 255, 0.16); }
+  .why__reason { border-bottom-color: rgba(255, 255, 255, 0.16); }
+}
+
+/* De balk is donkergroen, dus daar blijven de witte letters staan.
+   Alleen in de lichte footer worden het donkere letters. */
+.footer__logo .logo-word-img--light { display: none; }
+.footer__logo .logo-word-img--dark { display: block; }

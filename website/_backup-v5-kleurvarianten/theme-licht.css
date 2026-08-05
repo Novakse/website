@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Novakse Reizen — lichte thema-variant
+   Laadt NA styles.css en overschrijft alleen de donkere vlakken.
+   De fotosecties (opener, gelaagd, keuzepanelen) blijven donker: die geven
+   in deze variant het ritme en contrast dat de zwarte vlakken eerst gaven.
+   ========================================================================== */
+
+:root {
+  --paper-soft: #f4f5f2;
+  --band: #eceee9;
+}
+
+/* --------------------------------------------------------------------------
+   Header — licht, met donkere tekst
+   -------------------------------------------------------------------------- */
+.site-header { color: var(--ink); }
+.site-header.is-solid {
+  background-color: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Boven de openingsfoto blijft de tekst wit; zodra de balk dekt, wordt hij donker */
+.site-header:not(.is-solid) { color: #fff; }
+.site-header:not(.is-solid) .nav-toggle span { background: #fff; }
+.site-header.is-solid .nav-toggle span { background: var(--ink); }
+
+/* Logo: donkere letters op wit. De opake achtergrond van het PNG wordt eerst
+   naar puur wit geduwd en daarna via multiply weggeblend. */
+
+.site-header.is-solid .main-nav__links a::after { background: var(--warm-deep); }
+
+@media (max-width: 63.99rem) {
+  .main-nav { background: var(--paper); color: var(--ink); }
+  .main-nav__close { color: var(--ink); }
+}
+
+/* --------------------------------------------------------------------------
+   Baanlijn-overgangen
+   -------------------------------------------------------------------------- */
+.baanlijn--on-dark { background: var(--paper); }
+.baanlijn--on-dark svg path { stroke: var(--warm-deep); }
+
+/* --------------------------------------------------------------------------
+   Reizen — wit in plaats van grijs, zodat de grijze banden verderop opvallen
+   -------------------------------------------------------------------------- */
+.trips { background: var(--paper); }
+
+/* --------------------------------------------------------------------------
+   Waarom Novakse — van zwart naar zachtgrijze band
+   -------------------------------------------------------------------------- */
+.why { background: var(--paper-soft); color: var(--ink); }
+.why .eyebrow--warm { color: var(--warm-deep); }
+.why__text { color: var(--ink-soft); }
+.why__reasons { border-top-color: var(--border); }
+.why__reason { border-bottom-color: var(--border); }
+.why__reason p { color: var(--ink-soft); }
+
+/* --------------------------------------------------------------------------
+   Ervaringen — wit met een haarlijn, zodat het verschilt van de grijze banden
+   -------------------------------------------------------------------------- */
+.reviews { background: var(--paper); border-top: 1px solid var(--border); }
+
+/* --------------------------------------------------------------------------
+   Reisaanvraag — van zwart naar zachtgrijze band met lichte velden
+   -------------------------------------------------------------------------- */
+.request { background: var(--paper-soft); color: var(--ink); }
+.request .eyebrow--warm { color: var(--warm-deep); }
+.request__text { color: var(--ink-soft); }
+.request__points li { color: var(--ink-soft); }
+.request__points li::before { color: var(--warm-deep); }
+
+.request .form-field input,
+.request .form-field select,
+.request .form-field textarea {
+  background: var(--paper);
+  border-color: var(--border);
+  color: var(--ink);
+}
+.request .form-field input::placeholder,
+.request .form-field textarea::placeholder { color: #9a9d97; }
+.request .form-field select option { background: var(--paper); color: var(--ink); }
+.request .form-note { color: var(--ink-soft); }
+
+/* Knop houdt genoeg contrast op licht: donker in plaats van warm */
+.request .btn--warm { background: var(--ink); color: #fff; }
+.request .btn--warm:hover { background: var(--ink-2); }
+
+/* --------------------------------------------------------------------------
+   Footer — licht, met donkere tekst
+   -------------------------------------------------------------------------- */
+.site-footer { background: var(--band); color: var(--ink-soft); }
+.footer__tagline { color: var(--ink-soft); }
+.footer__heading { color: var(--ink); }
+.footer__links a { color: var(--ink); }
+.footer__links span { color: var(--ink-soft); }
+.footer__bottom { border-top-color: var(--border); color: var(--ink-soft); }
+
+/* Woordmerk: donkere letters zodra de balk wit is, en in de lichte footer */
+.site-header.is-solid .logo-word-img--light { display: none; }
+.site-header.is-solid .logo-word-img--dark { display: block; }
+.footer__logo .logo-word-img--light { display: none; }
+.footer__logo .logo-word-img--dark { display: block; }

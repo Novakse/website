@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>document.documentElement.classList.add("js");</script>
+  <title>Novakse Reizen — Schaatsreizen op natuurijs</title>
+  <meta name="description" content="Novakse organiseert kleinschalige schaatsreizen op natuurijs in Zweden en Finland, persoonlijk begeleid door oud-wedstrijdrijder Joey Novak." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Ga naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="site-header__logo" href="#top" aria-label="Novakse Reizen, terug naar boven">
+        <img src="images/logo-novakse.png" alt="Novakse Reizen" width="140" height="80" />
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+        <span class="sr-only" style="position:absolute;left:-9999px;">Menu openen</span>
+      </button>
+
+      <nav class="main-nav" id="mainNav" aria-label="Hoofdmenu">
+        <button class="main-nav__close" id="navClose" aria-label="Menu sluiten">×</button>
+        <ul class="main-nav__links">
+          <li><a href="#reizen">Reizen</a></li>
+          <li><a href="#schaatslessen">Schaatslessen</a></li>
+          <li><a href="#schaatsonderhoud">Schaatsonderhoud</a></li>
+          <li><a href="#verhaal">Over Novakse</a></li>
+          <li><a href="#aanvraag">Contact</a></li>
+        </ul>
+        <a class="btn btn--primary" href="#aanvraag">Bekijk onze reizen</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 1. Hero -->
+    <section class="hero" id="top">
+      <div class="hero__media">
+        <img src="images/hero-baan-zonsondergang.jpg" alt="Lege, geveegde schaatsbaan op natuurijs bij zonsondergang" />
+      </div>
+      <div class="wrap hero__content">
+        <span class="hero__eyebrow reveal reveal--hero" style="transition-delay:0ms">Novakse Reizen</span>
+        <h1 class="hero__title reveal reveal--hero" style="transition-delay:90ms">Schaats over natuurijs zoals het bedoeld is</h1>
+        <p class="hero__lede reveal reveal--hero" style="transition-delay:180ms">Kleine groepen, persoonlijke begeleiding door een oud-wedstrijdrijder, en bevroren meren in Zweden en Finland waar je in Nederland alleen nog van kunt dromen.</p>
+        <div class="hero__actions reveal reveal--hero" style="transition-delay:270ms">
+          <a class="btn btn--primary" href="#reizen">Bekijk onze reizen</a>
+          <a class="btn btn--secondary" href="#verhaal">Lees ons verhaal</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Reiskaarten -->
+    <section class="section" id="reizen">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow reveal">Onze reizen</span>
+          <h2 class="section-title reveal" style="transition-delay:60ms">Drie bestemmingen, één belofte: écht natuurijs</h2>
+          <p class="section-lede reveal" style="transition-delay:120ms">Dit zijn onze hoofdreizen voor komend seizoen. Elke reis wordt persoonlijk begeleid door Joey.</p>
+        </div>
+
+        <div class="trip-grid">
+          <!-- Orsa -->
+          <article class="trip-card reveal" style="transition-delay:0ms">
+            <div class="trip-card__media">
+              <img src="images/orsa-baan-mora.jpg" alt="Geveegde schaatsbaan in de omgeving van Orsa, Dalarna" loading="lazy" />
+            </div>
+            <div class="trip-card__body">
+              <div class="trip-card__tags">
+                <span class="trip-card__tag">Zweden · Dalarna</span>
+                <span class="trip-card__tag">Ieder niveau</span>
+              </div>
+              <h3 class="trip-card__title">Orsa</h3>
+              <p class="trip-card__desc">Schaatsen op het Orsameer, met een geveegde baan van zo'n 15 km en verblijf in eigen huisjes vlak bij het ijs.</p>
+              <p class="trip-card__note">Data en prijs volgen binnenkort.</p>
+              <p class="trip-card__extra">Mogelijk als open groepsreis of met je eigen groep</p>
+              <div class="trip-card__foot">
+                <a class="btn--ghost" href="#aanvraag">Vraag Orsa aan</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Falun -->
+          <article class="trip-card reveal" style="transition-delay:80ms">
+            <div class="trip-card__media">
+              <img src="images/falun-meer.jpg" alt="Schaatsers op een bevroren meer bij Falun, Zweden" loading="lazy" />
+            </div>
+            <div class="trip-card__body">
+              <div class="trip-card__tags">
+                <span class="trip-card__tag">Zweden</span>
+              </div>
+              <h3 class="trip-card__title">Falun</h3>
+              <p class="trip-card__desc">Schaatsen op historisch ijs, met de karakteristieke rode mijngebouwen van Falun op de achtergrond.</p>
+              <p class="trip-card__note">Pagina en praktische informatie volgen binnenkort.</p>
+              <p class="trip-card__extra">Mogelijk als open groepsreis of met je eigen groep</p>
+              <div class="trip-card__foot">
+                <a class="btn--ghost" href="#aanvraag">Vraag Falun aan</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Finland -->
+          <article class="trip-card reveal" style="transition-delay:160ms">
+            <div class="trip-card__media">
+              <img src="images/finland-baan.jpg" alt="Schaatsbaan op het Saimaameer bij Punkaharju, Finland" loading="lazy" />
+            </div>
+            <div class="trip-card__body">
+              <div class="trip-card__tags">
+                <span class="trip-card__tag">Finland · Punkaharju</span>
+              </div>
+              <h3 class="trip-card__title">Finland</h3>
+              <p class="trip-card__desc">Een zelfstandige schaatsreis op het Saimaameer, met eigen huisjes met sauna bij Harjun Portti.</p>
+              <p class="trip-card__price">Vanaf €995</p>
+              <p class="trip-card__note">10% vroegboekkorting bij boeken vóór 10 augustus 2026.</p>
+              <p class="trip-card__extra">Mogelijk als open groepsreis of met je eigen groep</p>
+              <div class="trip-card__foot">
+                <a class="btn--ghost" href="#aanvraag">Vraag Finland aan</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Waarom Novakse -->
+    <section class="section section--alt">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow reveal">Waarom Novakse</span>
+          <h2 class="section-title reveal" style="transition-delay:60ms">Geen massatoerisme, wel een gids die het ijs kent</h2>
+        </div>
+        <div class="value-grid">
+          <div class="value-item reveal" style="transition-delay:0ms">
+            <span class="value-item__mark">01</span>
+            <h3 class="value-item__title">Kleine groepen</h3>
+            <p class="value-item__text">Persoonlijke aandacht staat voorop — geen grote bussen vol toeristen.</p>
+          </div>
+          <div class="value-item reveal" style="transition-delay:70ms">
+            <span class="value-item__mark">02</span>
+            <h3 class="value-item__title">Begeleiding door Joey</h3>
+            <p class="value-item__text">Oud-wedstrijdrijder met jarenlange ervaring op hoog niveau en op natuurijs.</p>
+          </div>
+          <div class="value-item reveal" style="transition-delay:140ms">
+            <span class="value-item__mark">03</span>
+            <h3 class="value-item__title">Natuurijs dat zeldzaam wordt</h3>
+            <p class="value-item__text">In Nederland is goed natuurijs steeds schaarser — in Zweden en Finland niet.</p>
+          </div>
+          <div class="value-item reveal" style="transition-delay:210ms">
+            <span class="value-item__mark">04</span>
+            <h3 class="value-item__title">Flexibel om het ijs</h3>
+            <p class="value-item__text">Programma's passen zich dagelijks aan weer en ijskwaliteit aan — veiligheid eerst.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Open groep vs eigen groep -->
+    <section class="section" id="groepsvorm">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow reveal">Samen op reis</span>
+          <h2 class="section-title reveal" style="transition-delay:60ms">Sluit je aan, of ga met je eigen groep</h2>
+        </div>
+        <div class="choice-grid" id="choiceGrid">
+          <button type="button" class="choice-card reveal" style="transition-delay:0ms" data-groepsvorm="open" aria-pressed="false">
+            <img src="images/groep-dames.jpg" alt="Groep schaatsers die samen op een open groepsreis gaan" loading="lazy" />
+            <span class="choice-card__body">
+              <span class="choice-card__tag">Open groepsreis</span>
+              <span class="choice-card__title">Sluit je aan bij een groep</span>
+              <span class="choice-card__text">Meld je aan op een vaste reisdatum en schaats samen met andere deelnemers. Bij Orsa meld je je bijvoorbeeld in tweetallen aan.</span>
+            </span>
+            <span class="choice-card__check" aria-hidden="true">✓</span>
+          </button>
+          <button type="button" class="choice-card reveal" style="transition-delay:80ms" data-groepsvorm="eigen-groep" aria-pressed="false">
+            <img src="images/duo-zonsondergang.jpg" alt="Twee reizigers genieten samen van het natuurijs" loading="lazy" />
+            <span class="choice-card__body">
+              <span class="choice-card__tag">Eigen groep</span>
+              <span class="choice-card__title">Ga met je eigen mensen</span>
+              <span class="choice-card__text">Met vrienden, familie of collega's op een datum die jullie zelf kiezen. In overleg stellen we het programma samen op.</span>
+            </span>
+            <span class="choice-card__check" aria-hidden="true">✓</span>
+          </button>
+        </div>
+        <p class="choice-feedback" id="choiceFeedback" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- 5. Persoonlijk verhaal -->
+    <section class="section section--alt" id="verhaal">
+      <div class="wrap story">
+        <div class="story__media reveal" style="transition-delay:0ms">
+          <img src="images/joey-hond-persoonlijk.jpg" alt="Joey Novak met zijn hond aan het water" loading="lazy" />
+        </div>
+        <div class="story__body reveal" style="transition-delay:100ms">
+          <span class="eyebrow">Het verhaal achter Novakse</span>
+          <p class="story__quote">"Buiten zijn, in de natuur — dat is waar het voor mij om draait. Schaatsen op natuurijs geeft een ongekende vrijheid."</p>
+          <p class="story__name">Joey Novak</p>
+          <p class="story__role">Oprichter van Novakse</p>
+          <p class="story__text">Joey schaatste jarenlang op hoog niveau in zijn juniorentijd, met podiumplekken op NK's en internationale wedstrijden. Later volgde hij een opleiding tot sportleraar en werkte hij in de 11shop van de Elfstedenhal. Vandaag draait het voor hem niet meer om prestaties, maar om het beleven van het schaatsen en de natuur — en dat wil hij met je delen.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Zo werkt een aanvraag -->
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow reveal">Zo werkt het</span>
+          <h2 class="section-title reveal" style="transition-delay:60ms">In vier stappen op reis</h2>
+        </div>
+        <div class="steps">
+          <div class="step reveal" style="transition-delay:0ms">
+            <h3 class="step__title">Je vraagt aan</h3>
+            <p class="step__text">Je vult het aanvraagformulier in met de reis en je voorkeuren.</p>
+          </div>
+          <div class="step reveal" style="transition-delay:70ms">
+            <h3 class="step__title">Persoonlijk contact</h3>
+            <p class="step__text">Joey neemt zelf contact met je op om je vraag te bespreken.</p>
+          </div>
+          <div class="step reveal" style="transition-delay:140ms">
+            <h3 class="step__title">Samen bepalen</h3>
+            <p class="step__text">Groep, datum en praktische details stemmen jullie samen af.</p>
+          </div>
+          <div class="step reveal" style="transition-delay:210ms">
+            <h3 class="step__title">Bevestiging</h3>
+            <p class="step__text">Je ontvangt een persoonlijke bevestiging van je schaatsreis.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Ervaringen -->
+    <section class="section section--alt">
+      <div class="wrap experience">
+        <div class="experience__media reveal" style="transition-delay:0ms">
+          <img src="images/groep-dames.jpg" alt="Groep deelnemers na een geslaagde schaatsreis" loading="lazy" />
+        </div>
+        <div class="experience__body reveal" style="transition-delay:120ms">
+          <span class="eyebrow">Ervaringen</span>
+          <h2 class="section-title">Wat eerdere reizigers zeggen</h2>
+          <p class="experience__stars" aria-hidden="true">★★★★★</p>
+          <p class="experience__text">De reacties van eerdere deelnemers staan op onze Google-pagina — daar plaatsen we hier binnenkort een directe koppeling naar toe.</p>
+          <a class="btn--ghost" href="#" aria-disabled="true">Bekijk onze reviews op Google</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. FAQ -->
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow reveal">Veelgestelde vragen</span>
+          <h2 class="section-title reveal" style="transition-delay:60ms">Nog twijfels? Dit wordt vaak gevraagd</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Wat als het ijs of het weer niet goed genoeg is?</summary>
+            <p>Onze schaatstochten zijn altijd afhankelijk van de weersomstandigheden en de kwaliteit van het ijs. Routes en programma's worden dagelijks aangepast, en waar nodig wijken we uit naar een ander geschikt meer of bieden we een alternatief programma aan.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Kan ik met mijn eigen groep op reis?</summary>
+            <p>Ja. Naast de open groepsreizen kun je ook met je eigen vrienden, familie of collega's op een zelfgekozen datum reizen. Neem contact op om de mogelijkheden te bespreken.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Wat is er ongeveer inbegrepen bij een reis?</summary>
+            <p>Denk aan verblijf, vervoer ter plaatse en persoonlijke begeleiding op het ijs. Vliegtickets, reis- en annuleringsverzekering, en de meeste maaltijden zijn niet inbegrepen. Per reis lees je de exacte details op de reispagina.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Hoe zit het met aanbetaling en annuleren?</summary>
+            <p>Voor alle reizen geldt een aanbetaling van 50% van de reissom; het restant betaal je uiterlijk 5 weken voor vertrek. Annuleer je meer dan 6 weken van tevoren, dan betaal je 50% van de reissom; daarna geldt 100%.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Welk schaatsmateriaal heb ik nodig?</summary>
+            <p>Je neemt je eigen schaatsmateriaal, winterkleding en veiligheidsuitrusting mee. Vooraf ontvang je een paklijst en advies over wat je nodig hebt.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Reisaanvraag -->
+    <section class="section section--alt" id="aanvraag">
+      <div class="wrap request">
+        <div class="request__body reveal" style="transition-delay:0ms">
+          <span class="eyebrow">Reisaanvraag</span>
+          <h2 class="section-title">Vertel ons over je droomreis</h2>
+          <p class="section-lede">Vul het formulier in en Joey neemt persoonlijk contact met je op.</p>
+          <ul class="request__list">
+            <li>Reactie rechtstreeks van Joey, geen callcenter</li>
+            <li>Ook mogelijk voor een reis met je eigen groep</li>
+            <li>Geen verplichtingen — eerst een goed gesprek</li>
+          </ul>
+        </div>
+        <form class="request__form reveal" style="transition-delay:100ms" id="requestForm">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="voornaam">Voornaam</label>
+              <input type="text" id="voornaam" name="voornaam" autocomplete="given-name" required />
+            </div>
+            <div class="form-field">
+              <label for="achternaam">Achternaam</label>
+              <input type="text" id="achternaam" name="achternaam" autocomplete="family-name" required />
+            </div>
+            <div class="form-field">
+              <label for="email">E-mailadres</label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+            <div class="form-field">
+              <label for="telefoon">Telefoon</label>
+              <input type="tel" id="telefoon" name="telefoon" autocomplete="tel" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="reis">Welke reis heeft je interesse?</label>
+              <select id="reis" name="reis">
+                <option value="orsa">Orsa</option>
+                <option value="falun">Falun</option>
+                <option value="finland">Finland</option>
+                <option value="weet-nog-niet">Weet ik nog niet</option>
+              </select>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="groepsvorm">Groepsvorm</label>
+              <select id="groepsvorm" name="groepsvorm">
+                <option value="open">Open groepsreis</option>
+                <option value="eigen-groep">Eigen groep</option>
+              </select>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="bericht">Je bericht</label>
+              <textarea id="bericht" name="bericht" placeholder="Vertel kort iets over je wensen of vragen"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--primary" style="margin-top: 1.25rem;">Verstuur aanvraag</button>
+          <p class="form-note">Dit formulier is nog niet gekoppeld aan een verzendfunctie — dat volgt in een volgende bouwstap.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- 10. Compacte verwijzing schaatslessen + schaatsonderhoud -->
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow reveal">Ook bij Novakse</span>
+          <h2 class="section-title reveal" style="transition-delay:60ms">Naast schaatsreizen</h2>
+        </div>
+        <div class="teaser-grid">
+          <article class="teaser-card reveal" style="transition-delay:0ms" id="schaatslessen">
+            <div class="teaser-card__media">
+              <img src="images/schaatsles-teaser.jpg" alt="Schaatser in actie op de ijsbaan tijdens een training" loading="lazy" />
+            </div>
+            <div>
+              <span class="teaser-card__tag">Schaatslessen</span>
+              <h3 class="teaser-card__title">Groepslessen &amp; personal training</h3>
+              <p class="teaser-card__text">Techniek en snelheid, in kleine groepen of persoonlijk begeleid.</p>
+              <a class="teaser-card__link btn--ghost" href="#">Meer over schaatslessen</a>
+            </div>
+          </article>
+          <article class="teaser-card teaser-card--calm reveal" style="transition-delay:90ms" id="schaatsonderhoud">
+            <div class="teaser-card__media">
+              <img src="images/onderhoud-teaser.jpg" alt="Specialistisch slijpen van een schaats" loading="lazy" />
+            </div>
+            <div>
+              <span class="teaser-card__tag">Schaatsonderhoud</span>
+              <h3 class="teaser-card__title">Slijpen, onderhoud &amp; skatefitting</h3>
+              <p class="teaser-card__text">Vakkundig scherp en goed afgesteld, door een oud-materiaalspecialist.</p>
+              <a class="teaser-card__link btn--ghost" href="#">Meer over schaatsonderhoud</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 11. Footer -->
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <a class="footer-logo" href="#top" aria-label="Novakse Reizen, terug naar boven">
+          <img src="images/logo-novakse.png" alt="Novakse Reizen" width="140" height="80" />
+        </a>
+        <p class="footer-tagline">Kleinschalige schaatsreizen op natuurijs, persoonlijk begeleid door Joey Novak.</p>
+      </div>
+      <div>
+        <p class="footer-heading">Contact</p>
+        <div class="footer-links">
+          <a href="tel:+31617467643">+31 6 17467643</a>
+          <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a>
+          <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-heading">Informatie</p>
+        <div class="footer-links">
+          <a href="#">Privacyverklaring</a>
+          <a href="#">Algemene voorwaarden</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© 2022–2026 Novakse. Alle rechten voorbehouden.</span>
+      <span>KVK 92092969</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

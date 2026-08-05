@@ -1,0 +1,1069 @@
+/* ==========================================================================
+   Novakse — Design tokens
+   ========================================================================== */
+:root {
+  --color-bg: #ffffff;
+  --color-bg-alt: #f3f4f2;
+  --color-ink: #23262a;
+  --color-ink-soft: #5c6058;
+  --color-accent: #dde6e4;       /* lichte, koele tint van het accent — voor badges */
+  --color-accent-dark: #2f4a52;  /* Diepijs — enige accentkleur: knoppen, links, tags */
+  --color-cool: #2f4a52;         /* zelfde accent, voor focus/links */
+  --color-border: #e2e3e0;
+
+  --font-display: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius: 4px;
+  --container: 72rem;
+  --gap: clamp(1rem, 3vw, 2.5rem);
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.75rem;
+  --space-lg: 3rem;
+  --space-xl: 5rem;
+  --space-2xl: 7rem;
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-bg);
+  line-height: 1.55;
+  font-size: 1rem;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+h1, h2, h3, p, ul, figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input, textarea, select {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--color-cool);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Scroll-onthulling (reveal-on-scroll)
+   Alleen opacity + transform. Zonder JS ('.js' ontbreekt) blijft alles
+   gewoon zichtbaar. prefers-reduced-motion wordt al globaal afgevangen
+   hierboven (transition-duration: 0.001ms), dus onthulling verschijnt
+   dan direct i.p.v. te animeren.
+   ========================================================================== */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero-content: iets rustiger/filmischer, kleine verplaatsing */
+.js .reveal--hero {
+  transform: translateY(16px);
+  transition-duration: 0.7s;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  background: var(--color-ink);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  z-index: 200;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* ==========================================================================
+   Layout helpers
+   ========================================================================== */
+.wrap {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 48rem) {
+  .wrap {
+    padding-inline: 2rem;
+  }
+}
+
+.section {
+  padding-block: var(--space-xl);
+}
+
+.section--alt {
+  background: var(--color-bg-alt);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-cool);
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  line-height: 1.15;
+  max-width: 34ch;
+}
+
+.section-lede {
+  margin-top: var(--space-sm);
+  max-width: 56ch;
+  color: var(--color-ink-soft);
+  font-size: 1.05rem;
+}
+
+.section-head {
+  margin-bottom: var(--space-lg);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--color-accent-dark);
+  color: #fff;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.btn--primary:hover {
+  background: #8f4419;
+  transform: translateY(-2px);
+}
+.btn--primary:active {
+  transform: translateY(0);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-ink);
+  border: 1.5px solid var(--color-ink);
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.btn--secondary:hover {
+  background: var(--color-ink);
+  color: #fff;
+  transform: translateY(-2px);
+}
+.btn--secondary:active {
+  transform: translateY(0);
+}
+
+.btn--ghost {
+  color: var(--color-cool);
+  padding-inline: 0;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+.btn--ghost::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 0.4em;
+  transition: transform 0.2s ease;
+}
+.btn--ghost:hover::after,
+.btn--ghost:focus-visible::after {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn--ghost::after { transition: none; }
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.75rem;
+  gap: var(--space-sm);
+}
+
+.site-header__logo img {
+  height: 2.4rem;
+  width: auto;
+}
+
+.nav-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0.5rem;
+}
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--color-ink);
+  border-radius: 2px;
+}
+
+.main-nav {
+  position: fixed;
+  inset: 0 0 0 30%;
+  background: var(--color-bg);
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 1.5rem 2rem;
+  gap: var(--space-md);
+  z-index: 150;
+}
+.main-nav.is-open {
+  transform: translateX(0);
+}
+.main-nav__links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.main-nav__links a {
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+}
+.main-nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent-dark);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+.main-nav__links a:hover::after,
+.main-nav__links a:focus-visible::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .main-nav__links a::after { transition: none; }
+}
+.main-nav__close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+@media (min-width: 62rem) {
+  .nav-toggle,
+  .main-nav__close {
+    display: none;
+  }
+  .main-nav {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0;
+    background: transparent;
+    inset: auto;
+    flex: 1;
+  }
+  .main-nav__links {
+    flex-direction: row;
+    gap: var(--space-md);
+    font-size: 0.95rem;
+    margin-right: var(--space-md);
+  }
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: flex-end;
+  color: #fff;
+  overflow: hidden;
+}
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(18, 24, 28, 0.15) 0%, rgba(18, 24, 28, 0.75) 100%);
+}
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--space-2xl) var(--space-xl);
+  max-width: 42rem;
+}
+.hero__eyebrow {
+  font-family: var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #f4d9c6;
+}
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 6.5vw, 3.6rem);
+  line-height: 1.08;
+  margin-top: var(--space-sm);
+}
+.hero__lede {
+  margin-top: var(--space-md);
+  font-size: 1.1rem;
+  max-width: 38ch;
+  color: rgba(255, 255, 255, 0.92);
+}
+.hero__actions {
+  margin-top: var(--space-lg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.hero__actions .btn--secondary {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #fff;
+}
+.hero__actions .btn--secondary:hover {
+  background: #fff;
+  color: var(--color-ink);
+}
+
+/* ==========================================================================
+   Trip cards
+   ========================================================================== */
+.trip-grid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 56rem) {
+  .trip-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.trip-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.trip-card__media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+.trip-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+.trip-card:hover .trip-card__media img {
+  transform: scale(1.04);
+}
+@media (prefers-reduced-motion: reduce) {
+  .trip-card__media img { transition: none; }
+  .trip-card:hover .trip-card__media img { transform: none; }
+}
+
+.trip-card__body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+.trip-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.trip-card__tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--color-bg-alt);
+  color: var(--color-ink-soft);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+}
+.trip-card__title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.trip-card__desc {
+  color: var(--color-ink-soft);
+  font-size: 0.95rem;
+  flex: 1;
+}
+.trip-card__price {
+  font-weight: 600;
+}
+.trip-card__note {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  font-style: italic;
+}
+.trip-card__extra {
+  font-size: 0.85rem;
+  color: var(--color-cool);
+  font-weight: 600;
+}
+
+/* Extra kerninfo alleen verborgen tot hover/focus op apparaten met een
+   echte muisaanwijzer. Op touch-apparaten (geen hover) blijft de tekst
+   gewoon altijd zichtbaar, zoals hierboven. */
+@media (hover: hover) and (pointer: fine) {
+  .trip-card__extra {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .trip-card:hover .trip-card__extra,
+  .trip-card:focus-within .trip-card__extra {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trip-card__extra { transition: none; }
+}
+.trip-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   Waarom Novakse — value props
+   ========================================================================== */
+.value-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 48rem) {
+  .value-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 72rem) {
+  .value-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.value-item__mark {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-accent-dark);
+}
+.value-item__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+.value-item__text {
+  margin-top: 0.4rem;
+  color: var(--color-ink-soft);
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   Groepsvorm
+   ========================================================================== */
+.choice-grid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 56rem) {
+  .choice-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.choice-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1.5px solid var(--color-border);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.choice-card:hover {
+  transform: translateY(-3px);
+}
+.choice-card:active {
+  transform: translateY(0);
+}
+.choice-card.is-selected {
+  border-color: var(--color-accent-dark);
+}
+.choice-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+.choice-card__body {
+  display: block;
+  padding: var(--space-md);
+}
+.choice-card__tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark);
+  display: block;
+}
+.choice-card__title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 0.4rem;
+  display: block;
+  color: var(--color-ink);
+}
+.choice-card__text {
+  margin-top: 0.5rem;
+  max-width: 36ch;
+  color: var(--color-ink-soft);
+  font-size: 0.92rem;
+  display: block;
+}
+.choice-card__check {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 2;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--color-accent-dark);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.choice-card.is-selected .choice-card__check {
+  opacity: 1;
+  transform: scale(1);
+}
+.choice-feedback {
+  margin-top: var(--space-sm);
+  min-height: 1.4em;
+  color: var(--color-cool);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .choice-card, .choice-card__check { transition: none; }
+}
+
+/* ==========================================================================
+   Persoonlijk verhaal
+   ========================================================================== */
+.story {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 56rem) {
+  .story {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}
+.story__media img {
+  border-radius: var(--radius);
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+.story__quote {
+  margin-top: var(--space-sm);
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.story__name {
+  margin-top: var(--space-md);
+  font-weight: 600;
+}
+.story__role {
+  color: var(--color-ink-soft);
+  font-size: 0.9rem;
+}
+.story__text {
+  margin-top: var(--space-sm);
+  color: var(--color-ink-soft);
+  max-width: 62ch;
+}
+
+/* ==========================================================================
+   Aanvraag-stappen
+   ========================================================================== */
+.steps {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1fr;
+  counter-reset: step;
+}
+@media (min-width: 56rem) {
+  .steps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.step {
+  counter-increment: step;
+  position: relative;
+  padding-top: var(--space-md);
+  border-top: 2px solid var(--color-border);
+}
+.step::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-accent-dark);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.step__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.step__text {
+  margin-top: 0.4rem;
+  color: var(--color-ink-soft);
+  font-size: 0.92rem;
+}
+
+/* ==========================================================================
+   Ervaringen
+   ========================================================================== */
+.experience {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 56rem) {
+  .experience {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.experience__media img {
+  border-radius: var(--radius);
+  width: 100%;
+}
+.experience__stars {
+  color: var(--color-accent-dark);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+}
+.experience__text {
+  margin-top: var(--space-sm);
+  color: var(--color-ink-soft);
+}
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+.faq-list {
+  max-width: 46rem;
+}
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-sm);
+}
+.faq-item summary {
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item summary::after {
+  content: "+";
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  color: var(--color-cool);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+.faq-item p {
+  margin-top: 0.75rem;
+  color: var(--color-ink-soft);
+  max-width: 60ch;
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-item summary::after { transition: none; }
+}
+
+/* ==========================================================================
+   Reisaanvraag / form
+   ========================================================================== */
+.request {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 62rem) {
+  .request {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}
+.request__list {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.request__list li {
+  padding-left: 1.4rem;
+  position: relative;
+  color: var(--color-ink-soft);
+}
+.request__list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-accent-dark);
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 32rem) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .form-field--full {
+    grid-column: 1 / -1;
+  }
+}
+.form-field label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.35rem;
+}
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  background: #fff;
+}
+.form-field textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+.form-note {
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  margin-top: 0.75rem;
+}
+
+/* ==========================================================================
+   Lessen / Onderhoud teaser
+   ========================================================================== */
+.teaser-grid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 48rem) {
+  .teaser-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.teaser-card {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: var(--space-sm);
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-sm);
+}
+.teaser-card__media {
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.teaser-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.teaser-card:hover .teaser-card__media img,
+.teaser-card:focus-within .teaser-card__media img {
+  transform: scale(1.06);
+}
+
+/* Schaatslessen: energiek, snel en met lichte overshoot (zie hierboven).
+   Schaatsonderhoud: rustig en precies, minimale beweging, geen overshoot. */
+.teaser-card--calm .teaser-card__media img {
+  transition: transform 0.45s ease;
+}
+.teaser-card--calm:hover .teaser-card__media img,
+.teaser-card--calm:focus-within .teaser-card__media img {
+  transform: scale(1.015);
+}
+
+.js .teaser-card.reveal {
+  transform: translateY(10px);
+  transition-duration: 0.28s;
+}
+.js .teaser-card--calm.reveal {
+  transform: translateY(8px);
+  transition-duration: 0.48s;
+  transition-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teaser-card__media img,
+  .teaser-card--calm .teaser-card__media img { transition: none; }
+}
+.teaser-card__tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent-dark);
+}
+.teaser-card--calm .teaser-card__tag {
+  color: var(--color-cool);
+}
+.teaser-card__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 0.2rem;
+}
+.teaser-card__text {
+  color: var(--color-ink-soft);
+  font-size: 0.88rem;
+  margin-top: 0.3rem;
+}
+.teaser-card__link {
+  margin-top: 0.5rem;
+  display: inline-block;
+  font-size: 0.88rem;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.site-footer {
+  background: var(--color-ink);
+  color: rgba(255, 255, 255, 0.85);
+  padding-block: var(--space-xl) var(--space-lg);
+}
+.footer-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 56rem) {
+  .footer-grid {
+    grid-template-columns: 1.3fr 1fr 1fr;
+  }
+}
+.footer-logo img {
+  height: 2.2rem;
+  filter: brightness(0) invert(1);
+}
+.footer-tagline {
+  margin-top: var(--space-sm);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  max-width: 30ch;
+}
+.footer-heading {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+}
+.footer-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+}
+.footer-links a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.footer-bottom {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+.footer-bottom a {
+  color: rgba(255, 255, 255, 0.55);
+}

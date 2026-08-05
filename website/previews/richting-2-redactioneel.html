@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Richting 2 — Redactioneel &amp; persoonlijk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#fbfaf8; --ink:#1c1c1a; --ink-soft:#65645d;
+    --accent-dark:#7a3b25; --border:#dedad2;
+    --serif:"Newsreader", serif; --sans:"Work Sans", sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.55;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:74rem;margin-inline:auto;padding-inline:1.5rem;}
+  @media(min-width:48rem){.wrap{padding-inline:3rem;}}
+  .demo-label{background:#7a3b25;color:#fff;text-align:center;padding:.6rem;font-size:.85rem;letter-spacing:.04em;}
+
+  /* Masthead-navigatie, als een krant/tijdschrift */
+  .masthead{border-bottom:1px solid var(--border);padding-block:1.1rem;}
+  .masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .masthead .logo img{height:2rem;}
+  .masthead nav ul{list-style:none;display:none;gap:1.75rem;margin:0;padding:0;font-size:.82rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+  @media(min-width:64rem){.masthead nav ul{display:flex;}}
+  .masthead .issue{font-family:var(--serif);font-style:italic;color:var(--ink-soft);font-size:.9rem;display:none;}
+  @media(min-width:64rem){.masthead .issue{display:block;}}
+
+  /* Hero: redactionele, asymmetrische split */
+  .hero{padding-block:3.5rem;}
+  .hero-grid{display:grid;gap:2.5rem;grid-template-columns:1fr;align-items:end;}
+  @media(min-width:60rem){.hero-grid{grid-template-columns:0.95fr 1.3fr;gap:3rem;}}
+  .hero-kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;font-weight:600;color:var(--accent-dark);}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.1rem,4.6vw,3.4rem);line-height:1.08;margin:.8rem 0 0;}
+  .hero h1 em{font-style:italic;color:var(--accent-dark);}
+  .hero__byline{margin-top:1.4rem;font-size:.95rem;color:var(--ink-soft);border-top:1px solid var(--border);padding-top:1rem;max-width:26rem;}
+  .hero__media{position:relative;}
+  .hero__media img{width:100%;aspect-ratio:5/6;object-fit:cover;}
+  .hero__cutline{margin-top:.6rem;font-family:var(--serif);font-style:italic;font-size:.9rem;color:var(--ink-soft);}
+  .hero__cta{margin-top:1.5rem;display:inline-flex;align-items:center;gap:.6rem;font-weight:600;font-size:.92rem;border-bottom:1.5px solid var(--ink);padding-bottom:.15rem;}
+  .hero__cta::after{content:"→";transition:transform .2s ease;}
+  .hero__cta:hover::after{transform:translateX(4px);}
+
+  /* Overgang: dunne dubbele regel, als een kolomscheiding */
+  .rule{border:0;border-top:1px solid var(--border);margin:0;}
+  .rule-pair{max-width:74rem;margin:2.5rem auto 0;padding-inline:1.5rem;}
+  @media(min-width:48rem){.rule-pair{padding-inline:3rem;}}
+  .rule-pair::after{content:"";display:block;height:4px;}
+
+  /* Reizen als redactionele lijst i.p.v. kaartenrij */
+  .trips{padding-block:3.5rem 5rem;}
+  .trips__head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--ink);padding-bottom:1rem;margin-bottom:.5rem;}
+  .trips__head h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,3vw,2rem);margin:0;}
+  .trips__head span{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);}
+  .trip-list{}
+  .trip-row{display:grid;grid-template-columns:3rem 1fr;gap:1.5rem;align-items:center;padding-block:1.6rem;border-bottom:1px solid var(--border);}
+  @media(min-width:52rem){.trip-row{grid-template-columns:3rem 9rem 1fr auto;}}
+  .trip-row__num{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--accent-dark);}
+  .trip-row__media{display:none;overflow:hidden;}
+  @media(min-width:52rem){.trip-row__media{display:block;aspect-ratio:4/3;}}
+  .trip-row__media img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+  .trip-row:hover .trip-row__media img{transform:scale(1.07);}
+  @media(prefers-reduced-motion:reduce){.trip-row__media img{transition:none;}.trip-row:hover .trip-row__media img{transform:none;}}
+  .trip-row__title{font-family:var(--serif);font-weight:500;font-size:1.35rem;}
+  .trip-row__desc{margin-top:.3rem;color:var(--ink-soft);font-size:.92rem;max-width:44ch;}
+  .trip-row__link{font-size:.85rem;font-weight:600;white-space:nowrap;border-bottom:1.5px solid var(--ink);padding-bottom:.1rem;}
+</style>
+</head>
+<body>
+<div class="demo-label">RICHTING 2 — Redactioneel en persoonlijk (preview, alleen bovenkant)</div>
+
+<div class="masthead">
+  <div class="wrap">
+    <a class="logo" href="#"><img src="../images/logo-novakse.png" alt="Novakse Reizen" /></a>
+    <nav>
+      <ul>
+        <li><a href="#">Reizen</a></li>
+        <li><a href="#">Schaatslessen</a></li>
+        <li><a href="#">Schaatsonderhoud</a></li>
+        <li><a href="#">Over Novakse</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <span class="issue">Seizoen 2026 – 2027</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-kicker">Het verhaal achter Novakse</span>
+      <h1>Schaatsen op <em>natuurijs</em>, verteld door wie het zelf leefde</h1>
+      <p class="hero__byline">Joey Novak schaatste jarenlang op hoog niveau, en neemt je nu mee naar de bevroren meren van Zweden en Finland — in kleine groepen, met persoonlijke begeleiding.</p>
+      <a class="hero__cta" href="#">Lees ons verhaal</a>
+    </div>
+    <div class="hero__media">
+      <img src="../images/joey-hond-persoonlijk.jpg" alt="Joey Novak met zijn hond aan het water" />
+      <p class="hero__cutline">Joey Novak, oprichter van Novakse</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+<div class="rule-pair"></div>
+
+<section class="trips">
+  <div class="wrap">
+    <div class="trips__head">
+      <h2>Drie reizen dit seizoen</h2>
+      <span>Novakse Reizen</span>
+    </div>
+    <div class="trip-list">
+      <article class="trip-row">
+        <span class="trip-row__num">01</span>
+        <div class="trip-row__media"><img src="../images/orsa-baan-mora.jpg" alt="Geveegde schaatsbaan bij Orsa" /></div>
+        <div>
+          <h3 class="trip-row__title">Orsa, Dalarna</h3>
+          <p class="trip-row__desc">Schaatsen op het Orsameer, verblijf in eigen huisjes vlak bij het ijs. Data en prijs volgen binnenkort.</p>
+        </div>
+        <a class="trip-row__link" href="#">Vraag aan</a>
+      </article>
+      <article class="trip-row">
+        <span class="trip-row__num">02</span>
+        <div class="trip-row__media"><img src="../images/falun-meer.jpg" alt="Schaatsers bij Falun" /></div>
+        <div>
+          <h3 class="trip-row__title">Falun</h3>
+          <p class="trip-row__desc">Schaatsen op historisch ijs, met de rode mijngebouwen van Falun op de achtergrond.</p>
+        </div>
+        <a class="trip-row__link" href="#">Vraag aan</a>
+      </article>
+      <article class="trip-row">
+        <span class="trip-row__num">03</span>
+        <div class="trip-row__media"><img src="../images/finland-baan.jpg" alt="Schaatsbaan bij Punkaharju, Finland" /></div>
+        <div>
+          <h3 class="trip-row__title">Finland — Punkaharju</h3>
+          <p class="trip-row__desc">Zelfstandige schaatsreis op het Saimaameer, eigen huisjes met sauna. Vanaf €995.</p>
+        </div>
+        <a class="trip-row__link" href="#">Vraag aan</a>
+      </article>
+    </div>
+  </div>
+</section>
+</body>
+</html>

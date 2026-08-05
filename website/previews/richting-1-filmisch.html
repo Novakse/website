@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Richting 1 — Filmisch &amp; avontuurlijk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#fff; --ink:#181b1d; --ink-soft:#5c6058;
+    --accent:#e7ede9; --accent-dark:#1f3b3a; --border:#e4e5e2;
+    --font: "Work Sans", sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.5;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:78rem;margin-inline:auto;padding-inline:1.5rem;}
+  @media(min-width:48rem){.wrap{padding-inline:3rem;}}
+
+  /* label banner */
+  .demo-label{background:#1f3b3a;color:#fff;text-align:center;padding:.6rem;font-size:.85rem;letter-spacing:.04em;}
+
+  /* Nav: transparant, zwevend over de hero */
+  header{position:absolute;top:0;left:0;right:0;z-index:10;padding-block:1.5rem;}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .logo img{height:2.1rem;filter:brightness(0) invert(1);}
+  nav ul{list-style:none;display:none;gap:2rem;margin:0;padding:0;font-size:.92rem;font-weight:500;color:#fff;}
+  @media(min-width:64rem){nav ul{display:flex;}}
+  nav a{position:relative;padding-block:.2rem;}
+  nav a::after{content:"";position:absolute;left:0;bottom:-2px;width:100%;height:1px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .25s ease;}
+  nav a:hover::after{transform:scaleX(1);}
+  .cta-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.5);color:#fff;padding:.6rem 1.3rem;border-radius:999px;font-size:.85rem;font-weight:600;backdrop-filter:blur(4px);transition:background .2s ease,transform .2s ease;}
+  .cta-pill:hover{background:#fff;color:#1f3b3a;transform:translateY(-2px);}
+
+  /* Hero: full-bleed, cinematisch, veel lucht */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;color:#fff;overflow:hidden;}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:heroin 7s ease-out forwards;}
+  @keyframes heroin{to{transform:scale(1);}}
+  @media(prefers-reduced-motion:reduce){.hero img{animation:none;transform:none;}}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(200deg, rgba(10,14,13,.05) 20%, rgba(10,14,13,.75) 90%);}
+  .hero__inner{position:relative;z-index:2;padding-bottom:6.5rem;max-width:46rem;}
+  .hero__eyebrow{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:.78rem;font-weight:600;color:#dfeae6;margin-bottom:1rem;opacity:0;animation:fadeup .8s ease .2s forwards;}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.04;font-weight:600;margin:0;letter-spacing:-.01em;opacity:0;animation:fadeup .8s ease .35s forwards;}
+  .hero p{margin-top:1.5rem;font-size:1.15rem;max-width:34ch;color:rgba(255,255,255,.9);opacity:0;animation:fadeup .8s ease .5s forwards;}
+  .hero__facts{margin-top:2rem;display:flex;flex-wrap:wrap;gap:1.5rem;font-size:.85rem;color:rgba(255,255,255,.85);opacity:0;animation:fadeup .8s ease .65s forwards;}
+  .hero__facts span{display:flex;align-items:center;gap:.5rem;}
+  .hero__facts b{color:#fff;}
+  @keyframes fadeup{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  @media(prefers-reduced-motion:reduce){.hero__eyebrow,.hero h1,.hero p,.hero__facts{animation:none;opacity:1;}}
+
+  /* Overgang: gelaagd vlak i.p.v. rechte snede */
+  .seam{position:relative;height:7rem;margin-top:-7rem;z-index:3;pointer-events:none;}
+  .seam svg{width:100%;height:100%;display:block;}
+
+  /* Reiskaarten: asymmetrisch, geen 3 gelijke vakken */
+  .trips{padding-block:5rem 6rem;}
+  .trips__head{max-width:36rem;margin-bottom:3rem;}
+  .trips__head span{text-transform:uppercase;letter-spacing:.1em;font-size:.78rem;font-weight:600;color:var(--accent-dark);}
+  .trips__head h2{font-size:clamp(1.6rem,3.4vw,2.2rem);margin:.6rem 0 0;line-height:1.15;}
+  .trip-layout{display:grid;gap:1.25rem;grid-template-columns:1fr;}
+  @media(min-width:56rem){
+    .trip-layout{grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto;}
+    .trip-feature{grid-row:1 / 3;}
+  }
+  .trip{position:relative;border-radius:2px;overflow:hidden;color:#fff;min-height:20rem;display:flex;align-items:flex-end;}
+  .trip-feature{min-height:30rem;}
+  .trip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,.61,.36,1);}
+  .trip:hover img{transform:scale(1.05);}
+  @media(prefers-reduced-motion:reduce){.trip img{transition:none;}.trip:hover img{transform:none;}}
+  .trip::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,14,13,.85),rgba(10,14,13,0) 55%);}
+  .trip__body{position:relative;z-index:1;padding:1.75rem;}
+  .trip__tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:#cfe3dd;}
+  .trip__title{font-size:1.6rem;font-weight:600;margin:.3rem 0 0;}
+  .trip-feature .trip__title{font-size:2.1rem;}
+  .trip__desc{margin-top:.5rem;max-width:32ch;font-size:.92rem;color:rgba(255,255,255,.85);}
+  .trip__link{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.88rem;font-weight:600;}
+  .trip__link::after{content:"→";transition:transform .2s ease;}
+  .trip__link:hover::after{transform:translateX(4px);}
+</style>
+</head>
+<body>
+<div class="demo-label">RICHTING 1 — Filmisch en avontuurlijk (preview, alleen bovenkant)</div>
+
+<header>
+  <div class="wrap nav-row">
+    <a class="logo" href="#"><img src="../images/logo-novakse.png" alt="Novakse Reizen" /></a>
+    <nav>
+      <ul>
+        <li><a href="#">Reizen</a></li>
+        <li><a href="#">Schaatslessen</a></li>
+        <li><a href="#">Schaatsonderhoud</a></li>
+        <li><a href="#">Over Novakse</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="cta-pill" href="#">Bekijk onze reizen</a>
+  </div>
+</header>
+
+<section class="hero">
+  <img src="../images/hero-baan-zonsondergang.jpg" alt="Lege, geveegde schaatsbaan op natuurijs bij zonsondergang" />
+  <div class="wrap hero__inner">
+    <span class="hero__eyebrow">Novakse Reizen</span>
+    <h1>Schaats over natuurijs zoals het bedoeld is</h1>
+    <p>Kleine groepen, persoonlijke begeleiding door een oud-wedstrijdrijder, en bevroren meren waar je in Nederland alleen nog van kunt dromen.</p>
+    <div class="hero__facts">
+      <span>📍 <b>Zweden &amp; Finland</b></span>
+      <span>👥 <b>Kleine groepen</b></span>
+      <span>🧑‍🏫 <b>Persoonlijke begeleiding</b></span>
+    </div>
+  </div>
+</section>
+
+<div class="seam">
+  <svg viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0,60 L0,34 C120,10 280,52 400,22 L400,60 Z" fill="#ffffff"/></svg>
+</div>
+
+<section class="trips">
+  <div class="wrap">
+    <div class="trips__head">
+      <span>Onze reizen</span>
+      <h2>Drie bestemmingen, één belofte: écht natuurijs</h2>
+    </div>
+    <div class="trip-layout">
+      <article class="trip trip-feature">
+        <img src="../images/orsa-baan-mora.jpg" alt="Geveegde schaatsbaan bij Orsa, Dalarna" />
+        <div class="trip__body">
+          <span class="trip__tag">Zweden · Dalarna</span>
+          <h3 class="trip__title">Orsa</h3>
+          <p class="trip__desc">Schaatsen op het Orsameer, verblijf in eigen huisjes vlak bij het ijs. Data en prijs volgen binnenkort.</p>
+          <a class="trip__link" href="#">Vraag Orsa aan</a>
+        </div>
+      </article>
+      <article class="trip">
+        <img src="../images/falun-meer.jpg" alt="Schaatsers op een bevroren meer bij Falun" />
+        <div class="trip__body">
+          <span class="trip__tag">Zweden</span>
+          <h3 class="trip__title">Falun</h3>
+          <a class="trip__link" href="#">Vraag Falun aan</a>
+        </div>
+      </article>
+      <article class="trip">
+        <img src="../images/finland-baan.jpg" alt="Schaatsbaan op het Saimaameer bij Punkaharju" />
+        <div class="trip__body">
+          <span class="trip__tag">Finland · Punkaharju</span>
+          <h3 class="trip__title">Finland — vanaf €995</h3>
+          <a class="trip__link" href="#">Vraag Finland aan</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash('/Applications/Brave Browser.app/Contents/MacOS/Brave Browser' --headless --disable-gpu --hide-scrollbars --force-device-scale-factor=2 --window-size=600,1400 --virtual-time-budget=6000 --screenshot=/private/tmp/claude-501/-Users-verajager-Website-bouwen-Novakse/ca9710da-233a-4658-8c59-fa5572b9570a/scratchpad/shots/m3.png http://localhost:8080/_tmp-mobile.html)",
+      "Bash(cd \"/Users/verajager/Website bouwen Novakse/website\" && rm -f _tmp-*.html && echo \"opgeruimd\")",
+      "Bash(mkdir -p _backup-v5-kleurvarianten)",
+      "Bash(cp index.html index-groen.html index-licht.html _backup-v5-kleurvarianten/)",
+      "Bash(cp -R css _backup-v5-kleurvarianten/css)",
+      "Bash(cp -R js _backup-v5-kleurvarianten/js)",
+      "Bash(cp index-groen.html index.html)",
+      "Bash(python3 -)",
+      "Bash(perl -pi -e 's|<div class=\"trips__label\"><a href=\"reizen.html\">Alle reizen</a></div>|<div class=\"trips__label\"><a href=\"reizen.html\"><span>Alle reizen</span></a></div>|' index.html)",
+      "Bash(cd \"/Users/verajager/Website bouwen Novakse/website\" && rm -f _tmp-*.html && ls *.html && grep -c \"reveal\" reizen.html)",
+      "Bash(python3 /private/tmp/claude-501/-Users-verajager-Website-bouwen-Novakse/ca9710da-233a-4658-8c59-fa5572b9570a/scratchpad/fonts.py)",
+      "Bash(md5 -q space-grotesk-400-latin.woff2 space-grotesk-700-latin.woff2 work-sans-300-latin.woff2 work-sans-600-latin.woff2)",
+      "Bash(osascript -l JavaScript /private/tmp/claude-501/-Users-verajager-Website-bouwen-Novakse/ca9710da-233a-4658-8c59-fa5572b9570a/scratchpad/crop2.js /private/tmp/claude-501/-Users-verajager-Website-bouwen-Novakse/ca9710da-233a-4658-8c59-fa5572b9570a/scratchpad/shots/finland2.png /private/tmp/claude-501/-Users-verajager-Website-bouwen-Novakse/ca9710da-233a-4658-8c59-fa5572b9570a/scratchpad/shots/finland-footer.png 0 6350 2880 1000)",
+      "Bash(cd \"/Users/verajager/Website bouwen Novakse/website\" && rm -f _tmp-*.html && ls *.html)",
+      "Bash(curl -s -L --max-time 25 -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 Chrome/120 Safari/537.36\" \"https://www.harjunportti.fi/en/offers/skating-package/\")",
+      "Bash(python3 -c ' *)"
+    ],
+    "additionalDirectories": [
+      "/Users/verajager/Website bouwen Novakse/website"
+    ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
+  }
+}

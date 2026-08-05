@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vita C — Donker en redactioneel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#14181a; --paper:#ffffff; --paper-soft:#f2f3f0; --ink-soft:#6b6f6a;
+    --warm:#dd9752; --warm-deep:#7a4620; --border:#e2e3df;
+    --display:"Space Grotesk", sans-serif; --sans:"Work Sans", sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.5;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:80rem;margin-inline:auto;padding-inline:1.5rem;}
+  @media(min-width:48rem){.wrap{padding-inline:3rem;}}
+  .demo-label{background:var(--warm-deep);color:#fff;text-align:center;padding:.6rem;font-size:.85rem;letter-spacing:.04em;}
+
+  .dark{background:var(--ink);color:#fff;}
+
+  header{padding-block:1.3rem;}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .nav-row .logo img{height:2rem;filter:brightness(0) invert(1);}
+  .nav-row ul{list-style:none;display:none;gap:2rem;margin:0;padding:0;font-size:.86rem;font-weight:500;}
+  @media(min-width:64rem){.nav-row ul{display:flex;}}
+  .nav-row a.cta{border:1.5px solid rgba(255,255,255,.5);padding:.55rem 1.2rem;border-radius:2px;font-size:.8rem;font-weight:600;transition:transform .18s ease,background .18s ease,color .18s ease;}
+  .nav-row a.cta:hover{background:#fff;color:var(--ink);transform:translateY(-2px);}
+  @media(prefers-reduced-motion:reduce){.nav-row a.cta:hover{transform:none;}}
+
+  .intro{padding-block:1rem 4rem;}
+  .intro__eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--warm);}
+  .intro__eyebrow .dot{width:.4rem;height:.4rem;border-radius:50%;background:var(--warm);display:inline-block;}
+  h1.display{font-family:var(--display);font-weight:600;font-size:clamp(2rem,4.6vw,3.3rem);line-height:1.12;margin:1rem 0 0;max-width:26ch;}
+
+  .intro-grid{margin-top:3rem;display:grid;gap:2.5rem;grid-template-columns:1fr;}
+  @media(min-width:56rem){.intro-grid{grid-template-columns:1fr 1.1fr;align-items:center;}}
+  .intro__media{position:relative;}
+  .intro__media img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:2px;}
+  .intro__body p.lede{font-size:1.05rem;color:rgba(255,255,255,.8);max-width:44ch;}
+  .stats{margin-top:2.5rem;display:flex;gap:3rem;flex-wrap:wrap;}
+  .stat b{display:block;font-family:var(--display);font-weight:700;font-size:2.6rem;color:var(--warm);}
+  .stat span{font-size:.85rem;color:rgba(255,255,255,.6);}
+
+  /* Baanlijn: enkel, rustig overgangselement (Novakse-signatuur) */
+  .baanlijn{position:relative;background:var(--ink);}
+  .baanlijn svg{display:block;width:100%;height:clamp(2.5rem,6vw,4rem);margin-top:-1px;}
+
+  .trips{padding-block:1rem 5.5rem;background:var(--paper);color:var(--ink);}
+  .trips__head{margin-bottom:2.5rem;padding-top:3rem;}
+  .trips__head span{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--warm-deep);font-weight:600;}
+  .trips__head h2{font-family:var(--display);font-weight:600;font-size:clamp(1.6rem,3.4vw,2.3rem);margin:.4rem 0 0;}
+  .trip-grid{display:grid;gap:1.75rem;grid-template-columns:1fr;}
+  @media(min-width:56rem){.trip-grid{grid-template-columns:repeat(3,1fr);}}
+  .trip__head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.75rem;}
+  .trip__title{font-family:var(--display);font-weight:600;font-size:1.3rem;}
+  .trip__meta{font-size:.78rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;}
+  .trip__media{aspect-ratio:4/5;overflow:hidden;}
+  .trip__media img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.22,.61,.36,1);}
+  .trip:hover .trip__media img{transform:scale(1.045);}
+  @media(prefers-reduced-motion:reduce){.trip__media img{transition:none;}.trip:hover .trip__media img{transform:none;}}
+  .trip__desc{margin-top:.75rem;font-size:.9rem;color:var(--ink-soft);max-width:32ch;}
+</style>
+</head>
+<body>
+<div class="demo-label">VITA C — Donker en redactioneel (Vita Travel-stijl, preview bovenkant)</div>
+
+<div class="dark">
+  <header>
+    <div class="wrap nav-row">
+      <a class="logo" href="#"><img src="../images/logo-novakse.png" alt="Novakse Reizen" /></a>
+      <nav>
+        <ul>
+          <li><a href="#">Reizen</a></li>
+          <li><a href="#">Schaatslessen</a></li>
+          <li><a href="#">Schaatsonderhoud</a></li>
+          <li><a href="#">Over Novakse</a></li>
+        </ul>
+      </nav>
+      <a class="cta" href="#">Contact</a>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="wrap">
+      <span class="intro__eyebrow"><span class="dot"></span>Novakse Reizen</span>
+      <h1 class="display">Niet zomaar een reis — natuurijs zoals het bedoeld is</h1>
+
+      <div class="intro-grid">
+        <div class="intro__media">
+          <img src="../images/joey-hond-persoonlijk.jpg" alt="Joey Novak met zijn hond aan het water" />
+        </div>
+        <div class="intro__body">
+          <p class="lede">Kleine groepen, persoonlijke begeleiding door oud-wedstrijdrijder Joey Novak, en bevroren meren in Zweden en Finland waar je in Nederland alleen nog van kunt dromen.</p>
+          <div class="stats">
+            <div class="stat"><b>03</b><span>Bestemmingen dit seizoen</span></div>
+            <div class="stat"><b>2022</b><span>Novakse opgericht</span></div>
+            <div class="stat"><b>12</b><span>Max. deelnemers per groep</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="baanlijn">
+  <svg viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#dd9752" stroke-width="2"/>
+  </svg>
+</div>
+
+<section class="trips">
+  <div class="wrap">
+    <div class="trips__head">
+      <span>Onze reizen</span>
+      <h2>Drie bestemmingen dit seizoen</h2>
+    </div>
+    <div class="trip-grid">
+      <article class="trip">
+        <div class="trip__head"><h3 class="trip__title">Orsa</h3><span class="trip__meta">Dalarna</span></div>
+        <div class="trip__media"><img src="../images/orsa-baan-mora.jpg" alt="Geveegde schaatsbaan bij Orsa" /></div>
+        <p class="trip__desc">Schaatsen op het Orsameer. Data en prijs volgen binnenkort.</p>
+      </article>
+      <article class="trip">
+        <div class="trip__head"><h3 class="trip__title">Falun</h3><span class="trip__meta">Zweden</span></div>
+        <div class="trip__media"><img src="../images/falun-meer.jpg" alt="Schaatsers bij Falun" /></div>
+        <p class="trip__desc">Historisch ijs met de rode mijngebouwen op de achtergrond.</p>
+      </article>
+      <article class="trip">
+        <div class="trip__head"><h3 class="trip__title">Finland</h3><span class="trip__meta">Vanaf €995</span></div>
+        <div class="trip__media"><img src="../images/finland-baan.jpg" alt="Schaatsbaan bij Punkaharju" /></div>
+        <p class="trip__desc">Zelfstandige reis op het Saimaameer, eigen huisjes met sauna.</p>
+      </article>
+    </div>
+  </div>
+</section>
+</body>
+</html>

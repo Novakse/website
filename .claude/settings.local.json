@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:schaatsennovakse.wixsite.com)",
+      "Read(//tmp/**)",
+
+      "Edit(website/**)",
+      "Write(website/**)",
+
+      "Bash(python3 -m http.server *)",
+      "Bash(curl -s -o /dev/null -w *)",
+      "Bash(sips *)",
+      "Bash(node --check *)",
+
+      "Bash(ls *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(du *)",
+      "Bash(wc *)",
+      "Bash(file *)"
+    ]
+  }
+}
