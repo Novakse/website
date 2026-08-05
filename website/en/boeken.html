@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>document.documentElement.classList.add("js");</script>
+  <title>Put together your request — Novakse Reizen</title>
+  <meta name="description" content="Put together your skating trip to Finland: choose your period, number of people and extra activities, and send your request to Novakse." />
+  <meta name="robots" content="noindex" />
+
+  <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="../css/fonts.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/theme-groen.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header is-solid">
+    <div class="wrap site-header__row">
+      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — go to homepage">
+        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="524" height="733" />
+        <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
+        <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Open menu</span>
+      </button>
+
+      <nav class="main-nav" id="mainNav" aria-label="Main menu">
+        <button class="main-nav__close" id="navClose" aria-label="Close menu">×</button>
+        <ul class="main-nav__links">
+          <li><a href="reizen.html">Trips</a></li>
+          <li><a href="schaatslessen.html">Skating lessons</a></li>
+          <li><a href="schaatsonderhoud.html">Skate maintenance</a></li>
+          <li><a href="over-novakse.html">About Novakse</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a class="header-cta" href="finland.html#prijzen">Calendar</a>
+        <div class="lang-switch" aria-label="Taal · Language">
+          <a href="../boeken.html" lang="nl" hreflang="nl">NL</a>
+          <span class="lang-switch__current" aria-current="true">EN</span>
+          <a href="../sv/boeken.html" lang="sv" hreflang="sv">SV</a>
+          <a href="../de/boeken.html" lang="de" hreflang="de">DE</a>
+          <a href="../no/boeken.html" lang="no" hreflang="no">NO</a>
+          <a href="../fi/boeken.html" lang="fi" hreflang="fi">FI</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="booking-page">
+    <div class="wrap">
+      <nav class="crumbs crumbs--dark" aria-label="Breadcrumb">
+        <a href="reizen.html">Trips</a> <span aria-hidden="true">/</span> <span>Request</span>
+      </nav>
+
+      <p class="booking__trip" id="reisNaam">Skating trip</p>
+      <h1 class="booking__title">Put together your request</h1>
+      <p class="booking__intro">Fill in what you'd like, and you'll see roughly what it costs right away. You're not committed to anything yet — Joey checks your request personally and confirms whether the period is available.</p>
+
+      <script type="application/json" id="boekingsdata">
+{
+  "standaard": "finland",
+  "weerbericht": "Whether an activity goes ahead depends on the weather and conditions.",
+  "reizen": {
+    "orsa": {
+      "naam": "Orsa — Dalarna, Sweden",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Are you coming alone or with your own group?",
+          "opties": [
+            {
+              "naam": "I'm joining an open group trip",
+              "toelichting": "Sign-up is in pairs"
+            },
+            {
+              "naam": "We're coming with our own group",
+              "toelichting": "You choose the date yourselves"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "How will you get around locally?",
+          "opties": [
+            {
+              "naam": "Local transport is included in the trip",
+              "toelichting": "Standard for this trip"
+            },
+            {
+              "naam": "We'd like our own rental car",
+              "toelichting": "Joey will send a proposal with price"
+            },
+            {
+              "naam": "We'll arrange our own transport entirely"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "What about your insurance?",
+          "opties": [
+            {
+              "naam": "I've arranged my own travel and cancellation insurance"
+            },
+            {
+              "naam": "I'd like advice on this",
+              "toelichting": "Joey points you in the right direction; you arrange it yourself"
+            }
+          ]
+        },
+        {
+          "sleutel": "betaling",
+          "vraag": "How would you like to pay?",
+          "opties": [
+            {
+              "naam": "iDEAL"
+            },
+            {
+              "naam": "Credit card"
+            },
+            {
+              "naam": "Bank transfer"
+            },
+            {
+              "naam": "I'd rather pay in bitcoin",
+              "toelichting": "Joey will send you a personal payment request"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Are you bringing your own skating equipment?",
+          "opties": [
+            {
+              "naam": "Yes, I have my own touring skates"
+            },
+            {
+              "naam": "No, I'd like advice on renting or buying"
+            },
+            {
+              "naam": "I don't know yet"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Ski pass",
+          "prijs": 65,
+          "toelichting": "per person, excluding equipment — rental arranged yourself"
+        },
+        {
+          "naam": "Snowmobile riding",
+          "prijs": 100,
+          "toelichting": "per person"
+        },
+        {
+          "naam": "Cross-country skiing",
+          "prijs": 25,
+          "toelichting": "per person, without equipment"
+        },
+        {
+          "naam": "Dog sledding",
+          "prijs": 70,
+          "toelichting": "per person, per 20 minutes"
+        }
+      ]
+    },
+    "finland": {
+      "naam": "Finland — Punkaharju",
+      "periodeVrij": true,
+      "minimumPersonen": 1,
+      "maxPersonen": 12,
+      "opslagPerPersoonPerNacht": 0,
+      "extras": [],
+      "prijsPerPersoonPerDag": 199
+    },
+    "falun": {
+      "naam": "Falun — Dalarna, Sweden",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Are you coming alone or with your own group?",
+          "opties": [
+            {
+              "naam": "I'm joining an open group trip",
+              "toelichting": "Sign-up is in pairs"
+            },
+            {
+              "naam": "We're coming with our own group",
+              "toelichting": "You choose the date yourselves"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "How will you get around locally?",
+          "opties": [
+            {
+              "naam": "Local transport is included in the trip",
+              "toelichting": "Standard for this trip"
+            },
+            {
+              "naam": "We'd like our own rental car",
+              "toelichting": "Joey will send a proposal with price"
+            },
+            {
+              "naam": "We'll arrange our own transport entirely"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "What about your insurance?",
+          "opties": [
+            {
+              "naam": "I've arranged my own travel and cancellation insurance"
+            },
+            {
+              "naam": "I'd like advice on this",
+              "toelichting": "Joey points you in the right direction; you arrange it yourself"
+            }
+          ]
+        },
+        {
+          "sleutel": "betaling",
+          "vraag": "How would you like to pay?",
+          "opties": [
+            {
+              "naam": "iDEAL"
+            },
+            {
+              "naam": "Credit card"
+            },
+            {
+              "naam": "Bank transfer"
+            },
+            {
+              "naam": "I'd rather pay in bitcoin",
+              "toelichting": "Joey will send you a personal payment request"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Are you bringing your own skating equipment?",
+          "opties": [
+            {
+              "naam": "Yes, I have my own touring skates"
+            },
+            {
+              "naam": "No, I'd like advice on renting or buying"
+            },
+            {
+              "naam": "I don't know yet"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Ski pass",
+          "prijs": 65,
+          "toelichting": "per person, excluding equipment — rental arranged yourself"
+        },
+        {
+          "naam": "Snowmobile riding",
+          "prijs": 100,
+          "toelichting": "per person"
+        },
+        {
+          "naam": "Cross-country skiing",
+          "prijs": 25,
+          "toelichting": "per person, without equipment"
+        },
+        {
+          "naam": "Dog sledding",
+          "prijs": 70,
+          "toelichting": "per person, per 20 minutes"
+        }
+      ]
+    }
+  }
+}
+      </script>
+
+      <p class="booking__voorbeeld">Finland starts from &euro;199 per person per day, including accommodation, rental car and other services. You arrange your own flight.</p>
+
+      <form class="booking" id="boekingsformulier" novalidate>
+        <div class="booking__grid">
+          <div class="booking__main">
+
+            <fieldset class="booking__block">
+              <legend class="booking__legend"><span class="booking__step">1</span> Your period</legend>
+              <div class="booking__period" id="periodeBox">
+                <p class="booking__period-empty">No period chosen yet.</p>
+              </div>
+              <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Choose a period in the calendar</a>
+            </fieldset>
+
+            <fieldset class="booking__block">
+              <legend class="booking__legend"><span class="booking__step">2</span> Number of people</legend>
+              <div class="booking__persons">
+                <button type="button" class="booking__step-btn" id="minderPersonen" aria-label="One person fewer">−</button>
+                <input type="number" id="personen" name="personen" value="2" min="1" max="12" inputmode="numeric" aria-label="Number of people" />
+                <button type="button" class="booking__step-btn" id="meerPersonen" aria-label="One person more">+</button>
+              </div>
+              <p class="booking__note">Children count too. Add any specifics in the remarks field.</p>
+            </fieldset>
+
+            <div id="vragenBlokken"></div>
+
+            <fieldset class="booking__block" id="variantBlok">
+              <legend class="booking__legend"><span class="booking__step">3</span> With or without equipment rental</legend>
+              <p class="booking__note">Accommodation includes breakfast and final cleaning. Bring your own skates and you'll pay less.</p>
+              <div class="booking__extras" id="variantBox"></div>
+            </fieldset>
+
+            <fieldset class="booking__block">
+              <legend class="booking__legend"><span class="booking__step">4</span> Extra activities</legend>
+              <p class="booking__note">Optional. All amounts are per person; we arrange the activities locally for you.</p>
+              <div class="booking__extras" id="extrasBox"></div>
+            </fieldset>
+
+            <fieldset class="booking__block">
+              <legend class="booking__legend"><span class="booking__step">5</span> Your details</legend>
+              <div class="form-grid">
+                <label class="form-field">
+                  <span>Name</span>
+                  <input type="text" name="naam" id="naam" autocomplete="name" required />
+                </label>
+                <label class="form-field">
+                  <span>Email address</span>
+                  <input type="email" name="email" id="email" autocomplete="email" required />
+                </label>
+                <label class="form-field">
+                  <span>Phone</span>
+                  <input type="tel" name="telefoon" id="telefoon" autocomplete="tel" />
+                </label>
+                <label class="form-field form-field--wide">
+                  <span>Remarks or questions</span>
+                  <textarea name="opmerkingen" id="opmerkingen" rows="4"></textarea>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <aside class="booking__summary" aria-label="Overview of your request">
+            <h2 class="booking__summary-title">Your request</h2>
+            <dl class="booking__lines" id="overzichtRegels"></dl>
+            <div class="booking__total">
+              <span>Total, estimate</span>
+              <strong id="totaalBedrag">—</strong>
+            </div>
+            <p class="booking__note">This is an estimate based on your choices. Joey will send you a final price.</p>
+            <div class="booking__actions">
+              <button type="submit" class="btn btn--dark booking__send">Email request</button>
+              <a class="btn btn--outline-dark booking__whatsapp" id="whatsappKnop" href="https://wa.me/31617467643" target="_blank" rel="noopener">Send via WhatsApp</a>
+            </div>
+            <p class="booking__error" id="formulierFout" role="alert" hidden></p>
+          </aside>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer__grid">
+      <div>
+        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — go to homepage">
+          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="524" height="733" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+        </a>
+        <p class="footer__tagline">Small-scale skating trips on natural ice, personally guided by Joey Novak.</p>
+      </div>
+      <div>
+        <p class="footer__heading">Contact</p>
+        <div class="footer__links">
+          <a href="tel:+31617467643">+31 6 17467643</a>
+          <a href="https://wa.me/31617467643" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a>
+          <span>Friesland, the Netherlands — near Noordwolde</span>
+        </div>
+      </div>
+      <div>
+        <p class="footer__heading">Follow &amp; information</p>
+        <div class="footer__links">
+          <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms and conditions</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap footer__bottom">
+      <span>© 2022–2026 Novakse. All rights reserved.</span>
+      <span>KVK 92092969</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/boeken.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

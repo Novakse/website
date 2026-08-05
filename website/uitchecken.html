@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>document.documentElement.classList.add("js");</script>
+  <title>Je betaling afronden — Novakse Reizen</title>
+  <meta name="description" content="Rond je betaling voor je Novakse-reis af via Mollie: iDEAL of creditcard." />
+  <meta name="robots" content="noindex" />
+
+  <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/fonts.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/theme-groen.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Ga naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="wrap site-header__row">
+      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+        <img class="logo-mark" src="images/logo-mark.png" alt="" width="524" height="733" />
+        <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
+        <img class="logo-word-img logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Menu openen</span>
+      </button>
+
+      <nav class="main-nav" id="mainNav" aria-label="Hoofdmenu">
+        <button class="main-nav__close" id="navClose" aria-label="Menu sluiten">×</button>
+        <ul class="main-nav__links">
+          <li><a href="reizen.html">Reizen</a></li>
+          <li><a href="schaatslessen.html">Schaatslessen</a></li>
+          <li><a href="schaatsonderhoud.html">Schaatsonderhoud</a></li>
+          <li><a href="over-novakse.html">Over Novakse</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="booking-page">
+    <div class="wrap">
+      <nav class="crumbs crumbs--dark" aria-label="Kruimelpad">
+        <a href="reizen.html">Reizen</a> <span aria-hidden="true">/</span> <span>Betalen</span>
+      </nav>
+
+      <p class="booking__trip" id="reisNaam">Novakse reis</p>
+      <h1 class="booking__title">Je betaling afronden</h1>
+      <p class="booking__intro">Joey heeft dit betaalverzoek voor je klaargezet. Kies hieronder hoe je wilt betalen.</p>
+
+      <div id="checkoutInhoud">
+        <form class="booking" id="betaalformulier" novalidate>
+          <fieldset class="booking__block">
+            <legend class="booking__legend">Te betalen</legend>
+            <div class="booking__total booking__total--standalone">
+              <span id="omschrijvingTekst">Novakse reis</span>
+              <strong id="bedragTekst">—</strong>
+            </div>
+          </fieldset>
+
+          <fieldset class="booking__block">
+            <legend class="booking__legend">Hoe wil je betalen?</legend>
+            <div class="booking__extras">
+              <label class="extra">
+                <input type="radio" name="methode" class="extra__check" value="ideal" checked />
+                <span class="extra__name">iDEAL<span class="extra__hint">Voor Nederlandse rekeningen — de standaardoptie</span></span>
+              </label>
+              <label class="extra">
+                <input type="radio" name="methode" class="extra__check" value="creditcard" />
+                <span class="extra__name">Creditcard<span class="extra__hint">Voor betalingen vanuit het buitenland</span></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn--dark booking__send" id="betaalKnop">Doorgaan naar betalen</button>
+          <p class="booking__error" id="betaalFout" role="alert" hidden></p>
+          <p class="booking__note">Je wordt doorgestuurd naar de beveiligde betaalomgeving van Mollie.</p>
+        </form>
+      </div>
+
+      <div class="booking__block" id="geenBedrag" hidden>
+        <p class="booking__note">Deze betaallink is nog niet compleet. Vraag Joey om een nieuwe link, of neem contact op.</p>
+        <a class="btn btn--outline-dark" href="contact.html">Contact opnemen</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer__grid">
+      <div>
+        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+          <img class="logo-mark logo-mark--lg" src="images/logo-mark.png" alt="" width="524" height="733" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+        </a>
+        <p class="footer__tagline">Kleinschalige schaatsreizen op natuurijs, persoonlijk begeleid door Joey Novak.</p>
+      </div>
+      <div>
+        <p class="footer__heading">Contact</p>
+        <div class="footer__links">
+          <a href="tel:+31617467643">+31 6 17467643</a>
+          <a href="https://wa.me/31617467643" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a>
+          <span>Friesland — omgeving Noordwolde</span>
+        </div>
+      </div>
+      <div>
+        <p class="footer__heading">Volgen &amp; informatie</p>
+        <div class="footer__links">
+          <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
+          <a href="#">Privacyverklaring</a>
+          <a href="#">Algemene voorwaarden</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap footer__bottom">
+      <span>© 2022–2026 Novakse. Alle rechten voorbehouden.</span>
+      <span>KVK 92092969</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/uitchecken.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

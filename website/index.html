@@ -5,11 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script>document.documentElement.classList.add("js");</script>
   <title>Novakse Reizen — groene variant</title>
-  <meta name="description" content="Novakse organiseert kleinschalige schaatsreizen op natuurijs naar Orsa, Falun en Finland. Persoonlijk begeleid door oud-wedstrijdrijder Joey Novak." />  <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <meta name="description" content="Novakse organiseert kleinschalige schaatsreizen op natuurijs naar Orsa, Falun en Finland. Persoonlijk begeleid door Joey Novak, met jarenlange ervaring op natuurijs." />  <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/theme-groen.css" />
+  <link rel="alternate" hreflang="nl" href="https://www.novakse.nl/index.html" />
+  <link rel="alternate" hreflang="en" href="https://www.novakse.nl/en/index.html" />
+  <link rel="alternate" hreflang="sv" href="https://www.novakse.nl/sv/index.html" />
+  <link rel="alternate" hreflang="de" href="https://www.novakse.nl/de/index.html" />
+  <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/index.html" />
+  <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/index.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/index.html" />
 </head>
 <body>
   <a class="skip-link" href="#main">Ga naar de inhoud</a>
@@ -37,6 +44,14 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
         <a class="header-cta" href="#aanvraag">Reis aanvragen</a>
+      <div class="lang-switch" aria-label="Taal · Language">
+        <span class="lang-switch__current" aria-current="true">NL</span>
+        <a href="en/index.html" lang="en" hreflang="en">EN</a>
+        <a href="sv/index.html" lang="sv" hreflang="sv">SV</a>
+        <a href="de/index.html" lang="de" hreflang="de">DE</a>
+        <a href="no/index.html" lang="no" hreflang="no">NO</a>
+        <a href="fi/index.html" lang="fi" hreflang="fi">FI</a>
+      </div>
       </nav>
     </div>
   </header>
@@ -44,45 +59,17 @@
   <main id="main">
     <!-- 1. Opener -->
     <section class="opener" id="top">
-      <!-- Diavoorstelling: de eerste foto laadt meteen, de rest pas na het
-           laden van de pagina (zie main.js). -->
-      <div class="opener__slides" id="openerSlides" role="group"
-           aria-roledescription="diavoorstelling"
-           aria-label="Sfeerbeelden van onze schaatsreizen">
-        <img class="opener__bg is-active" src="images/wijds-uitzicht.jpg" alt="Wijds uitzicht over bevroren natuurijs" fetchpriority="high" />
-        <img class="opener__bg" data-src="images/hero-baan-zonsondergang.jpg" alt="Geveegde schaatsbaan over een bevroren meer bij zonsondergang" />
-        <img class="opener__bg" data-src="images/zwart-ijs-scheuren.jpg" alt="Zwart ijs vol lange scheuren, met twee schaatsers in de verte" />
-      </div>
+      <video class="opener__video" autoplay muted loop playsinline
+             poster="images/hero-opener-poster.jpg" aria-hidden="true">
+        <source src="images/hero-opener.mp4" type="video/mp4" />
+      </video>
       <div class="opener__inner">
         <img class="opener__mark" src="images/logo-mark.png" alt="" width="524" height="733" fetchpriority="high" />
         <h1 class="opener__title">Natuurijs</h1>
-        <p class="opener__lede">Kleine groepen, persoonlijke begeleiding door een oud-wedstrijdrijder, bevroren meren in Zweden en Finland.</p>
+        <p class="opener__lede">Kleine groepen, persoonlijke begeleiding, bevroren meren in Zweden en Finland.</p>
         <div class="opener__actions">
           <a class="btn btn--light" href="reizen.html">Bekijk onze reizen</a>
           <a class="btn btn--outline-light" href="over-novakse.html">Lees ons verhaal</a>
-        </div>
-      </div>
-      <div class="opener__controls">
-        <div class="wrap opener__controls-row">
-          <div class="opener__dots" id="openerDots">
-            <button class="opener__dot is-active" type="button" data-slide="0" aria-label="Foto 1 van 3" aria-current="true"><span></span></button>
-            <button class="opener__dot" type="button" data-slide="1" aria-label="Foto 2 van 3"><span></span></button>
-            <button class="opener__dot" type="button" data-slide="2" aria-label="Foto 3 van 3"><span></span></button>
-          </div>
-          <div class="opener__nav">
-            <button class="opener__btn" type="button" id="openerPause" aria-label="Diavoorstelling pauzeren">
-              <svg viewBox="0 0 20 20" aria-hidden="true">
-                <g class="icon-pause"><path d="M7.5 4v12M12.5 4v12" /></g>
-                <g class="icon-play"><path d="M6.5 4.5l9 5.5-9 5.5z" /></g>
-              </svg>
-            </button>
-            <button class="opener__btn" type="button" id="openerPrev" aria-label="Vorige foto">
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12 4l-6 6 6 6" /></svg>
-            </button>
-            <button class="opener__btn" type="button" id="openerNext" aria-label="Volgende foto">
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4l6 6-6 6" /></svg>
-            </button>
-          </div>
         </div>
       </div>
     </section>
@@ -91,14 +78,17 @@
     <section class="layered">
       <img class="layered__bg" src="images/avondschaatsen.jpg" alt="Twee schaatsers in de avondschemering op natuurijs" loading="lazy" />
       <div class="wrap layered__inner">
-        <h2 class="layered__title">Jouw schaatsreis</h2>
-        <ul class="facts">
+        <h2 class="layered__title reveal">Jouw schaatsreis</h2>
+        <ul class="facts stagger">
           <li><span class="plus">+</span><b>Verblijf</b></li>
           <li><span class="plus">+</span>Vervoer ter plaatse</li>
           <li><span class="plus">+</span>Begeleiding op het ijs</li>
         </ul>
       </div>
-      <div class="wrap stepbar">
+      <div class="wrap stepbar stagger">
+        <div class="stepbar__item stepbar__item--intro">
+          <p class="stepbar__intro">Vul het formulier in en Joey neemt persoonlijk contact met je op.</p>
+        </div>
         <div class="stepbar__item">
           <span class="stepbar__num">01</span>
           <div class="stepbar__label">Stap</div>
@@ -185,7 +175,7 @@
         <div class="why__split">
           <div class="why__body reveal">
             <span class="eyebrow eyebrow--warm"><span class="dot"></span>Waarom Novakse</span>
-            <h2 class="why__title">Het ijs bepaalt de dag. Wij bepalen wat er dan gebeurt.</h2>
+            <h2 class="why__title">Het ijs bepaalt de dag. Samen bepalen we wat er dan gebeurt.</h2>
             <p class="why__text">Natuurijs laat zich niet plannen. Daarom kijken we elke ochtend opnieuw naar het weer, de ijskwaliteit en de groep — en passen we de route, het meer of het hele programma daarop aan.</p>
           </div>
           <div class="why__media reveal">
@@ -200,7 +190,7 @@
           </div>
           <div class="why__reason reveal">
             <h3>Joey gaat zelf mee</h3>
-            <p>Oud-wedstrijdrijder met podiumplekken op NK's, en jarenlange ervaring op natuurijs.</p>
+            <p>Jarenlange ervaring op natuurijs, en oog voor wat een dag echt nodig heeft.</p>
           </div>
           <div class="why__reason reveal">
             <h3>Drie niveaus</h3>
@@ -237,15 +227,15 @@
       <div class="wrap story__grid">
         <!-- Collage: drie foto's met afgeronde hoeken die tijdens het scrollen
              ieder een klein stukje meebewegen (zie main.js). -->
-        <figure class="story__collage reveal" data-collage>
+        <figure class="story__collage story__collage--home reveal" data-collage>
           <div class="collage__frame">
-            <div class="collage__item collage__item--main" data-speed="-180">
+            <div class="collage__item collage__item--main" data-speed="-360">
               <img src="images/joey-hond-persoonlijk.jpg" alt="Joey Novak met zijn hond aan het water" loading="lazy" />
             </div>
-            <div class="collage__item collage__item--left" data-speed="-280">
+            <div class="collage__item collage__item--left" data-speed="-540">
               <img src="images/joey-op-het-ijs.jpg" alt="Joey op schaatsen op een bevroren meer" loading="lazy" />
             </div>
-            <div class="collage__item collage__item--right" data-speed="-230">
+            <div class="collage__item collage__item--right" data-speed="-460">
               <img src="images/joey-kampvuur.jpg" alt="Joey kookt boven een kampvuur tijdens een schaatstocht" loading="lazy" />
             </div>
           </div>
@@ -254,7 +244,7 @@
         <div class="story__body reveal">
           <span class="eyebrow eyebrow--deep"><span class="dot"></span>Het verhaal achter Novakse</span>
           <p class="story__quote" data-reveal-words>"Buiten zijn, in de natuur — dat is waar het voor mij om draait. Schaatsen op natuurijs geeft een ongekende vrijheid."</p>
-          <p class="story__text">Joey schaatste jarenlang op hoog niveau in zijn juniorentijd, met podiumplekken op NK's en internationale wedstrijden. Later volgde hij een opleiding tot sportleraar en deed hij ervaring op in de 11shop van de Elfstedenhal, met schaatsmateriaal en slijpen.</p>
+          <p class="story__text">Joey schaatst al van jongs af aan en bouwde in de loop der jaren veel ervaring op natuurijs op. Later volgde hij een opleiding tot sportleraar en deed hij ervaring op in de 11shop van de Elfstedenhal, met schaatsmateriaal en slijpen.</p>
           <p class="story__text">Maar uiteindelijk draait het voor hem niet meer om prestaties — het gaat om het beleven van het schaatsen en de natuur. In Nederland wordt goed natuurijs steeds zeldzamer; in Zweden en Finland kun je nog eindeloos doorschaatsen.</p>
           <p class="story__sign">Joey Novak</p>
           <p class="story__role">Oprichter en reisbegeleider</p>
@@ -266,7 +256,7 @@
     <section class="reviews">
       <div class="wrap reviews__grid">
         <div class="reviews__media reveal">
-          <img src="images/groep-dames.jpg" alt="Deelnemers na een geslaagde schaatsreis" loading="lazy" />
+          <img src="images/handen-omhoog-zonsondergang.jpg" alt="Twee deelnemers juichen op het ijs bij zonsondergang" loading="lazy" />
         </div>
         <div class="reviews__body reveal">
           <span class="eyebrow eyebrow--deep"><span class="dot"></span>Ervaringen</span>
@@ -438,5 +428,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

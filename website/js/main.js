@@ -2,6 +2,148 @@
   "use strict";
 
   /* ------------------------------------------------------------------
+     Vertalingen voor teksten die door JS worden gegenereerd (kalender,
+     diavoorstelling). De rest van de pagina staat al vertaald in de HTML;
+     dit zijn alleen de stukjes die main.js zelf op het scherm zet.
+     ------------------------------------------------------------------ */
+  var I18N = {
+    nl: {
+      months: ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
+      dayHeaders: ["ma", "di", "wo", "do", "vr", "za", "zo"],
+      pauseAria: "Diavoorstelling pauzeren",
+      playAria: "Diavoorstelling afspelen",
+      legendAvailable: "Beschikbaar",
+      legendBooked: "Al bezet",
+      legendChosen: "Jouw keuze",
+      hintStart: "Klik je aankomstdag aan, en daarna je vertrekdag.",
+      hintEnd: function (aankomst, min) { return "Aankomst op " + aankomst + ". Kies nu je vertrekdag — minimaal " + min + " nachten."; },
+      reset: "Opnieuw kiezen",
+      chosenLabel: "Jouw periode",
+      nightsLabel: function (n) { return n + (n === 1 ? " nacht" : " nachten"); },
+      continueBtn: "Verder met de aanvraag",
+      defaultBooked: "Bezet",
+      availableAria: function (datum) { return datum + ", beschikbaar"; },
+      priceSuffix: function (prijs) { return ", vanaf €" + prijs + " per persoon per dag"; },
+      bookedTitle: function (wat, van, tot) { return wat + ": " + van + " tot " + tot; },
+      bookedSr: function (wat) { return " " + wat + ", niet beschikbaar"; },
+      warnMinNights: function (min) { return "Een verblijf duurt minimaal " + min + " nachten. Kies een latere vertrekdag."; },
+      warnOverlap: "In die periode zit een week die al bezet is. Kies een periode ervoor of erna."
+    },
+    en: {
+      months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      dayHeaders: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+      pauseAria: "Pause slideshow",
+      playAria: "Play slideshow",
+      legendAvailable: "Available",
+      legendBooked: "Already booked",
+      legendChosen: "Your selection",
+      hintStart: "Click your arrival day, then your departure day.",
+      hintEnd: function (arrival, min) { return "Arrival on " + arrival + ". Now choose your departure day — minimum " + min + " nights."; },
+      reset: "Start over",
+      chosenLabel: "Your period",
+      nightsLabel: function (n) { return n + (n === 1 ? " night" : " nights"); },
+      continueBtn: "Continue to request",
+      defaultBooked: "Booked",
+      availableAria: function (date) { return date + ", available"; },
+      priceSuffix: function (prijs) { return ", from €" + prijs + " per person per day"; },
+      bookedTitle: function (what, from, to) { return what + ": " + from + " to " + to; },
+      bookedSr: function (what) { return " " + what + ", not available"; },
+      warnMinNights: function (min) { return "A stay is at least " + min + " nights. Choose a later departure day."; },
+      warnOverlap: "That period includes a week that's already booked. Choose a period before or after."
+    },
+    sv: {
+      months: ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"],
+      dayHeaders: ["mån", "tis", "ons", "tor", "fre", "lör", "sön"],
+      pauseAria: "Pausa bildspelet",
+      playAria: "Spela bildspelet",
+      legendAvailable: "Tillgänglig",
+      legendBooked: "Redan bokad",
+      legendChosen: "Ditt val",
+      hintStart: "Klicka på din ankomstdag och sedan på din avresedag.",
+      hintEnd: function (ankomst, min) { return "Ankomst " + ankomst + ". Välj nu din avresedag — minst " + min + " nätter."; },
+      reset: "Välj igen",
+      chosenLabel: "Din period",
+      nightsLabel: function (n) { return n + (n === 1 ? " natt" : " nätter"); },
+      continueBtn: "Gå vidare till förfrågan",
+      defaultBooked: "Bokad",
+      availableAria: function (datum) { return datum + ", tillgänglig"; },
+      priceSuffix: function (pris) { return ", från €" + pris + " per person och dag"; },
+      bookedTitle: function (vad, fran, till) { return vad + ": " + fran + " till " + till; },
+      bookedSr: function (vad) { return " " + vad + ", inte tillgänglig"; },
+      warnMinNights: function (min) { return "En vistelse är minst " + min + " nätter. Välj en senare avresedag."; },
+      warnOverlap: "Den perioden omfattar en vecka som redan är bokad. Välj en period före eller efter."
+    },
+    de: {
+      months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+      dayHeaders: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+      pauseAria: "Diashow pausieren",
+      playAria: "Diashow abspielen",
+      legendAvailable: "Verfügbar",
+      legendBooked: "Bereits belegt",
+      legendChosen: "Deine Auswahl",
+      hintStart: "Klicke deinen Ankunftstag an, danach deinen Abreisetag.",
+      hintEnd: function (ankunft, min) { return "Ankunft am " + ankunft + ". Wähle jetzt deinen Abreisetag — mindestens " + min + " Nächte."; },
+      reset: "Neu wählen",
+      chosenLabel: "Dein Zeitraum",
+      nightsLabel: function (n) { return n + (n === 1 ? " Nacht" : " Nächte"); },
+      continueBtn: "Weiter zur Anfrage",
+      defaultBooked: "Belegt",
+      availableAria: function (datum) { return datum + ", verfügbar"; },
+      priceSuffix: function (preis) { return ", ab €" + preis + " pro Person pro Tag"; },
+      bookedTitle: function (was, von, bis) { return was + ": " + von + " bis " + bis; },
+      bookedSr: function (was) { return " " + was + ", nicht verfügbar"; },
+      warnMinNights: function (min) { return "Ein Aufenthalt dauert mindestens " + min + " Nächte. Wähle einen späteren Abreisetag."; },
+      warnOverlap: "In diesem Zeitraum liegt eine Woche, die bereits belegt ist. Wähle einen Zeitraum davor oder danach."
+    },
+    no: {
+      months: ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"],
+      dayHeaders: ["man", "tir", "ons", "tor", "fre", "lør", "søn"],
+      pauseAria: "Sett lysbildefremvisning på pause",
+      playAria: "Spill av lysbildefremvisning",
+      legendAvailable: "Tilgjengelig",
+      legendBooked: "Allerede booket",
+      legendChosen: "Ditt valg",
+      hintStart: "Klikk på ankomstdagen din, og deretter avreisedagen.",
+      hintEnd: function (ankomst, min) { return "Ankomst " + ankomst + ". Velg nå avreisedagen din — minst " + min + " netter."; },
+      reset: "Velg på nytt",
+      chosenLabel: "Din periode",
+      nightsLabel: function (n) { return n + (n === 1 ? " natt" : " netter"); },
+      continueBtn: "Gå videre til forespørsel",
+      defaultBooked: "Booket",
+      availableAria: function (dato) { return dato + ", tilgjengelig"; },
+      priceSuffix: function (pris) { return ", fra €" + pris + " per person per dag"; },
+      bookedTitle: function (hva, fra, til) { return hva + ": " + fra + " til " + til; },
+      bookedSr: function (hva) { return " " + hva + ", ikke tilgjengelig"; },
+      warnMinNights: function (min) { return "Et opphold varer minst " + min + " netter. Velg en senere avreisedag."; },
+      warnOverlap: "I den perioden ligger det en uke som allerede er booket. Velg en periode før eller etter."
+    },
+    fi: {
+      months: ["tammikuu", "helmikuu", "maaliskuu", "huhtikuu", "toukokuu", "kesäkuu", "heinäkuu", "elokuu", "syyskuu", "lokakuu", "marraskuu", "joulukuu"],
+      dayHeaders: ["ma", "ti", "ke", "to", "pe", "la", "su"],
+      pauseAria: "Pysäytä diaesitys",
+      playAria: "Käynnistä diaesitys",
+      legendAvailable: "Vapaa",
+      legendBooked: "Jo varattu",
+      legendChosen: "Valintasi",
+      hintStart: "Valitse ensin saapumispäivä ja sitten lähtöpäivä.",
+      hintEnd: function (saapuminen, min) { return "Saapuminen " + saapuminen + ". Valitse nyt lähtöpäivä — vähintään " + min + " yötä."; },
+      reset: "Valitse uudelleen",
+      chosenLabel: "Valittu ajanjakso",
+      nightsLabel: function (n) { return n + (n === 1 ? " yö" : " yötä"); },
+      continueBtn: "Jatka varauspyyntöön",
+      defaultBooked: "Varattu",
+      availableAria: function (pvm) { return pvm + ", vapaa"; },
+      priceSuffix: function (hinta) { return ", alkaen €" + hinta + " / henkilö / vrk"; },
+      bookedTitle: function (mika, alkaen, saakka) { return mika + ": " + alkaen + " – " + saakka; },
+      bookedSr: function (mika) { return " " + mika + ", ei vapaa"; },
+      warnMinNights: function (min) { return "Vähimmäisoleskelu on " + min + " yötä. Valitse myöhäisempi lähtöpäivä."; },
+      warnOverlap: "Kyseiselle ajanjaksolle osuu jo varattu viikko. Valitse ajanjakso ennen tai jälkeen."
+    }
+  };
+  var LANG = (document.documentElement.lang || "nl").slice(0, 2).toLowerCase();
+  var T = I18N[LANG] || I18N.nl;
+
+  /* ------------------------------------------------------------------
      Mobile navigation
      ------------------------------------------------------------------ */
   var toggle = document.getElementById("navToggle");
@@ -10,22 +152,41 @@
   var header = document.querySelector(".site-header");
 
   /* ------------------------------------------------------------------
-     Header: transparent over the opening photo, fades to a solid bar
-     once you have scrolled most of that photo out of view.
+     Header: altijd doorzichtig, geen witte balk. De tekst en het logo
+     wisselen automatisch tussen wit en donker, op basis van wat er op
+     dat moment achter de balk zit (foto/donkere sectie = wit, lichte
+     sectie = donker). De schaduwrand boven de openingsfoto is er alleen
+     zolang die foto ook echt achter de balk zit.
      ------------------------------------------------------------------ */
-  // Pagina's zonder foto bovenaan hebben geen doorzichtige balk nodig; die zou
-  // daar wit op wit worden.
-  var heeftKopfoto = !!document.querySelector(".opener, .page-hero");
+  var heroEl = document.querySelector(".opener, .page-hero");
+  var darkZoneEls = Array.prototype.slice.call(
+    document.querySelectorAll(".opener, .page-hero, .factbar, .why, .layered, .choice")
+  );
+
+  function overlapsHeaderBand(el) {
+    var band = header.offsetHeight;
+    var rect = el.getBoundingClientRect();
+    return rect.top < band && rect.bottom > 0;
+  }
 
   function syncHeader() {
     if (!header) return;
-    if (!heeftKopfoto) {
-      header.classList.add("is-solid");
-      return;
-    }
-    var navOpen = nav && nav.classList.contains("is-open");
-    var pastHero = window.scrollY > window.innerHeight * 0.6;
-    header.classList.toggle("is-solid", navOpen || pastHero);
+
+    header.classList.toggle("site-header--over-hero", !!heroEl && overlapsHeaderBand(heroEl));
+
+    var onDark = darkZoneEls.some(function (el) {
+      if (el.classList.contains("why")) {
+        // Zelfde voorwaarde als de "why"-omslag zelf (zie snapSection hieronder),
+        // zodat de balk niet een frame achterloopt op die kleurwissel.
+        var rect = el.getBoundingClientRect();
+        var vh = window.innerHeight;
+        if (rect.bottom <= 0 || rect.top >= vh) return false;
+        var zichtbaar = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+        return zichtbaar >= vh * 0.6 || zichtbaar >= rect.height * 0.8;
+      }
+      return overlapsHeaderBand(el);
+    });
+    header.classList.toggle("site-header--on-light", !onDark);
   }
 
   if (header) {
@@ -82,7 +243,7 @@
      Scroll reveal — runs once per element, opacity + transform only.
      Without JS the .js class is absent, so content stays visible.
      ------------------------------------------------------------------ */
-  var revealEls = document.querySelectorAll(".reveal");
+  var revealEls = document.querySelectorAll(".reveal, .stagger");
   if (revealEls.length && "IntersectionObserver" in window) {
     var observer = new IntersectionObserver(
       function (entries) {
@@ -307,7 +468,7 @@
             pauseBtn.classList.toggle("is-paused", stoppedByUser);
             pauseBtn.setAttribute(
               "aria-label",
-              stoppedByUser ? "Diavoorstelling afspelen" : "Diavoorstelling pauzeren"
+              stoppedByUser ? T.playAria : T.pauseAria
             );
             dotsBox.classList.toggle("is-paused", stoppedByUser);
             if (stoppedByUser) { stopTimer(); } else { startTimer(); }
@@ -373,9 +534,8 @@
      Gaat er iets mis in het lijstje, dan blijft de gewone tekst staan die er
      zonder JavaScript ook al is.
      ------------------------------------------------------------------ */
-  var MAANDEN = ["januari", "februari", "maart", "april", "mei", "juni", "juli",
-                 "augustus", "september", "oktober", "november", "december"];
-  var DAGKOPPEN = ["ma", "di", "wo", "do", "vr", "za", "zo"];
+  var MAANDEN = T.months;
+  var DAGKOPPEN = T.dayHeaders;
 
   function alsDatum(tekst) {
     var d = String(tekst).split("-");
@@ -405,7 +565,7 @@
     var minNachten = data.minimumNachten || 1;
     var dagprijs = data.prijsPerPersoonPerDag || 0;
     var bezet = (data.bezet || []).map(function (blok) {
-      return { van: alsDatum(blok.van), tot: alsDatum(blok.tot), wat: blok.wat || "Bezet" };
+      return { van: alsDatum(blok.van), tot: alsDatum(blok.tot), wat: blok.wat || T.defaultBooked };
     });
 
     var keuzeVan = null;
@@ -436,9 +596,9 @@
     var legenda = document.createElement("div");
     legenda.className = "calendar__legend";
     legenda.innerHTML =
-      '<span class="calendar__legend-item"><span class="calendar__chip is-vrij"></span>Beschikbaar</span>' +
-      '<span class="calendar__legend-item"><span class="calendar__chip is-bezet"></span>Al bezet</span>' +
-      '<span class="calendar__legend-item"><span class="calendar__chip is-gekozen"></span>Jouw keuze</span>';
+      '<span class="calendar__legend-item"><span class="calendar__chip is-vrij"></span>' + T.legendAvailable + '</span>' +
+      '<span class="calendar__legend-item"><span class="calendar__chip is-bezet"></span>' + T.legendBooked + '</span>' +
+      '<span class="calendar__legend-item"><span class="calendar__chip is-gekozen"></span>' + T.legendChosen + '</span>';
 
     box.innerHTML = "";
     box.appendChild(legenda);
@@ -448,28 +608,27 @@
     function toonBalk() {
       if (!keuzeVan) {
         balk.className = "calendar__bar";
-        balk.innerHTML = '<p class="calendar__hint">Klik je aankomstdag aan, en daarna je vertrekdag.</p>';
+        balk.innerHTML = '<p class="calendar__hint">' + T.hintStart + '</p>';
         return;
       }
       if (!keuzeTot) {
         balk.className = "calendar__bar is-busy";
-        balk.innerHTML = '<p class="calendar__hint">Aankomst op ' + schrijfDatum(keuzeVan) +
-          '. Kies nu je vertrekdag — minimaal ' + minNachten + ' nachten.</p>' +
-          '<button type="button" class="calendar__reset">Opnieuw kiezen</button>';
+        balk.innerHTML = '<p class="calendar__hint">' + T.hintEnd(schrijfDatum(keuzeVan), minNachten) + '</p>' +
+          '<button type="button" class="calendar__reset">' + T.reset + '</button>';
         return;
       }
       var nachten = dagenTussen(keuzeVan, keuzeTot);
       balk.className = "calendar__bar is-done";
       balk.innerHTML =
         '<div class="calendar__chosen">' +
-          '<span class="calendar__chosen-label">Jouw periode</span>' +
+          '<span class="calendar__chosen-label">' + T.chosenLabel + '</span>' +
           '<span class="calendar__chosen-dates">' + schrijfDatum(keuzeVan) + ' – ' + schrijfDatum(keuzeTot) + '</span>' +
-          '<span class="calendar__chosen-nights">' + nachten + (nachten === 1 ? ' nacht' : ' nachten') + '</span>' +
+          '<span class="calendar__chosen-nights">' + T.nightsLabel(nachten) + '</span>' +
         '</div>' +
         '<div class="calendar__bar-actions">' +
-          '<button type="button" class="calendar__reset">Opnieuw kiezen</button>' +
+          '<button type="button" class="calendar__reset">' + T.reset + '</button>' +
           '<a class="btn btn--dark" href="boeken.html?van=' + alsTekst(keuzeVan) +
-            '&amp;tot=' + alsTekst(keuzeTot) + '">Verder met de aanvraag</a>' +
+            '&amp;tot=' + alsTekst(keuzeTot) + '">' + T.continueBtn + '</a>' +
         '</div>';
     }
 
@@ -526,10 +685,10 @@
         uit.className = "calendar__cell " + (blok ? "is-bezet" : "is-buiten");
         uit.textContent = datum.getDate();
         if (blok) {
-          uit.title = blok.wat + ": " + schrijfDatum(blok.van) + " tot " + schrijfDatum(blok.tot);
+          uit.title = T.bookedTitle(blok.wat, schrijfDatum(blok.van), schrijfDatum(blok.tot));
           var uitleg = document.createElement("span");
           uitleg.className = "sr-only";
-          uitleg.textContent = " " + blok.wat + ", niet beschikbaar";
+          uitleg.textContent = T.bookedSr(blok.wat);
           uit.appendChild(uitleg);
         }
         return uit;
@@ -540,8 +699,8 @@
       knop.className = "calendar__cell is-vrij";
       knop.innerHTML = '<span class="calendar__daynr">' + datum.getDate() + "</span>" +
         (dagprijs ? '<span class="calendar__dayprice">\u20ac' + dagprijs + "</span>" : "");
-      knop.setAttribute("aria-label", schrijfDatum(datum) + ", beschikbaar" +
-        (dagprijs ? ", vanaf \u20ac" + dagprijs + " per persoon per dag" : ""));
+      knop.setAttribute("aria-label", T.availableAria(schrijfDatum(datum)) +
+        (dagprijs ? T.priceSuffix(dagprijs) : ""));
 
       if (keuzeVan && datum.getTime() === keuzeVan.getTime()) {
         knop.classList.add("is-gekozen", "is-start");
@@ -565,16 +724,14 @@
         keuzeVan = datum;
       } else if (dagenTussen(keuzeVan, datum) < minNachten) {
         balk.className = "calendar__bar is-warn";
-        balk.innerHTML = '<p class="calendar__hint">Een verblijf duurt minimaal ' + minNachten +
-          ' nachten. Kies een latere vertrekdag.</p>' +
-          '<button type="button" class="calendar__reset">Opnieuw kiezen</button>';
+        balk.innerHTML = '<p class="calendar__hint">' + T.warnMinNights(minNachten) + '</p>' +
+          '<button type="button" class="calendar__reset">' + T.reset + '</button>';
         koppelReset();
         return;
       } else if (bezetTussen(keuzeVan, datum)) {
         balk.className = "calendar__bar is-warn";
-        balk.innerHTML = '<p class="calendar__hint">In die periode zit een week die al bezet is. ' +
-          'Kies een periode ervoor of erna.</p>' +
-          '<button type="button" class="calendar__reset">Opnieuw kiezen</button>';
+        balk.innerHTML = '<p class="calendar__hint">' + T.warnOverlap + '</p>' +
+          '<button type="button" class="calendar__reset">' + T.reset + '</button>';
         koppelReset();
         return;
       } else {

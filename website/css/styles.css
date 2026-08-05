@@ -105,6 +105,32 @@ summary:focus-visible,
 }
 .js .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
+/* Staggered reveal: kinderen komen na elkaar omhoog, gebruikt door .stepbar */
+.js .stagger > * {
+  opacity: 0;
+  transform: translateY(120px);
+  transition: opacity 1.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 1.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.js .stagger.is-visible > * { opacity: 1; transform: translateY(0); }
+.js .stagger.is-visible > *:nth-child(1) { transition-delay: 0s; }
+.js .stagger.is-visible > *:nth-child(2) { transition-delay: 0.4s; }
+.js .stagger.is-visible > *:nth-child(3) { transition-delay: 0.8s; }
+.js .stagger.is-visible > *:nth-child(4) { transition-delay: 1.2s; }
+.js .stagger.is-visible > *:nth-child(5) { transition-delay: 1.6s; }
+.js .stagger.is-visible > *:nth-child(6) { transition-delay: 2s; }
+
+/* Tijdlijn "Jouw schaatsreis": kop + facts komen heel snel na elkaar, dan een
+   adempauze, dan de introtekst, dan weer een pauze voor de stappen. */
+.js .facts.stagger.is-visible > *:nth-child(1) { transition-delay: 0.1s; }
+.js .facts.stagger.is-visible > *:nth-child(2) { transition-delay: 0.2s; }
+.js .facts.stagger.is-visible > *:nth-child(3) { transition-delay: 0.3s; }
+.js .stepbar.stagger.is-visible > *:nth-child(1) { transition-delay: 0.6s; }
+.js .stepbar.stagger.is-visible > *:nth-child(2) { transition-delay: 0.9s; }
+.js .stepbar.stagger.is-visible > *:nth-child(3) { transition-delay: 1.2s; }
+.js .stepbar.stagger.is-visible > *:nth-child(4) { transition-delay: 1.5s; }
+.js .stepbar.stagger.is-visible > *:nth-child(5) { transition-delay: 1.8s; }
+
 /* ==========================================================================
    Tekst die meekleurt met het scrollen
    De opacity wordt per woord door JavaScript gezet. Zonder JavaScript blijft
@@ -229,7 +255,9 @@ summary:focus-visible,
 /* ==========================================================================
    Header
    ========================================================================== */
-/* Transparent over the opening photo; the dark bar fades in once you scroll past it. */
+/* Blijft altijd doorzichtig, ook boven het uitgeklapte menu. Tekst en logo
+   wisselen van wit naar donker zodra de balk over een lichte sectie komt
+   (zie main.js: site-header--on-light). */
 .site-header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -237,31 +265,26 @@ summary:focus-visible,
   color: #fff;
   padding-block: 1rem;
   background-color: transparent;
-  transition: background-color 0.6s ease, backdrop-filter 0.6s ease;
+  transition: color 0.3s ease;
 }
-/* Soft scrim so the white nav stays readable on the photo */
+/* Soft scrim zodat witte tekst leesbaar blijft boven de openingsfoto */
 .site-header::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(20, 24, 26, 0.45), rgba(20, 24, 26, 0));
   pointer-events: none;
-  transition: opacity 0.6s ease;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
-/* Zodra de openingsfoto voorbij is, wordt de balk gewoon wit: rustig, en de
-   pagina eronder is ook licht. De inhoud van de balk kleurt dan mee naar donker. */
-.site-header.is-solid {
-  background-color: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
-  color: var(--ink);
-}
-.site-header.is-solid::before { opacity: 0; }
-.site-header.is-solid .nav-toggle span { background: var(--ink); }
-.site-header.is-solid .main-nav__links a::after { background: var(--warm-deep); }
+.site-header.site-header--over-hero::before { opacity: 1; }
+/* Zodra de balk over een lichte sectie komt, kleurt de inhoud donker mee. */
+.site-header.site-header--on-light { color: var(--ink); }
+.site-header.site-header--on-light .nav-toggle span { background: var(--ink); }
+.site-header.site-header--on-light .main-nav__links a::after { background: var(--warm-deep); }
 /* Woordmerk wisselt van de witte naar de donkere versie */
-.site-header.is-solid .logo-word-img--light { display: none; }
-.site-header.is-solid .logo-word-img--dark { display: block; }
+.site-header.site-header--on-light .logo-word-img--light { display: none; }
+.site-header.site-header--on-light .logo-word-img--dark { display: block; }
 
 .site-header__row {
   position: relative;
@@ -294,7 +317,6 @@ summary:focus-visible,
 .main-nav {
   position: fixed;
   inset: 0 0 0 28%;
-  background: var(--ink);
   transform: translateX(100%);
   transition: transform 0.25s ease;
   display: flex;
@@ -302,9 +324,10 @@ summary:focus-visible,
   gap: 1.5rem;
   padding: 5rem 1.5rem 2rem;
   z-index: 150;
+  color: inherit;
 }
 .main-nav.is-open { transform: translateX(0); }
-.main-nav__close { position: absolute; top: 1rem; right: 1.25rem; font-size: 1.6rem; line-height: 1; color: #fff; }
+.main-nav__close { position: absolute; top: 1rem; right: 1.25rem; font-size: 1.6rem; line-height: 1; color: inherit; }
 .main-nav__links { display: flex; flex-direction: column; gap: 1.1rem; font-size: 1.05rem; font-weight: 500; }
 .main-nav__links a { position: relative; display: inline-block; }
 .main-nav__links a::after {
@@ -346,6 +369,32 @@ summary:focus-visible,
 }
 .header-cta:hover { transform: translateY(-2px); }
 
+/* Taalkiezer: compacte taalcodes in de nav, zowel uitgeklapt (mobiel) als
+   in de horizontale balk (desktop). */
+.lang-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.lang-switch a,
+.lang-switch__current { opacity: 0.66; }
+.lang-switch__current {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--warm);
+}
+.lang-switch a:hover,
+.lang-switch a:focus-visible { opacity: 1; }
+
+@media (min-width: 64rem) {
+  .lang-switch { gap: 0.5rem; padding-left: 0.5rem; border-left: 1px solid currentColor; opacity: 0.9; }
+}
+
 /* ==========================================================================
    1. Opener — full-bleed photo
    ========================================================================== */
@@ -368,9 +417,11 @@ summary:focus-visible,
   transition: opacity 1.4s ease;
 }
 .opener__bg.is-active { opacity: 1; }
+.opener__video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; background: #14181a; }
 .opener::after {
   content: "";
   position: absolute; inset: 0;
+  z-index: 1;
   background: linear-gradient(180deg, rgba(20,24,26,.15) 0%, rgba(20,24,26,.1) 45%, rgba(20,24,26,.62) 100%);
 }
 .opener__inner {
@@ -525,6 +576,7 @@ html:not(.js) .opener__controls { display: none; }
 
 .stepbar {
   position: relative; z-index: 2;
+  margin-top: 2.5rem;
   border-top: 1px solid var(--border-dark);
   display: grid;
   grid-template-columns: 1fr;
@@ -534,11 +586,20 @@ html:not(.js) .opener__controls { display: none; }
 .stepbar__num { font-family: var(--display); font-weight: 700; font-size: 2.4rem; color: var(--warm); }
 .stepbar__label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,.6); margin-top: 0.2rem; }
 .stepbar__title { margin-top: 0.6rem; font-weight: 600; font-size: 1.02rem; }
+.stepbar__intro { font-size: 1rem; line-height: 1.5; color: rgba(255,255,255,.75); max-width: 22ch; }
 
 @media (min-width: 56rem) {
-  .stepbar { grid-template-columns: repeat(4, 1fr); }
-  .stepbar__item { border-top: none; border-left: 1px solid var(--border-dark); }
+  .stepbar { grid-template-columns: 1.1fr repeat(4, 1fr); margin-top: 7rem; }
+  .stepbar__item {
+    display: flex;
+    flex-direction: column;
+    min-height: 22rem;
+    padding-bottom: 2.5rem;
+    border-top: none;
+    border-left: 1px solid var(--border-dark);
+  }
   .stepbar__item:first-child { border-left: none; }
+  .stepbar__title { margin-top: auto; padding-top: 5rem; }
 }
 
 /* ==========================================================================
@@ -554,13 +615,17 @@ html:not(.js) .opener__controls { display: none; }
    ========================================================================== */
 .trips { background: var(--paper-soft); padding-block: 4rem 4.5rem; overflow: hidden; }
 .trips__layout { display: flex; gap: 1.5rem; align-items: stretch; }
-.trips__label { flex: 0 0 auto; display: flex; align-items: flex-end; }
+/* Vaste breedte in plaats van auto: sommige browsers berekenen de
+   intrinsieke breedte van verticale tekst net iets anders, waardoor het
+   label zichtbaar naar rechts opschoof. */
+.trips__label { flex: 0 0 auto; width: clamp(2.4rem, 4vw, 3.1rem); display: flex; align-items: flex-end; }
 .trips__label span {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-family: var(--display);
   font-weight: 600;
   font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+  line-height: 1;
   letter-spacing: -0.01em;
   white-space: nowrap;
 }
@@ -747,6 +812,11 @@ html:not(.js) .opener__controls { display: none; }
 
 /* De kampvuurfoto staat rechtop; zo blijft Joey heel in beeld bij deze uitsnede. */
 .collage__item--right img { object-position: center 22%; }
+
+/* Homepage-sectie "Het verhaal achter Novakse": foto's staan dichter bij
+   elkaar in rust, en schuiven daardoor tijdens het scrollen zichtbaarder
+   uit elkaar (data-speed hoger gezet in index.html). */
+.story__collage--home .collage__frame { aspect-ratio: 4 / 4.3; }
 
 .story__caption {
   margin-top: 1.1rem;
@@ -1246,7 +1316,7 @@ html:not(.js) .opener__controls { display: none; }
    Wat zit er wel en niet bij een reis in
    -------------------------------------------------------------------------- */
 .included { background: var(--paper); padding-block: 4rem; }
-.included__grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+.included__grid { display: grid; grid-template-columns: 1fr; gap: 5rem; }
 .included__title {
   font-family: var(--display);
   font-weight: 600;
@@ -1639,6 +1709,10 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
   gap: 1rem;
 }
 .booking__total strong { font-family: var(--display); font-size: 1.35rem; }
+.booking__total--standalone { margin-top: 0; padding-top: 0; border-top: none; }
+.booking__payment { margin-top: 1.25rem; padding-top: 1.1rem; border-top: 1px solid var(--border); }
+.booking__payment-title { font-size: 0.95rem; font-weight: 600; }
+.booking__payment .booking__note { margin-top: 0.4rem; }
 .booking__actions { margin-top: 1.5rem; display: grid; gap: 0.7rem; }
 .booking__actions .btn { justify-content: center; }
 .booking__error { margin-top: 0.9rem; font-size: 0.88rem; color: #9a2f2f; font-weight: 500; }

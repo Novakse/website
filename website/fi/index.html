@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>document.documentElement.classList.add("js");</script>
+  <title>Novakse Reizen — luonnonjääluistelumatkat</title>
+  <meta name="description" content="Novakse järjestää pienryhmille suunnattuja luonnonjääluistelumatkoja Orsaan, Faluniin ja Suomeen. Joey Novak opastaa henkilökohtaisesti, vuosien kokemuksella luonnonjäältä." />  <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="../css/fonts.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/theme-groen.css" />
+  <link rel="alternate" hreflang="nl" href="https://www.novakse.nl/index.html" />
+  <link rel="alternate" hreflang="en" href="https://www.novakse.nl/en/index.html" />
+  <link rel="alternate" hreflang="sv" href="https://www.novakse.nl/sv/index.html" />
+  <link rel="alternate" hreflang="de" href="https://www.novakse.nl/de/index.html" />
+  <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/index.html" />
+  <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/index.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/index.html" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Siirry sisältöön</a>
+
+  <header class="site-header">
+    <div class="wrap site-header__row">
+      <a class="site-header__logo" href="#top" aria-label="Novakse Reizen — takaisin ylös">
+        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="158" height="220" />
+        <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
+        <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Avaa valikko</span>
+      </button>
+
+      <nav class="main-nav" id="mainNav" aria-label="Päävalikko">
+        <button class="main-nav__close" id="navClose" aria-label="Sulje valikko">×</button>
+        <ul class="main-nav__links">
+          <li><a href="reizen.html">Matkat</a></li>
+          <li><a href="schaatslessen.html">Luistelutunnit</a></li>
+          <li><a href="schaatsonderhoud.html">Luistinten huolto</a></li>
+          <li><a href="over-novakse.html">Tietoa Novaksesta</a></li>
+          <li><a href="contact.html">Yhteystiedot</a></li>
+        </ul>
+        <a class="header-cta" href="#aanvraag">Pyydä tarjous</a>
+              <div class="lang-switch" aria-label="Taal · Language">
+          <a href="../index.html" lang="nl" hreflang="nl">NL</a>
+          <a href="../en/index.html" lang="en" hreflang="en">EN</a>
+          <a href="../sv/index.html" lang="sv" hreflang="sv">SV</a>
+          <a href="../de/index.html" lang="de" hreflang="de">DE</a>
+          <a href="../no/index.html" lang="no" hreflang="no">NO</a>
+          <span class="lang-switch__current" aria-current="true">FI</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 1. Opener -->
+    <section class="opener" id="top">
+      <video class="opener__video" autoplay muted loop playsinline
+             poster="../images/hero-opener-poster.jpg" aria-hidden="true">
+        <source src="../images/hero-opener.mp4" type="video/mp4" />
+      </video>
+      <div class="opener__inner">
+        <img class="opener__mark" src="../images/logo-mark.png" alt="" width="524" height="733" fetchpriority="high" />
+        <h1 class="opener__title">Luonnonjää</h1>
+        <p class="opener__lede">Pienet ryhmät, henkilökohtainen opastus, jäätyneitä järviä Ruotsissa ja Suomessa.</p>
+        <div class="opener__actions">
+          <a class="btn btn--light" href="reizen.html">Katso matkamme</a>
+          <a class="btn btn--outline-light" href="over-novakse.html">Lue tarinamme</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Jouw schaatsreis + zo werkt een aanvraag -->
+    <section class="layered">
+      <img class="layered__bg" src="../images/avondschaatsen.jpg" alt="Kaksi luistelijaa iltahämärässä luonnonjäällä" loading="lazy" />
+      <div class="wrap layered__inner">
+        <h2 class="layered__title reveal">Oma luistelumatkasi</h2>
+        <ul class="facts stagger">
+          <li><span class="plus">+</span><b>Majoitus</b></li>
+          <li><span class="plus">+</span>Kuljetukset paikan päällä</li>
+          <li><span class="plus">+</span>Opastus jäällä</li>
+        </ul>
+      </div>
+      <div class="wrap stepbar stagger">
+        <div class="stepbar__item stepbar__item--intro">
+          <p class="stepbar__intro">Täytä lomake, niin Joey ottaa sinuun henkilökohtaisesti yhteyttä.</p>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">01</span>
+          <div class="stepbar__label">Vaihe</div>
+          <div class="stepbar__title">Lähetät pyynnön</div>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">02</span>
+          <div class="stepbar__label">Vaihe</div>
+          <div class="stepbar__title">Henkilökohtainen yhteydenotto</div>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">03</span>
+          <div class="stepbar__label">Vaihe</div>
+          <div class="stepbar__title">Suunnittelemme yhdessä</div>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">04</span>
+          <div class="stepbar__label">Vaihe</div>
+          <div class="stepbar__title">Vahvistus</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="baanlijn baanlijn--on-dark" aria-hidden="true">
+      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
+        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#dd9752" stroke-width="2" />
+      </svg>
+    </div>
+
+    <!-- 3. Reizen -->
+    <section class="trips" id="reizen">
+      <div class="wrap">
+        <div class="trips__layout">
+          <div class="trips__label"><a href="reizen.html"><span>Kaikki matkat</span></a></div>
+          <div class="trips__scroll" id="tripScroll">
+            <article class="trip-card">
+              <div class="trip-card__media" data-gallery role="button" tabindex="0" aria-label="Kuvia Orsasta, napauta vaihtaaksesi">
+                <img class="is-active" src="../images/orsa-baan-mora.jpg" alt="Aurattu luistelurata Orsassa" loading="lazy" />
+                <img src="../images/orsa-accommodatie.jpg" alt="Majoitus Orsassa, Dalarnassa" loading="lazy" />
+                <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
+              </div>
+              <div class="trip-card__head">
+                <h3 class="trip-card__title">Orsa</h3>
+                <span class="trip-card__meta">Dalarna</span>
+              </div>
+              <p class="trip-card__desc">Opastettu ryhmämatka Orsajärvelle, aurattu rata noin 15 km ja majoitus omissa mökeissä aivan jään tuntumassa. Päivämäärät ja hinta julkaistaan pian.</p>
+              <a class="link-arrow trip-card__link" href="orsa.html">Katso tämä matka</a>
+            </article>
+
+            <article class="trip-card">
+              <div class="trip-card__media" data-gallery role="button" tabindex="0" aria-label="Kuvia Falunista, napauta vaihtaaksesi">
+                <img class="is-active" src="../images/falun-meer.jpg" alt="Luistelijoita jäätyneellä järvellä Falunissa" loading="lazy" />
+                <img src="../images/falun-accommodatie.jpg" alt="Majoitus Falunissa" loading="lazy" />
+                <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
+              </div>
+              <div class="trip-card__head">
+                <h3 class="trip-card__title">Falun</h3>
+                <span class="trip-card__meta">Ruotsi</span>
+              </div>
+              <p class="trip-card__desc">Opastettu ryhmämatka historialliselle jäälle, taustalla Falunin punaiset kaivosrakennukset. Sama toteutus kuin Orsassa.</p>
+              <a class="link-arrow trip-card__link" href="falun.html">Katso tämä matka</a>
+            </article>
+
+            <article class="trip-card">
+              <div class="trip-card__media">
+                <img class="is-active" src="../images/finland-baan.jpg" alt="Luistelurata Saimaalla Punkaharjulla" loading="lazy" />
+              </div>
+              <div class="trip-card__head">
+                <h3 class="trip-card__title">Suomi</h3>
+                <span class="trip-card__meta">Alkaen 995 €</span>
+              </div>
+              <p class="trip-card__desc">Omatoiminen luistelumatka ilman opastusta Saimaalla Punkaharjulla, majoitus omissa saunallisissa mökeissä.</p>
+              <a class="link-arrow trip-card__link" href="finland.html">Katso tämä matka</a>
+            </article>
+          </div>
+        </div>
+        <div class="trips__progress"><div class="trips__progress-bar" id="tripProgress"></div></div>
+      </div>
+    </section>
+
+    <!-- 4. Waarom Novakse -->
+    <section class="why">
+      <div class="wrap">
+        <div class="why__split">
+          <div class="why__body reveal">
+            <span class="eyebrow eyebrow--warm"><span class="dot"></span>Miksi Novakse</span>
+            <h2 class="why__title">Jää määrää päivän kulun. Yhdessä päätämme, mitä silloin tehdään.</h2>
+            <p class="why__text">Luonnonjäätä ei voi suunnitella etukäteen. Siksi tarkistamme joka aamu uudelleen sään, jään laadun ja ryhmän — ja mukautamme reitin, järven tai koko ohjelman sen mukaan.</p>
+          </div>
+          <div class="why__media reveal">
+            <img src="../images/man-schaatsen.jpg" alt="Luistelija avaralla luonnonjäällä" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="why__reasons">
+          <div class="why__reason reveal">
+            <h3>Ryhmät 4–12 hengelle</h3>
+            <p>Tarpeeksi pieni henkilökohtaiseen huomioon, tarpeeksi suuri mukavaan yhdessäoloon matkan varrella.</p>
+          </div>
+          <div class="why__reason reveal">
+            <h3>Joey on itse mukana</h3>
+            <p>Vuosien kokemus luonnonjäältä ja silmää sille, mitä päivä todella tarvitsee.</p>
+          </div>
+          <div class="why__reason reveal">
+            <h3>Kolme tasoa</h3>
+            <p>Rento taso 1–4 tuntia, sportiivinen 2–5 tuntia tai innokas 3–6 tuntia päivässä. Sinä valitset tahdin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Open groepsreis of eigen groep -->
+    <section class="choice" id="groepsvorm">
+      <a class="choice__panel" href="#aanvraag">
+        <img src="../images/duo-zonsondergang.jpg" alt="Kaksi luistelijaa yhdessä jäällä auringonlaskussa" loading="lazy" />
+        <span class="choice__body">
+          <span class="choice__tag">Avoin ryhmämatka</span>
+          <span class="choice__title">Liity ryhmään</span>
+          <span class="choice__text">Ilmoittaudut kiinteälle matkapäivämäärälle ja luistelet yhdessä muiden osallistujien kanssa, Joey oppaana. Orsaan ja Faluniin ilmoittaudutaan pareittain.</span>
+          <span class="link-arrow choice__link">Kysy avoimesta ryhmämatkasta</span>
+        </span>
+      </a>
+      <a class="choice__panel" href="#aanvraag">
+        <img src="../images/groep-dames.jpg" alt="Ystäväporukka yhdessä matkalla luistelureissulla" loading="lazy" />
+        <span class="choice__body">
+          <span class="choice__tag">Oma ryhmä</span>
+          <span class="choice__title">Lähde omalla porukalla</span>
+          <span class="choice__text">Ystävien, perheen tai kollegoiden kanssa, itse valitsemananne ajankohtana. Suunnittelemme ohjelman yhdessä.</span>
+          <span class="link-arrow choice__link">Kysy omaa ryhmää varten</span>
+        </span>
+      </a>
+    </section>
+
+    <!-- 6. Persoonlijk verhaal -->
+    <section class="story" id="verhaal">
+      <div class="wrap story__grid">
+        <!-- Collage: drie foto's met afgeronde hoeken die tijdens het scrollen
+             ieder een klein stukje meebewegen (zie main.js). -->
+        <figure class="story__collage story__collage--home reveal" data-collage>
+          <div class="collage__frame">
+            <div class="collage__item collage__item--main" data-speed="-360">
+              <img src="../images/joey-hond-persoonlijk.jpg" alt="Joey Novak koiransa kanssa veden äärellä" loading="lazy" />
+            </div>
+            <div class="collage__item collage__item--left" data-speed="-540">
+              <img src="../images/joey-op-het-ijs.jpg" alt="Joey luistelemassa jäätyneellä järvellä" loading="lazy" />
+            </div>
+            <div class="collage__item collage__item--right" data-speed="-460">
+              <img src="../images/joey-kampvuur.jpg" alt="Joey valmistaa ruokaa nuotiolla luistelumatkan aikana" loading="lazy" />
+            </div>
+          </div>
+          <figcaption class="story__caption">Joey Novak, Novaksen perustaja</figcaption>
+        </figure>
+        <div class="story__body reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Novaksen tarina</span>
+          <p class="story__quote" data-reveal-words>"Ulkona oleminen, luonnossa — siitä minulle on kyse. Luonnonjäällä luisteleminen antaa ennennäkemättömän vapauden tunteen."</p>
+          <p class="story__text">Joey on luistellut pienestä pitäen ja on vuosien varrella kerännyt paljon kokemusta luonnonjäältä. Myöhemmin hän opiskeli liikunnanohjaajaksi ja hankki kokemusta Elfstedenhallin 11shopissa luistinvarusteiden ja teroituksen parissa.</p>
+          <p class="story__text">Mutta lopulta hänelle ei ole enää kyse suorituksista — vaan luistelun ja luonnon kokemisesta. Alankomaissa hyvä luonnonjää käy yhä harvinaisemmaksi; Ruotsissa ja Suomessa voi vielä luistella loputtomiin.</p>
+          <p class="story__sign">Joey Novak</p>
+          <p class="story__role">Perustaja ja matkaopas</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Ervaringen -->
+    <section class="reviews">
+      <div class="wrap reviews__grid">
+        <div class="reviews__media reveal">
+          <img src="../images/handen-omhoog-zonsondergang.jpg" alt="Kaksi osallistujaa juhlimassa jäällä auringonlaskussa" loading="lazy" />
+        </div>
+        <div class="reviews__body reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Kokemuksia</span>
+          <h2 class="reviews__title">Mitä aiemmat matkailijat ovat sanoneet</h2>
+          <p class="reviews__text">Aiempien osallistujien palautteet löytyvät Google-sivultamme. Lisäämme tänne pian suoran linkin sinne.</p>
+          <a class="link-arrow reviews__link" href="#aanvraag">Esitä kysymyksesi Joeylle</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Veelgestelde vragen -->
+    <section class="faq" id="faq">
+      <div class="wrap faq__inner">
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Usein kysytyt kysymykset</span>
+        <h2 class="h-section">Vieläkö epäröit? Nämä kysytään useimmin</h2>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary>Entä jos jää tai sää ei ole tarpeeksi hyvä?</summary>
+            <p>Luistelumatkamme riippuvat aina sääolosuhteista ja jään laadusta. Muokkaamme reittejä ja ohjelmaa päivittäin, ja tarvittaessa siirrymme toiselle sopivalle järvelle tai tarjoamme vaihtoehtoisen ohjelman.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Kuinka suuria ryhmät ovat?</summary>
+            <p>Matka toteutuu vähintään 4 osallistujalla ja siihen mahtuu enintään 12 osallistujaa. Näin varmistamme henkilökohtaisen huomion ja opastuksen jäällä.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Entä maksaminen ja peruminen?</summary>
+            <p>Kaikkiin matkoihin sovelletaan 50 %:n käsirahaa matkan hinnasta; loppusumma maksetaan viimeistään 5 viikkoa ennen lähtöä. Jos peruutat yli 6 viikkoa etukäteen, maksat 50 % matkan hinnasta; sen jälkeen peruutusmaksu on 100 %.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Millaisia luisteluvarusteita tarvitsen?</summary>
+            <p>Otat mukaasi omat luisteluvarusteesi, talvivaatteet ja turvavarusteet. Saat etukäteen pakkauslistan ja neuvoja siitä, mitä tarvitset. Luonnonjäälle suosittelemme retkiluistimia; jääpiikit ja kypärä ovat pakollisia.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <div class="baanlijn baanlijn--on-light" aria-hidden="true">
+      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
+        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
+      </svg>
+    </div>
+
+    <!-- 9. Reisaanvraag -->
+    <section class="request" id="aanvraag">
+      <div class="wrap request__grid">
+        <div class="request__body reveal">
+          <span class="eyebrow eyebrow--warm"><span class="dot"></span>Matkapyyntö</span>
+          <h2 class="request__title">Kerro meille, minne haluat matkustaa</h2>
+          <p class="request__text">Täytä lomake, niin Joey ottaa sinuun henkilökohtaisesti yhteyttä.</p>
+          <ul class="request__points">
+            <li>Vastaus suoraan Joeylta, ei puhelinpalvelukeskusta</li>
+            <li>Sopii myös omalle ryhmällesi järjestettävään matkaan</li>
+            <li>Ei sitoumuksia — ensin hyvä keskustelu</li>
+          </ul>
+        </div>
+
+        <form class="request__form reveal" id="requestForm">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="voornaam">Etunimi</label>
+              <input type="text" id="voornaam" name="voornaam" autocomplete="given-name" required />
+            </div>
+            <div class="form-field">
+              <label for="achternaam">Sukunimi</label>
+              <input type="text" id="achternaam" name="achternaam" autocomplete="family-name" required />
+            </div>
+            <div class="form-field">
+              <label for="email">Sähköpostiosoite</label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+            <div class="form-field">
+              <label for="telefoon">Puhelin</label>
+              <input type="tel" id="telefoon" name="telefoon" autocomplete="tel" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="reis">Mikä matka kiinnostaa sinua?</label>
+              <select id="reis" name="reis">
+                <option value="orsa">Orsa — Dalarna</option>
+                <option value="falun">Falun</option>
+                <option value="finland">Suomi — Punkaharju</option>
+                <option value="onbekend">En vielä tiedä</option>
+              </select>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="groepsvorm-select">Ryhmämuoto</label>
+              <select id="groepsvorm-select" name="groepsvorm">
+                <option value="open">Avoin ryhmämatka</option>
+                <option value="eigen">Oma ryhmä</option>
+              </select>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="bericht">Viestisi</label>
+              <textarea id="bericht" name="bericht" placeholder="Kerro lyhyesti toiveistasi, tasostasi tai kysymyksistäsi"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--warm form-submit">Lähetä pyyntö</button>
+          <p class="form-note">Tätä lomaketta ei ole vielä liitetty lähetystoimintoon. Lähetä toistaiseksi sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- 10. Ondersteunende diensten -->
+    <section class="services">
+      <div class="wrap">
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Novaksella myös</span>
+        <div class="services__grid">
+          <article class="service reveal" id="schaatslessen">
+            <div class="service__media">
+              <img src="../images/schaatsles-teaser.jpg" alt="Luistelija harjoittelemassa luistelualalla" loading="lazy" />
+            </div>
+            <div>
+              <span class="service__tag">Luistelutunnit</span>
+              <h3 class="service__title">Ryhmätunnit &amp; henkilökohtainen valmennus</h3>
+              <p class="service__text">Tekniikkaa ja tahtia, pienryhmissä tai henkilökohtaisesti ohjattuna.</p>
+              <a class="link-arrow service__link" href="schaatslessen.html">Lisää luistelutunneista</a>
+            </div>
+          </article>
+
+          <article class="service service--calm reveal" id="schaatsonderhoud">
+            <div class="service__media">
+              <img src="../images/onderhoud-teaser.jpg" alt="Luistimen ammattitaitoinen teroitus" loading="lazy" />
+            </div>
+            <div>
+              <span class="service__tag">Luistinten huolto</span>
+              <h3 class="service__title">Teroitus, huolto &amp; luistinsovitus</h3>
+              <p class="service__text">Ammattitaitoisesti terävä ja hyvin säädetty, entisen materiaalispesialistin käsissä.</p>
+              <a class="link-arrow service__link" href="schaatsonderhoud.html">Lisää luistinten huollosta</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 11. Footer -->
+  <footer class="site-footer">
+    <div class="wrap footer__grid">
+      <div>
+        <a class="footer__logo" href="#top" aria-label="Novakse Reizen — takaisin ylös">
+          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="158" height="220" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
+        <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+        </a>
+        <p class="footer__tagline">Pienimuotoisia luonnonjääluistelumatkoja, henkilökohtaisesti opastaa Joey Novak.</p>
+      </div>
+      <div>
+        <p class="footer__heading">Yhteystiedot</p>
+        <div class="footer__links">
+          <a href="tel:+31617467643">+31 6 17467643</a>
+          <a href="https://wa.me/31617467643" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a>
+          <span>Friesland — Noordwolden seutu</span>
+        </div>
+      </div>
+      <div>
+        <p class="footer__heading">Seuraa &amp; tietoa</p>
+        <div class="footer__links">
+          <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
+          <a href="#">Tietosuojaseloste</a>
+          <a href="#">Yleiset ehdot</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap footer__bottom">
+      <span>© 2022–2026 Novakse. Kaikki oikeudet pidätetään.</span>
+      <span>KVK 92092969</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -16,10 +16,14 @@
       "Bash(osascript -l JavaScript /private/tmp/claude-501/-Users-verajager-Website-bouwen-Novakse/ca9710da-233a-4658-8c59-fa5572b9570a/scratchpad/crop2.js /private/tmp/claude-501/-Users-verajager-Website-bouwen-Novakse/ca9710da-233a-4658-8c59-fa5572b9570a/scratchpad/shots/finland2.png /private/tmp/claude-501/-Users-verajager-Website-bouwen-Novakse/ca9710da-233a-4658-8c59-fa5572b9570a/scratchpad/shots/finland-footer.png 0 6350 2880 1000)",
       "Bash(cd \"/Users/verajager/Website bouwen Novakse/website\" && rm -f _tmp-*.html && ls *.html)",
       "Bash(curl -s -L --max-time 25 -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 Chrome/120 Safari/537.36\" \"https://www.harjunportti.fi/en/offers/skating-package/\")",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(node check5.js)",
+      "Bash(lsof -ti:8791 -sTCP:LISTEN)",
+      "Bash(xargs -r kill)"
     ],
     "additionalDirectories": [
-      "/Users/verajager/Website bouwen Novakse/website"
+      "/Users/verajager/Website bouwen Novakse/website",
+      "/private/tmp/pwcheck"
     ]
   },
   "enabledPlugins": {

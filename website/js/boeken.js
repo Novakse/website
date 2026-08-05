@@ -11,8 +11,191 @@
 (function () {
   "use strict";
 
-  var MAANDEN = ["januari", "februari", "maart", "april", "mei", "juni", "juli",
-                 "augustus", "september", "oktober", "november", "december"];
+  /* ------------------------------------------------------------------
+     Vertalingen voor teksten die door boeken.js zelf op het scherm
+     worden gezet (de aanvraaginhoud zelf komt uit het JSON-blokje in de
+     pagina, dat staat al in de juiste taal).
+     ------------------------------------------------------------------ */
+  var I18N = {
+    nl: {
+      locale: "nl-NL",
+      months: ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
+      nightsLabel: function (n) { return n + (n === 1 ? " nacht" : " nachten"); },
+      personsLabel: function (n) { return n + (n === 1 ? " persoon" : " personen"); },
+      stayDefault: "Verblijf",
+      perPersonPerDay: " p.p. per dag",
+      fromPerPersonPerNight: function (bedrag) { return "vanaf " + bedrag + " p.p.p.n."; },
+      chooseCalendarPeriod: "Kies een periode in de kalender",
+      viewDatesFor: function (naam) { return "Bekijk de reisdata van " + naam; },
+      fixedDatesNote: "Deze reis heeft vaste vertrekdata. Zet in je opmerking welke periode je op het oog hebt, dan laat Joey weten wat er mogelijk is.",
+      noExtrasYet: "Voor deze reis staan de extra activiteiten nog niet vast. Zet in je opmerking waar je belangstelling voor hebt.",
+      chooseFirst: "Kies eerst een periode in de kalender.",
+      fillIn: function (lijst) { return "Vul nog even " + lijst.join(" en ") + " in."; },
+      yourName: "je naam",
+      yourEmail: "je e-mailadres",
+      requestFor: function (naam) { return "Aanvraag " + naam; },
+      periodLabel: "Periode: ",
+      periodTo: " tot ",
+      periodNotChosen: "nog niet gekozen",
+      personsLabel2: "Aantal personen: ",
+      extraActivitiesLabel: "Extra activiteiten: ",
+      none: "geen",
+      totalEstimate: "Indicatie totaal: ",
+      nameLabel: "Naam: ",
+      emailLabel: "E-mail: ",
+      phoneLabel: "Telefoon: ",
+      remarksLabel: "Opmerkingen:"
+    },
+    en: {
+      locale: "en-GB",
+      months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      nightsLabel: function (n) { return n + (n === 1 ? " night" : " nights"); },
+      personsLabel: function (n) { return n + (n === 1 ? " person" : " people"); },
+      stayDefault: "Stay",
+      perPersonPerDay: " pp/day",
+      fromPerPersonPerNight: function (bedrag) { return "from " + bedrag + " pp/night"; },
+      chooseCalendarPeriod: "Choose a period in the calendar",
+      viewDatesFor: function (naam) { return "View travel dates for " + naam; },
+      fixedDatesNote: "This trip has fixed departure dates. Mention in your message which period you have in mind, and Joey will let you know what's possible.",
+      noExtrasYet: "The extra activities for this trip haven't been finalised yet. Mention in your message what you're interested in.",
+      chooseFirst: "Choose a period in the calendar first.",
+      fillIn: function (lijst) { return "Please fill in " + lijst.join(" and ") + "."; },
+      yourName: "your name",
+      yourEmail: "your email address",
+      requestFor: function (naam) { return "Request " + naam; },
+      periodLabel: "Period: ",
+      periodTo: " to ",
+      periodNotChosen: "not yet chosen",
+      personsLabel2: "Number of people: ",
+      extraActivitiesLabel: "Extra activities: ",
+      none: "none",
+      totalEstimate: "Estimated total: ",
+      nameLabel: "Name: ",
+      emailLabel: "Email: ",
+      phoneLabel: "Phone: ",
+      remarksLabel: "Remarks:"
+    },
+    sv: {
+      locale: "sv-SE",
+      months: ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"],
+      nightsLabel: function (n) { return n + (n === 1 ? " natt" : " nätter"); },
+      personsLabel: function (n) { return n + (n === 1 ? " person" : " personer"); },
+      stayDefault: "Boende",
+      perPersonPerDay: " p.p./dag",
+      fromPerPersonPerNight: function (bedrag) { return "från " + bedrag + " p.p./natt"; },
+      chooseCalendarPeriod: "Välj en period i kalendern",
+      viewDatesFor: function (naam) { return "Se resedatum för " + naam; },
+      fixedDatesNote: "Den här resan har fasta avresedatum. Skriv i ditt meddelande vilken period du har i åtanke, så återkommer Joey med vad som är möjligt.",
+      noExtrasYet: "De extra aktiviteterna för den här resan är inte fastställda än. Skriv i ditt meddelande vad du är intresserad av.",
+      chooseFirst: "Välj först en period i kalendern.",
+      fillIn: function (lijst) { return "Fyll i " + lijst.join(" och ") + "."; },
+      yourName: "ditt namn",
+      yourEmail: "din e-postadress",
+      requestFor: function (naam) { return "Förfrågan " + naam; },
+      periodLabel: "Period: ",
+      periodTo: " till ",
+      periodNotChosen: "inte vald än",
+      personsLabel2: "Antal personer: ",
+      extraActivitiesLabel: "Extra aktiviteter: ",
+      none: "inga",
+      totalEstimate: "Uppskattad totalsumma: ",
+      nameLabel: "Namn: ",
+      emailLabel: "E-post: ",
+      phoneLabel: "Telefon: ",
+      remarksLabel: "Kommentarer:"
+    },
+    de: {
+      locale: "de-DE",
+      months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+      nightsLabel: function (n) { return n + (n === 1 ? " Nacht" : " Nächte"); },
+      personsLabel: function (n) { return n + (n === 1 ? " Person" : " Personen"); },
+      stayDefault: "Aufenthalt",
+      perPersonPerDay: " p.P./Tag",
+      fromPerPersonPerNight: function (bedrag) { return "ab " + bedrag + " p.P./Nacht"; },
+      chooseCalendarPeriod: "Wähle einen Zeitraum im Kalender",
+      viewDatesFor: function (naam) { return "Reisedaten für " + naam + " ansehen"; },
+      fixedDatesNote: "Diese Reise hat feste Abreisetermine. Schreib in deiner Nachricht, welchen Zeitraum du im Blick hast, dann lässt Joey dich wissen, was möglich ist.",
+      noExtrasYet: "Die Zusatzaktivitäten für diese Reise stehen noch nicht fest. Schreib in deiner Nachricht, wofür du dich interessierst.",
+      chooseFirst: "Wähle zuerst einen Zeitraum im Kalender.",
+      fillIn: function (lijst) { return "Bitte trage noch " + lijst.join(" und ") + " ein."; },
+      yourName: "deinen Namen",
+      yourEmail: "deine E-Mail-Adresse",
+      requestFor: function (naam) { return "Anfrage " + naam; },
+      periodLabel: "Zeitraum: ",
+      periodTo: " bis ",
+      periodNotChosen: "noch nicht gewählt",
+      personsLabel2: "Anzahl Personen: ",
+      extraActivitiesLabel: "Zusatzaktivitäten: ",
+      none: "keine",
+      totalEstimate: "Geschätzte Gesamtsumme: ",
+      nameLabel: "Name: ",
+      emailLabel: "E-Mail: ",
+      phoneLabel: "Telefon: ",
+      remarksLabel: "Anmerkungen:"
+    },
+    no: {
+      locale: "nb-NO",
+      months: ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"],
+      nightsLabel: function (n) { return n + (n === 1 ? " natt" : " netter"); },
+      personsLabel: function (n) { return n + (n === 1 ? " person" : " personer"); },
+      stayDefault: "Opphold",
+      perPersonPerDay: " pr. person/dag",
+      fromPerPersonPerNight: function (bedrag) { return "fra " + bedrag + " pr. person/natt"; },
+      chooseCalendarPeriod: "Velg en periode i kalenderen",
+      viewDatesFor: function (naam) { return "Se reisedatoer for " + naam; },
+      fixedDatesNote: "Denne reisen har faste avreisedatoer. Skriv i meldingen din hvilken periode du har i tankene, så gir Joey beskjed om hva som er mulig.",
+      noExtrasYet: "De ekstra aktivitetene for denne reisen er ikke fastsatt ennå. Skriv i meldingen din hva du er interessert i.",
+      chooseFirst: "Velg først en periode i kalenderen.",
+      fillIn: function (lijst) { return "Fyll inn " + lijst.join(" og ") + "."; },
+      yourName: "navnet ditt",
+      yourEmail: "e-postadressen din",
+      requestFor: function (naam) { return "Forespørsel " + naam; },
+      periodLabel: "Periode: ",
+      periodTo: " til ",
+      periodNotChosen: "ikke valgt ennå",
+      personsLabel2: "Antall personer: ",
+      extraActivitiesLabel: "Ekstra aktiviteter: ",
+      none: "ingen",
+      totalEstimate: "Estimert totalt: ",
+      nameLabel: "Navn: ",
+      emailLabel: "E-post: ",
+      phoneLabel: "Telefon: ",
+      remarksLabel: "Merknader:"
+    },
+    fi: {
+      locale: "fi-FI",
+      months: ["tammikuu", "helmikuu", "maaliskuu", "huhtikuu", "toukokuu", "kesäkuu", "heinäkuu", "elokuu", "syyskuu", "lokakuu", "marraskuu", "joulukuu"],
+      nightsLabel: function (n) { return n + (n === 1 ? " yö" : " yötä"); },
+      personsLabel: function (n) { return n + (n === 1 ? " henkilö" : " henkilöä"); },
+      stayDefault: "Majoitus",
+      perPersonPerDay: " hlö/vrk",
+      fromPerPersonPerNight: function (bedrag) { return "alkaen " + bedrag + " hlö/yö"; },
+      chooseCalendarPeriod: "Valitse ajanjakso kalenterista",
+      viewDatesFor: function (naam) { return "Katso matkapäivät: " + naam; },
+      fixedDatesNote: "Tällä matkalla on kiinteät lähtöpäivät. Kerro viestissäsi, mikä ajanjakso sinulla on mielessä, niin Joey kertoo mikä on mahdollista.",
+      noExtrasYet: "Tämän matkan lisäaktiviteetit eivät ole vielä varmistuneet. Kerro viestissäsi, mistä olet kiinnostunut.",
+      chooseFirst: "Valitse ensin ajanjakso kalenterista.",
+      fillIn: function (lijst) { return "Täytä vielä " + lijst.join(" ja ") + "."; },
+      yourName: "nimesi",
+      yourEmail: "sähköpostiosoitteesi",
+      requestFor: function (naam) { return "Varauspyyntö " + naam; },
+      periodLabel: "Ajanjakso: ",
+      periodTo: " – ",
+      periodNotChosen: "ei vielä valittu",
+      personsLabel2: "Henkilömäärä: ",
+      extraActivitiesLabel: "Lisäaktiviteetit: ",
+      none: "ei mitään",
+      totalEstimate: "Arvioitu kokonaishinta: ",
+      nameLabel: "Nimi: ",
+      emailLabel: "Sähköposti: ",
+      phoneLabel: "Puhelin: ",
+      remarksLabel: "Huomiot:"
+    }
+  };
+  var LANG = (document.documentElement.lang || "nl").slice(0, 2).toLowerCase();
+  var T = I18N[LANG] || I18N.nl;
+
+  var MAANDEN = T.months;
   var MAIL = "schaatsennovakse@outlook.com";
   var WHATSAPP = "31617467643";
 
@@ -49,7 +232,7 @@
     return datum.getDate() + " " + MAANDEN[datum.getMonth()] + " " + datum.getFullYear();
   }
   function euro(bedrag) {
-    return "€" + bedrag.toLocaleString("nl-NL");
+    return "€" + bedrag.toLocaleString(T.locale);
   }
 
   /* --- Periode uit het webadres halen ---------------------------------- */
@@ -65,18 +248,18 @@
   if (terugLink) {
     terugLink.href = reisSleutel + ".html" + (reis.periodeVrij ? "#prijzen" : "");
     terugLink.textContent = reis.periodeVrij
-      ? "Kies een periode in de kalender"
-      : "Bekijk de reisdata van " + reis.naam.split(" —")[0];
+      ? T.chooseCalendarPeriod
+      : T.viewDatesFor(reis.naam.split(" —")[0]);
   }
 
   var periodeBox = document.getElementById("periodeBox");
   if (nachten) {
     periodeBox.innerHTML =
       '<p class="booking__period-dates">' + schrijfDatum(van) + ' – ' + schrijfDatum(tot) + '</p>' +
-      '<p class="booking__period-nights">' + nachten + (nachten === 1 ? " nacht" : " nachten") + '</p>';
+      '<p class="booking__period-nights">' + T.nightsLabel(nachten) + '</p>';
   } else if (!reis.periodeVrij) {
     periodeBox.innerHTML =
-      '<p class="booking__period-empty">Deze reis heeft vaste vertrekdata. Zet in je opmerking welke periode je op het oog hebt, dan laat Joey weten wat er mogelijk is.</p>';
+      '<p class="booking__period-empty">' + T.fixedDatesNote + '</p>';
   }
 
   /* --- Aantal personen -------------------------------------------------- */
@@ -166,7 +349,7 @@
         '<span class="extra__name">' + variant.naam +
           (variant.toelichting ? '<span class="extra__hint">' + variant.toelichting + '</span>' : '') +
         '</span>' +
-        '<span class="extra__price">vanaf ' + euro(staffelprijs(variant, 7) + opslag) + ' p.p.p.n.</span>';
+        '<span class="extra__price">' + T.fromPerPersonPerNight(euro(staffelprijs(variant, 7) + opslag)) + '</span>';
       variantBox.appendChild(rij);
     });
     variantBox.addEventListener("change", ververs);
@@ -189,7 +372,7 @@
   });
 
   if (!extras.length) {
-    extrasBox.innerHTML = '<p class="booking__note">Voor deze reis staan de extra activiteiten nog niet vast. Zet in je opmerking waar je belangstelling voor hebt.</p>';
+    extrasBox.innerHTML = '<p class="booking__note">' + T.noExtrasYet + '</p>';
   } else if (data.weerbericht) {
     var waarschuwing = document.createElement("p");
     waarschuwing.className = "booking__note";
@@ -266,10 +449,9 @@
       var verblijf = nachten * aantal * perDag;
       totaal += verblijf;
       regels.push({
-        naam: (variant ? variant.naam : "Verblijf") + ", " + nachten +
-              (nachten === 1 ? " nacht" : " nachten") + " × " + aantal +
-              (aantal === 1 ? " persoon" : " personen") +
-              " (" + euro(perDag) + " p.p. per dag)",
+        naam: (variant ? variant.naam : T.stayDefault) + ", " + T.nightsLabel(nachten) +
+              " × " + T.personsLabel(aantal) +
+              " (" + euro(perDag) + T.perPersonPerDay + ")",
         bedrag: verblijf
       });
 
@@ -278,8 +460,7 @@
         var toeslag = piekNachten * aantal * reis.hoogseizoen.toeslagPerPersoonPerNacht;
         totaal += toeslag;
         regels.push({
-          naam: reis.hoogseizoen.naam + ", " + piekNachten +
-                (piekNachten === 1 ? " nacht" : " nachten"),
+          naam: reis.hoogseizoen.naam + ", " + T.nightsLabel(piekNachten),
           bedrag: toeslag
         });
       }
@@ -300,7 +481,7 @@
 
     regelsBox.innerHTML = "";
     if (!regels.length) {
-      regelsBox.innerHTML = '<p class="booking__empty">Kies eerst een periode in de kalender.</p>';
+      regelsBox.innerHTML = '<p class="booking__empty">' + T.chooseFirst + '</p>';
     }
     regels.forEach(function (regel) {
       var naam = document.createElement("dt");
@@ -318,36 +499,36 @@
   /* --- Het bericht dat verstuurd wordt ---------------------------------- */
   function bericht(totaal) {
     var aantal = personen();
-    var regels = ["Aanvraag " + reis.naam, ""];
+    var regels = [T.requestFor(reis.naam), ""];
 
     if (nachten) {
-      regels.push("Periode: " + schrijfDatum(van) + " tot " + schrijfDatum(tot) +
-                  " (" + nachten + (nachten === 1 ? " nacht" : " nachten") + ")");
+      regels.push(T.periodLabel + schrijfDatum(van) + T.periodTo + schrijfDatum(tot) +
+                  " (" + T.nightsLabel(nachten) + ")");
     } else {
-      regels.push("Periode: nog niet gekozen");
+      regels.push(T.periodLabel + T.periodNotChosen);
     }
-    regels.push("Aantal personen: " + aantal);
+    regels.push(T.personsLabel2 + aantal);
 
     antwoorden().forEach(function (keuze) {
       regels.push(keuze.vraag + " " + keuze.antwoord);
     });
 
     var lijst = gekozenExtras();
-    regels.push("Extra activiteiten: " + (lijst.length
+    regels.push(T.extraActivitiesLabel + (lijst.length
       ? lijst.map(function (e) { return e.naam; }).join(", ")
-      : "geen"));
+      : T.none));
 
-    if (nachten) regels.push("Indicatie totaal: " + euro(totaal));
+    if (nachten) regels.push(T.totalEstimate + euro(totaal));
 
     regels.push("");
-    regels.push("Naam: " + (document.getElementById("naam").value || "-"));
-    regels.push("E-mail: " + (document.getElementById("email").value || "-"));
-    regels.push("Telefoon: " + (document.getElementById("telefoon").value || "-"));
+    regels.push(T.nameLabel + (document.getElementById("naam").value || "-"));
+    regels.push(T.emailLabel + (document.getElementById("email").value || "-"));
+    regels.push(T.phoneLabel + (document.getElementById("telefoon").value || "-"));
 
     var opmerking = document.getElementById("opmerkingen").value.trim();
     if (opmerking) {
       regels.push("");
-      regels.push("Opmerkingen:");
+      regels.push(T.remarksLabel);
       regels.push(opmerking);
     }
     return regels.join("\n");
@@ -362,25 +543,25 @@
     var naam = document.getElementById("naam");
     var email = document.getElementById("email");
     var ontbreekt = [];
-    if (!naam.value.trim()) ontbreekt.push("je naam");
-    if (!email.value.trim()) ontbreekt.push("je e-mailadres");
+    if (!naam.value.trim()) ontbreekt.push(T.yourName);
+    if (!email.value.trim()) ontbreekt.push(T.yourEmail);
 
     if (ontbreekt.length) {
       foutmelding.hidden = false;
-      foutmelding.textContent = "Vul nog even " + ontbreekt.join(" en ") + " in.";
-      (ontbreekt[0] === "je naam" ? naam : email).focus();
+      foutmelding.textContent = T.fillIn(ontbreekt);
+      (ontbreekt[0] === T.yourName ? naam : email).focus();
       return;
     }
     if (!nachten) {
       foutmelding.hidden = false;
-      foutmelding.textContent = "Kies eerst een periode in de kalender.";
+      foutmelding.textContent = T.chooseFirst;
       return;
     }
 
     foutmelding.hidden = true;
     var totaal = totaalBox.textContent;
     window.location.href = "mailto:" + MAIL +
-      "?subject=" + encodeURIComponent("Aanvraag " + reis.naam) +
+      "?subject=" + encodeURIComponent(T.requestFor(reis.naam)) +
       "&body=" + encodeURIComponent(bericht(totaal));
   });
 

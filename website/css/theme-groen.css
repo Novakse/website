@@ -19,25 +19,13 @@
 /* --------------------------------------------------------------------------
    Header — licht met donkergroene tekst zodra hij dekt
    -------------------------------------------------------------------------- */
-/* Boven de openingsfoto is de balk doorzichtig met witte tekst; zodra hij dekt
-   wordt hij gewoon wit met donkergroene tekst (zie styles.css). */
-.site-header:not(.is-solid) { color: #fff; }
-.site-header:not(.is-solid) .nav-toggle span { background: #fff; }
-.site-header:not(.is-solid) .main-nav__links a::after { background: var(--warm); }
+/* De balk zelf is altijd doorzichtig en wisselt van wit naar donkergroene
+   tekst zodra hij over een lichte sectie komt (logica in styles.css/main.js;
+   --ink is hierboven al herdefinieerd naar het donkergroen van dit thema). */
 .header-cta { background: var(--warm); color: var(--green); }
 
-/* Het uitschuifmenu is licht, net als de rest van de site. De randlijn en de
-   zachte schaduw houden het los van de pagina eronder. */
-@media (max-width: 63.99rem) {
-  .main-nav {
-    background: var(--paper);
-    color: var(--ink);
-    border-left: 1px solid var(--border);
-    box-shadow: -18px 0 40px rgba(20, 24, 26, 0.12);
-  }
-  .main-nav__close { color: var(--ink); }
-  .main-nav .main-nav__links a::after { background: var(--warm-deep); }
-}
+/* Het uitschuifmenu heeft geen eigen achtergrond meer: het kleurt gewoon mee
+   met de balk (zie .site-header--on-light hierboven, in styles.css). */
 
 /* --------------------------------------------------------------------------
    Alle overige secties: licht
