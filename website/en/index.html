@@ -18,6 +18,20 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/index.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/index.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/index.html" />
+  <style>
+    /* Homepage-only polish: balance headline wrapping so no single word is left
+       stranded on its own line. Degrades safely where unsupported. */
+    .opener__title,
+    .layered__title,
+    .why__title,
+    .choice__title,
+    .story__quote,
+    .reviews__title,
+    .h-section,
+    .request__title {
+      text-wrap: balance;
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -25,7 +39,7 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="#top" aria-label="Novakse Reizen — back to top">
-        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="158" height="220" />
+        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="524" height="733" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
       </a>
@@ -45,13 +59,18 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
         <a class="header-cta" href="#aanvraag">Request a trip</a>
-        <div class="lang-switch" aria-label="Taal · Language">
-          <a href="../index.html" lang="nl" hreflang="nl">NL</a>
-          <span class="lang-switch__current" aria-current="true">EN</span>
-          <a href="../sv/index.html" lang="sv" hreflang="sv">SV</a>
-          <a href="../de/index.html" lang="de" hreflang="de">DE</a>
-          <a href="../no/index.html" lang="no" hreflang="no">NO</a>
-          <a href="../fi/index.html" lang="fi" hreflang="fi">FI</a>
+        <div class="lang-switch">
+          <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+            <span class="lang-switch__current">EN</span>
+            <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="lang-switch__menu">
+            <a href="../index.html" lang="nl" hreflang="nl">NL</a>
+            <a href="../sv/index.html" lang="sv" hreflang="sv">SV</a>
+            <a href="../de/index.html" lang="de" hreflang="de">DE</a>
+            <a href="../no/index.html" lang="no" hreflang="no">NO</a>
+            <a href="../fi/index.html" lang="fi" hreflang="fi">FI</a>
+          </div>
         </div>
       </nav>
     </div>
@@ -79,14 +98,17 @@
     <section class="layered">
       <img class="layered__bg" src="../images/avondschaatsen.jpg" alt="Two skaters at dusk on natural ice" loading="lazy" />
       <div class="wrap layered__inner">
-        <h2 class="layered__title">Your skating trip</h2>
-        <ul class="facts">
+        <h2 class="layered__title reveal">Your skating trip</h2>
+        <ul class="facts stagger">
           <li><span class="plus">+</span><b>Accommodation</b></li>
           <li><span class="plus">+</span>Local transport</li>
           <li><span class="plus">+</span>Guidance on the ice</li>
         </ul>
       </div>
       <div class="wrap stepbar stagger">
+        <div class="stepbar__item stepbar__item--intro">
+          <p class="stepbar__intro">Fill in the form and Joey will contact you personally.</p>
+        </div>
         <div class="stepbar__item">
           <span class="stepbar__num">01</span>
           <div class="stepbar__label">Step</div>
@@ -413,7 +435,7 @@
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
           <a href="#">Privacy policy</a>
-          <a href="#">Terms and conditions</a>
+          <a href="algemene-voorwaarden.html">Terms and conditions</a>
         </div>
       </div>
     </div>

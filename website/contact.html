@@ -12,6 +12,43 @@
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/theme-groen.css" />
+  <style>
+    /* Contact page — small refinements within the existing design system.
+       No new colors: reuses var(--warm), var(--warm-deep), var(--ink),
+       var(--border) from css/styles.css and css/theme-groen.css. */
+
+    /* Make the current page visible in the main menu */
+    .main-nav__links a[aria-current="page"] { color: var(--warm); font-weight: 600; }
+    .main-nav__links a[aria-current="page"]::after { transform: scaleX(1); background: var(--warm); }
+    .site-header.site-header--on-light .main-nav__links a[aria-current="page"] { color: var(--warm-deep); }
+    .site-header.site-header--on-light .main-nav__links a[aria-current="page"]::after { background: var(--warm-deep); }
+
+    /* Slightly less symmetrical vertical rhythm */
+    .contact { padding-block: 4.5rem 5.5rem; }
+    .closing { padding-block: 4.5rem 5.5rem; }
+
+    /* Two columns with a bit more weight for the form, gently offset */
+    @media (min-width: 56rem) {
+      .contact__grid { grid-template-columns: 0.88fr 1.12fr; align-items: start; }
+      .contact__form { margin-top: 3rem; }
+    }
+
+    /* Subtle tactile hover on the contact rows (not on the business details) */
+    .contact__list:not(.contact__list--compact) li {
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .contact__list:not(.contact__list--compact) li:hover {
+      transform: translateX(0.4rem);
+      border-color: var(--ink);
+    }
+
+    /* Tidy alignment of digits for KVK/IBAN/BIC */
+    .contact__list--compact .contact__value { font-variant-numeric: tabular-nums; }
+
+    /* Prevents stray orphan lines in headings and intro text */
+    .page-hero__title, .h-section { text-wrap: balance; }
+    .page-hero__lede, .closing__text { text-wrap: pretty; }
+  </style>
   <link rel="alternate" hreflang="nl" href="https://www.novakse.nl/contact.html" />
   <link rel="alternate" hreflang="en" href="https://www.novakse.nl/en/contact.html" />
   <link rel="alternate" hreflang="sv" href="https://www.novakse.nl/sv/contact.html" />
@@ -46,13 +83,18 @@
           <li><a href="index.html#aanvraag" aria-current="page">Contact</a></li>
         </ul>
         <a class="header-cta" href="index.html#aanvraag">Reis aanvragen</a>
-      <div class="lang-switch" aria-label="Taal · Language">
-        <span class="lang-switch__current" aria-current="true">NL</span>
-        <a href="en/contact.html" lang="en" hreflang="en">EN</a>
-        <a href="sv/contact.html" lang="sv" hreflang="sv">SV</a>
-        <a href="de/contact.html" lang="de" hreflang="de">DE</a>
-        <a href="no/contact.html" lang="no" hreflang="no">NO</a>
-        <a href="fi/contact.html" lang="fi" hreflang="fi">FI</a>
+      <div class="lang-switch">
+        <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+          <span class="lang-switch__current">NL</span>
+          <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-switch__menu">
+          <a href="en/contact.html" lang="en" hreflang="en">EN</a>
+          <a href="sv/contact.html" lang="sv" hreflang="sv">SV</a>
+          <a href="de/contact.html" lang="de" hreflang="de">DE</a>
+          <a href="no/contact.html" lang="no" hreflang="no">NO</a>
+          <a href="fi/contact.html" lang="fi" hreflang="fi">FI</a>
+        </div>
       </div>
       </nav>
     </div>
@@ -173,7 +215,7 @@
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
           <a href="#">Privacyverklaring</a>
-          <a href="#">Algemene voorwaarden</a>
+          <a href="algemene-voorwaarden.html">Algemene voorwaarden</a>
         </div>
       </div>
     </div>
@@ -182,10 +224,6 @@
       <span>KVK 92092969</span>
     </div>
   </footer>
-
-  <script src="js/main.js"></script>
-
-  <script src="js/main.js"></script>
 
   <script src="js/main.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>

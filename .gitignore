@@ -1,4 +1,6 @@
 .DS_Store
+.env
+website/.env
 
 # Ruwe bronbestanden (foto's, video's, referenties) - te groot voor GitHub
 brand_assets/

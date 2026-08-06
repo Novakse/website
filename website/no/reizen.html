@@ -17,6 +17,23 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/reizen.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/reizen.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/reizen.html" />
+  <style>
+    /* Verfijning reizen-overzicht: voorkomt wees-woorden in koppen en lopende tekst. */
+    .page-hero__title,
+    .intro__lead,
+    .trip-row__title,
+    .why__title,
+    .closing .h-section {
+      text-wrap: balance;
+    }
+    .page-hero__lede,
+    .trip-row__text,
+    .why__text,
+    .why__reason p,
+    .closing__text {
+      text-wrap: pretty;
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Gå til innhold</a>
@@ -44,68 +61,18 @@
           <li><a href="contact.html">Kontakt</a></li>
         </ul>
         <a class="header-cta" href="index.html#aanvraag">Be om en tur</a>
-              <div class="lang-switch" aria-label="Taal · Language">
-          <a href="../reizen.html" lang="nl" hreflang="nl">NL</a>
-          <a href="../en/reizen.html" lang="en" hreflang="en">EN</a>
-          <a href="../sv/reizen.html" lang="sv" hreflang="sv">SV</a>
-          <a href="../de/reizen.html" lang="de" hreflang="de">DE</a>
-          <span class="lang-switch__current" aria-current="true">NO</span>
-          <a href="../fi/reizen.html" lang="fi" hreflang="fi">FI</a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- 1. Paginakop -->
-    <section class="page-hero" id="top">
-      <img class="page-hero__bg" src="../images/hero-baan-zonsondergang.jpg" alt="Feid skøytebane over en tilfrosset sjø ved solnedgang" fetchpriority="high" />
-      <div class="wrap page-hero__inner">
-        <span class="eyebrow eyebrow--light"><span class="dot"></span>Våre turer</span>
-        <h1 class="page-hero__title">Tre destinasjoner, én sesong</h1>
-        <p class="page-hero__lede">En bekymringsfri, hyggelig skøyteferie: oppdag sjøene og havene med naturis i Sverige og Finland.</p>
-      </div>
-    </section>
-
-    <div class="baanlijn baanlijn--on-light" aria-hidden="true">
-      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
-        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
-      </svg>
-    </div>
-
-    <!-- 2. Inleiding -->
-    <section class="intro">
-      <div class="wrap intro__grid">
-        <p class="intro__lead" data-reveal-words>Hos Novakse skøyter du på naturis gjennom fantastiske vinterlandskap. Med små grupper, personlig veiledning og komfortabel overnatting opplever du kombinasjonen av eventyr og godt selskap.</p>
-        <div class="intro__aside reveal">
-          <p>Hver tur går som planlagt fra 4 deltakere og har maksimalt 12. Joey blir selv med, kjenner isen og bestemmer hver morgen på nytt hvor dagen blir best.</p>
-          <a class="link-arrow" href="reisinformatie.html">Praktisk reiseinformasjon</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. De reizen, één voor één -->
-    <section class="trip-rows" id="bestemmingen">
-      <article class="trip-row reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Bilder av Orsa, trykk for å bytte">
-          <img class="is-active" src="../images/orsa-baan-mora.jpg" alt="Feid skøytebane på Orsasjøen" loading="lazy" />
-          <img src="../images/orsa-accommodatie.jpg" alt="Overnatting ved Orsa i Dalarna" loading="lazy" />
-          <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
-        </div>
-        <div class="trip-row__body">
-          <span class="trip-row__region">Dalarna, Sverige</span>
-          <h2 class="trip-row__title">Orsa</h2>
-          <p class="trip-row__text">Ledet gruppetur på Orsasjøen, med en feid bane på rundt 15 kilometer og opphold i egne hytter like ved isen. Små grupper og begrenset tilgjengelighet.</p>
-          <dl class="trip-row__facts">
-            <div><dt>Type tur</dt><dd>Ledet gruppetur</dd></div>
-            <div><dt>Påmelding</dt><dd>Åpen påmelding, to og to</dd></div>
-            <div><dt>Opphold</dt><dd>Egne hytter ved sjøen</dd></div>
-            <div><dt>Datoer</dt><dd>Kommer snart</dd></div>
-            <div><dt>Pris</dt><dd>Kommer snart</dd></div>
-          </dl>
-          <div class="trip-row__actions">
-            <a class="btn btn--dark" href="orsa.html">Se denne turen</a>
-            <a class="link-arrow" href="index.html#aanvraag">Be om tur</a>
+              <div class="lang-switch">
+            <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+              <span class="lang-switch__current">NO</span>
+              <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lang-switch__menu">
+              <a href="../reizen.html" lang="nl" hreflang="nl">NL</a>
+              <a href="../en/reizen.html" lang="en" hreflang="en">EN</a>
+              <a href="../sv/reizen.html" lang="sv" hreflang="sv">SV</a>
+              <a href="../de/reizen.html" lang="de" hreflang="de">DE</a>
+              <a href="../fi/reizen.html" lang="fi" hreflang="fi">FI</a>
+            </div>
           </div>
         </div>
       </article>
@@ -199,7 +166,7 @@
         <p class="closing__text">På reiseinformasjonssiden finner du hva du tar med, hvordan en dag ser ut og hvordan betaling og avbestilling fungerer. Finner du ikke svaret, still spørsmålet direkte til Joey.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reisinformatie.html">Til reiseinformasjonen</a>
-          <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20jullie%20schaatsreizen." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Still spørsmålet ditt via WhatsApp</a>
+          <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hei%20Joey%2C%20jeg%20har%20et%20sp%C3%B8rsm%C3%A5l%20om%20sk%C3%B8yteturene%20deres." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Still spørsmålet ditt via WhatsApp</a>
         </div>
       </div>
     </section>
@@ -230,7 +197,7 @@
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
           <a href="#">Personvernerklæring</a>
-          <a href="#">Generelle vilkår</a>
+          <a href="algemene-voorwaarden.html">Generelle vilkår</a>
         </div>
       </div>
     </div>

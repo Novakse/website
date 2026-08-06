@@ -17,6 +17,20 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/index.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/index.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/index.html" />
+  <style>
+    /* Homepage-only polish: balance headline wrapping so no single word is left
+       stranded on its own line. Degrades safely where unsupported. */
+    .opener__title,
+    .layered__title,
+    .why__title,
+    .choice__title,
+    .story__quote,
+    .reviews__title,
+    .h-section,
+    .request__title {
+      text-wrap: balance;
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Ga naar de inhoud</a>
@@ -24,7 +38,7 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="#top" aria-label="Novakse Reizen — naar boven">
-        <img class="logo-mark" src="images/logo-mark.png" alt="" width="158" height="220" />
+        <img class="logo-mark" src="images/logo-mark.png" alt="" width="524" height="733" />
         <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
         <img class="logo-word-img logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
       </a>
@@ -44,13 +58,18 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
         <a class="header-cta" href="#aanvraag">Reis aanvragen</a>
-      <div class="lang-switch" aria-label="Taal · Language">
-        <span class="lang-switch__current" aria-current="true">NL</span>
-        <a href="en/index.html" lang="en" hreflang="en">EN</a>
-        <a href="sv/index.html" lang="sv" hreflang="sv">SV</a>
-        <a href="de/index.html" lang="de" hreflang="de">DE</a>
-        <a href="no/index.html" lang="no" hreflang="no">NO</a>
-        <a href="fi/index.html" lang="fi" hreflang="fi">FI</a>
+      <div class="lang-switch">
+        <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+          <span class="lang-switch__current">NL</span>
+          <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-switch__menu">
+          <a href="en/index.html" lang="en" hreflang="en">EN</a>
+          <a href="sv/index.html" lang="sv" hreflang="sv">SV</a>
+          <a href="de/index.html" lang="de" hreflang="de">DE</a>
+          <a href="no/index.html" lang="no" hreflang="no">NO</a>
+          <a href="fi/index.html" lang="fi" hreflang="fi">FI</a>
+        </div>
       </div>
       </nav>
     </div>
@@ -162,6 +181,20 @@
               </div>
               <p class="trip-card__desc">Zelfstandige schaatsreis zonder begeleiding op het Saimaameer bij Punkaharju, met eigen huisjes met sauna.</p>
               <a class="link-arrow trip-card__link" href="finland.html">Bekijk deze reis</a>
+            </article>
+
+            <article class="trip-card">
+              <div class="trip-card__media" data-gallery role="button" tabindex="0" aria-label="Foto's van de Weissensee, tik om te wisselen">
+                <img class="is-active" src="images/weissensee-baan.jpg" alt="Geveegde natuurijsbaan op de Weissensee" loading="lazy" />
+                <img src="images/weissensee-schaatsers.jpg" alt="Schaatsers op de Weissensee tussen de bergen" loading="lazy" />
+                <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
+              </div>
+              <div class="trip-card__head">
+                <h3 class="trip-card__title">Weissensee</h3>
+                <span class="trip-card__meta">Oostenrijk</span>
+              </div>
+              <p class="trip-card__desc">Zelfstandig schaatsen op een bergmeer in Karinthië, bekend van de Alternatieve Elfstedentocht. Data en prijs volgen binnenkort.</p>
+              <a class="link-arrow trip-card__link" href="weissensee.html">Bekijk deze reis</a>
             </article>
           </div>
         </div>
@@ -337,6 +370,7 @@
                 <option value="orsa">Orsa — Dalarna</option>
                 <option value="falun">Falun</option>
                 <option value="finland">Finland — Punkaharju</option>
+                <option value="weissensee">Weissensee — Karinthië</option>
                 <option value="onbekend">Weet ik nog niet</option>
               </select>
             </div>
@@ -417,7 +451,7 @@
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
           <a href="#">Privacyverklaring</a>
-          <a href="#">Algemene voorwaarden</a>
+          <a href="algemene-voorwaarden.html">Algemene voorwaarden</a>
         </div>
       </div>
     </div>

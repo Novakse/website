@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script>document.documentElement.classList.add("js");</script>
-  <title>Over Novakse — het verhaal van Joey Novak | Novakse</title>
-  <meta name="description" content="Joey Novak over Novakse: schaatsen op natuurijs, kleine groepen en persoonlijke begeleiding, vanuit jarenlange ervaring op natuurijs." />
+  <title>Om Novakse — historien til Joey Novak | Novakse</title>
+  <meta name="description" content="Joey Novak om Novakse: skøyting på naturis, små grupper og personlig veiledning, basert på mange års erfaring på naturis." />
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="../fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -19,13 +19,31 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/over-novakse.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/over-novakse.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/over-novakse.html" />
+  <style>
+    /* Refinement pass — scoped to this page only, geen wijziging van gedeelde CSS.
+       Voorkomt wees-woorden onderaan koppen en alinea's (typografische polish). */
+    .page-hero__title,
+    .h-section,
+    .why__title,
+    .story__quote {
+      text-wrap: balance;
+    }
+    .story__text,
+    .why__text,
+    .why__reason p,
+    .split-photo__note,
+    .closing__text,
+    .lede-text {
+      text-wrap: pretty;
+    }
+  </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Ga naar de inhoud</a>
+  <a class="skip-link" href="#main">Gå til innhold</a>
 
   <header class="site-header">
     <div class="wrap site-header__row">
-      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — til forsiden">
         <img class="logo-mark" src="../images/logo-mark.png" alt="" width="524" height="733" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
@@ -33,79 +51,58 @@
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
-        <span class="sr-only">Menu openen</span>
+        <span class="sr-only">Åpne meny</span>
       </button>
 
-      <nav class="main-nav" id="mainNav" aria-label="Hoofdmenu">
-        <button class="main-nav__close" id="navClose" aria-label="Menu sluiten">×</button>
+      <nav class="main-nav" id="mainNav" aria-label="Hovedmeny">
+        <button class="main-nav__close" id="navClose" aria-label="Lukk meny">×</button>
         <ul class="main-nav__links">
-          <li><a href="reizen.html">Reizen</a></li>
-          <li><a href="schaatslessen.html">Schaatslessen</a></li>
-          <li><a href="schaatsonderhoud.html">Schaatsonderhoud</a></li>
-          <li><a href="over-novakse.html" aria-current="page">Over Novakse</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="reizen.html">Turer</a></li>
+          <li><a href="schaatslessen.html">Skøyteleksjoner</a></li>
+          <li><a href="schaatsonderhoud.html">Skøytevedlikehold</a></li>
+          <li><a href="over-novakse.html" aria-current="page">Om Novakse</a></li>
+          <li><a href="contact.html">Kontakt</a></li>
         </ul>
-        <a class="header-cta" href="index.html#aanvraag">Reis aanvragen</a>
-              <div class="lang-switch" aria-label="Taal · Language">
-          <a href="../over-novakse.html" lang="nl" hreflang="nl">NL</a>
-          <a href="../en/over-novakse.html" lang="en" hreflang="en">EN</a>
-          <a href="../sv/over-novakse.html" lang="sv" hreflang="sv">SV</a>
-          <a href="../de/over-novakse.html" lang="de" hreflang="de">DE</a>
-          <span class="lang-switch__current" aria-current="true">NO</span>
-          <a href="../fi/over-novakse.html" lang="fi" hreflang="fi">FI</a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main">
-    <section class="page-hero page-hero--tall" id="top">
-      <img class="page-hero__bg" src="../images/joey-op-het-ijs.jpg" alt="Joey Novak op schaatsen op een bevroren meer" fetchpriority="high" />
-      <div class="wrap page-hero__inner">
-        <span class="eyebrow eyebrow--light"><span class="dot"></span>Over Novakse</span>
-        <h1 class="page-hero__title">Hej, ik ben Joey Novak</h1>
-      </div>
-    </section>
-
-    <div class="baanlijn baanlijn--on-light" aria-hidden="true">
-      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
-        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
-      </svg>
-    </div>
-
-    <section class="story" id="verhaal">
-      <div class="wrap story__grid">
-        <figure class="story__collage reveal" data-collage>
-          <div class="collage__frame">
-            <div class="collage__item collage__item--main" data-speed="-180">
-              <img src="../images/joey-hond-persoonlijk.jpg" alt="Joey Novak met zijn hond aan het water" loading="lazy" />
+        <a class="header-cta" href="index.html#aanvraag">Be om en tur</a>
+              <div class="lang-switch">
+              <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+                <span class="lang-switch__current">NO</span>
+                <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="lang-switch__menu">
+                <a href="../over-novakse.html" lang="nl" hreflang="nl">NL</a>
+                <a href="../en/over-novakse.html" lang="en" hreflang="en">EN</a>
+                <a href="../sv/over-novakse.html" lang="sv" hreflang="sv">SV</a>
+                <a href="../de/over-novakse.html" lang="de" hreflang="de">DE</a>
+                <a href="../fi/over-novakse.html" lang="fi" hreflang="fi">FI</a>
+              </div>
             </div>
             <div class="collage__item collage__item--left" data-speed="-280">
-              <img src="../images/joey-kampvuur.jpg" alt="Joey kookt boven een kampvuur tijdens een schaatstocht" loading="lazy" />
+              <img src="../images/joey-kampvuur.jpg" alt="Joey lager mat over et bål under en skøytetur" loading="lazy" />
             </div>
             <div class="collage__item collage__item--right" data-speed="-230">
-              <img src="../images/groep-rust-ijs.jpg" alt="Schaatsers staan stil op het bevroren meer bij zonsopkomst" loading="lazy" />
+              <img src="../images/groep-rust-ijs.jpg" alt="Skøyteløpere står stille på den tilfrosne sjøen ved soloppgang" loading="lazy" />
             </div>
           </div>
-          <figcaption class="story__caption">Joey Novak, oprichter van Novakse</figcaption>
+          <figcaption class="story__caption">Joey Novak, grunnlegger av Novakse</figcaption>
         </figure>
         <div class="story__body reveal">
-          <p class="story__quote" data-reveal-words>Buiten zijn, in de natuur, dat is waar het voor mij om draait. Schaatsen op natuurijs geeft een ongekende vrijheid.</p>
-          <p class="story__text">Het is geen gecontroleerde ijsbaan, maar iets dat je moet lezen, begrijpen en respecteren. Elke dag op natuurijs is anders &mdash; de wind, het licht, de omstandigheden. Vooral die zonnige, windstille dagen zijn magisch. Ik wil mensen dat laten ervaren, want in onze maatschappij staan we daar te weinig bij stil.</p>
-          <p class="story__text">Mijn achtergrond ligt in het schaatsen. Ik schaats al van jongs af aan en heb in de loop der jaren veel ervaring opgebouwd op natuurijs. Later heb ik een opleiding tot sportleraar gevolgd en daarna veel ervaring opgedaan in de 11shop van de Elfstedenhal, waar ik me bezighield met schaatsmateriaal en slijpen. Maar uiteindelijk draait het voor mij niet om prestaties &mdash; het gaat om het beleven van het schaatsen en de natuur.</p>
+          <p class="story__quote" data-reveal-words>Å være ute, i naturen, det er det som betyr mest for meg. Å skøyte på naturis gir en frihet uten sidestykke.</p>
+          <p class="story__text">Det er ingen kontrollert skøytebane, men noe du må lese, forstå og respektere. Hver dag på naturis er annerledes &mdash; vinden, lyset, forholdene. Særlig de solfylte, vindstille dagene er magiske. Jeg vil at folk skal oppleve det, for i samfunnet vårt tenker vi for lite på det.</p>
+          <p class="story__text">Bakgrunnen min ligger i skøyting. Jeg har skøytet siden jeg var liten og har opparbeidet meg mye erfaring på naturis gjennom årene. Senere tok jeg en utdanning som idrettslærer og fikk deretter mye erfaring i 11-shop hos Elfstedenhal, der jeg jobbet med skøyteutstyr og sliping. Men til syvende og sist handler det for meg ikke om prestasjoner &mdash; det handler om å oppleve skøytingen og naturen.</p>
         </div>
       </div>
     </section>
 
     <section class="split-photo">
       <div class="split-photo__media reveal">
-        <img src="../images/wijds-uitzicht.jpg" alt="Wijds uitzicht over een bevroren meer" loading="lazy" />
+        <img src="../images/wijds-uitzicht.jpg" alt="Vidstrakt utsikt over en tilfrosset sjø" loading="lazy" />
       </div>
       <div class="split-photo__body reveal">
-        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Waar Novakse voor staat</span>
-        <h2 class="h-section">Recreatief schaatsen op natuurijs</h2>
-        <p class="lede-text">Met Novakse richt ik me op recreatief schaatsen op natuurijs. Mijn hoofdfocus ligt op schaatsreizen, waarbij ik anderen meeneem naar plekken waar natuurijs nog &eacute;cht beleefd kan worden. In Nederland is dat steeds zeldzamer, maar in het buitenland zijn er nog geweldige locaties waar je eindeloos kunt schaatsen in een prachtige omgeving.</p>
-        <p class="split-photo__note">Daarnaast geef ik personal training en techniektrainingen. Ik werk graag met kleine groepen, zodat ik echt maatwerk kan leveren.</p>
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Hva Novakse står for</span>
+        <h2 class="h-section">Rekreativ skøyting på naturis</h2>
+        <p class="lede-text">Med Novakse fokuserer jeg på rekreativ skøyting på naturis. Hovedfokuset mitt ligger på skøyteturer, der jeg tar med andre til steder hvor naturis fortsatt kan oppleves ordentlig. I Nederland blir det stadig sjeldnere, men i utlandet finnes det fortsatt fantastiske steder der du kan skøyte i det uendelige i vakre omgivelser.</p>
+        <p class="split-photo__note">I tillegg gir jeg personlig trening og teknikktreninger. Jeg liker å jobbe med små grupper, slik at jeg virkelig kan levere skreddersøm.</p>
       </div>
     </section>
 
@@ -118,23 +115,23 @@
     <section class="why" id="waarom">
       <div class="wrap">
         <div class="why__body why__body--wide reveal">
-          <span class="eyebrow eyebrow--warm"><span class="dot"></span>Waarom voor mezelf</span>
-          <h2 class="why__title">Alles wat ik erin stop, is van mijzelf.</h2>
-          <p class="why__text">Ik ben Novakse gestart omdat ik iets van mezelf wilde opbouwen in plaats van voor een bedrijf te werken en dat op te bouwen. De energie die ik erin steek, is nooit verloren, en de verantwoordelijkheid ligt volledig bij mij. Dat voelt goed.</p>
+          <span class="eyebrow eyebrow--warm"><span class="dot"></span>Hvorfor for meg selv</span>
+          <h2 class="why__title">Alt jeg legger i det, er mitt eget.</h2>
+          <p class="why__text">Jeg startet Novakse fordi jeg ville bygge opp noe eget, i stedet for å jobbe for et selskap og bygge opp det. Energien jeg legger i det, går aldri tapt, og ansvaret ligger helt hos meg selv. Det føles godt.</p>
         </div>
 
         <div class="why__reasons">
           <div class="why__reason reveal">
-            <h3>Techniek en mentaliteit</h3>
-            <p>De twee pijlers waar ik in mijn trainingen op bouw.</p>
+            <h3>Teknikk og mentalitet</h3>
+            <p>De to pilarene jeg bygger treningene mine på.</p>
           </div>
           <div class="why__reason reveal">
-            <h3>Kleine groepen</h3>
-            <p>Zodat er echt maatwerk mogelijk is, op het ijs en op reis.</p>
+            <h3>Små grupper</h3>
+            <p>Slik at ekte skreddersøm er mulig, på isen og på reise.</p>
           </div>
           <div class="why__reason reveal">
-            <h3>Op gevoel</h3>
-            <p>Door mijn eigen ervaring kan ik techniek vaak op gevoel overbrengen.</p>
+            <h3>På følelse</h3>
+            <p>Gjennom min egen erfaring kan jeg ofte formidle teknikk på følelse.</p>
           </div>
         </div>
       </div>
@@ -142,11 +139,11 @@
 
     <section class="closing">
       <div class="wrap closing__inner">
-        <h2 class="h-section">Zin om mee te gaan?</h2>
-        <p class="closing__text">De reizen zijn de kern van Novakse. Daarnaast kun je bij mij terecht voor training en voor het slijpen en afstellen van je schaatsen.</p>
+        <h2 class="h-section">Har du lyst til å bli med?</h2>
+        <p class="closing__text">Turene er kjernen i Novakse. I tillegg kan du komme til meg for trening og for sliping og justering av skøytene dine.</p>
         <div class="closing__actions">
-          <a class="btn btn--dark" href="reizen.html">Bekijk de reizen</a>
-          <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Stel je vraag via WhatsApp</a>
+          <a class="btn btn--dark" href="reizen.html">Se turene</a>
+          <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hei%20Joey%2C%20jeg%20har%20et%20sp%C3%B8rsm%C3%A5l." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Still spørsmålet ditt via WhatsApp</a>
         </div>
       </div>
     </section>
@@ -155,41 +152,37 @@
   <footer class="site-footer">
     <div class="wrap footer__grid">
       <div>
-        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — til forsiden">
           <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="524" height="733" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
         </a>
-        <p class="footer__tagline">Kleinschalige schaatsreizen op natuurijs, persoonlijk begeleid door Joey Novak.</p>
+        <p class="footer__tagline">Småskala skøyteturer på naturis, personlig ledet av Joey Novak.</p>
       </div>
       <div>
-        <p class="footer__heading">Contact</p>
+        <p class="footer__heading">Kontakt</p>
         <div class="footer__links">
           <a href="tel:+31617467643">+31 6 17467643</a>
           <a href="https://wa.me/31617467643" target="_blank" rel="noopener">WhatsApp</a>
           <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a>
-          <span>Friesland — omgeving Noordwolde</span>
+          <span>Friesland, Nederland — nær Noordwolde</span>
         </div>
       </div>
       <div>
-        <p class="footer__heading">Volgen &amp; informatie</p>
+        <p class="footer__heading">Følg &amp; informasjon</p>
         <div class="footer__links">
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
-          <a href="#">Privacyverklaring</a>
-          <a href="#">Algemene voorwaarden</a>
+          <a href="#">Personvernerklæring</a>
+          <a href="algemene-voorwaarden.html">Generelle vilkår</a>
         </div>
       </div>
     </div>
     <div class="wrap footer__bottom">
-      <span>© 2022–2026 Novakse. Alle rechten voorbehouden.</span>
+      <span>© 2022–2026 Novakse. Alle rettigheter forbeholdt.</span>
       <span>KVK 92092969</span>
     </div>
   </footer>
-
-  <script src="../js/main.js"></script>
-
-  <script src="../js/main.js"></script>
 
   <script src="../js/main.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>

@@ -17,6 +17,20 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/index.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/index.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/index.html" />
+  <style>
+    /* Homepage-only polish: balance headline wrapping so no single word is left
+       stranded on its own line. Degrades safely where unsupported. */
+    .opener__title,
+    .layered__title,
+    .why__title,
+    .choice__title,
+    .story__quote,
+    .reviews__title,
+    .h-section,
+    .request__title {
+      text-wrap: balance;
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Gå till innehållet</a>
@@ -24,7 +38,7 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="#top" aria-label="Novakse Reizen — till toppen">
-        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="158" height="220" />
+        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="524" height="733" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
       </a>
@@ -44,91 +58,18 @@
           <li><a href="contact.html">Kontakt</a></li>
         </ul>
         <a class="header-cta" href="#aanvraag">Skicka reseförfrågan</a>
-              <div class="lang-switch" aria-label="Taal · Language">
-          <a href="../index.html" lang="nl" hreflang="nl">NL</a>
-          <a href="../en/index.html" lang="en" hreflang="en">EN</a>
-          <span class="lang-switch__current" aria-current="true">SV</span>
-          <a href="../de/index.html" lang="de" hreflang="de">DE</a>
-          <a href="../no/index.html" lang="no" hreflang="no">NO</a>
-          <a href="../fi/index.html" lang="fi" hreflang="fi">FI</a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- 1. Opener -->
-    <section class="opener" id="top">
-      <video class="opener__video" autoplay muted loop playsinline
-             poster="../images/hero-opener-poster.jpg" aria-hidden="true">
-        <source src="../images/hero-opener.mp4" type="video/mp4" />
-      </video>
-      <div class="opener__inner">
-        <img class="opener__mark" src="../images/logo-mark.png" alt="" width="524" height="733" fetchpriority="high" />
-        <h1 class="opener__title">Naturis</h1>
-        <p class="opener__lede">Små grupper, personlig guidning, frusna sjöar i Sverige och Finland.</p>
-        <div class="opener__actions">
-          <a class="btn btn--light" href="reizen.html">Se våra resor</a>
-          <a class="btn btn--outline-light" href="over-novakse.html">Läs vår historia</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. Jouw schaatsreis + zo werkt een aanvraag -->
-    <section class="layered">
-      <img class="layered__bg" src="../images/avondschaatsen.jpg" alt="Två skridskoåkare i skymningen på naturis" loading="lazy" />
-      <div class="wrap layered__inner">
-        <h2 class="layered__title reveal">Din skridskoresa</h2>
-        <ul class="facts stagger">
-          <li><span class="plus">+</span><b>Boende</b></li>
-          <li><span class="plus">+</span>Transport på plats</li>
-          <li><span class="plus">+</span>Guidning på isen</li>
-        </ul>
-      </div>
-      <div class="wrap stepbar stagger">
-        <div class="stepbar__item stepbar__item--intro">
-          <p class="stepbar__intro">Fyll i formuläret så kontaktar Joey dig personligen.</p>
-        </div>
-        <div class="stepbar__item">
-          <span class="stepbar__num">01</span>
-          <div class="stepbar__label">Steg</div>
-          <div class="stepbar__title">Du skickar en förfrågan</div>
-        </div>
-        <div class="stepbar__item">
-          <span class="stepbar__num">02</span>
-          <div class="stepbar__label">Steg</div>
-          <div class="stepbar__title">Personlig kontakt</div>
-        </div>
-        <div class="stepbar__item">
-          <span class="stepbar__num">03</span>
-          <div class="stepbar__label">Steg</div>
-          <div class="stepbar__title">Vi bestämmer tillsammans</div>
-        </div>
-        <div class="stepbar__item">
-          <span class="stepbar__num">04</span>
-          <div class="stepbar__label">Steg</div>
-          <div class="stepbar__title">Bekräftelse</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="baanlijn baanlijn--on-dark" aria-hidden="true">
-      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
-        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#dd9752" stroke-width="2" />
-      </svg>
-    </div>
-
-    <!-- 3. Reizen -->
-    <section class="trips" id="reizen">
-      <div class="wrap">
-        <div class="trips__layout">
-          <div class="trips__label"><a href="reizen.html"><span>Alla resor</span></a></div>
-          <div class="trips__scroll" id="tripScroll">
-            <article class="trip-card">
-              <div class="trip-card__media" data-gallery role="button" tabindex="0" aria-label="Bilder från Orsa, tryck för att växla">
-                <img class="is-active" src="../images/orsa-baan-mora.jpg" alt="Sopad skridskobana vid Orsa" loading="lazy" />
-                <img src="../images/orsa-accommodatie.jpg" alt="Boende vid Orsa, Dalarna" loading="lazy" />
-                <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
+              <div class="lang-switch">
+                <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+                  <span class="lang-switch__current">SV</span>
+                  <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="lang-switch__menu">
+                  <a href="../index.html" lang="nl" hreflang="nl">NL</a>
+                  <a href="../en/index.html" lang="en" hreflang="en">EN</a>
+                  <a href="../de/index.html" lang="de" hreflang="de">DE</a>
+                  <a href="../no/index.html" lang="no" hreflang="no">NO</a>
+                  <a href="../fi/index.html" lang="fi" hreflang="fi">FI</a>
+                </div>
               </div>
               <div class="trip-card__head">
                 <h3 class="trip-card__title">Orsa</h3>
@@ -417,7 +358,7 @@
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
           <a href="#">Integritetspolicy</a>
-          <a href="#">Allmänna villkor</a>
+          <a href="algemene-voorwaarden.html">Allmänna villkor</a>
         </div>
       </div>
     </div>

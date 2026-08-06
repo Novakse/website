@@ -1,6 +1,8 @@
 ## Frontend workflow
 
-- Werk zelfstandig op de gevraagde pagina of sectie. Neem voor kleine wijzigingen zelf een besluit en maak ze direct.
+- Werk zelfstandig op de gevraagde pagina of sectie. Maak alle redelijke aannames zelf en stel alleen vragen als je er echt niet uitkomt.
+- Begin direct met implementeren zodra de opdracht duidelijk is; wacht niet op tussentijdse bevestiging tenzij een keuze onomkeerbaar is.
+- Start zoveel mogelijk agents parallel zodat onafhankelijke onderdelen tegelijk ontwikkeld worden.
 - Gebruik de `frontend-design` skill voor grotere frontendwijzigingen of wanneer de richting niet duidelijk is.
 - Gebruik Claude Design alleen als extra visuele ondersteuning voor richting, compositie, typografie en sfeer. Het helpt met ontwerp, niet met de volledige implementatie.
 - Claude Design mag inspiratie geven en conceptuele richting bieden, maar Claude Code is verantwoordelijk voor de daadwerkelijke implementatie, structuur en functionaliteit.

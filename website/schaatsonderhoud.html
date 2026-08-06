@@ -19,6 +19,30 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/schaatsonderhoud.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/schaatsonderhoud.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/schaatsonderhoud.html" />
+
+  <style>
+    /* Schaatsonderhoud: rustiger, technischer ritme dan de rest van de site —
+       zelfde kleuren, type en knoppen, alleen ruimte, foto-verhouding en
+       woordafbreking. Hergebruikt bestaande tokens uit styles.css. */
+
+    .page-hero__title,
+    .h-section,
+    .intro__lead { text-wrap: balance; }
+
+    /* De slijptafel-foto is van nature een breedbeeldopname; een gedwongen
+       portretcrop laat het meeste gereedschap wegvallen. Hier krijgt hij zijn
+       eigen brede, rustige kader in plaats van het staande kader dat de
+       reispagina's voor dit blok gebruiken. */
+    .split-photo--panorama { grid-template-columns: 1fr; gap: 2.25rem; }
+    .split-photo--panorama .split-photo__media img { aspect-ratio: 2.8 / 1; border-radius: 1.25rem; }
+    .split-photo--panorama .split-photo__body { padding-inline: var(--pad); max-width: 42rem; }
+    @media (min-width: 60rem) {
+      .split-photo--panorama { padding-block: 5rem 5.5rem; }
+    }
+
+    /* De workshop-vermelding krijgt iets meer rust dan de hoofdzin ervoor. */
+    .closing__note { margin-top: 0.6rem; font-size: 0.9rem; color: var(--ink-soft); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Ga naar de inhoud</a>
@@ -46,13 +70,18 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
         <a class="header-cta" href="index.html#aanvraag">Reis aanvragen</a>
-      <div class="lang-switch" aria-label="Taal · Language">
-        <span class="lang-switch__current" aria-current="true">NL</span>
-        <a href="en/schaatsonderhoud.html" lang="en" hreflang="en">EN</a>
-        <a href="sv/schaatsonderhoud.html" lang="sv" hreflang="sv">SV</a>
-        <a href="de/schaatsonderhoud.html" lang="de" hreflang="de">DE</a>
-        <a href="no/schaatsonderhoud.html" lang="no" hreflang="no">NO</a>
-        <a href="fi/schaatsonderhoud.html" lang="fi" hreflang="fi">FI</a>
+      <div class="lang-switch">
+        <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+          <span class="lang-switch__current">NL</span>
+          <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-switch__menu">
+          <a href="en/schaatsonderhoud.html" lang="en" hreflang="en">EN</a>
+          <a href="sv/schaatsonderhoud.html" lang="sv" hreflang="sv">SV</a>
+          <a href="de/schaatsonderhoud.html" lang="de" hreflang="de">DE</a>
+          <a href="no/schaatsonderhoud.html" lang="no" hreflang="no">NO</a>
+          <a href="fi/schaatsonderhoud.html" lang="fi" hreflang="fi">FI</a>
+        </div>
       </div>
       </nav>
     </div>
@@ -76,7 +105,7 @@
 
     <section class="intro">
       <div class="wrap intro__grid">
-        <p class="intro__lead" data-reveal-words>Een schaats die niet onder je past, kost je meer dan een schaats die niet scherp is.</p>
+        <p class="intro__lead">Een schaats die niet onder je past, kost je meer dan een schaats die niet scherp is.</p>
         <div class="intro__aside reveal">
           <p>Slijpen maakt je schaats scherp. Skatefitting zorgt dat hij goed staat. Dat zijn twee verschillende dingen, en ze hebben allebei hun eigen tarief.</p>
           <a class="link-arrow" href="#skatefitting">Naar skatefitting</a>
@@ -116,7 +145,7 @@
       </div>
     </section>
 
-    <section class="split-photo">
+    <section class="split-photo split-photo--panorama">
       <div class="split-photo__media reveal">
         <img src="images/slijptafel.jpg" alt="Slijptafel met slijpstenen" loading="lazy" />
       </div>
@@ -172,7 +201,8 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Schaatsen laten nakijken?</h2>
-        <p class="closing__text">Laat even weten wat je schaatsen zijn en wat je ermee doet, dan hoor je wat er nodig is. Een workshop slijpen, waarbij je het zelf leert, kan ook.</p>
+        <p class="closing__text">Laat even weten wat je schaatsen zijn en wat je ermee doet, dan hoor je wat er nodig is.</p>
+        <p class="closing__note">Een workshop slijpen, waarbij je het zelf leert, kan ook.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="index.html#aanvraag">Maak een afspraak</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20het%20slijpen%20van%20mijn%20schaatsen." target="_blank" rel="noopener">
@@ -207,7 +237,7 @@
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
           <a href="#">Privacyverklaring</a>
-          <a href="#">Algemene voorwaarden</a>
+          <a href="algemene-voorwaarden.html">Algemene voorwaarden</a>
         </div>
       </div>
     </div>
@@ -216,8 +246,6 @@
       <span>KVK 92092969</span>
     </div>
   </footer>
-
-  <script src="js/main.js"></script>
 
   <script src="js/main.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>

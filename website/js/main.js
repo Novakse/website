@@ -172,6 +172,7 @@
   function syncHeader() {
     if (!header) return;
 
+    header.classList.toggle("site-header--scrolled", window.scrollY > 4);
     header.classList.toggle("site-header--over-hero", !!heroEl && overlapsHeaderBand(heroEl));
 
     var onDark = darkZoneEls.some(function (el) {
@@ -208,6 +209,7 @@
     nav.classList.remove("is-open");
     toggle.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
+    closeLangSwitch();
     syncHeader();
   }
 
@@ -236,6 +238,35 @@
 
     window.matchMedia("(min-width: 64rem)").addEventListener("change", function (e) {
       if (e.matches) closeNav();
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Taalkiezer: toont alleen de actieve taal; klik op de knop opent een
+     uitklapmenu met de overige talen.
+     ------------------------------------------------------------------ */
+  var langSwitch = document.querySelector(".lang-switch");
+  var langToggle = langSwitch && langSwitch.querySelector(".lang-switch__toggle");
+
+  function closeLangSwitch() {
+    if (!langSwitch || !langToggle) return;
+    langSwitch.classList.remove("is-open");
+    langToggle.setAttribute("aria-expanded", "false");
+  }
+
+  if (langSwitch && langToggle) {
+    langToggle.addEventListener("click", function (event) {
+      event.stopPropagation();
+      var isOpen = langSwitch.classList.toggle("is-open");
+      langToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!langSwitch.contains(event.target)) closeLangSwitch();
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") closeLangSwitch();
     });
   }
 

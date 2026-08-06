@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script>document.documentElement.classList.add("js");</script>
-  <title>Schaatsreizen op natuurijs — Novakse Reizen</title>
-  <meta name="description" content="Kleinschalige schaatsreizen op natuurijs naar Orsa en Falun in Zweden en Punkaharju in Finland. Kleine groepen, persoonlijke begeleiding door Joey Novak." />  <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <title>Luonnonjääluistelumatkat — Novakse Reizen</title>
+  <meta name="description" content="Pienimuotoisia luonnonjääluistelumatkoja Orsaan ja Faluniin Ruotsissa sekä Punkaharjulle Suomeen. Pienet ryhmät, Joey Novakin henkilökohtainen opastus." />  <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="../fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="../css/fonts.css" />
   <link rel="stylesheet" href="../css/styles.css" />
@@ -17,13 +17,30 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/reizen.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/reizen.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/reizen.html" />
+  <style>
+    /* Verfijning reizen-overzicht: voorkomt wees-woorden in koppen en lopende tekst. */
+    .page-hero__title,
+    .intro__lead,
+    .trip-row__title,
+    .why__title,
+    .closing .h-section {
+      text-wrap: balance;
+    }
+    .page-hero__lede,
+    .trip-row__text,
+    .why__text,
+    .why__reason p,
+    .closing__text {
+      text-wrap: pretty;
+    }
+  </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Ga naar de inhoud</a>
+  <a class="skip-link" href="#main">Siirry sisältöön</a>
 
   <header class="site-header">
     <div class="wrap site-header__row">
-      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — etusivulle">
         <img class="logo-mark" src="../images/logo-mark.png" alt="" width="524" height="733" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
@@ -31,125 +48,75 @@
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
-        <span class="sr-only">Menu openen</span>
+        <span class="sr-only">Avaa valikko</span>
       </button>
 
-      <nav class="main-nav" id="mainNav" aria-label="Hoofdmenu">
-        <button class="main-nav__close" id="navClose" aria-label="Menu sluiten">×</button>
+      <nav class="main-nav" id="mainNav" aria-label="Päävalikko">
+        <button class="main-nav__close" id="navClose" aria-label="Sulje valikko">×</button>
         <ul class="main-nav__links">
-          <li><a href="reizen.html" aria-current="page">Reizen</a></li>
-          <li><a href="schaatslessen.html">Schaatslessen</a></li>
-          <li><a href="schaatsonderhoud.html">Schaatsonderhoud</a></li>
-          <li><a href="over-novakse.html">Over Novakse</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="reizen.html" aria-current="page">Matkat</a></li>
+          <li><a href="schaatslessen.html">Luistelutunnit</a></li>
+          <li><a href="schaatsonderhoud.html">Luistinten huolto</a></li>
+          <li><a href="over-novakse.html">Tietoa Novaksesta</a></li>
+          <li><a href="contact.html">Yhteystiedot</a></li>
         </ul>
-        <a class="header-cta" href="index.html#aanvraag">Reis aanvragen</a>
-              <div class="lang-switch" aria-label="Taal · Language">
-          <a href="../reizen.html" lang="nl" hreflang="nl">NL</a>
-          <a href="../en/reizen.html" lang="en" hreflang="en">EN</a>
-          <a href="../sv/reizen.html" lang="sv" hreflang="sv">SV</a>
-          <a href="../de/reizen.html" lang="de" hreflang="de">DE</a>
-          <a href="../no/reizen.html" lang="no" hreflang="no">NO</a>
-          <span class="lang-switch__current" aria-current="true">FI</span>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- 1. Paginakop -->
-    <section class="page-hero" id="top">
-      <img class="page-hero__bg" src="../images/hero-baan-zonsondergang.jpg" alt="Geveegde schaatsbaan over een bevroren meer bij zonsondergang" fetchpriority="high" />
-      <div class="wrap page-hero__inner">
-        <span class="eyebrow eyebrow--light"><span class="dot"></span>Onze reizen</span>
-        <h1 class="page-hero__title">Drie bestemmingen, één seizoen</h1>
-        <p class="page-hero__lede">Zonder zorgen een gezellige schaatsvakantie: ontdek de meren en zeeën van natuurijs in Zweden en Finland.</p>
-      </div>
-    </section>
-
-    <div class="baanlijn baanlijn--on-light" aria-hidden="true">
-      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
-        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
-      </svg>
-    </div>
-
-    <!-- 2. Inleiding -->
-    <section class="intro">
-      <div class="wrap intro__grid">
-        <p class="intro__lead" data-reveal-words>Bij Novakse schaats je op natuurijs door schitterende winterlandschappen. Met kleine groepen, persoonlijke begeleiding en comfortabele accommodaties ervaar je de combinatie van avontuur en gezelligheid.</p>
-        <div class="intro__aside reveal">
-          <p>Elke reis gaat door vanaf 4 deelnemers en telt er maximaal 12. Joey gaat zelf mee, kent het ijs en bepaalt elke ochtend opnieuw waar de dag het mooist wordt.</p>
-          <a class="link-arrow" href="reisinformatie.html">Praktische reisinformatie</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. De reizen, één voor één -->
-    <section class="trip-rows" id="bestemmingen">
-      <article class="trip-row reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Orsa, tik om te wisselen">
-          <img class="is-active" src="../images/orsa-baan-mora.jpg" alt="Geveegde schaatsbaan op het Orsameer" loading="lazy" />
-          <img src="../images/orsa-accommodatie.jpg" alt="Accommodatie bij Orsa in Dalarna" loading="lazy" />
-          <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
-        </div>
-        <div class="trip-row__body">
-          <span class="trip-row__region">Dalarna, Zweden</span>
-          <h2 class="trip-row__title">Orsa</h2>
-          <p class="trip-row__text">Begeleide groepsreis op het Orsameer, met een geveegde baan van zo'n 15 kilometer en verblijf in eigen huisjes vlak bij het ijs. Kleine groepen en beperkte beschikbaarheid.</p>
-          <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Begeleide groepsreis</dd></div>
-            <div><dt>Aanmelden</dt><dd>Open inschrijving, per tweetal</dd></div>
-            <div><dt>Verblijf</dt><dd>Eigen huisjes bij het meer</dd></div>
-            <div><dt>Data</dt><dd>Volgen binnenkort</dd></div>
-            <div><dt>Prijs</dt><dd>Volgt binnenkort</dd></div>
-          </dl>
-          <div class="trip-row__actions">
-            <a class="btn btn--dark" href="orsa.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="index.html#aanvraag">Vraag aan</a>
+        <a class="header-cta" href="index.html#aanvraag">Pyydä tarjous</a>
+              <div class="lang-switch">
+            <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+              <span class="lang-switch__current">FI</span>
+              <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lang-switch__menu">
+              <a href="../reizen.html" lang="nl" hreflang="nl">NL</a>
+              <a href="../en/reizen.html" lang="en" hreflang="en">EN</a>
+              <a href="../sv/reizen.html" lang="sv" hreflang="sv">SV</a>
+              <a href="../de/reizen.html" lang="de" hreflang="de">DE</a>
+              <a href="../no/reizen.html" lang="no" hreflang="no">NO</a>
+            </div>
           </div>
         </div>
       </article>
 
       <article class="trip-row trip-row--flip reveal">
         <div class="trip-row__media">
-          <img class="is-active" src="../images/finland-baan.jpg" alt="Schaatsbaan op het Saimaameer bij Punkaharju" loading="lazy" />
+          <img class="is-active" src="../images/finland-baan.jpg" alt="Luistelurata Saimaalla Punkaharjulla" loading="lazy" />
         </div>
         <div class="trip-row__body">
-          <span class="trip-row__region">Punkaharju, Finland</span>
-          <h2 class="trip-row__title">Finland</h2>
-          <p class="trip-row__text">Zelfstandige schaatsreis op het Saimaameer bij Punkaharju, in het nationaal park. Je gaat zonder begeleiding op pad; het verblijf is in eigen huisjes met sauna.</p>
+          <span class="trip-row__region">Punkaharju, Suomi</span>
+          <h2 class="trip-row__title">Suomi</h2>
+          <p class="trip-row__text">Omatoiminen luistelumatka Saimaalla Punkaharjulla, kansallispuiston alueella. Liikut ilman opastusta; majoitus on omissa saunallisissa mökeissä.</p>
           <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
-            <div><dt>Verblijf</dt><dd>Eigen huisjes met sauna</dd></div>
-            <div><dt>Prijs</dt><dd>Vanaf €995</dd></div>
+            <div><dt>Matkan tyyppi</dt><dd>Omatoiminen, ilman opastusta</dd></div>
+            <div><dt>Majoitus</dt><dd>Omat saunalliset mökit</dd></div>
+            <div><dt>Hinta</dt><dd>Alkaen 995 €</dd></div>
           </dl>
           <div class="trip-row__actions">
-            <a class="btn btn--dark" href="finland.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="index.html#aanvraag">Vraag aan</a>
+            <a class="btn btn--dark" href="finland.html">Katso tämä matka</a>
+            <a class="link-arrow" href="index.html#aanvraag">Kysy tarjousta</a>
           </div>
         </div>
       </article>
 
       <article class="trip-row reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Falun, tik om te wisselen">
-          <img class="is-active" src="../images/falun-meer.jpg" alt="Schaatsers op een bevroren meer bij Falun" loading="lazy" />
-          <img src="../images/falun-accommodatie.jpg" alt="Accommodatie bij Falun" loading="lazy" />
+        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Kuvia Falunista, napauta vaihtaaksesi">
+          <img class="is-active" src="../images/falun-meer.jpg" alt="Luistelijoita jäätyneellä järvellä Falunissa" loading="lazy" />
+          <img src="../images/falun-accommodatie.jpg" alt="Majoitus Falunissa" loading="lazy" />
           <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
         </div>
         <div class="trip-row__body">
-          <span class="trip-row__region">Dalarna, Zweden</span>
+          <span class="trip-row__region">Dalarna, Ruotsi</span>
           <h2 class="trip-row__title">Falun</h2>
-          <p class="trip-row__text">Begeleide groepsreis op historisch ijs, met de karakteristieke rode mijngebouwen van Falun op de achtergrond. Zelfde opzet als Orsa.</p>
+          <p class="trip-row__text">Opastettu ryhmämatka historialliselle jäälle, taustalla Falunin tunnusomaiset punaiset kaivosrakennukset. Sama toteutus kuin Orsassa.</p>
           <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Begeleide groepsreis</dd></div>
-            <div><dt>Aanmelden</dt><dd>Open inschrijving, per tweetal</dd></div>
-            <div><dt>Verblijf</dt><dd>Volgt binnenkort</dd></div>
-            <div><dt>Data</dt><dd>Volgen binnenkort</dd></div>
-            <div><dt>Prijs</dt><dd>Volgt binnenkort</dd></div>
+            <div><dt>Matkan tyyppi</dt><dd>Opastettu ryhmämatka</dd></div>
+            <div><dt>Ilmoittautuminen</dt><dd>Avoin ilmoittautuminen, pareittain</dd></div>
+            <div><dt>Majoitus</dt><dd>Julkaistaan pian</dd></div>
+            <div><dt>Päivämäärät</dt><dd>Julkaistaan pian</dd></div>
+            <div><dt>Hinta</dt><dd>Julkaistaan pian</dd></div>
           </dl>
           <div class="trip-row__actions">
-            <a class="btn btn--dark" href="falun.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="index.html#aanvraag">Vraag aan</a>
+            <a class="btn btn--dark" href="falun.html">Katso tämä matka</a>
+            <a class="link-arrow" href="index.html#aanvraag">Kysy tarjousta</a>
           </div>
         </div>
       </article>
@@ -160,27 +127,27 @@
       <div class="wrap">
         <div class="why__split">
           <div class="why__body reveal">
-            <span class="eyebrow eyebrow--warm"><span class="dot"></span>Hoe een reis werkt</span>
-            <h2 class="why__title">Je boekt geen route. Je boekt een week op het ijs.</h2>
-            <p class="why__text">Natuurijs laat zich niet plannen. Waar we schaatsen hangt af van het weer en de ijskwaliteit, en dat bepalen we ter plekke. Wat wél vaststaat, is hoe de reis geregeld is.</p>
+            <span class="eyebrow eyebrow--warm"><span class="dot"></span>Miten matka toimii</span>
+            <h2 class="why__title">Et varaa reittiä. Varaat viikon jäällä.</h2>
+            <p class="why__text">Luonnonjäätä ei voi suunnitella etukäteen. Missä luistelemme, riippuu säästä ja jään laadusta, ja sen päätämme paikan päällä. Se, mikä on kiinteää, on tapa, jolla matka on järjestetty.</p>
           </div>
           <div class="why__media reveal">
-            <img src="../images/zwart-ijs-scheuren.jpg" alt="Zwart natuurijs met lange scheuren" loading="lazy" />
+            <img src="../images/zwart-ijs-scheuren.jpg" alt="Mustaa luonnonjäätä, jossa pitkiä halkeamia" loading="lazy" />
           </div>
         </div>
 
         <div class="why__reasons">
           <div class="why__reason reveal">
-            <h3>4 tot 12 deelnemers</h3>
-            <p>Een reis gaat door vanaf 4 deelnemers en telt er maximaal 12.</p>
+            <h3>4–12 osallistujaa</h3>
+            <p>Matka toteutuu vähintään 4 osallistujalla ja siihen mahtuu enintään 12.</p>
           </div>
           <div class="why__reason reveal">
-            <h3>50% aanbetaling</h3>
-            <p>De helft bij boeking, het restant uiterlijk 5 weken voor vertrek.</p>
+            <h3>50 %:n käsiraha</h3>
+            <p>Puolet varauksen yhteydessä, loppuosa viimeistään 5 viikkoa ennen lähtöä.</p>
           </div>
           <div class="why__reason reveal">
-            <h3>Ruim vooraf duidelijk</h3>
-            <p>Eventuele prijswijzigingen horen we minimaal 4 weken voor vertrek.</p>
+            <h3>Selvää hyvissä ajoin</h3>
+            <p>Mahdollisista hinnanmuutoksista ilmoitetaan viimeistään 4 viikkoa ennen lähtöä.</p>
           </div>
         </div>
       </div>
@@ -195,11 +162,11 @@
     <!-- 5. Verder lezen of aanvragen -->
     <section class="closing">
       <div class="wrap closing__inner">
-        <h2 class="h-section">Nog vragen voordat je kiest?</h2>
-        <p class="closing__text">Op de reisinformatie staat wat je meeneemt, hoe een dag eruitziet en hoe het zit met betalen en annuleren. Kom je er niet uit, stel je vraag dan gewoon rechtstreeks aan Joey.</p>
+        <h2 class="h-section">Onko vielä kysyttävää ennen kuin päätät?</h2>
+        <p class="closing__text">Matkatietosivulla kerrotaan, mitä otat mukaan, miltä päivä näyttää ja miten maksaminen ja peruminen toimivat. Jos et löydä vastausta, kysy rohkeasti suoraan Joeylta.</p>
         <div class="closing__actions">
-          <a class="btn btn--dark" href="reisinformatie.html">Naar de reisinformatie</a>
-          <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20jullie%20schaatsreizen." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Stel je vraag via WhatsApp</a>
+          <a class="btn btn--dark" href="reisinformatie.html">Matkatietoihin</a>
+          <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hei%20Joey%2C%20minulla%20on%20kysymys%20luistelumatkoistanne." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Kysy WhatsAppin kautta</a>
         </div>
       </div>
     </section>
@@ -208,34 +175,34 @@
   <footer class="site-footer">
     <div class="wrap footer__grid">
       <div>
-        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — etusivulle">
           <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="524" height="733" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
         </a>
-        <p class="footer__tagline">Kleinschalige schaatsreizen op natuurijs, persoonlijk begeleid door Joey Novak.</p>
+        <p class="footer__tagline">Pienimuotoisia luonnonjääluistelumatkoja, henkilökohtaisesti opastaa Joey Novak.</p>
       </div>
       <div>
-        <p class="footer__heading">Contact</p>
+        <p class="footer__heading">Yhteystiedot</p>
         <div class="footer__links">
           <a href="tel:+31617467643">+31 6 17467643</a>
           <a href="https://wa.me/31617467643" target="_blank" rel="noopener">WhatsApp</a>
           <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a>
-          <span>Friesland — omgeving Noordwolde</span>
+          <span>Friesland — Noordwolden seutu</span>
         </div>
       </div>
       <div>
-        <p class="footer__heading">Volgen &amp; informatie</p>
+        <p class="footer__heading">Seuraa &amp; tietoa</p>
         <div class="footer__links">
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
-          <a href="#">Privacyverklaring</a>
-          <a href="#">Algemene voorwaarden</a>
+          <a href="#">Tietosuojaseloste</a>
+          <a href="algemene-voorwaarden.html">Yleiset ehdot</a>
         </div>
       </div>
     </div>
     <div class="wrap footer__bottom">
-      <span>© 2022–2026 Novakse. Alle rechten voorbehouden.</span>
+      <span>© 2022–2026 Novakse. Kaikki oikeudet pidätetään.</span>
       <span>KVK 92092969</span>
     </div>
   </footer>

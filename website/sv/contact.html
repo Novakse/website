@@ -4,14 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script>document.documentElement.classList.add("js");</script>
-  <title>Contact — Novakse Reizen</title>
-  <meta name="description" content="Neem contact op met Novakse: WhatsApp, telefoon of e-mail. Joey Novak beantwoordt je vraag zelf. Gevestigd in Friesland, omgeving Noordwolde." />
+  <title>Kontakt — Novakse Reizen</title>
+  <meta name="description" content="Kontakta Novakse: WhatsApp, telefon eller e-post. Joey Novak svarar på din fråga själv. Baserad i Friesland, i närheten av Noordwolde." />
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="../fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="../css/fonts.css" />
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/theme-groen.css" />
+  <style>
+    /* Contact page — small refinements within the existing design system.
+       No new colors: reuses var(--warm), var(--warm-deep), var(--ink),
+       var(--border) from css/styles.css and css/theme-groen.css. */
+
+    /* Make the current page visible in the main menu */
+    .main-nav__links a[aria-current="page"] { color: var(--warm); font-weight: 600; }
+    .main-nav__links a[aria-current="page"]::after { transform: scaleX(1); background: var(--warm); }
+    .site-header.site-header--on-light .main-nav__links a[aria-current="page"] { color: var(--warm-deep); }
+    .site-header.site-header--on-light .main-nav__links a[aria-current="page"]::after { background: var(--warm-deep); }
+
+    /* Slightly less symmetrical vertical rhythm */
+    .contact { padding-block: 4.5rem 5.5rem; }
+    .closing { padding-block: 4.5rem 5.5rem; }
+
+    /* Two columns with a bit more weight for the form, gently offset */
+    @media (min-width: 56rem) {
+      .contact__grid { grid-template-columns: 0.88fr 1.12fr; align-items: start; }
+      .contact__form { margin-top: 3rem; }
+    }
+
+    /* Subtle tactile hover on the contact rows (not on the business details) */
+    .contact__list:not(.contact__list--compact) li {
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .contact__list:not(.contact__list--compact) li:hover {
+      transform: translateX(0.4rem);
+      border-color: var(--ink);
+    }
+
+    /* Tidy alignment of digits for KVK/IBAN/BIC */
+    .contact__list--compact .contact__value { font-variant-numeric: tabular-nums; }
+
+    /* Prevents stray orphan lines in headings and intro text */
+    .page-hero__title, .h-section { text-wrap: balance; }
+    .page-hero__lede, .closing__text { text-wrap: pretty; }
+  </style>
   <link rel="alternate" hreflang="nl" href="https://www.novakse.nl/contact.html" />
   <link rel="alternate" hreflang="en" href="https://www.novakse.nl/en/contact.html" />
   <link rel="alternate" hreflang="sv" href="https://www.novakse.nl/sv/contact.html" />
@@ -21,11 +58,11 @@
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/contact.html" />
 </head>
 <body>
-  <a class="skip-link" href="#main">Ga naar de inhoud</a>
+  <a class="skip-link" href="#main">Gå till innehållet</a>
 
   <header class="site-header">
     <div class="wrap site-header__row">
-      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — till startsidan">
         <img class="logo-mark" src="../images/logo-mark.png" alt="" width="524" height="733" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
@@ -33,26 +70,31 @@
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
-        <span class="sr-only">Menu openen</span>
+        <span class="sr-only">Öppna menyn</span>
       </button>
 
-      <nav class="main-nav" id="mainNav" aria-label="Hoofdmenu">
-        <button class="main-nav__close" id="navClose" aria-label="Menu sluiten">×</button>
+      <nav class="main-nav" id="mainNav" aria-label="Huvudmeny">
+        <button class="main-nav__close" id="navClose" aria-label="Stäng menyn">×</button>
         <ul class="main-nav__links">
-          <li><a href="reizen.html">Reizen</a></li>
-          <li><a href="schaatslessen.html">Schaatslessen</a></li>
-          <li><a href="schaatsonderhoud.html">Schaatsonderhoud</a></li>
-          <li><a href="over-novakse.html">Over Novakse</a></li>
-          <li><a href="index.html#aanvraag" aria-current="page">Contact</a></li>
+          <li><a href="reizen.html">Resor</a></li>
+          <li><a href="schaatslessen.html">Skridskolektioner</a></li>
+          <li><a href="schaatsonderhoud.html">Skridskounderhåll</a></li>
+          <li><a href="over-novakse.html">Om Novakse</a></li>
+          <li><a href="index.html#aanvraag" aria-current="page">Kontakt</a></li>
         </ul>
-        <a class="header-cta" href="index.html#aanvraag">Reis aanvragen</a>
-              <div class="lang-switch" aria-label="Taal · Language">
-          <a href="../contact.html" lang="nl" hreflang="nl">NL</a>
-          <a href="../en/contact.html" lang="en" hreflang="en">EN</a>
-          <span class="lang-switch__current" aria-current="true">SV</span>
-          <a href="../de/contact.html" lang="de" hreflang="de">DE</a>
-          <a href="../no/contact.html" lang="no" hreflang="no">NO</a>
-          <a href="../fi/contact.html" lang="fi" hreflang="fi">FI</a>
+        <a class="header-cta" href="index.html#aanvraag">Skicka reseförfrågan</a>
+        <div class="lang-switch">
+          <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+            <span class="lang-switch__current">SV</span>
+            <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="lang-switch__menu">
+            <a href="../contact.html" lang="nl" hreflang="nl">NL</a>
+            <a href="../en/contact.html" lang="en" hreflang="en">EN</a>
+            <a href="../de/contact.html" lang="de" hreflang="de">DE</a>
+            <a href="../no/contact.html" lang="no" hreflang="no">NO</a>
+            <a href="../fi/contact.html" lang="fi" hreflang="fi">FI</a>
+          </div>
         </div>
       </nav>
     </div>
@@ -60,11 +102,11 @@
 
   <main id="main">
     <section class="page-hero" id="top">
-      <img class="page-hero__bg" src="../images/duo-zonsondergang.jpg" alt="Twee schaatsers op het ijs bij zonsondergang" fetchpriority="high" />
+      <img class="page-hero__bg" src="../images/duo-zonsondergang.jpg" alt="Två skridskoåkare på isen vid solnedgången" fetchpriority="high" />
       <div class="wrap page-hero__inner">
-        <span class="eyebrow eyebrow--light"><span class="dot"></span>Contact</span>
-        <h1 class="page-hero__title">Even overleggen?</h1>
-        <p class="page-hero__lede">Joey beantwoordt de berichten zelf. Bellen, appen of mailen &mdash; wat jou het beste uitkomt.</p>
+        <span class="eyebrow eyebrow--light"><span class="dot"></span>Kontakt</span>
+        <h1 class="page-hero__title">Ska vi stämma av?</h1>
+        <p class="page-hero__lede">Joey svarar på meddelandena själv. Ring, messa eller mejla &mdash; vad som passar dig bäst.</p>
       </div>
     </section>
 
@@ -77,30 +119,30 @@
     <section class="contact">
       <div class="wrap contact__grid">
         <div class="contact__ways reveal">
-          <h2 class="h-section">Rechtstreeks</h2>
+          <h2 class="h-section">Direkt</h2>
           <ul class="contact__list">
             <li>
               <span class="contact__label">WhatsApp</span>
-              <a class="contact__value" href="https://wa.me/31617467643" target="_blank" rel="noopener">Stuur een bericht</a>
-              <span class="contact__hint">Meestal het snelst</span>
+              <a class="contact__value" href="https://wa.me/31617467643" target="_blank" rel="noopener">Skicka ett meddelande</a>
+              <span class="contact__hint">Oftast snabbast</span>
             </li>
             <li>
-              <span class="contact__label">Telefoon</span>
+              <span class="contact__label">Telefon</span>
               <a class="contact__value" href="tel:+31617467643">+31 6 17467643</a>
             </li>
             <li>
-              <span class="contact__label">E-mail</span>
+              <span class="contact__label">E-post</span>
               <a class="contact__value" href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a>
-              <span class="contact__hint">Voor aanvragen en reserveringen</span>
+              <span class="contact__hint">För förfrågningar och bokningar</span>
             </li>
             <li>
-              <span class="contact__label">Waar</span>
-              <span class="contact__value">Friesland, omgeving Noordwolde</span>
-              <span class="contact__hint">Slijpen en onderhoud: haal &amp; breng in Wolvega, Appelscha, Oosterwolde, Steenwijk, Vledder en Heerenveen</span>
+              <span class="contact__label">Var</span>
+              <span class="contact__value">Friesland, i närheten av Noordwolde</span>
+              <span class="contact__hint">Slipning och underhåll: hämtning &amp; lämning i Wolvega, Appelscha, Oosterwolde, Steenwijk, Vledder och Heerenveen</span>
             </li>
           </ul>
 
-          <h2 class="h-section contact__sub">Bedrijfsgegevens</h2>
+          <h2 class="h-section contact__sub">Företagsuppgifter</h2>
           <ul class="contact__list contact__list--compact">
             <li><span class="contact__label">KVK</span><span class="contact__value">92092969</span></li>
             <li><span class="contact__label">IBAN</span><span class="contact__value">NL12 BUNQ 2140 1368 45</span></li>
@@ -109,27 +151,27 @@
         </div>
 
         <div class="contact__form reveal">
-          <h2 class="h-section">Of stel je vraag hier</h2>
+          <h2 class="h-section">Eller ställ din fråga här</h2>
           <form class="form-grid contact__fields">
             <label class="form-field">
-              <span>Naam</span>
+              <span>Namn</span>
               <input type="text" name="naam" autocomplete="name" required />
             </label>
             <label class="form-field">
-              <span>E-mailadres</span>
+              <span>E-postadress</span>
               <input type="email" name="email" autocomplete="email" />
             </label>
             <label class="form-field">
-              <span>Telefoon</span>
+              <span>Telefon</span>
               <input type="tel" name="telefoon" autocomplete="tel" />
             </label>
             <label class="form-field form-field--full">
-              <span>Je vraag</span>
+              <span>Din fråga</span>
               <textarea name="vraag" rows="5"></textarea>
             </label>
             <div class="form-field--full">
-              <button class="btn btn--dark" type="submit">Verzenden</button>
-              <p class="form-note">Dit formulier is nog niet gekoppeld aan een verzendfunctie. Mail zolang naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+              <button class="btn btn--dark" type="submit">Skicka</button>
+              <p class="form-note">Det här formuläret är ännu inte kopplat till en sändfunktion. Mejla under tiden till <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller messa till +31 6 17467643.</p>
             </div>
           </form>
         </div>
@@ -138,11 +180,11 @@
 
     <section class="closing">
       <div class="wrap closing__inner">
-        <h2 class="h-section">Weet je al wat je wilt?</h2>
-        <p class="closing__text">Stel je reis alvast samen &mdash; periode, aantal personen en de extra&rsquo;s. Je zit nergens aan vast.</p>
+        <h2 class="h-section">Vet du redan vad du vill?</h2>
+        <p class="closing__text">Sätt ihop din resa redan nu &mdash; period, antal personer och tilläggen. Du binder dig inte till något.</p>
         <div class="closing__actions">
-          <a class="btn btn--dark" href="reizen.html">Bekijk de reizen</a>
-          <a class="btn btn--outline-dark" href="reisinformatie.html">Praktische informatie</a>
+          <a class="btn btn--dark" href="reizen.html">Se resorna</a>
+          <a class="btn btn--outline-dark" href="reisinformatie.html">Praktisk information</a>
         </div>
       </div>
     </section>
@@ -151,41 +193,37 @@
   <footer class="site-footer">
     <div class="wrap footer__grid">
       <div>
-        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — till startsidan">
           <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="524" height="733" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
         </a>
-        <p class="footer__tagline">Kleinschalige schaatsreizen op natuurijs, persoonlijk begeleid door Joey Novak.</p>
+        <p class="footer__tagline">Småskaliga skridskoresor på naturis, personligt guidade av Joey Novak.</p>
       </div>
       <div>
-        <p class="footer__heading">Contact</p>
+        <p class="footer__heading">Kontakt</p>
         <div class="footer__links">
           <a href="tel:+31617467643">+31 6 17467643</a>
           <a href="https://wa.me/31617467643" target="_blank" rel="noopener">WhatsApp</a>
           <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a>
-          <span>Friesland — omgeving Noordwolde</span>
+          <span>Friesland — i närheten av Noordwolde</span>
         </div>
       </div>
       <div>
-        <p class="footer__heading">Volgen &amp; informatie</p>
+        <p class="footer__heading">Följ oss &amp; information</p>
         <div class="footer__links">
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
-          <a href="#">Privacyverklaring</a>
-          <a href="#">Algemene voorwaarden</a>
+          <a href="#">Integritetspolicy</a>
+          <a href="algemene-voorwaarden.html">Allmänna villkor</a>
         </div>
       </div>
     </div>
     <div class="wrap footer__bottom">
-      <span>© 2022–2026 Novakse. Alle rechten voorbehouden.</span>
+      <span>© 2022–2026 Novakse. Alla rättigheter förbehållna.</span>
       <span>KVK 92092969</span>
     </div>
   </footer>
-
-  <script src="../js/main.js"></script>
-
-  <script src="../js/main.js"></script>
 
   <script src="../js/main.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>

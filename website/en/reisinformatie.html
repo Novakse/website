@@ -19,6 +19,29 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/reisinformatie.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/reisinformatie.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/reisinformatie.html" />
+
+  <style>
+    /* Reisinformatie — scoped typographic polish (this page only, reuses tokens from styles.css) */
+    .page-hero__title,
+    .h-section,
+    .why__title,
+    .included__title {
+      text-wrap: balance;
+    }
+    .page-hero__lede,
+    .intro__lead,
+    .lede-text,
+    .why__text,
+    .closing__text {
+      text-wrap: pretty;
+    }
+    .faq__item summary {
+      transition: color 0.2s ease;
+    }
+    .faq__item summary:hover {
+      color: var(--warm-deep);
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -46,13 +69,18 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
         <a class="header-cta" href="index.html#aanvraag">Request a trip</a>
-        <div class="lang-switch" aria-label="Taal · Language">
-          <a href="../reisinformatie.html" lang="nl" hreflang="nl">NL</a>
-          <span class="lang-switch__current" aria-current="true">EN</span>
-          <a href="../sv/reisinformatie.html" lang="sv" hreflang="sv">SV</a>
-          <a href="../de/reisinformatie.html" lang="de" hreflang="de">DE</a>
-          <a href="../no/reisinformatie.html" lang="no" hreflang="no">NO</a>
-          <a href="../fi/reisinformatie.html" lang="fi" hreflang="fi">FI</a>
+        <div class="lang-switch">
+          <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+            <span class="lang-switch__current">EN</span>
+            <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="lang-switch__menu">
+            <a href="../reisinformatie.html" lang="nl" hreflang="nl">NL</a>
+            <a href="../sv/reisinformatie.html" lang="sv" hreflang="sv">SV</a>
+            <a href="../de/reisinformatie.html" lang="de" hreflang="de">DE</a>
+            <a href="../no/reisinformatie.html" lang="no" hreflang="no">NO</a>
+            <a href="../fi/reisinformatie.html" lang="fi" hreflang="fi">FI</a>
+          </div>
         </div>
       </nav>
     </div>
@@ -253,7 +281,7 @@
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
           <a href="#">Privacy policy</a>
-          <a href="#">Terms and conditions</a>
+          <a href="algemene-voorwaarden.html">Terms and conditions</a>
         </div>
       </div>
     </div>

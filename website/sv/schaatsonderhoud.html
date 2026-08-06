@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script>document.documentElement.classList.add("js");</script>
-  <title>Schaatsen slijpen, onderhoud en skatefitting | Novakse</title>
-  <meta name="description" content="Schaatsen slijpen, onderhoud en skatefitting bij Novakse in Noordwolde. Handmatig slijpen, ronden, benden en richten, en het afstellen van je schaats." />
+  <title>Slipa skridskor, underhåll och skatefitting | Novakse</title>
+  <meta name="description" content="Slipa skridskor, underhåll och skatefitting hos Novakse i Noordwolde. Handslipning, rondering, bockning och riktning, samt inställning av din skridsko." />
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="../fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -19,13 +19,37 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.nl/no/schaatsonderhoud.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.nl/fi/schaatsonderhoud.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.nl/schaatsonderhoud.html" />
+
+  <style>
+    /* Schaatsonderhoud: rustiger, technischer ritme dan de rest van de site —
+       zelfde kleuren, type en knoppen, alleen ruimte, foto-verhouding en
+       woordafbreking. Hergebruikt bestaande tokens uit styles.css. */
+
+    .page-hero__title,
+    .h-section,
+    .intro__lead { text-wrap: balance; }
+
+    /* De slijptafel-foto is van nature een breedbeeldopname; een gedwongen
+       portretcrop laat het meeste gereedschap wegvallen. Hier krijgt hij zijn
+       eigen brede, rustige kader in plaats van het staande kader dat de
+       reispagina's voor dit blok gebruiken. */
+    .split-photo--panorama { grid-template-columns: 1fr; gap: 2.25rem; }
+    .split-photo--panorama .split-photo__media img { aspect-ratio: 2.8 / 1; border-radius: 1.25rem; }
+    .split-photo--panorama .split-photo__body { padding-inline: var(--pad); max-width: 42rem; }
+    @media (min-width: 60rem) {
+      .split-photo--panorama { padding-block: 5rem 5.5rem; }
+    }
+
+    /* De workshop-vermelding krijgt iets meer rust dan de hoofdzin ervoor. */
+    .closing__note { margin-top: 0.6rem; font-size: 0.9rem; color: var(--ink-soft); }
+  </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Ga naar de inhoud</a>
+  <a class="skip-link" href="#main">Gå till innehållet</a>
 
   <header class="site-header">
     <div class="wrap site-header__row">
-      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+      <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — till startsidan">
         <img class="logo-mark" src="../images/logo-mark.png" alt="" width="524" height="733" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
@@ -33,98 +57,56 @@
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
-        <span class="sr-only">Menu openen</span>
+        <span class="sr-only">Öppna menyn</span>
       </button>
 
-      <nav class="main-nav" id="mainNav" aria-label="Hoofdmenu">
-        <button class="main-nav__close" id="navClose" aria-label="Menu sluiten">×</button>
+      <nav class="main-nav" id="mainNav" aria-label="Huvudmeny">
+        <button class="main-nav__close" id="navClose" aria-label="Stäng menyn">×</button>
         <ul class="main-nav__links">
-          <li><a href="reizen.html">Reizen</a></li>
-          <li><a href="schaatslessen.html">Schaatslessen</a></li>
-          <li><a href="schaatsonderhoud.html" aria-current="page">Schaatsonderhoud</a></li>
-          <li><a href="over-novakse.html">Over Novakse</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="reizen.html">Resor</a></li>
+          <li><a href="schaatslessen.html">Skridskolektioner</a></li>
+          <li><a href="schaatsonderhoud.html" aria-current="page">Skridskounderhåll</a></li>
+          <li><a href="over-novakse.html">Om Novakse</a></li>
+          <li><a href="contact.html">Kontakt</a></li>
         </ul>
-        <a class="header-cta" href="index.html#aanvraag">Reis aanvragen</a>
-              <div class="lang-switch" aria-label="Taal · Language">
-          <a href="../schaatsonderhoud.html" lang="nl" hreflang="nl">NL</a>
-          <a href="../en/schaatsonderhoud.html" lang="en" hreflang="en">EN</a>
-          <span class="lang-switch__current" aria-current="true">SV</span>
-          <a href="../de/schaatsonderhoud.html" lang="de" hreflang="de">DE</a>
-          <a href="../no/schaatsonderhoud.html" lang="no" hreflang="no">NO</a>
-          <a href="../fi/schaatsonderhoud.html" lang="fi" hreflang="fi">FI</a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main">
-    <section class="page-hero" id="top">
-      <img class="page-hero__bg" src="../images/slijpen-ronding.jpg" alt="Specialistisch slijpen van een schaatsronding" fetchpriority="high" />
-      <div class="wrap page-hero__inner">
-        <span class="eyebrow eyebrow--light"><span class="dot"></span>Schaatsonderhoud</span>
-        <h1 class="page-hero__title">Slijpen en afstellen</h1>
-        <p class="page-hero__lede">Scherpe schaatsen die onder je passen. Handwerk, uit de praktijk van de 11shop van de Elfstedenhal.</p>
-      </div>
-    </section>
-
-    <div class="baanlijn baanlijn--on-light" aria-hidden="true">
-      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
-        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
-      </svg>
-    </div>
-
-    <section class="intro">
-      <div class="wrap intro__grid">
-        <p class="intro__lead" data-reveal-words>Een schaats die niet onder je past, kost je meer dan een schaats die niet scherp is.</p>
-        <div class="intro__aside reveal">
-          <p>Slijpen maakt je schaats scherp. Skatefitting zorgt dat hij goed staat. Dat zijn twee verschillende dingen, en ze hebben allebei hun eigen tarief.</p>
-          <a class="link-arrow" href="#skatefitting">Naar skatefitting</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="rates" id="slijpen">
-      <div class="wrap">
-        <div class="rates__head reveal">
-          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Slijpen en onderhoud</span>
-          <h2 class="h-section">Wat het kost</h2>
-        </div>
-
-        <div class="rates__grid">
-          <div class="rates__block reveal">
-            <h3 class="rates__title">Slijpen</h3>
-            <dl class="rates__list">
-              <div><dt>Handmatig slijpen noren</dt><dd>&euro;16</dd></div>
-              <div><dt>Ronden &amp; slijpen noren</dt><dd>&euro;27</dd></div>
-              <div><dt>Handgeslepen ronding</dt><dd>&euro;65</dd></div>
-            </dl>
-            <p class="rates__note">De handgeslepen ronding is variabel; wat er nodig is hangt af van je schaats en je rijstijl.</p>
+        <a class="header-cta" href="index.html#aanvraag">Skicka reseförfrågan</a>
+              <div class="lang-switch">
+            <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+              <span class="lang-switch__current">SV</span>
+              <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lang-switch__menu">
+              <a href="../schaatsonderhoud.html" lang="nl" hreflang="nl">NL</a>
+              <a href="../en/schaatsonderhoud.html" lang="en" hreflang="en">EN</a>
+              <a href="../de/schaatsonderhoud.html" lang="de" hreflang="de">DE</a>
+              <a href="../no/schaatsonderhoud.html" lang="no" hreflang="no">NO</a>
+              <a href="../fi/schaatsonderhoud.html" lang="fi" hreflang="fi">FI</a>
+            </div>
           </div>
 
           <div class="rates__block reveal">
-            <h3 class="rates__title">Onderhoud en afstelwerk</h3>
+            <h3 class="rates__title">Underhåll och inställningsarbete</h3>
             <dl class="rates__list">
-              <div><dt>Onderhoud (APK)</dt><dd>vanaf &euro;35</dd></div>
-              <div><dt>Benden en richten, eerste half uur</dt><dd>&euro;35</dd></div>
-              <div><dt>Elk volgend half uur</dt><dd>&euro;30</dd></div>
-              <div><dt>Reparatie</dt><dd>op aanvraag</dd></div>
+              <div><dt>Underhåll (besiktning)</dt><dd>från &euro;35</dd></div>
+              <div><dt>Bockning och riktning, första halvtimmen</dt><dd>&euro;35</dd></div>
+              <div><dt>Varje ytterligare halvtimme</dt><dd>&euro;30</dd></div>
+              <div><dt>Reparation</dt><dd>på förfrågan</dd></div>
             </dl>
-            <p class="rates__note">Benden en richten geldt ook voor shorttrack. Bij reparatie hangt de prijs af van de tijd en de onderdelen.</p>
+            <p class="rates__note">Bockning och riktning gäller även för shorttrack. Vid reparation beror priset på tiden och delarna.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="split-photo">
+    <section class="split-photo split-photo--panorama">
       <div class="split-photo__media reveal">
-        <img src="../images/slijptafel.jpg" alt="Slijptafel met slijpstenen" loading="lazy" />
+        <img src="../images/slijptafel.jpg" alt="Slipbord med slipstenar" loading="lazy" />
       </div>
       <div class="split-photo__body reveal">
-        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Wat de APK inhoudt</span>
-        <h2 class="h-section">Alles nagelopen, niet alleen geslepen</h2>
-        <p class="lede-text">Bij een onderhoudsbeurt gaat de hele schaats langs: ronden, slijpen en polijsten, en daarnaast de veren, stootrubbers, nokjes, bouten en het scharnier.</p>
-        <p class="split-photo__note">Zitten er onderdelen bij die vervangen moeten worden, dan hoor je dat vooraf.</p>
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Vad besiktningen innebär</span>
+        <h2 class="h-section">Allt genomgånget, inte bara slipat</h2>
+        <p class="lede-text">Vid en underhållsomgång går hela skridskon igenom: rondering, slipning och polering, samt fjädrar, stötgummi, tappar, bultar och gångjärnet.</p>
+        <p class="split-photo__note">Om det finns delar som behöver bytas ut hör du det i förväg.</p>
       </div>
     </section>
 
@@ -138,32 +120,32 @@
       <div class="wrap">
         <div class="steps__head reveal">
           <span class="eyebrow eyebrow--deep"><span class="dot"></span>Skatefitting</span>
-          <h2 class="h-section">Je schaats onder je voet afstellen</h2>
-          <p class="steps__intro">Iets anders dan slijpen. Hierbij kijken we naar de stand van je schaats en passen we hem aan op hoe jij rijdt.</p>
+          <h2 class="h-section">Ställa in skridskon under din fot</h2>
+          <p class="steps__intro">Något annat än slipning. Här tittar vi på hur din skridsko står och anpassar den efter hur du åker.</p>
         </div>
 
         <ol class="steps__list">
-          <li class="step reveal"><span class="step__nr">1</span><div><h3 class="step__title">Intake</h3><p class="step__text">Je rijstijl, je materiaal en waar je tegenaan loopt.</p></div></li>
-          <li class="step reveal"><span class="step__nr">2</span><div><h3 class="step__title">Basisafstelling</h3><p class="step__text">De schaats wordt afgesteld op je voet en je stand.</p></div></li>
-          <li class="step reveal"><span class="step__nr">3</span><div><h3 class="step__title">IJsobservatie</h3><p class="step__text">Je rijdt, Joey kijkt mee op het ijs.</p></div></li>
-          <li class="step reveal"><span class="step__nr">4</span><div><h3 class="step__title">Aanpassingen</h3><p class="step__text">Bijstellen op basis van wat er te zien was.</p></div></li>
-          <li class="step reveal"><span class="step__nr">5</span><div><h3 class="step__title">Controle</h3><p class="step__text">Nog een keer nalopen of het klopt.</p></div></li>
+          <li class="step reveal"><span class="step__nr">1</span><div><h3 class="step__title">Intag</h3><p class="step__text">Din åkstil, din utrustning och vad du stöter på.</p></div></li>
+          <li class="step reveal"><span class="step__nr">2</span><div><h3 class="step__title">Grundinställning</h3><p class="step__text">Skridskon ställs in efter din fot och din stående position.</p></div></li>
+          <li class="step reveal"><span class="step__nr">3</span><div><h3 class="step__title">Isobservation</h3><p class="step__text">Du åker, Joey följer med på isen.</p></div></li>
+          <li class="step reveal"><span class="step__nr">4</span><div><h3 class="step__title">Justeringar</h3><p class="step__text">Finjustering utifrån vad som observerades.</p></div></li>
+          <li class="step reveal"><span class="step__nr">5</span><div><h3 class="step__title">Kontroll</h3><p class="step__text">En sista genomgång för att bekräfta att allt stämmer.</p></div></li>
         </ol>
 
         <div class="rates__grid steps__rates">
           <div class="rates__block reveal">
-            <h3 class="rates__title">Tarieven skatefitting</h3>
+            <h3 class="rates__title">Priser skatefitting</h3>
             <dl class="rates__list">
-              <div><dt>Individueel, per uur</dt><dd>&euro;95</dd></div>
-              <div><dt>Samen, twee personen</dt><dd>&euro;140</dd></div>
-              <div><dt>Vervolgafspraak</dt><dd>&euro;65</dd></div>
+              <div><dt>Individuellt, per timme</dt><dd>&euro;95</dd></div>
+              <div><dt>Tillsammans, två personer</dt><dd>&euro;140</dd></div>
+              <div><dt>Uppföljningsbesök</dt><dd>&euro;65</dd></div>
             </dl>
-            <p class="rates__note">Wigjes, veren of andere onderdelen komen daar apart bij.</p>
+            <p class="rates__note">Kilar, fjädrar eller andra delar tillkommer separat.</p>
           </div>
           <div class="rates__block reveal">
-            <h3 class="rates__title">Haal &amp; breng</h3>
-            <p class="rates__note">Kom je er niet uit om langs te komen? In de omgeving haal en breng ik je schaatsen tegen een kleine vergoeding, en kosten delen kan.</p>
-            <p class="rates__note">Bereik vanuit Noordwolde: Wolvega, Appelscha, Oosterwolde, Steenwijk, Vledder en Heerenveen — ongeveer twintig minuten rijden.</p>
+            <h3 class="rates__title">Hämta &amp; lämna</h3>
+            <p class="rates__note">Kommer du inte iväg själv? I området hämtar och lämnar jag dina skridskor mot en liten avgift, och att dela kostnaden går bra.</p>
+            <p class="rates__note">Räckvidd från Noordwolde: Wolvega, Appelscha, Oosterwolde, Steenwijk, Vledder och Heerenveen — cirka tjugo minuters bilresa.</p>
           </div>
         </div>
       </div>
@@ -171,12 +153,13 @@
 
     <section class="closing">
       <div class="wrap closing__inner">
-        <h2 class="h-section">Schaatsen laten nakijken?</h2>
-        <p class="closing__text">Laat even weten wat je schaatsen zijn en wat je ermee doet, dan hoor je wat er nodig is. Een workshop slijpen, waarbij je het zelf leert, kan ook.</p>
+        <h2 class="h-section">Vill du få dina skridskor kontrollerade?</h2>
+        <p class="closing__text">Berätta vilka skridskor du har och vad du använder dem till, så hör du vad som behövs.</p>
+        <p class="closing__note">En workshop i slipning, där du lär dig göra det själv, går också bra.</p>
         <div class="closing__actions">
-          <a class="btn btn--dark" href="index.html#aanvraag">Maak een afspraak</a>
-          <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20het%20slijpen%20van%20mijn%20schaatsen." target="_blank" rel="noopener">
-            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Stel je vraag via WhatsApp</a>
+          <a class="btn btn--dark" href="index.html#aanvraag">Boka en tid</a>
+          <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hej%20Joey%2C%20jag%20har%20en%20fr%C3%A5ga%20om%20slipning%20av%20mina%20skridskor." target="_blank" rel="noopener">
+            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Ställ din fråga via WhatsApp</a>
         </div>
       </div>
     </section>
@@ -185,39 +168,37 @@
   <footer class="site-footer">
     <div class="wrap footer__grid">
       <div>
-        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
+        <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — till startsidan">
           <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="524" height="733" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
         </a>
-        <p class="footer__tagline">Kleinschalige schaatsreizen op natuurijs, persoonlijk begeleid door Joey Novak.</p>
+        <p class="footer__tagline">Småskaliga skridskoresor på naturis, personligt guidade av Joey Novak.</p>
       </div>
       <div>
-        <p class="footer__heading">Contact</p>
+        <p class="footer__heading">Kontakt</p>
         <div class="footer__links">
           <a href="tel:+31617467643">+31 6 17467643</a>
           <a href="https://wa.me/31617467643" target="_blank" rel="noopener">WhatsApp</a>
           <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a>
-          <span>Friesland — omgeving Noordwolde</span>
+          <span>Friesland — i närheten av Noordwolde</span>
         </div>
       </div>
       <div>
-        <p class="footer__heading">Volgen &amp; informatie</p>
+        <p class="footer__heading">Följ oss &amp; information</p>
         <div class="footer__links">
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
-          <a href="#">Privacyverklaring</a>
-          <a href="#">Algemene voorwaarden</a>
+          <a href="#">Integritetspolicy</a>
+          <a href="algemene-voorwaarden.html">Allmänna villkor</a>
         </div>
       </div>
     </div>
     <div class="wrap footer__bottom">
-      <span>© 2022–2026 Novakse. Alle rechten voorbehouden.</span>
+      <span>© 2022–2026 Novakse. Alla rättigheter förbehållna.</span>
       <span>KVK 92092969</span>
     </div>
   </footer>
-
-  <script src="../js/main.js"></script>
 
   <script src="../js/main.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
