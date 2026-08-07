@@ -19,7 +19,7 @@ Gebaseerd op website_content/CONTENT-INVENTORY.md, DESIGN-DIRECTION.md en de rei
 
 ---
 
-## Volledige paginastructuur (12 pagina's)
+## Volledige paginastructuur (13 pagina's)
 
 1. **Home**
 2. **Reizen** — overzichtspagina
@@ -30,9 +30,10 @@ Gebaseerd op website_content/CONTENT-INVENTORY.md, DESIGN-DIRECTION.md en de rei
 7. **Schaatslessen** — inclusief de secties aanbod, tarieven, gratis proefles, inschrijven, én de sectie **Clinics** (bedrijfsclinic, bochtenclinic)
 8. **Schaatsonderhoud** — inclusief de secties slijpen & onderhoud, haal & breng, én de secties **Skatefitting** en **Workshop slijpen**
 9. **Over Novakse**
-10. **Contact**
-11. **Privacyverklaring** (footer)
-12. **Algemene voorwaarden** (footer)
+10. **Blog** — overzichtspagina met artikelen (details en indeling nog te bepalen)
+11. **Contact**
+12. **Privacyverklaring** (footer)
+13. **Algemene voorwaarden** (footer)
 
 Clinics, Skatefitting en Workshop slijpen zijn dus **geen aparte pagina's**, maar duidelijk herkenbare secties binnen Schaatslessen respectievelijk Schaatsonderhoud. Dit houdt de eerste versie compact; als een van deze onderdelen later behoefte heeft aan meer ruimte, kan het alsnog een eigen pagina worden.
 
@@ -49,7 +50,6 @@ Clinics, Skatefitting en Workshop slijpen zijn dus **geen aparte pagina's**, maa
 
 ## Niet meegenomen in deze eerste versie
 
-- **Blog** — wordt voorlopig niet gebouwd.
 - **Webshop** — wordt voorlopig niet gebouwd. Dit vraagt later een apart besluit (bijv. of de bestaande 32 producten overgezet worden, of de webshop sowieso terugkomt).
 
 ---
@@ -63,4 +63,4 @@ Clinics, Skatefitting en Workshop slijpen zijn dus **geen aparte pagina's**, maa
 
 ---
 
-Dit is een eerste, compacte structuur. Onderdelen die nu als sectie zijn ondergebracht (Clinics, Skatefitting, Workshop slijpen) of bewust zijn weggelaten (Blog, Webshop, extra bestemmingen) kunnen in een latere fase alsnog uitgebreid worden, in overleg.
+Dit is een eerste, compacte structuur. Onderdelen die nu als sectie zijn ondergebracht (Clinics, Skatefitting, Workshop slijpen) of bewust zijn weggelaten (Webshop, extra bestemmingen) kunnen in een latere fase alsnog uitgebreid worden, in overleg.

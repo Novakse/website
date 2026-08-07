@@ -3,9 +3,9 @@
 
    Leest reis en bedrag uit het webadres (die zet Joey erin als hij een
    betaallink stuurt, bijvoorbeeld: uitchecken.html?reis=Finland&bedrag=59700).
-   Het bedrag staat in hele centen. Bij het doorgaan wordt er een Mollie-
-   betaling aangemaakt via /api/create-payment en stuurt de browser door
-   naar de betaalomgeving van Mollie.
+   Het bedrag staat in hele centen. Bij het doorgaan wordt er een Stripe
+   Checkout-sessie aangemaakt via /api/create-payment en stuurt de browser
+   door naar de betaalomgeving van Stripe.
    ========================================================================== */
 (function () {
   "use strict";

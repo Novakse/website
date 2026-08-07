@@ -374,8 +374,10 @@
               <textarea id="bericht" name="bericht" placeholder="Tell us briefly about your wishes, level or questions"></textarea>
             </div>
           </div>
-          <button type="submit" class="btn btn--warm form-submit">Send request</button>
-          <p class="form-note">This form isn't connected to a sending function yet. In the meantime, email <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> or message +31 6 17467643.</p>
+          <button type="submit" class="btn btn--warm form-submit" id="aanvraagKnop">Send request</button>
+          <p class="form-status form-status--error" id="aanvraagFout" role="alert" hidden>Sending didn't work. Please try again, or email <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> or message +31 6 17467643.</p>
+          <p class="form-status form-status--success" id="aanvraagSucces" role="status" hidden>Thanks! Your request has been sent — Joey will get in touch with you soon.</p>
+          <p class="form-note" id="formNote">Prefer to reach out directly? Email <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> or message +31 6 17467643.</p>
         </form>
       </div>
     </section>
@@ -450,6 +452,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

@@ -297,8 +297,10 @@
               <textarea id="bericht" name="bericht" placeholder="Erzähl kurz etwas über deine Wünsche, dein Niveau oder deine Fragen"></textarea>
             </div>
           </div>
-          <button type="submit" class="btn btn--warm form-submit">Anfrage senden</button>
-          <p class="form-note">Dieses Formular ist noch nicht mit einer Versandfunktion verbunden. Schreib in der Zwischenzeit eine E-Mail an <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> oder eine Nachricht an +31 6 17467643.</p>
+          <button type="submit" class="btn btn--warm form-submit" id="aanvraagKnop">Anfrage senden</button>
+          <p class="form-status form-status--error" id="aanvraagFout" role="alert" hidden>Senden hat nicht geklappt. Versuch es noch einmal oder schreib eine E-Mail an <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> oder eine Nachricht an +31 6 17467643.</p>
+          <p class="form-status form-status--success" id="aanvraagSucces" role="status" hidden>Danke! Deine Anfrage wurde gesendet — Joey meldet sich bald bei dir.</p>
+          <p class="form-note" id="formNote">Lieber direkt Kontakt aufnehmen? Schreib eine E-Mail an <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> oder eine Nachricht an +31 6 17467643.</p>
         </form>
       </div>
     </section>
@@ -373,6 +375,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

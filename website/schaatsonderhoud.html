@@ -47,6 +47,13 @@
 
     /* De workshop-vermelding krijgt iets meer rust dan de hoofdzin ervoor. */
     .closing__note { margin-top: 0.6rem; font-size: 0.9rem; color: var(--ink-soft); }
+
+    /* Eigen aanmeldformulier voor slijpen/onderhoud, los van de reisaanvraag
+       op de homepage — andere velden, zelfde form-grid/form-field tokens. */
+    .onderhoud-form { margin-top: 2.25rem; }
+    .onderhoud-form .form-note { color: var(--ink-soft); }
+    .closing__divider { margin: 2.25rem 0; border: none; border-top: 1px solid var(--border); }
+    .closing__or { margin-top: 1.5rem; color: var(--ink-soft); font-size: 0.9rem; }
   </style>
 </head>
 <body>
@@ -146,6 +153,12 @@
             </dl>
             <p class="rates__note">Benden en richten geldt ook voor shorttrack. Bij reparatie hangt de prijs af van de tijd en de onderdelen.</p>
           </div>
+
+          <div class="rates__block rates__block--full reveal">
+            <h3 class="rates__title">Haal &amp; breng</h3>
+            <p class="rates__note">Kom je er niet uit om langs te komen? In de omgeving haal en breng ik je schaatsen tegen een kleine vergoeding, en kosten delen kan.</p>
+            <p class="rates__note">Bereik vanuit Noordwolde: Wolvega, Appelscha, Oosterwolde, Steenwijk, Vledder en Heerenveen — ongeveer twintig minuten rijden.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -184,7 +197,7 @@
           <li class="step reveal"><span class="step__nr">5</span><div><h3 class="step__title">Controle</h3><p class="step__text">Nog een keer nalopen of het klopt.</p></div></li>
         </ol>
 
-        <div class="rates__grid steps__rates">
+        <div class="steps__rates">
           <div class="rates__block reveal">
             <h3 class="rates__title">Tarieven skatefitting</h3>
             <dl class="rates__list">
@@ -194,22 +207,54 @@
             </dl>
             <p class="rates__note">Wigjes, veren of andere onderdelen komen daar apart bij.</p>
           </div>
-          <div class="rates__block reveal">
-            <h3 class="rates__title">Haal &amp; breng</h3>
-            <p class="rates__note">Kom je er niet uit om langs te komen? In de omgeving haal en breng ik je schaatsen tegen een kleine vergoeding, en kosten delen kan.</p>
-            <p class="rates__note">Bereik vanuit Noordwolde: Wolvega, Appelscha, Oosterwolde, Steenwijk, Vledder en Heerenveen — ongeveer twintig minuten rijden.</p>
-          </div>
         </div>
       </div>
     </section>
 
-    <section class="closing">
+    <section class="closing" id="aanmelden">
       <div class="wrap closing__inner">
         <h2 class="h-section">Schaatsen laten nakijken?</h2>
         <p class="closing__text">Laat even weten wat je schaatsen zijn en wat je ermee doet, dan hoor je wat er nodig is.</p>
         <p class="closing__note">Een workshop slijpen, waarbij je het zelf leert, kan ook.</p>
+
+        <form class="form-grid onderhoud-form reveal" id="onderhoudForm">
+          <label class="form-field">
+            <span>Naam</span>
+            <input type="text" name="naam" autocomplete="name" required />
+          </label>
+          <label class="form-field">
+            <span>E-mailadres</span>
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+          <label class="form-field">
+            <span>Telefoon</span>
+            <input type="tel" name="telefoon" autocomplete="tel" />
+          </label>
+          <label class="form-field">
+            <span>Wat heeft je schaats nodig?</span>
+            <select name="dienst">
+              <option value="slijpen-noren">Handmatig slijpen noren</option>
+              <option value="ronden-slijpen">Ronden &amp; slijpen noren</option>
+              <option value="handgeslepen-ronding">Handgeslepen ronding</option>
+              <option value="onderhoud-apk">Onderhoud (APK)</option>
+              <option value="benden-richten">Benden en richten</option>
+              <option value="skatefitting">Skatefitting</option>
+              <option value="weet-niet">Weet ik nog niet</option>
+            </select>
+          </label>
+          <label class="form-field form-field--full">
+            <span>Je schaatsen en wat je ermee doet</span>
+            <textarea name="toelichting" rows="4" placeholder="Bijvoorbeeld: noren of shorttrack, merk, hoe vaak je rijdt"></textarea>
+          </label>
+          <div class="form-field--full">
+            <button class="btn btn--dark" type="submit">Verstuur aanvraag</button>
+            <p class="form-note">Dit formulier is nog niet gekoppeld aan een verzendfunctie. Mail zolang naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+          </div>
+        </form>
+
+        <hr class="closing__divider" />
+        <p class="closing__or">Liever direct contact?</p>
         <div class="closing__actions">
-          <a class="btn btn--dark" href="index.html#aanvraag">Maak een afspraak</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20het%20slijpen%20van%20mijn%20schaatsen." target="_blank" rel="noopener">
             <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Stel je vraag via WhatsApp</a>
         </div>
@@ -241,6 +286,7 @@
         <div class="footer__links">
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
+          <a href="blog.html">Blog</a>
           <a href="#">Privacyverklaring</a>
           <a href="algemene-voorwaarden.html">Algemene voorwaarden</a>
         </div>

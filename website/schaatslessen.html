@@ -160,12 +160,12 @@
           <summary>Entree van de ijsbaan &mdash; wat kost dat ongeveer?</summary>
           <p class="rates__note">Dit betaal je aan de Elfstedenhal zelf, niet aan Novakse. Kijk voor de actuele tarieven op de site van de ijsbaan; onderstaande bedragen zijn van eerder en kunnen inmiddels anders zijn.</p>
           <dl class="rates__list rates__list--compact">
-            <div><dt>11-rittenkaart t/m 17 jaar</dt><dd>&euro;60,00</dd></div>
-            <div><dt>11-rittenkaart vanaf 18 jaar</dt><dd>&euro;95,00</dd></div>
-            <div><dt>Seizoensabonnement t/m 17 jaar</dt><dd>&euro;134,00</dd></div>
-            <div><dt>Basis vanaf 18 jaar, max. 26&times;</dt><dd>&euro;185,00</dd></div>
-            <div><dt>Comfort vanaf 18 jaar, max. 65&times;</dt><dd>&euro;260,00</dd></div>
-            <div><dt>Premium vanaf 18 jaar, onbeperkt</dt><dd>&euro;320,00</dd></div>
+            <div><dt>11-rittenkaart t/m 17 jaar</dt><dd>&euro;70,00</dd></div>
+            <div><dt>11-rittenkaart vanaf 18 jaar</dt><dd>&euro;105,00</dd></div>
+            <div><dt>Seizoensabonnement t/m 17 jaar</dt><dd>&euro;150,00</dd></div>
+            <div><dt>Basis vanaf 18 jaar, max. 26&times;</dt><dd>&euro;212,50</dd></div>
+            <div><dt>Comfort vanaf 18 jaar, max. 65&times;</dt><dd>&euro;255,00</dd></div>
+            <div><dt>Premium vanaf 18 jaar, onbeperkt</dt><dd>&euro;345,00</dd></div>
           </dl>
         </details>
       </div>
@@ -207,12 +207,73 @@
       </div>
     </section>
 
+    <section class="request" id="lesaanvraag">
+      <div class="wrap request__grid">
+        <div class="request__body reveal">
+          <span class="eyebrow eyebrow--warm"><span class="dot"></span>Aanmelden</span>
+          <h2 class="request__title">Meedoen of eerst even proberen?</h2>
+          <p class="request__text">Vul het formulier in en Joey neemt persoonlijk contact met je op.</p>
+          <ul class="request__points">
+            <li>Antwoord rechtstreeks van Joey, geen callcenter</li>
+            <li>Voor groepslessen, personal training, privétrainer of een proefles</li>
+            <li>Vrijblijvend — eerst even kennismaken</li>
+          </ul>
+        </div>
+
+        <form class="request__form reveal" id="lessonRequestForm">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="les-voornaam">Voornaam</label>
+              <input type="text" id="les-voornaam" name="voornaam" autocomplete="given-name" required />
+            </div>
+            <div class="form-field">
+              <label for="les-achternaam">Achternaam</label>
+              <input type="text" id="les-achternaam" name="achternaam" autocomplete="family-name" required />
+            </div>
+            <div class="form-field">
+              <label for="les-email">E-mailadres</label>
+              <input type="email" id="les-email" name="email" autocomplete="email" required />
+            </div>
+            <div class="form-field">
+              <label for="les-telefoon">Telefoon</label>
+              <input type="tel" id="les-telefoon" name="telefoon" autocomplete="tel" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="les-type">Waar heb je interesse in?</label>
+              <select id="les-type" name="lestype">
+                <option value="groepslessen">Groepslessen</option>
+                <option value="personal-training">Personal Training</option>
+                <option value="privetrainer">Privétrainer</option>
+                <option value="natuurijstraining">Natuurijstraining</option>
+                <option value="proefles">Gratis proefles</option>
+                <option value="onbekend">Weet ik nog niet</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="les-personen">Met hoeveel personen?</label>
+              <input type="number" id="les-personen" name="personen" min="1" inputmode="numeric" />
+            </div>
+            <div class="form-field">
+              <label for="les-niveau">Schaatsniveau</label>
+              <input type="text" id="les-niveau" name="niveau" placeholder="Bijv. beginner, gevorderd" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="les-bericht">Je bericht</label>
+              <textarea id="les-bericht" name="bericht" placeholder="Vertel kort iets over je wensen of vragen"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--warm form-submit">Verstuur aanvraag</button>
+          <p class="form-note">Dit formulier is nog niet gekoppeld aan een verzendfunctie. Mail zolang naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+        </form>
+      </div>
+    </section>
+
     <section class="closing">
       <div class="wrap closing__inner">
-        <h2 class="h-section">Meedoen of eerst even proberen?</h2>
-        <p class="closing__text">Laat weten waarvoor je je wilt inschrijven en met hoeveel personen je komt. Joey neemt zelf contact met je op.</p>
+        <h2 class="h-section">Liever eerst appen?</h2>
+        <p class="closing__text">Stel je vraag rechtstreeks aan Joey, of vul hierboven het formulier in.</p>
         <div class="closing__actions">
-          <a class="btn btn--dark" href="index.html#aanvraag">Schrijf je in</a>
+          <a class="btn btn--dark" href="#lesaanvraag">Schrijf je in</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20de%20schaatslessen." target="_blank" rel="noopener">
             <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Stel je vraag via WhatsApp</a>
         </div>
@@ -244,6 +305,7 @@
         <div class="footer__links">
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
+          <a href="blog.html">Blog</a>
           <a href="#">Privacyverklaring</a>
           <a href="algemene-voorwaarden.html">Algemene voorwaarden</a>
         </div>

@@ -297,8 +297,10 @@
               <textarea id="bericht" name="bericht" placeholder="Fortell kort om dine ønsker, nivå eller spørsmål"></textarea>
             </div>
           </div>
-          <button type="submit" class="btn btn--warm form-submit">Send forespørsel</button>
-          <p class="form-note">Dette skjemaet er ennå ikke koblet til en sendefunksjon. Send i mellomtiden en e-post til <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller en melding til +31 6 17467643.</p>
+          <button type="submit" class="btn btn--warm form-submit" id="aanvraagKnop">Send forespørsel</button>
+          <p class="form-status form-status--error" id="aanvraagFout" role="alert" hidden>Sendingen mislyktes. Prøv igjen, eller send e-post til <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller en melding til +31 6 17467643.</p>
+          <p class="form-status form-status--success" id="aanvraagSucces" role="status" hidden>Takk! Forespørselen din er sendt — Joey tar snart kontakt med deg.</p>
+          <p class="form-note" id="formNote">Vil du heller ta kontakt direkte? Send e-post til <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller en melding til +31 6 17467643.</p>
         </form>
       </div>
     </section>
@@ -373,6 +375,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

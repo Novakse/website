@@ -391,8 +391,10 @@
               <textarea id="bericht" name="bericht" placeholder="Vertel kort iets over je wensen, niveau of vragen"></textarea>
             </div>
           </div>
-          <button type="submit" class="btn btn--warm form-submit">Verstuur aanvraag</button>
-          <p class="form-note">Dit formulier is nog niet gekoppeld aan een verzendfunctie. Mail zolang naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+          <button type="submit" class="btn btn--warm form-submit" id="aanvraagKnop">Verstuur aanvraag</button>
+          <p class="form-status form-status--error" id="aanvraagFout" role="alert" hidden>Verzenden lukte niet. Probeer het opnieuw, of mail naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+          <p class="form-status form-status--success" id="aanvraagSucces" role="status" hidden>Bedankt! Je aanvraag is verstuurd — Joey neemt snel contact met je op.</p>
+          <p class="form-note" id="formNote">Liever meteen contact? Mail naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
         </form>
       </div>
     </section>
@@ -420,9 +422,12 @@
             </div>
             <div>
               <span class="service__tag">Schaatsonderhoud</span>
-              <h3 class="service__title">Slijpen, onderhoud &amp; skatefitting</h3>
+              <h3 class="service__title">Slijpen, onderhoud &amp; <strong class="service__highlight">skatefitting</strong></h3>
               <p class="service__text">Vakkundig scherp en goed afgesteld, door een oud-materiaalspecialist.</p>
-              <a class="link-arrow service__link" href="schaatsonderhoud.html">Meer over schaatsonderhoud</a>
+              <div class="service__links">
+                <a class="link-arrow service__link" href="schaatsonderhoud.html">Meer over schaatsonderhoud</a>
+                <a class="link-arrow service__link" href="schaatsonderhoud.html#skatefitting">Direct naar skatefitting</a>
+              </div>
             </div>
           </article>
         </div>
@@ -455,6 +460,7 @@
         <div class="footer__links">
           <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
+          <a href="blog.html">Blog</a>
           <a href="#">Privacyverklaring</a>
           <a href="algemene-voorwaarden.html">Algemene voorwaarden</a>
         </div>
@@ -467,6 +473,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

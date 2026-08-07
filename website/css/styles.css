@@ -394,6 +394,8 @@ summary:focus-visible,
   .main-nav {
     position: static;
     inset: auto;
+    opacity: 1;
+    pointer-events: auto;
     transform: none;
     flex-direction: row;
     align-items: center;
@@ -1016,6 +1018,9 @@ html:not(.js) .opener__controls { display: none; }
 .form-field select option { background: var(--ink); color: #fff; }
 .form-note { margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,.55); }
 .form-submit { margin-top: 1.25rem; }
+.form-status { margin-top: 1rem; font-size: 0.88rem; font-weight: 600; }
+.form-status--error { color: #ff8a80; }
+.form-status--success { color: var(--warm); }
 
 /* ==========================================================================
    10. Ondersteunende diensten — bewust compact
@@ -1040,6 +1045,8 @@ html:not(.js) .opener__controls { display: none; }
 .service--calm .service__tag { color: var(--ink-soft); }
 .service__title { font-family: var(--display); font-weight: 600; font-size: 1.05rem; margin-top: 0.25rem; }
 .service__text { margin-top: 0.3rem; font-size: 0.86rem; color: var(--ink-soft); }
+.service__highlight { font-size: 1.2em; font-weight: 700; color: var(--warm-deep); }
+.service__links { display: flex; flex-direction: column; gap: 0.3rem; }
 .service__link { margin-top: 0.5rem; color: var(--warm-deep); }
 .service--calm .service__link { color: var(--ink-soft); }
 
@@ -1969,6 +1976,7 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
 
 @media (min-width: 52rem) {
   .rates__grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .rates__block--full { grid-column: 1 / -1; }
 }
 
 .steps { background: var(--paper); padding-block: 4.5rem; }

@@ -297,8 +297,10 @@
               <textarea id="bericht" name="bericht" placeholder="Kerro lyhyesti toiveistasi, tasostasi tai kysymyksistäsi"></textarea>
             </div>
           </div>
-          <button type="submit" class="btn btn--warm form-submit">Lähetä pyyntö</button>
-          <p class="form-note">Tätä lomaketta ei ole vielä liitetty lähetystoimintoon. Lähetä toistaiseksi sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
+          <button type="submit" class="btn btn--warm form-submit" id="aanvraagKnop">Lähetä pyyntö</button>
+          <p class="form-status form-status--error" id="aanvraagFout" role="alert" hidden>Lähetys ei onnistunut. Yritä uudelleen tai lähetä sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
+          <p class="form-status form-status--success" id="aanvraagSucces" role="status" hidden>Kiitos! Pyyntösi on lähetetty — Joey ottaa sinuun pian yhteyttä.</p>
+          <p class="form-note" id="formNote">Haluatko mieluummin ottaa suoraan yhteyttä? Lähetä sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
         </form>
       </div>
     </section>
@@ -373,6 +375,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
