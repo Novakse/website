@@ -263,7 +263,9 @@
             </div>
           </div>
           <button type="submit" class="btn btn--warm form-submit">Verstuur aanvraag</button>
-          <p class="form-note">Dit formulier is nog niet gekoppeld aan een verzendfunctie. Mail zolang naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+          <p class="form-status form-status--error" id="lesFout" role="alert" hidden>Verzenden lukte niet. Probeer het opnieuw, of mail naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+          <p class="form-status form-status--success" id="lesSucces" role="status" hidden>Bedankt! Je aanvraag is verstuurd — Joey neemt snel contact met je op.</p>
+          <p class="form-note">Liever meteen contact? Mail naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
         </form>
       </div>
     </section>
@@ -318,6 +320,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/aanvraag.js"></script>
 
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>

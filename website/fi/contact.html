@@ -156,14 +156,14 @@
 
         <div class="contact__form reveal">
           <h2 class="h-section">Tai kysy täältä</h2>
-          <form class="form-grid contact__fields">
+          <form class="form-grid contact__fields" id="contactForm">
             <label class="form-field">
               <span>Nimi</span>
               <input type="text" name="naam" autocomplete="name" required />
             </label>
             <label class="form-field">
               <span>Sähköpostiosoite</span>
-              <input type="email" name="email" autocomplete="email" />
+              <input type="email" name="email" autocomplete="email" required />
             </label>
             <label class="form-field">
               <span>Puhelin</span>
@@ -175,7 +175,9 @@
             </label>
             <div class="form-field--full">
               <button class="btn btn--dark" type="submit">Lähetä</button>
-              <p class="form-note">Tätä lomaketta ei ole vielä liitetty lähetystoimintoon. Lähetä toistaiseksi sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
+              <p class="form-status form-status--error" role="alert" hidden>Lähetys ei onnistunut. Yritä uudelleen tai lähetä sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
+              <p class="form-status form-status--success" role="status" hidden>Kiitos! Viestisi on lähetetty — Joey ottaa sinuun pian yhteyttä.</p>
+              <p class="form-note">Haluatko mieluummin ottaa suoraan yhteyttä? Lähetä sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
             </div>
           </form>
         </div>
@@ -230,6 +232,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

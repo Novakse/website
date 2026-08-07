@@ -156,14 +156,14 @@
 
         <div class="contact__form reveal">
           <h2 class="h-section">Eller ställ din fråga här</h2>
-          <form class="form-grid contact__fields">
+          <form class="form-grid contact__fields" id="contactForm">
             <label class="form-field">
               <span>Namn</span>
               <input type="text" name="naam" autocomplete="name" required />
             </label>
             <label class="form-field">
               <span>E-postadress</span>
-              <input type="email" name="email" autocomplete="email" />
+              <input type="email" name="email" autocomplete="email" required />
             </label>
             <label class="form-field">
               <span>Telefon</span>
@@ -175,7 +175,9 @@
             </label>
             <div class="form-field--full">
               <button class="btn btn--dark" type="submit">Skicka</button>
-              <p class="form-note">Det här formuläret är ännu inte kopplat till en sändfunktion. Mejla under tiden till <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller messa till +31 6 17467643.</p>
+              <p class="form-status form-status--error" role="alert" hidden>Det gick inte att skicka. Försök igen, eller mejla till <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller messa till +31 6 17467643.</p>
+              <p class="form-status form-status--success" role="status" hidden>Tack! Ditt meddelande har skickats — Joey hör av sig till dig snart.</p>
+              <p class="form-note">Vill du hellre höra av dig direkt? Mejla till <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller messa till +31 6 17467643.</p>
             </div>
           </form>
         </div>
@@ -230,6 +232,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

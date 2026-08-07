@@ -157,14 +157,14 @@
 
         <div class="contact__form reveal">
           <h2 class="h-section">Of stel je vraag hier</h2>
-          <form class="form-grid contact__fields">
+          <form class="form-grid contact__fields" id="contactForm">
             <label class="form-field">
               <span>Naam</span>
               <input type="text" name="naam" autocomplete="name" required />
             </label>
             <label class="form-field">
               <span>E-mailadres</span>
-              <input type="email" name="email" autocomplete="email" />
+              <input type="email" name="email" autocomplete="email" required />
             </label>
             <label class="form-field">
               <span>Telefoon</span>
@@ -176,7 +176,9 @@
             </label>
             <div class="form-field--full">
               <button class="btn btn--dark" type="submit">Verzenden</button>
-              <p class="form-note">Dit formulier is nog niet gekoppeld aan een verzendfunctie. Mail zolang naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+              <p class="form-status form-status--error" role="alert" hidden>Verzenden lukte niet. Probeer het opnieuw, of mail naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+              <p class="form-status form-status--success" role="status" hidden>Bedankt! Je bericht is verstuurd — Joey neemt snel contact met je op.</p>
+              <p class="form-note">Liever meteen contact? Mail naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
             </div>
           </form>
         </div>
@@ -232,6 +234,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

@@ -156,14 +156,14 @@
 
         <div class="contact__form reveal">
           <h2 class="h-section">Oder stell deine Frage hier</h2>
-          <form class="form-grid contact__fields">
+          <form class="form-grid contact__fields" id="contactForm">
             <label class="form-field">
               <span>Name</span>
               <input type="text" name="naam" autocomplete="name" required />
             </label>
             <label class="form-field">
               <span>E-Mail-Adresse</span>
-              <input type="email" name="email" autocomplete="email" />
+              <input type="email" name="email" autocomplete="email" required />
             </label>
             <label class="form-field">
               <span>Telefon</span>
@@ -175,7 +175,9 @@
             </label>
             <div class="form-field--full">
               <button class="btn btn--dark" type="submit">Senden</button>
-              <p class="form-note">Dieses Formular ist noch nicht mit einer Versandfunktion verbunden. Schreib in der Zwischenzeit eine E-Mail an <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> oder eine Nachricht an +31 6 17467643.</p>
+              <p class="form-status form-status--error" role="alert" hidden>Senden hat nicht geklappt. Versuch es noch einmal oder schreib eine E-Mail an <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> oder eine Nachricht an +31 6 17467643.</p>
+              <p class="form-status form-status--success" role="status" hidden>Danke! Deine Nachricht wurde gesendet — Joey meldet sich bald bei dir.</p>
+              <p class="form-note">Lieber direkt Kontakt aufnehmen? Schreib eine E-Mail an <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> oder eine Nachricht an +31 6 17467643.</p>
             </div>
           </form>
         </div>
@@ -230,6 +232,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

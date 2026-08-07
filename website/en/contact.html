@@ -156,14 +156,14 @@
 
         <div class="contact__form reveal">
           <h2 class="h-section">Or ask your question here</h2>
-          <form class="form-grid contact__fields">
+          <form class="form-grid contact__fields" id="contactForm">
             <label class="form-field">
               <span>Name</span>
               <input type="text" name="naam" autocomplete="name" required />
             </label>
             <label class="form-field">
               <span>Email address</span>
-              <input type="email" name="email" autocomplete="email" />
+              <input type="email" name="email" autocomplete="email" required />
             </label>
             <label class="form-field">
               <span>Phone</span>
@@ -175,7 +175,9 @@
             </label>
             <div class="form-field--full">
               <button class="btn btn--dark" type="submit">Send</button>
-              <p class="form-note">This form isn't connected to a sending function yet. In the meantime, email <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> or message +31 6 17467643.</p>
+              <p class="form-status form-status--error" role="alert" hidden>Sending didn't work. Please try again, or email <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> or message +31 6 17467643.</p>
+              <p class="form-status form-status--success" role="status" hidden>Thanks! Your message has been sent — Joey will get in touch with you soon.</p>
+              <p class="form-note">Prefer to reach out directly? Email <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> or message +31 6 17467643.</p>
             </div>
           </form>
         </div>
@@ -230,6 +232,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

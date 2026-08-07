@@ -2033,7 +2033,12 @@ a.contact__value:hover { border-bottom-color: var(--ink); }
 .contact__list--compact .contact__value { font-size: 0.95rem; font-weight: 400; }
 .contact__sub { margin-top: 3rem; }
 .contact__fields { margin-top: 1.5rem; }
-.contact__form .form-note { color: var(--ink-soft); }
+.contact__form .form-note,
+.onderhoud-form .form-note { color: var(--ink-soft); }
+.contact__form .form-status--error,
+.onderhoud-form .form-status--error { color: #b3261e; }
+.contact__form .form-status--success,
+.onderhoud-form .form-status--success { color: var(--warm-deep); }
 
 @media (min-width: 56rem) {
   .contact__grid { grid-template-columns: 1fr 1fr; gap: 5rem; }
