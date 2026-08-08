@@ -78,6 +78,7 @@
       var email = emailVeld ? emailVeld.value.trim() : "";
       var naam = naamUitFormulier(form);
       var onderwerp = onderwerpVoor(form) + (naam ? " — " + naam : "");
+      var hpVeld = form.querySelector('input[name="website"]');
 
       foutEl.hidden = true;
       knop.disabled = true;
@@ -86,7 +87,12 @@
       fetch("/api/send-aanvraag", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ onderwerp: onderwerp, bericht: berichtVoor(form), email: email })
+        body: JSON.stringify({
+          onderwerp: onderwerp,
+          bericht: berichtVoor(form),
+          email: email,
+          website: hpVeld ? hpVeld.value : ""
+        })
       })
         .then(function (respons) {
           return respons.json().then(function (data) {

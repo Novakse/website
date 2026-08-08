@@ -60,6 +60,15 @@ input, textarea, select { font: inherit; }
   white-space: nowrap;
 }
 
+/* Honeypot: onzichtbaar voor bezoekers en screenreaders, wel invulbaar voor bots */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* Focus */
 a:focus-visible,
 button:focus-visible,

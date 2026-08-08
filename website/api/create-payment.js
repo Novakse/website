@@ -16,9 +16,23 @@ function toFormParams(waarde, prefix) {
   return params;
 }
 
+var TOEGESTANE_ORIGINS = ["https://novakse.com", "https://www.novakse.com", "http://localhost:3000"];
+var MAX_BEDRAG_CENTEN = 2000000; // €20.000 — ruim boven een reële boeking, tegen misbruik (bv. "card testing")
+
+function origineOngeldig(req) {
+  var origin = req.headers.origin;
+  if (!origin) return false; // geen Origin-header (bv. curl/oude browser): niet blokkeren
+  return TOEGESTANE_ORIGINS.indexOf(origin) === -1;
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Methode niet toegestaan." });
+    return;
+  }
+
+  if (origineOngeldig(req)) {
+    res.status(403).json({ error: "Niet toegestaan." });
     return;
   }
 
@@ -33,7 +47,7 @@ module.exports = async function handler(req, res) {
   var omschrijving = String(body.omschrijving || "Novakse reis").slice(0, 255);
   var methode = body.methode === "creditcard" ? "card" : "ideal";
 
-  if (!bedrag || bedrag < 100) {
+  if (!bedrag || bedrag < 100 || bedrag > MAX_BEDRAG_CENTEN) {
     res.status(400).json({ error: "Ongeldig bedrag." });
     return;
   }
