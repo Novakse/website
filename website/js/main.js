@@ -236,7 +236,7 @@
       if (event.key === "Escape") closeNav();
     });
 
-    window.matchMedia("(min-width: 64rem)").addEventListener("change", function (e) {
+    window.matchMedia("(min-width: 72rem)").addEventListener("change", function (e) {
       if (e.matches) closeNav();
     });
   }
@@ -814,12 +814,17 @@
       // groter, dus daar wordt de afstand teruggeschroefd.
       var scale = Math.max(0.45, Math.min(1, window.innerWidth / 1100));
 
+      // De linker- en rechterfoto staan onderin het frame, vlak boven het
+      // onderschrift. Zonder grens kan een grote verschuiving ze over de
+      // tekst eronder laten schuiven (met name wanneer de collage al bij
+      // het laden van de pagina deels in beeld staat). Daarom wordt de
+      // verschuiving hier hard begrensd tot een subtiel effect.
+      var maxShift = 20;
+
       collageItems.forEach(function (item) {
         var speed = parseFloat(item.dataset.speed) || 0;
-        item.style.setProperty(
-          "--collage-shift",
-          (progress * speed * scale).toFixed(1) + "px"
-        );
+        var shift = Math.max(-maxShift, Math.min(maxShift, progress * speed * scale));
+        item.style.setProperty("--collage-shift", shift.toFixed(1) + "px");
       });
     };
 

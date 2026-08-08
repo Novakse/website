@@ -42,7 +42,7 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 h1, h2, h3, p, ul, figure { margin: 0; }
 ul { padding: 0; list-style: none; }
-button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+button { font: inherit; color: inherit; background: none; border: none; padding: 0; cursor: pointer; }
 input, textarea, select { font: inherit; }
 
 .wrap {
@@ -354,12 +354,25 @@ summary:focus-visible,
   padding: 5rem 1.75rem 2rem;
   z-index: 150;
   color: #fff;
+}
+/* De glazen achtergrond zit op een los pseudo-element (niet op .main-nav
+   zelf), om dezelfde reden als bij .site-header::after hierboven: WebKit
+   laat backdrop-filter soms bevriezen (geen blur meer tonen) zodra hij op
+   hetzelfde element staat als een lopende transform-transitie. */
+.main-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
   background-color: rgba(12, 15, 17, 0.32);
   backdrop-filter: blur(36px) saturate(180%);
   -webkit-backdrop-filter: blur(36px) saturate(180%);
+  transition: opacity 0.6s ease;
 }
 .main-nav.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.main-nav__close { position: absolute; top: 1rem; right: 1.25rem; font-size: 1.6rem; line-height: 1; color: inherit; }
+.main-nav.is-open::before { opacity: 1; }
+.main-nav__close { position: absolute; top: 0.6rem; right: 0.85rem; padding: 0.5rem; font-size: 1.6rem; line-height: 1; color: inherit; }
 .main-nav__links {
   display: flex;
   flex-direction: column;
@@ -389,7 +402,11 @@ summary:focus-visible,
 .main-nav__links a:hover::after,
 .main-nav__links a:focus-visible::after { transform: scaleX(1); }
 
-@media (min-width: 64rem) {
+/* Breekpunt bewust hoger dan de gangbare 64rem: bij 64rem (bv. een liggende
+   tablet) is er te weinig ruimte voor het logo, alle menu-items, de
+   "Reis aanvragen"-knop en de taalkiezer naast elkaar, waardoor ze over
+   elkaar heen vallen. Tot 72rem blijft daarom het compacte uitklapmenu staan. */
+@media (min-width: 72rem) {
   .nav-toggle, .main-nav__close { display: none; }
   .main-nav {
     position: static;
@@ -400,13 +417,11 @@ summary:focus-visible,
     flex-direction: row;
     align-items: center;
     padding: 0;
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
     box-shadow: none;
     color: inherit;
     gap: 2rem;
   }
+  .main-nav::before { content: none; }
   .main-nav__links {
     flex-direction: row;
     gap: 2rem;
@@ -490,7 +505,7 @@ summary:focus-visible,
 .lang-switch__menu a:hover,
 .lang-switch__menu a:focus-visible { opacity: 1; }
 
-@media (min-width: 64rem) {
+@media (min-width: 72rem) {
   .lang-switch { padding-left: 0.9rem; border-left: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
 }
 
@@ -1055,7 +1070,14 @@ html:not(.js) .opener__controls { display: none; }
    ========================================================================== */
 .site-footer { background: var(--ink); color: rgba(255,255,255,.8); padding-block: 3.5rem 2rem; }
 .footer__grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
-@media (min-width: 56rem) { .footer__grid { grid-template-columns: 1.3fr 0.9fr 0.9fr 0.9fr; } }
+@media (min-width: 48rem) {
+  .footer__grid { grid-template-columns: repeat(3, 1fr); gap: 2.5rem 2rem; }
+  .footer__grid > div:first-child { grid-column: 1 / -1; }
+}
+@media (min-width: 56rem) {
+  .footer__grid { grid-template-columns: 1.3fr 0.9fr 0.9fr 0.9fr; }
+  .footer__grid > div:first-child { grid-column: auto; }
+}
 
 .footer__logo { display: inline-flex; align-items: center; gap: 0.8rem; }
 .logo-mark--lg { height: 3.1rem; }
