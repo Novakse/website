@@ -59,7 +59,7 @@
       "addressCountry": "NL"
     },
     "sameAs": [
-      "https://instagram.com/novakse_natuurijsschaatsen"
+      "https://www.instagram.com/schaatsreizennovakse/"
     ]
   }
   </script>
@@ -78,9 +78,9 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="#top" aria-label="Novakse Reizen — naar boven">
-        <img class="logo-mark" src="images/logo-mark.png" alt="" width="524" height="733" />
-        <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
-        <img class="logo-word-img logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+        <img class="logo-mark" src="images/logo-mark.png" alt="" width="616" height="840" />
+        <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
+        <img class="logo-word-img logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
       </a>
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
@@ -123,7 +123,7 @@
         <source src="images/hero-opener.mp4" type="video/mp4" />
       </video>
       <div class="opener__inner">
-        <img class="opener__mark" src="images/logo-mark.png" alt="" width="524" height="733" fetchpriority="high" />
+        <img class="opener__mark" src="images/logo-mark.png" alt="" width="616" height="840" fetchpriority="high" />
         <h1 class="opener__title">Schaatsreizen op natuurijs</h1>
         <p class="opener__lede">Kleine groepen, persoonlijke begeleiding, natuurijs in Zweden, Finland en Oostenrijk.</p>
         <div class="opener__actions">
@@ -236,6 +236,20 @@
               <p class="trip-card__desc">Zelfstandig schaatsen op een bergmeer in Karinthië, bekend van de Alternatieve Elfstedentocht. Data en prijs volgen binnenkort.</p>
               <a class="link-arrow trip-card__link" href="weissensee.html">Bekijk deze reis</a>
             </article>
+
+            <article class="trip-card">
+              <div class="trip-card__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Luleå, tik om te wisselen">
+                <img class="is-active" src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij Luleå" loading="lazy" />
+                <img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" />
+                <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
+              </div>
+              <div class="trip-card__head">
+                <h3 class="trip-card__title">Luleå</h3>
+                <span class="trip-card__meta">Zweeds Lapland</span>
+              </div>
+              <p class="trip-card__desc">Individuele, zelfstandige schaatsreis op de openbare natuurijsroute langs de bevroren Botnische Golf. Geen begeleiding of vast programma; je bepaalt zelf je reisduur en dagindeling.</p>
+              <a class="link-arrow trip-card__link" href="lulea.html">Bekijk deze reis</a>
+            </article>
           </div>
         </div>
         <div class="trips__progress"><div class="trips__progress-bar" id="tripProgress"></div></div>
@@ -326,17 +340,23 @@
     </section>
 
     <!-- 7. Ervaringen -->
-    <section class="reviews">
-      <div class="wrap reviews__grid">
-        <div class="reviews__media reveal">
-          <img src="images/handen-omhoog-zonsondergang.jpg" alt="Twee deelnemers juichen op het ijs bij zonsondergang" loading="lazy" />
-        </div>
-        <div class="reviews__body reveal">
+    <section class="reviews" id="reviews">
+      <div class="wrap">
+        <div class="reviews__intro reveal">
           <span class="eyebrow eyebrow--deep"><span class="dot"></span>Ervaringen</span>
           <h2 class="reviews__title">Wat eerdere reizigers ervan vonden</h2>
-          <p class="reviews__text">De reacties van eerdere deelnemers staan op onze Google-pagina. We plaatsen hier binnenkort een directe koppeling naartoe.</p>
-          <a class="link-arrow reviews__link" href="#aanvraag">Stel je vraag aan Joey</a>
+          <p class="reviews__text">Echte reacties van eerdere deelnemers, rechtstreeks van onze Google-pagina.</p>
         </div>
+        <div class="reviews__widget reveal">
+          <!--
+            Google-reviews widget (Elfsight "Google Reviews").
+            Gekoppeld aan het Google Bedrijfsprofiel van Novakse:
+            https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np
+            Vervang WIDGET-ID hieronder zodra de widget is aangemaakt op elfsight.com.
+          -->
+          <div class="elfsight-app-WIDGET-ID" data-elfsight-app-lazy></div>
+        </div>
+        <a class="link-arrow reviews__link" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Bekijk alle reviews op Google</a>
       </div>
     </section>
 
@@ -475,9 +495,9 @@
     <div class="wrap footer__grid">
       <div>
         <a class="footer__logo" href="#top" aria-label="Novakse Reizen — naar boven">
-          <img class="logo-mark logo-mark--lg" src="images/logo-mark.png" alt="" width="158" height="220" />
-          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
-        <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+          <img class="logo-mark logo-mark--lg" src="images/logo-mark.png" alt="" width="158" height="215" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
+        <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
         </a>
         <p class="footer__tagline">Kleinschalige schaatsreizen op natuurijs, persoonlijk begeleid door Joey Novak.</p>
       </div>
@@ -493,7 +513,7 @@
       <div>
         <p class="footer__heading">Volgen &amp; informatie</p>
         <div class="footer__links">
-          <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
           <a href="blog.html">Blog</a>
           <a href="#">Privacyverklaring</a>
@@ -518,6 +538,7 @@
 
   <script src="js/main.js"></script>
   <script src="js/aanvraag.js"></script>
+  <script src="https://static.elfsight.com/platform/platform.js" async></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

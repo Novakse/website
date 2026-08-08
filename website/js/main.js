@@ -918,6 +918,46 @@
   }
 
   /* ------------------------------------------------------------------
+     Trip carousel: markeer de kaart die net gesnapt is als "is-current"
+     zodat die subtiel groter/helderder toont dan de rest (zie styles.css).
+     ------------------------------------------------------------------ */
+  if (scroller && "IntersectionObserver" in window) {
+    var tripCards = scroller.querySelectorAll(".trip-card");
+    if (tripCards.length) {
+      scroller.classList.add("is-tracking");
+      var currentCard = null;
+      var visibleRatios = new Map();
+
+      var markCurrent = function (card) {
+        if (card === currentCard) return;
+        if (currentCard) currentCard.classList.remove("is-current");
+        card.classList.add("is-current");
+        currentCard = card;
+      };
+
+      var cardObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            visibleRatios.set(entry.target, entry.intersectionRatio);
+          });
+          var bestCard = null;
+          var bestRatio = 0;
+          visibleRatios.forEach(function (ratio, card) {
+            if (ratio > bestRatio) {
+              bestRatio = ratio;
+              bestCard = card;
+            }
+          });
+          if (bestCard) markCurrent(bestCard);
+        },
+        { root: scroller, threshold: [0, 0.25, 0.5, 0.6, 0.75, 0.9, 1] }
+      );
+
+      tripCards.forEach(function (card) { cardObserver.observe(card); });
+    }
+  }
+
+  /* ------------------------------------------------------------------
      Dagprogramma: balkje dat meeloopt met het zijwaarts scrollen
      ------------------------------------------------------------------ */
   document.querySelectorAll("[data-dayscroll]").forEach(function (baan) {

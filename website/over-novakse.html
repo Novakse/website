@@ -48,6 +48,26 @@
     .lede-text {
       text-wrap: pretty;
     }
+
+    /* Instagram-volgblok: tijdelijk een selectie eigen foto's tot de live
+       widget-embed is gekoppeld (zie insta-follow__grid hieronder). */
+    .insta-follow { background: var(--paper); padding-block: 4.5rem; }
+    .insta-follow__head { max-width: 40rem; }
+    .insta-follow__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      margin-block: 2rem 2.2rem;
+    }
+    .insta-follow__item { display: block; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 0.5rem; }
+    .insta-follow__item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .insta-follow__item:hover img { transform: scale(1.04); }
+    @media (min-width: 40rem) {
+      .insta-follow__grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+    }
+    @media (min-width: 62rem) {
+      .insta-follow__grid { grid-template-columns: repeat(6, 1fr); gap: 0.75rem; }
+    }
   </style>
 </head>
 <body>
@@ -56,9 +76,9 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
-        <img class="logo-mark" src="images/logo-mark.png" alt="" width="524" height="733" />
-        <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
-        <img class="logo-word-img logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+        <img class="logo-mark" src="images/logo-mark.png" alt="" width="616" height="840" />
+        <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
+        <img class="logo-word-img logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
       </a>
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
@@ -175,6 +195,38 @@
       </div>
     </section>
 
+    <section class="insta-follow" id="instagram">
+      <div class="wrap">
+        <div class="insta-follow__head reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Onderweg</span>
+          <h2 class="h-section">Volg de reizen op Instagram</h2>
+          <p class="lede-text">Sfeerbeelden van het ijs, de tochten en de voorbereiding &mdash; deel ik regelmatig op Instagram.</p>
+        </div>
+        <!-- Placeholder tot de live widget-embed (SnapWidget o.i.d.) gekoppeld is -->
+        <div class="insta-follow__grid">
+          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
+            <img src="images/avondschaatsen.jpg" alt="Twee schaatsers in de avondschemering op natuurijs" loading="lazy" />
+          </a>
+          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
+            <img src="images/duo-zonsondergang.jpg" alt="Twee schaatsers op het ijs bij zonsondergang" loading="lazy" />
+          </a>
+          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
+            <img src="images/handen-omhoog-zonsondergang.jpg" alt="Deelnemers juichen op het ijs bij zonsondergang" loading="lazy" />
+          </a>
+          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
+            <img src="images/man-schaatsen.jpg" alt="Schaatser op weids natuurijs" loading="lazy" />
+          </a>
+          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
+            <img src="images/zwart-ijs-scheuren.jpg" alt="Zwart natuurijs met lange scheuren" loading="lazy" />
+          </a>
+          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
+            <img src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf" loading="lazy" />
+          </a>
+        </div>
+        <a class="btn btn--outline-dark" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">Volg op Instagram</a>
+      </div>
+    </section>
+
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Zin om mee te gaan?</h2>
@@ -191,9 +243,9 @@
     <div class="wrap footer__grid">
       <div>
         <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — naar de homepage">
-          <img class="logo-mark logo-mark--lg" src="images/logo-mark.png" alt="" width="524" height="733" />
-          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="780" height="190" />
-          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="780" height="190" />
+          <img class="logo-mark logo-mark--lg" src="images/logo-mark.png" alt="" width="616" height="840" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
         </a>
         <p class="footer__tagline">Kleinschalige schaatsreizen op natuurijs, persoonlijk begeleid door Joey Novak.</p>
       </div>
@@ -209,7 +261,7 @@
       <div>
         <p class="footer__heading">Volgen &amp; informatie</p>
         <div class="footer__links">
-          <a href="https://instagram.com/novakse_natuurijsschaatsen" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
           <a href="blog.html">Blog</a>
           <a href="#">Privacyverklaring</a>

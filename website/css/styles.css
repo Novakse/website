@@ -747,13 +747,13 @@ html:not(.js) .opener__controls { display: none; }
   flex: 1; min-width: 0;
   display: flex; gap: 1.5rem;
   overflow-x: auto;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: x mandatory;
   padding-bottom: 0.5rem;
   scrollbar-width: none;
 }
 .trips__scroll::-webkit-scrollbar { display: none; }
 
-.trip-card { flex: 0 0 auto; width: 16rem; scroll-snap-align: start; }
+.trip-card { flex: 0 0 auto; width: 16rem; scroll-snap-align: start; scroll-snap-stop: always; }
 @media (min-width: 56rem) { .trip-card { width: 19rem; } }
 
 .trip-card__media {
@@ -762,6 +762,18 @@ html:not(.js) .opener__controls { display: none; }
   border-radius: 1.5rem;
   overflow: hidden;
   background: var(--border);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+/* Zodra JS de gesnapte kaart kan bepalen (zie main.js), krijgt de
+   actieve kaart volle grootte/opacity en de rest een subtiele demping —
+   zonder JS blijft alles gewoon op volle sterkte (geen layout shift). */
+.trips__scroll.is-tracking .trip-card:not(.is-current) .trip-card__media {
+  opacity: 0.72;
+  transform: scale(0.96);
+}
+.trips__scroll.is-tracking .trip-card.is-current .trip-card__media {
+  opacity: 1;
+  transform: scale(1);
 }
 .trip-card__media[data-gallery] { cursor: pointer; }
 .trip-card__media img {
@@ -958,15 +970,15 @@ html:not(.js) .opener__controls { display: none; }
 /* ==========================================================================
    7. Ervaringen — compacte, warme band
    ========================================================================== */
-.reviews { background: var(--paper-soft); padding-block: 3.5rem; }
-.reviews__grid { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
-.reviews__media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 1rem; }
+.reviews { background: var(--paper-soft); padding-block: 3.5rem; text-align: center; }
+.reviews__intro { max-width: 40rem; margin-inline: auto; }
 .reviews__title { font-family: var(--display); font-weight: 600; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-top: 0.8rem; line-height: 1.2; }
-.reviews__text { margin-top: 0.8rem; color: var(--ink-soft); max-width: 46ch; }
-.reviews__link { margin-top: 1.1rem; color: var(--warm-deep); }
+.reviews__text { margin-top: 0.8rem; color: var(--ink-soft); }
+.reviews__widget { margin-top: 2.2rem; min-height: 14rem; }
+.reviews__link { display: inline-block; margin-top: 1.6rem; color: var(--warm-deep); }
 
 @media (min-width: 56rem) {
-  .reviews__grid { grid-template-columns: 0.9fr 1.1fr; gap: 3rem; }
+  .reviews { padding-block: 5rem; }
 }
 
 /* ==========================================================================
