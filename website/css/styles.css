@@ -1055,7 +1055,7 @@ html:not(.js) .opener__controls { display: none; }
    ========================================================================== */
 .site-footer { background: var(--ink); color: rgba(255,255,255,.8); padding-block: 3.5rem 2rem; }
 .footer__grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
-@media (min-width: 56rem) { .footer__grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+@media (min-width: 56rem) { .footer__grid { grid-template-columns: 1.3fr 0.9fr 0.9fr 0.9fr; } }
 
 .footer__logo { display: inline-flex; align-items: center; gap: 0.8rem; }
 .logo-mark--lg { height: 3.1rem; }
@@ -1108,6 +1108,7 @@ html:not(.js) .opener__controls { display: none; }
   line-height: 1.02;
   letter-spacing: -0.015em;
   margin-top: 0.8rem;
+  text-wrap: balance;
 }
 .page-hero__lede {
   margin-top: 1rem;

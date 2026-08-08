@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/fonts.css" />
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/theme-groen.css" />
+  <link rel="canonical" href="https://www.novakse.com/no/reizen.html" />
   <link rel="alternate" hreflang="nl" href="https://www.novakse.com/reizen.html" />
   <link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reizen.html" />
   <link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reizen.html" />
@@ -64,7 +65,7 @@
           <li><a href="over-novakse.html">Om Novakse</a></li>
           <li><a href="contact.html">Kontakt</a></li>
         </ul>
-        <a class="header-cta" href="index.html#aanvraag">Be om en tur</a>
+        <a class="header-cta" href="boeken.html">Be om en tur</a>
               <div class="lang-switch">
             <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
               <span class="lang-switch__current">NO</span>
@@ -77,6 +78,61 @@
               <a href="../de/reizen.html" lang="de" hreflang="de">DE</a>
               <a href="../fi/reizen.html" lang="fi" hreflang="fi">FI</a>
             </div>
+          </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 1. Paginakop -->
+    <section class="page-hero" id="top">
+      <img class="page-hero__bg" src="../images/hero-baan-zonsondergang.jpg" alt="Feid skøytebane over en tilfrosset sjø ved solnedgang" fetchpriority="high" />
+      <div class="wrap page-hero__inner">
+        <span class="eyebrow eyebrow--light"><span class="dot"></span>Våre turer</span>
+        <h1 class="page-hero__title">Våre skøyteturer på naturis</h1>
+        <p class="page-hero__lede">Fem reisemål, én sesong — sjøene og havene med naturis i Sverige, Finland og Østerrike.</p>
+      </div>
+    </section>
+
+    <div class="baanlijn baanlijn--on-light" aria-hidden="true">
+      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
+        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
+      </svg>
+    </div>
+
+    <!-- 2. Inleiding -->
+    <section class="intro">
+      <div class="wrap intro__grid">
+        <p class="intro__lead" data-reveal-words>Hos Novakse skøyter du på naturis gjennom fantastiske vinterlandskap. Med små grupper, personlig veiledning og komfortabel overnatting opplever du kombinasjonen av eventyr og godt selskap.</p>
+        <div class="intro__aside reveal">
+          <p>Hver tur går som planlagt fra 4 deltakere og har maksimalt 12. Joey blir med selv, kjenner isen og bestemmer hver morgen på nytt hvor dagen blir finest.</p>
+          <a class="link-arrow" href="reisinformatie.html">Praktisk reiseinformasjon</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. De reizen, één voor één -->
+    <section class="trip-rows" id="bestemmingen">
+      <article class="trip-row reveal">
+        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Bilder av Orsa, trykk for å bytte">
+          <img class="is-active" src="../images/orsa-baan-mora.jpg" alt="Feid skøytebane på Orsasjøen" loading="lazy" />
+          <img src="../images/orsa-accommodatie.jpg" alt="Overnatting ved Orsa i Dalarna" loading="lazy" />
+          <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
+        </div>
+        <div class="trip-row__body">
+          <span class="trip-row__region">Dalarna, Sverige</span>
+          <h2 class="trip-row__title">Orsa</h2>
+          <p class="trip-row__text">Ledet gruppetur på Orsasjøen, med en feid bane på rundt 15 kilometer og opphold i egne hytter like ved isen. Små grupper og begrenset tilgjengelighet.</p>
+          <dl class="trip-row__facts">
+            <div><dt>Type tur</dt><dd>Ledet gruppetur</dd></div>
+            <div><dt>Påmelding</dt><dd>Åpen påmelding, to og to</dd></div>
+            <div><dt>Opphold</dt><dd>Egne hytter ved sjøen</dd></div>
+            <div><dt>Datoer</dt><dd>Kommer snart</dd></div>
+            <div><dt>Pris</dt><dd>Kommer snart</dd></div>
+          </dl>
+          <div class="trip-row__actions">
+            <a class="btn btn--dark" href="orsa.html">Se denne turen</a>
+            <a class="link-arrow" href="boeken.html?reis=orsa">Be om tur</a>
           </div>
         </div>
       </article>
@@ -96,7 +152,7 @@
           </dl>
           <div class="trip-row__actions">
             <a class="btn btn--dark" href="finland.html">Se denne turen</a>
-            <a class="link-arrow" href="index.html#aanvraag">Be om tur</a>
+            <a class="link-arrow" href="boeken.html?reis=finland">Be om tur</a>
           </div>
         </div>
       </article>
@@ -120,7 +176,7 @@
           </dl>
           <div class="trip-row__actions">
             <a class="btn btn--dark" href="falun.html">Se denne turen</a>
-            <a class="link-arrow" href="index.html#aanvraag">Be om tur</a>
+            <a class="link-arrow" href="boeken.html?reis=falun">Be om tur</a>
           </div>
         </div>
       </article>

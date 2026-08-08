@@ -67,6 +67,225 @@
                   <a href="../fi/boeken.html" lang="fi" hreflang="fi">FI</a>
                 </div>
               </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="booking-page">
+    <div class="wrap">
+      <nav class="crumbs crumbs--dark" aria-label="Brødsmulesti">
+        <a href="reizen.html">Turer</a> <span aria-hidden="true">/</span> <span>Forespørsel</span>
+      </nav>
+
+      <p class="booking__trip" id="reisNaam">Skøytetur</p>
+      <h1 class="booking__title">Sett sammen forespørselen din</h1>
+      <p class="booking__intro">Fyll inn det du ønsker, så ser du med det samme omtrent hva det koster. Du er ikke bundet til noe ennå — Joey går personlig gjennom forespørselen din og bekrefter om perioden er ledig.</p>
+
+      <script type="application/json" id="boekingsdata">
+{
+  "standaard": "finland",
+  "weerbericht": "Om en aktivitet blir gjennomført avhenger av vær og forhold.",
+  "reizen": {
+    "orsa": {
+      "naam": "Orsa — Dalarna, Sverige",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Kommer du alene eller med din egen gruppe?",
+          "opties": [
+            {
+              "naam": "Jeg blir med på en åpen gruppetur",
+              "toelichting": "Påmelding skjer to og to"
+            },
+            {
+              "naam": "Vi kommer med vår egen gruppe",
+              "toelichting": "Dere velger selv datoen"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "Hvordan kommer du deg rundt på stedet?",
+          "opties": [
+            {
+              "naam": "Transport på stedet er inkludert i turen",
+              "toelichting": "Standard for denne turen"
+            },
+            {
+              "naam": "Vi vil ha egen leiebil",
+              "toelichting": "Joey sender et forslag med pris"
+            },
+            {
+              "naam": "Vi ordner transporten helt selv"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "Hvordan er det med forsikringen din?",
+          "opties": [
+            {
+              "naam": "Jeg har selv ordnet reise- og avbestillingsforsikring"
+            },
+            {
+              "naam": "Jeg vil gjerne ha råd om dette",
+              "toelichting": "Joey viser deg veien; du tegner den selv"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Tar du med eget skøyteutstyr?",
+          "opties": [
+            {
+              "naam": "Ja, jeg har egne langrennsskøyter"
+            },
+            {
+              "naam": "Nei, jeg vil ha råd om å leie eller kjøpe"
+            },
+            {
+              "naam": "Jeg vet ikke ennå"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Skipass",
+          "prijs": 65,
+          "toelichting": "per person, uten utstyr — leie ordner du selv"
+        },
+        {
+          "naam": "Snøscooterkjøring",
+          "prijs": 100,
+          "toelichting": "per person"
+        },
+        {
+          "naam": "Langrenn",
+          "prijs": 25,
+          "toelichting": "per person, uten utstyr"
+        },
+        {
+          "naam": "Hundekjøring",
+          "prijs": 70,
+          "toelichting": "per person, per 20 minutter"
+        }
+      ]
+    },
+    "finland": {
+      "naam": "Finland — Punkaharju",
+      "periodeVrij": true,
+      "minimumPersonen": 1,
+      "maxPersonen": 12,
+      "opslagPerPersoonPerNacht": 0,
+      "extras": [],
+      "prijsPerPersoonPerDag": 199
+    },
+    "falun": {
+      "naam": "Falun — Dalarna, Sverige",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Kommer du alene eller med din egen gruppe?",
+          "opties": [
+            {
+              "naam": "Jeg blir med på en åpen gruppetur",
+              "toelichting": "Påmelding skjer to og to"
+            },
+            {
+              "naam": "Vi kommer med vår egen gruppe",
+              "toelichting": "Dere velger selv datoen"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "Hvordan kommer du deg rundt på stedet?",
+          "opties": [
+            {
+              "naam": "Transport på stedet er inkludert i turen",
+              "toelichting": "Standard for denne turen"
+            },
+            {
+              "naam": "Vi vil ha egen leiebil",
+              "toelichting": "Joey sender et forslag med pris"
+            },
+            {
+              "naam": "Vi ordner transporten helt selv"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "Hvordan er det med forsikringen din?",
+          "opties": [
+            {
+              "naam": "Jeg har selv ordnet reise- og avbestillingsforsikring"
+            },
+            {
+              "naam": "Jeg vil gjerne ha råd om dette",
+              "toelichting": "Joey viser deg veien; du tegner den selv"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Tar du med eget skøyteutstyr?",
+          "opties": [
+            {
+              "naam": "Ja, jeg har egne langrennsskøyter"
+            },
+            {
+              "naam": "Nei, jeg vil ha råd om å leie eller kjøpe"
+            },
+            {
+              "naam": "Jeg vet ikke ennå"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Skipass",
+          "prijs": 65,
+          "toelichting": "per person, uten utstyr — leie ordner du selv"
+        },
+        {
+          "naam": "Snøscooterkjøring",
+          "prijs": 100,
+          "toelichting": "per person"
+        },
+        {
+          "naam": "Langrenn",
+          "prijs": 25,
+          "toelichting": "per person, uten utstyr"
+        },
+        {
+          "naam": "Hundekjøring",
+          "prijs": 70,
+          "toelichting": "per person, per 20 minutter"
+        }
+      ]
+    }
+  }
+}
+      </script>
+
+      <p class="booking__voorbeeld">Finland koster fra &euro;199 per person per dag, inkludert overnatting, leiebil og de øvrige tjenestene. Flyet ordner du selv.</p>
+
+      <form class="booking" id="boekingsformulier" novalidate>
+        <div class="booking__grid">
+          <div class="booking__main">
+
+            <fieldset class="booking__block">
+              <legend class="booking__legend"><span class="booking__step">1</span> Din periode</legend>
+              <div class="booking__period" id="periodeBox">
+                <p class="booking__period-empty">Ingen periode valgt ennå.</p>
+              </div>
               <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Velg en periode i kalenderen</a>
             </fieldset>
 
@@ -125,10 +344,6 @@
               <strong id="totaalBedrag">—</strong>
             </div>
             <p class="booking__note">Dette er et anslag basert på dine valg. Du får en endelig pris tilbake fra Joey.</p>
-            <div class="booking__payment">
-              <p class="booking__payment-title">Hvordan du betaler</p>
-              <p class="booking__note">Etter bekreftelse sender Joey deg en personlig betalingsforespørsel via Stripe. Nederlandske konti betaler via iDEAL; kommer du fra utlandet, kan det også skje med kredittkort. Helst i bitcoin? Det ordner Joey gjerne direkte med deg.</p>
-            </div>
             <div class="booking__actions">
               <button type="submit" class="btn btn--dark booking__send">Send forespørsel</button>
               <a class="btn btn--outline-dark booking__whatsapp" id="whatsappKnop" href="https://wa.me/31617467643" target="_blank" rel="noopener">Send via WhatsApp</a>

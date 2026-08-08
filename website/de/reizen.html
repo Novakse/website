@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/fonts.css" />
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/theme-groen.css" />
+  <link rel="canonical" href="https://www.novakse.com/de/reizen.html" />
   <link rel="alternate" hreflang="nl" href="https://www.novakse.com/reizen.html" />
   <link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reizen.html" />
   <link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reizen.html" />
@@ -64,7 +65,7 @@
           <li><a href="over-novakse.html">Über Novakse</a></li>
           <li><a href="contact.html">Kontakt</a></li>
         </ul>
-        <a class="header-cta" href="index.html#aanvraag">Reise anfragen</a>
+        <a class="header-cta" href="boeken.html">Reise anfragen</a>
               <div class="lang-switch">
             <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
               <span class="lang-switch__current">DE</span>
@@ -77,6 +78,61 @@
               <a href="../no/reizen.html" lang="no" hreflang="no">NO</a>
               <a href="../fi/reizen.html" lang="fi" hreflang="fi">FI</a>
             </div>
+          </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 1. Paginakop -->
+    <section class="page-hero" id="top">
+      <img class="page-hero__bg" src="../images/hero-baan-zonsondergang.jpg" alt="Gefegte Schlittschuhbahn über einen gefrorenen See bei Sonnenuntergang" fetchpriority="high" />
+      <div class="wrap page-hero__inner">
+        <span class="eyebrow eyebrow--light"><span class="dot"></span>Unsere Reisen</span>
+        <h1 class="page-hero__title">Unsere Schlittschuhreisen auf Natureis</h1>
+        <p class="page-hero__lede">Fünf Reiseziele, eine Saison — die Seen und Meere von Natureis in Schweden, Finnland und Österreich.</p>
+      </div>
+    </section>
+
+    <div class="baanlijn baanlijn--on-light" aria-hidden="true">
+      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
+        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
+      </svg>
+    </div>
+
+    <!-- 2. Inleiding -->
+    <section class="intro">
+      <div class="wrap intro__grid">
+        <p class="intro__lead" data-reveal-words>Bei Novakse läufst du Schlittschuh auf Natureis durch atemberaubende Winterlandschaften. Mit kleinen Gruppen, persönlicher Begleitung und komfortablen Unterkünften erlebst du die Kombination aus Abenteuer und Geselligkeit.</p>
+        <div class="intro__aside reveal">
+          <p>Jede Reise findet ab 4 Teilnehmern statt und umfasst maximal 12. Joey ist selbst dabei, kennt das Eis und entscheidet jeden Morgen neu, wo der Tag am schönsten wird.</p>
+          <a class="link-arrow" href="reisinformatie.html">Praktische Reiseinformationen</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. De reizen, één voor één -->
+    <section class="trip-rows" id="bestemmingen">
+      <article class="trip-row reveal">
+        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Fotos von Orsa, zum Wechseln tippen">
+          <img class="is-active" src="../images/orsa-baan-mora.jpg" alt="Gefegte Schlittschuhbahn auf dem Orsasee" loading="lazy" />
+          <img src="../images/orsa-accommodatie.jpg" alt="Unterkunft bei Orsa in Dalarna" loading="lazy" />
+          <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
+        </div>
+        <div class="trip-row__body">
+          <span class="trip-row__region">Dalarna, Schweden</span>
+          <h2 class="trip-row__title">Orsa</h2>
+          <p class="trip-row__text">Begleitete Gruppenreise auf dem Orsasee, mit einer gefegten Bahn von rund 15 Kilometern und Unterkunft in eigenen Hütten direkt am Eis. Kleine Gruppen und begrenzte Verfügbarkeit.</p>
+          <dl class="trip-row__facts">
+            <div><dt>Art der Reise</dt><dd>Begleitete Gruppenreise</dd></div>
+            <div><dt>Anmeldung</dt><dd>Offene Anmeldung, zu zweit</dd></div>
+            <div><dt>Unterkunft</dt><dd>Eigene Hütten am See</dd></div>
+            <div><dt>Termine</dt><dd>Folgen in Kürze</dd></div>
+            <div><dt>Preis</dt><dd>Folgt in Kürze</dd></div>
+          </dl>
+          <div class="trip-row__actions">
+            <a class="btn btn--dark" href="orsa.html">Diese Reise ansehen</a>
+            <a class="link-arrow" href="boeken.html?reis=orsa">Anfragen</a>
           </div>
         </div>
       </article>
@@ -96,7 +152,7 @@
           </dl>
           <div class="trip-row__actions">
             <a class="btn btn--dark" href="finland.html">Diese Reise ansehen</a>
-            <a class="link-arrow" href="index.html#aanvraag">Anfragen</a>
+            <a class="link-arrow" href="boeken.html?reis=finland">Anfragen</a>
           </div>
         </div>
       </article>
@@ -120,7 +176,7 @@
           </dl>
           <div class="trip-row__actions">
             <a class="btn btn--dark" href="falun.html">Diese Reise ansehen</a>
-            <a class="link-arrow" href="index.html#aanvraag">Anfragen</a>
+            <a class="link-arrow" href="boeken.html?reis=falun">Anfragen</a>
           </div>
         </div>
       </article>

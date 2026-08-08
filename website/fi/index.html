@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/fonts.css" />
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/theme-groen.css" />
+  <link rel="canonical" href="https://www.novakse.com/fi/index.html" />
   <link rel="alternate" hreflang="nl" href="https://www.novakse.com/index.html" />
   <link rel="alternate" hreflang="en" href="https://www.novakse.com/en/index.html" />
   <link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/index.html" />
@@ -61,7 +62,7 @@
           <li><a href="over-novakse.html">Tietoa Novaksesta</a></li>
           <li><a href="contact.html">Yhteystiedot</a></li>
         </ul>
-        <a class="header-cta" href="#aanvraag">Pyydä tarjous</a>
+        <a class="header-cta" href="boeken.html">Pyydä tarjous</a>
               <div class="lang-switch">
                 <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
                   <span class="lang-switch__current">FI</span>
@@ -74,6 +75,84 @@
                   <a href="../de/index.html" lang="de" hreflang="de">DE</a>
                   <a href="../no/index.html" lang="no" hreflang="no">NO</a>
                 </div>
+              </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 1. Opener -->
+    <section class="opener" id="top">
+      <video class="opener__video" autoplay muted loop playsinline
+             poster="../images/hero-opener-poster.jpg" aria-hidden="true">
+        <source src="../images/hero-opener.mp4" type="video/mp4" />
+      </video>
+      <div class="opener__inner">
+        <img class="opener__mark" src="../images/logo-mark.png" alt="" width="524" height="733" fetchpriority="high" />
+        <h1 class="opener__title">Luistelumatkoja luonnonjäällä</h1>
+        <p class="opener__lede">Pienet ryhmät, henkilökohtainen opastus, luonnonjäätä Ruotsissa, Suomessa ja Itävallassa.</p>
+        <div class="opener__actions">
+          <a class="btn btn--light" href="reizen.html">Katso matkat</a>
+          <a class="btn btn--outline-light" href="over-novakse.html">Lue tarinamme</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Jouw schaatsreis + zo werkt een aanvraag -->
+    <section class="layered">
+      <img class="layered__bg" src="../images/avondschaatsen.jpg" alt="Kaksi luistelijaa hämärässä luonnonjäällä" loading="lazy" />
+      <div class="wrap layered__inner">
+        <h2 class="layered__title reveal">Sinun luistelumatkasi</h2>
+        <ul class="facts stagger">
+          <li><span class="plus">+</span><b>Majoitus</b></li>
+          <li><span class="plus">+</span>Paikallinen kuljetus</li>
+          <li><span class="plus">+</span>Opastus jäällä</li>
+        </ul>
+      </div>
+      <div class="wrap stepbar stagger">
+        <div class="stepbar__item stepbar__item--intro">
+          <p class="stepbar__intro">Täytä lomake, niin Joey ottaa sinuun henkilökohtaisesti yhteyttä.</p>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">01</span>
+          <div class="stepbar__label">Vaihe</div>
+          <div class="stepbar__title">Lähetät pyynnön</div>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">02</span>
+          <div class="stepbar__label">Vaihe</div>
+          <div class="stepbar__title">Henkilökohtainen yhteydenotto</div>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">03</span>
+          <div class="stepbar__label">Vaihe</div>
+          <div class="stepbar__title">Päätämme yhdessä</div>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">04</span>
+          <div class="stepbar__label">Vaihe</div>
+          <div class="stepbar__title">Vahvistus</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="baanlijn baanlijn--on-dark" aria-hidden="true">
+      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
+        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#dd9752" stroke-width="2" />
+      </svg>
+    </div>
+
+    <!-- 3. Reizen -->
+    <section class="trips" id="reizen">
+      <div class="wrap">
+        <div class="trips__layout">
+          <div class="trips__label"><a href="reizen.html"><span>Kaikki matkat</span></a></div>
+          <div class="trips__scroll" id="tripScroll">
+            <article class="trip-card">
+              <div class="trip-card__media" data-gallery role="button" tabindex="0" aria-label="Kuvia Orsasta, napauta vaihtaaksesi">
+                <img class="is-active" src="../images/orsa-baan-mora.jpg" alt="Aurattu rata Orsajärvellä" loading="lazy" />
+                <img src="../images/orsa-accommodatie.jpg" alt="Majoitus Orsassa, Dalarnassa" loading="lazy" />
+                <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
               </div>
               <div class="trip-card__head">
                 <h3 class="trip-card__title">Orsa</h3>

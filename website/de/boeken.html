@@ -67,6 +67,225 @@
                   <a href="../fi/boeken.html" lang="fi" hreflang="fi">FI</a>
                 </div>
               </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="booking-page">
+    <div class="wrap">
+      <nav class="crumbs crumbs--dark" aria-label="Brotkrümelnavigation">
+        <a href="reizen.html">Reisen</a> <span aria-hidden="true">/</span> <span>Anfrage</span>
+      </nav>
+
+      <p class="booking__trip" id="reisNaam">Schlittschuhreise</p>
+      <h1 class="booking__title">Deine Anfrage zusammenstellen</h1>
+      <p class="booking__intro">Fülle aus, was du möchtest, und du siehst sofort ungefähr, was es kostet. Du bist noch an nichts gebunden — Joey prüft deine Anfrage persönlich und bestätigt, ob der Zeitraum frei ist.</p>
+
+      <script type="application/json" id="boekingsdata">
+{
+  "standaard": "finland",
+  "weerbericht": "Ob eine Aktivität stattfindet, hängt vom Wetter und den Bedingungen ab.",
+  "reizen": {
+    "orsa": {
+      "naam": "Orsa — Dalarna, Schweden",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Kommst du allein oder mit deiner eigenen Gruppe?",
+          "opties": [
+            {
+              "naam": "Ich schließe mich einer offenen Gruppenreise an",
+              "toelichting": "Anmeldung erfolgt paarweise"
+            },
+            {
+              "naam": "Wir kommen mit unserer eigenen Gruppe",
+              "toelichting": "Ihr wählt selbst das Datum"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "Wie kommst du vor Ort herum?",
+          "opties": [
+            {
+              "naam": "Transport vor Ort ist in der Reise enthalten",
+              "toelichting": "Standard bei dieser Reise"
+            },
+            {
+              "naam": "Wir möchten einen eigenen Mietwagen",
+              "toelichting": "Joey schickt einen Vorschlag mit Preis"
+            },
+            {
+              "naam": "Wir organisieren unseren Transport komplett selbst"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "Wie sieht es mit deiner Versicherung aus?",
+          "opties": [
+            {
+              "naam": "Reise- und Stornoversicherung habe ich selbst geregelt"
+            },
+            {
+              "naam": "Ich hätte gerne Beratung dazu",
+              "toelichting": "Joey weist dir den Weg; abschließen tust du selbst"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Bringst du dein eigenes Schlittschuhmaterial mit?",
+          "opties": [
+            {
+              "naam": "Ja, ich habe eigene Langlaufschlittschuhe"
+            },
+            {
+              "naam": "Nein, ich hätte gerne Beratung zu Miete oder Kauf"
+            },
+            {
+              "naam": "Ich weiß es noch nicht"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Skipass",
+          "prijs": 65,
+          "toelichting": "pro Person, ohne Ausrüstung — Verleih regelst du selbst"
+        },
+        {
+          "naam": "Schneemobilfahren",
+          "prijs": 100,
+          "toelichting": "pro Person"
+        },
+        {
+          "naam": "Skilanglauf",
+          "prijs": 25,
+          "toelichting": "pro Person, ohne Ausrüstung"
+        },
+        {
+          "naam": "Hundeschlittenfahrten",
+          "prijs": 70,
+          "toelichting": "pro Person, pro 20 Minuten"
+        }
+      ]
+    },
+    "finland": {
+      "naam": "Finnland — Punkaharju",
+      "periodeVrij": true,
+      "minimumPersonen": 1,
+      "maxPersonen": 12,
+      "opslagPerPersoonPerNacht": 0,
+      "extras": [],
+      "prijsPerPersoonPerDag": 199
+    },
+    "falun": {
+      "naam": "Falun — Dalarna, Schweden",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Kommst du allein oder mit deiner eigenen Gruppe?",
+          "opties": [
+            {
+              "naam": "Ich schließe mich einer offenen Gruppenreise an",
+              "toelichting": "Anmeldung erfolgt paarweise"
+            },
+            {
+              "naam": "Wir kommen mit unserer eigenen Gruppe",
+              "toelichting": "Ihr wählt selbst das Datum"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "Wie kommst du vor Ort herum?",
+          "opties": [
+            {
+              "naam": "Transport vor Ort ist in der Reise enthalten",
+              "toelichting": "Standard bei dieser Reise"
+            },
+            {
+              "naam": "Wir möchten einen eigenen Mietwagen",
+              "toelichting": "Joey schickt einen Vorschlag mit Preis"
+            },
+            {
+              "naam": "Wir organisieren unseren Transport komplett selbst"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "Wie sieht es mit deiner Versicherung aus?",
+          "opties": [
+            {
+              "naam": "Reise- und Stornoversicherung habe ich selbst geregelt"
+            },
+            {
+              "naam": "Ich hätte gerne Beratung dazu",
+              "toelichting": "Joey weist dir den Weg; abschließen tust du selbst"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Bringst du dein eigenes Schlittschuhmaterial mit?",
+          "opties": [
+            {
+              "naam": "Ja, ich habe eigene Langlaufschlittschuhe"
+            },
+            {
+              "naam": "Nein, ich hätte gerne Beratung zu Miete oder Kauf"
+            },
+            {
+              "naam": "Ich weiß es noch nicht"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Skipass",
+          "prijs": 65,
+          "toelichting": "pro Person, ohne Ausrüstung — Verleih regelst du selbst"
+        },
+        {
+          "naam": "Schneemobilfahren",
+          "prijs": 100,
+          "toelichting": "pro Person"
+        },
+        {
+          "naam": "Skilanglauf",
+          "prijs": 25,
+          "toelichting": "pro Person, ohne Ausrüstung"
+        },
+        {
+          "naam": "Hundeschlittenfahrten",
+          "prijs": 70,
+          "toelichting": "pro Person, pro 20 Minuten"
+        }
+      ]
+    }
+  }
+}
+      </script>
+
+      <p class="booking__voorbeeld">Finnland kostet ab &euro;199 pro Person pro Tag, inklusive Unterkunft, Mietwagen und den übrigen Leistungen. Den Flug organisierst du selbst.</p>
+
+      <form class="booking" id="boekingsformulier" novalidate>
+        <div class="booking__grid">
+          <div class="booking__main">
+
+            <fieldset class="booking__block">
+              <legend class="booking__legend"><span class="booking__step">1</span> Dein Zeitraum</legend>
+              <div class="booking__period" id="periodeBox">
+                <p class="booking__period-empty">Noch kein Zeitraum gewählt.</p>
+              </div>
               <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Wähle einen Zeitraum im Kalender</a>
             </fieldset>
 
@@ -125,10 +344,6 @@
               <strong id="totaalBedrag">—</strong>
             </div>
             <p class="booking__note">Dies ist eine Schätzung auf Basis deiner Auswahl. Du erhältst von Joey einen endgültigen Preis.</p>
-            <div class="booking__payment">
-              <p class="booking__payment-title">So bezahlst du</p>
-              <p class="booking__note">Nach Bestätigung schickt Joey dir eine persönliche Zahlungsanfrage über Stripe. Niederländische Konten zahlen per iDEAL; kommst du aus dem Ausland, geht es auch mit Kreditkarte. Lieber in Bitcoin? Das regelt Joey gerne direkt mit dir.</p>
-            </div>
             <div class="booking__actions">
               <button type="submit" class="btn btn--dark booking__send">Anfrage per E-Mail senden</button>
               <a class="btn btn--outline-dark booking__whatsapp" id="whatsappKnop" href="https://wa.me/31617467643" target="_blank" rel="noopener">Über WhatsApp senden</a>

@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/fonts.css" />
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/theme-groen.css" />
+  <link rel="canonical" href="https://www.novakse.com/de/index.html" />
   <link rel="alternate" hreflang="nl" href="https://www.novakse.com/index.html" />
   <link rel="alternate" hreflang="en" href="https://www.novakse.com/en/index.html" />
   <link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/index.html" />
@@ -61,7 +62,7 @@
           <li><a href="over-novakse.html">Über Novakse</a></li>
           <li><a href="contact.html">Kontakt</a></li>
         </ul>
-        <a class="header-cta" href="#aanvraag">Reise anfragen</a>
+        <a class="header-cta" href="boeken.html">Reise anfragen</a>
               <div class="lang-switch">
                 <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
                   <span class="lang-switch__current">DE</span>
@@ -74,6 +75,84 @@
                   <a href="../no/index.html" lang="no" hreflang="no">NO</a>
                   <a href="../fi/index.html" lang="fi" hreflang="fi">FI</a>
                 </div>
+              </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 1. Opener -->
+    <section class="opener" id="top">
+      <video class="opener__video" autoplay muted loop playsinline
+             poster="../images/hero-opener-poster.jpg" aria-hidden="true">
+        <source src="../images/hero-opener.mp4" type="video/mp4" />
+      </video>
+      <div class="opener__inner">
+        <img class="opener__mark" src="../images/logo-mark.png" alt="" width="524" height="733" fetchpriority="high" />
+        <h1 class="opener__title">Schlittschuhreisen auf Natureis</h1>
+        <p class="opener__lede">Kleine Gruppen, persönliche Begleitung, Natureis in Schweden, Finnland und Österreich.</p>
+        <div class="opener__actions">
+          <a class="btn btn--light" href="reizen.html">Unsere Reisen ansehen</a>
+          <a class="btn btn--outline-light" href="over-novakse.html">Unsere Geschichte lesen</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Jouw schaatsreis + zo werkt een aanvraag -->
+    <section class="layered">
+      <img class="layered__bg" src="../images/avondschaatsen.jpg" alt="Zwei Schlittschuhläufer in der Abenddämmerung auf Natureis" loading="lazy" />
+      <div class="wrap layered__inner">
+        <h2 class="layered__title reveal">Deine Schlittschuhreise</h2>
+        <ul class="facts stagger">
+          <li><span class="plus">+</span><b>Unterkunft</b></li>
+          <li><span class="plus">+</span>Transport vor Ort</li>
+          <li><span class="plus">+</span>Begleitung auf dem Eis</li>
+        </ul>
+      </div>
+      <div class="wrap stepbar stagger">
+        <div class="stepbar__item stepbar__item--intro">
+          <p class="stepbar__intro">Fülle das Formular aus, und Joey meldet sich persönlich bei dir.</p>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">01</span>
+          <div class="stepbar__label">Schritt</div>
+          <div class="stepbar__title">Du fragst an</div>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">02</span>
+          <div class="stepbar__label">Schritt</div>
+          <div class="stepbar__title">Persönlicher Kontakt</div>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">03</span>
+          <div class="stepbar__label">Schritt</div>
+          <div class="stepbar__title">Gemeinsam entscheiden</div>
+        </div>
+        <div class="stepbar__item">
+          <span class="stepbar__num">04</span>
+          <div class="stepbar__label">Schritt</div>
+          <div class="stepbar__title">Bestätigung</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="baanlijn baanlijn--on-dark" aria-hidden="true">
+      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
+        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#dd9752" stroke-width="2" />
+      </svg>
+    </div>
+
+    <!-- 3. Reizen -->
+    <section class="trips" id="reizen">
+      <div class="wrap">
+        <div class="trips__layout">
+          <div class="trips__label"><a href="reizen.html"><span>Alle Reisen</span></a></div>
+          <div class="trips__scroll" id="tripScroll">
+            <article class="trip-card">
+              <div class="trip-card__media" data-gallery role="button" tabindex="0" aria-label="Fotos von Orsa, zum Wechseln tippen">
+                <img class="is-active" src="../images/orsa-baan-mora.jpg" alt="Gefegte Schlittschuhbahn bei Orsa" loading="lazy" />
+                <img src="../images/orsa-accommodatie.jpg" alt="Unterkunft bei Orsa, Dalarna" loading="lazy" />
+                <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
               </div>
               <div class="trip-card__head">
                 <h3 class="trip-card__title">Orsa</h3>

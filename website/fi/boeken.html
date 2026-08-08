@@ -67,6 +67,225 @@
                   <a href="../no/boeken.html" lang="no" hreflang="no">NO</a>
                 </div>
               </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="booking-page">
+    <div class="wrap">
+      <nav class="crumbs crumbs--dark" aria-label="Murupolku">
+        <a href="reizen.html">Matkat</a> <span aria-hidden="true">/</span> <span>Pyyntö</span>
+      </nav>
+
+      <p class="booking__trip" id="reisNaam">Luistelumatka</p>
+      <h1 class="booking__title">Kokoa tarjouspyyntösi</h1>
+      <p class="booking__intro">Täytä toiveesi, niin näet heti suunnilleen, mitä se maksaa. Et sitoudu vielä mihinkään — Joey tarkistaa pyyntösi henkilökohtaisesti ja vahvistaa, onko ajankohta vapaa.</p>
+
+      <script type="application/json" id="boekingsdata">
+{
+  "standaard": "finland",
+  "weerbericht": "Aktiviteetin toteutuminen riippuu säästä ja olosuhteista.",
+  "reizen": {
+    "orsa": {
+      "naam": "Orsa — Dalarna, Ruotsi",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Tuletko yksin vai omalla ryhmällä?",
+          "opties": [
+            {
+              "naam": "Liityn avoimeen ryhmämatkaan",
+              "toelichting": "Ilmoittautuminen tapahtuu pareittain"
+            },
+            {
+              "naam": "Tulemme omalla ryhmällä",
+              "toelichting": "Valitsette itse ajankohdan"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "Miten liikut paikan päällä?",
+          "opties": [
+            {
+              "naam": "Paikallinen kuljetus sisältyy matkaan",
+              "toelichting": "Vakiona tällä matkalla"
+            },
+            {
+              "naam": "Haluamme oman vuokra-auton",
+              "toelichting": "Joey lähettää ehdotuksen hinnan kanssa"
+            },
+            {
+              "naam": "Järjestämme kuljetuksen kokonaan itse"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "Entä vakuutuksesi?",
+          "opties": [
+            {
+              "naam": "Olen itse järjestänyt matka- ja peruutusvakuutuksen"
+            },
+            {
+              "naam": "Haluaisin neuvoja tästä",
+              "toelichting": "Joey opastaa sinua; hankit sen itse"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Otatko omat luistimesi mukaan?",
+          "opties": [
+            {
+              "naam": "Kyllä, minulla on omat retkiluistimet"
+            },
+            {
+              "naam": "En, haluaisin neuvoja vuokraamisesta tai ostamisesta"
+            },
+            {
+              "naam": "En tiedä vielä"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Hiihtolippu",
+          "prijs": 65,
+          "toelichting": "per henkilö, ilman välineitä — vuokraus järjestät itse"
+        },
+        {
+          "naam": "Moottorikelkkailu",
+          "prijs": 100,
+          "toelichting": "per henkilö"
+        },
+        {
+          "naam": "Murtomaahiihto",
+          "prijs": 25,
+          "toelichting": "per henkilö, ilman välineitä"
+        },
+        {
+          "naam": "Koiravaljakkoajelu",
+          "prijs": 70,
+          "toelichting": "per henkilö, 20 minuuttia"
+        }
+      ]
+    },
+    "finland": {
+      "naam": "Suomi — Punkaharju",
+      "periodeVrij": true,
+      "minimumPersonen": 1,
+      "maxPersonen": 12,
+      "opslagPerPersoonPerNacht": 0,
+      "extras": [],
+      "prijsPerPersoonPerDag": 199
+    },
+    "falun": {
+      "naam": "Falun — Dalarna, Ruotsi",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Tuletko yksin vai omalla ryhmällä?",
+          "opties": [
+            {
+              "naam": "Liityn avoimeen ryhmämatkaan",
+              "toelichting": "Ilmoittautuminen tapahtuu pareittain"
+            },
+            {
+              "naam": "Tulemme omalla ryhmällä",
+              "toelichting": "Valitsette itse ajankohdan"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "Miten liikut paikan päällä?",
+          "opties": [
+            {
+              "naam": "Paikallinen kuljetus sisältyy matkaan",
+              "toelichting": "Vakiona tällä matkalla"
+            },
+            {
+              "naam": "Haluamme oman vuokra-auton",
+              "toelichting": "Joey lähettää ehdotuksen hinnan kanssa"
+            },
+            {
+              "naam": "Järjestämme kuljetuksen kokonaan itse"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "Entä vakuutuksesi?",
+          "opties": [
+            {
+              "naam": "Olen itse järjestänyt matka- ja peruutusvakuutuksen"
+            },
+            {
+              "naam": "Haluaisin neuvoja tästä",
+              "toelichting": "Joey opastaa sinua; hankit sen itse"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Otatko omat luistimesi mukaan?",
+          "opties": [
+            {
+              "naam": "Kyllä, minulla on omat retkiluistimet"
+            },
+            {
+              "naam": "En, haluaisin neuvoja vuokraamisesta tai ostamisesta"
+            },
+            {
+              "naam": "En tiedä vielä"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Hiihtolippu",
+          "prijs": 65,
+          "toelichting": "per henkilö, ilman välineitä — vuokraus järjestät itse"
+        },
+        {
+          "naam": "Moottorikelkkailu",
+          "prijs": 100,
+          "toelichting": "per henkilö"
+        },
+        {
+          "naam": "Murtomaahiihto",
+          "prijs": 25,
+          "toelichting": "per henkilö, ilman välineitä"
+        },
+        {
+          "naam": "Koiravaljakkoajelu",
+          "prijs": 70,
+          "toelichting": "per henkilö, 20 minuuttia"
+        }
+      ]
+    }
+  }
+}
+      </script>
+
+      <p class="booking__voorbeeld">Suomi maksaa alkaen &euro;199 henkilöltä päivässä, sisältäen majoituksen, vuokra-auton ja muut palvelut. Lennon järjestät itse.</p>
+
+      <form class="booking" id="boekingsformulier" novalidate>
+        <div class="booking__grid">
+          <div class="booking__main">
+
+            <fieldset class="booking__block">
+              <legend class="booking__legend"><span class="booking__step">1</span> Ajankohtasi</legend>
+              <div class="booking__period" id="periodeBox">
+                <p class="booking__period-empty">Ajankohtaa ei ole vielä valittu.</p>
+              </div>
               <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Valitse ajankohta kalenterista</a>
             </fieldset>
 
@@ -125,10 +344,6 @@
               <strong id="totaalBedrag">—</strong>
             </div>
             <p class="booking__note">Tämä on arvio valintojesi perusteella. Saat lopullisen hinnan Joeylta.</p>
-            <div class="booking__payment">
-              <p class="booking__payment-title">Miten maksat</p>
-              <p class="booking__note">Vahvistuksen jälkeen Joey lähettää sinulle henkilökohtaisen maksupyynnön Stripen kautta. Hollantilaiset tilit maksavat iDEALilla; ulkomailta voi maksaa myös luottokortilla. Haluatko mieluummin maksaa bitcoinilla? Sen Joey järjestää mielellään suoraan kanssasi.</p>
-            </div>
             <div class="booking__actions">
               <button type="submit" class="btn btn--dark booking__send">Lähetä pyyntö sähköpostilla</button>
               <a class="btn btn--outline-dark booking__whatsapp" id="whatsappKnop" href="https://wa.me/31617467643" target="_blank" rel="noopener">Lähetä WhatsAppilla</a>

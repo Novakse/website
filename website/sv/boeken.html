@@ -67,6 +67,225 @@
                   <a href="../fi/boeken.html" lang="fi" hreflang="fi">FI</a>
                 </div>
               </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="booking-page">
+    <div class="wrap">
+      <nav class="crumbs crumbs--dark" aria-label="Brödsmulor">
+        <a href="reizen.html">Resor</a> <span aria-hidden="true">/</span> <span>Förfrågan</span>
+      </nav>
+
+      <p class="booking__trip" id="reisNaam">Skridskoresa</p>
+      <h1 class="booking__title">Sätt ihop din förfrågan</h1>
+      <p class="booking__intro">Fyll i vad du vill ha, så ser du direkt ungefär vad det kostar. Du binder dig inte till något än — Joey går igenom din förfrågan personligen och bekräftar om perioden är ledig.</p>
+
+      <script type="application/json" id="boekingsdata">
+{
+  "standaard": "finland",
+  "weerbericht": "Om en aktivitet blir av beror på väder och förhållanden.",
+  "reizen": {
+    "orsa": {
+      "naam": "Orsa — Dalarna, Sverige",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Kommer du ensam eller med din egen grupp?",
+          "opties": [
+            {
+              "naam": "Jag ansluter mig till en öppen gruppresa",
+              "toelichting": "Anmälan sker parvis"
+            },
+            {
+              "naam": "Vi kommer med vår egen grupp",
+              "toelichting": "Ni väljer själva datum"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "Hur tar du dig runt på plats?",
+          "opties": [
+            {
+              "naam": "Transport på plats ingår i resan",
+              "toelichting": "Standard för denna resa"
+            },
+            {
+              "naam": "Vi vill ha en egen hyrbil",
+              "toelichting": "Joey skickar ett förslag med pris"
+            },
+            {
+              "naam": "Vi ordnar transporten helt själva"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "Hur är det med din försäkring?",
+          "opties": [
+            {
+              "naam": "Jag har själv ordnat rese- och avbeställningsförsäkring"
+            },
+            {
+              "naam": "Jag vill gärna ha råd om detta",
+              "toelichting": "Joey visar dig vägen; du tecknar den själv"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Tar du med egen skridskoutrustning?",
+          "opties": [
+            {
+              "naam": "Ja, jag har egna långfärdsskridskor"
+            },
+            {
+              "naam": "Nej, jag vill ha råd om att hyra eller köpa"
+            },
+            {
+              "naam": "Jag vet inte än"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Skidpass",
+          "prijs": 65,
+          "toelichting": "per person, exklusive utrustning — hyra ordnar du själv"
+        },
+        {
+          "naam": "Snöskoteråkning",
+          "prijs": 100,
+          "toelichting": "per person"
+        },
+        {
+          "naam": "Längdskidåkning",
+          "prijs": 25,
+          "toelichting": "per person, utan utrustning"
+        },
+        {
+          "naam": "Hundspann",
+          "prijs": 70,
+          "toelichting": "per person, per 20 minuter"
+        }
+      ]
+    },
+    "finland": {
+      "naam": "Finland — Punkaharju",
+      "periodeVrij": true,
+      "minimumPersonen": 1,
+      "maxPersonen": 12,
+      "opslagPerPersoonPerNacht": 0,
+      "extras": [],
+      "prijsPerPersoonPerDag": 199
+    },
+    "falun": {
+      "naam": "Falun — Dalarna, Sverige",
+      "periodeVrij": false,
+      "maxPersonen": 12,
+      "vragen": [
+        {
+          "sleutel": "groepsvorm",
+          "vraag": "Kommer du ensam eller med din egen grupp?",
+          "opties": [
+            {
+              "naam": "Jag ansluter mig till en öppen gruppresa",
+              "toelichting": "Anmälan sker parvis"
+            },
+            {
+              "naam": "Vi kommer med vår egen grupp",
+              "toelichting": "Ni väljer själva datum"
+            }
+          ]
+        },
+        {
+          "sleutel": "vervoer",
+          "vraag": "Hur tar du dig runt på plats?",
+          "opties": [
+            {
+              "naam": "Transport på plats ingår i resan",
+              "toelichting": "Standard för denna resa"
+            },
+            {
+              "naam": "Vi vill ha en egen hyrbil",
+              "toelichting": "Joey skickar ett förslag med pris"
+            },
+            {
+              "naam": "Vi ordnar transporten helt själva"
+            }
+          ]
+        },
+        {
+          "sleutel": "verzekering",
+          "vraag": "Hur är det med din försäkring?",
+          "opties": [
+            {
+              "naam": "Jag har själv ordnat rese- och avbeställningsförsäkring"
+            },
+            {
+              "naam": "Jag vill gärna ha råd om detta",
+              "toelichting": "Joey visar dig vägen; du tecknar den själv"
+            }
+          ]
+        },
+        {
+          "sleutel": "materiaal",
+          "vraag": "Tar du med egen skridskoutrustning?",
+          "opties": [
+            {
+              "naam": "Ja, jag har egna långfärdsskridskor"
+            },
+            {
+              "naam": "Nej, jag vill ha råd om att hyra eller köpa"
+            },
+            {
+              "naam": "Jag vet inte än"
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "naam": "Skidpass",
+          "prijs": 65,
+          "toelichting": "per person, exklusive utrustning — hyra ordnar du själv"
+        },
+        {
+          "naam": "Snöskoteråkning",
+          "prijs": 100,
+          "toelichting": "per person"
+        },
+        {
+          "naam": "Längdskidåkning",
+          "prijs": 25,
+          "toelichting": "per person, utan utrustning"
+        },
+        {
+          "naam": "Hundspann",
+          "prijs": 70,
+          "toelichting": "per person, per 20 minuter"
+        }
+      ]
+    }
+  }
+}
+      </script>
+
+      <p class="booking__voorbeeld">Finland kostar från &euro;199 per person och dag, inklusive boende, hyrbil och övriga tjänster. Flyget ordnar du själv.</p>
+
+      <form class="booking" id="boekingsformulier" novalidate>
+        <div class="booking__grid">
+          <div class="booking__main">
+
+            <fieldset class="booking__block">
+              <legend class="booking__legend"><span class="booking__step">1</span> Din period</legend>
+              <div class="booking__period" id="periodeBox">
+                <p class="booking__period-empty">Ingen period vald ännu.</p>
+              </div>
               <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Välj en period i kalendern</a>
             </fieldset>
 
@@ -125,10 +344,6 @@
               <strong id="totaalBedrag">—</strong>
             </div>
             <p class="booking__note">Det här är en uppskattning baserad på dina val. Du får ett slutgiltigt pris från Joey.</p>
-            <div class="booking__payment">
-              <p class="booking__payment-title">Hur du betalar</p>
-              <p class="booking__note">Efter bekräftelse skickar Joey dig en personlig betalningsförfrågan via Stripe. Nederländska konton betalar via iDEAL; kommer du från utlandet går det även med kreditkort. Hellre i bitcoin? Det ordnar Joey gärna direkt med dig.</p>
-            </div>
             <div class="booking__actions">
               <button type="submit" class="btn btn--dark booking__send">Mejla förfrågan</button>
               <a class="btn btn--outline-dark booking__whatsapp" id="whatsappKnop" href="https://wa.me/31617467643" target="_blank" rel="noopener">Skicka via WhatsApp</a>
