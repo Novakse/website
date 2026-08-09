@@ -27,7 +27,9 @@
       fromPerPersonPerNight: function (bedrag) { return "vanaf " + bedrag + " p.p.p.n."; },
       chooseCalendarPeriod: "Kies een periode in de kalender",
       viewDatesFor: function (naam) { return "Bekijk de reisdata van " + naam; },
+      viewTripPage: function (naam) { return "Bekijk de reispagina van " + naam; },
       fixedDatesNote: "Deze reis heeft vaste vertrekdata. Zet in je opmerking welke periode je op het oog hebt, dan laat Joey weten wat er mogelijk is.",
+      priceOnRequestNote: "Prijs en definitieve data staan voor deze reis nog niet vast. Zet in je opmerking welke periode je op het oog hebt, dan stelt Joey een passend voorstel op maat.",
       noExtrasYet: "Voor deze reis staan de extra activiteiten nog niet vast. Zet in je opmerking waar je belangstelling voor hebt.",
       chooseFirst: "Kies eerst een periode in de kalender.",
       fillIn: function (lijst) { return "Vul nog even " + lijst.join(" en ") + " in."; },
@@ -244,12 +246,19 @@
   var reisNaam = document.getElementById("reisNaam");
   if (reisNaam) reisNaam.textContent = reis.naam;
 
+  // Reizen zonder vaste prijs/data (zoals Weissensee en Luleå) hebben geen
+  // voorbeeldprijs en geen kalender- of reisdatapagina om naar terug te linken.
+  var voorbeeld = document.getElementById("boekingVoorbeeld");
+  if (voorbeeld && reis.prijsOpAanvraag) voorbeeld.hidden = true;
+
   var terugLink = document.getElementById("terugNaarReis");
   if (terugLink) {
     terugLink.href = reisSleutel + ".html" + (reis.periodeVrij ? "#prijzen" : "");
-    terugLink.textContent = reis.periodeVrij
-      ? T.chooseCalendarPeriod
-      : T.viewDatesFor(reis.naam.split(" —")[0]);
+    terugLink.textContent = reis.prijsOpAanvraag
+      ? T.viewTripPage(reis.naam.split(" —")[0])
+      : reis.periodeVrij
+        ? T.chooseCalendarPeriod
+        : T.viewDatesFor(reis.naam.split(" —")[0]);
   }
 
   var periodeBox = document.getElementById("periodeBox");
@@ -257,6 +266,9 @@
     periodeBox.innerHTML =
       '<p class="booking__period-dates">' + schrijfDatum(van) + ' – ' + schrijfDatum(tot) + '</p>' +
       '<p class="booking__period-nights">' + T.nightsLabel(nachten) + '</p>';
+  } else if (reis.prijsOpAanvraag) {
+    periodeBox.innerHTML =
+      '<p class="booking__period-empty">' + T.priceOnRequestNote + '</p>';
   } else if (!reis.periodeVrij) {
     periodeBox.innerHTML =
       '<p class="booking__period-empty">' + T.fixedDatesNote + '</p>';
@@ -552,7 +564,7 @@
       (ontbreekt[0] === T.yourName ? naam : email).focus();
       return;
     }
-    if (!nachten) {
+    if (!nachten && !reis.prijsOpAanvraag) {
       foutmelding.hidden = false;
       foutmelding.textContent = T.chooseFirst;
       return;
