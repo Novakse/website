@@ -8,10 +8,10 @@
    ========================================================================== */
 
 :root {
-  --green: #17231f;        /* hoofdgroen */
-  --green-deep: #101f1a;   /* diepste groen */
+  --green: #050d08;        /* hoofdgroen — zwartgroen, dicht tegen zwart aan */
+  --green-deep: #020603;   /* diepste groen */
   --paper-soft: #f1f3f1;   /* zeer licht groengrijs */
-  --ink: #17231f;          /* tekstkleur krijgt dezelfde groenzwarte ondertoon */
+  --ink: #050d08;          /* tekstkleur krijgt dezelfde groenzwarte ondertoon */
   --ink-soft: #52615c;
   --border: #dfe3df;
 }

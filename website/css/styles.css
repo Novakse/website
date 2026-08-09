@@ -9,6 +9,7 @@
   --ink-soft: #5f635e;
   --warm: #dd9752;        /* accent on dark backgrounds */
   --warm-deep: #7a4620;   /* accent on light backgrounds (WCAG AA on white) */
+  --status-green: #1b4332; /* status/success accent */
   --border: #e2e3df;
   --border-dark: rgba(255, 255, 255, 0.18);
 
@@ -1410,7 +1411,7 @@ html:not(.js) .opener__controls { display: none; }
   border-radius: 50%;
   background: currentColor;
 }
-.status.is-open { color: #2f6b4f; }
+.status.is-open { color: var(--status-green); }
 .status.is-limited { color: var(--warm-deep); }
 .status.is-full { color: var(--ink-soft); }
 
@@ -1483,7 +1484,7 @@ html:not(.js) .opener__controls { display: none; }
   left: 0; top: 0;
   font-weight: 700;
 }
-.included__list--yes li::before { content: "+"; color: #2f6b4f; }
+.included__list--yes li::before { content: "+"; color: var(--status-green); }
 .included__list--no li { color: var(--ink-soft); }
 .included__list--no li::before { content: "–"; color: var(--ink-soft); }
 .included__note {
@@ -1562,7 +1563,7 @@ html:not(.js) .opener__controls { display: none; }
   border-radius: 3px;
   background: var(--border);
 }
-.calendar__chip.is-vrij { background: #2f6b4f; }
+.calendar__chip.is-vrij { background: var(--status-green); }
 .calendar__chip.is-bijna-vol { background: var(--warm); }
 .calendar__chip.is-vol { background: #c9ccc6; }
 
@@ -1609,7 +1610,7 @@ html:not(.js) .opener__controls { display: none; }
 .calendar__cell.is-start {
   font-weight: 700;
   color: #fff;
-  background: #2f6b4f;
+  background: var(--status-green);
   transition: transform 0.15s ease, background-color 0.15s ease;
 }
 .calendar__cell.is-bijna-vol { background: var(--warm); color: var(--ink); }

@@ -152,6 +152,56 @@
   var header = document.querySelector(".site-header");
 
   /* ------------------------------------------------------------------
+     Donker blok: kleurt pas om zodra het scherm volledig op deze sectie zit,
+     dus wanneer de bovenrand voorbij de bovenkant van het scherm is en de
+     sectie het beeld nog grotendeels vult. Zodra de sectie uit beeld raakt,
+     valt hij terug op wit, zodat de omslag opnieuw afspeelt als je er weer
+     langs scrolt. Zonder een thema dat hier styling voor heeft, doet deze
+     klasse niets.
+     Staat vóór de header-sync hieronder: syncHeader leest is-snapped, dus
+     moet zowel bij page-load als bij elk scroll-event ná syncSnap draaien
+     (registratie- en aanroepvolgorde bepalen de rAF-volgorde binnen een
+     frame), anders loopt de balk een frame achter of start hij fout.
+     ------------------------------------------------------------------ */
+  var snapSection = document.querySelector(".why");
+
+  if (snapSection) {
+    var snapTicking = false;
+
+    var syncSnap = function () {
+      var rect = snapSection.getBoundingClientRect();
+      var vh = window.innerHeight;
+
+      // Terug naar wit gebeurt pas als de sectie volledig buiten beeld is —
+      // boven- of onderlangs. Zo zie je die omslag nooit gebeuren.
+      if (rect.bottom <= 0 || rect.top >= vh) {
+        snapSection.classList.remove("is-snapped");
+        return;
+      }
+
+      // Naar groen zodra de sectie het scherm vult. Is de sectie zelf korter
+      // dan het scherm, dan telt of hij vrijwel helemaal in beeld staat.
+      var zichtbaar = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+      if (zichtbaar >= vh * 0.6 || zichtbaar >= rect.height * 0.8) {
+        snapSection.classList.add("is-snapped");
+      }
+      // Zit hij daartussenin? Dan blijft staan wat er staat.
+    };
+
+    window.addEventListener("scroll", function () {
+      if (snapTicking) return;
+      snapTicking = true;
+      window.requestAnimationFrame(function () {
+        syncSnap();
+        snapTicking = false;
+      });
+    }, { passive: true });
+
+    window.addEventListener("resize", syncSnap);
+    syncSnap();
+  }
+
+  /* ------------------------------------------------------------------
      Header: altijd doorzichtig, geen witte balk. De tekst en het logo
      wisselen automatisch tussen wit en donker, op basis van wat er op
      dat moment achter de balk zit (foto/donkere sectie = wit, lichte
@@ -177,13 +227,12 @@
 
     var onDark = darkZoneEls.some(function (el) {
       if (el.classList.contains("why")) {
-        // Zelfde voorwaarde als de "why"-omslag zelf (zie snapSection hieronder),
-        // zodat de balk niet een frame achterloopt op die kleurwissel.
-        var rect = el.getBoundingClientRect();
-        var vh = window.innerHeight;
-        if (rect.bottom <= 0 || rect.top >= vh) return false;
-        var zichtbaar = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
-        return zichtbaar >= vh * 0.6 || zichtbaar >= rect.height * 0.8;
+        // De "why"-sectie is pas echt donker zodra hij is omgeslagen naar
+        // groen (is-snapped, zie syncSnap hierboven). Zolang dat zo is
+        // en de balk er nog overheen staat, blijft de balk donker — ook
+        // verderop in een lange sectie, waar maar een klein stukje nog in
+        // de balk-band valt.
+        return el.classList.contains("is-snapped") && overlapsHeaderBand(el);
       }
       return overlapsHeaderBand(el);
     });
@@ -289,52 +338,6 @@
     revealEls.forEach(function (el) { observer.observe(el); });
   } else {
     revealEls.forEach(function (el) { el.classList.add("is-visible"); });
-  }
-
-  /* ------------------------------------------------------------------
-     Donker blok: kleurt pas om zodra het scherm volledig op deze sectie zit,
-     dus wanneer de bovenrand voorbij de bovenkant van het scherm is en de
-     sectie het beeld nog grotendeels vult. Zodra de sectie uit beeld raakt,
-     valt hij terug op wit, zodat de omslag opnieuw afspeelt als je er weer
-     langs scrolt. Zonder een thema dat hier styling voor heeft, doet deze
-     klasse niets.
-     ------------------------------------------------------------------ */
-  var snapSection = document.querySelector(".why");
-
-  if (snapSection) {
-    var snapTicking = false;
-
-    var syncSnap = function () {
-      var rect = snapSection.getBoundingClientRect();
-      var vh = window.innerHeight;
-
-      // Terug naar wit gebeurt pas als de sectie volledig buiten beeld is —
-      // boven- of onderlangs. Zo zie je die omslag nooit gebeuren.
-      if (rect.bottom <= 0 || rect.top >= vh) {
-        snapSection.classList.remove("is-snapped");
-        return;
-      }
-
-      // Naar groen zodra de sectie het scherm vult. Is de sectie zelf korter
-      // dan het scherm, dan telt of hij vrijwel helemaal in beeld staat.
-      var zichtbaar = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
-      if (zichtbaar >= vh * 0.6 || zichtbaar >= rect.height * 0.8) {
-        snapSection.classList.add("is-snapped");
-      }
-      // Zit hij daartussenin? Dan blijft staan wat er staat.
-    };
-
-    window.addEventListener("scroll", function () {
-      if (snapTicking) return;
-      snapTicking = true;
-      window.requestAnimationFrame(function () {
-        syncSnap();
-        snapTicking = false;
-      });
-    }, { passive: true });
-
-    window.addEventListener("resize", syncSnap);
-    syncSnap();
   }
 
   /* ------------------------------------------------------------------
