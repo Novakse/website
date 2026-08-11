@@ -1,0 +1,24 @@
+{
+  "_readme": "Interne planningslijst voor het dagelijks live zetten van blogartikelen op novakse.com. Niet onderdeel van de website zelf (staat buiten de website/-map). Elke dag haalt de geplande routine de EERSTE slug uit 'queue', maakt hem zichtbaar op website/blog.html en in website/sitemap.xml, en verwijdert hem dan uit deze lijst. 'published' houdt bij wat al live staat, met datum.",
+  "queue": [
+    "eerste-schaatsreis-beginner",
+    "schaatsen-afstellen",
+    "schaatstechniek-rechte-stuk",
+    "pootje-over-bocht",
+    "schaatsen-zweden",
+    "schaatsen-orsa",
+    "schaatsen-falun",
+    "orsa-versus-falun",
+    "beste-periode-schaatsen-scandinavie",
+    "wat-als-het-ijs-niet-goed-is",
+    "zweden-of-finland",
+    "schaatsen-punkaharju-finland",
+    "langlaufschaatsen-versus-noren",
+    "kosten-schaatsreis",
+    "veiligheid-natuurijs",
+    "paklijst-schaatsreis-scandinavie"
+  ],
+  "published": [
+    { "slug": "kledingadvies-natuurijs", "date": "2026-08-11" }
+  ]
+}

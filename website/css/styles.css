@@ -349,8 +349,11 @@ summary:focus-visible,
 .logo-word-img--lg { height: 1.9rem; }
 .logo-word-img--dark { display: none; }
 
-.nav-toggle { display: inline-flex; flex-direction: column; gap: 5px; padding: 0.5rem; }
-.nav-toggle span { width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+/* Twee lijnen van ongelijke lengte, geïnspireerd op de geveegde ijsbaanlijn */
+.nav-toggle { display: inline-flex; flex-direction: column; align-items: flex-end; gap: 5px; padding: 0.5rem; }
+.nav-toggle span { display: block; height: 2px; background: #fff; border-radius: 2px; }
+.nav-toggle span:nth-child(1) { width: 23px; }
+.nav-toggle span:nth-child(2) { width: 15px; }
 
 .main-nav {
   position: fixed;
@@ -358,12 +361,10 @@ summary:focus-visible,
   opacity: 0;
   pointer-events: none;
   transform: translateY(-2rem);
-  /* Tekst krijgt een kleine vertraging t.o.v. de blur hieronder (::before),
-     zodat backdrop-filter (relatief zwaar om te renderen op mobiel) al
-     zichtbaar aan het opbouwen is voordat de tekst verschijnt. Zonder deze
-     vertraging lijkt de tekst er eerder te staan dan de vervaagde
-     achtergrond. */
-  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease 0.12s;
+  /* Geen vertraging op deze opacity: de glazen achtergrond (::before) zit
+     als kind-element binnen .main-nav, dus een vertraging hier op de
+     buitenste laag remt ook de achtergrond af — averechts effect. */
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -374,21 +375,26 @@ summary:focus-visible,
 /* De glazen achtergrond zit op een los pseudo-element (niet op .main-nav
    zelf), om dezelfde reden als bij .site-header::after hierboven: WebKit
    laat backdrop-filter soms bevriezen (geen blur meer tonen) zodra hij op
-   hetzelfde element staat als een lopende transform-transitie. */
+   hetzelfde element staat als een lopende transform-transitie.
+   Zelfde glaslook als de balk (.site-header::after): blur + saturate, met
+   dezelfde donker/licht-kleurwissel. Geen transition op opacity: de blur
+   moet er meteen staan zodra het menu opent (samen met de eerste frame
+   van .main-nav's eigen transform/opacity-animatie), niet er nog overheen
+   invagen. */
 .main-nav::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   opacity: 0;
-  background-color: rgba(12, 15, 17, 0.32);
-  backdrop-filter: blur(36px) saturate(180%);
-  -webkit-backdrop-filter: blur(36px) saturate(180%);
-  transition: opacity 0.45s ease;
-  will-change: opacity, backdrop-filter;
+  background-color: rgba(15, 18, 20, 0.16);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  transition: background-color 0.35s ease;
 }
 .main-nav.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .main-nav.is-open::before { opacity: 1; }
+.site-header.site-header--on-light .main-nav::before { background-color: rgba(255, 255, 255, 0.45); }
 .main-nav__close { position: absolute; top: 0.6rem; right: 0.85rem; padding: 0.5rem; font-size: 1.6rem; line-height: 1; color: inherit; }
 .main-nav__links {
   display: flex;
@@ -2190,4 +2196,231 @@ button.calendar__cell.is-gekozen .calendar__dayprice { opacity: 0.85; }
 @media (min-width: 72rem) {
   .days__scroll { padding-inline: max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad))); }
   .day-card { flex: 0 0 25%; }
+}
+
+/* ==========================================================================
+   Blog — overzicht (blog.html)
+   Bewust geen identieke kaarten: het eerste artikel krijgt een groter,
+   uitgelicht kaartformaat; de rest varieert licht in beeldverhouding.
+   ========================================================================== */
+.blog-grid { margin-top: 2.5rem; display: grid; gap: 1.5rem; }
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  overflow: hidden;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.blog-card:hover, .blog-card:focus-within { transform: translateY(-3px); border-color: var(--warm-deep); }
+.blog-card__media { display: block; }
+.blog-card__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.blog-card__body { padding: 1.4rem 1.5rem 1.6rem; display: flex; flex-direction: column; flex: 1; }
+.blog-card__cat { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--warm-deep); }
+.blog-card__title { margin-top: 0.55rem; font-family: var(--display); font-weight: 600; font-size: 1.15rem; line-height: 1.28; }
+.blog-card__title a::after { content: ""; position: absolute; inset: 0; }
+.blog-card__excerpt { margin-top: 0.6rem; font-size: 0.92rem; color: var(--ink-soft); flex: 1; }
+.blog-card__meta { margin-top: 1.1rem; font-size: 0.8rem; color: var(--ink-soft); }
+.blog-card { position: relative; }
+
+.blog-card--featured .blog-card__media img { aspect-ratio: 16 / 9; }
+.blog-card--featured .blog-card__title { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.7rem); }
+
+@media (min-width: 40rem) {
+  .blog-grid { grid-template-columns: repeat(2, 1fr); }
+  .blog-card--featured { grid-column: 1 / -1; }
+  .blog-card--featured { flex-direction: row; }
+  .blog-card--featured .blog-card__media { flex: 0 0 52%; }
+  .blog-card--featured .blog-card__media img { height: 100%; aspect-ratio: auto; }
+  .blog-card--featured .blog-card__body { flex: 1; justify-content: center; padding: 2rem 2.4rem; }
+  .blog-grid > .blog-card:nth-child(4n+3) .blog-card__media img { aspect-ratio: 3 / 4; }
+}
+@media (min-width: 64rem) {
+  .blog-grid { grid-template-columns: repeat(3, 1fr); }
+  .blog-grid > .blog-card:nth-child(4n+3) { grid-row: span 2; }
+  .blog-grid > .blog-card:nth-child(4n+3) .blog-card__media { flex: 1; }
+  .blog-grid > .blog-card:nth-child(4n+3) .blog-card__media img { height: 100%; }
+}
+
+/* ==========================================================================
+   Blog — artikelpagina
+   ========================================================================== */
+.article-head { background: var(--paper); padding-block: 3rem 0; }
+.article-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--warm-deep);
+}
+.article-back::before { content: "←"; }
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.6rem;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+.article-meta__dot { width: 0.3rem; height: 0.3rem; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+
+.article-hero__title {
+  margin-top: 0.9rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 1.5rem + 2.2vw, 2.9rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  max-width: 44rem;
+  text-wrap: balance;
+}
+.article-hero__lede {
+  margin-top: 1.1rem;
+  font-size: 1.08rem;
+  color: var(--ink-soft);
+  max-width: 46rem;
+  text-wrap: pretty;
+}
+
+.article-hero__media { margin-top: 2.25rem; }
+.article-hero__media img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border-radius: 1.25rem; }
+
+@media (min-width: 60rem) {
+  .article-hero__media img { aspect-ratio: 21 / 8; }
+}
+
+.article { background: var(--paper); padding-block: 3.5rem 5.5rem; }
+.article__wrap { max-width: 42rem; padding-inline: var(--pad); }
+
+.article-body .lead {
+  font-size: 1.1rem;
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+
+.article-body h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.35rem, 1.1rem + 1.1vw, 1.85rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-top: 3rem;
+}
+.article-body > h2:first-child { margin-top: 0; }
+.article-body h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.08rem, 1rem + 0.4vw, 1.28rem);
+  line-height: 1.3;
+  margin-top: 2.1rem;
+}
+.article-body p { margin-top: 1.1rem; color: var(--ink-2); max-width: 64ch; }
+.article-body ul, .article-body ol { margin-top: 1.1rem; display: grid; gap: 0.55rem; max-width: 60ch; }
+.article-body ul li, .article-body ol li { position: relative; padding-left: 1.4rem; color: var(--ink-2); }
+.article-body ul li::before {
+  content: "";
+  position: absolute;
+  left: 0.1rem; top: 0.65em;
+  width: 0.4rem; height: 0.4rem;
+  border-radius: 50%;
+  background: var(--warm-deep);
+}
+.article-body ol { counter-reset: article-ol; }
+.article-body ol li { counter-increment: article-ol; padding-left: 1.6rem; }
+.article-body ol li::before {
+  content: counter(article-ol) ".";
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+  color: var(--warm-deep);
+}
+.article-body strong { font-weight: 600; color: var(--ink); }
+
+.article-callout {
+  margin-top: 1.75rem;
+  padding: 1.3rem 1.5rem;
+  border-radius: 1rem;
+  background: var(--paper-soft);
+  border-left: 3px solid var(--warm-deep);
+}
+.article-callout p:first-child { margin-top: 0; }
+.article-callout__label {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--warm-deep);
+  margin-bottom: 0.4rem;
+}
+
+.checklist { margin-top: 1.1rem; display: grid; gap: 0.6rem; max-width: 60ch; }
+.checklist li { position: relative; padding-left: 1.9rem; color: var(--ink-2); }
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.1em;
+  width: 1.05rem; height: 1.05rem;
+  border: 1.5px solid var(--warm-deep);
+  border-radius: 0.3rem;
+}
+
+.article-figure { margin-top: 2.25rem; }
+.article-figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 1.25rem; }
+.article-figure figcaption { margin-top: 0.7rem; font-size: 0.85rem; color: var(--ink-soft); }
+
+/* Uitlegdiagrammen (schema's met tekst): niet croppen, natuurlijke verhouding
+   met rustige kader eromheen zodat labels leesbaar blijven. */
+.article-figure--diagram img {
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: var(--paper-soft);
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+}
+
+.article-divider { margin-block: 3rem; border: none; border-top: 1px solid var(--border); }
+
+.article-share {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+.article-share__text { font-size: 0.9rem; color: var(--ink-soft); }
+
+/* Gerelateerde artikelen */
+.related { background: var(--paper-soft); padding-block: 4.5rem; }
+.related__head { max-width: 42rem; }
+.related__grid { margin-top: 2.25rem; display: grid; gap: 1.25rem; }
+.related-card {
+  position: relative;
+  display: block;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.related-card:hover { transform: translateY(-3px); border-color: var(--warm-deep); }
+.related-card__eyebrow { font-size: 0.76rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--warm-deep); }
+.related-card__title { margin-top: 0.5rem; font-family: var(--display); font-weight: 600; font-size: 1.05rem; line-height: 1.32; }
+.related-card__title a::after { content: ""; position: absolute; inset: 0; }
+
+@media (min-width: 48rem) {
+  .related__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 60rem) {
+  .article__wrap { max-width: 44rem; }
+  .article-body p, .article-body ul, .article-body ol { max-width: 68ch; }
 }
