@@ -288,6 +288,15 @@
     window.matchMedia("(min-width: 72rem)").addEventListener("change", function (e) {
       if (e.matches) closeNav();
     });
+
+    // Bij terugkeer vanuit de bfcache (bv. via de terug-knop) herstelt de
+    // browser de pagina precies zoals hij was toen je wegnavigeerde, zonder
+    // dat main.js opnieuw draait. Stond het menu toen nog open, dan blijft
+    // het dat ook nu — alsof het vanzelf openklapt bij het laden. Forceer
+    // daarom een schone, gesloten staat bij elke bfcache-restore.
+    window.addEventListener("pageshow", function (event) {
+      if (event.persisted) closeNav();
+    });
   }
 
   /* ------------------------------------------------------------------
@@ -404,6 +413,31 @@
       window.addEventListener("resize", syncWords);
       syncWords();
     }
+  }
+
+  /* ------------------------------------------------------------------
+     Openingsvideo: bij het naadloos herstarten van de loop toont de
+     browser heel even het verkeerde frame (bekend `loop`-euvel bij
+     H.264-video). Een korte opacity-dip rond het herstartmoment
+     verbergt die flits.
+     ------------------------------------------------------------------ */
+  var heroVideo = document.querySelector(".opener__video");
+  if (heroVideo) {
+    var LOOP_FADE_S = 0.26;
+    heroVideo.addEventListener("timeupdate", function () {
+      if (heroVideo.duration && heroVideo.duration - heroVideo.currentTime < LOOP_FADE_S) {
+        heroVideo.classList.add("opener__video--loop-fade");
+      }
+    });
+    heroVideo.addEventListener("seeked", function () {
+      if (heroVideo.currentTime < LOOP_FADE_S) {
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
+            heroVideo.classList.remove("opener__video--loop-fade");
+          });
+        });
+      }
+    });
   }
 
   /* ------------------------------------------------------------------
