@@ -28,6 +28,8 @@
       chooseCalendarPeriod: "Kies een periode in de kalender",
       viewDatesFor: function (naam) { return "Bekijk de reisdata van " + naam; },
       viewTripPage: function (naam) { return "Bekijk de reispagina van " + naam; },
+      calendarLabel: "Kalender",
+      datesAndPriceLabel: "Data en prijs",
       fixedDatesNote: "Deze reis heeft vaste vertrekdata. Zet in je opmerking welke periode je op het oog hebt, dan laat Joey weten wat er mogelijk is.",
       priceOnRequestNote: "Prijs en definitieve data staan voor deze reis nog niet vast. Zet in je opmerking welke periode je op het oog hebt, dan stelt Joey een passend voorstel op maat.",
       noExtrasYet: "Voor deze reis staan de extra activiteiten nog niet vast. Zet in je opmerking waar je belangstelling voor hebt.",
@@ -58,6 +60,8 @@
       fromPerPersonPerNight: function (bedrag) { return "from " + bedrag + " pp/night"; },
       chooseCalendarPeriod: "Choose a period in the calendar",
       viewDatesFor: function (naam) { return "View travel dates for " + naam; },
+      calendarLabel: "Calendar",
+      datesAndPriceLabel: "Dates and price",
       fixedDatesNote: "This trip has fixed departure dates. Mention in your message which period you have in mind, and Joey will let you know what's possible.",
       noExtrasYet: "The extra activities for this trip haven't been finalised yet. Mention in your message what you're interested in.",
       chooseFirst: "Choose a period in the calendar first.",
@@ -87,6 +91,8 @@
       fromPerPersonPerNight: function (bedrag) { return "från " + bedrag + " p.p./natt"; },
       chooseCalendarPeriod: "Välj en period i kalendern",
       viewDatesFor: function (naam) { return "Se resedatum för " + naam; },
+      calendarLabel: "Kalender",
+      datesAndPriceLabel: "Datum och pris",
       fixedDatesNote: "Den här resan har fasta avresedatum. Skriv i ditt meddelande vilken period du har i åtanke, så återkommer Joey med vad som är möjligt.",
       noExtrasYet: "De extra aktiviteterna för den här resan är inte fastställda än. Skriv i ditt meddelande vad du är intresserad av.",
       chooseFirst: "Välj först en period i kalendern.",
@@ -116,6 +122,8 @@
       fromPerPersonPerNight: function (bedrag) { return "ab " + bedrag + " p.P./Nacht"; },
       chooseCalendarPeriod: "Wähle einen Zeitraum im Kalender",
       viewDatesFor: function (naam) { return "Reisedaten für " + naam + " ansehen"; },
+      calendarLabel: "Kalender",
+      datesAndPriceLabel: "Termine und Preis",
       fixedDatesNote: "Diese Reise hat feste Abreisetermine. Schreib in deiner Nachricht, welchen Zeitraum du im Blick hast, dann lässt Joey dich wissen, was möglich ist.",
       noExtrasYet: "Die Zusatzaktivitäten für diese Reise stehen noch nicht fest. Schreib in deiner Nachricht, wofür du dich interessierst.",
       chooseFirst: "Wähle zuerst einen Zeitraum im Kalender.",
@@ -145,6 +153,8 @@
       fromPerPersonPerNight: function (bedrag) { return "fra " + bedrag + " pr. person/natt"; },
       chooseCalendarPeriod: "Velg en periode i kalenderen",
       viewDatesFor: function (naam) { return "Se reisedatoer for " + naam; },
+      calendarLabel: "Kalender",
+      datesAndPriceLabel: "Datoer og pris",
       fixedDatesNote: "Denne reisen har faste avreisedatoer. Skriv i meldingen din hvilken periode du har i tankene, så gir Joey beskjed om hva som er mulig.",
       noExtrasYet: "De ekstra aktivitetene for denne reisen er ikke fastsatt ennå. Skriv i meldingen din hva du er interessert i.",
       chooseFirst: "Velg først en periode i kalenderen.",
@@ -174,6 +184,8 @@
       fromPerPersonPerNight: function (bedrag) { return "alkaen " + bedrag + " hlö/yö"; },
       chooseCalendarPeriod: "Valitse ajanjakso kalenterista",
       viewDatesFor: function (naam) { return "Katso matkapäivät: " + naam; },
+      calendarLabel: "Kalenteri",
+      datesAndPriceLabel: "Päivämäärät ja hinta",
       fixedDatesNote: "Tällä matkalla on kiinteät lähtöpäivät. Kerro viestissäsi, mikä ajanjakso sinulla on mielessä, niin Joey kertoo mikä on mahdollista.",
       noExtrasYet: "Tämän matkan lisäaktiviteetit eivät ole vielä varmistuneet. Kerro viestissäsi, mistä olet kiinnostunut.",
       chooseFirst: "Valitse ensin ajanjakso kalenterista.",
@@ -259,6 +271,14 @@
       : reis.periodeVrij
         ? T.chooseCalendarPeriod
         : T.viewDatesFor(reis.naam.split(" —")[0]);
+  }
+
+  // De "Kalender"-knop in de koptekst stond altijd vast naar finland.html;
+  // die moet meegaan met de reis die nu open staat.
+  var headerKalender = document.getElementById("headerKalender");
+  if (headerKalender) {
+    headerKalender.href = reisSleutel + ".html" + (reis.periodeVrij ? "#prijzen" : "");
+    headerKalender.textContent = reis.periodeVrij ? T.calendarLabel : T.datesAndPriceLabel;
   }
 
   var periodeBox = document.getElementById("periodeBox");

@@ -37,6 +37,56 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": "Schaatsreis Luleå, Zweeds Lapland",
+    "description": "Zelfstandige schaatsreis naar Luleå in Zweeds Lapland. Schaats op de openbare natuurijsroute langs de Botnische Golf, zonder begeleiding, met een reisduur die je zelf bepaalt.",
+    "touristType": "Zelfstandige schaatsers",
+    "provider": { "@type": "TravelAgency", "name": "Novakse", "url": "https://www.novakse.com/" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is de schaatsreis naar Luleå begeleid?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nee, de reis naar Luleå is een zelfstandige reis zonder begeleiding. Er is geen Nederlandstalige reisleider of schaatsbegeleider aanwezig, geen gezamenlijk vertrekuur en geen verplichte excursie. Je bent zelf verantwoordelijk voor je route, je materiaal en je dagindeling."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Waar schaats je in Luleå?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Wanneer de ijsomstandigheden het toelaten, onderhoudt de gemeente Luleå een openbare natuurijsroute op de bevroren Botnische Golf, langs de haven, de kust en de winterse archipel. Bij optimale omstandigheden is de route ongeveer 10 kilometer lang."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hoe lang duurt de reis naar Luleå?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Je bepaalt zelf hoe lang je reist. Een verblijf van 5 dagen is een populaire keuze, maar niet verplicht — de reis wordt afgestemd op jouw gewenste reisduur, vluchtmogelijkheden en de beschikbaarheid van de accommodatie."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Wat als het ijs bij Luleå niet goed genoeg is?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Natuurijs, baanlengte en openstelling kunnen nooit vooraf worden gegarandeerd. Bij onvoldoende of gesloten ijs is er geen begeleid vervangend programma inbegrepen; je vult je dagen dan zelfstandig in met andere winteractiviteiten in en rond Luleå."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Ga naar de inhoud</a>
@@ -64,6 +114,19 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
         <a class="header-cta" href="boeken.html?reis=lulea">Reis aanvragen</a>
+      <div class="lang-switch">
+        <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+          <span class="lang-switch__current">NL</span>
+          <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-switch__menu">
+          <a href="en/reizen.html" lang="en" hreflang="en">EN</a>
+          <a href="sv/reizen.html" lang="sv" hreflang="sv">SV</a>
+          <a href="de/reizen.html" lang="de" hreflang="de">DE</a>
+          <a href="no/reizen.html" lang="no" hreflang="no">NO</a>
+          <a href="fi/reizen.html" lang="fi" hreflang="fi">FI</a>
+        </div>
+      </div>
       </nav>
     </div>
   </header>
@@ -71,7 +134,7 @@
   <main id="main">
     <!-- 1. Paginakop -->
     <section class="page-hero page-hero--tall" id="top">
-      <img class="page-hero__bg" src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij zonsondergang" fetchpriority="high" />
+      <picture><source type="image/avif" srcset="images/lulea-ijs-zonsondergang-480.avif 480w, images/lulea-ijs-zonsondergang-800.avif 800w, images/lulea-ijs-zonsondergang-1200.avif 1200w, images/lulea-ijs-zonsondergang-1600.avif 1600w, images/lulea-ijs-zonsondergang.avif 1800w" sizes="100vw" /><source type="image/webp" srcset="images/lulea-ijs-zonsondergang-480.webp 480w, images/lulea-ijs-zonsondergang-800.webp 800w, images/lulea-ijs-zonsondergang-1200.webp 1200w, images/lulea-ijs-zonsondergang-1600.webp 1600w, images/lulea-ijs-zonsondergang.webp 1800w" sizes="100vw" /><img class="page-hero__bg" src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij zonsondergang" fetchpriority="high" srcset="images/lulea-ijs-zonsondergang-480.jpg 480w, images/lulea-ijs-zonsondergang-800.jpg 800w, images/lulea-ijs-zonsondergang-1200.jpg 1200w, images/lulea-ijs-zonsondergang-1600.jpg 1600w, images/lulea-ijs-zonsondergang.jpg 1800w" sizes="100vw" /></picture>
       <div class="wrap page-hero__inner">
         <nav class="crumbs" aria-label="Kruimelpad">
           <a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reizen.html">Schaatsreizen</a> <span aria-hidden="true">/</span> <span>Luleå</span>
@@ -99,10 +162,10 @@
         <figure class="story__collage story__collage--duo reveal" data-collage>
           <div class="collage__frame">
             <div class="collage__item collage__item--main" data-speed="-180">
-              <img src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf" loading="lazy" />
+              <picture><source type="image/avif" srcset="images/lulea-ijs-zonsondergang-480.avif 480w, images/lulea-ijs-zonsondergang-800.avif 800w, images/lulea-ijs-zonsondergang-1200.avif 1200w, images/lulea-ijs-zonsondergang-1600.avif 1600w, images/lulea-ijs-zonsondergang.avif 1800w" sizes="(min-width: 62rem) 32vw, 76vw" /><source type="image/webp" srcset="images/lulea-ijs-zonsondergang-480.webp 480w, images/lulea-ijs-zonsondergang-800.webp 800w, images/lulea-ijs-zonsondergang-1200.webp 1200w, images/lulea-ijs-zonsondergang-1600.webp 1600w, images/lulea-ijs-zonsondergang.webp 1800w" sizes="(min-width: 62rem) 32vw, 76vw" /><img src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf" loading="lazy" srcset="images/lulea-ijs-zonsondergang-480.jpg 480w, images/lulea-ijs-zonsondergang-800.jpg 800w, images/lulea-ijs-zonsondergang-1200.jpg 1200w, images/lulea-ijs-zonsondergang-1600.jpg 1600w, images/lulea-ijs-zonsondergang.jpg 1800w" sizes="(min-width: 62rem) 32vw, 76vw" /></picture>
             </div>
             <div class="collage__item collage__item--left" data-speed="-280">
-              <img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" />
+              <picture><source type="image/avif" srcset="images/lulea-berkenbomen-baai-480.avif 480w, images/lulea-berkenbomen-baai-800.avif 800w, images/lulea-berkenbomen-baai-1200.avif 1200w, images/lulea-berkenbomen-baai.avif 1400w" sizes="(min-width: 62rem) 19vw, 46vw" /><source type="image/webp" srcset="images/lulea-berkenbomen-baai-480.webp 480w, images/lulea-berkenbomen-baai-800.webp 800w, images/lulea-berkenbomen-baai-1200.webp 1200w, images/lulea-berkenbomen-baai.webp 1400w" sizes="(min-width: 62rem) 19vw, 46vw" /><img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" srcset="images/lulea-berkenbomen-baai-480.jpg 480w, images/lulea-berkenbomen-baai-800.jpg 800w, images/lulea-berkenbomen-baai-1200.jpg 1200w, images/lulea-berkenbomen-baai.jpg 1400w" sizes="(min-width: 62rem) 19vw, 46vw" /></picture>
             </div>
           </div>
           <figcaption class="story__caption">De Botnische Golf, Zweeds Lapland</figcaption>
@@ -126,7 +189,7 @@
     <!-- 4. Buiten het evenement -->
     <section class="split-photo">
       <div class="split-photo__media reveal">
-        <img src="images/lulea-rendiergewei.jpg" alt="Rendiergewei in de sneeuw bij Luleå, buiten de drukte van de Grand Prix" loading="lazy" />
+        <picture><source type="image/avif" srcset="images/lulea-rendiergewei-480.avif 480w, images/lulea-rendiergewei-800.avif 800w, images/lulea-rendiergewei.avif 1200w" sizes="(min-width: 60rem) 55vw, 100vw" /><source type="image/webp" srcset="images/lulea-rendiergewei-480.webp 480w, images/lulea-rendiergewei-800.webp 800w, images/lulea-rendiergewei.webp 1200w" sizes="(min-width: 60rem) 55vw, 100vw" /><img src="images/lulea-rendiergewei.jpg" alt="Rendiergewei in de sneeuw bij Luleå, buiten de drukte van de Grand Prix" loading="lazy" srcset="images/lulea-rendiergewei-480.jpg 480w, images/lulea-rendiergewei-800.jpg 800w, images/lulea-rendiergewei.jpg 1200w" sizes="(min-width: 60rem) 55vw, 100vw" /></picture>
       </div>
       <div class="split-photo__body reveal">
         <span class="eyebrow eyebrow--deep"><span class="dot"></span>Rust in plaats van evenement</span>
@@ -145,7 +208,7 @@
     <!-- 5. Verblijf -->
     <section class="split-photo">
       <div class="split-photo__media reveal">
-        <img src="images/lulea-vliegtuig-aankomst.jpg" alt="Uitzicht vanuit het vliegtuig bij aankomst in Zweeds Lapland" loading="lazy" />
+        <picture><source type="image/avif" srcset="images/lulea-vliegtuig-aankomst-480.avif 480w, images/lulea-vliegtuig-aankomst-800.avif 800w, images/lulea-vliegtuig-aankomst.avif 1200w" sizes="(min-width: 60rem) 55vw, 100vw" /><source type="image/webp" srcset="images/lulea-vliegtuig-aankomst-480.webp 480w, images/lulea-vliegtuig-aankomst-800.webp 800w, images/lulea-vliegtuig-aankomst.webp 1200w" sizes="(min-width: 60rem) 55vw, 100vw" /><img src="images/lulea-vliegtuig-aankomst.jpg" alt="Uitzicht vanuit het vliegtuig bij aankomst in Zweeds Lapland" loading="lazy" srcset="images/lulea-vliegtuig-aankomst-480.jpg 480w, images/lulea-vliegtuig-aankomst-800.jpg 800w, images/lulea-vliegtuig-aankomst.jpg 1200w" sizes="(min-width: 60rem) 55vw, 100vw" /></picture>
       </div>
       <div class="split-photo__body reveal">
         <span class="eyebrow eyebrow--deep"><span class="dot"></span>Waar je slaapt</span>
@@ -221,6 +284,32 @@
             <li>Je vult je dagen dan zelfstandig in met andere winteractiviteiten in en rond Luleå</li>
           </ul>
           <p class="included__note">Deze reis is vooral geschikt voor zelfstandige, flexibele reizigers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8b. Veelgestelde vragen -->
+    <section class="faq" id="faq">
+      <div class="wrap faq__inner">
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Veelgestelde vragen</span>
+        <h2 class="h-section">Veelgestelde vragen over Luleå</h2>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary>Is de schaatsreis naar Luleå begeleid?</summary>
+            <p>Nee, de reis naar Luleå is een zelfstandige reis zonder begeleiding. Er is geen Nederlandstalige reisleider of schaatsbegeleider aanwezig, geen gezamenlijk vertrekuur en geen verplichte excursie. Je bent zelf verantwoordelijk voor je route, je materiaal en je dagindeling.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Waar schaats je in Luleå?</summary>
+            <p>Wanneer de ijsomstandigheden het toelaten, onderhoudt de gemeente Luleå een openbare natuurijsroute op de bevroren Botnische Golf, langs de haven, de kust en de winterse archipel. Bij optimale omstandigheden is de route ongeveer 10 kilometer lang.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Hoe lang duurt de reis naar Luleå?</summary>
+            <p>Je bepaalt zelf hoe lang je reist. Een verblijf van 5 dagen is een populaire keuze, maar niet verplicht — de reis wordt afgestemd op jouw gewenste reisduur, vluchtmogelijkheden en de beschikbaarheid van de accommodatie.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Wat als het ijs bij Luleå niet goed genoeg is?</summary>
+            <p>Natuurijs, baanlengte en openstelling kunnen nooit vooraf worden gegarandeerd. Bij onvoldoende of gesloten ijs is er geen begeleid vervangend programma inbegrepen; je vult je dagen dan zelfstandig in met andere winteractiviteiten in en rond Luleå.</p>
+          </details>
         </div>
       </div>
     </section>

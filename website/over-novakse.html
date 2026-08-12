@@ -49,25 +49,8 @@
       text-wrap: pretty;
     }
 
-    /* Instagram-volgblok: tijdelijk een selectie eigen foto's tot de live
-       widget-embed is gekoppeld (zie insta-follow__grid hieronder). */
     .insta-follow { background: var(--paper); padding-block: 4.5rem; }
     .insta-follow__head { max-width: 40rem; }
-    .insta-follow__grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-      margin-block: 2rem 2.2rem;
-    }
-    .insta-follow__item { display: block; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 0.5rem; }
-    .insta-follow__item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .insta-follow__item:hover img { transform: scale(1.04); }
-    @media (min-width: 40rem) {
-      .insta-follow__grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
-    }
-    @media (min-width: 62rem) {
-      .insta-follow__grid { grid-template-columns: repeat(6, 1fr); gap: 0.75rem; }
-    }
   </style>
   <script type="application/ld+json">
   {
@@ -139,7 +122,7 @@
 
   <main id="main">
     <section class="page-hero page-hero--tall" id="top">
-      <img class="page-hero__bg" src="images/joey-op-het-ijs.jpg" alt="Joey Novak op schaatsen op een bevroren meer" fetchpriority="high" />
+      <picture><source type="image/avif" srcset="images/joey-op-het-ijs-480.avif 480w, images/joey-op-het-ijs-800.avif 800w, images/joey-op-het-ijs.avif 1100w" sizes="100vw" /><source type="image/webp" srcset="images/joey-op-het-ijs-480.webp 480w, images/joey-op-het-ijs-800.webp 800w, images/joey-op-het-ijs.webp 1100w" sizes="100vw" /><img class="page-hero__bg" src="images/joey-op-het-ijs.jpg" alt="Joey Novak op schaatsen op een bevroren meer" fetchpriority="high" srcset="images/joey-op-het-ijs-480.jpg 480w, images/joey-op-het-ijs-800.jpg 800w, images/joey-op-het-ijs.jpg 1100w" sizes="100vw" /></picture>
       <div class="wrap page-hero__inner">
         <span class="eyebrow eyebrow--light"><span class="dot"></span>Over Novakse</span>
         <h1 class="page-hero__title">Hej, ik ben Joey Novak</h1>
@@ -157,13 +140,13 @@
         <figure class="story__collage reveal" data-collage>
           <div class="collage__frame">
             <div class="collage__item collage__item--main" data-speed="-180">
-              <img src="images/joey-hond-persoonlijk.jpg" alt="Joey Novak met zijn hond aan het water" loading="lazy" />
+              <picture><source type="image/avif" srcset="images/joey-hond-persoonlijk-480.avif 480w, images/joey-hond-persoonlijk-800.avif 800w, images/joey-hond-persoonlijk.avif 1200w" sizes="(min-width: 62rem) 32vw, 76vw" /><source type="image/webp" srcset="images/joey-hond-persoonlijk-480.webp 480w, images/joey-hond-persoonlijk-800.webp 800w, images/joey-hond-persoonlijk.webp 1200w" sizes="(min-width: 62rem) 32vw, 76vw" /><img src="images/joey-hond-persoonlijk.jpg" alt="Joey Novak met zijn hond aan het water" loading="lazy" srcset="images/joey-hond-persoonlijk-480.jpg 480w, images/joey-hond-persoonlijk-800.jpg 800w, images/joey-hond-persoonlijk.jpg 1200w" sizes="(min-width: 62rem) 32vw, 76vw" /></picture>
             </div>
             <div class="collage__item collage__item--left" data-speed="-280">
-              <img src="images/joey-kampvuur.jpg" alt="Joey kookt boven een kampvuur tijdens een schaatstocht" loading="lazy" />
+              <picture><source type="image/avif" srcset="images/joey-kampvuur-480.avif 480w, images/joey-kampvuur.avif 720w" sizes="(min-width: 62rem) 19vw, 46vw" /><source type="image/webp" srcset="images/joey-kampvuur-480.webp 480w, images/joey-kampvuur.webp 720w" sizes="(min-width: 62rem) 19vw, 46vw" /><img src="images/joey-kampvuur.jpg" alt="Joey kookt boven een kampvuur tijdens een schaatstocht" loading="lazy" srcset="images/joey-kampvuur-480.jpg 480w, images/joey-kampvuur.jpg 720w" sizes="(min-width: 62rem) 19vw, 46vw" /></picture>
             </div>
             <div class="collage__item collage__item--right" data-speed="-230">
-              <img src="images/groep-rust-ijs.jpg" alt="Schaatsers staan stil op het bevroren meer bij zonsopkomst" loading="lazy" />
+              <picture><source type="image/avif" srcset="images/groep-rust-ijs-480.avif 480w, images/groep-rust-ijs-800.avif 800w, images/groep-rust-ijs-1200.avif 1200w, images/groep-rust-ijs.avif 1400w" sizes="(min-width: 62rem) 19vw, 46vw" /><source type="image/webp" srcset="images/groep-rust-ijs-480.webp 480w, images/groep-rust-ijs-800.webp 800w, images/groep-rust-ijs-1200.webp 1200w, images/groep-rust-ijs.webp 1400w" sizes="(min-width: 62rem) 19vw, 46vw" /><img src="images/groep-rust-ijs.jpg" alt="Schaatsers staan stil op het bevroren meer bij zonsopkomst" loading="lazy" srcset="images/groep-rust-ijs-480.jpg 480w, images/groep-rust-ijs-800.jpg 800w, images/groep-rust-ijs-1200.jpg 1200w, images/groep-rust-ijs.jpg 1400w" sizes="(min-width: 62rem) 19vw, 46vw" /></picture>
             </div>
           </div>
           <figcaption class="story__caption">Joey Novak, oprichter van Novakse</figcaption>
@@ -178,7 +161,7 @@
 
     <section class="split-photo">
       <div class="split-photo__media reveal">
-        <img src="images/wijds-uitzicht.jpg" alt="Wijds uitzicht over een bevroren meer" loading="lazy" />
+        <picture><source type="image/avif" srcset="images/wijds-uitzicht-480.avif 480w, images/wijds-uitzicht-800.avif 800w, images/wijds-uitzicht-1200.avif 1200w, images/wijds-uitzicht.avif 1600w" sizes="(min-width: 60rem) 55vw, 100vw" /><source type="image/webp" srcset="images/wijds-uitzicht-480.webp 480w, images/wijds-uitzicht-800.webp 800w, images/wijds-uitzicht-1200.webp 1200w, images/wijds-uitzicht.webp 1600w" sizes="(min-width: 60rem) 55vw, 100vw" /><img src="images/wijds-uitzicht.jpg" alt="Wijds uitzicht over een bevroren meer" loading="lazy" srcset="images/wijds-uitzicht-480.jpg 480w, images/wijds-uitzicht-800.jpg 800w, images/wijds-uitzicht-1200.jpg 1200w, images/wijds-uitzicht.jpg 1600w" sizes="(min-width: 60rem) 55vw, 100vw" /></picture>
       </div>
       <div class="split-photo__body reveal">
         <span class="eyebrow eyebrow--deep"><span class="dot"></span>Waar Novakse voor staat</span>
@@ -198,8 +181,8 @@
       <div class="wrap">
         <div class="why__body why__body--wide reveal">
           <span class="eyebrow eyebrow--warm"><span class="dot"></span>Waarom voor mezelf</span>
-          <h2 class="why__title">Alles wat ik erin stop, is van mijzelf.</h2>
-          <p class="why__text">Ik ben Novakse gestart omdat ik iets van mezelf wilde opbouwen in plaats van voor een bedrijf te werken en dat op te bouwen. De energie die ik erin steek, is nooit verloren, en de verantwoordelijkheid ligt volledig bij mij. Dat voelt goed.</p>
+          <h2 class="why__title">Wat ik opbouw, heeft betekenis voor de lange termijn.</h2>
+          <p class="why__text">Ik ben Novakse gestart omdat ik zelf iets wilde cre&euml;ren en vormgeven. Iets waar ik mijn idee&euml;n, energie en ambitie volledig in kwijt kan en waarvan ik de richting zelf kan bepalen. De tijd en energie die ik erin steek, dragen direct bij aan iets dat ik stap voor stap opbouw. Juist die combinatie van vrijheid, verantwoordelijkheid en ontwikkeling geeft mij veel voldoening.</p>
         </div>
 
         <div class="why__reasons">
@@ -226,27 +209,8 @@
           <h2 class="h-section">Volg de reizen op Instagram</h2>
           <p class="lede-text">Sfeerbeelden van het ijs, de tochten en de voorbereiding &mdash; deel ik regelmatig op Instagram.</p>
         </div>
-        <!-- Placeholder tot de live widget-embed (SnapWidget o.i.d.) gekoppeld is -->
-        <div class="insta-follow__grid">
-          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
-            <img src="images/avondschaatsen.jpg" alt="Twee schaatsers in de avondschemering op natuurijs" loading="lazy" />
-          </a>
-          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
-            <img src="images/duo-zonsondergang.jpg" alt="Twee schaatsers op het ijs bij zonsondergang" loading="lazy" />
-          </a>
-          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
-            <img src="images/handen-omhoog-zonsondergang.jpg" alt="Deelnemers juichen op het ijs bij zonsondergang" loading="lazy" />
-          </a>
-          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
-            <img src="images/man-schaatsen.jpg" alt="Schaatser op weids natuurijs" loading="lazy" />
-          </a>
-          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
-            <img src="images/zwart-ijs-scheuren.jpg" alt="Zwart natuurijs met lange scheuren" loading="lazy" />
-          </a>
-          <a class="insta-follow__item" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">
-            <img src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf" loading="lazy" />
-          </a>
-        </div>
+        <!-- Elfsight Instagram Feed, gekoppeld aan @schaatsreizennovakse -->
+        <div class="elfsight-app-2367e2ce-24b7-48fc-bbdd-ae86ffc0dc5c" data-elfsight-app-lazy></div>
         <a class="btn btn--outline-dark" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">Volg op Instagram</a>
       </div>
     </section>
@@ -309,6 +273,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="https://elfsightcdn.com/platform.js" async></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

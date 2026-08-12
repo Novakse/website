@@ -365,7 +365,7 @@ summary:focus-visible,
      kind-element binnen .main-nav, dus elke fade-duur hier op de buitenste
      laag vermenigvuldigt mee door de compositing en vertraagt de blur —
      die moet er in één keer staan, alleen de positie (transform) schuift. */
-  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -396,6 +396,12 @@ summary:focus-visible,
 .main-nav.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .main-nav.is-open::before { opacity: 1; }
 .site-header.site-header--on-light .main-nav::before { background-color: rgba(255, 255, 255, 0.45); }
+/* Op witte pagina's (geen donkere hero) is de balk meteen "on-light" en
+   krijgt het uitgeklapte menu deze lichte glazen achtergrond. Zonder deze
+   regel blijft de menutekst hardcoded wit (zie .main-nav hierboven), wat
+   nauwelijks leesbaar is op het lichte glas. */
+.site-header.site-header--on-light .main-nav { color: var(--ink-soft); }
+.site-header.site-header--on-light .main-nav__links a::before { color: rgba(95, 99, 94, 0.5); }
 .main-nav__close { position: absolute; top: 0.6rem; right: 0.85rem; padding: 0.5rem; font-size: 1.6rem; line-height: 1; color: inherit; }
 .main-nav__links {
   display: flex;

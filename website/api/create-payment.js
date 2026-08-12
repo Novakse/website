@@ -45,7 +45,6 @@ module.exports = async function handler(req, res) {
   var body = req.body || {};
   var bedrag = parseInt(body.bedrag, 10); // bedrag in centen
   var omschrijving = String(body.omschrijving || "Novakse reis").slice(0, 255);
-  var methode = body.methode === "creditcard" ? "card" : "ideal";
 
   if (!bedrag || bedrag < 100 || bedrag > MAX_BEDRAG_CENTEN) {
     res.status(400).json({ error: "Ongeldig bedrag." });
@@ -56,7 +55,6 @@ module.exports = async function handler(req, res) {
 
   var sessieData = {
     mode: "payment",
-    payment_method_types: [methode],
     line_items: [
       {
         quantity: 1,

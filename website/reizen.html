@@ -65,6 +65,46 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Hoeveel schaatsbestemmingen biedt Novakse aan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Novakse biedt vijf bestemmingen aan: Orsa en Falun in Zweden (begeleide groepsreizen), Luleå in Zweeds Lapland en Punkaharju in Finland (zelfstandige reizen), en de Weissensee in Oostenrijk (zelfstandig)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Wat is het verschil tussen een begeleide en een zelfstandige reis?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bij een begeleide groepsreis (Orsa, Falun) gaat Joey zelf mee, kent het ijs en bepaalt elke ochtend opnieuw waar de dag het mooist wordt. Bij een zelfstandige reis (Luleå, Finland, Weissensee) schaats je zonder begeleiding van Novakse, op je eigen tempo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hoe groot zijn de groepen bij een begeleide reis?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Een begeleide reis gaat door vanaf 4 deelnemers en telt maximaal 12."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hoe zit het met betalen?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Je betaalt de helft bij boeking, het restant uiterlijk 5 weken voor vertrek. Eventuele prijswijzigingen horen we minimaal 4 weken voor vertrek."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Ga naar de inhoud</a>
@@ -112,7 +152,7 @@
   <main id="main">
     <!-- 1. Paginakop -->
     <section class="page-hero" id="top">
-      <img class="page-hero__bg" src="images/hero-baan-zonsondergang.jpg" alt="Geveegde schaatsbaan over een bevroren meer bij zonsondergang" fetchpriority="high" />
+      <picture><source type="image/avif" srcset="images/hero-baan-zonsondergang-480.avif 480w, images/hero-baan-zonsondergang-800.avif 800w, images/hero-baan-zonsondergang-1200.avif 1200w, images/hero-baan-zonsondergang-1600.avif 1600w, images/hero-baan-zonsondergang.avif 1920w" sizes="100vw" /><source type="image/webp" srcset="images/hero-baan-zonsondergang-480.webp 480w, images/hero-baan-zonsondergang-800.webp 800w, images/hero-baan-zonsondergang-1200.webp 1200w, images/hero-baan-zonsondergang-1600.webp 1600w, images/hero-baan-zonsondergang.webp 1920w" sizes="100vw" /><img class="page-hero__bg" src="images/hero-baan-zonsondergang.jpg" alt="Geveegde schaatsbaan over een bevroren meer bij zonsondergang" fetchpriority="high" srcset="images/hero-baan-zonsondergang-480.jpg 480w, images/hero-baan-zonsondergang-800.jpg 800w, images/hero-baan-zonsondergang-1200.jpg 1200w, images/hero-baan-zonsondergang-1600.jpg 1600w, images/hero-baan-zonsondergang.jpg 1920w" sizes="100vw" /></picture>
       <div class="wrap page-hero__inner">
         <span class="eyebrow eyebrow--light"><span class="dot"></span>Onze reizen</span>
         <h1 class="page-hero__title">Onze schaatsreizen op natuurijs</h1>
@@ -141,8 +181,8 @@
     <section class="trip-rows" id="bestemmingen">
       <article class="trip-row reveal">
         <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Orsa, tik om te wisselen">
-          <img class="is-active" src="images/orsa-baan-mora.jpg" alt="Geveegde schaatsbaan op het Orsameer" loading="lazy" />
-          <img src="images/orsa-accommodatie.jpg" alt="Accommodatie bij Orsa in Dalarna" loading="lazy" />
+          <picture><source type="image/avif" srcset="images/orsa-baan-mora-480.avif 480w, images/orsa-baan-mora-800.avif 800w, images/orsa-baan-mora.avif 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/orsa-baan-mora-480.webp 480w, images/orsa-baan-mora-800.webp 800w, images/orsa-baan-mora.webp 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/orsa-baan-mora.jpg" alt="Geveegde schaatsbaan op het Orsameer" loading="lazy" srcset="images/orsa-baan-mora-480.jpg 480w, images/orsa-baan-mora-800.jpg 800w, images/orsa-baan-mora.jpg 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
+          <picture><source type="image/avif" srcset="images/orsa-accommodatie-480.avif 480w, images/orsa-accommodatie-800.avif 800w, images/orsa-accommodatie.avif 900w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/orsa-accommodatie-480.webp 480w, images/orsa-accommodatie-800.webp 800w, images/orsa-accommodatie.webp 900w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/orsa-accommodatie.jpg" alt="Accommodatie bij Orsa in Dalarna" loading="lazy" srcset="images/orsa-accommodatie-480.jpg 480w, images/orsa-accommodatie-800.jpg 800w, images/orsa-accommodatie.jpg 900w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
           <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
         </div>
         <div class="trip-row__body">
@@ -165,7 +205,7 @@
 
       <article class="trip-row trip-row--flip reveal">
         <div class="trip-row__media">
-          <img class="is-active" src="images/finland-baan.jpg" alt="Schaatsbaan op het Saimaameer bij Punkaharju" loading="lazy" />
+          <picture><source type="image/avif" srcset="images/finland-baan-480.avif 480w, images/finland-baan-800.avif 800w, images/finland-baan.avif 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/finland-baan-480.webp 480w, images/finland-baan-800.webp 800w, images/finland-baan.webp 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/finland-baan.jpg" alt="Schaatsbaan op het Saimaameer bij Punkaharju" loading="lazy" srcset="images/finland-baan-480.jpg 480w, images/finland-baan-800.jpg 800w, images/finland-baan.jpg 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
         </div>
         <div class="trip-row__body">
           <span class="trip-row__region">Punkaharju, Finland</span>
@@ -185,8 +225,8 @@
 
       <article class="trip-row reveal">
         <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Falun, tik om te wisselen">
-          <img class="is-active" src="images/falun-meer.jpg" alt="Schaatsers op een bevroren meer bij Falun" loading="lazy" />
-          <img src="images/falun-accommodatie.jpg" alt="Accommodatie bij Falun" loading="lazy" />
+          <picture><source type="image/avif" srcset="images/falun-meer-480.avif 480w, images/falun-meer-800.avif 800w, images/falun-meer.avif 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/falun-meer-480.webp 480w, images/falun-meer-800.webp 800w, images/falun-meer.webp 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/falun-meer.jpg" alt="Schaatsers op een bevroren meer bij Falun" loading="lazy" srcset="images/falun-meer-480.jpg 480w, images/falun-meer-800.jpg 800w, images/falun-meer.jpg 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
+          <picture><source type="image/avif" srcset="images/falun-accommodatie-480.avif 480w, images/falun-accommodatie-800.avif 800w, images/falun-accommodatie.avif 900w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/falun-accommodatie-480.webp 480w, images/falun-accommodatie-800.webp 800w, images/falun-accommodatie.webp 900w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/falun-accommodatie.jpg" alt="Accommodatie bij Falun" loading="lazy" srcset="images/falun-accommodatie-480.jpg 480w, images/falun-accommodatie-800.jpg 800w, images/falun-accommodatie.jpg 900w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
           <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
         </div>
         <div class="trip-row__body">
@@ -209,8 +249,8 @@
 
       <article class="trip-row trip-row--flip reveal">
         <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van de Weissensee, tik om te wisselen">
-          <img class="is-active" src="images/weissensee-baan.jpg" alt="Geveegde natuurijsbaan op de Weissensee" loading="lazy" />
-          <img src="images/weissensee-schaatsers.jpg" alt="Schaatsers op de Weissensee tussen de bergen" loading="lazy" />
+          <picture><source type="image/avif" srcset="images/weissensee-baan-480.avif 480w, images/weissensee-baan-800.avif 800w, images/weissensee-baan.avif 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/weissensee-baan-480.webp 480w, images/weissensee-baan-800.webp 800w, images/weissensee-baan.webp 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/weissensee-baan.jpg" alt="Geveegde natuurijsbaan op de Weissensee" loading="lazy" srcset="images/weissensee-baan-480.jpg 480w, images/weissensee-baan-800.jpg 800w, images/weissensee-baan.jpg 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
+          <picture><source type="image/avif" srcset="images/weissensee-schaatsers-480.avif 480w, images/weissensee-schaatsers-800.avif 800w, images/weissensee-schaatsers.avif 999w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/weissensee-schaatsers-480.webp 480w, images/weissensee-schaatsers-800.webp 800w, images/weissensee-schaatsers.webp 999w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/weissensee-schaatsers.jpg" alt="Schaatsers op de Weissensee tussen de bergen" loading="lazy" srcset="images/weissensee-schaatsers-480.jpg 480w, images/weissensee-schaatsers-800.jpg 800w, images/weissensee-schaatsers.jpg 999w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
           <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
         </div>
         <div class="trip-row__body">
@@ -232,8 +272,8 @@
 
       <article class="trip-row reveal">
         <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Luleå, tik om te wisselen">
-          <img class="is-active" src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij Luleå" loading="lazy" />
-          <img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" />
+          <picture><source type="image/avif" srcset="images/lulea-ijs-zonsondergang-480.avif 480w, images/lulea-ijs-zonsondergang-800.avif 800w, images/lulea-ijs-zonsondergang-1200.avif 1200w, images/lulea-ijs-zonsondergang-1600.avif 1600w, images/lulea-ijs-zonsondergang.avif 1800w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/lulea-ijs-zonsondergang-480.webp 480w, images/lulea-ijs-zonsondergang-800.webp 800w, images/lulea-ijs-zonsondergang-1200.webp 1200w, images/lulea-ijs-zonsondergang-1600.webp 1600w, images/lulea-ijs-zonsondergang.webp 1800w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij Luleå" loading="lazy" srcset="images/lulea-ijs-zonsondergang-480.jpg 480w, images/lulea-ijs-zonsondergang-800.jpg 800w, images/lulea-ijs-zonsondergang-1200.jpg 1200w, images/lulea-ijs-zonsondergang-1600.jpg 1600w, images/lulea-ijs-zonsondergang.jpg 1800w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
+          <picture><source type="image/avif" srcset="images/lulea-berkenbomen-baai-480.avif 480w, images/lulea-berkenbomen-baai-800.avif 800w, images/lulea-berkenbomen-baai-1200.avif 1200w, images/lulea-berkenbomen-baai.avif 1400w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/lulea-berkenbomen-baai-480.webp 480w, images/lulea-berkenbomen-baai-800.webp 800w, images/lulea-berkenbomen-baai-1200.webp 1200w, images/lulea-berkenbomen-baai.webp 1400w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" srcset="images/lulea-berkenbomen-baai-480.jpg 480w, images/lulea-berkenbomen-baai-800.jpg 800w, images/lulea-berkenbomen-baai-1200.jpg 1200w, images/lulea-berkenbomen-baai.jpg 1400w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
           <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
         </div>
         <div class="trip-row__body">
@@ -264,7 +304,7 @@
             <p class="why__text">Natuurijs laat zich niet plannen. Waar we schaatsen hangt af van het weer en de ijskwaliteit, en dat bepalen we ter plekke. Wat wél vaststaat, is hoe de reis geregeld is.</p>
           </div>
           <div class="why__media reveal">
-            <img src="images/zwart-ijs-scheuren.jpg" alt="Zwart natuurijs met lange scheuren" loading="lazy" />
+            <picture><source type="image/avif" srcset="images/zwart-ijs-scheuren-480.avif 480w, images/zwart-ijs-scheuren-800.avif 800w, images/zwart-ijs-scheuren-1200.avif 1200w, images/zwart-ijs-scheuren.avif 1280w" sizes="(min-width: 60rem) 50vw, 100vw" /><source type="image/webp" srcset="images/zwart-ijs-scheuren-480.webp 480w, images/zwart-ijs-scheuren-800.webp 800w, images/zwart-ijs-scheuren-1200.webp 1200w, images/zwart-ijs-scheuren.webp 1280w" sizes="(min-width: 60rem) 50vw, 100vw" /><img src="images/zwart-ijs-scheuren.jpg" alt="Zwart natuurijs met lange scheuren" loading="lazy" srcset="images/zwart-ijs-scheuren-480.jpg 480w, images/zwart-ijs-scheuren-800.jpg 800w, images/zwart-ijs-scheuren-1200.jpg 1200w, images/zwart-ijs-scheuren.jpg 1280w" sizes="(min-width: 60rem) 50vw, 100vw" /></picture>
           </div>
         </div>
 
@@ -290,6 +330,32 @@
         <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
       </svg>
     </div>
+
+    <!-- 4b. Veelgestelde vragen -->
+    <section class="faq" id="faq">
+      <div class="wrap faq__inner">
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Veelgestelde vragen</span>
+        <h2 class="h-section">Veelgestelde vragen over onze schaatsreizen</h2>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary>Hoeveel schaatsbestemmingen biedt Novakse aan?</summary>
+            <p>Novakse biedt vijf bestemmingen aan: Orsa en Falun in Zweden (begeleide groepsreizen), Luleå in Zweeds Lapland en Punkaharju in Finland (zelfstandige reizen), en de Weissensee in Oostenrijk (zelfstandig).</p>
+          </details>
+          <details class="faq__item">
+            <summary>Wat is het verschil tussen een begeleide en een zelfstandige reis?</summary>
+            <p>Bij een begeleide groepsreis (Orsa, Falun) gaat Joey zelf mee, kent het ijs en bepaalt elke ochtend opnieuw waar de dag het mooist wordt. Bij een zelfstandige reis (Luleå, Finland, Weissensee) schaats je zonder begeleiding van Novakse, op je eigen tempo.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Hoe groot zijn de groepen bij een begeleide reis?</summary>
+            <p>Een begeleide reis gaat door vanaf 4 deelnemers en telt maximaal 12.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Hoe zit het met betalen?</summary>
+            <p>Je betaalt de helft bij boeking, het restant uiterlijk 5 weken voor vertrek. Eventuele prijswijzigingen horen we minimaal 4 weken voor vertrek.</p>
+          </details>
+        </div>
+      </div>
+    </section>
 
     <!-- 5. Verder lezen of aanvragen -->
     <section class="closing">
