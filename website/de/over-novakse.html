@@ -17,6 +17,13 @@
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/theme-groen.css" />
   <link rel="canonical" href="https://www.novakse.com/de/over-novakse.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Novakse Reizen" />
+  <meta property="og:title" content="Über Novakse — die Geschichte von Joey Novak | Novakse" />
+  <meta property="og:description" content="Joey Novak über Novakse: Schlittschuhlaufen auf Natureis, kleine Gruppen und persönliche Begleitung, aus jahrelanger Erfahrung auf Natureis." />
+  <meta property="og:url" content="https://www.novakse.com/de/over-novakse.html" />
+  <meta property="og:image" content="https://www.novakse.com/images/joey-op-het-ijs.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="alternate" hreflang="nl" href="https://www.novakse.com/over-novakse.html" />
   <link rel="alternate" hreflang="en" href="https://www.novakse.com/en/over-novakse.html" />
   <link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/over-novakse.html" />
@@ -41,6 +48,9 @@
     .lede-text {
       text-wrap: pretty;
     }
+
+    .insta-follow { background: var(--paper); padding-block: 4.5rem; }
+    .insta-follow__head { max-width: 40rem; }
   </style>
 </head>
 <body>
@@ -70,7 +80,7 @@
         </ul>
         <a class="header-cta" href="boeken.html">Reise anfragen</a>
               <div class="lang-switch">
-              <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
+              <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Sprache · Language">
                 <span class="lang-switch__current">DE</span>
                 <svg class="lang-switch__chevron" width="9" height="6" viewBox="0 0 9 6" aria-hidden="true" focusable="false"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
@@ -168,6 +178,19 @@
       </div>
     </section>
 
+    <section class="insta-follow" id="instagram">
+      <div class="wrap">
+        <div class="insta-follow__head reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Unterwegs</span>
+          <h2 class="h-section">Folge den Reisen auf Instagram</h2>
+          <p class="lede-text">Impressionen vom Eis, von den Touren und von der Vorbereitung &mdash; die teile ich regelmäßig auf Instagram.</p>
+        </div>
+        <!-- Elfsight Instagram Feed, gekoppeld aan @schaatsreizennovakse -->
+        <div class="elfsight-app-2367e2ce-24b7-48fc-bbdd-ae86ffc0dc5c" data-elfsight-app-lazy></div>
+        <a class="btn btn--outline-dark" href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">Auf Instagram folgen</a>
+      </div>
+    </section>
+
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Lust mitzukommen?</h2>
@@ -204,7 +227,7 @@
         <div class="footer__links">
           <a href="https://www.instagram.com/schaatsreizennovakse/" target="_blank" rel="noopener">Instagram</a>
           <a href="https://facebook.com/komcycling.tours.1" target="_blank" rel="noopener">Facebook</a>
-          <a href="../privacyverklaring.html">Datenschutzerklärung</a>
+          <a href="privacyverklaring.html">Datenschutzerklärung</a>
           <a href="algemene-voorwaarden.html">Allgemeine Geschäftsbedingungen</a>
         </div>
       </div>
@@ -216,6 +239,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="https://elfsightcdn.com/platform.js" async></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

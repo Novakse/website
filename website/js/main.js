@@ -438,6 +438,28 @@
         });
       }
     });
+
+    /* De opening speelt automatisch en eindeloos door. Bezoekers die minder
+       beweging willen krijgen een stilstaand beeld: de CSS-mediaquery raakt
+       videoafspelen niet, dus dat moet hier. */
+    var applyVideoMotion = function () {
+      if (reducedMotion.matches) {
+        heroVideo.removeAttribute("autoplay");
+        heroVideo.loop = false;
+        heroVideo.pause();
+        heroVideo.currentTime = 0;
+      } else if (heroVideo.paused) {
+        heroVideo.loop = true;
+        var speelt = heroVideo.play();
+        if (speelt && speelt.catch) speelt.catch(function () {});
+      }
+    };
+    applyVideoMotion();
+    if (reducedMotion.addEventListener) {
+      reducedMotion.addEventListener("change", applyVideoMotion);
+    } else if (reducedMotion.addListener) {
+      reducedMotion.addListener(applyVideoMotion);
+    }
   }
 
   /* ------------------------------------------------------------------

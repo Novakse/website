@@ -10,6 +10,7 @@
   --warm: #dd9752;        /* accent on dark backgrounds */
   --warm-deep: #7a4620;   /* accent on light backgrounds (WCAG AA on white) */
   --status-green: #1b4332; /* status/success accent */
+  --focus-ring: var(--warm-deep); /* light surfaces by default; see dark override */
   --border: #e2e3df;
   --border-dark: rgba(255, 255, 255, 0.18);
 
@@ -78,8 +79,17 @@ textarea:focus-visible,
 select:focus-visible,
 summary:focus-visible,
 [tabindex]:focus-visible {
-  outline: 3px solid var(--warm);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
+}
+
+/* --warm haalt maar 2.4:1 op wit en zakt daarmee onder de 3:1 van WCAG
+   2.4.11. Op lichte vlakken gebruikt de ring daarom --warm-deep; op de
+   donkere vlakken (witte tekst) is die juist te donker en blijft --warm. */
+.opener, .layered, .page-hero, .why, .request, .factbar, .site-footer,
+.choice__panel, .trip-card__media, .trip-row__media,
+.site-header:not(.site-header--on-light) {
+  --focus-ring: var(--warm);
 }
 
 .skip-link {
@@ -263,6 +273,17 @@ summary:focus-visible,
 .link-arrow::after { content: "↗"; transition: transform 0.2s ease; }
 .link-arrow:hover::after, .link-arrow:focus-visible::after { transform: translate(2px, -2px); }
 
+/* Tekstlink midden in een alinea. Omdat links standaard hun kleur erven,
+   heeft een inline link altijd een eigen kleur én een onderstreping nodig:
+   kleur alleen is te weinig onderscheid. */
+.link-inline {
+  color: var(--warm-deep);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+.link-inline:hover, .link-inline:focus-visible { text-decoration-thickness: 2px; }
+
 /* ==========================================================================
    Header
    ========================================================================== */
@@ -365,6 +386,11 @@ summary:focus-visible,
      kind-element binnen .main-nav, dus elke fade-duur hier op de buitenste
      laag vermenigvuldigt mee door de compositing en vertraagt de blur —
      die moet er in één keer staan, alleen de positie (transform) schuift. */
+  /* visibility houdt het gesloten menu uit de tabvolgorde en uit de
+     accessibility tree; opacity + pointer-events alleen verbergen het
+     visueel. Opacity springt hierboven bewust zonder transition naar 0, dus
+     het menu is bij sluiten meteen weg en visibility mag direct mee. */
+  visibility: hidden;
   transition: transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
@@ -393,7 +419,7 @@ summary:focus-visible,
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   transition: background-color 0.35s ease;
 }
-.main-nav.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.main-nav.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); visibility: visible; }
 .main-nav.is-open::before { opacity: 1; }
 .site-header.site-header--on-light .main-nav::before { background-color: rgba(255, 255, 255, 0.45); }
 /* Op witte pagina's (geen donkere hero) is de balk meteen "on-light" en
@@ -443,6 +469,7 @@ summary:focus-visible,
     inset: auto;
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
     transform: none;
     flex-direction: row;
     align-items: center;
@@ -1018,6 +1045,9 @@ html:not(.js) .opener__controls { display: none; }
 .faq { background: var(--paper); padding-block: 4.5rem; }
 .faq__inner { max-width: 46rem; }
 .faq__list { margin-top: 2rem; }
+/* Link from a destination page to the matching blog article. */
+.faq__more { margin-top: 1.6rem; }
+.faq__more .link-arrow { color: var(--warm-deep); }
 .faq__item { border-top: 1px solid var(--border); }
 .faq__item:last-child { border-bottom: 1px solid var(--border); }
 .faq__item summary {
@@ -1515,6 +1545,17 @@ html:not(.js) .opener__controls { display: none; }
   padding-left: 0.9rem;
   border-left: 2px solid var(--warm);
 }
+/* Kop boven de twee kolommen, voor de "past deze reis bij jou"-blokken op de
+   zelfstandige reizen. De grid eronder blijft ongewijzigd. */
+.included__intro { max-width: 42rem; margin-bottom: 2.5rem; }
+.included__lede { margin-top: 1rem; color: var(--ink-soft); }
+.included__cta {
+  margin-top: 1.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 2rem;
+}
+.included__cta .link-arrow { color: var(--warm-deep); }
 
 @media (min-width: 48rem) {
   .included__grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
