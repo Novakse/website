@@ -1,7 +1,6 @@
 {
   "_readme": "Interne planningslijst voor het live zetten van blogartikelen op novakse.com. Niet onderdeel van de website zelf (staat buiten de website/-map). Publicatie gaat in kleine, thematische batches (niet strikt 1/dag) zodra de gebruiker daarom vraagt, of automatisch (1 per keer) via de lokale geplande taak zolang die actief is. 'published' houdt bij wat al live staat, met datum.",
   "queue": [
-    "wat-als-het-ijs-niet-goed-is",
     "zweden-of-finland",
     "schaatsen-punkaharju-finland",
     "langlaufschaatsen-versus-noren",
@@ -21,6 +20,7 @@
     { "slug": "orsa-versus-falun", "date": "2026-08-12" },
     { "slug": "schaatsen-lulea", "date": "2026-08-12" },
     { "slug": "schaatsen-weissensee", "date": "2026-08-12" },
-    { "slug": "beste-periode-schaatsen-scandinavie", "date": "2026-08-12" }
+    { "slug": "beste-periode-schaatsen-scandinavie", "date": "2026-08-12" },
+    { "slug": "wat-als-het-ijs-niet-goed-is", "date": "2026-08-13" }
   ]
 }
