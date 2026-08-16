@@ -1,6 +1,10 @@
 {
-  "_readme": "Interne planningslijst voor het live zetten van blogartikelen op novakse.com. Niet onderdeel van de website zelf (staat buiten de website/-map). Alle geplande artikelen uit de eerste rollout zijn nu live. Queue leeg = rollout compleet. Nieuwe artikelen (bv. blog 18-restant, 19, 20) kunnen hier later weer aan 'queue' worden toegevoegd.",
-  "queue": [],
+  "_readme": "Interne planningslijst voor het live zetten van blogartikelen op novakse.com. Niet onderdeel van de website zelf (staat buiten de website/-map). Artikelen in 'queue' zijn wel gebouwd en gecontroleerd, maar nog NIET zichtbaar: ze staan niet op blog.html en niet in sitemap.xml. Publiceren gebeurt op verzoek, per artikel of per cluster. 'published' houdt bij wat al live staat, met datum.",
+  "queue": [
+    "hoe-vaak-schaatsen-slijpen",
+    "schaatsronding-18-21-24-27-meter",
+    "wat-is-skatefitting"
+  ],
   "published": [
     { "slug": "kledingadvies-natuurijs", "date": "2026-08-11" },
     { "slug": "schaatsen-afstellen", "date": "2026-08-11" },
