@@ -994,8 +994,11 @@ html:not(.js) .opener__controls { display: none; }
 .collage__item--left { left: 0; bottom: 0; width: 46%; aspect-ratio: 5 / 4; z-index: 2; }
 .collage__item--right { right: 0; bottom: 3%; width: 46%; aspect-ratio: 5 / 4; z-index: 2; }
 
-/* De kampvuurfoto staat rechtop; zo blijft Joey heel in beeld bij deze uitsnede. */
-.collage__item--right img { object-position: center 22%; }
+/* De kampvuurfoto staat rechtop; in een liggend kader valt Joey's hoofd bij een
+   uitsnede vanuit het midden weg. De uitsnede hangt daarom aan de foto zelf en
+   niet aan de plek in de collage: op de homepage staat hij rechts, op
+   over-novakse links. De taalversies gebruiken ../images/, vandaar *=. */
+.collage__item img[src*="joey-kampvuur"] { object-position: center top; }
 
 /* Homepage-sectie "Het verhaal achter Novakse": foto's staan dichter bij
    elkaar in rust, en schuiven daardoor tijdens het scrollen zichtbaarder
@@ -2344,7 +2347,7 @@ button.calendar__cell.is-gekozen .calendar__dayprice { opacity: 0.85; }
 }
 
 .article { background: var(--paper); padding-block: 3.5rem 5.5rem; }
-.article__wrap { max-width: 42rem; padding-inline: var(--pad); }
+.article__wrap { max-width: 42rem; margin-inline: auto; padding-inline: var(--pad); }
 
 .article-body .lead {
   font-size: 1.1rem;

@@ -873,17 +873,15 @@
       // groter, dus daar wordt de afstand teruggeschroefd.
       var scale = Math.max(0.45, Math.min(1, window.innerWidth / 1100));
 
-      // De linker- en rechterfoto staan onderin het frame, vlak boven het
-      // onderschrift. Zonder grens kan een grote verschuiving ze over de
-      // tekst eronder laten schuiven (met name wanneer de collage al bij
-      // het laden van de pagina deels in beeld staat). Daarom wordt de
-      // verschuiving hier hard begrensd tot een subtiel effect.
-      var maxShift = 20;
-
+      // De onderste twee foto's lopen sneller dan de grote bovenste (zie
+      // data-speed in de HTML): daardoor kruipen ze tijdens het scrollen
+      // naar elkaar toe. De afstand is bewust groot — dat is het effect.
       collageItems.forEach(function (item) {
         var speed = parseFloat(item.dataset.speed) || 0;
-        var shift = Math.max(-maxShift, Math.min(maxShift, progress * speed * scale));
-        item.style.setProperty("--collage-shift", shift.toFixed(1) + "px");
+        item.style.setProperty(
+          "--collage-shift",
+          (progress * speed * scale).toFixed(1) + "px"
+        );
       });
     };
 
