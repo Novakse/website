@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png?v=2" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png?v=2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=2" />
   <script>document.documentElement.classList.add("js");</script>
   <title>Luistelutunnit ja henkilökohtainen valmennus | Novakse</title>
   <meta name="description" content="Luistelutunteja, henkilökohtaista valmennusta ja luonnonjääharjoittelua Novaksella. Pienet ryhmät, tekniikka ja asenne, hinnat henkilöä kohti." />
@@ -31,6 +31,56 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatslessen.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatslessen.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatslessen.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Etusivu", "item": "https://www.novakse.com/fi/index.html" },
+      { "@type": "ListItem", "position": 2, "name": "Luistelutunnit", "item": "https://www.novakse.com/fi/schaatslessen.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Mitä luistelutunteja Novakse tarjoaa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Novakse tarjoaa viittä muotoa: ryhmätunnit (alkaen 15 vuotta), Personal Training, yksityisvalmennuksen ystävä-, perhe- tai kollegaryhmälle, luonnonjääharjoittelun valmistautumiseksi ulkona luisteluun, sekä ilmaisen kokeilutunnin silloin, kun kausi on täydessä vauhdissa."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Mitä luistelutunti Novaksella maksaa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Personal Training 12 kerran paketissa maksaa alkaen €395 henkilöltä (4 henkilön ryhmässä) aina €870 henkilöltä (yksin). Tunnilta henkilökohtainen valmentaja maksaa alkaen €34,95 henkilöltä (4 henkilön ryhmässä) aina €79,95 (yksin). Luisteluradan sisäänpääsy ei sisälly hintaan."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Sisältyykö luisteluradan sisäänpääsy hintaan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ei. Kaikki hinnat ovat henkilöä kohti ja koskevat ohjausta; luisteluradan sisäänpääsyn maksat erikseen suoraan Elfstedenhallille."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Voiko Novakse järjestää klinikan myös yritykselle tai seuralle?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Kyllä, vakiotuntien lisäksi Novakse järjestää räätälöityjä klinikoita, jotka sopivat myös tiimipäiväksi tai kohdennetuksi tekniikkapäiväksi ryhmälle. Vaihtoehtoja ovat esimerkiksi yritysklinikka, kaarreklinikka tai teroitustyöpaja."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Siirry sisältöön</a>
@@ -38,9 +88,9 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — etusivulle">
-        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="616" height="840" />
-        <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
-        <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
+        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="599" height="840" />
+        <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
+        <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
       </a>
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
@@ -214,6 +264,31 @@
       </div>
     </section>
 
+    <section class="faq" id="faq">
+      <div class="wrap faq__inner">
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Usein kysytyt kysymykset</span>
+        <h2 class="h-section">Usein kysytyt kysymykset luistelutunneista</h2>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary>Mitä luistelutunteja Novakse tarjoaa?</summary>
+            <p>Novakse tarjoaa viittä muotoa: ryhmätunnit (alkaen 15 vuotta), Personal Training, yksityisvalmennuksen ystävä-, perhe- tai kollegaryhmälle, luonnonjääharjoittelun valmistautumiseksi ulkona luisteluun, sekä ilmaisen kokeilutunnin silloin, kun kausi on täydessä vauhdissa.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Mitä luistelutunti Novaksella maksaa?</summary>
+            <p>Personal Training 12 kerran paketissa maksaa alkaen &euro;395 henkilöltä (4 henkilön ryhmässä) aina &euro;870 henkilöltä (yksin). Tunnilta henkilökohtainen valmentaja maksaa alkaen &euro;34,95 henkilöltä (4 henkilön ryhmässä) aina &euro;79,95 (yksin). Luisteluradan sisäänpääsy ei sisälly hintaan.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Sisältyykö luisteluradan sisäänpääsy hintaan?</summary>
+            <p>Ei. Kaikki hinnat ovat henkilöä kohti ja koskevat ohjausta; luisteluradan sisäänpääsyn maksat erikseen suoraan Elfstedenhallille.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Voiko Novakse järjestää klinikan myös yritykselle tai seuralle?</summary>
+            <p>Kyllä, vakiotuntien lisäksi Novakse järjestää räätälöityjä klinikoita, jotka sopivat myös tiimipäiväksi tai kohdennetuksi tekniikkapäiväksi ryhmälle. Vaihtoehtoja ovat esimerkiksi yritysklinikka, kaarreklinikka tai teroitustyöpaja.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Mukaan vai ensin kokeilemaan?</h2>
@@ -231,9 +306,9 @@
     <div class="wrap footer__grid">
       <div>
         <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — etusivulle">
-          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="616" height="840" />
-          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
-          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
+          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="599" height="840" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
         </a>
         <p class="footer__tagline">Pienimuotoisia luonnonjääluistelumatkoja, henkilökohtaisesti opastaa Joey Novak.</p>
       </div>

@@ -341,9 +341,6 @@ summary:focus-visible,
 /* Zodra de balk over een lichte sectie komt, kleurt de inhoud donker mee. */
 .site-header.site-header--on-light { color: var(--ink); }
 .site-header.site-header--on-light .nav-toggle span { background: var(--ink); }
-/* Woordmerk wisselt van de witte naar de donkere versie */
-.site-header.site-header--on-light .logo-word-img--light { display: none; }
-.site-header.site-header--on-light .logo-word-img--dark { display: block; }
 
 .site-header__row {
   position: relative;
@@ -356,10 +353,13 @@ summary:focus-visible,
 
 /* Anchor targets clear the fixed header */
 [id] { scroll-margin-top: 5rem; }
-/* Logo-lockup: het vrijstaande beeldmerk naast de naam. Het beeldmerk is
-   transparant gemaakt, dus het werkt op elke ondergrond. De naam is tekst,
-   zodat hij automatisch meekleurt met de header (wit op foto, donker op wit). */
-.site-header__logo { display: inline-flex; align-items: center; gap: 0.6rem; }
+/* Logo-lockup: het vrijstaande beeldmerk naast de naam. De naam staat laag
+   tegen het beeldmerk aan, op dezelfde plek als in het originele logo. */
+.site-header__logo { display: inline-flex; align-items: flex-end; gap: 0.6rem; }
+.site-header__logo .logo-word-img { margin-bottom: 0.12rem; }
+/* De naam houdt altijd zijn eigen donkerblauw, ook boven een foto. */
+.site-header .logo-word-img--light { display: none; }
+.site-header .logo-word-img--dark { display: block; }
 
 .logo-mark { height: 2.2rem; width: auto; }
 

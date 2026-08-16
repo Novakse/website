@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png?v=2" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png?v=2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=2" />
   <script>document.documentElement.classList.add("js");</script>
   <title>Luistinten teroitus, huolto ja luistinsovitus | Novakse</title>
   <meta name="description" content="Luistinten teroitus, huolto ja luistinsovitus Novaksella Noordwoldessa. Käsin teroitus, pyöristys, suoristus ja luistimen säätö." />
@@ -55,6 +55,56 @@
     /* De workshop-vermelding krijgt iets meer rust dan de hoofdzin ervoor. */
     .closing__note { margin-top: 0.6rem; font-size: 0.9rem; color: var(--ink-soft); }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Etusivu", "item": "https://www.novakse.com/fi/index.html" },
+      { "@type": "ListItem", "position": 2, "name": "Luistinten huolto", "item": "https://www.novakse.com/fi/schaatsonderhoud.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Mikä ero on teroituksella ja luistinsovituksella?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Teroitus tekee luistimestasi terävän. Luistinsovitus varmistaa, että se seisoo oikein. Nämä ovat kaksi eri asiaa, ja molemmilla on oma hintansa."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Mitä luistimieni teroitus maksaa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Retkiluistimien käsin teroitus maksaa €16, pyöristys & teroitus €27, ja käsin teroitettu pyöristys alkaen €65 — viimeksi mainittu vaihtelee ja riippuu luistimestasi ja ajotyylistäsi."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Mitä huolto (täyshuolto) sisältää?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Huoltokerralla koko luistin käydään läpi: pyöristys, teroitus ja kiillotus, sekä lisäksi jouset, puskurikumit, nokat, pultit ja sarana. Jos jokin osa täytyy vaihtaa, kuulet siitä etukäteen. Huolto maksaa alkaen €35."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Mitä luistinsovitus maksaa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yksin tunnilta luistinsovitus maksaa €95, kahdestaan yhdessä €140, ja jatkotapaaminen €65. Kiilat, jouset tai muut osat veloitetaan erikseen."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Siirry sisältöön</a>
@@ -62,9 +112,9 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — etusivulle">
-        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="616" height="840" />
-        <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
-        <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
+        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="599" height="840" />
+        <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
+        <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
       </a>
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
@@ -211,6 +261,31 @@
       </div>
     </section>
 
+    <section class="faq" id="faq">
+      <div class="wrap faq__inner">
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Usein kysytyt kysymykset</span>
+        <h2 class="h-section">Usein kysytyt kysymykset luistinten huollosta</h2>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary>Mikä ero on teroituksella ja luistinsovituksella?</summary>
+            <p>Teroitus tekee luistimestasi terävän. Luistinsovitus varmistaa, että se seisoo oikein. Nämä ovat kaksi eri asiaa, ja molemmilla on oma hintansa.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Mitä luistimieni teroitus maksaa?</summary>
+            <p>Retkiluistimien käsin teroitus maksaa &euro;16, pyöristys &amp; teroitus &euro;27, ja käsin teroitettu pyöristys alkaen &euro;65 &mdash; viimeksi mainittu vaihtelee ja riippuu luistimestasi ja ajotyylistäsi.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Mitä huolto (täyshuolto) sisältää?</summary>
+            <p>Huoltokerralla koko luistin käydään läpi: pyöristys, teroitus ja kiillotus, sekä lisäksi jouset, puskurikumit, nokat, pultit ja sarana. Jos jokin osa täytyy vaihtaa, kuulet siitä etukäteen. Huolto maksaa alkaen &euro;35.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Mitä luistinsovitus maksaa?</summary>
+            <p>Yksin tunnilta luistinsovitus maksaa &euro;95, kahdestaan yhdessä &euro;140, ja jatkotapaaminen &euro;65. Kiilat, jouset tai muut osat veloitetaan erikseen.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Haluatko luistimesi tarkistukseen?</h2>
@@ -229,9 +304,9 @@
     <div class="wrap footer__grid">
       <div>
         <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — etusivulle">
-          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="616" height="840" />
-          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
-          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
+          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="599" height="840" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
         </a>
         <p class="footer__tagline">Pienimuotoisia luonnonjääluistelumatkoja, henkilökohtaisesti opastaa Joey Novak.</p>
       </div>

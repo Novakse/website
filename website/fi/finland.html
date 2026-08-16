@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png?v=2" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png?v=2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=2" />
   <script>document.documentElement.classList.add("js");</script>
   <title>Suomi, Punkaharju — omatoiminen luistelumatka | Novakse</title>
   <meta name="description" content="Omatoiminen luistelumatka Saimaalla Punkaharjulla. Oma saunallinen mökki, mahdollisuus nähdä revontulia, ilman opastusta, alkaen 199 € henkilöltä päivässä." />
@@ -31,6 +31,78 @@
   <link rel="alternate" hreflang="no" href="https://www.novakse.com/no/finland.html" />
   <link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/finland.html" />
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.com/finland.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Etusivu", "item": "https://www.novakse.com/fi/index.html" },
+      { "@type": "ListItem", "position": 2, "name": "Luistelumatkat", "item": "https://www.novakse.com/fi/reizen.html" },
+      { "@type": "ListItem", "position": 3, "name": "Suomi", "item": "https://www.novakse.com/fi/finland.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": "Luistelumatka Suomeen, Punkaharjulle",
+    "description": "Omatoiminen luistelumatka Saimaalla Punkaharjulla Suomessa. Oma saunallinen mökki, mahdollisuus nähdä revontulia, ilman opastusta.",
+    "touristType": "Omatoimiset luistelijat",
+    "provider": { "@type": "TravelAgency", "name": "Novakse", "url": "https://www.novakse.com/fi/" },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.novakse.com/fi/finland.html",
+      "priceCurrency": "EUR",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "199",
+        "priceCurrency": "EUR",
+        "unitText": "henkilöltä päivässä"
+      }
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Onko luistelumatka Suomeen opastettu?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ei, tämä matka on erilainen kuin Orsa ja Falun: mukana ei ole opasta. Saat majoituksen ja paikan, ja muuten suunnittelet päivät itse. Ei kiinteää lähtöpäivää, ei ryhmää, johon liittyä. Se edellyttää, että osaat itse arvioida, onko jää turvallista; jos epäilet tätä, opastettu matka Ruotsiin on parempi valinta."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Mitä luistelumatka Suomeen maksaa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hinta on henkilöltä päivässä ja alkaa 199 eurosta. Siihen sisältyvät majoitus, vuokra-auto ja muut palvelut. Lennon järjestät itse."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Milloin voit lähteä tälle luistelumatkalle Suomeen?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Kausi kestää joulukuun lopusta maaliskuun alkuun; sen jälkeen jäätä ei enää ole. Lyhin mahdollinen oleskelu on 2 yötä."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Mitä matkaan Suomeen sisältyy ja mitä ei?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hintaan sisältyvät saunallinen mökki, paikan päällä oleva vuokra-auto ja muut matkaan liittyvät palvelut. Hintaan eivät sisälly lento Suomeen, ruoka ja juoma sekä omat luisteluvarusteet ja turvavarusteet."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Siirry sisältöön</a>
@@ -38,9 +110,9 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="index.html" aria-label="Novakse Reizen — etusivulle">
-        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="616" height="840" />
-        <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
-        <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
+        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="599" height="840" />
+        <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
+        <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
       </a>
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
@@ -222,6 +294,32 @@
       </svg>
     </div>
 
+    <!-- 5b. Veelgestelde vragen -->
+    <section class="faq" id="faq">
+      <div class="wrap faq__inner">
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Usein kysytyt kysymykset</span>
+        <h2 class="h-section">Usein kysytyt kysymykset Suomesta</h2>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary>Onko luistelumatka Suomeen opastettu?</summary>
+            <p>Ei, tämä matka on erilainen kuin Orsa ja Falun: mukana ei ole opasta. Saat majoituksen ja paikan, ja muuten suunnittelet päivät itse. Ei kiinteää lähtöpäivää, ei ryhmää, johon liittyä. Se edellyttää, että osaat itse arvioida, onko jää turvallista; jos epäilet tätä, opastettu matka Ruotsiin on parempi valinta.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Mitä luistelumatka Suomeen maksaa?</summary>
+            <p>Hinta on henkilöltä päivässä ja alkaa 199 eurosta. Siihen sisältyvät majoitus, vuokra-auto ja muut palvelut. Lennon järjestät itse.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Milloin voit lähteä tälle luistelumatkalle Suomeen?</summary>
+            <p>Kausi kestää joulukuun lopusta maaliskuun alkuun; sen jälkeen jäätä ei enää ole. Lyhin mahdollinen oleskelu on 2 yötä.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Mitä matkaan Suomeen sisältyy ja mitä ei?</summary>
+            <p>Hintaan sisältyvät saunallinen mökki, paikan päällä oleva vuokra-auto ja muut matkaan liittyvät palvelut. Hintaan eivät sisälly lento Suomeen, ruoka ja juoma sekä omat luisteluvarusteet ja turvavarusteet.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- 6. Liever met begeleiding -->
     <section class="closing">
       <div class="wrap closing__inner">
@@ -239,9 +337,9 @@
     <div class="wrap footer__grid">
       <div>
         <a class="footer__logo" href="index.html" aria-label="Novakse Reizen — etusivulle">
-          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="616" height="840" />
-          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="748" height="159" />
-          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="748" height="159" />
+          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="599" height="840" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
+          <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
         </a>
         <p class="footer__tagline">Pienimuotoisia luonnonjääluistelumatkoja, henkilökohtaisesti opastaa Joey Novak.</p>
       </div>
