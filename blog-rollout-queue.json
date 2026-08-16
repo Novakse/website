@@ -3,27 +3,89 @@
   "queue": [
     "hoe-vaak-schaatsen-slijpen",
     "schaatsronding-18-21-24-27-meter",
-    "wat-is-skatefitting"
+    "wat-is-skatefitting",
+    "leren-schaatsen-als-volwassene",
+    "schaatsen-natuurijs-nederland",
+    "alternatieve-elfstedentocht-weissensee",
+    "schaatstermen-uitgelegd",
+    "schaatsen-meenemen-vliegtuig"
   ],
   "published": [
-    { "slug": "kledingadvies-natuurijs", "date": "2026-08-11" },
-    { "slug": "schaatsen-afstellen", "date": "2026-08-11" },
-    { "slug": "schaatstechniek-rechte-stuk", "date": "2026-08-11" },
-    { "slug": "pootje-over-bocht", "date": "2026-08-11" },
-    { "slug": "eerste-schaatsreis-beginner", "date": "2026-08-11" },
-    { "slug": "schaatsen-zweden", "date": "2026-08-12" },
-    { "slug": "schaatsen-orsa", "date": "2026-08-12" },
-    { "slug": "schaatsen-falun", "date": "2026-08-12" },
-    { "slug": "orsa-versus-falun", "date": "2026-08-12" },
-    { "slug": "schaatsen-lulea", "date": "2026-08-12" },
-    { "slug": "schaatsen-weissensee", "date": "2026-08-12" },
-    { "slug": "beste-periode-schaatsen-scandinavie", "date": "2026-08-12" },
-    { "slug": "wat-als-het-ijs-niet-goed-is", "date": "2026-08-13" },
-    { "slug": "zweden-of-finland", "date": "2026-08-13" },
-    { "slug": "schaatsen-punkaharju-finland", "date": "2026-08-13" },
-    { "slug": "langlaufschaatsen-versus-noren", "date": "2026-08-13" },
-    { "slug": "kosten-schaatsreis", "date": "2026-08-13" },
-    { "slug": "veiligheid-natuurijs", "date": "2026-08-15" },
-    { "slug": "paklijst-schaatsreis-scandinavie", "date": "2026-08-16" }
+    {
+      "slug": "kledingadvies-natuurijs",
+      "date": "2026-08-11"
+    },
+    {
+      "slug": "schaatsen-afstellen",
+      "date": "2026-08-11"
+    },
+    {
+      "slug": "schaatstechniek-rechte-stuk",
+      "date": "2026-08-11"
+    },
+    {
+      "slug": "pootje-over-bocht",
+      "date": "2026-08-11"
+    },
+    {
+      "slug": "eerste-schaatsreis-beginner",
+      "date": "2026-08-11"
+    },
+    {
+      "slug": "schaatsen-zweden",
+      "date": "2026-08-12"
+    },
+    {
+      "slug": "schaatsen-orsa",
+      "date": "2026-08-12"
+    },
+    {
+      "slug": "schaatsen-falun",
+      "date": "2026-08-12"
+    },
+    {
+      "slug": "orsa-versus-falun",
+      "date": "2026-08-12"
+    },
+    {
+      "slug": "schaatsen-lulea",
+      "date": "2026-08-12"
+    },
+    {
+      "slug": "schaatsen-weissensee",
+      "date": "2026-08-12"
+    },
+    {
+      "slug": "beste-periode-schaatsen-scandinavie",
+      "date": "2026-08-12"
+    },
+    {
+      "slug": "wat-als-het-ijs-niet-goed-is",
+      "date": "2026-08-13"
+    },
+    {
+      "slug": "zweden-of-finland",
+      "date": "2026-08-13"
+    },
+    {
+      "slug": "schaatsen-punkaharju-finland",
+      "date": "2026-08-13"
+    },
+    {
+      "slug": "langlaufschaatsen-versus-noren",
+      "date": "2026-08-13"
+    },
+    {
+      "slug": "kosten-schaatsreis",
+      "date": "2026-08-13"
+    },
+    {
+      "slug": "veiligheid-natuurijs",
+      "date": "2026-08-15"
+    },
+    {
+      "slug": "paklijst-schaatsreis-scandinavie",
+      "date": "2026-08-16"
+    }
   ]
 }
