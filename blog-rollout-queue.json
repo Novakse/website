@@ -1,8 +1,6 @@
 {
-  "_readme": "Interne planningslijst voor het live zetten van blogartikelen op novakse.com. Niet onderdeel van de website zelf (staat buiten de website/-map). Publicatie gaat in kleine, thematische batches (niet strikt 1/dag) zodra de gebruiker daarom vraagt, of automatisch (1 per keer) via de lokale geplande taak zolang die actief is. 'published' houdt bij wat al live staat, met datum.",
-  "queue": [
-    "paklijst-schaatsreis-scandinavie"
-  ],
+  "_readme": "Interne planningslijst voor het live zetten van blogartikelen op novakse.com. Niet onderdeel van de website zelf (staat buiten de website/-map). Alle geplande artikelen uit de eerste rollout zijn nu live. Queue leeg = rollout compleet. Nieuwe artikelen (bv. blog 18-restant, 19, 20) kunnen hier later weer aan 'queue' worden toegevoegd.",
+  "queue": [],
   "published": [
     { "slug": "kledingadvies-natuurijs", "date": "2026-08-11" },
     { "slug": "schaatsen-afstellen", "date": "2026-08-11" },
@@ -21,6 +19,7 @@
     { "slug": "schaatsen-punkaharju-finland", "date": "2026-08-13" },
     { "slug": "langlaufschaatsen-versus-noren", "date": "2026-08-13" },
     { "slug": "kosten-schaatsreis", "date": "2026-08-13" },
-    { "slug": "veiligheid-natuurijs", "date": "2026-08-15" }
+    { "slug": "veiligheid-natuurijs", "date": "2026-08-15" },
+    { "slug": "paklijst-schaatsreis-scandinavie", "date": "2026-08-16" }
   ]
 }
