@@ -7,8 +7,7 @@
     "leren-schaatsen-als-volwassene",
     "schaatsen-natuurijs-nederland",
     "alternatieve-elfstedentocht-weissensee",
-    "schaatstermen-uitgelegd",
-    "schaatsen-meenemen-vliegtuig"
+    "schaatstermen-uitgelegd"
   ],
   "published": [
     {
@@ -86,6 +85,10 @@
     {
       "slug": "paklijst-schaatsreis-scandinavie",
       "date": "2026-08-16"
+    },
+    {
+      "slug": "schaatsen-meenemen-vliegtuig",
+      "date": "2026-08-18"
     }
   ]
 }
