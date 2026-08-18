@@ -180,6 +180,43 @@ Gebruik deze voor elke andere site die nog naar novakse.nl verwijst.
 
 ---
 
+## Schaatsclubs en verenigingen — nieuwe links, geen verhuizing
+
+Toegevoegd 18-08-2026, naar aanleiding van de zoekwoordencontrole (zie SEO-KEYWORDS.md).
+
+Twee namen die mensen googelen als ze op Zweeds natuurijs willen schaatsen, zijn geen
+zoekwoorden maar organisaties. Hun leden zijn precies jouw doelgroep: mensen die al
+weten wat langlaufschaatsen zijn en die naar Scandinavie willen.
+
+### HLSK — Hollandse Langetocht Schaats Klubb
+
+- Site: <https://hlsk.nl/>
+- Nederlandse club die met eigen, opgeleide gidsen op Zweeds natuurijs schaatst.
+- Ze werken met een eigen gidsenopleiding en Zweedse veiligheidsregels.
+- **Actie:** mail of bel met de vraag of Novakse in hun linkoverzicht mag, of dat je
+  iets kunt betekenen voor hun leden (slijpen, skatefitting, materiaaladvies).
+  Dat laatste is de zachtste ingang: je biedt iets aan in plaats van iets te vragen.
+
+### NTSV — Nederlandse Toerschaats Vereniging
+
+- Site: <https://ntsv.skridsko.net/>
+- Opgericht in 2016, ruim 60 leden, schaatst volgens de Scandinavische veiligheidsregels.
+- **Actie:** zelfde aanpak als bij HLSK.
+
+### Natuurijswijzer — linkpagina
+
+De linkpagina van Natuurijswijzer (<https://www.natuurijswijzer.nl/links/links/>) noemt
+dit soort clubs bij elkaar. Je hebt Natuurijswijzer op 16-08-2026 al gemaild over het
+domein; als die link goed komt te staan, sta je meteen in het juiste rijtje.
+
+### Let op
+
+Dit gaat om links en zichtbaarheid, niet om teksten op je eigen site. Deze clubs bij
+naam noemen op novakse.com is een aparte afweging — dat doe ik niet zonder dat je het
+zelf wilt.
+
+---
+
 ## Wat je hiermee bereikt
 
 Elke link die je verhuist, verhuist ook een stukje van de waarde die je in de loop
