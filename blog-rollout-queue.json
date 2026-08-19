@@ -1,9 +1,6 @@
 {
   "_readme": "Interne planningslijst voor het live zetten van blogartikelen op novakse.com. Niet onderdeel van de website zelf (staat buiten de website/-map). Artikelen in 'queue' zijn wel gebouwd en gecontroleerd, maar nog NIET zichtbaar: ze staan niet op blog.html en niet in sitemap.xml. Publiceren gebeurt op verzoek, per artikel of per cluster. 'published' houdt bij wat al live staat, met datum.",
   "queue": [
-    "hoe-vaak-schaatsen-slijpen",
-    "schaatsronding-18-21-24-27-meter",
-    "wat-is-skatefitting",
     "leren-schaatsen-als-volwassene",
     "schaatsen-natuurijs-nederland",
     "alternatieve-elfstedentocht-weissensee",
@@ -89,6 +86,18 @@
     {
       "slug": "schaatsen-meenemen-vliegtuig",
       "date": "2026-08-18"
+    },
+    {
+      "slug": "hoe-vaak-schaatsen-slijpen",
+      "date": "2026-08-19"
+    },
+    {
+      "slug": "schaatsronding-18-21-24-27-meter",
+      "date": "2026-08-19"
+    },
+    {
+      "slug": "wat-is-skatefitting",
+      "date": "2026-08-19"
     }
   ]
 }
