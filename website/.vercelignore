@@ -8,3 +8,5 @@ _backup-v5-kleurvarianten
 previews
 _backup-v6-voor-nieuw-logo
 _backup-v7-oude-favicons
+.env
+.env.local
