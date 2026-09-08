@@ -116,8 +116,27 @@
     });
   }
 
+  // Links met data-lestype springen naar het formulier en zetten daar alvast
+  // de juiste keuze klaar, zodat de bezoeker die niet opnieuw hoeft te zoeken.
+  function koppelKeuzeLinks() {
+    var links = document.querySelectorAll("a[data-lestype]");
+    if (!links.length) return;
+    var keuzeveld = document.getElementById("les-type");
+    if (!keuzeveld) return;
+
+    links.forEach(function (link) {
+      link.addEventListener("click", function () {
+        var waarde = link.getAttribute("data-lestype");
+        var optie = keuzeveld.querySelector('option[value="' + waarde + '"]');
+        if (optie) keuzeveld.value = waarde;
+      });
+    });
+  }
+
   FORMULIER_IDS.forEach(function (id) {
     var form = document.getElementById(id);
     if (form) koppel(form);
   });
+
+  koppelKeuzeLinks();
 })();

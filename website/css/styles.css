@@ -919,6 +919,10 @@ html:not(.js) .opener__controls { display: none; }
 .why__reason { padding-block: 1.6rem 2rem; border-bottom: 1px solid var(--border-dark); }
 .why__reason h3 { font-family: var(--display); font-weight: 600; font-size: 1.1rem; }
 .why__reason p { margin-top: 0.4rem; font-size: 0.9rem; color: rgba(255,255,255,.65); max-width: 34ch; }
+/* Subkop en verwijzing in de clinicsectie. De kleur wordt geërfd van de
+   sectie, die in het thema van wit naar groen kleurt. */
+.why__sub { margin-top: 1.2rem; font-family: var(--display); font-weight: 600; font-size: 1.1rem; }
+.why__link { margin-top: 0.8rem; color: var(--warm); }
 
 @media (min-width: 56rem) {
   .why__reasons { grid-template-columns: repeat(3, 1fr); gap: 0 2.5rem; }
@@ -2088,6 +2092,33 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
   .rates__grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
   .rates__block--full { grid-column: 1 / -1; }
 }
+
+/* Knoppen in een paginakop. Alleen gebruikt waar de kop ook een keuze biedt,
+   zodat de overige paginakoppen rustig blijven. */
+.page-hero__actions { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+/* Inleiding met een eigen kop boven de grote openingszin. */
+.intro__head .h-section { margin-top: 0; }
+.intro__head .intro__lead { margin-top: 1.1rem; }
+.intro__aside--stacked p + p { margin-top: 0.9rem; }
+
+/* Rustige tekstband: een kop met korte uitleg, zonder beeld. */
+.textband { background: var(--paper-soft); padding-block: 4.5rem; }
+.textband__inner { max-width: 46rem; }
+.textband .h-section { margin-top: 0; }
+.textband__text { margin-top: 1.1rem; color: var(--ink-soft); }
+.textband .link-arrow { margin-top: 1.4rem; color: var(--warm-deep); }
+
+/* Verwijzing per dienst, onder de omschrijving. */
+.offer__item .link-arrow { margin-top: 0.8rem; color: var(--warm-deep); }
+.offer__item--accent .link-arrow { margin-top: 1rem; }
+
+/* Afsluiting onder de tarieven en het losse blok over de entree. */
+.rates__cta { margin-top: 1.2rem; }
+.rates__entree { margin-top: 3.5rem; max-width: 46rem; }
+.rates__entree .h-section { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+.rates__entree .rates__intro { margin-bottom: 1.8rem; }
+.rates__extern .rates__list { margin-bottom: 1.3rem; }
 
 .steps { background: var(--paper); padding-block: 4.5rem; }
 .steps__head { max-width: 42rem; }

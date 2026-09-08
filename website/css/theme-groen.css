@@ -105,6 +105,7 @@ html:not(.js) .why { color: #fff; }
 
 /* Witte begintoestand */
 .why .eyebrow--warm { color: var(--warm-deep); }
+.why .why__link { color: var(--warm-deep); }
 .why__text,
 .why__reason p { color: var(--ink-soft); }
 .why__reasons { border-top-color: var(--border); }
@@ -113,6 +114,7 @@ html:not(.js) .why { color: #fff; }
 /* Groene eindtoestand */
 .why.is-snapped { color: #fff; }
 .why.is-snapped .eyebrow--warm { color: var(--warm); }
+.why.is-snapped .why__link { color: var(--warm); }
 .why.is-snapped .why__text,
 .why.is-snapped .why__reason p { color: rgba(255, 255, 255, 0.72); }
 .why.is-snapped .why__reasons { border-top-color: rgba(255, 255, 255, 0.16); }
@@ -126,6 +128,7 @@ html:not(.js) .why { color: #fff; }
    ze die van de sectie achterna en lopen ze zichtbaar achter. */
 .why,
 .why .eyebrow--warm,
+.why .why__link,
 .why__text,
 .why__reason p,
 .why__reasons,
@@ -137,6 +140,7 @@ html:not(.js) .why { color: #fff; }
   .why::before { opacity: 1; transition: none; }
   .why { color: #fff; }
   .why .eyebrow--warm { color: var(--warm); }
+  .why .why__link { color: var(--warm); }
   .why__text,
   .why__reason p { color: rgba(255, 255, 255, 0.72); }
   .why__reasons { border-top-color: rgba(255, 255, 255, 0.16); }
