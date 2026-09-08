@@ -277,10 +277,10 @@
   if (terugLink) {
     terugLink.href = reisSleutel + ".html" + (reis.periodeVrij ? "#prijzen" : "");
     terugLink.textContent = reis.prijsOpAanvraag
-      ? T.viewTripPage(reis.naam.split(" —")[0])
+      ? T.viewTripPage(reis.naam.split(/ [—-]/)[0])
       : reis.periodeVrij
         ? T.chooseCalendarPeriod
-        : T.viewDatesFor(reis.naam.split(" —")[0]);
+        : T.viewDatesFor(reis.naam.split(/ [—-]/)[0]);
   }
 
   // De "Kalender"-knop in de koptekst stond altijd vast naar finland.html;

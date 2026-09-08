@@ -36,7 +36,7 @@
     var sectie = form.closest(".request");
     var eyebrow = sectie && sectie.querySelector(".eyebrow");
     if (eyebrow) return eyebrow.textContent.trim();
-    return document.title.split(" — ")[0].split(" | ")[0].trim();
+    return document.title.split(/ [—-] /)[0].split(" | ")[0].trim();
   }
 
   function berichtVoor(form) {
@@ -77,7 +77,7 @@
       var emailVeld = form.querySelector('input[type="email"]');
       var email = emailVeld ? emailVeld.value.trim() : "";
       var naam = naamUitFormulier(form);
-      var onderwerp = onderwerpVoor(form) + (naam ? " — " + naam : "");
+      var onderwerp = onderwerpVoor(form) + (naam ? " - " + naam : "");
       var hpVeld = form.querySelector('input[name="website"]');
 
       foutEl.hidden = true;
