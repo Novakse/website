@@ -164,7 +164,7 @@
 
   <header class="site-header">
     <div class="wrap site-header__row">
-      <a class="site-header__logo" href="#top" aria-label="Novakse Reizen — till toppen">
+      <a class="site-header__logo" href="#top" aria-label="Novakse Reizen - till toppen">
         <img class="logo-mark" src="../images/logo-mark.png" alt="" width="599" height="840" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
@@ -205,10 +205,12 @@
   <main id="main">
     <!-- 1. Opener -->
     <section class="opener" id="top">
-      <video class="opener__video" autoplay muted loop playsinline
-             poster="../images/hero-opener-poster.jpg" aria-hidden="true">
-        <source src="../images/hero-opener.mp4" type="video/mp4" />
-      </video>
+      <video class="opener__video" autoplay muted loop playsinline preload="none"
+             poster="../images/hero-opener-poster.jpg" aria-hidden="true"
+             data-src-wide="../images/hero-opener.mp4"
+             data-src-tall="../images/hero-opener-mobile.mp4"
+             data-poster-wide="../images/hero-opener-poster.jpg"
+             data-poster-tall="../images/hero-opener-poster-mobile.jpg"></video>
       <div class="opener__inner">
         <img class="opener__mark" src="../images/logo-mark.png" alt="" width="599" height="840" fetchpriority="high" />
         <h1 class="opener__title">Skridskoresor på naturis</h1>
@@ -549,6 +551,9 @@
               <textarea id="bericht" name="bericht" placeholder="Berätta kort om dina önskemål, nivå eller frågor"></textarea>
             </div>
           </div>
+          <div class="hp-field" aria-hidden="true">
+            <label>Lämna det här fältet tomt<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
           <button type="submit" class="btn btn--warm form-submit" id="aanvraagKnop">Skicka förfrågan</button>
           <p class="form-status form-status--error" id="aanvraagFout" role="alert" hidden>Det gick inte att skicka. Försök igen, eller mejla till <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller messa till +31 6 17467643.</p>
           <p class="form-status form-status--success" id="aanvraagSucces" role="status" hidden>Tack! Din förfrågan har skickats - Joey hör av sig till dig snart.</p>
@@ -594,7 +599,7 @@
   <footer class="site-footer">
     <div class="wrap footer__grid">
       <div>
-        <a class="footer__logo" href="#top" aria-label="Novakse Reizen — till toppen">
+        <a class="footer__logo" href="#top" aria-label="Novakse Reizen - till toppen">
           <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="599" height="840" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
         <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />

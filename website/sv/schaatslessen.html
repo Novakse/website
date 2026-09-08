@@ -87,7 +87,7 @@
 
   <header class="site-header">
     <div class="wrap site-header__row">
-      <a class="site-header__logo" href="./" aria-label="Novakse Reizen — till startsidan">
+      <a class="site-header__logo" href="./" aria-label="Novakse Reizen - till startsidan">
         <img class="logo-mark" src="../images/logo-mark.png" alt="" width="599" height="840" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
@@ -319,6 +319,9 @@
               <textarea id="les-bericht" name="bericht" placeholder="Berätta kort om dina önskemål eller frågor"></textarea>
             </div>
           </div>
+          <div class="hp-field" aria-hidden="true">
+            <label>Lämna det här fältet tomt<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
           <button type="submit" class="btn btn--warm form-submit">Skicka anmälan</button>
           <p class="form-status form-status--error" id="lesFout" role="alert" hidden>Det gick inte att skicka. Försök igen, eller mejla till <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller messa till +31 6 17467643.</p>
           <p class="form-status form-status--success" id="lesSucces" role="status" hidden>Tack! Din anmälan har skickats - Joey hör av sig till dig snart.</p>
@@ -368,7 +371,7 @@
   <footer class="site-footer">
     <div class="wrap footer__grid">
       <div>
-        <a class="footer__logo" href="./" aria-label="Novakse Reizen — till startsidan">
+        <a class="footer__logo" href="./" aria-label="Novakse Reizen - till startsidan">
           <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="599" height="840" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
@@ -401,6 +404,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/aanvraag.js"></script>
 
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>

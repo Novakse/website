@@ -440,6 +440,31 @@
      ------------------------------------------------------------------ */
   var heroVideo = document.querySelector(".opener__video");
   if (heroVideo) {
+    /* De opening is een liggende 16:9-video. Op een staand telefoonscherm
+       vergroot `object-fit: cover` die ruim twee keer uit, waardoor hij daar
+       onscherp oogt terwijl hij op een breed scherm juist scherp is. Op smalle,
+       staande schermen laden we daarom een staande uitsnede uit hetzelfde
+       4K-origineel; het beeldkader op het scherm blijft precies gelijk. */
+    var tallScreen = window.matchMedia("(max-aspect-ratio: 4/5)");
+    var chooseHeroSource = function () {
+      var kind = tallScreen.matches ? "tall" : "wide";
+      if (heroVideo.dataset.active === kind) return;
+      heroVideo.dataset.active = kind;
+      var poster = kind === "tall" ? heroVideo.dataset.posterTall : heroVideo.dataset.posterWide;
+      var src = kind === "tall" ? heroVideo.dataset.srcTall : heroVideo.dataset.srcWide;
+      if (poster) heroVideo.poster = poster;
+      if (src) {
+        heroVideo.src = src;
+        heroVideo.load();
+      }
+    };
+    chooseHeroSource();
+    if (tallScreen.addEventListener) {
+      tallScreen.addEventListener("change", chooseHeroSource);
+    } else if (tallScreen.addListener) {
+      tallScreen.addListener(chooseHeroSource);
+    }
+
     var LOOP_FADE_S = 0.26;
     heroVideo.addEventListener("timeupdate", function () {
       if (heroVideo.duration && heroVideo.duration - heroVideo.currentTime < LOOP_FADE_S) {

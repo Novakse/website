@@ -534,7 +534,7 @@
       regelsBox.appendChild(bedrag);
     });
 
-    totaalBox.textContent = nachten ? euro(totaal) : "—";
+    totaalBox.textContent = nachten ? euro(totaal) : "-";
     whatsappKnop.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(bericht(totaal));
   }
 

@@ -209,7 +209,7 @@
 
   <header class="site-header">
     <div class="wrap site-header__row">
-      <a class="site-header__logo" href="#top" aria-label="Novakse Reizen — naar boven">
+      <a class="site-header__logo" href="#top" aria-label="Novakse Reizen - naar boven">
         <img class="logo-mark" src="images/logo-mark.png" alt="" width="599" height="840" />
         <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
         <img class="logo-word-img logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
@@ -250,10 +250,12 @@
   <main id="main">
     <!-- 1. Opener -->
     <section class="opener" id="top">
-      <video class="opener__video" autoplay muted loop playsinline
-             poster="images/hero-opener-poster.jpg" aria-hidden="true">
-        <source src="images/hero-opener.mp4" type="video/mp4" />
-      </video>
+      <video class="opener__video" autoplay muted loop playsinline preload="none"
+             poster="images/hero-opener-poster.jpg" aria-hidden="true"
+             data-src-wide="images/hero-opener.mp4"
+             data-src-tall="images/hero-opener-mobile.mp4"
+             data-poster-wide="images/hero-opener-poster.jpg"
+             data-poster-tall="images/hero-opener-poster-mobile.jpg"></video>
       <div class="opener__inner">
         <img class="opener__mark" src="images/logo-mark.png" alt="" width="599" height="840" fetchpriority="high" />
         <h1 class="opener__title">Schaatsreizen op natuurijs</h1>
@@ -647,7 +649,7 @@
   <footer class="site-footer">
     <div class="wrap footer__grid">
       <div>
-        <a class="footer__logo" href="#top" aria-label="Novakse Reizen — naar boven">
+        <a class="footer__logo" href="#top" aria-label="Novakse Reizen - naar boven">
           <img class="logo-mark logo-mark--lg" src="images/logo-mark.png" alt="" width="599" height="840" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="1027" height="200" />
         <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="1027" height="200" />
