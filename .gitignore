@@ -6,3 +6,9 @@ website/.env
 brand_assets/
 reference_images/
 temporary_screenshots/
+
+# Locally installed agent/skill tooling (not part of the website)
+.agents/
+agent/
+.claude/skills/
+skills-lock.json

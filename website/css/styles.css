@@ -1791,6 +1791,13 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
 }
 .calendar__chosen-dates { font-family: var(--display); font-weight: 600; font-size: 1.1rem; }
 .calendar__chosen-nights { font-size: 0.85rem; color: var(--ink-soft); }
+.calendar__chosen-price {
+  margin-top: 0.2rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+}
 .calendar__bar-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
 .calendar__reset {
   font-size: 0.88rem;
@@ -2108,6 +2115,27 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
 .textband .h-section { margin-top: 0; }
 .textband__text { margin-top: 1.1rem; color: var(--ink-soft); }
 .textband .link-arrow { margin-top: 1.4rem; color: var(--warm-deep); }
+.textband .subhead { margin-top: 2.4rem; }
+.textband__cta { margin-top: 1.8rem; }
+
+/* Tussenkop binnen een tekstsectie: kleiner dan .h-section, wel dezelfde stem. */
+.subhead {
+  margin-top: 2.4rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  line-height: 1.2;
+}
+
+/* Plaatsnamen naast elkaar, zonder opsommingstekens. */
+.place-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
 
 /* Verwijzing per dienst, onder de omschrijving. */
 .offer__item .link-arrow { margin-top: 0.8rem; color: var(--warm-deep); }
@@ -2185,20 +2213,13 @@ a.contact__value:hover { border-bottom-color: var(--ink); }
   .contact__grid { grid-template-columns: 1fr 1fr; gap: 5rem; }
 }
 
-/* Dagnummer met daaronder de prijs, klein. */
+/* Alleen het dagnummer in de cel; de prijs komt pas in de balk eronder. */
 button.calendar__cell {
   flex-direction: column;
   gap: 0.05rem;
   line-height: 1.1;
 }
 .calendar__daynr { font-size: 0.85rem; }
-.calendar__dayprice {
-  font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  opacity: 0.7;
-}
-button.calendar__cell.is-gekozen .calendar__dayprice { opacity: 0.85; }
 
 /* --------------------------------------------------------------------------
    Dagprogramma als brede slideshow

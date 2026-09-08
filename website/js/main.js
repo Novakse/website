@@ -23,7 +23,7 @@
       continueBtn: "Verder met de aanvraag",
       defaultBooked: "Bezet",
       availableAria: function (datum) { return datum + ", beschikbaar"; },
-      priceSuffix: function (prijs) { return ", vanaf €" + prijs + " per persoon per dag"; },
+      totalLabel: function (totaal) { return "Totaal €" + totaal + " per persoon"; },
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " tot " + tot; },
       bookedSr: function (wat) { return " " + wat + ", niet beschikbaar"; },
       warnMinNights: function (min) { return "Een verblijf duurt minimaal " + min + " nachten. Kies een latere vertrekdag."; },
@@ -45,7 +45,7 @@
       continueBtn: "Continue to request",
       defaultBooked: "Booked",
       availableAria: function (date) { return date + ", available"; },
-      priceSuffix: function (prijs) { return ", from €" + prijs + " per person per day"; },
+      totalLabel: function (totaal) { return "Total €" + totaal + " per person"; },
       bookedTitle: function (what, from, to) { return what + ": " + from + " to " + to; },
       bookedSr: function (what) { return " " + what + ", not available"; },
       warnMinNights: function (min) { return "A stay is at least " + min + " nights. Choose a later departure day."; },
@@ -67,7 +67,7 @@
       continueBtn: "Gå vidare till förfrågan",
       defaultBooked: "Bokad",
       availableAria: function (datum) { return datum + ", tillgänglig"; },
-      priceSuffix: function (pris) { return ", från €" + pris + " per person och dag"; },
+      totalLabel: function (total) { return "Totalt €" + total + " per person"; },
       bookedTitle: function (vad, fran, till) { return vad + ": " + fran + " till " + till; },
       bookedSr: function (vad) { return " " + vad + ", inte tillgänglig"; },
       warnMinNights: function (min) { return "En vistelse är minst " + min + " nätter. Välj en senare avresedag."; },
@@ -89,7 +89,7 @@
       continueBtn: "Weiter zur Anfrage",
       defaultBooked: "Belegt",
       availableAria: function (datum) { return datum + ", verfügbar"; },
-      priceSuffix: function (preis) { return ", ab €" + preis + " pro Person pro Tag"; },
+      totalLabel: function (gesamt) { return "Gesamt €" + gesamt + " pro Person"; },
       bookedTitle: function (was, von, bis) { return was + ": " + von + " bis " + bis; },
       bookedSr: function (was) { return " " + was + ", nicht verfügbar"; },
       warnMinNights: function (min) { return "Ein Aufenthalt dauert mindestens " + min + " Nächte. Wähle einen späteren Abreisetag."; },
@@ -111,7 +111,7 @@
       continueBtn: "Gå videre til forespørsel",
       defaultBooked: "Booket",
       availableAria: function (dato) { return dato + ", tilgjengelig"; },
-      priceSuffix: function (pris) { return ", fra €" + pris + " per person per dag"; },
+      totalLabel: function (total) { return "Totalt €" + total + " per person"; },
       bookedTitle: function (hva, fra, til) { return hva + ": " + fra + " til " + til; },
       bookedSr: function (hva) { return " " + hva + ", ikke tilgjengelig"; },
       warnMinNights: function (min) { return "Et opphold varer minst " + min + " netter. Velg en senere avreisedag."; },
@@ -133,7 +133,7 @@
       continueBtn: "Jatka varauspyyntöön",
       defaultBooked: "Varattu",
       availableAria: function (pvm) { return pvm + ", vapaa"; },
-      priceSuffix: function (hinta) { return ", alkaen €" + hinta + " / henkilö / vrk"; },
+      totalLabel: function (yhteensa) { return "Yhteensä €" + yhteensa + " / henkilö"; },
       bookedTitle: function (mika, alkaen, saakka) { return mika + ": " + alkaen + " – " + saakka; },
       bookedSr: function (mika) { return " " + mika + ", ei vapaa"; },
       warnMinNights: function (min) { return "Vähimmäisoleskelu on " + min + " yötä. Valitse myöhäisempi lähtöpäivä."; },
@@ -378,18 +378,35 @@
 
   function syncWords() {
     var vh = window.innerHeight;
-    wordBlocks.forEach(function (block) {
+
+    // Eerst alles meten, daarna pas schrijven. Door lezen en schrijven niet af
+    // te wisselen hoeft de browser de pagina niet telkens opnieuw te berekenen,
+    // en blijft het scrollen soepel.
+    var work = wordBlocks.map(function (block) {
       var rect = block.el.getBoundingClientRect();
       // 0 = nog niet begonnen, 1 = volledig doorgekleurd
       var progress = (vh * 0.85 - rect.top) / (vh * 0.55);
-      progress = Math.min(1, Math.max(0, progress));
+      return {
+        block: block,
+        progress: Math.min(1, Math.max(0, progress)),
+        offscreen: rect.bottom < -vh || rect.top > vh * 1.5
+      };
+    });
+
+    work.forEach(function (item) {
+      var block = item.block;
+
+      // Ver buiten beeld, of niets veranderd sinds de vorige keer? Overslaan.
+      if (item.offscreen) return;
+      if (block.progress !== undefined && Math.abs(block.progress - item.progress) < 0.004) return;
+      block.progress = item.progress;
 
       // Alle woorden starten binnen de eerste 70% van de voortgang, zodat ook
       // het laatste woord volledig doorkleurt voordat de voortgang op 1 staat.
       var total = block.spans.length;
       block.spans.forEach(function (el, i) {
         var start = (i / total) * 0.7;
-        var value = (progress - start) / 0.3;
+        var value = (item.progress - start) / 0.3;
         el.style.opacity = Math.min(1, Math.max(0.26, value));
       });
     });
@@ -615,7 +632,11 @@
      <script type="application/json">. Daarin staat wanneer het seizoen loopt,
      wat een nacht per persoon kost, hoeveel nachten je minimaal boekt en welke
      periodes al bezet zijn. Wie iets wijzigt, hoeft alleen dat lijstje aan te
-     passen — hier verandert niets.
+     passen - hier verandert niets.
+
+     De dagprijs staat niet in de losse dagen. Pas als er een aankomst- en een
+     vertrekdag gekozen zijn, verschijnt onderaan het totaalbedrag per persoon
+     (aantal nachten x dagprijs).
 
      Bezette periodes kun je niet aanklikken en je kunt er ook niet overheen
      selecteren. Zodra er een geldige periode staat, verschijnt onderaan een
@@ -708,12 +729,14 @@
         return;
       }
       var nachten = dagenTussen(keuzeVan, keuzeTot);
+      var totaal = dagprijs ? nachten * dagprijs : 0;
       balk.className = "calendar__bar is-done";
       balk.innerHTML =
         '<div class="calendar__chosen">' +
           '<span class="calendar__chosen-label">' + T.chosenLabel + '</span>' +
           '<span class="calendar__chosen-dates">' + schrijfDatum(keuzeVan) + ' – ' + schrijfDatum(keuzeTot) + '</span>' +
           '<span class="calendar__chosen-nights">' + T.nightsLabel(nachten) + '</span>' +
+          (totaal ? '<span class="calendar__chosen-price">' + T.totalLabel(totaal) + '</span>' : '') +
         '</div>' +
         '<div class="calendar__bar-actions">' +
           '<button type="button" class="calendar__reset">' + T.reset + '</button>' +
@@ -787,10 +810,8 @@
       var knop = document.createElement("button");
       knop.type = "button";
       knop.className = "calendar__cell is-vrij";
-      knop.innerHTML = '<span class="calendar__daynr">' + datum.getDate() + "</span>" +
-        (dagprijs ? '<span class="calendar__dayprice">\u20ac' + dagprijs + "</span>" : "");
-      knop.setAttribute("aria-label", T.availableAria(schrijfDatum(datum)) +
-        (dagprijs ? T.priceSuffix(dagprijs) : ""));
+      knop.innerHTML = '<span class="calendar__daynr">' + datum.getDate() + "</span>";
+      knop.setAttribute("aria-label", T.availableAria(schrijfDatum(datum)));
 
       if (keuzeVan && datum.getTime() === keuzeVan.getTime()) {
         knop.classList.add("is-gekozen", "is-start");
@@ -1056,4 +1077,175 @@
       }
     });
   });
+
+  /* ------------------------------------------------------------------
+     Leesrust: de pagina komt na het scrollen zachtjes tot stilstand bij een
+     kop, zodat je van kop naar kop leest in plaats van er middenin te blijven
+     hangen. Ligt er geen kop in de buurt, dan blijft de pagina staan waar je
+     stopte - er wordt dus nooit een heel eind gesprongen.
+
+     Bewust geen CSS scroll-snap: dat vecht met de vloeiende scroll van de
+     browser en met de vaartafloop van een trackpad, wat gehaper geeft. Hier
+     gebeurt er tijdens het scrollen niets. Pas als je echt stilstaat en er al
+     een kop dichtbij staat, schuift de pagina dat laatste stukje bij.
+     Elke muis-, toets- of scrollbeweging breekt dat direct af.
+     ------------------------------------------------------------------ */
+  var settleMedia = window.matchMedia("(min-width: 48rem) and (pointer: fine)");
+
+  if (!reducedMotion.matches && settleMedia.matches) {
+    var SETTLE_IDLE = 180;     // ms stilstand voordat we bijsturen
+    var SETTLE_RANGE = 0.2;    // deel van het scherm waarbinnen we bijsturen
+    var SETTLE_MIN = 6;        // px, kleiner verschil laten we staan
+    var SETTLE_MAX_MS = 480;
+
+    // Hoogte van de vaste balk; valt terug op 5rem als de balk er niet is.
+    var headerOffset = function () {
+      return header ? header.offsetHeight : 80;
+    };
+
+    var settleTimer = null;
+    var settleFrame = null;
+    var settleActive = false;
+
+    var stopSettle = function () {
+      if (settleFrame !== null) window.cancelAnimationFrame(settleFrame);
+      settleFrame = null;
+      settleActive = false;
+      // De vloeiende scroll van de browser weer aan de stylesheet overlaten.
+      document.documentElement.style.scrollBehavior = "";
+    };
+
+    var maxScrollY = function () {
+      return Math.max(
+        0,
+        document.documentElement.scrollHeight - window.innerHeight
+      );
+    };
+
+    // De rustpunten van de pagina: de koppen. Je leest zo van kop naar kop.
+    // Heeft een sectie geen eigen kop (bijvoorbeeld de openingsfoto), dan
+    // telt de bovenkant van die sectie, zodat er geen blok wordt overgeslagen.
+    var settlePoints = function () {
+      var y = window.scrollY;
+      var vh = window.innerHeight;
+      var offset = headerOffset();
+      var air = Math.min(48, Math.round(vh * 0.05)); // beetje lucht boven de kop
+      var points = [];
+
+      document.querySelectorAll("main > section").forEach(function (section) {
+        var found = false;
+
+        section.querySelectorAll("h1, h2").forEach(function (heading) {
+          // Verborgen koppen (dichtgeklapt, andere taal) tellen niet mee.
+          if (!heading.getClientRects().length) return;
+          points.push(Math.round(y + heading.getBoundingClientRect().top - offset - air));
+          found = true;
+        });
+
+        if (!found) {
+          points.push(Math.round(y + section.getBoundingClientRect().top - offset));
+        }
+      });
+
+      points.sort(function (a, b) { return a - b; });
+
+      // Koppen die vlak bij elkaar staan - twee kolommen naast elkaar, of een
+      // kop direct onder een tussenkop - leveren samen één rustpunt op.
+      var minGap = Math.max(140, vh * 0.35);
+      var spread = [];
+
+      points.forEach(function (point) {
+        if (!spread.length || point - spread[spread.length - 1] >= minGap) {
+          spread.push(point);
+        }
+      });
+
+      return spread;
+    };
+
+    // Het dichtstbijzijnde rustpunt, gemeten vanaf de huidige scrollpositie.
+    var nearestPoint = function (y) {
+      var best = null;
+      var bestGap = Infinity;
+
+      settlePoints().forEach(function (point) {
+        var gap = Math.abs(point - y);
+        if (gap < bestGap) {
+          bestGap = gap;
+          best = point;
+        }
+      });
+
+      return best;
+    };
+
+    var runSettle = function (from, to) {
+      var distance = to - from;
+      var duration = Math.min(SETTLE_MAX_MS, 200 + Math.abs(distance) * 1.1);
+      var start = null;
+
+      // De eigen animatie zet de scrollpositie per frame; de vloeiende scroll
+      // van de browser moet daar even uit, anders animeren er twee dingen.
+      document.documentElement.style.scrollBehavior = "auto";
+
+      settleActive = true;
+
+      var step = function (now) {
+        if (start === null) start = now;
+
+        var t = Math.min(1, (now - start) / duration);
+        var eased = 1 - Math.pow(1 - t, 3); // easeOutCubic: rustig uitlopen
+        var y = Math.round(from + distance * eased);
+
+        window.scrollTo(0, y);
+
+        if (t < 1 && settleActive) {
+          settleFrame = window.requestAnimationFrame(step);
+          return;
+        }
+
+        stopSettle();
+      };
+
+      settleFrame = window.requestAnimationFrame(step);
+    };
+
+    var settle = function () {
+      if (settleActive) return;
+
+      var y = window.scrollY;
+      var limit = maxScrollY();
+
+      // Boven- en onderkant van de pagina laten we met rust.
+      if (y <= 4 || y >= limit - 4) return;
+
+      var target = nearestPoint(y);
+      if (target === null) return;
+
+      target = Math.max(0, Math.min(limit, target));
+
+      var delta = Math.abs(target - y);
+      if (delta < SETTLE_MIN || delta > window.innerHeight * SETTLE_RANGE) return;
+
+      runSettle(y, target);
+    };
+
+    window.addEventListener("scroll", function () {
+      // Tijdens de eigen animatie komen de scroll-events van onszelf.
+      if (settleActive) return;
+
+      if (settleTimer) window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(settle, SETTLE_IDLE);
+    }, { passive: true });
+
+    // Elke eigen beweging van de bezoeker gaat voor: de wachttijd wordt
+    // opnieuw ingesteld en een lopende bijstuur-animatie stopt meteen.
+    ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (type) {
+      window.addEventListener(type, function () {
+        if (settleTimer) window.clearTimeout(settleTimer);
+        if (settleActive) stopSettle();
+      }, { passive: true });
+    });
+  }
+
 })();

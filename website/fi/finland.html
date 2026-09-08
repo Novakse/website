@@ -89,7 +89,7 @@
         "name": "Milloin voit lähteä tälle luistelumatkalle Suomeen?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Kausi kestää joulukuun lopusta maaliskuun alkuun; sen jälkeen jäätä ei enää ole. Lyhin mahdollinen oleskelu on 2 yötä."
+          "text": "Kausi kestää joulukuun lopusta maaliskuun alkuun; sen jälkeen jäätä ei enää ole. Lyhin mahdollinen oleskelu on 3 yötä."
         }
       },
       {
@@ -244,7 +244,9 @@
 
             seizoenStart / seizoenEind  wanneer je verhuurt (jaar-maand-dag)
             minimumNachten              kortste verblijf dat iemand kan kiezen
-            prijsPerPersoonPerDag       bedrag in hele euro's, per persoon
+            prijsPerPersoonPerDag       bedrag in hele euro's, per persoon (staat niet
+                                        in de dagen zelf; komt als totaal in beeld
+                                        zodra iemand een periode heeft gekozen)
             bezet                       weken die niet meer te kiezen zijn
 
           Een week dichtzetten: voeg een regel toe aan "bezet", zo:
@@ -258,7 +260,7 @@
           {
             "seizoenStart": "2026-12-27",
             "seizoenEind": "2027-03-07",
-            "minimumNachten": 2,
+            "minimumNachten": 3,
             "prijsPerPersoonPerDag": 199,
             "bezet": [
               {"van": "2027-01-16", "tot": "2027-01-23", "wat": "Kiinteä ryhmämatka"},
@@ -310,7 +312,7 @@
           </details>
           <details class="faq__item">
             <summary>Milloin voit lähteä tälle luistelumatkalle Suomeen?</summary>
-            <p>Kausi kestää joulukuun lopusta maaliskuun alkuun; sen jälkeen jäätä ei enää ole. Lyhin mahdollinen oleskelu on 2 yötä.</p>
+            <p>Kausi kestää joulukuun lopusta maaliskuun alkuun; sen jälkeen jäätä ei enää ole. Lyhin mahdollinen oleskelu on 3 yötä.</p>
           </details>
           <details class="faq__item">
             <summary>Mitä matkaan Suomeen sisältyy ja mitä ei?</summary>

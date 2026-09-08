@@ -8,8 +8,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png?v=2" />
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=2" />
   <script>document.documentElement.classList.add("js");</script>
-  <title>Schaatsen slijpen, onderhoud en skatefitting | Novakse</title>
-  <meta name="description" content="Schaatsen slijpen, onderhoud en skatefitting bij Novakse in Noordwolde. Handmatig slijpen, ronden, benden en richten, en het afstellen van je schaats." />
+  <title>Schaatsen slijpen &amp; onderhoud in Noordwolde | Novakse</title>
+  <meta name="description" content="Schaatsen slijpen, ronden, onderhoud en richten in Noordwolde. Ook skatefitting en het richten van shorttrackschaatsen. Bekijk de tarieven." />
 
   <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -19,8 +19,8 @@
   <link rel="canonical" href="https://www.novakse.com/schaatsonderhoud.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
-  <meta property="og:title" content="Schaatsen slijpen, onderhoud en skatefitting | Novakse" />
-  <meta property="og:description" content="Schaatsen slijpen, onderhoud en skatefitting bij Novakse in Noordwolde. Handmatig slijpen, ronden, benden en richten, en het afstellen van je schaats." />
+  <meta property="og:title" content="Schaatsen slijpen &amp; onderhoud in Noordwolde | Novakse" />
+  <meta property="og:description" content="Schaatsen slijpen, ronden, onderhoud en richten in Noordwolde. Ook skatefitting en het richten van shorttrackschaatsen. Bekijk de tarieven." />
   <meta property="og:url" content="https://www.novakse.com/schaatsonderhoud.html" />
   <meta property="og:image" content="https://www.novakse.com/images/slijpen-ronding.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -33,13 +33,18 @@
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatsonderhoud.html" />
 
   <style>
-    /* Schaatsonderhoud: rustiger, technischer ritme dan de rest van de site —
+    /* Schaatsonderhoud: rustiger, technischer ritme dan de rest van de site -
        zelfde kleuren, type en knoppen, alleen ruimte, foto-verhouding en
        woordafbreking. Hergebruikt bestaande tokens uit styles.css. */
 
     .page-hero__title,
     .h-section,
     .intro__lead { text-wrap: balance; }
+
+    /* De H1 noemt alle drie de diensten en is daardoor langer dan de koppen
+       op de andere pagina's. Iets kleiner, zodat hij op mobiel niet over vijf
+       regels valt. */
+    .page-hero__title--long { font-size: clamp(1.95rem, 4.6vw, 3.1rem); }
 
     /* De slijptafel-foto is van nature een breedbeeldopname; een gedwongen
        portretcrop laat het meeste gereedschap wegvallen. Hier krijgt hij zijn
@@ -50,6 +55,63 @@
     .split-photo--panorama .split-photo__body { padding-inline: var(--pad); max-width: 42rem; }
     @media (min-width: 60rem) {
       .split-photo--panorama { padding-block: 5rem 5.5rem; }
+    }
+
+    /* Lopende uitleg naast een tarievenkolom binnen een .rates-sectie. */
+    .rates__body p { color: var(--ink-soft); }
+    .rates__body p + p { margin-top: 0.9rem; }
+    .rates__body .rates__title + p { margin-top: 0.6rem; }
+    .rates__body p + .rates__title { margin-top: 1.8rem; }
+    .rates__body .link-arrow { margin-top: 1.2rem; color: var(--warm-deep); }
+    .rates__block .link-arrow { margin-top: 1.3rem; color: var(--warm-deep); }
+
+    /* Opsomming van wat er bij een onderhoudsbeurt langsloopt. */
+    .part-list {
+      margin-top: 1.1rem;
+      display: grid;
+      gap: 0.4rem;
+      list-style: none;
+      padding: 0;
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+    }
+    .part-list li { position: relative; padding-left: 1.1rem; }
+    .part-list li::before {
+      content: "";
+      position: absolute; left: 0; top: 0.6em;
+      width: 0.38rem; height: 0.38rem;
+      border-radius: 50%;
+      background: var(--warm);
+    }
+    .split-photo--panorama .split-photo__body p + p { margin-top: 1rem; }
+    .split-photo__body .rates__list { margin-top: 1.5rem; }
+
+    /* Tekstband met een klein tarievenlijstje eronder (benden en richten). */
+    .textband .rates__list { margin-top: 1.8rem; }
+    .textband .rates__note { margin-top: 1rem; }
+
+    /* Slotzin onder de stappen van de skatefitting. */
+    .steps__after { margin-top: 2.5rem; max-width: 46rem; color: var(--ink-soft); }
+
+    /* Compact tarievenoverzicht. */
+    .tariff-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+    .tariff-table th, .tariff-table td {
+      text-align: left;
+      padding-block: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    .tariff-table thead th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-soft); }
+    .tariff-table tbody th { font-weight: 400; }
+    .tariff-table th:last-child, .tariff-table td:last-child { text-align: right; font-weight: 600; white-space: nowrap; }
+
+    /* Regio en haal- en brengservice naast elkaar. */
+    .local { background: var(--paper); padding-block: 4.5rem; }
+    .local__grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+    .local__text { margin-top: 1rem; color: var(--ink-soft); }
+    .local .link-arrow { margin-top: 1.2rem; color: var(--warm-deep); }
+    @media (min-width: 52rem) {
+      .local__grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
     }
 
     /* De workshop-vermelding krijgt iets meer rust dan de hoofdzin ervoor. */
@@ -79,34 +141,82 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Wat is het verschil tussen slijpen en skatefitting?",
+        "name": "Wat kost schaatsen slijpen?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Slijpen maakt je schaats scherp. Skatefitting zorgt dat hij goed onder je staat. Dat zijn twee verschillende dingen, met elk hun eigen tarief."
+          "text": "Handmatig slijpen van noren kost €16. Ronden en slijpen kost €27. Een handgeslepen ronding kost €65."
         }
       },
       {
         "@type": "Question",
-        "name": "Wat kost het slijpen van mijn schaatsen?",
+        "name": "Hoe vaak moet je schaatsen laten slijpen?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Handmatig slijpen van noren kost €16, ronden & slijpen €27, en een handgeslepen ronding vanaf €65 - dat laatste is variabel en hangt af van je schaats en je rijstijl."
+          "text": "Dat verschilt per schaatser. Het hangt af van hoe vaak je rijdt, op wat voor ijs je rijdt en hoe voorzichtig je met je schaatsen omgaat. Merk je dat je minder grip hebt of dat je wegglijdt waar dat eerder niet gebeurde, dan is het meestal tijd."
         }
       },
       {
         "@type": "Question",
-        "name": "Wat houdt een onderhoudsbeurt (APK) in?",
+        "name": "Wat is het verschil tussen ronden en slijpen?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Bij een onderhoudsbeurt gaat de hele schaats langs: ronden, slijpen en polijsten, en daarnaast de veren, stootrubbers, nokjes, bouten en het scharnier. Zitten er onderdelen bij die vervangen moeten worden, dan hoor je dat vooraf. Een APK kost vanaf €35."
+          "text": "Slijpen is het scherp maken van de kanten van het ijzer. Ronden is het opnieuw goed zetten van de ronding van het ijzer, dus de lijn die het ijzer van voor naar achter maakt. Bij ronden en slijpen doe ik allebei."
         }
       },
       {
         "@type": "Question",
-        "name": "Wat kost skatefitting?",
+        "name": "Wat houdt schaatsonderhoud of een APK in?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Individueel per uur kost skatefitting €95, samen met twee personen €140, en een vervolgafspraak €65. Wigjes, veren of andere onderdelen komen daar apart bij."
+          "text": "Bij een APK kijk ik de hele schaats na. De schaatsen worden gerond, geslepen en gepolijst, en daarnaast loop ik de veren, stootrubbers, nokjes, bouten, het scharnier en de algemene staat van de schaats na. Kom ik onderdelen tegen die vervangen moeten worden, dan bespreek ik dat eerst met je. Een APK kost vanaf €35."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Wat is skatefitting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bij skatefitting kijk ik naar de stand van je schaats onder je voet en naar de manier waarop je rijdt. Op basis daarvan kan de schaats worden aangepast. Skatefitting staat los van het slijpen of onderhouden van je schaatsen. Meer over skatefitting."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Waar vindt een skatefitting plaats?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Op de ijsbaan waar jij schaatst. Je hoeft er niet voor naar Noordwolde te komen en ik werk door heel Nederland, dus ook buiten Friesland. Bij een afspraak op locatie komen de reiskosten apart."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Kan ik een skatefitting met iemand samen doen?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ja. Voor twee personen is het tarief €140. Wil je met meerdere schaatsers van een vereniging of trainingsgroep een skatefitting organiseren? Neem dan even contact op. Als ik meerdere schaatsers op dezelfde locatie kan helpen, kunnen de reiskosten worden gedeeld."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Wat kost een skatefitting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Een individuele skatefitting kost €95 per uur, voor twee personen is het €140 en een vervolgafspraak kost €65. Wigjes, veren en andere onderdelen komen daar eventueel apart bij. Bij een afspraak op locatie komen de reiskosten daar nog bij."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Kan ik mijn schaatsen laten richten?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ja, benden en richten is mogelijk. Dat is bedoeld voor schaatsen die krom zijn of niet meer goed onder de schoen staan. Het eerste half uur kost €35, elk volgend half uur €30."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Doen jullie ook onderhoud aan shorttrackschaatsen?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Benden en richten doe ik ook bij shorttrackschaatsen. Gaat het om andere werkzaamheden of om een reparatie, neem dan contact op, dan kijken we wat er nodig is."
         }
       }
     ]
@@ -117,7 +227,7 @@
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": "https://www.novakse.com/schaatsonderhoud.html#service",
-    "name": "Schaatsonderhoud: slijpen, ronden en skatefitting",
+    "name": "Schaatsen slijpen, onderhoud en skatefitting",
     "description": "Handmatig slijpen, ronden, benden en richten, onderhoudscontrole en skatefitting van schaatsen door Joey Novak in Noordwolde, Friesland.",
     "url": "https://www.novakse.com/schaatsonderhoud.html",
     "serviceType": "Schaatsonderhoud",
@@ -161,7 +271,7 @@
           "name": "Handgeslepen ronding",
           "price": "65",
           "priceCurrency": "EUR",
-          "description": "De handgeslepen ronding is variabel; wat er nodig is hangt af van je schaats en je rijstijl.",
+          "description": "Maatwerk. Welke ronding geschikt is, hangt af van je schaats, je materiaal en vooral van hoe je rijdt.",
           "url": "https://www.novakse.com/schaatsonderhoud.html#slijpen"
         },
         {
@@ -169,22 +279,23 @@
           "name": "Onderhoud (APK)",
           "price": "35",
           "priceCurrency": "EUR",
-          "description": "Vanafprijs. De hele schaats gaat langs: ronden, slijpen en polijsten, en daarnaast de veren, stootrubbers, nokjes, bouten en het scharnier.",
-          "url": "https://www.novakse.com/schaatsonderhoud.html#slijpen"
+          "description": "Vanafprijs. De hele schaats gaat langs: ronden, slijpen en polijsten, en daarnaast de veren, stootrubbers, nokjes, bouten, het scharnier en de algemene staat.",
+          "url": "https://www.novakse.com/schaatsonderhoud.html#onderhoud"
         },
         {
           "@type": "Offer",
           "name": "Benden en richten, eerste half uur",
           "price": "35",
           "priceCurrency": "EUR",
-          "url": "https://www.novakse.com/schaatsonderhoud.html#slijpen"
+          "description": "Ook mogelijk voor shorttrackschaatsen.",
+          "url": "https://www.novakse.com/schaatsonderhoud.html#benden-richten"
         },
         {
           "@type": "Offer",
           "name": "Benden en richten, elk volgend half uur",
           "price": "30",
           "priceCurrency": "EUR",
-          "url": "https://www.novakse.com/schaatsonderhoud.html#slijpen"
+          "url": "https://www.novakse.com/schaatsonderhoud.html#benden-richten"
         },
         {
           "@type": "Offer",
@@ -257,11 +368,11 @@
 
   <main id="main">
     <section class="page-hero" id="top">
-      <picture><source type="image/avif" srcset="images/slijpen-ronding-480.avif 480w, images/slijpen-ronding-800.avif 800w, images/slijpen-ronding-1200.avif 1200w, images/slijpen-ronding.avif 1400w" sizes="100vw" /><source type="image/webp" srcset="images/slijpen-ronding-480.webp 480w, images/slijpen-ronding-800.webp 800w, images/slijpen-ronding-1200.webp 1200w, images/slijpen-ronding.webp 1400w" sizes="100vw" /><img class="page-hero__bg" src="images/slijpen-ronding.jpg" alt="Specialistisch slijpen van een schaatsronding" fetchpriority="high" srcset="images/slijpen-ronding-480.jpg 480w, images/slijpen-ronding-800.jpg 800w, images/slijpen-ronding-1200.jpg 1200w, images/slijpen-ronding.jpg 1400w" sizes="100vw" /></picture>
+      <picture><source type="image/avif" srcset="images/slijpen-ronding-480.avif 480w, images/slijpen-ronding-800.avif 800w, images/slijpen-ronding-1200.avif 1200w, images/slijpen-ronding.avif 1400w" sizes="100vw" /><source type="image/webp" srcset="images/slijpen-ronding-480.webp 480w, images/slijpen-ronding-800.webp 800w, images/slijpen-ronding-1200.webp 1200w, images/slijpen-ronding.webp 1400w" sizes="100vw" /><img class="page-hero__bg" src="images/slijpen-ronding.jpg" alt="Handmatig slijpen van de ronding van een schaatsijzer" fetchpriority="high" srcset="images/slijpen-ronding-480.jpg 480w, images/slijpen-ronding-800.jpg 800w, images/slijpen-ronding-1200.jpg 1200w, images/slijpen-ronding.jpg 1400w" sizes="100vw" /></picture>
       <div class="wrap page-hero__inner">
-        <span class="eyebrow eyebrow--light"><span class="dot"></span>Schaatsonderhoud</span>
-        <h1 class="page-hero__title">Slijpen en afstellen</h1>
-        <p class="page-hero__lede">Scherpe schaatsen die onder je passen. Handwerk, uit de praktijk van de 11shop van de Elfstedenhal.</p>
+        <span class="eyebrow eyebrow--light"><span class="dot"></span>Werkplaats in Noordwolde</span>
+        <h1 class="page-hero__title page-hero__title--long">Schaatsen slijpen, onderhoud &amp; skatefitting</h1>
+        <p class="page-hero__lede">Drie verschillende dingen, met ieder een eigen doel. Handwerk, opgedaan als materiaalman van Team Frysk en andere topschaatsers.</p>
       </div>
     </section>
 
@@ -273,10 +384,11 @@
 
     <section class="intro">
       <div class="wrap intro__grid">
-        <p class="intro__lead">Een schaats die niet onder je past, kost je meer dan een schaats die niet scherp is.</p>
-        <div class="intro__aside reveal">
-          <p>Slijpen maakt je schaats scherp. Skatefitting zorgt dat hij goed staat. Dat zijn twee verschillende dingen, en ze hebben allebei hun eigen tarief.</p>
-          <a class="link-arrow" href="#skatefitting">Naar skatefitting</a>
+        <p class="intro__lead">Ik houd me bezig met schaatsen slijpen, schaatsonderhoud en skatefitting. Drie verschillende dingen, met ieder een eigen doel.</p>
+        <div class="intro__aside intro__aside--stacked reveal">
+          <p>Bij het slijpen zorg ik dat je schaats scherp is en de juiste ronding heeft. Bij onderhoud kijk ik de hele schaats na, dus niet alleen het ijzer. En bij skatefitting kijken we naar de manier waarop je schaats onder jouw voet staat en rijdt.</p>
+          <p>Ik werk vanuit Noordwolde. Er komen schaatsers langs uit onder andere Wolvega, Heerenveen, Steenwijk, Oosterwolde, Appelscha en Vledder.</p>
+          <a class="link-arrow" href="#skatefitting">Meer over skatefitting</a>
         </div>
       </div>
     </section>
@@ -284,50 +396,73 @@
     <section class="rates" id="slijpen">
       <div class="wrap">
         <div class="rates__head reveal">
-          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Slijpen en onderhoud</span>
-          <h2 class="h-section">Wat het kost</h2>
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Slijpen</span>
+          <h2 class="h-section">Schaatsen slijpen</h2>
+          <p class="rates__intro">Ik slijp met de hand. Dat kost meer tijd dan een machine, maar ik voel wat het ijzer doet en kan per schaats bijsturen.</p>
         </div>
 
         <div class="rates__grid">
+          <div class="rates__body reveal">
+            <h3 class="rates__title">Alleen slijpen, of ronden en slijpen</h3>
+            <p>Bij slijpen zet ik de kanten van het ijzer weer scherp. Dat is wat de meeste noren nodig hebben als ze een tijdje mee zijn.</p>
+            <p>Bij ronden en slijpen komt er een stap bij. Ik zet dan eerst de ronding van het ijzer weer goed en slijp daarna pas. Dat is nodig als het ijzer niet meer netjes loopt, bijvoorbeeld doordat er op een plek te veel af is gegaan.</p>
+
+            <h3 class="rates__title">Handgeslepen ronding</h3>
+            <p>Een handgeslepen ronding is maatwerk. Welke ronding geschikt is, hangt af van je schaats, je materiaal en vooral van hoe je rijdt.</p>
+            <p>Voor veel schaatsers is dit niet nodig. Komt het ter sprake, dan leg ik eerst uit waarom ik denk dat het bij jou wat oplevert.</p>
+            <a class="link-arrow" href="#aanmelden">Schaatsen aanmelden voor slijpen</a>
+          </div>
+
           <div class="rates__block reveal">
-            <h3 class="rates__title">Slijpen</h3>
+            <h3 class="rates__title">Tarieven slijpen</h3>
             <dl class="rates__list">
               <div><dt>Handmatig slijpen noren</dt><dd>&euro;16</dd></div>
               <div><dt>Ronden &amp; slijpen noren</dt><dd>&euro;27</dd></div>
               <div><dt>Handgeslepen ronding</dt><dd>&euro;65</dd></div>
             </dl>
-            <p class="rates__note">De handgeslepen ronding is variabel; wat er nodig is hangt af van je schaats en je rijstijl.</p>
-          </div>
-
-          <div class="rates__block reveal">
-            <h3 class="rates__title">Onderhoud en afstelwerk</h3>
-            <dl class="rates__list">
-              <div><dt>Onderhoud (APK)</dt><dd>vanaf &euro;35</dd></div>
-              <div><dt>Benden en richten, eerste half uur</dt><dd>&euro;35</dd></div>
-              <div><dt>Elk volgend half uur</dt><dd>&euro;30</dd></div>
-              <div><dt>Reparatie</dt><dd>op aanvraag</dd></div>
-            </dl>
-            <p class="rates__note">Benden en richten geldt ook voor shorttrack. Bij reparatie hangt de prijs af van de tijd en de onderdelen.</p>
-          </div>
-
-          <div class="rates__block rates__block--full reveal">
-            <h3 class="rates__title">Haal &amp; breng</h3>
-            <p class="rates__note">Kom je er niet uit om langs te komen? In de omgeving haal en breng ik je schaatsen tegen een kleine vergoeding, en kosten delen kan.</p>
-            <p class="rates__note">Bereik vanuit Noordwolde: Wolvega, Appelscha, Oosterwolde, Steenwijk, Vledder en Heerenveen - ongeveer twintig minuten rijden.</p>
+            <p class="rates__note">Deze tarieven gelden voor noren. Weet je niet wat je schaats nodig heeft? Laat het weten, dan kijk ik ernaar voordat ik begin.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="split-photo split-photo--panorama">
+    <section class="split-photo split-photo--panorama" id="onderhoud">
       <div class="split-photo__media reveal">
-        <picture><source type="image/avif" srcset="images/slijptafel-480.avif 480w, images/slijptafel-800.avif 800w, images/slijptafel-1200.avif 1200w, images/slijptafel.avif 1400w" sizes="(min-width: 60rem) 55vw, 100vw" /><source type="image/webp" srcset="images/slijptafel-480.webp 480w, images/slijptafel-800.webp 800w, images/slijptafel-1200.webp 1200w, images/slijptafel.webp 1400w" sizes="(min-width: 60rem) 55vw, 100vw" /><img src="images/slijptafel.jpg" alt="Slijptafel met slijpstenen" loading="lazy" srcset="images/slijptafel-480.jpg 480w, images/slijptafel-800.jpg 800w, images/slijptafel-1200.jpg 1200w, images/slijptafel.jpg 1400w" sizes="(min-width: 60rem) 55vw, 100vw" /></picture>
+        <picture><source type="image/avif" srcset="images/slijptafel-480.avif 480w, images/slijptafel-800.avif 800w, images/slijptafel-1200.avif 1200w, images/slijptafel.avif 1400w" sizes="(min-width: 60rem) 55vw, 100vw" /><source type="image/webp" srcset="images/slijptafel-480.webp 480w, images/slijptafel-800.webp 800w, images/slijptafel-1200.webp 1200w, images/slijptafel.webp 1400w" sizes="(min-width: 60rem) 55vw, 100vw" /><img src="images/slijptafel.jpg" alt="Slijptafel met slijpstenen en gereedschap voor schaatsonderhoud" loading="lazy" srcset="images/slijptafel-480.jpg 480w, images/slijptafel-800.jpg 800w, images/slijptafel-1200.jpg 1200w, images/slijptafel.jpg 1400w" sizes="(min-width: 60rem) 55vw, 100vw" /></picture>
       </div>
       <div class="split-photo__body reveal">
-        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Wat de APK inhoudt</span>
-        <h2 class="h-section">Alles nagelopen, niet alleen geslepen</h2>
-        <p class="lede-text">Bij een onderhoudsbeurt gaat de hele schaats langs: ronden, slijpen en polijsten, en daarnaast de veren, stootrubbers, nokjes, bouten en het scharnier.</p>
-        <p class="split-photo__note">Zitten er onderdelen bij die vervangen moeten worden, dan hoor je dat vooraf.</p>
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Onderhoud</span>
+        <h2 class="h-section">Schaatsonderhoud</h2>
+        <p class="lede-text">Een schaats kan scherp zijn en toch onderhoud nodig hebben.</p>
+        <p>Bij een onderhoudsbeurt, of wat ik zelf de APK noem, kijk ik de hele schaats na. Natuurlijk worden de schaatsen gerond, geslepen en gepolijst, maar daar blijft het niet bij. Ik loop ook langs:</p>
+        <ul class="part-list">
+          <li>de veren</li>
+          <li>de stootrubbers</li>
+          <li>de nokjes</li>
+          <li>de bouten</li>
+          <li>het scharnier</li>
+          <li>de algemene staat van de schaats</li>
+        </ul>
+        <dl class="rates__list">
+          <div><dt>Onderhoud (APK)</dt><dd>vanaf &euro;35</dd></div>
+        </dl>
+        <p class="split-photo__note">Kom ik onderdelen tegen die vervangen moeten worden, dan bespreek ik dat eerst met je.</p>
+      </div>
+    </section>
+
+    <section class="textband" id="benden-richten">
+      <div class="wrap textband__inner reveal">
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Benden en richten</span>
+        <h2 class="h-section">Schaatsen benden en richten</h2>
+        <p class="textband__text">Soms is een schaats niet bot, maar krom. Het ijzer staat scheef onder de schoen of is verbogen geraakt. Slijpen helpt dan niet, want dan maak je een schaats scherp die verkeerd staat.</p>
+        <p class="textband__text">Bij benden en richten zet ik het ijzer terug in de goede stand. Ik reken per half uur, omdat het per schaats verschilt hoeveel werk het is.</p>
+        <p class="textband__text">Benden en richten doe ik ook bij shorttrackschaatsen.</p>
+        <dl class="rates__list">
+          <div><dt>Eerste half uur</dt><dd>&euro;35</dd></div>
+          <div><dt>Elk volgend half uur</dt><dd>&euro;30</dd></div>
+          <div><dt>Reparatie</dt><dd>op aanvraag</dd></div>
+        </dl>
+        <p class="rates__note">Bij een reparatie hangt de prijs af van de werkzaamheden en de onderdelen die nodig zijn. Laat weten wat er aan de hand is, dan hoor je vooraf waar je ongeveer aan toe bent.</p>
       </div>
     </section>
 
@@ -340,18 +475,63 @@
     <section class="steps" id="skatefitting">
       <div class="wrap">
         <div class="steps__head reveal">
-          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Skatefitting</span>
-          <h2 class="h-section">Je schaats onder je voet afstellen</h2>
-          <p class="steps__intro">Iets anders dan slijpen. Hierbij kijken we naar de stand van je schaats en passen we hem aan op hoe jij rijdt.</p>
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Skatefitting op locatie</span>
+          <h2 class="h-section">Ik kom naar de ijsbaan waar jij schaatst</h2>
+          <p class="steps__intro">Een skatefitting doe ik het liefst op de plek waar je normaal ook schaatst. Je hoeft er dus niet voor naar Noordwolde te komen.</p>
+          <p class="steps__intro">Ik kijk naar jou, je schaatsen en hoe je rijdt. Op het ijs zie ik wat er gebeurt en van daaruit kan ik de schaats verder afstellen. Dat kan op de baan waar je iedere week traint, maar ook op een baan waar je een trainingsdag of een wedstrijd hebt.</p>
+          <p class="steps__intro">Ik werk door heel Nederland. Schaats je in Friesland, Groningen, Overijssel, Noord-Holland, Utrecht of ergens anders? Neem gewoon contact met me op, dan kijken we wat mogelijk is.</p>
+          <ul class="place-list">
+            <li>Heerenveen</li>
+            <li>Leeuwarden</li>
+            <li>Groningen</li>
+            <li>Enschede</li>
+            <li>Utrecht</li>
+            <li>Amsterdam</li>
+            <li>Den Haag</li>
+            <li>Eindhoven</li>
+          </ul>
+          <p class="rates__note">Een paar voorbeelden; het hoeft geen van deze banen te zijn.</p>
+          <p class="steps__intro">Voor een skatefitting op locatie reken ik een vergoeding voor de reiskosten.</p>
+
+          <h3 class="subhead">Wat is skatefitting?</h3>
+          <p class="steps__intro">Skatefitting is iets anders dan je schaatsen laten slijpen of onderhouden. Bij een skatefitting kijk ik naar de combinatie van jou en je schaats.</p>
+          <p class="steps__intro">Hoe staat de schaats onder je voet? Hoe rijdt hij? Waar loop je tegenaan? En kan de stand van de schaats worden aangepast?</p>
+          <p class="steps__intro">Het gaat dus niet om één standaardafstelling die voor iedereen werkt. Iedere schaatser is anders en daarom kijk ik naar wat bij jou en jouw manier van rijden past.</p>
+          <p class="steps__intro">Ik heb dit werk in de praktijk gedaan als materiaalman van Team Frysk en andere topschaatsers. Daar heb ik veel verschillende schaatsers en materialen voorbij zien komen.</p>
+
+          <h3 class="subhead">Hoe werkt een skatefitting?</h3>
         </div>
 
         <ol class="steps__list">
-          <li class="step reveal"><span class="step__nr">1</span><div><h3 class="step__title">Intake</h3><p class="step__text">Je rijstijl, je materiaal en waar je tegenaan loopt.</p></div></li>
-          <li class="step reveal"><span class="step__nr">2</span><div><h3 class="step__title">Basisafstelling</h3><p class="step__text">De schaats wordt afgesteld op je voet en je stand.</p></div></li>
-          <li class="step reveal"><span class="step__nr">3</span><div><h3 class="step__title">IJsobservatie</h3><p class="step__text">Je rijdt, Joey kijkt mee op het ijs.</p></div></li>
-          <li class="step reveal"><span class="step__nr">4</span><div><h3 class="step__title">Aanpassingen</h3><p class="step__text">Bijstellen op basis van wat er te zien was.</p></div></li>
-          <li class="step reveal"><span class="step__nr">5</span><div><h3 class="step__title">Controle</h3><p class="step__text">Nog een keer nalopen of het klopt.</p></div></li>
+          <li class="step reveal"><span class="step__nr">1</span><div><h4 class="step__title">Intake</h4><p class="step__text">We beginnen met een gesprek. Welke schaatsen heb je? Hoe lang rijd je ermee? Hoe ervaar je ze? Waar loop je tegenaan en wat zou je graag anders willen?</p></div></li>
+          <li class="step reveal"><span class="step__nr">2</span><div><h4 class="step__title">Kijken naar je schaats</h4><p class="step__text">Ik kijk naar de stand van de schaats onder je voet en naar de mogelijkheden om deze af te stellen.</p></div></li>
+          <li class="step reveal"><span class="step__nr">3</span><div><h4 class="step__title">Het ijs op</h4><p class="step__text">Daarna ga je schaatsen en kijk ik mee. Ik let op hoe je rijdt en hoe de schaats onder je voet reageert. Daarom werk ik graag op jouw eigen baan: ik zie je rijden op het ijs waar je normaal traint.</p></div></li>
+          <li class="step reveal"><span class="step__nr">4</span><div><h4 class="step__title">Aanpassen</h4><p class="step__text">Aan de hand van wat ik zie, pas ik de afstelling aan waar dat nodig is.</p></div></li>
+          <li class="step reveal"><span class="step__nr">5</span><div><h4 class="step__title">Opnieuw kijken</h4><p class="step__text">Daarna ga je opnieuw het ijs op. We kijken wat de aanpassing heeft gedaan en of er nog iets veranderd moet worden.</p></div></li>
         </ol>
+
+        <p class="lede-text reveal">Zo werken we stap voor stap naar een afstelling die bij jou past.</p>
+      </div>
+    </section>
+
+    <section class="textband" id="skatefitting-locatie">
+      <div class="wrap textband__inner reveal">
+        <h2 class="h-section">Met meerdere schaatsers op dezelfde baan</h2>
+        <p class="textband__text">Een skatefitting kan ook met twee personen. Maar misschien willen er bij jouw vereniging, trainingsgroep of ijsbaan meerdere schaatsers een skatefitting. Dat kan ook.</p>
+        <p class="textband__text">Voor meerdere schaatsers op dezelfde baan kunnen de reiskosten worden verdeeld. Dat maakt het interessant om er met een trainingsgroep samen een afspraak voor te plannen.</p>
+        <a class="link-arrow" href="#aanmelden">Vraag naar de mogelijkheden</a>
+      </div>
+    </section>
+
+    <section class="steps" id="voor-wie-skatefitting">
+      <div class="wrap">
+        <div class="steps__head reveal">
+          <h2 class="h-section">Voor wie is skatefitting?</h2>
+          <p class="steps__intro">Je hoeft niet eerst een groot probleem met je schaatsen te hebben.</p>
+          <p class="steps__intro">Misschien heb je het gevoel dat je niet lekker op je schaats staat. Of je hebt het idee dat je schaats niet doet wat jij wilt. Misschien heb je al verschillende dingen geprobeerd en kom je er zelf niet uit.</p>
+          <p class="steps__intro">Maar het kan ook gewoon zijn dat je eens wilt laten kijken of je schaats goed onder je voet staat.</p>
+          <p class="steps__intro">Tijdens een skatefitting kijken we naar jouw situatie en naar wat er aan de schaats aangepast kan worden.</p>
+        </div>
 
         <div class="steps__rates">
           <div class="rates__block reveal">
@@ -361,8 +541,54 @@
               <div><dt>Samen, twee personen</dt><dd>&euro;140</dd></div>
               <div><dt>Vervolgafspraak</dt><dd>&euro;65</dd></div>
             </dl>
-            <p class="rates__note">Wigjes, veren of andere onderdelen komen daar apart bij.</p>
+            <p class="rates__note">Wigjes, veren en andere onderdelen komen daar eventueel apart bij.</p>
+            <p class="rates__note">Bij een skatefitting op locatie komen de reiskosten apart.</p>
+            <a class="btn btn--dark rates__cta" href="#aanmelden">Skatefitting aanvragen</a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rates" id="tarieven">
+      <div class="wrap">
+        <div class="rates__head reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Overzicht</span>
+          <h2 class="h-section">Alle tarieven op een rij</h2>
+        </div>
+        <table class="tariff-table reveal">
+          <caption class="sr-only">Tarieven voor schaatsen slijpen, onderhoud, richten en skatefitting</caption>
+          <thead>
+            <tr><th scope="col">Dienst</th><th scope="col">Tarief</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Handmatig slijpen noren</th><td>&euro;16</td></tr>
+            <tr><th scope="row">Ronden &amp; slijpen noren</th><td>&euro;27</td></tr>
+            <tr><th scope="row">Handgeslepen ronding</th><td>&euro;65</td></tr>
+            <tr><th scope="row">Onderhoud (APK)</th><td>vanaf &euro;35</td></tr>
+            <tr><th scope="row">Benden &amp; richten, eerste half uur</th><td>&euro;35</td></tr>
+            <tr><th scope="row">Elk volgend half uur</th><td>&euro;30</td></tr>
+            <tr><th scope="row">Reparatie</th><td>op aanvraag</td></tr>
+            <tr><th scope="row">Skatefitting individueel</th><td>&euro;95 per uur</td></tr>
+            <tr><th scope="row">Skatefitting 2 personen</th><td>&euro;140</td></tr>
+            <tr><th scope="row">Vervolgafspraak skatefitting</th><td>&euro;65</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="local" id="regio">
+      <div class="wrap local__grid">
+        <div class="reveal">
+          <h2 class="h-section">Schaatsen laten slijpen in Noordwolde en omgeving</h2>
+          <p class="local__text">Ik werk vanuit Noordwolde. Je kunt bij mij terecht als je je schaatsen wilt laten slijpen, onderhouden of richten.</p>
+          <p class="local__text">Er komen schaatsers langs uit onder andere Noordwolde, Wolvega, Heerenveen, Steenwijk, Oosterwolde, Appelscha en Vledder.</p>
+          <a class="link-arrow" href="contact.html">Neem contact op</a>
+        </div>
+        <div class="reveal">
+          <h2 class="h-section">Haal- en brengservice</h2>
+          <p class="local__text">Kun je niet makkelijk naar Noordwolde komen? Dan kan ik in de omgeving je schaatsen ophalen en weer terugbrengen, tegen een kleine vergoeding.</p>
+          <p class="local__text">Maken meerdere mensen tegelijk gebruik van de service, dan kunnen we de kosten delen.</p>
+          <p class="local__text">Vanuit Noordwolde rijd ik ongeveer twintig minuten naar Wolvega, Appelscha, Oosterwolde, Steenwijk, Vledder en Heerenveen.</p>
         </div>
       </div>
     </section>
@@ -373,20 +599,44 @@
         <h2 class="h-section">Veelgestelde vragen over schaatsonderhoud</h2>
         <div class="faq__list">
           <details class="faq__item">
-            <summary>Wat is het verschil tussen slijpen en skatefitting?</summary>
-            <p>Slijpen maakt je schaats scherp. Skatefitting zorgt dat hij goed onder je staat. Dat zijn twee verschillende dingen, met elk hun eigen tarief.</p>
+            <summary>Wat kost schaatsen slijpen?</summary>
+            <p>Handmatig slijpen van noren kost &euro;16. Ronden en slijpen kost &euro;27. Een handgeslepen ronding kost &euro;65.</p>
           </details>
           <details class="faq__item">
-            <summary>Wat kost het slijpen van mijn schaatsen?</summary>
-            <p>Handmatig slijpen van noren kost &euro;16, ronden &amp; slijpen &euro;27, en een handgeslepen ronding vanaf &euro;65 - dat laatste is variabel en hangt af van je schaats en je rijstijl.</p>
+            <summary>Hoe vaak moet je schaatsen laten slijpen?</summary>
+            <p>Dat verschilt per schaatser. Het hangt af van hoe vaak je rijdt, op wat voor ijs je rijdt en hoe voorzichtig je met je schaatsen omgaat. Merk je dat je minder grip hebt of dat je wegglijdt waar dat eerder niet gebeurde, dan is het meestal tijd.</p>
           </details>
           <details class="faq__item">
-            <summary>Wat houdt een onderhoudsbeurt (APK) in?</summary>
-            <p>Bij een onderhoudsbeurt gaat de hele schaats langs: ronden, slijpen en polijsten, en daarnaast de veren, stootrubbers, nokjes, bouten en het scharnier. Zitten er onderdelen bij die vervangen moeten worden, dan hoor je dat vooraf. Een APK kost vanaf &euro;35.</p>
+            <summary>Wat is het verschil tussen ronden en slijpen?</summary>
+            <p>Slijpen is het scherp maken van de kanten van het ijzer. Ronden is het opnieuw goed zetten van de ronding van het ijzer, dus de lijn die het ijzer van voor naar achter maakt. Bij ronden en slijpen doe ik allebei.</p>
           </details>
           <details class="faq__item">
-            <summary>Wat kost skatefitting?</summary>
-            <p>Individueel per uur kost skatefitting &euro;95, samen met twee personen &euro;140, en een vervolgafspraak &euro;65. Wigjes, veren of andere onderdelen komen daar apart bij.</p>
+            <summary>Wat houdt schaatsonderhoud of een APK in?</summary>
+            <p>Bij een APK kijk ik de hele schaats na. De schaatsen worden gerond, geslepen en gepolijst, en daarnaast loop ik de veren, stootrubbers, nokjes, bouten, het scharnier en de algemene staat van de schaats na. Kom ik onderdelen tegen die vervangen moeten worden, dan bespreek ik dat eerst met je. Een APK kost vanaf &euro;35.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Wat is skatefitting?</summary>
+            <p>Bij skatefitting kijk ik naar de stand van je schaats onder je voet en naar de manier waarop je rijdt. Op basis daarvan kan de schaats worden aangepast. Skatefitting staat los van het slijpen of onderhouden van je schaatsen. <a class="link-inline" href="#skatefitting">Meer over skatefitting</a>.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Waar vindt een skatefitting plaats?</summary>
+            <p>Op de ijsbaan waar jij schaatst. Je hoeft er niet voor naar Noordwolde te komen en ik werk door heel Nederland, dus ook buiten Friesland. Bij een afspraak op locatie komen de reiskosten apart.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Kan ik een skatefitting met iemand samen doen?</summary>
+            <p>Ja. Voor twee personen is het tarief &euro;140. Wil je met meerdere schaatsers van een vereniging of trainingsgroep een skatefitting organiseren? <a class="link-inline" href="#aanmelden">Neem dan even contact op</a>. Als ik meerdere schaatsers op dezelfde locatie kan helpen, kunnen de reiskosten worden gedeeld.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Wat kost een skatefitting?</summary>
+            <p>Een individuele skatefitting kost &euro;95 per uur, voor twee personen is het &euro;140 en een vervolgafspraak kost &euro;65. Wigjes, veren en andere onderdelen komen daar eventueel apart bij. Bij een afspraak op locatie komen de reiskosten daar nog bij.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Kan ik mijn schaatsen laten richten?</summary>
+            <p>Ja, benden en richten is mogelijk. Dat is bedoeld voor schaatsen die krom zijn of niet meer goed onder de schoen staan. Het eerste half uur kost &euro;35, elk volgend half uur &euro;30.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Doen jullie ook onderhoud aan shorttrackschaatsen?</summary>
+            <p>Benden en richten doe ik ook bij shorttrackschaatsen. Gaat het om andere werkzaamheden of om een reparatie, <a class="link-inline" href="contact.html">neem dan contact op</a>, dan kijken we wat er nodig is.</p>
           </details>
         </div>
       </div>
@@ -394,9 +644,9 @@
 
     <section class="closing" id="aanmelden">
       <div class="wrap closing__inner">
-        <h2 class="h-section">Schaatsen laten nakijken?</h2>
-        <p class="closing__text">Laat even weten wat je schaatsen zijn en wat je ermee doet, dan hoor je wat er nodig is.</p>
-        <p class="closing__note">Een workshop slijpen, waarbij je het zelf leert, kan ook.</p>
+        <h2 class="h-section">Heb je niet precies kunnen vinden wat je nodig hebt?</h2>
+        <p class="closing__text">Stuur me gewoon even een bericht. Dan kijken we samen wat er met je schaatsen moet gebeuren.</p>
+        <p class="closing__note">Wil je het liever zelf leren? Er is ook een <a class="link-inline" href="schaatslessen.html#clinics">workshop schaatsen slijpen</a>.</p>
 
         <form class="form-grid onderhoud-form reveal" id="onderhoudForm">
           <label class="form-field">
