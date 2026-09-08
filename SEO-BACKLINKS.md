@@ -24,6 +24,25 @@ Het Google Bedrijfsprofiel (§1) helpt bij lokale zoekopdrachten, niet bij de re
 Het staat bovenaan in dit document omdat het onderwerp het eerst ter sprake kwam,
 niet omdat het het belangrijkst is.
 
+---
+
+## Gemeten stand van zaken 08-09-2026 (DataForSEO Backlinks API)
+
+- **Verwijzende domeinen: 11. Domain rank: 0.**
+- **Alle 11 zijn spam** — dumpsites met steeds dezelfde ankertekst
+  "High Quality Dofollow Backlink" (o.a. betwinnermirror.com, m98ufa.com,
+  theforbestimes.com). Geen enkele heeft met schaatsen te maken.
+- Er is dus op dit moment **geen enkele echte externe link** naar novakse.com.
+- Ter vergelijking: zweedschaatsavontuur.nl 51 domeinen, natuurijswijzer.nl 199,
+  lapland.nl 781.
+
+De acties hieronder zijn daarmee bevestigd als de belangrijkste openstaande taak van
+het hele SEO-traject. Volledige analyse: `SEO-RANKING-ANALYSE.md`.
+
+**Let op:** koop nooit backlinks. De 11 spamlinks laten precies zien wat dat oplevert.
+Nu is ingrijpen niet nodig; groeit het door naar tientallen, dan pas een disavow-bestand
+indienen in Search Console.
+
 ## Afgevinkt
 
 - ✅ **Instagram** — domein staat goed. Er is maar één account; de oude naam
