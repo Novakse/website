@@ -19,6 +19,8 @@ function toFormParams(waarde, prefix) {
 var TOEGESTANE_ORIGINS = ["https://novakse.com", "https://www.novakse.com", "http://localhost:3000"];
 var MAX_BEDRAG_CENTEN = 2000000; // €20.000 — ruim boven een reële boeking, tegen misbruik (bv. "card testing")
 
+var berekenFalun = require("./_falun-prijs.js").berekenFalun;
+
 function origineOngeldig(req) {
   var origin = req.headers.origin;
   if (!origin) return false; // geen Origin-header (bv. curl/oude browser): niet blokkeren
@@ -43,8 +45,22 @@ module.exports = async function handler(req, res) {
   }
 
   var body = req.body || {};
-  var bedrag = parseInt(body.bedrag, 10); // bedrag in centen
-  var omschrijving = String(body.omschrijving || "Novakse reis").slice(0, 255);
+  var bedrag;
+  var omschrijving;
+
+  if (body.reis === "Falun" && body.aankomst) {
+    // Het bedrag dat de browser meestuurt wordt hier genegeerd.
+    var falun = berekenFalun(body);
+    if (falun.fout) {
+      res.status(400).json({ error: falun.fout });
+      return;
+    }
+    bedrag = falun.bedrag * 100;
+    omschrijving = falun.omschrijving.slice(0, 255);
+  } else {
+    bedrag = parseInt(body.bedrag, 10); // bedrag in centen
+    omschrijving = String(body.omschrijving || "Novakse reis").slice(0, 255);
+  }
 
   if (!bedrag || bedrag < 100 || bedrag > MAX_BEDRAG_CENTEN) {
     res.status(400).json({ error: "Ongeldig bedrag." });

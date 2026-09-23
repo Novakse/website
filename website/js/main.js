@@ -209,6 +209,10 @@
      zolang die foto ook echt achter de balk zit.
      ------------------------------------------------------------------ */
   var heroEl = document.querySelector(".opener, .page-hero");
+  /* Op de homepage staat het beeldmerk groot in het openingsscherm. Zolang
+     dat grote logo nog in beeld is, blijft het kleine logo in de balk weg;
+     het verschijnt pas rustig zodra er voorbij het grote logo is gescrold. */
+  var openerMark = document.querySelector(".opener__mark");
   var darkZoneEls = Array.prototype.slice.call(
     document.querySelectorAll(".opener, .page-hero, .factbar, .why, .layered, .choice")
   );
@@ -223,6 +227,12 @@
     if (!header) return;
 
     header.classList.toggle("site-header--scrolled", window.scrollY > 4);
+
+    if (openerMark) {
+      var markPassed = openerMark.getBoundingClientRect().bottom <= header.offsetHeight;
+      header.classList.toggle("site-header--logo-shown", markPassed);
+    }
+
     header.classList.toggle("site-header--over-hero", !!heroEl && overlapsHeaderBand(heroEl));
 
     var onDark = darkZoneEls.some(function (el) {

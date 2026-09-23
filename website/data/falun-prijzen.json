@@ -1,0 +1,34 @@
+{
+  "//": "Prijzen en data voor de Falun-kalender. Alle zes de taalversies lezen dit bestand, dus je werkt het een keer bij. Zolang seizoenStart of seizoenEind leeg is, verschijnt de kalender niet en blijft de gewone tekst op de pagina staan.",
+
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. Schrijf als jaar-maand-dag. De laatste dag is de laatste dag dat iemand nog kan vertrekken.",
+  "seizoenStart": null,
+  "seizoenEind": null,
+
+  "//duur": "Welke reisduren iemand kan kiezen, in dagen. 4 dagen telt 3 nachten, 5 dagen telt 4 nachten.",
+  "duur": [4, 5],
+
+  "//basisprijs": "Bedrag per persoon per reisduur, in hele euro's. Dit is de prijs inclusief vlucht en huurauto.",
+  "basisprijs": {
+    "4": 995,
+    "5": 1095
+  },
+
+  "//toeslagPerNacht": "Wat een nacht duurder of goedkoper is dan de basisprijs, omdat de huisjes niet het hele seizoen hetzelfde kosten. Schrijf per nacht: \"2027-01-15\": 25. Een min-teken maakt hem goedkoper: \"2027-01-15\": -20. Nachten die hier niet in staan, tellen als nul en houden dus gewoon de basisprijs. Zorg dat er precies een reeks van drie nachten op nul staat, dan komt die periode op 995 uit en staat hij vanzelf voorgeselecteerd.",
+  "toeslagPerNacht": {},
+
+  "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf en huurautoZelf gaan van de prijs af; begeleiding komt erbij.",
+  "opties": {
+    "vluchtZelf": 250,
+    "huurautoZelf": 100,
+    "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en vika's. Kan alleen als de hele reis binnen van/tot valt. Zolang prijs null is, kan het vinkje niet aangezet worden.",
+    "begeleiding": {
+      "prijs": null,
+      "van": "2027-01-10",
+      "tot": "2027-02-20"
+    }
+  },
+
+  "//bezet": "Periodes die niet meer te kiezen zijn. Voorbeeld: {\"van\": \"2027-02-06\", \"tot\": \"2027-02-13\", \"wat\": \"Volgeboekt\"}. Achter elke regel een komma, behalve achter de laatste.",
+  "bezet": []
+}

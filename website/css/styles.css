@@ -357,7 +357,20 @@ summary:focus-visible,
    tegen het beeldmerk aan, op dezelfde plek als in het originele logo. */
 .site-header__logo { display: inline-flex; align-items: flex-end; gap: 0.6rem; }
 .site-header__logo .logo-word-img { margin-bottom: 0.12rem; }
-/* De naam houdt altijd zijn eigen donkerblauw, ook boven een foto. */
+/* Op de homepage staat hetzelfde beeldmerk groot in het openingsscherm. Het
+   kleine logo in de balk blijft daar weg zolang het grote nog in beeld is en
+   schuift pas rustig binnen zodra er voorbij het grote logo is gescrold
+   (zie main.js: site-header--logo-shown). De verborgen stand is ook de
+   startstand, zodat het logo niet even oplicht voordat de JS draait. */
+.site-header__logo {
+  transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s;
+}
+body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header__logo {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.4rem);
+}
+/* De naam houdt altijd zijn eigen donkere logokleur, ook boven een foto. */
 .site-header .logo-word-img--light { display: none; }
 .site-header .logo-word-img--dark { display: block; }
 
@@ -626,6 +639,39 @@ summary:focus-visible,
   color: rgba(255,255,255,.9);
 }
 .opener__actions { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.9rem; justify-content: center; }
+
+/* Kleine Google-rating onder de knoppen in het beginscherm. Bewust klein
+   gehouden: het is een stil bewijsstuk, geen tweede oproep tot actie. */
+.opener__rating {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(20, 24, 26, 0.32);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.92);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.opener__rating:hover { background: rgba(20, 24, 26, 0.5); border-color: rgba(255, 255, 255, 0.5); }
+.opener__rating:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.opener__rating-g { display: inline-flex; }
+.opener__rating-g svg { width: 0.9375rem; height: 0.9375rem; }
+.opener__rating-stars { display: inline-flex; gap: 0.1rem; color: var(--warm); }
+.opener__rating-stars svg { width: 0.8125rem; height: 0.8125rem; fill: currentColor; }
+.opener__rating-score { font-weight: 600; letter-spacing: 0.01em; }
+.opener__rating-text { color: rgba(255, 255, 255, 0.72); }
+
+@media (max-width: 30rem) {
+  .opener__rating { font-size: 0.75rem; padding: 0.35rem 0.7rem; gap: 0.4rem; }
+  .opener__rating-stars svg { width: 0.75rem; height: 0.75rem; }
+  .opener__rating-g svg { width: 0.875rem; height: 0.875rem; }
+}
 
 /* --------------------------------------------------------------------------
    Bediening van de diavoorstelling
@@ -1807,6 +1853,96 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
   padding: 0.3rem 0;
 }
 .calendar__reset:hover { color: var(--ink); }
+
+/* --------------------------------------------------------------------------
+   Falun-kalender: dezelfde opmaak als de kalender hierboven, maar met de prijs
+   in de dag zelf. De cellen zijn daarom hoger en er passen er minder naast
+   elkaar. Verder staan hier de duurkeuze en de samenvatting met het totaal.
+   -------------------------------------------------------------------------- */
+.falun-cal { margin-top: 2.5rem; }
+.falun-cal__fallback { color: var(--ink-soft); }
+.falun-cal__block { margin-bottom: 1.75rem; }
+.falun-cal__legend {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  margin-bottom: 0.7rem;
+}
+.falun-cal__duren { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.falun-cal__duur {
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+.falun-cal__duur:hover { border-color: var(--ink); }
+.falun-cal__duur:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.falun-cal__duur.is-actief { background: var(--ink); border-color: var(--ink); color: #fff; }
+.falun-cal__duur-nachten { font-size: 0.8rem; font-weight: 400; opacity: 0.75; }
+
+/* De dagcel krijgt twee regels: het dagnummer en de prijs eronder. */
+.falun-cal__cell {
+  flex-direction: column;
+  gap: 0.1rem;
+  aspect-ratio: auto;
+  min-height: 3.1rem;
+  padding: 0.35rem 0.2rem;
+}
+.falun-cal__dagprijs {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+/* Zonder minmax(0, ...) rekt het prijsje de kolom op en loopt de kalender op
+   een telefoon buiten het scherm. */
+.falun-cal .calendar__grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.falun-cal .calendar__cell { min-width: 0; }
+@media (min-width: 26rem) {
+  .falun-cal__dagprijs { font-size: 0.66rem; }
+}
+.falun-cal__cell.is-gekozen .falun-cal__dagprijs { opacity: 1; }
+
+/* Een optie die nu niet kan, blijft leesbaar maar is duidelijk uit. */
+.extra.is-uit { opacity: 0.55; cursor: not-allowed; }
+.extra.is-uit .extra__check { cursor: not-allowed; }
+
+.falun-cal__summary {
+  margin-top: 2rem;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid var(--ink);
+  border-radius: 0.9rem;
+  background: var(--paper);
+}
+.falun-cal__summary-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  margin-bottom: 0.8rem;
+}
+.falun-cal__period { margin-top: 0.4rem; font-size: 0.88rem; color: var(--ink-soft); }
+.falun-cal__book { margin-top: 1.25rem; justify-content: center; }
+.falun-cal__hint { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+
+/* Minder maanden naast elkaar dan bij de gewone kalender, want de prijs
+   heeft breedte nodig. */
+.falun-cal .calendar__months { grid-template-columns: minmax(0, 1fr); margin-bottom: 2.25rem; }
+@media (min-width: 44rem) {
+  .falun-cal .calendar__months { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+}
+@media (min-width: 70rem) {
+  .falun-cal .calendar__months { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+}
 
 /* --------------------------------------------------------------------------
    Aanvraagpagina
