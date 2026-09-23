@@ -717,6 +717,11 @@
     var keuzeVan = null;
     var keuzeTot = null;
 
+    var reizigersUitAdres = (function () {
+      var aantal = parseInt(new URLSearchParams(window.location.search).get("personen"), 10);
+      return isNaN(aantal) ? 0 : aantal;
+    })();
+
     function bezetOp(datum) {
       for (var i = 0; i < bezet.length; i++) {
         if (datum >= bezet[i].van && datum < bezet[i].tot) return bezet[i];
@@ -775,8 +780,13 @@
         '</div>' +
         '<div class="calendar__bar-actions">' +
           '<button type="button" class="calendar__reset">' + T.reset + '</button>' +
-          '<a class="btn btn--dark" href="boeken.html?van=' + alsTekst(keuzeVan) +
-            '&amp;tot=' + alsTekst(keuzeTot) + '">' + T.continueBtn + '</a>' +
+          '<a class="btn btn--dark" href="boeken.html?' +
+            (data.reis ? 'reis=' + encodeURIComponent(data.reis) + '&amp;' : '') +
+            'van=' + alsTekst(keuzeVan) +
+            '&amp;tot=' + alsTekst(keuzeTot) +
+            // Kwam het aantal reizigers uit de reiszoeker mee, dan blijft dat
+            // ook staan als iemand hier een andere periode kiest.
+            (reizigersUitAdres ? '&amp;personen=' + reizigersUitAdres : '') + '">' + T.continueBtn + '</a>' +
         '</div>';
     }
 
@@ -898,6 +908,22 @@
         toonBalk();
       });
     }
+
+    /* Komt de bezoeker via de reiszoeker binnen, dan staat zijn periode in het
+       webadres. Die nemen we hier over, zodat de kalender meteen goed staat.
+       Past de periode niet (te kort of over een bezette week heen), dan blijft
+       de kalender gewoon leeg en kiest hij zelf. */
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var uitVan = alsDatum(params.get("van"));
+      var uitTot = alsDatum(params.get("tot"));
+      if (!uitVan || !uitTot || uitTot <= uitVan) return;
+      if (uitVan < seizoenVan || uitTot > seizoenTot) return;
+      if (dagenTussen(uitVan, uitTot) < minNachten) return;
+      if (bezetOp(uitVan) || bezetTussen(uitVan, uitTot)) return;
+      keuzeVan = uitVan;
+      keuzeTot = uitTot;
+    })();
 
     tekenRaster();
     toonBalk();

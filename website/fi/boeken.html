@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/x-icon" href="../favicon.ico?v=2" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png?v=2" />
-  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png?v=2" />
-  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=2" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico?v=3" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png?v=3" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=3" />
   <script>document.documentElement.classList.add("js");</script>
   <title>Kokoa tarjouspyyntösi - Novakse Reizen</title>
-  <meta name="description" content="Kokoa luistelumatkasi Suomeen: valitse ajankohta, henkilömäärä ja lisäaktiviteetit, ja lähetä pyyntösi Novakselle." />
+  <meta name="description" content="Kokoa luistelumatkasi: valitse kohde, ajankohta, henkilömäärä ja lisäpalvelut, ja lähetä pyyntösi Novakselle." />
   <meta name="robots" content="noindex" />
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -34,7 +34,7 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="./" aria-label="Novakse Reizen - etusivulle">
-        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="599" height="840" />
+        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="401" height="600" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1099" height="184" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1099" height="184" />
       </a>
@@ -53,7 +53,7 @@
           <li><a href="over-novakse.html">Tietoa Novaksesta</a></li>
           <li><a href="contact.html">Yhteystiedot</a></li>
         </ul>
-        <a class="header-cta" id="headerKalender" href="finland.html#prijzen">Kalenteri</a>
+        <a class="header-cta" id="headerKalender" href="reizen.html">Kaikki matkat</a>
               <div class="lang-switch">
                 <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Kieli · Language">
                   <span class="lang-switch__current">FI</span>
@@ -83,11 +83,12 @@
 
       <script type="application/json" id="boekingsdata">
 {
-  "standaard": "finland",
+  "standaard": null,
   "weerbericht": "Aktiviteetin toteutuminen riippuu säästä ja olosuhteista.",
   "reizen": {
     "orsa": {
       "naam": "Orsa - Dalarna, Ruotsi",
+      "zelfTeBoeken": false,
       "periodeVrij": false,
       "maxPersonen": 12,
       "vragen": [
@@ -176,16 +177,20 @@
     },
     "finland": {
       "naam": "Suomi - Punkaharju",
+      "zelfTeBoeken": true,
       "periodeVrij": true,
       "minimumPersonen": 1,
       "maxPersonen": 12,
       "opslagPerPersoonPerNacht": 0,
       "extras": [],
-      "prijsPerPersoonPerDag": 199
+      "prijsPerPersoonPerDag": null
     },
     "falun": {
       "naam": "Falun - Dalarna, Ruotsi",
-      "periodeVrij": false,
+      "zelfTeBoeken": true,
+      "//kalender": "Met een kalenderbestand erbij kiest de bezoeker zijn periode in stap 3 op deze pagina zelf, met de prijs per aankomstdag erbij. De prijzen staan in dat bestand, niet hier.",
+      "kalender": "data/falun-prijzen.json",
+      "periodeVrij": true,
       "maxPersonen": 12,
       "vragen": [
         {
@@ -273,12 +278,14 @@
     },
     "weissensee": {
       "naam": "Weissensee - Kärnten, Itävalta",
+      "zelfTeBoeken": false,
       "//prijsOpAanvraag": "Data en prijs staan nog niet vast (zie weissensee.html); geen periode, vragen of extra's verzinnen zolang dat zo is.",
       "prijsOpAanvraag": true,
       "extras": []
     },
     "lulea": {
       "naam": "Luleå - Ruotsin Lappi",
+      "zelfTeBoeken": false,
       "//prijsOpAanvraag": "Reis op maat, prijs op aanvraag (zie lulea.html); geen periode, vragen of extra's verzinnen zolang dat zo is.",
       "prijsOpAanvraag": true,
       "extras": []
@@ -287,21 +294,19 @@
 }
       </script>
 
-      <p class="booking__voorbeeld" id="boekingVoorbeeld">Suomi maksaa alkaen &euro;199 henkilöltä päivässä, sisältäen majoituksen, vuokra-auton ja muut palvelut. Lennon järjestät itse.</p>
+      <p class="booking__voorbeeld" id="boekingVoorbeeld" hidden></p>
 
       <form class="booking" id="boekingsformulier" novalidate>
         <div class="booking__grid">
           <div class="booking__main">
 
-            <fieldset class="booking__block">
-              <legend class="booking__legend"><span class="booking__step">1</span> Ajankohtasi</legend>
-              <div class="booking__period" id="periodeBox">
-                <p class="booking__period-empty">Ajankohtaa ei ole vielä valittu.</p>
-              </div>
-              <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Valitse ajankohta kalenterista</a>
+            <fieldset class="booking__block" id="reisBlok">
+              <legend class="booking__legend"><span class="booking__step">1</span> Minne haluat matkustaa?</legend>
+              <p class="booking__note">Valitse ensin kohde. Alla olevat vaiheet mukautuvat valintaasi.</p>
+              <div class="booking__destinations" id="reisKeuze"></div>
             </fieldset>
 
-            <fieldset class="booking__block">
+            <fieldset class="booking__block" id="personenBlok">
               <legend class="booking__legend"><span class="booking__step">2</span> Kuinka moni tulee mukaan</legend>
               <div class="booking__persons">
                 <button type="button" class="booking__step-btn" id="minderPersonen" aria-label="Yksi henkilö vähemmän">−</button>
@@ -311,21 +316,40 @@
               <p class="booking__note">Lapset lasketaan mukaan. Kerro erityistoiveet huomautuskentässä.</p>
             </fieldset>
 
-            <div id="vragenBlokken"></div>
-
-            <fieldset class="booking__block" id="variantBlok">
-              <legend class="booking__legend"><span class="booking__step">3</span> Varustevuokran kanssa vai ilman</legend>
-              <p class="booking__note">Majoitukseen sisältyy aamiainen ja loppusiivous. Jos otat omat luistimesi mukaan, maksat vähemmän.</p>
-              <div class="booking__extras" id="variantBox"></div>
+            <fieldset class="booking__block" id="periodeBlok">
+              <legend class="booking__legend"><span class="booking__step">3</span> Ajankohtasi</legend>
+              <div class="falun-cal booking__calendar" id="kalenderBox" data-falun-modus="periode" hidden></div>
+              <div class="booking__period" id="periodeBox">
+                <p class="booking__period-empty">Ajankohtaa ei ole vielä valittu.</p>
+              </div>
+              <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Valitse ajankohta kalenterista</a>
             </fieldset>
 
-            <fieldset class="booking__block">
-              <legend class="booking__legend"><span class="booking__step">4</span> Lisäaktiviteetit</legend>
-              <p class="booking__note">Valinnaista. Kaikki hinnat ovat henkilöä kohti; järjestämme aktiviteetit puolestasi paikan päällä.</p>
-              <div class="booking__extras" id="extrasBox"></div>
+            <fieldset class="booking__block" id="detailsBlok">
+              <legend class="booking__legend"><span class="booking__step">4</span> Matkasi yksityiskohdat</legend>
+              <p class="booking__note">Tässä tekemäsi valinnat koskevat yllä valitsemaasi kohdetta.</p>
+
+              <div id="vragenBlokken"></div>
+
+              <div class="booking__sub" id="variantBlok">
+                <p class="booking__sub-kop">Varustevuokran kanssa vai ilman</p>
+                <p class="booking__note">Majoitukseen sisältyy aamiainen ja loppusiivous. Jos otat omat luistimesi mukaan, maksat vähemmän.</p>
+                <div class="booking__extras" id="variantBox"></div>
+              </div>
+
+              <div class="booking__sub" id="optiesBlok">
+                <p class="booking__sub-kop">Tämän matkan vaihtoehdot</p>
+                <div class="booking__extras" id="optiesBox"></div>
+              </div>
+
+              <div class="booking__sub" id="extrasBlok">
+                <p class="booking__sub-kop">Lisäaktiviteetit</p>
+                <p class="booking__note">Valinnaista. Kaikki hinnat ovat henkilöä kohti; järjestämme aktiviteetit puolestasi paikan päällä.</p>
+                <div class="booking__extras" id="extrasBox"></div>
+              </div>
             </fieldset>
 
-            <fieldset class="booking__block">
+            <fieldset class="booking__block" id="gegevensBlok">
               <legend class="booking__legend"><span class="booking__step">5</span> Yhteystietosi</legend>
               <div class="form-grid">
                 <label class="form-field">
@@ -346,6 +370,7 @@
                 </label>
               </div>
             </fieldset>
+
           </div>
 
           <aside class="booking__summary" aria-label="Yhteenveto pyynnöstäsi">
@@ -371,7 +396,7 @@
     <div class="wrap footer__grid">
       <div>
         <a class="footer__logo" href="./" aria-label="Novakse Reizen - etusivulle">
-          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="599" height="840" />
+          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="401" height="600" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1099" height="184" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1099" height="184" />
         </a>

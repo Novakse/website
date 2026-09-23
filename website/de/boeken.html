@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/x-icon" href="../favicon.ico?v=2" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png?v=2" />
-  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png?v=2" />
-  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=2" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico?v=3" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png?v=3" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=3" />
   <script>document.documentElement.classList.add("js");</script>
   <title>Deine Anfrage zusammenstellen - Novakse Reizen</title>
-  <meta name="description" content="Stelle deine Schlittschuhreise nach Finnland zusammen: wähle Zeitraum, Personenzahl und Aktivitäten, und sende deine Anfrage an Novakse." />
+  <meta name="description" content="Stelle deine Schlittschuhreise zusammen: Ziel, Zeitraum, Anzahl der Personen und Extras wählen und deine Anfrage an Novakse senden." />
   <meta name="robots" content="noindex" />
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -34,7 +34,7 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="./" aria-label="Novakse Reizen - zur Startseite">
-        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="599" height="840" />
+        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="401" height="600" />
         <img class="logo-word-img logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1099" height="184" />
         <img class="logo-word-img logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1099" height="184" />
       </a>
@@ -53,7 +53,7 @@
           <li><a href="over-novakse.html">Über Novakse</a></li>
           <li><a href="contact.html">Kontakt</a></li>
         </ul>
-        <a class="header-cta" id="headerKalender" href="finland.html#prijzen">Kalender</a>
+        <a class="header-cta" id="headerKalender" href="reizen.html">Alle Reisen</a>
               <div class="lang-switch">
                 <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Sprache · Language">
                   <span class="lang-switch__current">DE</span>
@@ -83,11 +83,12 @@
 
       <script type="application/json" id="boekingsdata">
 {
-  "standaard": "finland",
+  "standaard": null,
   "weerbericht": "Ob eine Aktivität stattfindet, hängt vom Wetter und den Bedingungen ab.",
   "reizen": {
     "orsa": {
       "naam": "Orsa - Dalarna, Schweden",
+      "zelfTeBoeken": false,
       "periodeVrij": false,
       "maxPersonen": 12,
       "vragen": [
@@ -176,16 +177,20 @@
     },
     "finland": {
       "naam": "Finnland - Punkaharju",
+      "zelfTeBoeken": true,
       "periodeVrij": true,
       "minimumPersonen": 1,
       "maxPersonen": 12,
       "opslagPerPersoonPerNacht": 0,
       "extras": [],
-      "prijsPerPersoonPerDag": 199
+      "prijsPerPersoonPerDag": null
     },
     "falun": {
       "naam": "Falun - Dalarna, Schweden",
-      "periodeVrij": false,
+      "zelfTeBoeken": true,
+      "//kalender": "Met een kalenderbestand erbij kiest de bezoeker zijn periode in stap 3 op deze pagina zelf, met de prijs per aankomstdag erbij. De prijzen staan in dat bestand, niet hier.",
+      "kalender": "data/falun-prijzen.json",
+      "periodeVrij": true,
       "maxPersonen": 12,
       "vragen": [
         {
@@ -273,11 +278,13 @@
     },
     "weissensee": {
       "naam": "Weissensee - Kärnten, Österreich",
+      "zelfTeBoeken": false,
       "prijsOpAanvraag": true,
       "extras": []
     },
     "lulea": {
       "naam": "Luleå - Schwedisch-Lappland",
+      "zelfTeBoeken": false,
       "prijsOpAanvraag": true,
       "extras": []
     }
@@ -285,21 +292,19 @@
 }
       </script>
 
-      <p class="booking__voorbeeld" id="boekingVoorbeeld">Finnland kostet ab &euro;199 pro Person pro Tag, inklusive Unterkunft, Mietwagen und den übrigen Leistungen. Den Flug organisierst du selbst.</p>
+      <p class="booking__voorbeeld" id="boekingVoorbeeld" hidden></p>
 
       <form class="booking" id="boekingsformulier" novalidate>
         <div class="booking__grid">
           <div class="booking__main">
 
-            <fieldset class="booking__block">
-              <legend class="booking__legend"><span class="booking__step">1</span> Dein Zeitraum</legend>
-              <div class="booking__period" id="periodeBox">
-                <p class="booking__period-empty">Noch kein Zeitraum gewählt.</p>
-              </div>
-              <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Wähle einen Zeitraum im Kalender</a>
+            <fieldset class="booking__block" id="reisBlok">
+              <legend class="booking__legend"><span class="booking__step">1</span> Wohin möchtest du?</legend>
+              <p class="booking__note">Wähle zuerst ein Ziel. Die Schritte darunter richten sich danach.</p>
+              <div class="booking__destinations" id="reisKeuze"></div>
             </fieldset>
 
-            <fieldset class="booking__block">
+            <fieldset class="booking__block" id="personenBlok">
               <legend class="booking__legend"><span class="booking__step">2</span> Mit wie vielen Personen</legend>
               <div class="booking__persons">
                 <button type="button" class="booking__step-btn" id="minderPersonen" aria-label="Eine Person weniger">−</button>
@@ -309,21 +314,40 @@
               <p class="booking__note">Kinder zählen auch mit. Gib Besonderheiten im Bemerkungsfeld an.</p>
             </fieldset>
 
-            <div id="vragenBlokken"></div>
-
-            <fieldset class="booking__block" id="variantBlok">
-              <legend class="booking__legend"><span class="booking__step">3</span> Mit oder ohne Materialmiete</legend>
-              <p class="booking__note">Die Unterkunft ist inklusive Frühstück und Endreinigung. Bringst du deine eigenen Schlittschuhe mit, zahlst du weniger.</p>
-              <div class="booking__extras" id="variantBox"></div>
+            <fieldset class="booking__block" id="periodeBlok">
+              <legend class="booking__legend"><span class="booking__step">3</span> Dein Zeitraum</legend>
+              <div class="falun-cal booking__calendar" id="kalenderBox" data-falun-modus="periode" hidden></div>
+              <div class="booking__period" id="periodeBox">
+                <p class="booking__period-empty">Noch kein Zeitraum gewählt.</p>
+              </div>
+              <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Wähle einen Zeitraum im Kalender</a>
             </fieldset>
 
-            <fieldset class="booking__block">
-              <legend class="booking__legend"><span class="booking__step">4</span> Zusätzliche Aktivitäten</legend>
-              <p class="booking__note">Optional. Alle Beträge sind pro Person; wir organisieren die Aktivitäten vor Ort für dich.</p>
-              <div class="booking__extras" id="extrasBox"></div>
+            <fieldset class="booking__block" id="detailsBlok">
+              <legend class="booking__legend"><span class="booking__step">4</span> Details deiner Reise</legend>
+              <p class="booking__note">Was du hier wählst, gehört zum Reiseziel, das du oben gewählt hast.</p>
+
+              <div id="vragenBlokken"></div>
+
+              <div class="booking__sub" id="variantBlok">
+                <p class="booking__sub-kop">Mit oder ohne Materialmiete</p>
+                <p class="booking__note">Die Unterkunft ist inklusive Frühstück und Endreinigung. Bringst du deine eigenen Schlittschuhe mit, zahlst du weniger.</p>
+                <div class="booking__extras" id="variantBox"></div>
+              </div>
+
+              <div class="booking__sub" id="optiesBlok">
+                <p class="booking__sub-kop">Optionen für diese Reise</p>
+                <div class="booking__extras" id="optiesBox"></div>
+              </div>
+
+              <div class="booking__sub" id="extrasBlok">
+                <p class="booking__sub-kop">Zusätzliche Aktivitäten</p>
+                <p class="booking__note">Optional. Alle Beträge sind pro Person; wir organisieren die Aktivitäten vor Ort für dich.</p>
+                <div class="booking__extras" id="extrasBox"></div>
+              </div>
             </fieldset>
 
-            <fieldset class="booking__block">
+            <fieldset class="booking__block" id="gegevensBlok">
               <legend class="booking__legend"><span class="booking__step">5</span> Deine Daten</legend>
               <div class="form-grid">
                 <label class="form-field">
@@ -344,6 +368,7 @@
                 </label>
               </div>
             </fieldset>
+
           </div>
 
           <aside class="booking__summary" aria-label="Übersicht deiner Anfrage">
@@ -369,7 +394,7 @@
     <div class="wrap footer__grid">
       <div>
         <a class="footer__logo" href="./" aria-label="Novakse Reizen - zur Startseite">
-          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="599" height="840" />
+          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="401" height="600" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1099" height="184" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1099" height="184" />
         </a>

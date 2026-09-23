@@ -1,0 +1,699 @@
+/* ==========================================================================
+   Offerteaanvraag — stap-voor-stap pagina (offerte.html)
+
+   Eigen, donkere werkomgeving: één vraag per scherm, met bovenin een balk
+   waarin het aanvraagdocument zichtbaar opbouwt. Laadt NA styles.css en
+   theme-groen.css en raakt alleen classes die met .oq- beginnen.
+   ========================================================================== */
+
+.oq-body {
+  --oq-bar: 4.25rem;
+  --oq-line: rgba(255, 255, 255, 0.16);
+  --oq-surface: rgba(255, 255, 255, 0.05);
+  --oq-surface-hi: rgba(255, 255, 255, 0.1);
+  --focus-ring: var(--warm);
+  background: var(--green, #050d08);
+  color: #fff;
+  min-height: 100svh;
+}
+
+@media (min-width: 48rem) {
+  .oq-body { --oq-bar: 5rem; }
+}
+
+/* ==========================================================================
+   Balk met het aanvraagdocument
+   ========================================================================== */
+.oq-bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  background: rgba(5, 13, 8, 0.86);
+  border-bottom: 1px solid var(--oq-line);
+  backdrop-filter: blur(14px);
+}
+
+.oq-bar__row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: var(--oq-bar);
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.oq-bar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex: none;
+}
+.oq-bar__logo .logo-mark { height: 1.6rem; width: auto; }
+.oq-bar__logo .logo-word-img { height: 0.72rem; width: auto; }
+
+/* De chips zijn het document in het klein: elke beantwoorde vraag één chip. */
+.oq-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.oq-chips::-webkit-scrollbar { display: none; }
+
+.oq-chip {
+  flex: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--oq-line);
+  border-radius: 999px;
+  background: var(--oq-surface);
+  font-size: 0.78rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: #fff;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  animation: oq-chip-in 0.35s ease both;
+}
+.oq-chip:hover { border-color: var(--warm); background: var(--oq-surface-hi); }
+.oq-chip__label {
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@keyframes oq-chip-in {
+  from { opacity: 0; transform: translateY(-0.4rem); }
+  to { opacity: 1; transform: none; }
+}
+
+.oq-bar__toggle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--oq-line);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.oq-bar__toggle:hover { border-color: var(--warm); background: var(--oq-surface); }
+.oq-bar__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding-inline: 0.35rem;
+  border-radius: 999px;
+  background: var(--warm);
+  color: var(--green, #050d08);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.oq-bar__chevron { transition: transform 0.25s ease; }
+.oq-bar__toggle[aria-expanded="true"] .oq-bar__chevron { transform: rotate(180deg); }
+
+.oq-bar__exit {
+  flex: none;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.72);
+  border-bottom: 1px solid transparent;
+}
+.oq-bar__exit:hover { color: #fff; border-bottom-color: var(--warm); }
+
+/* Voortgangslijn: de geveegde baan die langzaam vol loopt. */
+.oq-progress {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.12);
+}
+.oq-progress__fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--warm);
+  transform-origin: left center;
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Het uitgeklapte document
+   -------------------------------------------------------------------------- */
+.oq-doc {
+  border-top: 1px solid var(--oq-line);
+  background: rgba(5, 13, 8, 0.96);
+  max-height: min(70svh, 34rem);
+  overflow-y: auto;
+}
+.oq-doc__inner {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: 1.5rem var(--pad) 1.75rem;
+}
+.oq-doc__title {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+.oq-doc__note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 34rem;
+  text-wrap: pretty;
+}
+.oq-doc__lines {
+  margin: 1.1rem 0 0;
+  border-top: 1px solid var(--oq-line);
+}
+.oq-doc__line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--oq-line);
+}
+.oq-doc__term {
+  flex: 0 0 auto;
+  min-width: 10rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+.oq-doc__value { flex: 1 1 12rem; font-weight: 600; }
+.oq-doc__value span { display: block; font-weight: 400; color: rgba(255, 255, 255, 0.72); }
+.oq-doc__edit {
+  flex: none;
+  font-size: 0.8rem;
+  color: var(--warm);
+  border-bottom: 1px solid transparent;
+}
+.oq-doc__edit:hover { border-bottom-color: var(--warm); }
+.oq-doc__empty { padding: 0.9rem 0; color: rgba(255, 255, 255, 0.6); }
+
+.oq-doc__sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.9rem 0 0;
+}
+.oq-doc__sum strong { font-family: var(--display); font-size: 1.25rem; }
+
+/* ==========================================================================
+   Het speelveld: achtergrondfoto + stappen
+   ========================================================================== */
+.oq-main {
+  position: relative;
+  min-height: 100svh;
+  padding-top: calc(var(--oq-bar) + 2px);
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+}
+
+.oq-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--green, #050d08);
+}
+.oq-bg picture,
+.oq-bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.oq-bg img {
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.9s ease, transform 8s ease-out;
+}
+.oq-bg.is-ready img { opacity: 0.3; transform: scale(1); }
+.oq-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(5, 13, 8, 0.82), rgba(5, 13, 8, 0.62) 45%, rgba(5, 13, 8, 0.92));
+}
+
+.oq-stage {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 62rem;
+  margin-inline: auto;
+  padding: 2.5rem var(--pad) 4rem;
+}
+
+@media (min-width: 48rem) {
+  .oq-stage { padding-block: 4rem 5rem; }
+}
+
+.oq-step { width: 100%; }
+.oq-step[hidden] { display: none; }
+
+.js .oq-step {
+  animation: oq-step-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.js .oq-step.is-leaving {
+  animation: oq-step-out 0.22s ease forwards;
+}
+.js .oq-step.is-back { animation-name: oq-step-in-back; }
+
+@keyframes oq-step-in {
+  from { opacity: 0; transform: translateY(1.5rem); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes oq-step-in-back {
+  from { opacity: 0; transform: translateY(-1.25rem); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes oq-step-out {
+  to { opacity: 0; transform: translateY(-0.9rem); }
+}
+
+/* --------------------------------------------------------------------------
+   Kop van een stap
+   -------------------------------------------------------------------------- */
+.oq-step__head { max-width: 40rem; margin-bottom: 2rem; }
+.oq-step__count {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm);
+  margin-bottom: 0.7rem;
+}
+.oq-step__title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 1.1rem + 2.6vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.oq-step__title:focus-visible { outline-offset: 6px; }
+.oq-step__sub {
+  margin-top: 0.85rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1.02rem;
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   Keuzekaarten
+   -------------------------------------------------------------------------- */
+.oq-options {
+  display: grid;
+  gap: 0.7rem;
+}
+@media (min-width: 48rem) {
+  .oq-options--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.oq-option {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  width: 100%;
+  padding: 1.05rem 1.15rem;
+  text-align: left;
+  border: 1px solid var(--oq-line);
+  border-radius: 0.9rem;
+  background: var(--oq-surface);
+  color: #fff;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+.oq-option:hover { border-color: rgba(221, 151, 82, 0.7); background: var(--oq-surface-hi); transform: translateY(-2px); }
+.oq-option[aria-pressed="true"],
+.oq-option.is-chosen {
+  border-color: var(--warm);
+  background: rgba(221, 151, 82, 0.14);
+}
+
+.oq-option__tick {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.oq-option__tick svg { opacity: 0; transition: opacity 0.2s ease; }
+.oq-option[aria-pressed="true"] .oq-option__tick,
+.oq-option.is-chosen .oq-option__tick { background: var(--warm); border-color: var(--warm); }
+.oq-option[aria-pressed="true"] .oq-option__tick svg,
+.oq-option.is-chosen .oq-option__tick svg { opacity: 1; }
+
+.oq-option__body { flex: 1 1 auto; min-width: 0; }
+.oq-option__name { font-weight: 600; font-size: 1.02rem; }
+.oq-option__note {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.68);
+  text-wrap: pretty;
+}
+.oq-option__price {
+  flex: none;
+  align-self: center;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  color: var(--warm);
+}
+
+/* --------------------------------------------------------------------------
+   Bestemmingskaarten met foto
+   -------------------------------------------------------------------------- */
+.oq-places {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.oq-place {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 11rem;
+  padding: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--oq-line);
+  border-radius: 1rem;
+  text-align: left;
+  color: #fff;
+  background: var(--oq-surface);
+  /* Houdt de foto binnen deze kaart; zonder dit zakt hij door naar de
+     achtergrondlaag van de pagina. */
+  isolation: isolate;
+  transition: border-color 0.2s ease, transform 0.25s ease;
+}
+.oq-place:hover { transform: translateY(-3px); border-color: var(--warm); }
+.oq-place.is-chosen { border-color: var(--warm); }
+
+.oq-place__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.oq-place__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.oq-place:hover .oq-place__media img { transform: scale(1.05); }
+.oq-place__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5, 13, 8, 0.92) 12%, rgba(5, 13, 8, 0.28));
+}
+.oq-place__region {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warm);
+}
+.oq-place__name {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  line-height: 1.1;
+  margin-top: 0.15rem;
+}
+.oq-place__note {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.78);
+  text-wrap: pretty;
+}
+.oq-place--plain { min-height: 8rem; }
+.oq-place--plain .oq-place__name { font-size: 1.2rem; }
+
+/* Uitleg die bij een vraag hoort, bijvoorbeeld de stap per vier personen. */
+.oq-callout {
+  max-width: 34rem;
+  margin: -1rem 0 1.75rem;
+  padding: 0.85rem 1.1rem;
+  border-left: 2px solid var(--warm);
+  background: var(--oq-surface);
+  border-radius: 0 0.6rem 0.6rem 0;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   Aantal personen
+   -------------------------------------------------------------------------- */
+.oq-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  max-width: 34rem;
+}
+.oq-number {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--oq-line);
+  border-radius: 50%;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  color: #fff;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+.oq-number:hover { border-color: var(--warm); transform: translateY(-2px); }
+.oq-number.is-chosen {
+  background: var(--warm);
+  border-color: var(--warm);
+  color: var(--green, #050d08);
+  font-weight: 700;
+}
+.oq-number--wide { width: auto; padding-inline: 1.2rem; border-radius: 999px; font-size: 0.95rem; }
+
+/* --------------------------------------------------------------------------
+   Tekstvelden en gegevens
+   -------------------------------------------------------------------------- */
+.oq-field { display: block; margin-bottom: 1rem; max-width: 34rem; }
+.oq-field > span {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 0.4rem;
+}
+.oq-field input,
+.oq-field textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--oq-line);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.oq-field input:hover,
+.oq-field textarea:hover { border-color: rgba(255, 255, 255, 0.32); }
+.oq-field input:focus,
+.oq-field textarea:focus { background: rgba(255, 255, 255, 0.1); }
+.oq-field input::placeholder,
+.oq-field textarea::placeholder { color: rgba(255, 255, 255, 0.4); }
+.oq-field textarea { resize: vertical; min-height: 7rem; }
+
+.oq-grid {
+  display: grid;
+  gap: 0 1rem;
+  max-width: 40rem;
+}
+@media (min-width: 40rem) {
+  .oq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .oq-grid .oq-field--wide { grid-column: 1 / -1; }
+}
+
+/* --------------------------------------------------------------------------
+   Voet van een stap: verder, terug, overslaan
+   -------------------------------------------------------------------------- */
+.oq-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.5rem;
+  margin-top: 2rem;
+}
+.oq-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: 999px;
+  background: var(--warm);
+  color: var(--green, #050d08);
+  font-weight: 700;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.oq-next:hover { transform: translateY(-2px); }
+.oq-next[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
+.oq-next svg { transition: transform 0.2s ease; }
+.oq-next:hover:not([disabled]) svg { transform: translateX(3px); }
+
+.oq-back,
+.oq-skip {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid transparent;
+}
+.oq-back:hover,
+.oq-skip:hover { color: #fff; border-bottom-color: var(--warm); }
+
+.oq-hint {
+  margin-top: 1.1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-wrap: pretty;
+}
+.oq-error {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(221, 151, 82, 0.6);
+  border-radius: 0.6rem;
+  background: rgba(221, 151, 82, 0.12);
+  font-size: 0.9rem;
+}
+
+/* --------------------------------------------------------------------------
+   Startscherm en slotscherm
+   -------------------------------------------------------------------------- */
+.oq-intro { max-width: 44rem; }
+.oq-intro__eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--warm);
+}
+.oq-intro__title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(2.25rem, 1.2rem + 4.2vw, 4.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-top: 0.9rem;
+  text-wrap: balance;
+}
+.oq-intro__text {
+  margin-top: 1.1rem;
+  font-size: 1.08rem;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 34rem;
+  text-wrap: pretty;
+}
+.oq-intro__points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+.oq-intro__points li { display: flex; align-items: center; gap: 0.5rem; }
+.oq-intro__points li::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--warm);
+}
+
+.oq-done { max-width: 40rem; }
+.oq-done__mark {
+  width: 3.25rem;
+  height: 3.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--warm);
+  color: var(--green, #050d08);
+  margin-bottom: 1.5rem;
+}
+.oq-done__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+.oq-done__link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.3rem;
+  border: 1px solid var(--oq-line);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.oq-done__link:hover { border-color: var(--warm); background: var(--oq-surface); }
+
+/* --------------------------------------------------------------------------
+   Zonder JavaScript: de gewone aanvraagpagina aanbieden
+   -------------------------------------------------------------------------- */
+.oq-nojs {
+  max-width: 34rem;
+  margin: 6rem auto;
+  padding-inline: var(--pad);
+  text-align: center;
+}
+.js .oq-nojs { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .oq-bg img,
+  .js .oq-step,
+  .js .oq-step.is-leaving,
+  .oq-chip { animation: none; transition: opacity 0.2s ease; }
+  .oq-option:hover,
+  .oq-place:hover,
+  .oq-number:hover,
+  .oq-next:hover { transform: none; }
+}
+
+/* ==========================================================================
+   Smalle schermen: de balk houdt alleen het nodige
+   ========================================================================== */
+@media (max-width: 47.99rem) {
+  .oq-chips { display: none; }
+  .oq-bar__exit { display: none; }
+  .oq-bar__row { gap: 0.75rem; justify-content: space-between; }
+  .oq-bar__logo .logo-word-img { display: none; }
+  .oq-doc__term { min-width: 100%; }
+  .oq-doc__edit { margin-left: auto; }
+  .oq-number { width: 3.1rem; height: 3.1rem; font-size: 1.05rem; }
+  .oq-option { padding: 0.95rem 1rem; }
+  .oq-place { min-height: 9.5rem; }
+}
+
+/* Tussen tablet en desktop passen niet alle chips; laat ze schuiven in plaats
+   van de knoppen weg te drukken. */
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .oq-chips { max-width: 22rem; }
+}

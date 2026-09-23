@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/x-icon" href="favicon.ico?v=2" />
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png?v=2" />
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png?v=2" />
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=2" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=3" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png?v=3" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <script>document.documentElement.classList.add("js");</script>
   <title>Alle schaatsreizen: Zweden, Finland en Oostenrijk | Novakse</title>
   <meta name="description" content="Kleinschalige schaatsreizen en schaatsvakanties op natuurijs in Scandinavië en Oostenrijk: Orsa, Falun en Luleå in Zweden, Punkaharju in Finland en de Weissensee." />  <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -119,7 +119,7 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="./" aria-label="Novakse Reizen - naar de homepage">
-        <img class="logo-mark" src="images/logo-mark.png" alt="" width="599" height="840" />
+        <img class="logo-mark" src="images/logo-mark.png" alt="" width="401" height="600" />
         <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="1099" height="184" />
         <img class="logo-word-img logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="1099" height="184" />
       </a>
@@ -166,6 +166,70 @@
         <p class="page-hero__lede">Vijf bestemmingen, één seizoen - de meren en zeeën van natuurijs in Scandinavië: Zweden en Finland, plus de Weissensee in Oostenrijk.</p>
       </div>
     </section>
+
+    <!-- Reiszoeker: geeft bestemming, datums en aantal reizigers door aan
+         boeken.html. Geen live beschikbaarheid - het is een keuzebalk. Het
+         schaatsseizoen staat in data-season-start en data-season-end. -->
+    <div class="trip-search-dock">
+      <div class="wrap">
+        <form class="trip-search" action="boeken.html" method="get"
+              data-season-start="2026-12-19" data-season-end="2027-03-14">
+          <p class="trip-search__title">Stel je schaatsreis samen</p>
+
+          <div class="trip-search__fields">
+            <div class="trip-search__field">
+              <label class="trip-search__label" for="tsReis">Bestemming</label>
+              <div class="trip-search__control">
+                <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+                <select class="trip-search__input" id="tsReis" name="reis">
+                  <option value="" data-target="reizen.html#bestemmingen">Alle bestemmingen</option>
+                  <option value="orsa" data-target="orsa.html#data-en-prijs">Orsa - Dalarna, Zweden</option>
+                  <option value="falun" data-target="falun.html#data-en-prijs">Falun - Dalarna, Zweden</option>
+                  <option value="finland" data-target="finland.html#prijzen">Finland - Punkaharju</option>
+                  <option value="weissensee" data-target="weissensee.html#data-en-prijs">Weissensee - Karinthië</option>
+                  <option value="lulea" data-target="lulea.html#data-en-prijs">Luleå - Zweeds Lapland</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Zonder JavaScript blijven dit twee gewone datumvelden; met
+                 JavaScript worden ze verborgen en komt er een kalender voor in
+                 de plaats (zie js/trip-search.js). -->
+            <div class="trip-search__field trip-search__field--native">
+              <label class="trip-search__label" for="tsVan">Aankomst</label>
+              <div class="trip-search__control">
+                <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
+                <input class="trip-search__input" type="date" id="tsVan" name="van" />
+              </div>
+            </div>
+
+            <div class="trip-search__field trip-search__field--native">
+              <label class="trip-search__label" for="tsTot">Vertrek</label>
+              <div class="trip-search__control">
+                <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
+                <input class="trip-search__input" type="date" id="tsTot" name="tot" />
+              </div>
+            </div>
+
+            <div class="trip-search__field trip-search__field--persons">
+              <span class="trip-search__label" id="tsPersonenLabel">Reizigers</span>
+              <div class="trip-search__control trip-search__stepper">
+                <button type="button" class="trip-search__step-btn" data-persons="minus" aria-label="Eén reiziger minder">−</button>
+                <input class="trip-search__count" type="number" id="tsPersonen" name="personen" value="2" min="1" max="12" inputmode="numeric" aria-labelledby="tsPersonenLabel" />
+                <button type="button" class="trip-search__step-btn" data-persons="plus" aria-label="Eén reiziger meer">+</button>
+              </div>
+            </div>
+          </div>
+
+          <button class="trip-search__submit" type="submit">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8L20 20"/></svg>
+            <span>Bekijk je reis</span>
+          </button>
+
+          <p class="trip-search__note">Je keuzes staan meteen klaar in het aanvraagformulier. Joey neemt daarna persoonlijk contact met je op.</p>
+        </form>
+      </div>
+    </div>
 
     <div class="baanlijn baanlijn--on-light" aria-hidden="true">
       <svg viewBox="0 0 400 40" preserveAspectRatio="none">
@@ -245,10 +309,10 @@
         <div class="trip-row__body">
           <span class="trip-row__region">Dalarna, Zweden</span>
           <h2 class="trip-row__title">Falun</h2>
-          <p class="trip-row__text">Begeleide groepsreis op historisch ijs, met de karakteristieke rode mijngebouwen van Falun op de achtergrond. Zelfde opzet als Orsa.</p>
+          <p class="trip-row__text">Pakketreis op historisch ijs, met de karakteristieke rode mijngebouwen van Falun op de achtergrond. Vlucht, huurauto en verblijf zitten erbij in.</p>
           <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Begeleide groepsreis</dd></div>
-            <div><dt>Aanmelden</dt><dd>Open inschrijving, per tweetal</dd></div>
+            <div><dt>Soort reis</dt><dd>Pakketreis</dd></div>
+            <div><dt>Reisduur</dt><dd>4 of 5 dagen</dd></div>
             <div><dt>Verblijf</dt><dd>Volgt binnenkort</dd></div>
             <div><dt>Data</dt><dd>Volgen binnenkort</dd></div>
             <div><dt>Prijs</dt><dd>Vanaf €995</dd></div>
@@ -389,7 +453,7 @@
     <div class="wrap footer__grid">
       <div>
         <a class="footer__logo" href="./" aria-label="Novakse Reizen - naar de homepage">
-          <img class="logo-mark logo-mark--lg" src="images/logo-mark.png" alt="" width="599" height="840" />
+          <img class="logo-mark logo-mark--lg" src="images/logo-mark.png" alt="" width="401" height="600" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="1099" height="184" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="1099" height="184" />
         </a>
@@ -431,6 +495,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/trip-search.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

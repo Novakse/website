@@ -43,6 +43,7 @@
       reis: "Falun",
       aankomst: params.get("aankomst"),
       dagen: params.get("dagen"),
+      personen: params.get("personen"),
       vlucht: params.get("vlucht") || "",
       auto: params.get("auto") || "",
       begeleiding: params.get("begeleiding") || ""
@@ -119,6 +120,7 @@
         reis: falunKeuze.reis,
         aankomst: falunKeuze.aankomst,
         dagen: falunKeuze.dagen,
+        personen: falunKeuze.personen,
         vlucht: falunKeuze.vlucht,
         auto: falunKeuze.auto,
         begeleiding: falunKeuze.begeleiding,

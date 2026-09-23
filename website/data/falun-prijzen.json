@@ -1,34 +1,67 @@
 {
   "//": "Prijzen en data voor de Falun-kalender. Alle zes de taalversies lezen dit bestand, dus je werkt het een keer bij. Zolang seizoenStart of seizoenEind leeg is, verschijnt de kalender niet en blijft de gewone tekst op de pagina staan.",
 
-  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. Schrijf als jaar-maand-dag. De laatste dag is de laatste dag dat iemand nog kan vertrekken.",
-  "seizoenStart": null,
-  "seizoenEind": null,
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 19 december tot en met 14 maart.",
+  "seizoenStart": "2026-12-19",
+  "seizoenEind": "2027-03-14",
 
   "//duur": "Welke reisduren iemand kan kiezen, in dagen. 4 dagen telt 3 nachten, 5 dagen telt 4 nachten.",
   "duur": [4, 5],
 
-  "//basisprijs": "Bedrag per persoon per reisduur, in hele euro's. Dit is de prijs inclusief vlucht en huurauto.",
+  "//basisprijs": "Bedrag per persoon per reisduur, in hele euro's. Dit is de prijs inclusief vlucht, huurauto en verblijf, gerekend met een gewone nacht van huisjeBasisSEK.",
   "basisprijs": {
     "4": 995,
     "5": 1095
   },
 
-  "//toeslagPerNacht": "Wat een nacht duurder of goedkoper is dan de basisprijs, omdat de huisjes niet het hele seizoen hetzelfde kosten. Schrijf per nacht: \"2027-01-15\": 25. Een min-teken maakt hem goedkoper: \"2027-01-15\": -20. Nachten die hier niet in staan, tellen als nul en houden dus gewoon de basisprijs. Zorg dat er precies een reeks van drie nachten op nul staat, dan komt die periode op 995 uit en staat hij vanzelf voorgeselecteerd.",
-  "toeslagPerNacht": {},
+  "//personen": "Voor hoeveel personen kan iemand boeken. Het huisje gaat tot 4 personen. De basisprijs hierboven geldt voor basisPersonen; bij een ander aantal verandert het huisjesdeel en het autodeel mee. Wordt het duurder (alleen reizen), dan wordt dat volledig doorberekend. Wordt het goedkoper (3 of 4 personen), dan wordt daarvan kortingDoorgeven doorgegeven: 0.5 is de helft, 1 is alles, 0 is niets.",
+  "personen": { "min": 1, "max": 4, "standaard": 2 },
+  "basisPersonen": 2,
+  "autoPerReisEUR": 200,
+  "kortingDoorgeven": 0.5,
 
-  "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf en huurautoZelf gaan van de prijs af; begeleiding komt erbij.",
+  "//huisjes": "De huisjesprijzen komen van de boekingssite van Falun Strandby en staan in Zweedse kronen per huisje per nacht - precies zoals daar getoond, zodat je ze zo kunt overnemen. huisjeBasisSEK is de gewone nacht die al in de basisprijs zit; alleen nachten die daarvan afwijken zet je hieronder. Het verschil wordt gedeeld door personenPerHuisje en omgerekend met wisselkoersSEK (kronen per euro).",
+  "huisjeBasisSEK": 1298,
+  "personenPerHuisje": 2,
+  "wisselkoersSEK": 11.3,
+
+  "//huisjePerNachtSEK": "Alleen de nachten die afwijken van de 1298 hierboven. 9 januari is 1498 en 14 februari is 9086, omdat daar het WK begint. De goedkope decembernachten van Strandby (700 en 850) vallen voor het seizoen, dus die staan hier niet.",
+  "huisjePerNachtSEK": {
+    "2027-01-09": 1498,
+    "2027-02-14": 9086
+  },
+
+  "//ijsOnzeker": "Periode waarin het ijs nog onzeker is. Die dagen blijven gewoon te boeken, maar krijgen een streepje in de kalender en een regel uitleg eronder. Laat leeg (null) om de waarschuwing weg te halen.",
+  "ijsOnzeker": {"van": "2026-12-19", "tot": "2027-01-01"},
+
+  "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf gaat per persoon van de prijs af. Voor de huurauto wordt het bedrag uitgerekend uit autoPerReisEUR hierboven, want dat hangt af van hoeveel mensen er meegaan. Begeleiding komt erbij.",
   "opties": {
     "vluchtZelf": 250,
-    "huurautoZelf": 100,
-    "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en vika's. Kan alleen als de hele reis binnen van/tot valt. Zolang prijs null is, kan het vinkje niet aangezet worden.",
+    "//groterAuto": "Een ruimere huurauto, bijvoorbeeld voor meer bagage of meer mensen. Het bedrag is per persoon. Zolang prijs null is, staat de optie er wel in het aanvraagformulier maar telt hij niet mee in de prijs: Joey stuurt er dan een voorstel voor. Haal het hele blokje weg om de optie niet te tonen. NOG INVULLEN: wat kost een grotere auto?",
+    "groterAuto": {
+      "prijs": null
+    },
+    "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en fika's. De bezoeker kiest zelf voor hoeveel dagen hij begeleiding wil; dat hoeft niet de hele reis te zijn. prijsPerDag geldt voor de hele groep en wordt over de deelnemers verdeeld (perPersoon false). Kan alleen als de hele reis binnen van/tot valt. Zet prijsPerDag op null om begeleiding helemaal weg te laten.",
     "begeleiding": {
-      "prijs": null,
+      "prijsPerDag": 100,
+      "perPersoon": false,
       "van": "2027-01-10",
-      "tot": "2027-02-20"
+      "tot": "2027-02-20",
+      "//inbegrepen": "Wat er bij begeleiding hoort. Deze regels komen klein onder de optie te staan in het aanvraagformulier.",
+      "inbegrepen": [
+        "kampvuurlunch",
+        "fika's onderweg",
+        "techniektips op het ijs",
+        "materiaalservice",
+        "dronevideo's",
+        "foto's en video's op het ijs"
+      ]
     }
   },
 
-  "//bezet": "Periodes die niet meer te kiezen zijn. Voorbeeld: {\"van\": \"2027-02-06\", \"tot\": \"2027-02-13\", \"wat\": \"Volgeboekt\"}. Achter elke regel een komma, behalve achter de laatste.",
-  "bezet": []
+  "//bezet": "Periodes waarin Falun Strandby geen gewone aankomst toelaat. In februari en begin maart verhuren ze alleen weekpakketten vanaf 25.000 SEK omdat er een groot evenement in Falun is, dus daar valt niets normaals te boeken. Wil je die weken toch open zetten, haal dan de tweede regel hieronder weg.",
+  "bezet": [
+    {"van": "2027-01-07", "tot": "2027-01-09", "wat": "Geen aankomst mogelijk"},
+    {"van": "2027-02-14", "tot": "2027-03-08", "wat": "Niet beschikbaar"}
+  ]
 }

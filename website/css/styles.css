@@ -356,7 +356,7 @@ summary:focus-visible,
 /* Logo-lockup: het vrijstaande beeldmerk naast de naam. De naam staat laag
    tegen het beeldmerk aan, op dezelfde plek als in het originele logo. */
 .site-header__logo { display: inline-flex; align-items: flex-end; gap: 0.6rem; }
-.site-header__logo .logo-word-img { margin-bottom: 0.12rem; }
+.site-header__logo .logo-word-img { margin-bottom: 0.22rem; }
 /* Op de homepage staat hetzelfde beeldmerk groot in het openingsscherm. Het
    kleine logo in de balk blijft daar weg zolang het grote nog in beeld is en
    schuift pas rustig binnen zodra er voorbij het grote logo is gescrold
@@ -373,6 +373,12 @@ body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header_
 /* De naam houdt altijd zijn eigen donkere logokleur, ook boven een foto. */
 .site-header .logo-word-img--light { display: none; }
 .site-header .logo-word-img--dark { display: block; }
+
+/* In de balk staat de naam bewust klein en ingetogen naast het beeldmerk:
+   het beeldmerk draagt de herkenning, de naam is alleen ondersteunend. */
+.site-header .logo-word-img { height: 0.85rem; opacity: 0.78; transition: opacity 0.3s ease; }
+.site-header__logo:hover .logo-word-img,
+.site-header__logo:focus-visible .logo-word-img { opacity: 1; }
 
 .logo-mark { height: 2.2rem; width: auto; }
 
@@ -1456,6 +1462,55 @@ html:not(.js) .opener__controls { display: none; }
   .split-photo__body { padding-inline: 0 var(--pad); }
 }
 
+/* ------------------------------------------------------------------
+   Het huisje van binnen (Finland). Vier foto's in een ongelijk ritme:
+   twee brede en twee smalle, waarbij de tweede foto een stukje zakt.
+   Zo blijft het een reeks en geen rij identieke kaarten.
+   ------------------------------------------------------------------ */
+.lodge { background: var(--paper-soft); padding-block: 4rem 4.5rem; }
+.lodge__head { max-width: 40rem; }
+.lodge__lede { margin-top: 1rem; color: var(--ink-soft); max-width: 46ch; }
+
+.lodge__grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+.lodge__item { margin: 0; }
+.lodge__item picture { display: block; }
+.lodge__item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 16px 36px rgba(20, 24, 26, 0.14);
+}
+.lodge__item figcaption {
+  margin-top: 0.85rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 60rem) {
+  .lodge { padding-block: 5.5rem 6rem; }
+  .lodge__grid {
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 1.75rem;
+    row-gap: 3rem;
+  }
+  /* Breed - smal, daarna smal - breed: het ritme kantelt halverwege. */
+  .lodge__grid > .lodge__item:nth-child(1) { grid-column: 1 / 8; }
+  .lodge__grid > .lodge__item:nth-child(2) { grid-column: 8 / 13; }
+  .lodge__grid > .lodge__item:nth-child(3) { grid-column: 1 / 6; }
+  .lodge__grid > .lodge__item:nth-child(4) { grid-column: 6 / 13; }
+
+  .lodge__item--wide img { aspect-ratio: 3 / 2; }
+  .lodge__item--offset { margin-top: 3.5rem; }
+}
+
 /* Blok voor informatie die er nog niet is — bewust open en eerlijk. */
 .pending { background: var(--paper); padding-block: 4rem 5rem; }
 .pending__inner {
@@ -1860,6 +1915,9 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
    elkaar. Verder staan hier de duurkeuze en de samenvatting met het totaal.
    -------------------------------------------------------------------------- */
 .falun-cal { margin-top: 2.5rem; }
+/* De kalender staat in een sectie die over de volle breedte loopt; de tekst
+   erboven blijft wel leesbaar smal. */
+.pending__lead { margin-top: 1rem; color: var(--ink-soft); max-width: 58ch; }
 .falun-cal__fallback { color: var(--ink-soft); }
 .falun-cal__block { margin-bottom: 1.75rem; }
 .falun-cal__legend {
@@ -1933,6 +1991,22 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
 .falun-cal__period { margin-top: 0.4rem; font-size: 0.88rem; color: var(--ink-soft); }
 .falun-cal__book { margin-top: 1.25rem; justify-content: center; }
 .falun-cal__hint { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+.falun-cal__note {
+  margin: -1.25rem 0 2rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+.falun-cal__note--inline { margin: 0.8rem 0 0; }
+
+/* Dagen waarop het ijs nog onzeker is: gewoon te boeken, maar met een
+   streepje eronder zodat het opvalt. */
+button.calendar__cell.is-onzeker { border-bottom: 2px dashed var(--warm-deep); }
+button.calendar__cell.is-onzeker.is-gekozen { border-bottom-color: var(--warm); }
+.calendar__chip.is-onzeker {
+  background: #eef1ec;
+  border-bottom: 2px dashed var(--warm-deep);
+}
 
 /* Minder maanden naast elkaar dan bij de gewone kalender, want de prijs
    heeft breedte nodig. */
@@ -2103,6 +2177,59 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
   margin-bottom: 0.8rem;
 }
 .booking__block--vraag .booking__extras { margin-top: 0; }
+
+/* Stap 4 bundelt alles wat bij de gekozen bestemming hoort. De onderdelen
+   daarbinnen krijgen een lichte tussenkop in plaats van een eigen stapnummer,
+   zodat de nummering van de stappen kort blijft. */
+.booking__sub { margin-top: 2rem; padding-top: 1.6rem; border-top: 1px solid var(--border); }
+.booking__sub-kop { font-weight: 600; font-size: 0.95rem; }
+.booking__sub .booking__note { margin-top: 0.4rem; }
+
+/* De link naar de reispagina valt weg zodra de kalender hier in de stap
+   staat. .link-arrow zet zelf een display, dus hidden heeft hier hulp nodig. */
+.link-arrow[hidden] { display: none; }
+
+/* De kalender staat hier als stap in het formulier en niet als losse kaart op
+   een reispagina, dus smaller en zonder de ruime marge eromheen. */
+.booking__calendar { margin-top: 1rem; }
+.booking__calendar .falun-cal__block { margin-bottom: 1.25rem; }
+.booking__calendar .calendar__legend { margin-bottom: 0.9rem; }
+.booking__calendar .calendar__months { grid-template-columns: 1fr; gap: 1.75rem; }
+.booking__calendar .falun-cal__note { margin-top: 0.9rem; }
+@media (min-width: 700px) {
+  .booking__calendar .calendar__months { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Stap 1 van de aanvraag: de bestemming. De reizen die iemand zelf kan
+   boeken staan in de bovenste groep, de begeleide reizen en het maatwerk
+   daaronder. */
+.booking__destinations { margin-top: 1rem; display: grid; gap: 1.6rem; }
+.booking__groep-kop {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--ink-soft);
+}
+.booking__groep .booking__extras { margin-top: 0.7rem; }
+.extra--reis { padding: 1.05rem 1.2rem; align-items: start; }
+.extra--reis .extra__check { margin-top: 0.2rem; }
+.extra--reis .extra__name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  gap: 0.25rem;
+}
+.extra--reis .extra__hint { font-family: var(--sans); font-size: 0.82rem; }
+.extra--reis .extra__price {
+  align-self: center;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 0.82rem;
+  color: var(--warm-deep);
+  white-space: normal;
+  text-align: right;
+}
 
 /* --------------------------------------------------------------------------
    Dag voor dag
@@ -2335,6 +2462,8 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
 a.contact__value { border-bottom: 1px solid var(--border); width: fit-content; }
 a.contact__value:hover { border-bottom-color: var(--ink); }
 .contact__hint { font-size: 0.85rem; color: var(--ink-soft); }
+.contact__hint a { color: var(--warm-deep); border-bottom: 1px solid currentColor; }
+.contact__hint a:hover { color: var(--ink); }
 .contact__list--compact .contact__value { font-size: 0.95rem; font-weight: 400; }
 .contact__sub { margin-top: 3rem; }
 .contact__fields { margin-top: 1.5rem; }
@@ -2663,4 +2792,623 @@ button.calendar__cell {
 @media (min-width: 60rem) {
   .article__wrap { max-width: 44rem; }
   .article-body p, .article-body ul, .article-body ol { max-width: 68ch; }
+}
+
+/* ==========================================================================
+   Reiszoeker - de balk met bestemming, datums en reizigers
+
+   De balk staat in een "dock": op brede schermen schuift die met een
+   negatieve marge over de onderrand van de foto of video erboven. Op smalle
+   schermen blijft hij er gewoon onder staan, want gestapeld is hij te hoog
+   om over het beeld te leggen.
+   ========================================================================== */
+.trip-search-dock {
+  position: relative;
+  z-index: 3;
+  background: var(--paper);
+  padding-block: 1.75rem 2rem;
+}
+
+.trip-search {
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: var(--paper);
+  padding: 1.25rem;
+}
+
+.trip-search__title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.trip-search__fields {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.trip-search__field { min-width: 0; }
+
+.trip-search__label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+/* Het icoon staat naast het veld, niet erin: zo blijft het veld op iedere
+   breedte even breed als de kolom en loopt de tekst er nooit achter. */
+.trip-search__control {
+  margin-top: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.trip-search__icon {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--warm-deep);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trip-search__input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.45rem 0.1rem;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.3;
+  transition: border-color 0.18s ease;
+}
+.trip-search__input:hover { border-bottom-color: var(--warm-deep); }
+.trip-search__input:focus-visible { outline-offset: 1px; }
+
+/* Safari zet datumvelden anders neer dan de rest; deze regels trekken ze
+   gelijk met de keuzelijst ernaast. */
+.trip-search__input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 2.15rem;
+}
+.trip-search__input[type="date"]::-webkit-date-and-time-value { text-align: left; }
+.trip-search__input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: pointer; }
+.trip-search__input[type="date"]:hover::-webkit-calendar-picker-indicator { opacity: 1; }
+
+select.trip-search__input {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 1.3rem;
+  cursor: pointer;
+  /* Pijltje als achtergrond, zodat er geen extra element nodig is. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath d='M1 1l3.5 3.5L8 1' fill='none' stroke='%2314181a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.15rem center;
+  background-size: 0.6rem;
+}
+
+/* Reizigers: min en plus met het getal ertussen. */
+.trip-search__stepper { gap: 0.35rem; }
+.trip-search__step-btn {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--ink);
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+.trip-search__step-btn:hover { border-color: var(--warm-deep); background: var(--paper-soft); }
+.trip-search__count {
+  width: 2.75rem;
+  padding: 0.45rem 0;
+  border: none;
+  background: none;
+  color: var(--ink);
+  font-size: 1rem;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.trip-search__count::-webkit-outer-spin-button,
+.trip-search__count::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.trip-search__submit {
+  margin-top: 1rem;
+  width: 100%;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding-inline: 1.25rem;
+  border-radius: 0.9rem;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+.trip-search__submit:hover { background: var(--ink-2); }
+.trip-search__submit:active { transform: scale(0.99); }
+.trip-search__submit svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trip-search__note {
+  margin-top: 0.85rem;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* Vanaf hier passen de velden naast elkaar. */
+@media (min-width: 52rem) {
+  .trip-search-dock {
+    margin-top: -3rem;
+    padding-block: 0 0.5rem;
+    background: transparent;
+  }
+  .trip-search {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem 1.6rem;
+    padding: 1.4rem 1.6rem;
+    box-shadow: 0 1.5rem 2.5rem -1.5rem rgba(20, 24, 26, 0.45);
+  }
+  .trip-search__title { grid-column: 1 / -1; }
+  .trip-search__fields {
+    grid-column: 1 / -1;
+    margin-top: 0;
+    grid-template-columns: 1.5fr 1fr 1fr auto;
+    gap: 0;
+    align-items: start;
+  }
+  /* Dunne scheiding tussen de velden in plaats van kaders om elk veld heen. */
+  .trip-search__field { padding-right: 1.4rem; }
+  .trip-search__field + .trip-search__field {
+    padding-left: 1.4rem;
+    border-left: 1px solid var(--border);
+  }
+  .trip-search__field--persons { padding-right: 0; }
+  /* Toelichting en knop delen dezelfde regel: tekst links, knop rechts. */
+  .trip-search__note {
+    grid-row: 3;
+    grid-column: 1;
+    margin-top: 0;
+    align-self: center;
+  }
+  .trip-search__submit {
+    grid-row: 3;
+    grid-column: 2;
+    margin-top: 0;
+    width: auto;
+    min-width: 12rem;
+  }
+}
+
+/* Op brede schermen past de knop naast de velden, op dezelfde regel. */
+@media (min-width: 72rem) {
+  .trip-search { padding: 1.5rem 1.75rem; }
+  .trip-search__fields { grid-row: 2; grid-column: 1; }
+  .trip-search__submit { grid-row: 2; grid-column: 2; align-self: end; margin-bottom: 0.15rem; }
+  .trip-search__note { grid-row: 3; grid-column: 1 / -1; }
+}
+
+/* --------------------------------------------------------------------------
+   Reiszoeker: het periodeveld met de kalender
+
+   De twee gewone datumvelden staan er voor bezoekers zonder JavaScript. Zodra
+   js/trip-search.js draait, krijgt het formulier de klasse is-enhanced en
+   vervangt een knop met kalender die twee velden.
+   -------------------------------------------------------------------------- */
+.trip-search.is-enhanced .trip-search__field--native { display: none; }
+
+.trip-search__field--when { position: relative; }
+
+.trip-search__trigger {
+  width: 100%;
+  min-width: 0;
+  padding: 0.45rem 0.1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--ink-soft);
+  transition: border-color 0.18s ease;
+}
+.trip-search__trigger:hover { border-bottom-color: var(--warm-deep); }
+.trip-search__field--when.has-value .trip-search__trigger { color: var(--ink); }
+.trip-search__value { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* De kalender zelf. Op smalle schermen klapt hij open in de balk; vanaf 52rem
+   hangt hij als paneel onder het veld. */
+.trip-cal {
+  margin-top: 0.9rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--paper);
+}
+.trip-cal[hidden] { display: none; }
+
+.trip-cal__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.trip-cal__titles {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  text-align: center;
+}
+.trip-cal__title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: capitalize;
+}
+.trip-cal__arrow {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  transition: border-color 0.18s ease, background-color 0.18s ease, opacity 0.18s ease;
+}
+.trip-cal__arrow:hover:not(:disabled) { border-color: var(--warm-deep); background: var(--paper-soft); }
+.trip-cal__arrow:disabled { opacity: 0.35; cursor: default; }
+.trip-cal__arrow svg {
+  width: 0.55rem;
+  height: 0.8rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trip-cal__months {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+.trip-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.trip-cal__dayname {
+  text-align: center;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  padding-bottom: 0.3rem;
+}
+.trip-cal__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  font-size: 0.85rem;
+  color: var(--ink);
+  border-radius: 8px;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+.trip-cal__cell.is-empty { visibility: hidden; }
+.trip-cal__day:hover:not(:disabled) { background: var(--paper-soft); }
+.trip-cal__cell.is-outside { color: #c2c6bf; cursor: default; }
+
+/* De dagen tussen aankomst en vertrek krijgen een lichte baan; de twee
+   uiteinden zijn donker, zodat de keuze ook zonder kleur te lezen is. */
+.trip-cal__cell.is-between,
+.trip-cal__cell.is-preview { background: rgba(122, 70, 32, 0.12); border-radius: 0; }
+.trip-cal__cell.is-from,
+.trip-cal__cell.is-to {
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+}
+.trip-cal__cell.is-from { border-radius: 8px 0 0 8px; }
+.trip-cal__cell.is-to { border-radius: 0 8px 8px 0; }
+.trip-cal__cell.is-from.is-to { border-radius: 8px; }
+.trip-cal__day:hover:not(:disabled).is-from,
+.trip-cal__day:hover:not(:disabled).is-to { background: var(--ink-2); }
+
+.trip-cal__hint {
+  margin-top: 0.9rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.trip-cal__foot {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.trip-cal__clear {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.trip-cal__clear:hover:not(:disabled) { color: var(--ink); }
+.trip-cal__clear:disabled { opacity: 0.4; cursor: default; text-decoration: none; }
+.trip-cal__apply {
+  padding: 0.6rem 1rem;
+  white-space: nowrap;
+  border-radius: 0.75rem;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: background-color 0.18s ease;
+}
+.trip-cal__apply:hover:not(:disabled) { background: var(--ink-2); }
+.trip-cal__apply:disabled { opacity: 0.4; cursor: default; }
+
+@media (min-width: 52rem) {
+  .trip-search.is-enhanced .trip-search__fields { grid-template-columns: 1.4fr 1.4fr auto; }
+
+  .trip-cal {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    z-index: 20;
+    width: min(34rem, calc(100vw - 2 * var(--pad)));
+    padding: 1.25rem;
+    box-shadow: 0 1.5rem 3rem -1rem rgba(20, 24, 26, 0.28);
+  }
+  .trip-cal__titles { grid-template-columns: 1fr 1fr; }
+  .trip-cal__months { grid-template-columns: 1fr 1fr; }
+}
+
+/* Op de smalste schermen is één maand naast de ander niet te lezen; daar
+   blijft de kalender één kolom, ook als het paneel wel al zweeft. */
+@media (min-width: 52rem) and (max-width: 60rem) {
+  .trip-cal { width: min(30rem, calc(100vw - 2 * var(--pad))); }
+}
+
+/* --------------------------------------------------------------------------
+   Belafspraak inplannen
+   Links staat waarom je een moment kiest, rechts de kalender. Je kiest eerst
+   een dag, dan een tijd, dan pas het formulier: elke stap verschijnt pas als
+   de vorige klaar is, zodat er nooit een half ingevuld scherm staat.
+   -------------------------------------------------------------------------- */
+.plan-section { background: var(--paper); padding-block: 4.5rem 5.5rem; }
+.plan-section__grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: start; }
+.plan-section__text { max-width: 36rem; }
+.plan-section__intro { margin-top: 1rem; color: var(--ink-soft); }
+.plan-section__points { margin-top: 1.75rem; display: grid; gap: 0.9rem; }
+.plan-section__points li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.plan-section__points li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.6rem;
+  width: 0.6rem; height: 2px;
+  background: var(--warm-deep);
+}
+.plan-section__aside {
+  margin-top: 2.25rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+.plan-section__aside a { border-bottom: 1px solid var(--border); }
+.plan-section__aside a:hover { border-bottom-color: var(--ink); }
+
+@media (min-width: 60rem) {
+  .plan-section__grid { grid-template-columns: 0.85fr 1.15fr; gap: 5rem; }
+}
+
+/* Het paneel met de kalender zelf */
+.plan {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--paper-soft);
+  /* Op een telefoon blijft de rand smal: anders worden de zeven dagcellen
+     te klein om prettig aan te tikken. */
+  padding: 1.1rem;
+}
+@media (min-width: 40rem) {
+  .plan { padding: 2rem; }
+}
+.plan__fallback { color: var(--ink-soft); font-size: 0.95rem; }
+.plan__fallback a { border-bottom: 1px solid var(--border); }
+
+.plan__cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.plan__cal-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-transform: capitalize;
+  text-align: center;
+}
+.plan__cal-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem; height: 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--paper);
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--ink);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.plan__cal-nav:hover:not(:disabled) { border-color: var(--ink); }
+.plan__cal-nav:disabled { opacity: 0.35; cursor: default; }
+
+.plan__grid {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+@media (min-width: 40rem) {
+  .plan__grid { gap: 5px; }
+}
+.plan__dayname {
+  text-align: center;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  padding-bottom: 0.4rem;
+}
+.plan__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+.plan__cell.is-leeg { visibility: hidden; }
+.plan__cell.is-dicht { color: #b6bbb5; }
+
+button.plan__cell.is-vrij {
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--border);
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+button.plan__cell.is-vrij:hover { border-color: var(--ink); transform: translateY(-1px); }
+button.plan__cell.is-vrij:active { transform: translateY(0); }
+button.plan__cell.is-gekozen {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.plan__cal-note { margin-top: 1.1rem; font-size: 0.82rem; color: var(--ink-soft); }
+
+/* Tijdstippen */
+.plan__slots { margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid var(--border); }
+.plan__slots-title { font-family: var(--display); font-weight: 600; font-size: 1.02rem; }
+.plan__times {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: 0.6rem;
+}
+.plan__time {
+  padding: 0.7rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: var(--paper);
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+.plan__time:hover { border-color: var(--ink); }
+.plan__time.is-gekozen { background: var(--ink); border-color: var(--ink); color: #fff; }
+.plan__slots-note { margin-top: 0.9rem; font-size: 0.82rem; color: var(--ink-soft); }
+
+/* Formulier */
+.plan__form { margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid var(--border); }
+.plan__form-title { font-family: var(--display); font-weight: 600; font-size: 1.02rem; }
+.plan__chosen {
+  margin-top: 0.9rem;
+  padding: 0.85rem 1rem;
+  border-left: 2px solid var(--warm);
+  background: var(--paper);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.plan__chosen-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+.plan__chosen-value { font-family: var(--display); font-weight: 600; font-size: 1.02rem; }
+.plan__fields { margin-top: 1.5rem; }
+.plan__optional { font-weight: 400; color: var(--ink-soft); }
+.plan__form .form-note { color: var(--ink-soft); }
+.plan__form .form-status--error { color: #b3261e; }
+
+/* Bevestiging */
+.plan__done { text-align: left; }
+.plan__done:focus { outline: none; }
+.plan__done-title { font-family: var(--display); font-weight: 600; font-size: 1.3rem; }
+.plan__done-moment {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-left: 2px solid var(--warm);
+  background: var(--paper);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-family: var(--display);
+  font-weight: 600;
+}
+.plan__done-text { margin-top: 1.1rem; color: var(--ink-soft); font-size: 0.95rem; }
+.plan__done-actions { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; }
+
+/* Blok op de contactpagina dat naar de planner verwijst */
+.plan-cta {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--paper-soft);
+}
+.plan-cta__title { font-family: var(--display); font-weight: 600; font-size: 1.1rem; }
+.plan-cta__text { margin-top: 0.6rem; font-size: 0.95rem; color: var(--ink-soft); }
+.plan-cta__link { margin-top: 1.25rem; display: inline-flex; }
+
+/* De regel die laat zien welke keuze uit de reiszoeker is meegekomen. */
+.pending__chosen {
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--warm-deep);
+  background: var(--paper);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-size: 0.95rem;
 }

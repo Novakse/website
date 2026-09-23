@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=3" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png?v=3" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
+  <script>document.documentElement.classList.add("js");</script>
+  <title>Offerte aanvragen - Novakse Reizen</title>
+  <meta name="description" content="Stel in een paar korte stappen je schaatsreis samen. Je ziet je aanvraag meegroeien en Joey stuurt je daarna een persoonlijke offerte." />
+  <meta name="robots" content="noindex" />
+
+  <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/fonts.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/theme-groen.css" />
+  <link rel="stylesheet" href="css/offerte.css" />
+</head>
+<body class="oq-body">
+  <a class="skip-link" href="#main">Ga naar de inhoud</a>
+
+  <!-- ==========================================================================
+       De balk: hierin bouwt het aanvraagdocument zich op
+       ========================================================================== -->
+  <header class="oq-bar">
+    <div class="oq-bar__row">
+      <a class="oq-bar__logo" href="./" aria-label="Novakse Reizen - naar de homepage">
+        <img class="logo-mark" src="images/logo-mark.png" alt="" width="401" height="600" />
+        <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="1099" height="184" />
+      </a>
+
+      <div class="oq-chips" id="oqChips"></div>
+
+      <button type="button" class="oq-bar__toggle" id="oqToggle" aria-expanded="false" aria-controls="oqDoc">
+        <span>Je aanvraag</span>
+        <span class="oq-bar__count" id="oqCount">0</span>
+        <svg class="oq-bar__chevron" width="10" height="7" viewBox="0 0 10 7" aria-hidden="true" focusable="false"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <a class="oq-bar__exit" href="reizen.html">Sluiten</a>
+    </div>
+
+    <div class="oq-doc" id="oqDoc" hidden>
+      <div class="oq-doc__inner">
+        <h2 class="oq-doc__title">Je aanvraag tot nu toe</h2>
+        <p class="oq-doc__note">Dit gaat straks naar Joey. Klik op een regel om je antwoord aan te passen. Je zit nergens aan vast: je krijgt eerst een persoonlijk voorstel terug.</p>
+        <dl class="oq-doc__lines" id="oqLines"></dl>
+        <div class="oq-doc__sum" id="oqSum" hidden>
+          <span>Gekozen extra's, per persoon</span>
+          <strong id="oqSumValue">-</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="oq-progress">
+      <span class="oq-progress__fill" id="oqProgress" role="progressbar" aria-label="Voortgang van je aanvraag" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span>
+    </div>
+  </header>
+
+  <main id="main" class="oq-main">
+    <div class="oq-bg" id="oqBg" aria-hidden="true">
+      <picture>
+        <source id="oqBgAvif" type="image/avif" srcset="images/hero-baan-zonsondergang.avif" />
+        <source id="oqBgWebp" type="image/webp" srcset="images/hero-baan-zonsondergang.webp" />
+        <img id="oqBgImg" src="images/hero-baan-zonsondergang.jpg" alt="" width="1600" height="900" />
+      </picture>
+    </div>
+
+    <div class="oq-stage" id="oqStage"></div>
+
+    <noscript>
+      <div class="oq-nojs">
+        <h1 class="oq-intro__title">Offerte aanvragen</h1>
+        <p class="oq-intro__text">Deze pagina werkt stap voor stap en heeft JavaScript nodig. Zet JavaScript aan, of gebruik het gewone aanvraagformulier.</p>
+        <p class="oq-done__links"><a class="oq-done__link" href="boeken.html">Naar het aanvraagformulier</a> <a class="oq-done__link" href="contact.html">Naar contact</a></p>
+      </div>
+    </noscript>
+  </main>
+
+  <!-- ==========================================================================
+       INHOUD VAN DE STAPPEN BIJWERKEN
+
+       Alles wat de bezoeker te zien krijgt staat hieronder. Je kunt vragen
+       toevoegen, verwijderen of van volgorde wisselen zonder de code te raken.
+
+       Per stap:
+         "sleutel"  korte naam, moet uniek zijn (komt ook in het webadres)
+         "label"    de kop die in het document bovenin komt te staan
+         "vraag"    de grote vraag op het scherm
+         "onder"    kleine zin onder de vraag (mag weg)
+         "soort"    bestemming | aantal | keuze | extras | tekst | gegevens
+         "opties"   bij soort "keuze": elke regel {"naam": "...", "toelichting": "..."}
+         "overslaan" op true: de bezoeker mag deze stap overslaan
+
+       Bij "extras" staan de activiteiten per bestemming, onderaan bij de
+       bestemming zelf. Prijzen zijn per persoon, in hele euro's. Heeft een
+       bestemming geen extra's, dan slaat de pagina die stap vanzelf over.
+       ========================================================================== -->
+  <script type="application/json" id="offertedata">
+{
+  "bestemmingen": [
+    {
+      "sleutel": "orsa",
+      "perVierPersonen": true,
+      "naam": "Orsa",
+      "regio": "Dalarna, Zweden",
+      "kort": "Begeleide groepsreis op het Orsameer, met een geveegde baan van zo'n 15 kilometer.",
+      "foto": "orsa-zwart-ijs-baan",
+      "alt": "Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer",
+      "extras": [
+        { "naam": "Skipas", "prijs": 65, "toelichting": "per persoon, exclusief materiaal - huur regel je zelf" },
+        { "naam": "Sneeuwscooter rijden", "prijs": 100, "toelichting": "per persoon" },
+        { "naam": "Langlaufen", "prijs": 25, "toelichting": "per persoon, zonder materiaal" },
+        { "naam": "Hondensleeën", "prijs": 70, "toelichting": "per persoon, per 20 minuten" }
+      ]
+    },
+    {
+      "sleutel": "falun",
+      "perVierPersonen": true,
+      "//reisduur": "Falun is een pakketreis van 4 of 5 dagen; dat staat zo in data/falun-prijzen.json en daar hangen de prijzen aan vast. Haal dit blokje weg als de reis vrij in duur wordt.",
+      "reisduur": {
+        "min": 4,
+        "max": 5,
+        "meerLabel": null,
+        "onder": "Falun is een pakketreis van 4 of 5 dagen. Wil je langer blijven, schrijf dat dan bij de opmerkingen, dan kijkt Joey wat er kan."
+      },
+      "naam": "Falun",
+      "regio": "Dalarna, Zweden",
+      "kort": "Pakketreis op historisch ijs. Vlucht, huurauto en verblijf zitten erbij in.",
+      "foto": "falun-meer",
+      "alt": "Schaatsers op een bevroren meer bij Falun",
+      "extras": [
+        { "naam": "Skipas", "prijs": 65, "toelichting": "per persoon, exclusief materiaal - huur regel je zelf" },
+        { "naam": "Sneeuwscooter rijden", "prijs": 100, "toelichting": "per persoon" },
+        { "naam": "Langlaufen", "prijs": 25, "toelichting": "per persoon, zonder materiaal" },
+        { "naam": "Hondensleeën", "prijs": 70, "toelichting": "per persoon, per 20 minuten" }
+      ]
+    },
+    {
+      "sleutel": "finland",
+      "perVierPersonen": true,
+      "naam": "Finland",
+      "regio": "Punkaharju",
+      "kort": "Zelfstandig op het Saimaameer, met verblijf in eigen huisjes met sauna.",
+      "foto": "finland-baan",
+      "alt": "Schaatsbaan op het Saimaameer bij Punkaharju",
+      "extras": []
+    },
+    {
+      "sleutel": "weissensee",
+      "perVierPersonen": false,
+      "naam": "Weissensee",
+      "regio": "Karinthië, Oostenrijk",
+      "kort": "Zelfstandig schaatsen op een bergmeer van 6,5 km², bekend van de Alternatieve Elfstedentocht.",
+      "foto": "weissensee-baan",
+      "alt": "Geveegde natuurijsbaan op de Weissensee",
+      "extras": []
+    },
+    {
+      "sleutel": "lulea",
+      "perVierPersonen": false,
+      "naam": "Luleå",
+      "regio": "Zweeds Lapland",
+      "kort": "Individuele reis op de natuurijsroute langs de bevroren Botnische Golf.",
+      "foto": "lulea-ijs-zonsondergang",
+      "alt": "Sporen in het ijs op de bevroren Botnische Golf bij Luleå",
+      "extras": []
+    },
+    {
+      "sleutel": "advies",
+      "naam": "Ik weet het nog niet",
+      "regio": "Advies van Joey",
+      "kort": "Joey denkt met je mee en stelt een bestemming voor die bij je past.",
+      "foto": "",
+      "extras": []
+    }
+  ],
+
+  "stappen": [
+    {
+      "sleutel": "bestemming",
+      "label": "Bestemming",
+      "soort": "bestemming",
+      "vraag": "Waar wil je op het ijs staan?",
+      "onder": "Kies de bestemming die je het meest trekt. Twijfel je nog, kies dan onderaan voor advies."
+    },
+    {
+      "sleutel": "personen",
+      "label": "Aantal personen",
+      "soort": "aantal",
+      "vraag": "Met hoeveel personen kom je?",
+      "onder": "Kinderen tellen ook mee. Kom je met een grotere groep, kies dan de laatste knop.",
+      "min": 1,
+      "max": 12,
+      "eenheid": "persoon",
+      "eenheidMeervoud": "personen",
+      "kortEenheid": "pers.",
+      "soloLabel": "alleen",
+      "meerLabel": "Meer dan 12",
+      "//perVierTekst": "Komt alleen in beeld bij bestemmingen met \"perVierPersonen\": true hierboven.",
+      "perVierTekst": "Een huisje en een huurauto zijn voor vier personen. Kom je met meer, dan komt er een huisje en een auto bij en gaat de prijs per vier personen weer een stap omhoog."
+    },
+    {
+      "sleutel": "periode",
+      "label": "Periode",
+      "soort": "keuze",
+      "vraag": "Wanneer wil je graag weg?",
+      "onder": "Het ijs bepaalt uiteindelijk mee wanneer een reis doorgaat. Je voorkeur helpt Joey op weg.",
+      "opties": [
+        { "naam": "December" },
+        { "naam": "Januari" },
+        { "naam": "Februari" },
+        { "naam": "Maart" },
+        { "naam": "Ik ben flexibel", "toelichting": "Joey kiest de periode met het beste ijs" }
+      ]
+    },
+    {
+      "sleutel": "duur",
+      "label": "Reisduur",
+      "soort": "aantal",
+      "vraag": "Hoe lang wil je blijven?",
+      "onder": "Een reis duurt minimaal vier dagen. Langer blijven kan altijd, er is geen maximum.",
+      "//grenzenUitBestemming": "Heeft de gekozen bestemming een blokje \"reisduur\", dan gelden die grenzen in plaats van de min en max hieronder.",
+      "grenzenUitBestemming": "reisduur",
+      "min": 4,
+      "max": 14,
+      "eenheid": "dag",
+      "eenheidMeervoud": "dagen",
+      "meerLabel": "Langer dan 14 dagen"
+    },
+    {
+      "sleutel": "begeleiding",
+      "label": "Begeleiding",
+      "soort": "keuze",
+      "vraag": "Wil je begeleiding op het ijs?",
+      "onder": "Bij een begeleide reis gaat Joey zelf mee en bepaalt hij elke ochtend waar de dag het mooist wordt.",
+      "opties": [
+        { "naam": "Graag begeleiding van Joey", "toelichting": "Samen op pad, in een kleine groep" },
+        { "naam": "Liever zelfstandig", "toelichting": "Novakse regelt de reis, jij bepaalt je dagen" },
+        { "naam": "Ik hoor graag wat bij ons past" }
+      ]
+    },
+    {
+      "sleutel": "ervaring",
+      "label": "Ervaring op natuurijs",
+      "soort": "keuze",
+      "vraag": "Hoeveel ervaring heb je op natuurijs?",
+      "onder": "Geen goed of fout antwoord. Het helpt Joey om de juiste reis en het juiste tempo voor te stellen.",
+      "opties": [
+        { "naam": "Dit wordt mijn eerste keer" },
+        { "naam": "Ik heb al een paar keer op natuurijs gestaan" },
+        { "naam": "Ik ben een ervaren toerschaatser" },
+        { "naam": "We komen met een gemengde groep" }
+      ]
+    },
+    {
+      "sleutel": "materiaal",
+      "label": "Schaatsmateriaal",
+      "soort": "keuze",
+      "vraag": "Neem je eigen schaatsmateriaal mee?",
+      "opties": [
+        { "naam": "Ja, ik heb eigen langlaufschaatsen" },
+        { "naam": "Nee, ik wil advies over huren of kopen" },
+        { "naam": "Ik weet het nog niet" }
+      ]
+    },
+    {
+      "sleutel": "heenreis",
+      "label": "Heenreis",
+      "soort": "keuze",
+      "vraag": "Hoe zie je de heenreis voor je?",
+      "opties": [
+        { "naam": "Vliegen" },
+        { "naam": "Met de eigen auto" },
+        { "naam": "Geen voorkeur", "toelichting": "Joey zet de mogelijkheden voor je op een rij" }
+      ]
+    },
+    {
+      "sleutel": "extras",
+      "label": "Extra activiteiten",
+      "soort": "extras",
+      "vraag": "Waar heb je naast het schaatsen zin in?",
+      "onder": "Optioneel, en je kunt meerdere dingen kiezen. Alle bedragen zijn per persoon; we regelen het ter plaatse voor je. Of een activiteit doorgaat, hangt af van het weer en de omstandigheden.",
+      "leegLabel": "Liever alleen schaatsen",
+      "overslaan": true
+    },
+    {
+      "sleutel": "verzekering",
+      "label": "Verzekering",
+      "soort": "keuze",
+      "vraag": "Hoe zit het met je verzekering?",
+      "opties": [
+        { "naam": "Reis- en annuleringsverzekering heb ik zelf geregeld" },
+        { "naam": "Ik wil graag advies hierover", "toelichting": "Joey wijst je de weg; afsluiten doe je zelf" }
+      ]
+    },
+    {
+      "sleutel": "opmerkingen",
+      "label": "Opmerkingen",
+      "soort": "tekst",
+      "vraag": "Is er nog iets dat Joey moet weten?",
+      "onder": "Denk aan bijzonderheden in de groep, wensen voor het verblijf of vragen die je nog hebt.",
+      "placeholder": "Schrijf hier je vraag of opmerking",
+      "overslaan": true
+    },
+    {
+      "sleutel": "gegevens",
+      "label": "Je gegevens",
+      "soort": "gegevens",
+      "vraag": "Waar mag Joey je offerte naartoe sturen?",
+      "onder": "Je krijgt binnen een paar dagen een persoonlijk voorstel. Geen automatische mails, geen nieuwsbrief."
+    }
+  ],
+
+  "teksten": {
+    "startEyebrow": "Offerte aanvragen",
+    "startTitel": "Bouw je schaatsreis, vraag voor vraag",
+    "startTekst": "Een paar korte vragen over waar je heen wilt, met wie en wanneer. Bovenin zie je je aanvraag meegroeien. Aan het eind stuurt Joey je een persoonlijk voorstel.",
+    "startPunten": ["Ongeveer twee minuten", "Vrijblijvend", "Persoonlijk antwoord van Joey"],
+    "startKnop": "Beginnen",
+    "verderKnop": "Verder",
+    "terugKnop": "Terug",
+    "verstuurKnop": "Aanvraag versturen",
+    "dankTitel": "Je aanvraag staat bij Joey",
+    "dankTekst": "Bedankt. Joey kijkt je aanvraag persoonlijk na en komt binnen een paar dagen bij je terug met een voorstel. Zit je ergens mee, bel of app dan gerust.",
+    "foutTekst": "Het versturen lukte niet. Probeer het zo nog eens, of stuur je aanvraag per e-mail of WhatsApp."
+  }
+}
+  </script>
+
+  <script src="js/offerte.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
