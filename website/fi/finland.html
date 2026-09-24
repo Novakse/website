@@ -70,7 +70,7 @@
         "name": "Mitä luistelumatka Suomeen maksaa?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Hinta on henkilöltä päivässä ja saat sen pyynnöstä. Siihen sisältyvät majoitus, vuokra-auto ja muut palvelut. Lennon järjestät itse."
+          "text": "Hinta alkaa 895 € / hlö neljältä päivältä kahden hengen matkalla. Kysytyimpinä jaksoina joulun aikaan ja helmikuun jälkipuoliskolla se on hieman korkeampi. Hintaan sisältyvät lento Helsinkiin, vuokra-auto paikan päällä ja saunallinen mökki. Tämän sivun kalenterista valitset itse saapumis- ja lähtöpäiväsi ja näet heti mitä jakso maksaa."
         }
       },
       {
@@ -86,7 +86,7 @@
         "name": "Mitä matkaan Suomeen sisältyy ja mitä ei?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Hintaan sisältyvät saunallinen mökki, paikan päällä oleva vuokra-auto ja muut matkaan liittyvät palvelut. Hintaan eivät sisälly lento Suomeen, ruoka ja juoma sekä omat luisteluvarusteet ja turvavarusteet."
+          "text": "Hintaan sisältyvät lento Helsinkiin ruumaan menevän matkatavaran kanssa, vuokra-auto paikan päällä ja saunallinen mökki. Hintaan eivät sisälly ruoka ja juoma eivätkä omat luistelu- ja turvavarusteet."
         }
       }
     ]
@@ -156,8 +156,8 @@
         <div class="factbar__item"><span class="factbar__label">Matkan tyyppi</span><span class="factbar__value">Omatoiminen</span></div>
         <div class="factbar__item"><span class="factbar__label">Opastus</span><span class="factbar__value">Ei</span></div>
         <div class="factbar__item"><span class="factbar__label">Majoitus</span><span class="factbar__value">Mökki saunalla</span></div>
-        <div class="factbar__item"><span class="factbar__label">Hinta</span><span class="factbar__value">Pyynnöstä</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Lento</span><span class="factbar__value">Ei sisälly</span></div>
+        <div class="factbar__item"><span class="factbar__label">Hinta</span><span class="factbar__value">Alkaen 895 &euro; / hlö</span></div>
+        <div class="factbar__item"><span class="factbar__label">Lento</span><span class="factbar__value">Sisältyy</span></div>
       </div>
     </section>
 
@@ -254,7 +254,7 @@
         <div class="prices__head reveal">
           <span class="eyebrow eyebrow--deep"><span class="dot"></span>Päivämäärät ja hinnat</span>
           <h2 class="h-section">Mitä se maksaa ja milloin voit lähteä</h2>
-          <p class="prices__intro">Hinta on henkilöltä päivässä ja saat sen pyynnöstä. Siihen sisältyvät majoitus, vuokra-auto ja muut palvelut. Lennon järjestät itse.</p>
+          <p class="prices__intro">Hinta alkaa 895 &euro; / hlö neljältä päivältä kahden hengen matkalla. Siihen sisältyvät lento Helsinkiin, vuokra-auto paikan päällä ja saunallinen mökki. Valitse alta saapumis- ja lähtöpäiväsi, niin näet heti mitä jaksosi maksaa.</p>
         </div>
 
         <!--
@@ -276,17 +276,7 @@
         -->
         <div class="calendar reveal" data-calendar>
           <script type="application/json" class="calendar__data">
-          {
-            "reis": "finland",
-            "seizoenStart": "2026-12-27",
-            "seizoenEind": "2027-03-07",
-            "minimumNachten": 3,
-            "prijsPerPersoonPerDag": null,
-            "bezet": [
-              {"van": "2027-01-16", "tot": "2027-01-23", "wat": "Kiinteä ryhmämatka"},
-              {"van": "2027-02-27", "tot": "2027-03-06", "wat": "Täyteen varattu"}
-            ]
-          }
+          { "reis": "finland", "prijzen": "data/finland-prijzen.json" }
           </script>
           <p class="calendar__fallback">Saatavilla olevat ajanjaksot ja hinnat saat pyynnöstä. Lähetä sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
         </div>
@@ -296,11 +286,11 @@
         <div class="prices__notes reveal">
           <div class="prices__note">
             <h3>Mitä sisältyy</h3>
-            <p>Saunallinen mökki, paikan päällä oleva vuokra-auto ja muut matkaan liittyvät palvelut.</p>
+            <p>Lento Helsinkiin ruumaan menevän matkatavaran kanssa, vuokra-auto paikan päällä ja saunallinen mökki.</p>
           </div>
           <div class="prices__note">
             <h3>Mitä ei</h3>
-            <p>Lento Suomeen, ruoka ja juoma sekä omat luisteluvarusteet ja turvavarusteet.</p>
+            <p>Ruoka ja juoma sekä omat luisteluvarusteet ja turvavarusteet.</p>
           </div>
           <div class="prices__note">
             <h3>Maksaminen</h3>
@@ -328,7 +318,7 @@
           </details>
           <details class="faq__item">
             <summary>Mitä luistelumatka Suomeen maksaa?</summary>
-            <p>Hinta on henkilöltä päivässä ja saat sen pyynnöstä. Siihen sisältyvät majoitus, vuokra-auto ja muut palvelut. Lennon järjestät itse.</p>
+            <p>Hinta alkaa 895 € / hlö neljältä päivältä kahden hengen matkalla. Kysytyimpinä jaksoina joulun aikaan ja helmikuun jälkipuoliskolla se on hieman korkeampi. Hintaan sisältyvät lento Helsinkiin, vuokra-auto paikan päällä ja saunallinen mökki. Tämän sivun kalenterista valitset itse saapumis- ja lähtöpäiväsi ja näet heti mitä jakso maksaa.</p>
           </details>
           <details class="faq__item">
             <summary>Milloin voit lähteä tälle luistelumatkalle Suomeen?</summary>
@@ -336,7 +326,7 @@
           </details>
           <details class="faq__item">
             <summary>Mitä matkaan Suomeen sisältyy ja mitä ei?</summary>
-            <p>Hintaan sisältyvät saunallinen mökki, paikan päällä oleva vuokra-auto ja muut matkaan liittyvät palvelut. Hintaan eivät sisälly lento Suomeen, ruoka ja juoma sekä omat luisteluvarusteet ja turvavarusteet.</p>
+            <p>Hintaan sisältyvät lento Helsinkiin ruumaan menevän matkatavaran kanssa, vuokra-auto paikan päällä ja saunallinen mökki. Hintaan eivät sisälly ruoka ja juoma eivätkä omat luistelu- ja turvavarusteet.</p>
           </details>
         </div>
       </div>

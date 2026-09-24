@@ -70,7 +70,7 @@
         "name": "Was kostet die Schlittschuhreise nach Finnland?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Der Preis gilt pro Person pro Tag und wird auf Anfrage mitgeteilt. Darin enthalten sind die Unterkunft, der Mietwagen und die übrigen Leistungen. Den Flug organisierst du selbst."
+          "text": "Der Preis beginnt bei €895 pro Person für 4 Tage zu zweit. In den stark gefragten Zeiträumen um Weihnachten und in der zweiten Februarhälfte liegt er etwas höher. Inbegriffen sind der Flug nach Helsinki, der Mietwagen vor Ort und die Hütte mit Sauna. Im Kalender auf dieser Seite wählst du selbst deinen Ankunfts- und Abreisetag und siehst sofort, was dieser Zeitraum kostet."
         }
       },
       {
@@ -86,7 +86,7 @@
         "name": "Was ist bei der Reise nach Finnland inbegriffen und was nicht?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Inbegriffen sind die Hütte mit Sauna, der Mietwagen vor Ort und die übrigen Leistungen rund um die Reise. Nicht inbegriffen sind der Flug nach Finnland, Essen und Trinken sowie dein eigenes Schlittschuhmaterial und deine Sicherheitsausrüstung."
+          "text": "Inbegriffen sind der Flug nach Helsinki mit Aufgabegepäck, der Mietwagen vor Ort und die Hütte mit Sauna. Nicht inbegriffen sind Essen und Trinken sowie dein eigenes Schlittschuhmaterial und deine Sicherheitsausrüstung."
         }
       }
     ]
@@ -156,8 +156,8 @@
         <div class="factbar__item"><span class="factbar__label">Reiseart</span><span class="factbar__value">Selbstständig</span></div>
         <div class="factbar__item"><span class="factbar__label">Begleitung</span><span class="factbar__value">Keine</span></div>
         <div class="factbar__item"><span class="factbar__label">Unterkunft</span><span class="factbar__value">Hütte mit Sauna</span></div>
-        <div class="factbar__item"><span class="factbar__label">Preis</span><span class="factbar__value">Auf Anfrage</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Flug</span><span class="factbar__value">Nicht inbegriffen</span></div>
+        <div class="factbar__item"><span class="factbar__label">Preis</span><span class="factbar__value">Ab &euro;895 p.P.</span></div>
+        <div class="factbar__item"><span class="factbar__label">Flug</span><span class="factbar__value">Inbegriffen</span></div>
       </div>
     </section>
 
@@ -254,7 +254,7 @@
         <div class="prices__head reveal">
           <span class="eyebrow eyebrow--deep"><span class="dot"></span>Termine und Preise</span>
           <h2 class="h-section">Was es kostet, und wann du kannst</h2>
-          <p class="prices__intro">Der Preis gilt pro Person pro Tag und wird auf Anfrage mitgeteilt. Darin enthalten sind die Unterkunft, der Mietwagen und die übrigen Leistungen. Den Flug organisierst du selbst.</p>
+          <p class="prices__intro">Der Preis beginnt bei &euro;895 pro Person für 4 Tage zu zweit. Darin enthalten sind der Flug nach Helsinki, der Mietwagen vor Ort und die Hütte mit Sauna. Wähle unten deinen Ankunfts- und deinen Abreisetag, dann siehst du sofort, was dein Zeitraum kostet.</p>
         </div>
 
         <!--
@@ -276,17 +276,7 @@
         -->
         <div class="calendar reveal" data-calendar>
           <script type="application/json" class="calendar__data">
-          {
-            "reis": "finland",
-            "seizoenStart": "2026-12-27",
-            "seizoenEind": "2027-03-07",
-            "minimumNachten": 3,
-            "prijsPerPersoonPerDag": null,
-            "bezet": [
-              {"van": "2027-01-16", "tot": "2027-01-23", "wat": "Feste Gruppenreise"},
-              {"van": "2027-02-27", "tot": "2027-03-06", "wat": "Ausgebucht"}
-            ]
-          }
+          { "reis": "finland", "prijzen": "data/finland-prijzen.json" }
           </script>
           <p class="calendar__fallback">Die verfügbaren Zeiträume und Preise erhältst du auf Anfrage. Schreib eine E-Mail an <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> oder eine Nachricht an +31 6 17467643.</p>
         </div>
@@ -296,11 +286,11 @@
         <div class="prices__notes reveal">
           <div class="prices__note">
             <h3>Das ist enthalten</h3>
-            <p>Die Hütte mit Sauna, der Mietwagen vor Ort und die übrigen Leistungen rund um die Reise.</p>
+            <p>Der Flug nach Helsinki mit Aufgabegepäck, der Mietwagen vor Ort und die Hütte mit Sauna.</p>
           </div>
           <div class="prices__note">
             <h3>Das nicht</h3>
-            <p>Der Flug nach Finnland, Essen und Trinken, und dein eigenes Schlittschuhmaterial und deine Sicherheitsausrüstung.</p>
+            <p>Essen und Trinken, und dein eigenes Schlittschuhmaterial und deine Sicherheitsausrüstung.</p>
           </div>
           <div class="prices__note">
             <h3>Bezahlung</h3>
@@ -328,7 +318,7 @@
           </details>
           <details class="faq__item">
             <summary>Was kostet die Schlittschuhreise nach Finnland?</summary>
-            <p>Der Preis gilt pro Person pro Tag und wird auf Anfrage mitgeteilt. Darin enthalten sind die Unterkunft, der Mietwagen und die übrigen Leistungen. Den Flug organisierst du selbst.</p>
+            <p>Der Preis beginnt bei €895 pro Person für 4 Tage zu zweit. In den stark gefragten Zeiträumen um Weihnachten und in der zweiten Februarhälfte liegt er etwas höher. Inbegriffen sind der Flug nach Helsinki, der Mietwagen vor Ort und die Hütte mit Sauna. Im Kalender auf dieser Seite wählst du selbst deinen Ankunfts- und Abreisetag und siehst sofort, was dieser Zeitraum kostet.</p>
           </details>
           <details class="faq__item">
             <summary>Wann kannst du für diese Schlittschuhreise nach Finnland?</summary>
@@ -336,7 +326,7 @@
           </details>
           <details class="faq__item">
             <summary>Was ist bei der Reise nach Finnland inbegriffen und was nicht?</summary>
-            <p>Inbegriffen sind die Hütte mit Sauna, der Mietwagen vor Ort und die übrigen Leistungen rund um die Reise. Nicht inbegriffen sind der Flug nach Finnland, Essen und Trinken sowie dein eigenes Schlittschuhmaterial und deine Sicherheitsausrüstung.</p>
+            <p>Inbegriffen sind der Flug nach Helsinki mit Aufgabegepäck, der Mietwagen vor Ort und die Hütte mit Sauna. Nicht inbegriffen sind Essen und Trinken sowie dein eigenes Schlittschuhmaterial und deine Sicherheitsausrüstung.</p>
           </details>
         </div>
       </div>

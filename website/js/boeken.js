@@ -469,10 +469,10 @@
       terugLink.hidden = false;
       terugLink.href = reisSleutel + ".html" + (reis.periodeVrij ? "#prijzen" : "");
       terugLink.textContent = reis.prijsOpAanvraag
-        ? T.viewTripPage(reis.naam.split(/ [—-]/)[0])
+        ? T.viewTripPage(reis.naam.split(/ [—-] |, /)[0])
         : reis.periodeVrij
           ? T.chooseCalendarPeriod
-          : T.viewDatesFor(reis.naam.split(/ [—-]/)[0]);
+          : T.viewDatesFor(reis.naam.split(/ [—-] |, /)[0]);
     }
 
     // De "Kalender"-knop in de koptekst gaat mee met de reis die open staat.
@@ -515,6 +515,60 @@
      ---------------------------------------------------------------------- */
   var kalenderInfo = null;
   var kalenderGeladen = false;
+
+  /* --- Prijstabel per periode (Finland) ----------------------------------
+     Een reis met een prijstabel haalt zijn bedragen uit hetzelfde bestand
+     als de kalender op de reispagina (js/main.js). De rekenwijze hieronder
+     is daar een kopie van: pas je de een aan, pas dan de ander mee aan.
+     ---------------------------------------------------------------------- */
+  var prijstabel = null;
+  var prijstabelPad = null;
+
+  function laadPrijstabel() {
+    var pad = reis && reis.prijstabel;
+    if (!pad) { prijstabel = null; prijstabelPad = null; return; }
+    if (pad === prijstabelPad) return;
+    prijstabelPad = pad;
+    prijstabel = null;
+    fetch(mapVoor() + pad).then(function (antwoord) {
+      return antwoord.ok ? antwoord.json() : null;
+    }).then(function (data) {
+      // Is er inmiddels een andere reis gekozen, dan hoort dit er niet meer bij.
+      if (!data || pad !== prijstabelPad) return;
+      prijstabel = data;
+      ververs();
+    })["catch"](function () { /* dan blijft het bij "nog geen prijsindicatie" */ });
+  }
+
+  function tariefOp(datum) {
+    var lijst = (prijstabel && prijstabel.periodes) || [];
+    for (var i = 0; i < lijst.length; i++) {
+      var begin = alsDatum(lijst[i].van);
+      var eind = alsDatum(lijst[i].tot);
+      if (begin && eind && datum >= begin && datum < eind) return lijst[i].tarief;
+    }
+    return null;
+  }
+
+  function tabelPrijsPerPersoon(aankomst, aantalNachten) {
+    var tabel = prijstabel && prijstabel.prijsPerPersoon;
+    if (!tabel) return 0;
+    var tarief = tariefOp(aankomst);
+    var rij = tarief ? tabel[tarief] : null;
+    if (!rij) return 0;
+    if (typeof rij[String(aantalNachten)] === "number") return rij[String(aantalNachten)];
+
+    var langste = 0;
+    Object.keys(rij).forEach(function (sleutel) {
+      var n = parseInt(sleutel, 10);
+      if (n > langste && typeof rij[sleutel] === "number") langste = n;
+    });
+    if (!langste || aantalNachten < langste) return 0;
+
+    var extra = (prijstabel.extraNachtPerPersoon || {})[tarief] || 0;
+    if (!extra) return 0;
+    return rij[String(langste)] + (aantalNachten - langste) * extra;
+  }
 
   // "" op de Nederlandse site, "../" in de taalmappen. De paden in het
   // gegevensblokje gaan uit van de hoofdmap.
@@ -863,6 +917,17 @@
     var uitKalender = kalenderInfo && typeof kalenderInfo.verblijf === "number"
       ? kalenderInfo.verblijf : null;
 
+    // Heeft de reis een prijstabel, dan komt de verblijfprijs daarvandaan.
+    // De bedragen gaan uit van twee personen in een huisje. Met minder mensen
+    // zou de indicatie te laag uitvallen, dus dan geven we er geen; met meer
+    // mensen valt hij hooguit iets te hoog uit en stuurt Joey het precieze
+    // bedrag.
+    if (uitKalender === null && prijstabel && van && nachten &&
+        aantal >= (prijstabel.basisPersonen || 1)) {
+      var uitTabel = Math.round(tabelPrijsPerPersoon(van, nachten));
+      if (uitTabel) uitKalender = uitTabel;
+    }
+
     if (nachten && uitKalender) {
       var pakket = uitKalender * aantal;
       totaal += pakket;
@@ -1106,6 +1171,7 @@
     maxPersonen = reis.maxPersonen || 12;
     minPersonen = reis.minimumPersonen || 1;
     opslag = reis.opslagPerPersoonPerNacht || 0;
+    laadPrijstabel();
 
     if (handmatig) {
       // Wisselt iemand van reis, dan hoort de periode bij de kalender van de

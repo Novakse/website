@@ -144,9 +144,12 @@ function berekenFalun(keuze) {
     omschrijving += ", met " + begDagen + (begDagen === 1 ? " dag" : " dagen") + " begeleiding";
   }
 
-  totaal = Math.round(totaal);
-  if (!(totaal > 0)) return { fout: "Ongeldig bedrag." };
-  return { bedrag: totaal, omschrijving: omschrijving };
+  // Alles hierboven is per persoon. Afgerekend wordt voor de hele groep:
+  // eerst per persoon afronden, dan vermenigvuldigen, net als de kalender.
+  var perPersoon = Math.round(totaal);
+  if (!(perPersoon > 0)) return { fout: "Ongeldig bedrag." };
+  omschrijving += ", €" + perPersoon.toLocaleString("nl-NL") + " p.p.";
+  return { bedrag: perPersoon * personen, perPersoon: perPersoon, omschrijving: omschrijving };
 }
 
 function origineOngeldig(req) {

@@ -399,7 +399,7 @@
         }
         bevestig(stap, {
           sleutel: plek.sleutel,
-          waarde: plek.naam + (plek.regio ? " - " + plek.regio : ""),
+          waarde: plek.naam + (plek.regio ? ", " + plek.regio : ""),
           kort: plek.naam
         }, kaart);
       });
@@ -905,7 +905,7 @@
   if (plekUitAdres) {
     antwoorden.bestemming = {
       sleutel: plekUitAdres.sleutel,
-      waarde: plekUitAdres.naam + (plekUitAdres.regio ? " - " + plekUitAdres.regio : ""),
+      waarde: plekUitAdres.naam + (plekUitAdres.regio ? ", " + plekUitAdres.regio : ""),
       kort: plekUitAdres.naam
     };
     bewaar();

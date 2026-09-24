@@ -494,9 +494,11 @@
       link.setAttribute("href", split[0] + "?" + query.toString());
     });
 
-    // 2. De regel in het blok "Data en prijs".
+    // 2. De regel in het blok "Data en prijs". Heeft dat blok zijn eigen
+    //    kalender, dan staat de keuze daar al in en hoeft die regel niet.
     var block = document.getElementById("data-en-prijs");
-    var actions = block && block.querySelector(".pending__actions");
+    if (!block || block.querySelector("[data-falun-calendar], [data-calendar]")) return;
+    var actions = block.querySelector(".pending__actions");
     if (!actions) return;
 
     var parts = [];

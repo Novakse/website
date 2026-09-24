@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Falun - kalender met prijs per aankomstdag
+   Falun - kalender met de totaalprijs van de gekozen periode
 
    De bezoeker kiest zelf een aankomstdag en een reisduur (4 of 5 dagen).
    De prijs verschilt per datum, omdat de huisjes niet het hele seizoen
@@ -22,9 +22,8 @@
 
    Een verblijf van 4 dagen telt 3 nachten, 5 dagen telt 4 nachten.
 
-   Zodra de kalender opengaat, staat de goedkoopste aankomstdag al
-   voorgeselecteerd. Zo ziet de bezoeker meteen de vanaf-prijs waar de rest
-   van de pagina over spreekt.
+   In de kalender zelf staan geen bedragen bij de dagen. Pas als de bezoeker
+   een aankomstdag aanklikt, verschijnt de totaalprijs voor de hele groep.
 
    Gaat er iets mis in het blokje, dan blijft de gewone tekst staan die er
    zonder JavaScript ook al is.
@@ -43,12 +42,13 @@
       days: function (n) { return n + " dagen"; },
       nights: function (n) { return n + (n === 1 ? " nacht" : " nachten"); },
       arrivalLegend: "Wanneer kom je aan?",
-      hint: "Klik de dag aan waarop je aankomt. De prijs staat bij de dag.",
       legendAvailable: "Beschikbaar",
       legendBooked: "Al bezet",
       legendChosen: "Jouw keuze",
       legendUncertain: "IJs onzeker",
       uncertainNote: "De dagen met een streepje kun je gewoon boeken, maar in december is het ijs nog het onzekerst.",
+      searchKeptDay: "Je aankomstdag hebben we overgenomen. Kies hieronder nog hoe lang je blijft.",
+      searchDayGone: "Je gekozen aankomstdag kan niet. Kies hieronder een andere dag.",
       optionsLegend: "Wat wil je zelf regelen?",
       flightSelf: "Ik regel mijn vlucht zelf",
       flightSelfHint: "De heen- en terugvlucht zit anders bij de prijs in",
@@ -75,12 +75,13 @@
       lineCar: "Vervoer zelf geregeld",
       lineGuiding: "Begeleiding op het ijs",
       total: "Totaal per persoon",
+      totalFor: function (n) { return "Totaal voor " + n + (n === 1 ? " persoon" : " personen"); },
       book: "Boek en reken af",
       chooseFirst: "Kies eerst een aankomstdag.",
       perPerson: "per persoon",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " tot " + tot; },
       bookedSr: function (wat) { return " " + wat + ", niet beschikbaar"; },
-      availableAria: function (datum, prijs) { return datum + ", beschikbaar, " + prijs + " per persoon"; },
+      availableAria: function (datum) { return datum + ", beschikbaar"; },
       tooLate: "In die periode past je verblijf niet meer binnen het seizoen.",
       overlap: "In die periode zit een week die al bezet is."
     },
@@ -94,12 +95,13 @@
       days: function (n) { return n + " days"; },
       nights: function (n) { return n + (n === 1 ? " night" : " nights"); },
       arrivalLegend: "When do you arrive?",
-      hint: "Click the day you arrive. The price is shown on the day.",
       legendAvailable: "Available",
       legendBooked: "Booked",
       legendChosen: "Your choice",
       legendUncertain: "Ice uncertain",
       uncertainNote: "You can book the dashed days as normal, but in December the ice is least certain.",
+      searchKeptDay: "We kept your arrival day. Choose how long you are staying below.",
+      searchDayGone: "Your chosen arrival day is not available. Pick another day below.",
       optionsLegend: "What do you want to arrange yourself?",
       flightSelf: "I'll arrange my own flight",
       flightSelfHint: "Otherwise the return flight is included in the price",
@@ -126,12 +128,13 @@
       lineCar: "Own transport",
       lineGuiding: "Guiding on the ice",
       total: "Total per person",
+      totalFor: function (n) { return "Total for " + n + (n === 1 ? " person" : " people"); },
       book: "Book and pay",
       chooseFirst: "Choose an arrival day first.",
       perPerson: "per person",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " to " + tot; },
       bookedSr: function (wat) { return " " + wat + ", not available"; },
-      availableAria: function (datum, prijs) { return datum + ", available, " + prijs + " per person"; },
+      availableAria: function (datum) { return datum + ", available"; },
       tooLate: "Your stay no longer fits within the season in that period.",
       overlap: "That period includes a week that is already booked."
     },
@@ -145,12 +148,13 @@
       days: function (n) { return n + " Tage"; },
       nights: function (n) { return n + (n === 1 ? " Nacht" : " Nächte"); },
       arrivalLegend: "Wann kommst du an?",
-      hint: "Klicke deinen Ankunftstag an. Der Preis steht beim Tag.",
       legendAvailable: "Verfügbar",
       legendBooked: "Belegt",
       legendChosen: "Deine Wahl",
       legendUncertain: "Eis unsicher",
       uncertainNote: "Die gestrichelten Tage kannst du ganz normal buchen, aber im Dezember ist das Eis am unsichersten.",
+      searchKeptDay: "Deinen Anreisetag haben wir übernommen. Wähle unten noch, wie lange du bleibst.",
+      searchDayGone: "Dein gewählter Anreisetag ist nicht möglich. Wähle unten einen anderen Tag.",
       optionsLegend: "Was möchtest du selbst organisieren?",
       flightSelf: "Ich buche meinen Flug selbst",
       flightSelfHint: "Sonst ist der Hin- und Rückflug im Preis enthalten",
@@ -177,12 +181,13 @@
       lineCar: "Anreise selbst organisiert",
       lineGuiding: "Begleitung auf dem Eis",
       total: "Gesamt pro Person",
+      totalFor: function (n) { return "Gesamt für " + n + (n === 1 ? " Person" : " Personen"); },
       book: "Buchen und bezahlen",
       chooseFirst: "Wähle zuerst einen Ankunftstag.",
       perPerson: "pro Person",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " bis " + tot; },
       bookedSr: function (wat) { return " " + wat + ", nicht verfügbar"; },
-      availableAria: function (datum, prijs) { return datum + ", verfügbar, " + prijs + " pro Person"; },
+      availableAria: function (datum) { return datum + ", verfügbar"; },
       tooLate: "In diesem Zeitraum passt dein Aufenthalt nicht mehr in die Saison.",
       overlap: "In diesem Zeitraum liegt eine Woche, die schon belegt ist."
     },
@@ -196,12 +201,13 @@
       days: function (n) { return n + " dagar"; },
       nights: function (n) { return n + (n === 1 ? " natt" : " nätter"); },
       arrivalLegend: "När kommer du?",
-      hint: "Klicka på dagen du anländer. Priset står vid dagen.",
       legendAvailable: "Tillgänglig",
       legendBooked: "Bokad",
       legendChosen: "Ditt val",
       legendUncertain: "Isen osäker",
       uncertainNote: "Dagarna med streck går att boka som vanligt, men i december är isen som mest osäker.",
+      searchKeptDay: "Vi har behållit din ankomstdag. Välj nedan hur länge du stannar.",
+      searchDayGone: "Din valda ankomstdag går inte. Välj en annan dag nedan.",
       optionsLegend: "Vad vill du ordna själv?",
       flightSelf: "Jag ordnar flyget själv",
       flightSelfHint: "Annars ingår tur- och returflyget i priset",
@@ -228,12 +234,13 @@
       lineCar: "Egen transport",
       lineGuiding: "Guidning på isen",
       total: "Totalt per person",
+      totalFor: function (n) { return "Totalt för " + n + (n === 1 ? " person" : " personer"); },
       book: "Boka och betala",
       chooseFirst: "Välj först en ankomstdag.",
       perPerson: "per person",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " till " + tot; },
       bookedSr: function (wat) { return " " + wat + ", inte tillgänglig"; },
-      availableAria: function (datum, prijs) { return datum + ", tillgänglig, " + prijs + " per person"; },
+      availableAria: function (datum) { return datum + ", tillgänglig"; },
       tooLate: "Din vistelse ryms inte längre inom säsongen under den perioden.",
       overlap: "Den perioden innehåller en vecka som redan är bokad."
     },
@@ -247,12 +254,13 @@
       days: function (n) { return n + " dager"; },
       nights: function (n) { return n + (n === 1 ? " natt" : " netter"); },
       arrivalLegend: "Når kommer du?",
-      hint: "Klikk på dagen du ankommer. Prisen står ved dagen.",
       legendAvailable: "Tilgjengelig",
       legendBooked: "Opptatt",
       legendChosen: "Ditt valg",
       legendUncertain: "Isen usikker",
       uncertainNote: "Dagene med strek kan du bestille som vanlig, men i desember er isen mest usikker.",
+      searchKeptDay: "Vi har beholdt ankomstdagen din. Velg nedenfor hvor lenge du blir.",
+      searchDayGone: "Ankomstdagen du valgte går ikke. Velg en annen dag nedenfor.",
       optionsLegend: "Hva vil du ordne selv?",
       flightSelf: "Jeg ordner flyet selv",
       flightSelfHint: "Ellers er tur-retur-flyet inkludert i prisen",
@@ -279,12 +287,13 @@
       lineCar: "Egen transport",
       lineGuiding: "Guiding på isen",
       total: "Totalt per person",
+      totalFor: function (n) { return "Totalt for " + n + (n === 1 ? " person" : " personer"); },
       book: "Book og betal",
       chooseFirst: "Velg en ankomstdag først.",
       perPerson: "per person",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " til " + tot; },
       bookedSr: function (wat) { return " " + wat + ", ikke tilgjengelig"; },
-      availableAria: function (datum, prijs) { return datum + ", tilgjengelig, " + prijs + " per person"; },
+      availableAria: function (datum) { return datum + ", tilgjengelig"; },
       tooLate: "Oppholdet ditt passer ikke lenger inn i sesongen i den perioden.",
       overlap: "Den perioden inneholder en uke som allerede er opptatt."
     },
@@ -298,12 +307,13 @@
       days: function (n) { return n + " päivää"; },
       nights: function (n) { return n + (n === 1 ? " yö" : " yötä"); },
       arrivalLegend: "Milloin saavut?",
-      hint: "Napsauta saapumispäivääsi. Hinta näkyy päivän kohdalla.",
       legendAvailable: "Vapaa",
       legendBooked: "Varattu",
       legendChosen: "Valintasi",
       legendUncertain: "Jää epävarma",
       uncertainNote: "Katkoviivalla merkityt päivät voi varata normaalisti, mutta joulukuussa jää on epävarmimmillaan.",
+      searchKeptDay: "Säilytimme saapumispäiväsi. Valitse alta, kuinka kauan viivyt.",
+      searchDayGone: "Valitsemasi saapumispäivä ei onnistu. Valitse alta toinen päivä.",
       optionsLegend: "Mitä haluat järjestää itse?",
       flightSelf: "Järjestän lentoni itse",
       flightSelfHint: "Muuten meno-paluulento sisältyy hintaan",
@@ -330,12 +340,13 @@
       lineCar: "Oma kuljetus",
       lineGuiding: "Opastus jäällä",
       total: "Yhteensä / henkilö",
+      totalFor: function (n) { return "Yhteensä, " + n + (n === 1 ? " henkilö" : " henkilöä"); },
       book: "Varaa ja maksa",
       chooseFirst: "Valitse ensin saapumispäivä.",
       perPerson: "/ henkilö",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " - " + tot; },
       bookedSr: function (wat) { return " " + wat + ", ei vapaa"; },
-      availableAria: function (datum, prijs) { return datum + ", vapaa, " + prijs + " / henkilö"; },
+      availableAria: function (datum) { return datum + ", vapaa"; },
       tooLate: "Oleskelusi ei enää mahdu kauteen kyseisenä ajankohtana.",
       overlap: "Kyseiselle ajanjaksolle osuu jo varattu viikko."
     }
@@ -557,29 +568,6 @@
     return Math.round(totaal);
   }
 
-  /* De goedkoopste aankomstdag van het seizoen. Die staat voorgeselecteerd
-     zodra de kalender opengaat, zodat de vanaf-prijs meteen in beeld staat. */
-  function goedkoopsteDag(dagen) {
-    var beste = null;
-    var besteBedrag = null;
-    var loop = new Date(seizoenVan.getTime());
-    while (loop <= seizoenTot) {
-      if (kanAankomen(loop, dagen)) {
-        var bedrag = verblijfPrijs(loop, dagen);
-        // Bij een gelijke prijs liever een dag waarop het ijs al zeker is, dan
-        // staat er geen onzekere decemberdag voorgeselecteerd.
-        var beterDan = besteBedrag === null || bedrag < besteBedrag ||
-          (bedrag === besteBedrag && onzekerOp(beste) && !onzekerOp(loop));
-        if (bedrag !== null && beterDan) {
-          besteBedrag = bedrag;
-          beste = new Date(loop.getTime());
-        }
-      }
-      loop = plusDagen(loop, 1);
-    }
-    return beste;
-  }
-
   /* ------------------------------------------------------------------
      Opbouw van het scherm
      ------------------------------------------------------------------ */
@@ -649,7 +637,6 @@
         // De gekozen dag kan bij een langer verblijf niet meer passen.
         if (aankomst && !kanAankomen(aankomst, duur)) aankomst = null;
         if (begeleidingDagen > duur) begeleidingDagen = duur;
-        if (!aankomst) aankomst = goedkoopsteDag(duur);
         tekenAlles();
       });
     });
@@ -741,14 +728,12 @@
       return uit;
     }
 
-    var bedrag = verblijfPrijs(datum, duur);
     var knop = document.createElement("button");
     knop.type = "button";
-    knop.className = "calendar__cell is-vrij falun-cal__cell";
+    knop.className = "calendar__cell is-vrij";
     knop.innerHTML =
-      '<span class="calendar__daynr">' + datum.getDate() + "</span>" +
-      (bedrag === null ? "" : '<span class="falun-cal__dagprijs">' + euro(bedrag) + "</span>");
-    knop.setAttribute("aria-label", T.availableAria(schrijfDatum(datum), bedrag === null ? "" : euro(bedrag)));
+      '<span class="calendar__daynr">' + datum.getDate() + "</span>";
+    knop.setAttribute("aria-label", T.availableAria(schrijfDatum(datum)));
     if (onzekerOp(datum)) knop.classList.add("is-onzeker");
 
     if (aankomst && datum.getTime() === aankomst.getTime()) {
@@ -858,7 +843,11 @@
     }
 
     var verblijf = verblijfPrijs(aankomst, duur);
-    var totaal = totaalPrijs();
+    var perPersoon = totaalPrijs();
+    // Alle bedragen hierboven zijn per persoon; afgerekend wordt voor de hele
+    // groep. Zelfde rekenwijze als api/_falun-prijs.js: eerst per persoon
+    // afronden, dan vermenigvuldigen.
+    var totaal = perPersoon * personen;
     var vertrek = plusDagen(aankomst, nachtenVan(duur));
 
     var regels =
@@ -886,8 +875,10 @@
 
     samenvatting.innerHTML =
       '<p class="falun-cal__summary-title">' + T.summaryTitle + "</p>" +
-      '<dl class="booking__lines">' + regels + "</dl>" +
-      '<div class="booking__total"><span>' + T.total + "</span><strong>" + euro(totaal) + "</strong></div>" +
+      '<dl class="booking__lines">' + regels +
+        (personen > 1 ? "<dt>" + T.total + "</dt><dd>" + euro(perPersoon) + "</dd>" : "") +
+      "</dl>" +
+      '<div class="booking__total"><span>' + T.totalFor(personen) + "</span><strong>" + euro(totaal) + "</strong></div>" +
       '<p class="falun-cal__period">' + schrijfDatum(aankomst) + " - " + schrijfDatum(vertrek) + "</p>" +
       '<a class="btn btn--dark falun-cal__book" href="' +
         (box.getAttribute("data-betaalpagina") || data.betaalpagina || "uitchecken.html") +
@@ -993,18 +984,64 @@
 
   /* In periode-modus mag het formulier een periode meegeven die uit het
      webadres komt, zodat een gedeelde link dezelfde dagen laat zien. Past die
-     niet binnen het seizoen of de vrije dagen, dan valt de kalender terug op
-     de goedkoopste aankomstdag. */
-  var gevraagdeDuur = periodeModus ? parseInt(box.getAttribute("data-dagen"), 10) : NaN;
+     niet binnen het seizoen of de vrije dagen, dan staat er nog geen dag
+     gekozen.
+
+     Op de reispagina zelf komt die wens uit de reiszoeker op de home- en
+     reizenpagina: die zet van, tot en personen in het webadres. Falun boek je
+     voor 4 of 5 dagen; vroeg iemand om een andere lengte, dan houden we wel
+     zijn aankomstdag aan en zegt een regel erboven hoe het zit. */
+  function uitZoeker() {
+    var zoek = new URLSearchParams(window.location.search);
+    var van = zoek.get("van") || "";
+    var tot = zoek.get("tot") || "";
+    var wens = { dag: null, dagen: NaN };
+
+    var aantal = parseInt(zoek.get("personen"), 10);
+    if (!isNaN(aantal)) {
+      personen = Math.min(personenKeuze.max || 4, Math.max(personenKeuze.min || 1, aantal));
+    }
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(van)) return wens;
+    wens.dag = alsDatum(van);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(tot)) {
+      var nachten = Math.round((alsDatum(tot) - wens.dag) / 86400000);
+      if (nachten > 0) wens.dagen = nachten + 1;
+    }
+    return wens;
+  }
+
+  var wens = periodeModus ? null : uitZoeker();
+
+  var gevraagdeDuur = periodeModus ? parseInt(box.getAttribute("data-dagen"), 10) : wens.dagen;
   if (duren.indexOf(gevraagdeDuur) !== -1) duur = gevraagdeDuur;
 
   var gevraagdeDag = null;
-  var uitAdres = periodeModus ? box.getAttribute("data-aankomst") : null;
-  if (uitAdres && /^\d{4}-\d{2}-\d{2}$/.test(uitAdres)) gevraagdeDag = alsDatum(uitAdres);
+  if (periodeModus) {
+    var uitAdres = box.getAttribute("data-aankomst");
+    if (uitAdres && /^\d{4}-\d{2}-\d{2}$/.test(uitAdres)) gevraagdeDag = alsDatum(uitAdres);
+  } else {
+    gevraagdeDag = wens.dag;
+  }
 
-  aankomst = (gevraagdeDag && kanAankomen(gevraagdeDag, duur))
-    ? gevraagdeDag
-    : goedkoopsteDag(duur);
+  // Er staat geen dag vooraf klaar: de totaalprijs verschijnt pas als de
+  // bezoeker zelf een aankomstdag kiest.
+  aankomst = (gevraagdeDag && kanAankomen(gevraagdeDag, duur)) ? gevraagdeDag : null;
+
+  // De regel boven de kalender: alleen als er echt een wens meekwam die we
+  // niet helemaal konden inwilligen.
+  if (gevraagdeDag && !periodeModus) {
+    var melding = "";
+    if (aankomst !== gevraagdeDag) melding = T.searchDayGone;
+    else if (duren.indexOf(wens.dagen) === -1) melding = T.searchKeptDay;
+    if (melding) {
+      var regel = document.createElement("p");
+      regel.className = "falun-cal__note falun-cal__note--search";
+      regel.textContent = melding;
+      box.insertBefore(regel, box.firstChild);
+    }
+  }
+
   tekenAlles();
   }
 })();

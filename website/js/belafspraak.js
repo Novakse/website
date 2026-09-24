@@ -96,7 +96,12 @@
   }
 
   /* ------------------------------------------------------------------
-     Welke tijden zijn op een dag nog vrij?
+     Welke tijden staan er op een dag, en welke daarvan zijn nog vrij?
+
+     Een moment dat al vergeven is blijft gewoon in de rij staan, maar dan
+     grijs en niet aanklikbaar. Zo ziet de bezoeker in een oogopslag hoe vol
+     de dag zit. Tijden die al te dichtbij zijn vallen wel helemaal weg: daar
+     valt niets meer te kiezen.
      ------------------------------------------------------------------ */
   function tijdenOp(datumTekst) {
     if (config.gesloten.indexOf(datumTekst) !== -1) return [];
@@ -113,18 +118,22 @@
     });
 
     return tijden
-      .filter(function (tijd) {
-        if (config.bezet.indexOf(datumTekst + " " + tijd) !== -1) return false;
-        return tijdstipVan(datumTekst, tijd) >= vroegste;
-      })
-      .sort();
+      .filter(function (tijd) { return tijdstipVan(datumTekst, tijd) >= vroegste; })
+      .sort()
+      .map(function (tijd) {
+        return { tijd: tijd, vrij: config.bezet.indexOf(datumTekst + " " + tijd) === -1 };
+      });
+  }
+
+  function vrijeTijdenOp(datumTekst) {
+    return tijdenOp(datumTekst).filter(function (plek) { return plek.vrij; });
   }
 
   function eersteVrijeDag() {
     var dag = new Date();
     for (var i = 0; i <= config.maxDagenVooruit; i++) {
       var tekst = alsTekst(plusDagen(dag, i));
-      if (tijdenOp(tekst).length) return tekst;
+      if (vrijeTijdenOp(tekst).length) return tekst;
     }
     return null;
   }
@@ -190,7 +199,7 @@
     var dagenInMaand = new Date(zichtbareMaand.getFullYear(), zichtbareMaand.getMonth() + 1, 0).getDate();
     for (var dag = 1; dag <= dagenInMaand; dag++) {
       var datumTekst = alsTekst(new Date(zichtbareMaand.getFullYear(), zichtbareMaand.getMonth(), dag));
-      var aantal = tijdenOp(datumTekst).length;
+      var aantal = vrijeTijdenOp(datumTekst).length;
 
       if (!aantal) {
         var dicht = document.createElement("span");
@@ -250,27 +259,38 @@
     var rij = document.createElement("div");
     rij.className = "plan__times";
 
-    tijdenOp(gekozenDag).forEach(function (tijd) {
+    tijdenOp(gekozenDag).forEach(function (plek) {
       var knop = document.createElement("button");
       knop.type = "button";
-      knop.className = "plan__time";
-      knop.textContent = tijd;
-      knop.setAttribute("aria-label", tijd + " Nederlandse tijd, " + duurMin + " minuten");
-      knop.addEventListener("click", function () { kiesTijd(tijd, knop); });
+      knop.className = "plan__time" + (plek.vrij ? "" : " is-bezet");
+      knop.textContent = plek.tijd;
+
+      if (!plek.vrij) {
+        knop.disabled = true;
+        knop.setAttribute("aria-label", plek.tijd + " Nederlandse tijd, al bezet");
+        rij.appendChild(knop);
+        return;
+      }
+
+      knop.setAttribute("aria-label", plek.tijd + " Nederlandse tijd, " + duurMin + " minuten");
+      knop.addEventListener("click", function () { kiesTijd(plek.tijd, knop); });
       rij.appendChild(knop);
     });
 
     slotEl.appendChild(rij);
 
+    var bezetOpDezeDag = tijdenOp(gekozenDag).some(function (plek) { return !plek.vrij; });
+
     var note = document.createElement("p");
     note.className = "plan__slots-note";
-    note.textContent = "Een gesprek duurt ongeveer " + duurMin + " minuten.";
+    note.textContent = "Een gesprek duurt ongeveer " + duurMin + " minuten." +
+      (bezetOpDezeDag ? " De grijze tijden zijn al bezet." : "");
     slotEl.appendChild(note);
   }
 
   function kiesTijd(tijd, knop) {
     gekozenTijd = tijd;
-    slotEl.querySelectorAll(".plan__time").forEach(function (andere) {
+    slotEl.querySelectorAll(".plan__time:not(.is-bezet)").forEach(function (andere) {
       andere.classList.toggle("is-gekozen", andere === knop);
       andere.setAttribute("aria-pressed", andere === knop ? "true" : "false");
     });

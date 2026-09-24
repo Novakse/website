@@ -277,7 +277,7 @@
     <!-- Reiszoeker: geeft bestemming, datums en aantal reizigers door aan
          boeken.html. Geen live beschikbaarheid - het is een keuzebalk. Het
          schaatsseizoen staat in data-season-start en data-season-end. -->
-    <div class="trip-search-dock">
+    <div class="trip-search-dock trip-search-dock--float">
       <div class="wrap">
         <form class="trip-search" action="boeken.html" method="get"
               data-season-start="2026-12-19" data-season-end="2027-03-14">
@@ -290,11 +290,11 @@
                 <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
                 <select class="trip-search__input" id="tsReis" name="reis">
                   <option value="" data-target="reizen.html#bestemmingen">Alle bestemmingen</option>
-                  <option value="orsa" data-target="orsa.html#data-en-prijs">Orsa - Dalarna, Zweden</option>
-                  <option value="falun" data-target="falun.html#data-en-prijs">Falun - Dalarna, Zweden</option>
-                  <option value="finland" data-target="finland.html#prijzen">Finland - Punkaharju</option>
-                  <option value="weissensee" data-target="weissensee.html#data-en-prijs">Weissensee - Karinthië</option>
-                  <option value="lulea" data-target="lulea.html#data-en-prijs">Luleå - Zweeds Lapland</option>
+                  <option value="orsa" data-target="orsa.html#data-en-prijs">Orsa, Zweden</option>
+                  <option value="falun" data-target="falun.html#data-en-prijs">Falun, Zweden</option>
+                  <option value="finland" data-target="finland.html#prijzen">Punkaharju, Finland</option>
+                  <option value="weissensee" data-target="weissensee.html#data-en-prijs">Weissensee, Oostenrijk</option>
+                  <option value="lulea" data-target="lulea.html#data-en-prijs">Luleå, Zweden</option>
                 </select>
               </div>
             </div>
@@ -333,7 +333,7 @@
             <span>Bekijk je reis</span>
           </button>
 
-          <p class="trip-search__note">Je keuzes staan meteen klaar in het aanvraagformulier. Joey neemt daarna persoonlijk contact met je op.</p>
+          <p class="trip-search__note">Je komt op de pagina van je bestemming, met je keuzes al ingevuld.</p>
         </form>
       </div>
     </div>
@@ -397,7 +397,7 @@
               </div>
               <div class="trip-card__head">
                 <h3 class="trip-card__title">Orsa</h3>
-                <span class="trip-card__meta">Dalarna</span>
+                <span class="trip-card__meta">Zweden</span>
               </div>
               <p class="trip-card__desc">Begeleide groepsreis op het Orsameer, met een geveegde baan van zo'n 15 km en verblijf in eigen huisjes vlak bij het ijs. Data en prijs volgen binnenkort.</p>
               <a class="link-arrow trip-card__link" href="orsa.html">Bekijk deze reis</a>
@@ -426,10 +426,10 @@
                 <div class="trip-card__dots"><span class="is-active"></span><span></span><span></span></div>
               </div>
               <div class="trip-card__head">
-                <h3 class="trip-card__title">Finland</h3>
-                <span class="trip-card__meta">Vanaf €995</span>
+                <h3 class="trip-card__title">Punkaharju</h3>
+                <span class="trip-card__meta">Finland</span>
               </div>
-              <p class="trip-card__desc">Zelfstandige schaatsreis zonder begeleiding op het Saimaameer bij Punkaharju, met eigen huisjes met sauna.</p>
+              <p class="trip-card__desc">Zelfstandige schaatsreis zonder begeleiding op het Saimaameer bij Punkaharju, met eigen huisjes met sauna. Vanaf €895.</p>
               <a class="link-arrow trip-card__link" href="finland.html">Bekijk deze reis</a>
             </article>
 
@@ -456,7 +456,7 @@
               </div>
               <div class="trip-card__head">
                 <h3 class="trip-card__title">Luleå</h3>
-                <span class="trip-card__meta">Zweeds Lapland</span>
+                <span class="trip-card__meta">Zweden</span>
               </div>
               <p class="trip-card__desc">Individuele, zelfstandige schaatsreis op de openbare natuurijsroute langs de bevroren Botnische Golf. Geen begeleiding of vast programma; je bepaalt zelf je reisduur en dagindeling.</p>
               <a class="link-arrow trip-card__link" href="lulea.html">Bekijk deze reis</a>
@@ -650,10 +650,10 @@
             <div class="form-field form-field--full">
               <label for="reis">Welke reis heeft je interesse?</label>
               <select id="reis" name="reis">
-                <option value="orsa">Orsa - Dalarna</option>
-                <option value="falun">Falun</option>
-                <option value="finland">Finland - Punkaharju</option>
-                <option value="weissensee">Weissensee - Karinthië</option>
+                <option value="orsa">Orsa, Zweden</option>
+                <option value="falun">Falun, Zweden</option>
+                <option value="finland">Punkaharju, Finland</option>
+                <option value="weissensee">Weissensee, Oostenrijk</option>
                 <option value="onbekend">Weet ik nog niet</option>
               </select>
             </div>

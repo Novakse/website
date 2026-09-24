@@ -1,0 +1,37 @@
+{
+  "//": "Prijzen en data voor de Finland-kalender (Punkaharju). Alle zes de taalversies en de aanvraagpagina lezen dit bestand, dus je werkt het een keer bij. Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan.",
+
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Zet je seizoenEind later, pas dan ook de tekst over het seizoen op finland.html aan.",
+  "seizoenStart": "2026-12-27",
+  "seizoenEind": "2027-03-07",
+
+  "//minimumNachten": "Kortste verblijf dat iemand kan kiezen.",
+  "minimumNachten": 3,
+
+  "//prijs": "Bedrag per persoon voor het hele verblijf, in hele euro's, gerekend met twee personen in een huisje. Inclusief de vlucht naar Helsinki met ruimbagage, de huurauto ter plaatse en het huisje met sauna. Exclusief eten en drinken en je eigen schaatsmateriaal.",
+  "//prijsHerkomst": "De eigen prijzen van Novakse. Goedkope periode: 895 voor 4 dagen en elke dag erbij 100 euro meer (995 voor 5 dagen, 1095 voor 6 dagen). Drukke periode: 910 voor 4 dagen en elke dag erbij 110 euro meer (1020, 1130). Zet hier nooit inkoopprijzen van leveranciers in: dit bestand is voor iedereen op de site op te vragen.",
+  "prijsPerPersoon": {
+    "laag": { "3": 895, "4": 995, "5": 1095 },
+    "hoog": { "3": 910, "4": 1020, "5": 1130 }
+  },
+
+  "//extraNacht": "Blijft iemand langer dan 5 nachten, dan telt elke nacht daarboven dit bedrag per persoon mee: 100 euro in de goedkope periode, 110 in de drukke.",
+  "extraNachtPerPersoon": { "laag": 100, "hoog": 110 },
+
+  "//basisPersonen": "Voor hoeveel personen per huisje de bedragen hierboven gelden. Op de aanvraagpagina krijgt wie met minder mensen komt geen prijsindicatie (die zou te laag uitvallen); wie met meer komt krijgt dezelfde prijs per persoon als indicatie. Joey stuurt daarna het precieze bedrag.",
+  "basisPersonen": 2,
+
+  "//periodes": "De prijsperiodes van het verblijf. tot is de eerste dag die er niet meer bij hoort. De aankomstdag bepaalt welk tarief er voor het hele verblijf geldt. Staat een aankomstdag in geen enkele periode, dan verschijnt er geen prijs en blijft het bij een aanvraag.",
+  "periodes": [
+    { "van": "2026-12-26", "tot": "2027-01-07", "tarief": "hoog" },
+    { "van": "2027-01-07", "tot": "2027-02-19", "tarief": "laag" },
+    { "van": "2027-02-19", "tot": "2027-03-07", "tarief": "hoog" },
+    { "van": "2027-03-07", "tot": "2027-03-22", "tarief": "laag" }
+  ],
+
+  "//bezet": "Weken die niet meer te kiezen zijn. Een week dichtzetten doe je zo: {\"van\": \"2027-01-16\", \"tot\": \"2027-01-23\", \"wat\": \"Vaste groepsreis\"}. Achter elke regel een komma, behalve achter de laatste. Het label mag een losse regel zijn of een blokje per taal, zoals hieronder; laat je een taal weg, dan verschijnt daar gewoon het woord Bezet. De twee regels hieronder zijn nog voorbeelden.",
+  "bezet": [
+    { "van": "2027-01-16", "tot": "2027-01-23", "wat": {"nl": "Vaste groepsreis", "en": "Fixed group trip", "sv": "Fast gruppresa", "de": "Feste Gruppenreise", "no": "Fast gruppetur", "fi": "Kiinteä ryhmämatka"} },
+    { "van": "2027-02-27", "tot": "2027-03-06", "wat": {"nl": "Volgeboekt", "en": "Fully booked", "sv": "Fullbokat", "de": "Ausgebucht", "no": "Fullbooket", "fi": "Täyteen varattu"} }
+  ]
+}

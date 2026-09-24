@@ -1947,29 +1947,10 @@ button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
 .falun-cal__duur.is-actief { background: var(--ink); border-color: var(--ink); color: #fff; }
 .falun-cal__duur-nachten { font-size: 0.8rem; font-weight: 400; opacity: 0.75; }
 
-/* De dagcel krijgt twee regels: het dagnummer en de prijs eronder. */
-.falun-cal__cell {
-  flex-direction: column;
-  gap: 0.1rem;
-  aspect-ratio: auto;
-  min-height: 3.1rem;
-  padding: 0.35rem 0.2rem;
-}
-.falun-cal__dagprijs {
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  opacity: 0.8;
-  white-space: nowrap;
-}
-/* Zonder minmax(0, ...) rekt het prijsje de kolom op en loopt de kalender op
-   een telefoon buiten het scherm. */
+/* Met minmax(0, ...) blijven de kolommen even breed en loopt de kalender op
+   een telefoon niet buiten het scherm. */
 .falun-cal .calendar__grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .falun-cal .calendar__cell { min-width: 0; }
-@media (min-width: 26rem) {
-  .falun-cal__dagprijs { font-size: 0.66rem; }
-}
-.falun-cal__cell.is-gekozen .falun-cal__dagprijs { opacity: 1; }
 
 /* Een optie die nu niet kan, blijft leesbaar maar is duidelijk uit. */
 .extra.is-uit { opacity: 0.55; cursor: not-allowed; }
@@ -3008,8 +2989,38 @@ select.trip-search__input {
   }
 }
 
+/* Zwevende variant (homepage): geen witte strook meer. Het dock neemt zelf
+   geen hoogte in, zodat de balk over de naad tussen de openingsvideo en de
+   sectie eronder valt. --dock-overlap is hoeveel hij over de video valt;
+   de sectie eronder krijgt bovenaan ruimte voor wat er van de balk overblijft
+   (balkhoogte min overlap, plus 3rem lucht). De onderste padding van
+   .opener__inner (7rem) is groter dan de overlap, dus de knoppen blijven
+   altijd vrij. */
+.trip-search-dock--float {
+  --dock-overlap: 5rem;
+  height: 0;
+  padding-block: 0;
+  background: transparent;
+}
+.trip-search-dock--float > .wrap { transform: translateY(calc(-1 * var(--dock-overlap))); }
+.trip-search-dock--float .trip-search {
+  box-shadow: 0 1.5rem 2.5rem -1.5rem rgba(20, 24, 26, 0.45);
+}
+.trip-search-dock--float + .layered .layered__inner {
+  padding-top: 25rem;
+}
+@media (min-width: 52rem) {
+  .trip-search-dock--float {
+    --dock-overlap: 6.5rem;
+    margin-top: 0;
+  }
+  .trip-search-dock--float + .layered .layered__inner { padding-top: 10rem; }
+}
+
 /* Op brede schermen past de knop naast de velden, op dezelfde regel. */
 @media (min-width: 72rem) {
+  .trip-search-dock--float { --dock-overlap: 6rem; }
+  .trip-search-dock--float + .layered .layered__inner { padding-top: 9rem; }
   .trip-search { padding: 1.5rem 1.75rem; }
   .trip-search__fields { grid-row: 2; grid-column: 1; }
   .trip-search__submit { grid-row: 2; grid-column: 2; align-self: end; margin-bottom: 0.15rem; }
@@ -3348,8 +3359,19 @@ button.plan__cell.is-gekozen {
   text-align: center;
   transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
 }
-.plan__time:hover { border-color: var(--ink); }
+.plan__time:hover:not(:disabled) { border-color: var(--ink); }
 .plan__time.is-gekozen { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+/* Al vergeven momenten blijven staan, maar dan grijs en doorgestreept: de
+   bezoeker ziet zo dat de dag echt in gebruik is en niet dat er tijden
+   ontbreken. */
+.plan__time.is-bezet {
+  background: repeating-linear-gradient(135deg, #e8eae6 0 5px, #dfe2dd 5px 10px);
+  border-color: transparent;
+  color: #969c94;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
 .plan__slots-note { margin-top: 0.9rem; font-size: 0.82rem; color: var(--ink-soft); }
 
 /* Formulier */
@@ -3411,4 +3433,16 @@ button.plan__cell.is-gekozen {
   background: var(--paper);
   border-radius: 0 0.5rem 0.5rem 0;
   font-size: 0.95rem;
+}
+
+/* De regel boven de Falun-kalender als de keuze uit de reiszoeker niet
+   helemaal overgenomen kon worden. */
+.falun-cal__note--search {
+  margin: 0 0 1.75rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--warm-deep);
+  background: var(--paper);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-size: 0.95rem;
+  color: var(--ink);
 }

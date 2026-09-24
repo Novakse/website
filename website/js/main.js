@@ -24,6 +24,7 @@
       defaultBooked: "Bezet",
       availableAria: function (datum) { return datum + ", beschikbaar"; },
       totalLabel: function (totaal) { return "Totaal €" + totaal + " per persoon"; },
+      groupTotalLabel: function (totaal, n, pp) { return "Totaal €" + totaal + " voor " + n + " personen (€" + pp + " p.p.)"; },
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " tot " + tot; },
       bookedSr: function (wat) { return " " + wat + ", niet beschikbaar"; },
       warnMinNights: function (min) { return "Een verblijf duurt minimaal " + min + " nachten. Kies een latere vertrekdag."; },
@@ -46,6 +47,7 @@
       defaultBooked: "Booked",
       availableAria: function (date) { return date + ", available"; },
       totalLabel: function (totaal) { return "Total €" + totaal + " per person"; },
+      groupTotalLabel: function (total, n, pp) { return "Total €" + total + " for " + n + " people (€" + pp + " per person)"; },
       bookedTitle: function (what, from, to) { return what + ": " + from + " to " + to; },
       bookedSr: function (what) { return " " + what + ", not available"; },
       warnMinNights: function (min) { return "A stay is at least " + min + " nights. Choose a later departure day."; },
@@ -68,6 +70,7 @@
       defaultBooked: "Bokad",
       availableAria: function (datum) { return datum + ", tillgänglig"; },
       totalLabel: function (total) { return "Totalt €" + total + " per person"; },
+      groupTotalLabel: function (total, n, pp) { return "Totalt €" + total + " för " + n + " personer (€" + pp + " per person)"; },
       bookedTitle: function (vad, fran, till) { return vad + ": " + fran + " till " + till; },
       bookedSr: function (vad) { return " " + vad + ", inte tillgänglig"; },
       warnMinNights: function (min) { return "En vistelse är minst " + min + " nätter. Välj en senare avresedag."; },
@@ -90,6 +93,7 @@
       defaultBooked: "Belegt",
       availableAria: function (datum) { return datum + ", verfügbar"; },
       totalLabel: function (gesamt) { return "Gesamt €" + gesamt + " pro Person"; },
+      groupTotalLabel: function (gesamt, n, pp) { return "Gesamt €" + gesamt + " für " + n + " Personen (€" + pp + " pro Person)"; },
       bookedTitle: function (was, von, bis) { return was + ": " + von + " bis " + bis; },
       bookedSr: function (was) { return " " + was + ", nicht verfügbar"; },
       warnMinNights: function (min) { return "Ein Aufenthalt dauert mindestens " + min + " Nächte. Wähle einen späteren Abreisetag."; },
@@ -112,6 +116,7 @@
       defaultBooked: "Booket",
       availableAria: function (dato) { return dato + ", tilgjengelig"; },
       totalLabel: function (total) { return "Totalt €" + total + " per person"; },
+      groupTotalLabel: function (total, n, pp) { return "Totalt €" + total + " for " + n + " personer (€" + pp + " per person)"; },
       bookedTitle: function (hva, fra, til) { return hva + ": " + fra + " til " + til; },
       bookedSr: function (hva) { return " " + hva + ", ikke tilgjengelig"; },
       warnMinNights: function (min) { return "Et opphold varer minst " + min + " netter. Velg en senere avreisedag."; },
@@ -134,6 +139,7 @@
       defaultBooked: "Varattu",
       availableAria: function (pvm) { return pvm + ", vapaa"; },
       totalLabel: function (yhteensa) { return "Yhteensä €" + yhteensa + " / henkilö"; },
+      groupTotalLabel: function (yhteensa, n, pp) { return "Yhteensä €" + yhteensa + ", " + n + " henkilöä (€" + pp + " / henkilö)"; },
       bookedTitle: function (mika, alkaen, saakka) { return mika + ": " + alkaen + " – " + saakka; },
       bookedSr: function (mika) { return " " + mika + ", ei vapaa"; },
       warnMinNights: function (min) { return "Vähimmäisoleskelu on " + min + " yötä. Valitse myöhäisempi lähtöpäivä."; },
@@ -706,13 +712,47 @@
     return Math.round((tot - van) / 86400000);
   }
 
+  /* "" op de Nederlandse site, "../" in de taalmappen. De paden in het
+     gegevensblokje gaan uit van de hoofdmap. */
+  function mapVoorKalender() {
+    var eigen = document.querySelector('script[src$="js/main.js"]');
+    var src = eigen ? eigen.getAttribute("src") : "";
+    return src.replace(/js\/main\.js$/, "");
+  }
+
   document.querySelectorAll("[data-calendar]").forEach(function (box) {
     var bron = box.querySelector("script.calendar__data");
     if (!bron) return;
 
     var data;
     try { data = JSON.parse(bron.textContent); } catch (fout) { return; }
-    if (!data || !data.seizoenStart || !data.seizoenEind) return;
+    if (!data) return;
+
+    /* Staat er een prijzenbestand bij, dan komen het seizoen, het kortste
+       verblijf, de bezette weken en de prijzen daarvandaan. Zo staan ze op
+       een plek in plaats van zes keer in de taalversies. Lukt het ophalen
+       niet, dan blijft de gewone tekst staan die er zonder JavaScript ook
+       al is. */
+    if (typeof data.prijzen === "string" && data.prijzen) {
+      fetch(mapVoorKalender() + data.prijzen).then(function (antwoord) {
+        return antwoord.ok ? antwoord.json() : null;
+      }).then(function (uitBestand) {
+        if (!uitBestand) return;
+        Object.keys(uitBestand).forEach(function (sleutel) {
+          // De regels die met // beginnen zijn uitleg voor wie het bestand
+          // bijwerkt; die horen niet in de gegevens thuis.
+          if (sleutel.indexOf("//") !== 0) data[sleutel] = uitBestand[sleutel];
+        });
+        bouwKalender(box, data);
+      })["catch"](function () { /* gewone tekst blijft staan */ });
+      return;
+    }
+
+    bouwKalender(box, data);
+  });
+
+  function bouwKalender(box, data) {
+    if (!data.seizoenStart || !data.seizoenEind) return;
 
     var seizoenVan = alsDatum(data.seizoenStart);
     var seizoenTot = alsDatum(data.seizoenEind);
@@ -722,8 +762,56 @@
 
     var minNachten = data.minimumNachten || 1;
     var dagprijs = data.prijsPerPersoonPerDag || 0;
+
+    /* In welke periode van de leverancier de aankomstdag valt. De aankomstdag
+       bepaalt het tarief voor het hele verblijf, net als in hun eigen
+       prijslijst. Valt hij buiten alle periodes, dan komt er geen prijs in
+       beeld en blijft het bij een aanvraag. */
+    function tariefOp(datum) {
+      var lijst = data.periodes || [];
+      for (var i = 0; i < lijst.length; i++) {
+        var van = alsDatum(lijst[i].van);
+        var tot = alsDatum(lijst[i].tot);
+        if (van && tot && datum >= van && datum < tot) return lijst[i].tarief;
+      }
+      return null;
+    }
+
+    /* Wat het verblijf per persoon kost. Staat er een prijstabel, dan geldt
+       het bedrag dat bij dit tarief en dit aantal nachten hoort; blijft
+       iemand langer dan de tabel gaat, dan telt elke nacht daarboven het
+       losse nachttarief mee. Is er geen tabel, dan geldt de oude dagprijs. */
+    function prijsPerPersoon(aankomst, nachten) {
+      var tabel = data.prijsPerPersoon;
+      if (!tabel) return dagprijs ? nachten * dagprijs : 0;
+
+      var tarief = tariefOp(aankomst);
+      var rij = tarief ? tabel[tarief] : null;
+      if (!rij) return 0;
+      if (typeof rij[String(nachten)] === "number") return rij[String(nachten)];
+
+      var langste = 0;
+      Object.keys(rij).forEach(function (sleutel) {
+        var n = parseInt(sleutel, 10);
+        if (n > langste && typeof rij[sleutel] === "number") langste = n;
+      });
+      if (!langste || nachten < langste) return 0;
+
+      var extra = (data.extraNachtPerPersoon || {})[tarief] || 0;
+      if (!extra) return 0;
+      return rij[String(langste)] + (nachten - langste) * extra;
+    }
+    /* Staat het prijzenbestand voor alle talen tegelijk, dan mag het label bij
+       een bezette week een blokje per taal zijn in plaats van een losse regel.
+       Ontbreekt de taal, dan valt hij terug op het Nederlands en anders op het
+       gewone woord "Bezet". */
+    function labelVoor(wat) {
+      if (wat && typeof wat === "object") return wat[LANG] || wat.nl || T.defaultBooked;
+      return wat || T.defaultBooked;
+    }
+
     var bezet = (data.bezet || []).map(function (blok) {
-      return { van: alsDatum(blok.van), tot: alsDatum(blok.tot), wat: blok.wat || T.defaultBooked };
+      return { van: alsDatum(blok.van), tot: alsDatum(blok.tot), wat: labelVoor(blok.wat) };
     }).filter(function (blok) {
       // Een bezette periode met een kapotte datum laten we liever weg dan dat
       // hij de hele kalender onbruikbaar maakt.
@@ -737,6 +825,17 @@
       var aantal = parseInt(new URLSearchParams(window.location.search).get("personen"), 10);
       return isNaN(aantal) ? 0 : aantal;
     })();
+
+    /* De prijzen gelden per persoon. Kwam het aantal reizigers uit de
+       reiszoeker mee, dan staat het totaal voor de hele groep erbij, net als
+       in het aanvraagformulier. */
+    function prijsTekst(perPersoon) {
+      function bedrag(n) { return n.toLocaleString("nl-NL"); }
+      if (reizigersUitAdres > 1) {
+        return T.groupTotalLabel(bedrag(perPersoon * reizigersUitAdres), reizigersUitAdres, bedrag(perPersoon));
+      }
+      return T.totalLabel(perPersoon);
+    }
 
     function bezetOp(datum) {
       for (var i = 0; i < bezet.length; i++) {
@@ -785,14 +884,14 @@
         return;
       }
       var nachten = dagenTussen(keuzeVan, keuzeTot);
-      var totaal = dagprijs ? nachten * dagprijs : 0;
+      var totaal = Math.round(prijsPerPersoon(keuzeVan, nachten));
       balk.className = "calendar__bar is-done";
       balk.innerHTML =
         '<div class="calendar__chosen">' +
           '<span class="calendar__chosen-label">' + T.chosenLabel + '</span>' +
           '<span class="calendar__chosen-dates">' + schrijfDatum(keuzeVan) + ' – ' + schrijfDatum(keuzeTot) + '</span>' +
           '<span class="calendar__chosen-nights">' + T.nightsLabel(nachten) + '</span>' +
-          (totaal ? '<span class="calendar__chosen-price">' + T.totalLabel(totaal) + '</span>' : '') +
+          (totaal ? '<span class="calendar__chosen-price">' + prijsTekst(totaal) + '</span>' : '') +
         '</div>' +
         '<div class="calendar__bar-actions">' +
           '<button type="button" class="calendar__reset">' + T.reset + '</button>' +
@@ -943,7 +1042,7 @@
 
     tekenRaster();
     toonBalk();
-  });
+  }
 
   /* ------------------------------------------------------------------
      Collage bij het persoonlijke verhaal: elke foto schuift tijdens het
