@@ -29,9 +29,6 @@
     { "van": "2027-03-07", "tot": "2027-03-22", "tarief": "laag" }
   ],
 
-  "//bezet": "Weken die niet meer te kiezen zijn. Een week dichtzetten doe je zo: {\"van\": \"2027-01-16\", \"tot\": \"2027-01-23\", \"wat\": \"Vaste groepsreis\"}. Achter elke regel een komma, behalve achter de laatste. Het label mag een losse regel zijn of een blokje per taal, zoals hieronder; laat je een taal weg, dan verschijnt daar gewoon het woord Bezet. De twee regels hieronder zijn nog voorbeelden.",
-  "bezet": [
-    { "van": "2027-01-16", "tot": "2027-01-23", "wat": {"nl": "Vaste groepsreis", "en": "Fixed group trip", "sv": "Fast gruppresa", "de": "Feste Gruppenreise", "no": "Fast gruppetur", "fi": "Kiinteä ryhmämatka"} },
-    { "van": "2027-02-27", "tot": "2027-03-06", "wat": {"nl": "Volgeboekt", "en": "Fully booked", "sv": "Fullbokat", "de": "Ausgebucht", "no": "Fullbooket", "fi": "Täyteen varattu"} }
-  ]
+  "//bezet": "Weken die niet meer te kiezen zijn. Een week dichtzetten doe je zo: {\"van\": \"2027-01-16\", \"tot\": \"2027-01-23\", \"wat\": \"Vaste groepsreis\"}. Achter elke regel een komma, behalve achter de laatste. Het label mag een losse regel zijn of een blokje per taal: \"wat\": {\"nl\": \"Volgeboekt\", \"en\": \"Fully booked\", \"sv\": \"Fullbokat\", \"de\": \"Ausgebucht\", \"no\": \"Fullbooket\", \"fi\": \"Täyteen varattu\"}; laat je een taal weg, dan verschijnt daar gewoon het woord Bezet. Er staat nu niets dicht.",
+  "bezet": []
 }
