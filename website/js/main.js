@@ -683,9 +683,17 @@
   var MAANDEN = T.months;
   var DAGKOPPEN = T.dayHeaders;
 
+  /* Leest een datum als "2027-01-16". Alles wat die vorm niet heeft - een leeg
+     webadres, een typefout, een dag die niet bestaat - geeft null terug. Zo
+     komt er nooit een kapotte datum in de kalender of op het scherm. */
   function alsDatum(tekst) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(tekst))) return null;
     var d = String(tekst).split("-");
-    return new Date(+d[0], +d[1] - 1, +d[2]);
+    var datum = new Date(+d[0], +d[1] - 1, +d[2]);
+    if (isNaN(datum.getTime())) return null;
+    // Vangt 31 februari en dergelijke: die rolt stilletjes door naar de maand erna.
+    if (datum.getMonth() !== +d[1] - 1 || datum.getDate() !== +d[2]) return null;
+    return datum;
   }
   function alsTekst(datum) {
     function twee(n) { return (n < 10 ? "0" : "") + n; }
@@ -708,10 +716,18 @@
 
     var seizoenVan = alsDatum(data.seizoenStart);
     var seizoenTot = alsDatum(data.seizoenEind);
+    // Staat er een onleesbare of omgekeerde periode in het blokje, dan blijft
+    // de gewone tekst staan die er zonder JavaScript ook al is.
+    if (!seizoenVan || !seizoenTot || seizoenTot <= seizoenVan) return;
+
     var minNachten = data.minimumNachten || 1;
     var dagprijs = data.prijsPerPersoonPerDag || 0;
     var bezet = (data.bezet || []).map(function (blok) {
       return { van: alsDatum(blok.van), tot: alsDatum(blok.tot), wat: blok.wat || T.defaultBooked };
+    }).filter(function (blok) {
+      // Een bezette periode met een kapotte datum laten we liever weg dan dat
+      // hij de hele kalender onbruikbaar maakt.
+      return blok.van && blok.tot && blok.tot > blok.van;
     });
 
     var keuzeVan = null;
