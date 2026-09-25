@@ -1,5 +1,5 @@
 {
-  "//": "Prijzen voor de schaatsdagtocht vanuit Sälen, in hele euro's. De pagina schaatsen-salen.html en het afrekenen (api/salen-checkout.js) lezen allebei dit bestand, dus wat op het scherm staat is precies wat er afgeschreven wordt. Zet hier nooit inkoopprijzen in: dit bestand is openbaar.",
+  "//": "Prijzen voor de schaatsdagtocht vanuit Sälen, in euro's; centen mogen, schrijf ze met een punt (199.50 is € 199,50). De pagina schaatsen-salen.html en het afrekenen (api/salen-checkout.js) lezen allebei dit bestand, dus wat op het scherm staat is precies wat er afgeschreven wordt. Zet hier nooit inkoopprijzen in: dit bestand is openbaar.",
 
   "//season": "Tussen welke datums een dagtocht te boeken is, beide dagen meegerekend.",
   "season": { "from": "2027-01-10", "to": "2027-02-20" },
@@ -8,12 +8,12 @@
   "packages": {
     "half": {
       "label": "Halve dag",
-      "adultRates": { "1": 105, "2": 95, "3": 85, "4": 75 },
+      "adultRates": { "1": 155, "2": 145, "3": 135, "4": 125 },
       "child": 49
     },
     "full": {
       "label": "Hele dag",
-      "adultRates": { "1": 155, "2": 140, "3": 125, "4": 110 },
+      "adultRates": { "1": 199.50, "2": 184.50, "3": 169.50, "4": 154.50 },
       "child": 75
     }
   },

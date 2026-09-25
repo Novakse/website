@@ -29,9 +29,26 @@
       : new Date().toISOString().slice(0, 10);
   }
 
-  function euro(amount) {
-    var n = typeof amount === "number" && isFinite(amount) ? amount : 0;
-    return "€ " + n.toLocaleString("nl-NL");
+  // Amount in cents -> "€ 145" / "€ 199,50" (same formatter as the server).
+  function euro(cents) {
+    if (window.SalenPrice && window.SalenPrice.formatEuro) return window.SalenPrice.formatEuro(cents);
+    var n = typeof cents === "number" && isFinite(cents) ? cents / 100 : 0;
+    return "€ " + n.toLocaleString("nl-NL", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+  }
+
+  // Euro amount from the JSON -> cents.
+  function cents(euros) {
+    if (window.SalenPrice && window.SalenPrice.toCents) return window.SalenPrice.toCents(euros);
+    return typeof euros === "number" && isFinite(euros) && euros >= 0 ? Math.round(euros * 100) : 0;
+  }
+
+  // Displayed Dutch price ("€ 199,50", "€ 1.045") -> cents, for the bars.
+  function parseDisplayedCents(text) {
+    var m = String(text).replace(/\s/g, "").match(/(\d{1,3}(?:\.\d{3})*|\d+)(?:,(\d{1,2}))?/);
+    if (!m) return 0;
+    var whole = parseInt(m[1].replace(/\./g, ""), 10);
+    var frac = m[2] ? parseInt((m[2] + "0").slice(0, 2), 10) : 0;
+    return isFinite(whole) ? whole * 100 + frac : 0;
   }
 
   /* ------------------------------------------------------------------
@@ -82,8 +99,7 @@
       var cells = table.querySelectorAll("[data-rate]");
       var values = [];
       cells.forEach(function (cell) {
-        var n = parseInt(String(cell.textContent).replace(/[^\d]/g, ""), 10);
-        values.push(isFinite(n) ? n : 0);
+        values.push(parseDisplayedCents(cell.textContent));
       });
       var max = Math.max.apply(null, values.concat([1]));
       cells.forEach(function (cell, i) {
@@ -101,23 +117,23 @@
       if (!pkg || !pkg.adultRates) return;
       table.querySelectorAll("[data-rate]").forEach(function (cell) {
         var rate = pkg.adultRates[cell.getAttribute("data-rate")];
-        if (typeof rate === "number") cell.textContent = euro(rate);
+        if (typeof rate === "number") cell.textContent = euro(cents(rate));
       });
     });
 
     document.querySelectorAll("[data-child-rate]").forEach(function (el) {
       var pkg = prices.packages[el.getAttribute("data-child-rate")];
-      if (pkg && typeof pkg.child === "number") el.textContent = euro(pkg.child);
+      if (pkg && typeof pkg.child === "number") el.textContent = euro(cents(pkg.child));
     });
 
     if (typeof prices.transferPerAdult === "number") {
       document.querySelectorAll("[data-transfer-rate]").forEach(function (el) {
-        el.textContent = euro(prices.transferPerAdult);
+        el.textContent = euro(cents(prices.transferPerAdult));
       });
     }
     if (typeof prices.rentalPerPair === "number") {
       document.querySelectorAll("[data-rental-rate]").forEach(function (el) {
-        el.textContent = euro(prices.rentalPerPair);
+        el.textContent = euro(cents(prices.rentalPerPair));
       });
     }
 
@@ -220,9 +236,10 @@
     if (!on) clearFieldError(el.shoeSizes);
   }
 
-  function setButtonIdle(total) {
+  // totalCents = amount in cents, or null when there is no price yet.
+  function setButtonIdle(totalCents) {
     if (submitting) return;
-    el.submit.textContent = typeof total === "number" ? "Boek nu voor " + euro(total) : "Boek nu";
+    el.submit.textContent = typeof totalCents === "number" ? "Boek nu voor " + euro(totalCents) : "Boek nu";
   }
 
   // Show or hide one summary row (the <div> around a <dt>/<dd> pair).
@@ -245,35 +262,35 @@
 
     el.submit.disabled = submitting;
 
-    el.sumAdultsLabel.textContent = "Volwassenen (" + input.adults + " × " + euro(result.adultRate) + ")";
-    el.sumAdults.textContent = euro(result.adultsTotal);
+    el.sumAdultsLabel.textContent = "Volwassenen (" + input.adults + " × " + euro(result.adultRateCents) + ")";
+    el.sumAdults.textContent = euro(result.adultsTotalCents);
 
     var childLabel = "Kinderen";
-    if (input.children > 0) childLabel += " (" + input.children + " × " + euro(result.childRate) + ")";
+    if (input.children > 0) childLabel += " (" + input.children + " × " + euro(result.childRateCents) + ")";
     if (input.toddlers > 0) childLabel += (input.children > 0 ? ", " : " (") + input.toddlers + " t/m 3 jaar gratis" + (input.children > 0 ? "" : ")");
     el.sumChildrenLabel.textContent = childLabel;
-    el.sumChildren.textContent = euro(result.childrenTotal);
+    el.sumChildren.textContent = euro(result.childrenTotalCents);
     // Lines without anything in them are hidden. Children 0-3 are free but
     // still listed, so the visitor sees they are counted.
     setLineVisible(el.sumChildren, input.children > 0 || input.toddlers > 0);
 
     el.sumTransferLabel.textContent = input.transfer
-      ? "Vervoer (" + input.adults + " × " + euro(prices.transferPerAdult) + ")"
+      ? "Vervoer (" + input.adults + " × " + euro(result.transferRateCents) + ")"
       : "Vervoer (eigen vervoer)";
-    el.sumTransfer.textContent = euro(result.transferTotal);
-    setLineVisible(el.sumTransfer, result.transferTotal > 0);
+    el.sumTransfer.textContent = euro(result.transferTotalCents);
+    setLineVisible(el.sumTransfer, result.transferTotalCents > 0);
 
     el.sumRentalLabel.textContent = input.rentals > 0
-      ? "Schaatsverhuur (" + input.rentals + " × " + euro(prices.rentalPerPair) + ")"
+      ? "Schaatsverhuur (" + input.rentals + " × " + euro(result.rentalRateCents) + ")"
       : "Schaatsverhuur (eigen schaatsen)";
-    el.sumRental.textContent = euro(result.rentalTotal);
-    setLineVisible(el.sumRental, result.rentalTotal > 0);
+    el.sumRental.textContent = euro(result.rentalTotalCents);
+    setLineVisible(el.sumRental, result.rentalTotalCents > 0);
 
-    el.sumTotal.textContent = euro(result.total);
+    el.sumTotal.textContent = euro(result.totalCents);
     // Reveal only now, so hidden lines never flash in on the first render.
     el.loading.hidden = true;
     el.lines.hidden = false;
-    setButtonIdle(result.total);
+    setButtonIdle(result.totalCents);
   }
 
   function update() {

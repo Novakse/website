@@ -79,8 +79,9 @@ function schoenmaten(waarde) {
   return typeof waarde === "number" ? String(waarde) : tekst(waarde, 450);
 }
 
-function euro(bedrag) {
-  return "€ " + bedrag.toLocaleString("nl-NL");
+// Amount in cents -> "€ 145" / "€ 199,50", the same text the page shows.
+function euro(centen) {
+  return SalenPrice.formatEuro(centen);
 }
 
 function schrijfDatum(iso) {
@@ -93,12 +94,13 @@ function meervoud(aantal, enkel, meer) {
   return aantal + " " + (aantal === 1 ? enkel : meer);
 }
 
-function regel(naam, bedragEuro, omschrijving) {
+// bedragCenten is always a whole number of cents from SalenPrice.calc().
+function regel(naam, bedragCenten, omschrijving) {
   var item = {
     quantity: 1,
     price_data: {
       currency: "eur",
-      unit_amount: bedragEuro * 100,
+      unit_amount: bedragCenten,
       product_data: { name: naam.slice(0, 250) }
     }
   };
@@ -185,7 +187,9 @@ module.exports = async function handler(req, res) {
     rentals: huur
   }, prijzen);
 
-  if (!prijs || !(prijs.total > 0) || prijs.total * 100 > MAX_BEDRAG_CENTEN) {
+  // All amounts from calc() are whole cents; anything else is refused.
+  if (!prijs || !Number.isInteger(prijs.totalCents) || !(prijs.totalCents > 0) ||
+      prijs.totalCents > MAX_BEDRAG_CENTEN) {
     res.status(400).json({ error: "Ongeldig bedrag." });
     return;
   }
@@ -207,27 +211,27 @@ module.exports = async function handler(req, res) {
 
   var regels = [
     regel(
-      pakket + " - " + meervoud(volwassenen, "volwassene", "volwassenen") + " × " + euro(prijs.adultRate),
-      prijs.adultsTotal,
+      pakket + " - " + meervoud(volwassenen, "volwassene", "volwassenen") + " × " + euro(prijs.adultRateCents),
+      prijs.adultsTotalCents,
       "Schaatsdagtocht vanuit Sälen, " + datumTekst + ". Groep: " + groep.join(", ") + "."
     )
   ];
-  if (kinderen && prijs.childrenTotal > 0) {
+  if (kinderen && prijs.childrenTotalCents > 0) {
     regels.push(regel(
-      "Kinderen 4 t/m 12 jaar - " + meervoud(kinderen, "kind", "kinderen") + " × " + euro(prijs.childRate),
-      prijs.childrenTotal
+      "Kinderen 4 t/m 12 jaar - " + meervoud(kinderen, "kind", "kinderen") + " × " + euro(prijs.childRateCents),
+      prijs.childrenTotalCents
     ));
   }
-  if (prijs.transferTotal > 0) {
+  if (prijs.transferTotalCents > 0) {
     regels.push(regel(
-      "Vervoer - " + meervoud(volwassenen, "volwassene", "volwassenen") + " × " + euro(prijs.transferTotal / volwassenen),
-      prijs.transferTotal
+      "Vervoer - " + meervoud(volwassenen, "volwassene", "volwassenen") + " × " + euro(prijs.transferRateCents),
+      prijs.transferTotalCents
     ));
   }
-  if (prijs.rentalTotal > 0) {
+  if (prijs.rentalTotalCents > 0) {
     regels.push(regel(
-      "Schaatsverhuur - " + huur + " paar × " + euro(prijs.rentalTotal / huur),
-      prijs.rentalTotal,
+      "Schaatsverhuur - " + huur + " paar × " + euro(prijs.rentalRateCents),
+      prijs.rentalTotalCents,
       "Schoenmaten: " + maten
     ));
   }
@@ -248,7 +252,7 @@ module.exports = async function handler(req, res) {
     naam: naam,
     email: email,
     telefoon: telefoon,
-    totaal_eur: String(prijs.total)
+    totaal_eur: SalenPrice.formatAmount(prijs.totalCents) // Dutch format, e.g. "569" or "508,50"
   };
 
   var basis = basisUrl(req);

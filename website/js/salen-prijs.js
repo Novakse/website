@@ -15,12 +15,27 @@
      SalenPrice.calc(input, prices)
        input  = { package: "half"|"full", adults, children, toddlers,
                   transfer: boolean, rentals }
-       prices = parsed data/salen-prijzen.json
-       returns { adultRate, childRate, adultsTotal, childrenTotal,
-                 transferTotal, rentalTotal, total }  (whole euros)
-       or null when the package or the price data is unknown.
+       prices = parsed data/salen-prijzen.json (amounts in euros, cents
+                allowed, e.g. 199.50)
+       returns { adultRateCents, childRateCents, transferRateCents,
+                 rentalRateCents, adultsTotalCents, childrenTotalCents,
+                 transferTotalCents, rentalTotalCents, totalCents }
+       All amounts are whole numbers of CENTS. Every euro amount from the
+       JSON is converted once with Math.round(x * 100), and all arithmetic
+       after that is integer-only, so there is no float drift
+       (3 x 169.50 is exactly 50850 cents). Stripe takes cents directly.
+       Returns null when the package or the price data is unknown.
        Counts that are missing, negative or not a number count as 0, so the
        result never contains NaN.
+
+     SalenPrice.formatEuro(cents)
+       Dutch display of an amount in cents: 14500 -> "€ 145",
+       19950 -> "€ 199,50", 314500 -> "€ 3.145". Used by the page and by the
+       server (Stripe line items), so both show exactly the same text.
+       SalenPrice.formatAmount(cents) is the same without the "€ " prefix.
+
+     SalenPrice.toCents(euros)
+       Euro amount from the JSON -> whole cents (0 for anything invalid).
 
      SalenPrice.validate(input, prices, today)
        returns null when the trip choice is valid, otherwise a Dutch error
@@ -85,8 +100,37 @@
     return typeof best === "number" ? best : 0;
   }
 
-  function num(value) {
-    return typeof value === "number" && isFinite(value) ? value : 0;
+  // Euro amount from the JSON (may have cents, e.g. 199.5) -> whole cents.
+  // Anything that is not a finite, non-negative number counts as 0.
+  function toCents(value) {
+    if (typeof value !== "number" || !isFinite(value) || value < 0) return 0;
+    return Math.round(value * 100);
+  }
+
+  // "1.234" style grouping of a whole number of euros.
+  function groupThousands(n) {
+    var text = String(n);
+    var out = "";
+    while (text.length > 3) {
+      out = "." + text.slice(-3) + out;
+      text = text.slice(0, -3);
+    }
+    return text + out;
+  }
+
+  // Dutch amount without currency sign: 14500 -> "145", 19950 -> "199,50".
+  function formatAmount(cents) {
+    var c = typeof cents === "number" && isFinite(cents) ? Math.round(cents) : 0;
+    var negative = c < 0;
+    if (negative) c = -c;
+    var euros = Math.floor(c / 100);
+    var rest = c % 100;
+    var text = groupThousands(euros) + (rest ? "," + (rest < 10 ? "0" : "") + rest : "");
+    return (negative ? "-" : "") + text;
+  }
+
+  function formatEuro(cents) {
+    return "\u20ac " + formatAmount(cents);
   }
 
   function calc(input, prices) {
@@ -99,23 +143,28 @@
     var toddlers = toCount(input.toddlers);
     var rentals = toCount(input.rentals);
 
-    var adultRate = adultRateFor(pkg, adults);
-    var childRate = num(pkg.child);
-    var toddlerRate = num(prices.toddler);
+    // Rates in whole cents; from here on only integer arithmetic.
+    var adultRate = toCents(adultRateFor(pkg, adults));
+    var childRate = toCents(pkg.child);
+    var toddlerRate = toCents(prices.toddler);
+    var transferRate = toCents(prices.transferPerAdult);
+    var rentalRate = toCents(prices.rentalPerPair);
 
     var adultsTotal = adultRate * adults;
     var childrenTotal = childRate * children + toddlerRate * toddlers;
-    var transferTotal = input.transfer === true ? num(prices.transferPerAdult) * adults : 0;
-    var rentalTotal = num(prices.rentalPerPair) * rentals;
+    var transferTotal = input.transfer === true ? transferRate * adults : 0;
+    var rentalTotal = rentalRate * rentals;
 
     return {
-      adultRate: adultRate,
-      childRate: childRate,
-      adultsTotal: adultsTotal,
-      childrenTotal: childrenTotal,
-      transferTotal: transferTotal,
-      rentalTotal: rentalTotal,
-      total: adultsTotal + childrenTotal + transferTotal + rentalTotal
+      adultRateCents: adultRate,
+      childRateCents: childRate,
+      transferRateCents: transferRate,
+      rentalRateCents: rentalRate,
+      adultsTotalCents: adultsTotal,
+      childrenTotalCents: childrenTotal,
+      transferTotalCents: transferTotal,
+      rentalTotalCents: rentalTotal,
+      totalCents: adultsTotal + childrenTotal + transferTotal + rentalTotal
     };
   }
 
@@ -190,10 +239,14 @@
   return {
     calc: calc,
     validate: validate,
+    toCents: toCents,
+    formatEuro: formatEuro,
+    formatAmount: formatAmount,
     todayStockholm: function () { return todayStockholm(); },
-    adultRateFor: function (packageKey, adults, prices) {
+    // Price per adult in cents for this group size.
+    adultRateCentsFor: function (packageKey, adults, prices) {
       var pkg = getPackage(prices, packageKey);
-      return pkg ? adultRateFor(pkg, toCount(adults)) : 0;
+      return pkg ? toCents(adultRateFor(pkg, toCount(adults))) : 0;
     }
   };
 });
