@@ -157,7 +157,7 @@
         <div class="factbar__item"><span class="factbar__label">Opastus</span><span class="factbar__value">Ei opastusta</span></div>
         <div class="factbar__item"><span class="factbar__label">Matkan kesto</span><span class="factbar__value">Itse päätettävissä</span></div>
         <div class="factbar__item"><span class="factbar__label">Majoitus</span><span class="factbar__value">Hotelli oman valinnan mukaan</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Päivämäärät ja hinta</span><span class="factbar__value">Pyynnöstä</span></div>
+        <div class="factbar__item"><span class="factbar__label">Hinta</span><span class="factbar__value">Alkaen 1&nbsp;095 &euro; / hlö</span></div>
       </div>
     </section>
 
@@ -324,10 +324,20 @@
 
     <!-- 9. Mogelijke onderdelen en prijs -->
     <section class="pending">
-      <div class="wrap pending__inner reveal">
+      <div class="wrap reveal">
         <span class="eyebrow eyebrow--deep"><span class="dot"></span>Mahdolliset osat &amp; hinta</span>
         <h2 class="h-section">Räätälöity matka ja siihen sopiva hinta</h2>
-        <p class="pending__text">Koska päätät itse, kuinka kauan matkustat ja mitä otat mukaan, laadimme Luleåta varten räätälöidyn tarjouksen. Toiveidesi mukaan pakettiin voi kuulua meno-paluulento Luleåan, hotelliyöpymiset, päivittäinen aamiainen, matkatavarat ja kuljetus lentoaseman ja hotellin välillä sekä tietoa luistinvuokrauksesta ja talviaktiviteeteista. Luistinvuokra, retket, ateriat ja paikallinen liikkuminen sisältyvät vain silloin, kun se on nimenomaisesti mainittu matkakuvauksessa tai tarjouksessa.</p>
+        <p class="pending__lead">Koska päätät itse, kuinka kauan matkustat ja mitä otat mukaan, laadimme Luleåta varten räätälöidyn tarjouksen. Toiveidesi mukaan pakettiin voi kuulua meno-paluulento Luleåan, hotelliyöpymiset, päivittäinen aamiainen, matkatavarat ja kuljetus lentoaseman ja hotellin välillä sekä tietoa luistinvuokrauksesta ja talviaktiviteeteista. Luistinvuokra, retket, ateriat ja paikallinen liikkuminen sisältyvät vain silloin, kun se on nimenomaisesti mainittu matkakuvauksessa tai tarjouksessa.</p>
+        <p class="pending__lead">Hinta alkaa 1&nbsp;095 &euro; / hlö neljältä päivältä kahden hengen matkalla. Valitse alta saapumis- ja lähtöpäiväsi, niin näet heti mitä jaksosi maksaa.</p>
+
+        <!-- Dates, prices and blocked periods: see data/lulea-prijzen.json (shared by all six languages). -->
+        <div class="calendar" data-calendar>
+          <script type="application/json" class="calendar__data">
+          { "reis": "lulea", "prijzen": "data/lulea-prijzen.json" }
+          </script>
+          <p class="calendar__fallback">Saatavilla olevat ajanjaksot ja hinnat saat pyynnöstä. Lähetä sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
+        </div>
+
         <div class="pending__actions">
           <a class="btn btn--dark" href="boeken.html?reis=lulea">Pyydä tarjous</a>
           <a class="link-arrow" href="reisinformatie.html">Käytännön matkatietoa</a>
@@ -339,7 +349,7 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Mieluummin toinen kohde?</h2>
-        <p class="closing__text">Luleån lisäksi voit luistella Novaksen kanssa myös Orsassa, Falunissa, Suomessa ja Weissenseellä. Kaikki matkat ovat tällä hetkellä omatoimisia, ilman opastusta jäällä. Opastettuja ryhmämatkoja suunnitellaan vielä.</p>
+        <p class="closing__text">Luleån lisäksi voit luistella Novaksen kanssa myös Orsassa, Falunissa, Suomessa ja Weissenseellä. Kaikki matkat ovat lähtökohtaisesti omatoimisia, ilman opastusta jäällä. Orsan ja Falunin matkoille voit varata lisäksi opastuksen jäälle. Opastettuja ryhmämatkoja suunnitellaan vielä.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reizen.html">Katso kaikki matkat</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hei%20Joey%2C%20minulla%20on%20kysymys%20Lule%C3%A5n-matkasta." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Kysy WhatsAppin kautta</a>

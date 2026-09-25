@@ -53,6 +53,7 @@
           <li><a href="over-novakse.html">Over Novakse</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
+        <a class="header-cta header-cta--ghost" href="offerte.html">Offerte aanvragen</a>
         <a class="header-cta" id="headerKalender" href="reizen.html">Alle reizen</a>
       <div class="lang-switch">
         <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
@@ -101,9 +102,11 @@
   "reizen": {
     "orsa": {
       "naam": "Orsa, Zweden",
-      "zelfTeBoeken": false,
-      "periodeVrij": false,
+      "zelfTeBoeken": true,
+      "periodeVrij": true,
       "maxPersonen": 12,
+      "prijstabel": "data/orsa-prijzen.json",
+      "//prijstabel": "De prijzen per reisduur en de begeleiding op het ijs staan in dat bestand, net als in de kalender op orsa.html. Gerekend met twee personen.",
       "//vragen": "Keuzevragen. Zet een prijs erbij (per persoon) als je die kent; laat hem weg als Joey er een voorstel voor doet.",
       "vragen": [
         {
@@ -267,16 +270,43 @@
     },
     "weissensee": {
       "naam": "Weissensee, Oostenrijk",
-      "zelfTeBoeken": false,
-      "//prijsOpAanvraag": "Data en prijs staan nog niet vast (zie weissensee.html); geen periode, vragen of extra's verzinnen zolang dat zo is.",
-      "prijsOpAanvraag": true,
-      "extras": []
+      "zelfTeBoeken": true,
+      "periodeVrij": true,
+      "minimumPersonen": 1,
+      "maxPersonen": 12,
+      "opslagPerPersoonPerNacht": 0,
+      "extras": [],
+      "prijsPerPersoonPerDag": null,
+      "prijstabel": "data/weissensee-prijzen.json",
+      "//prijstabel": "De prijzen per reisduur (ook met eigen vervoer) staan in dat bestand, net als in de kalender op weissensee.html. Gerekend met twee personen."
     },
     "lulea": {
       "naam": "Luleå, Zweden",
+      "zelfTeBoeken": true,
+      "periodeVrij": true,
+      "minimumPersonen": 1,
+      "maxPersonen": 12,
+      "opslagPerPersoonPerNacht": 0,
+      "extras": [],
+      "prijsPerPersoonPerDag": null,
+      "prijstabel": "data/lulea-prijzen.json",
+      "//prijstabel": "De prijzen per reisduur staan in dat bestand, net als in de kalender op lulea.html. Gerekend met twee personen."
+    },
+    "wellness": {
+      "naam": "Wellnessreis, Zweden",
       "zelfTeBoeken": false,
-      "//prijsOpAanvraag": "Reis op maat, prijs op aanvraag (zie lulea.html); geen periode, vragen of extra's verzinnen zolang dat zo is.",
+      "//prijsOpAanvraag": "Aanvraag zonder online betaling (zie wellness.html, vanaf-prijs per persoon); de definitieve prijs hangt af van reisdatum en bezetting, Joey stelt de reis persoonlijk samen.",
       "prijsOpAanvraag": true,
+      "hint": "Je vraagt de reis aan",
+      "prijsLabel": "vanaf €1.395 p.p.",
+      "prijsToelichting": "Prijs per persoon, per reisduur. De definitieve prijs is afhankelijk van de gekozen reisdatum en bezetting. Laat in je opmerking weten wanneer je wilt gaan.",
+      "//prijzenPerDuur": "Verkoopprijzen per persoon per reisduur, gelijk aan de tabel op wellness.html.",
+      "prijzenPerDuur": [
+        { "dagen": 4, "label": "4 dagen", "prijs": 1395 },
+        { "dagen": 5, "label": "5 dagen", "prijs": 1595 },
+        { "dagen": 6, "label": "6 dagen", "prijs": 1795 },
+        { "dagen": 7, "label": "7 dagen", "prijs": 1995 }
+      ],
       "extras": []
     }
   }
@@ -416,6 +446,7 @@
           <a href="schaatslessen.html">Schaatslessen</a>
           <a href="schaatsonderhoud.html">Schaatsonderhoud</a>
           <a href="over-novakse.html">Over Novakse</a>
+          <a href="offerte.html">Offerte aanvragen</a>
         </div>
       </div>
     </div>

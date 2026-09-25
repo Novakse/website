@@ -157,7 +157,7 @@
         <div class="factbar__item"><span class="factbar__label">Guidance</span><span class="factbar__value">None</span></div>
         <div class="factbar__item"><span class="factbar__label">Trip length</span><span class="factbar__value">Up to you</span></div>
         <div class="factbar__item"><span class="factbar__label">Accommodation</span><span class="factbar__value">Hotel of your choice</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Dates and price</span><span class="factbar__value">On request</span></div>
+        <div class="factbar__item"><span class="factbar__label">Price</span><span class="factbar__value">From &euro;1,095 pp</span></div>
       </div>
     </section>
 
@@ -323,10 +323,20 @@
 
     <!-- 9. Mogelijke onderdelen en prijs -->
     <section class="pending">
-      <div class="wrap pending__inner reveal">
+      <div class="wrap reveal">
         <span class="eyebrow eyebrow--deep"><span class="dot"></span>Possible components &amp; price</span>
         <h2 class="h-section">A tailor-made trip, with a price to match</h2>
-        <p class="pending__text">Because you decide yourself how long you travel and what you include, we put together a tailor-made quote for Luleå. Depending on your wishes, the package can consist of a return flight to Luleå, hotel nights, daily breakfast, luggage and transport between the airport and the hotel, and information about skate rental and winter activities. Skate rental, excursions, meals and local transport are only included when this is explicitly stated in the trip description or the quote.</p>
+        <p class="pending__lead">Because you decide yourself how long you travel and what you include, we put together a tailor-made quote for Luleå. Depending on your wishes, the package can consist of a return flight to Luleå, hotel nights, daily breakfast, luggage and transport between the airport and the hotel, and information about skate rental and winter activities. Skate rental, excursions, meals and local transport are only included when this is explicitly stated in the trip description or the quote.</p>
+        <p class="pending__lead">The price starts at &euro;1,095 per person for 4 days with two of you. Pick your arrival and departure day below and you'll see straight away what your period costs.</p>
+
+        <!-- Dates, prices and blocked periods: see data/lulea-prijzen.json (shared by all six languages). -->
+        <div class="calendar" data-calendar>
+          <script type="application/json" class="calendar__data">
+          { "reis": "lulea", "prijzen": "data/lulea-prijzen.json" }
+          </script>
+          <p class="calendar__fallback">Available periods and prices are available on request. Email <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> or message +31 6 17467643.</p>
+        </div>
+
         <div class="pending__actions">
           <a class="btn btn--dark" href="boeken.html?reis=lulea">Request a quote</a>
           <a class="link-arrow" href="reisinformatie.html">Practical travel information</a>
@@ -338,7 +348,7 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Also curious about the other trips?</h2>
-        <p class="closing__text">All our trips are currently without guidance on the ice. Guided group trips are still being planned and will follow later.</p>
+        <p class="closing__text">As standard, all our trips are without guidance on the ice. At Orsa and Falun you can add guidance on the ice. Guided group trips are still being planned and will follow later.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reizen.html">View all trips</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hi%20Joey%2C%20I%20have%20a%20question%20about%20the%20trip%20to%20Lule%C3%A5." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Ask your question via WhatsApp</a>

@@ -5,8 +5,8 @@
   "seizoenStart": "2026-12-19",
   "seizoenEind": "2027-03-14",
 
-  "//duur": "Welke reisduren iemand kan kiezen, in dagen. 4 dagen telt 3 nachten, 5 dagen telt 4 nachten.",
-  "duur": [4, 5],
+  "//minimumDagen": "De kortste reis die iemand kan kiezen, in dagen. Een maximum is er niet: iedere vertrekdag vanaf minimumDagen na aankomst kan, zolang het verblijf binnen het seizoen past en er geen bezette nacht in zit. 4 dagen telt 3 nachten.",
+  "minimumDagen": 4,
 
   "//basisprijs": "Bedrag per persoon per reisduur, in hele euro's. Dit is de prijs inclusief vlucht, huurauto en verblijf, gerekend met een gewone nacht van huisjeBasisSEK.",
   "basisprijs": {
@@ -14,11 +14,17 @@
     "5": 1095
   },
 
+  "//extraDagPerPersoon": "Voor een reisduur zonder eigen bedrag in basisprijs hierboven: het bedrag van de langste duur daaronder, plus dit bedrag per persoon voor elke dag extra. Met 5 dagen voor 1095 en 100 per extra dag is 6 dagen 1195, 9 dagen 1495 en 15 dagen 2095. Daarbovenop telt, net als bij 4 en 5 dagen, per nacht het verschil met een gewone huisjesnacht mee (zie hieronder), en de huurauto per dag (autoPerDagEUR). In dit bedrag zit dus geen auto.",
+  "extraDagPerPersoon": 100,
+
   "//personen": "Voor hoeveel personen kan iemand boeken (max). Een huisje met huurauto gaat tot huisjeMaxPersonen personen. Bij een grotere groep rekent de prijs met meer huisjes en auto's, met de groep verdeeld over zo weinig mogelijk huisjes: 6 personen is 2 huisjes van 3, 8 personen is 2 huisjes van 4. De basisprijs hierboven geldt voor basisPersonen; bij een ander aantal verandert het huisjesdeel en het autodeel mee. Wordt het duurder (alleen reizen), dan wordt dat volledig doorberekend. Wordt het goedkoper (3 personen of meer), dan wordt daarvan kortingDoorgeven doorgegeven: 0.5 is de helft, 1 is alles, 0 is niets.",
   "personen": { "min": 1, "max": 20, "standaard": 2 },
   "huisjeMaxPersonen": 4,
   "basisPersonen": 2,
-  "autoPerReisEUR": 200,
+  "//autoPerDagEUR": "Wat de huurauto per dag kost, in euro's, voor de hele auto. Een auto wordt gedeeld door de mensen in een huisje. De auto telt mee voor het aantal dagen van de reis: 4 dagen is 160, 5 dagen is 200, 9 dagen is 360. Regelt iemand zijn vervoer zelf, dan gaat zijn deel van de auto voor de hele reis eraf.",
+  "autoPerDagEUR": 40,
+  "//autoInBasisprijsDagen": "Voor hoeveel dagen de huurauto al in de basisprijs hierboven zit, gerekend met basisPersonen. Nu 5 dagen: in 995 en 1095 zit 5 x 40 = 200 euro auto, 100 per persoon. De prijs rekent dat deel eruit en telt de auto voor de echte reisduur weer op, zodat een reis van 5 dagen precies hetzelfde kost als voorheen en de auto nooit dubbel meetelt.",
+  "autoInBasisprijsDagen": 5,
   "kortingDoorgeven": 0.5,
 
   "//huisjes": "De huisjesprijzen komen van de boekingssite van Falun Strandby en staan in Zweedse kronen per huisje per nacht - precies zoals daar getoond, zodat je ze zo kunt overnemen. huisjeBasisSEK is de gewone nacht die al in de basisprijs zit; alleen nachten die daarvan afwijken zet je hieronder. Het verschil wordt gedeeld door personenPerHuisje en omgerekend met wisselkoersSEK (kronen per euro).",
@@ -35,16 +41,17 @@
   "//ijsOnzeker": "Periode waarin het ijs nog onzeker is. Die dagen blijven gewoon te boeken, maar krijgen een streepje in de kalender en een regel uitleg eronder. Laat leeg (null) om de waarschuwing weg te halen.",
   "ijsOnzeker": {"van": "2026-12-19", "tot": "2027-01-01"},
 
-  "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf gaat per persoon van de prijs af. Voor de huurauto wordt het bedrag uitgerekend uit autoPerReisEUR hierboven, want dat hangt af van hoeveel mensen er meegaan. Begeleiding staat uit (prijsPerDag is null): alle reizen worden nu zonder begeleiding verkocht. Het blokje blijft staan als gegevens voor de latere pagina met begeleide groepsreizen.",
+  "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf gaat per persoon van de prijs af. Voor de huurauto wordt het bedrag uitgerekend uit autoPerDagEUR hierboven, want dat hangt af van hoeveel mensen er meegaan en hoeveel dagen de reis duurt. Begeleiding staat aan: 100 euro per dag voor 1 persoon, plus 50 euro per dag voor elke extra persoon (2 personen 150, 4 personen 250 per dag), verdeeld over de deelnemers. De bezoeker kiest zelf voor hoeveel dagen (0 tot en met de hele reis). Het kan alleen als de hele reis binnen van/tot van het blokje begeleiding valt.",
   "opties": {
     "vluchtZelf": 250,
     "//groterAuto": "Een ruimere huurauto, bijvoorbeeld voor meer bagage of meer mensen. Het bedrag is per persoon. Zolang prijs null is, staat de optie er wel in het aanvraagformulier maar telt hij niet mee in de prijs: Joey stuurt er dan een voorstel voor. Haal het hele blokje weg om de optie niet te tonen. NOG INVULLEN: wat kost een grotere auto?",
     "groterAuto": {
       "prijs": null
     },
-    "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en fika's. De bezoeker kiest zelf voor hoeveel dagen hij begeleiding wil; dat hoeft niet de hele reis te zijn. prijsPerDag geldt voor de hele groep en wordt over de deelnemers verdeeld (perPersoon false). Kan alleen als de hele reis binnen van/tot valt. Zet prijsPerDag op null om begeleiding helemaal weg te laten.",
+    "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en fika's. De bezoeker kiest zelf voor hoeveel dagen hij begeleiding wil; dat hoeft niet de hele reis te zijn. Per dag kost begeleiding prijsPerDag voor 1 persoon, plus prijsPerDagExtraPersoon voor elke persoon meer: 100 + 50 x (personen - 1). Dat dagbedrag geldt voor de hele groep en wordt over de deelnemers verdeeld (perPersoon false). Kan alleen als de hele reis binnen van/tot valt. Zet prijsPerDag op null om begeleiding helemaal weg te laten.",
     "begeleiding": {
-      "prijsPerDag": null,
+      "prijsPerDag": 100,
+      "prijsPerDagExtraPersoon": 50,
       "perPersoon": false,
       "van": "2027-01-10",
       "tot": "2027-02-20",
@@ -56,7 +63,15 @@
         "materiaalservice",
         "dronevideo's",
         "foto's en video's op het ijs"
-      ]
+      ],
+      "//inbegrepenPerTaal": "Dezelfde regels in de andere talen, in dezelfde volgorde. Pas je hierboven iets aan, pas het dan hier ook aan. Ontbreekt een taal, dan komt de Nederlandse lijst te staan.",
+      "inbegrepenPerTaal": {
+        "en": ["campfire lunch", "fika breaks along the way", "technique tips on the ice", "equipment service", "drone videos", "photos and videos on the ice"],
+        "de": ["Mittagessen am Lagerfeuer", "Fika-Pausen unterwegs", "Techniktipps auf dem Eis", "Materialservice", "Drohnenvideos", "Fotos und Videos auf dem Eis"],
+        "sv": ["lägereldslunch", "fika längs vägen", "tekniktips på isen", "materialservice", "drönarvideor", "foton och videor på isen"],
+        "no": ["lunsj ved bålet", "fika underveis", "teknikktips på isen", "utstyrsservice", "dronevideoer", "bilder og videoer på isen"],
+        "fi": ["nuotiolounas", "fika-taukoja matkan varrella", "tekniikkavinkkejä jäällä", "välinehuolto", "dronevideoita", "kuvia ja videoita jäällä"]
+      }
     }
   },
 

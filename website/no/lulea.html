@@ -157,7 +157,7 @@
         <div class="factbar__item"><span class="factbar__label">Veiledning</span><span class="factbar__value">Ingen</span></div>
         <div class="factbar__item"><span class="factbar__label">Reiselengde</span><span class="factbar__value">Bestemmer du selv</span></div>
         <div class="factbar__item"><span class="factbar__label">Overnatting</span><span class="factbar__value">Hotell etter eget valg</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Datoer og pris</span><span class="factbar__value">På forespørsel</span></div>
+        <div class="factbar__item"><span class="factbar__label">Pris</span><span class="factbar__value">Fra &euro;1&nbsp;095 per person</span></div>
       </div>
     </section>
 
@@ -323,10 +323,20 @@
 
     <!-- 9. Mogelijke onderdelen en prijs -->
     <section class="pending">
-      <div class="wrap pending__inner reveal">
+      <div class="wrap reveal">
         <span class="eyebrow eyebrow--deep"><span class="dot"></span>Mulige elementer &amp; pris</span>
         <h2 class="h-section">En skreddersydd tur, med en pris som passer til den</h2>
-        <p class="pending__text">Fordi du selv bestemmer hvor lenge du reiser og hva du tar med, setter vi sammen et skreddersydd tilbud for Luleå. Avhengig av ønskene dine kan opplegget bestå av en tur-retur-flyreise til Luleå, hotellovernattinger, daglig frokost, bagasje og transport mellom flyplass og hotell, og informasjon om skøyteutleie og vinteraktiviteter. Skøyteleie, utflukter, måltider og lokal transport er kun inkludert når det uttrykkelig står i reisebeskrivelsen eller tilbudet.</p>
+        <p class="pending__lead">Fordi du selv bestemmer hvor lenge du reiser og hva du tar med, setter vi sammen et skreddersydd tilbud for Luleå. Avhengig av ønskene dine kan opplegget bestå av en tur-retur-flyreise til Luleå, hotellovernattinger, daglig frokost, bagasje og transport mellom flyplass og hotell, og informasjon om skøyteutleie og vinteraktiviteter. Skøyteleie, utflukter, måltider og lokal transport er kun inkludert når det uttrykkelig står i reisebeskrivelsen eller tilbudet.</p>
+        <p class="pending__lead">Prisen starter på &euro;1&nbsp;095 per person for 4 dager når dere er to. Velg ankomst- og avreisedag nedenfor, så ser du med en gang hva perioden din koster.</p>
+
+        <!-- Dates, prices and blocked periods: see data/lulea-prijzen.json (shared by all six languages). -->
+        <div class="calendar" data-calendar>
+          <script type="application/json" class="calendar__data">
+          { "reis": "lulea", "prijzen": "data/lulea-prijzen.json" }
+          </script>
+          <p class="calendar__fallback">De tilgjengelige periodene og prisene får du på forespørsel. Send en e-post til <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller en melding til +31 6 17467643.</p>
+        </div>
+
         <div class="pending__actions">
           <a class="btn btn--dark" href="boeken.html?reis=lulea">Be om et tilbud</a>
           <a class="link-arrow" href="reisinformatie.html">Praktisk reiseinformasjon</a>
@@ -338,7 +348,7 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Se også de andre turene</h2>
-        <p class="closing__text">Luleå skøyter du på egen hånd. Alle turer er for tiden selvstendige, uten veiledning. Ledede gruppeturer er fortsatt under planlegging.</p>
+        <p class="closing__text">Luleå skøyter du på egen hånd. Alle turer er som standard selvstendige, uten veiledning. I Orsa og Falun kan du bestille veiledning på isen i tillegg. Ledede gruppeturer er fortsatt under planlegging.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reizen.html">Se alle turer</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hei%20Joey%2C%20jeg%20har%20et%20sp%C3%B8rsm%C3%A5l%20om%20turen%20til%20Lule%C3%A5." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Still spørsmålet ditt via WhatsApp</a>

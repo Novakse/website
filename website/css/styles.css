@@ -528,6 +528,28 @@ body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header_
   white-space: nowrap;
 }
 .header-cta:hover { transform: translateY(-2px); }
+/* Secondary header link to the quote request (offerte.html): an outlined
+   pill in the current text colour, so it reads as the second choice next to
+   the filled "Reis aanvragen" button on both dark and light headers. Two
+   classes so theme-groen.css (.header-cta background) cannot override it. */
+.header-cta.header-cta--ghost {
+  background: transparent;
+  color: inherit;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+/* Just above the 72rem desktop breakpoint the bar has no room for a second
+   pill (the logo would shrink and "Over Novakse" would wrap), so there the
+   link lives only in the footer and in-page buttons. */
+@media (min-width: 72rem) and (max-width: 79.99rem) {
+  .header-cta.header-cta--ghost { display: none; }
+}
+@media (min-width: 80rem) {
+  /* Slightly tighter spacing so logo, links, both pills and the language
+     switch fit on one line; the two pills sit closer than the nav gap. */
+  .main-nav { gap: 1.75rem; }
+  .main-nav__links { gap: 1.5rem; }
+  .header-cta.header-cta--ghost { margin-right: -1rem; padding-inline: 1.1rem; }
+}
 
 /* Taalkiezer: toont alleen de actieve taal; de overige talen verschijnen
    pas in een uitklapmenu zodra je op de knop klikt. */
@@ -1050,11 +1072,24 @@ html:not(.js) .opener__controls { display: none; }
 .collage__item--left { left: 0; bottom: 0; width: 46%; aspect-ratio: 5 / 4; z-index: 2; }
 .collage__item--right { right: 0; bottom: 3%; width: 46%; aspect-ratio: 5 / 4; z-index: 2; }
 
-/* De kampvuurfoto staat rechtop; in een liggend kader valt Joey's hoofd bij een
-   uitsnede vanuit het midden weg. De uitsnede hangt daarom aan de foto zelf en
-   niet aan de plek in de collage: op de homepage staat hij rechts, op
-   over-novakse links. De taalversies gebruiken ../images/, vandaar *=. */
-.collage__item img[src*="joey-kampvuur"] { object-position: center top; }
+/* Photo framing: focal points per photo, not per component.
+   Cropped photos (object-fit: cover) are centred by default, which cuts off
+   heads when people stand high in the frame. Each photo below gets one focal
+   point that keeps heads (and where possible the whole subject) in view in
+   every crop it appears in: heroes, cards, collages, article headers, at
+   mobile and desktop widths. Matching on src works for the language versions
+   too (they use ../images/), and for all srcset/avif/webp variants. */
+img[src*="joey-kampvuur"],
+img[src*="joey-op-het-ijs"] { object-position: 50% 0%; }
+img[src*="groep-dames"] { object-position: 50% 15%; }
+img[src*="weissensee-schaatsers"] { object-position: 50% 20%; }
+img[src*="handen-omhoog-zonsondergang"] { object-position: 50% 25%; }
+img[src*="duo-zonsondergang"] { object-position: 60% 35%; }
+img[src*="schaatsles-teaser"] { object-position: 85% 35%; }
+img[src*="schaatser-bocht-ijsbaan"] { object-position: 75% 35%; }
+img[src*="schaatser-lange-baan"] { object-position: 65% 50%; }
+img[src*="schaatsen-ijs-detail"] { object-position: 65% 15%; }
+img[src*="avondschaatsen"] { object-position: 50% 68%; }
 
 /* Homepage-sectie "Het verhaal achter Novakse": foto's staan dichter bij
    elkaar in rust, en schuiven daardoor tijdens het scrollen zichtbaarder
@@ -1142,6 +1177,7 @@ html:not(.js) .opener__controls { display: none; }
 .request__points { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 0.7rem; }
 .request__points li { position: relative; padding-left: 1.4rem; color: rgba(255,255,255,.72); font-size: 0.93rem; }
 .request__points li::before { content: "—"; position: absolute; left: 0; color: var(--warm); }
+.request__offerte { margin-top: 1.75rem; }
 
 .form-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
 @media (min-width: 32rem) {
@@ -1728,6 +1764,10 @@ html:not(.js) .opener__controls { display: none; }
   color: var(--ink-soft);
 }
 .calendar__legend-item { display: inline-flex; align-items: center; gap: 0.5rem; }
+/* Optional choice above the month grid (own transport at Weissensee). It
+   reuses the .extra checkbox row from the booking form. */
+.calendar__options { margin-top: 1.25rem; max-width: 26rem; }
+.calendar__options .extra { grid-template-columns: auto 1fr; }
 .calendar__chip {
   width: 0.75rem; height: 0.75rem;
   border-radius: 3px;
@@ -1969,6 +2009,31 @@ button.calendar__cell.is-vertrekoptie { box-shadow: inset 0 0 0 2px var(--ink); 
 .falun-cal__duur.is-actief { background: var(--ink); border-color: var(--ink); color: #fff; }
 .falun-cal__duur-nachten { font-size: 0.8rem; font-weight: 400; opacity: 0.75; }
 
+/* Guiding days: a stepper (minus, value with price, plus). The buttons reuse
+   .booking__step-btn but are 44px for touch, and only animate transform. */
+.falun-cal__stepper { display: flex; align-items: center; gap: 0.75rem; }
+.falun-cal__stepper .booking__step-btn {
+  width: 2.75rem; height: 2.75rem;
+  flex: none;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.falun-cal__stepper .booking__step-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.falun-cal__stepper .booking__step-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+.falun-cal__stepper .booking__step-btn:disabled:hover { background: transparent; border-color: var(--border); }
+.falun-cal__stepper-out {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  min-width: 6.5rem;
+  text-align: center;
+}
+.falun-cal__stepper-value { font-weight: 600; color: var(--ink); }
+.falun-cal__stepper-price { font-size: 0.8rem; color: var(--ink-soft); min-height: 1.2em; }
+
 /* Met minmax(0, ...) blijven de kolommen even breed en loopt de kalender op
    een telefoon niet buiten het scherm. */
 .falun-cal .calendar__grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
@@ -2001,6 +2066,9 @@ button.calendar__cell.is-vertrekoptie { box-shadow: inset 0 0 0 2px var(--ink); 
   max-width: 62ch;
 }
 .falun-cal__note--inline { margin: 0.8rem 0 0; }
+/* Guiding stepper in the shared trip calendar (Orsa), between the months and
+   the bar with the chosen period. */
+.calendar__guiding { margin-top: 1.75rem; }
 
 /* Dagen waarop het ijs nog onzeker is: gewoon te boeken, maar met een
    streepje eronder zodat het opvalt. */
@@ -2010,6 +2078,28 @@ button.calendar__cell.is-onzeker.is-gekozen { border-bottom-color: var(--warm); 
   background: #eef1ec;
   border-bottom: 2px dashed var(--warm-deep);
 }
+
+/* Nights that cost more (surcharge in the price file, e.g. Lulea): still
+   bookable, with a small warm dot in the top right corner. */
+button.calendar__cell.is-duurder { position: relative; }
+button.calendar__cell.is-duurder::after,
+.calendar__chip.is-duurder::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warm-deep);
+}
+button.calendar__cell.is-duurder.is-gekozen::after { background: var(--warm); }
+.calendar__chip.is-duurder {
+  position: relative;
+  background: #eef1ec;
+  box-shadow: inset 0 0 0 1px #c9ccc6;
+}
+.calendar__chip.is-duurder::after { top: 1px; right: 1px; width: 5px; height: 5px; }
 
 .falun-cal .calendar__months { margin-bottom: 2.25rem; }
 
@@ -2190,6 +2280,16 @@ button.calendar__cell.is-onzeker.is-gekozen { border-bottom-color: var(--warm); 
 .booking__calendar .falun-cal__block { margin-bottom: 1.25rem; }
 .booking__calendar .calendar__legend { margin-bottom: 0.9rem; }
 .booking__calendar .falun-cal__note { margin-top: 0.9rem; }
+/* Kiest iemand een bestemming, dan komt de kalender die erbij hoort rustig
+   in beeld. De animatie start elke keer dat het blok van verborgen naar
+   zichtbaar gaat, dus ook bij het wisselen van bestemming. */
+@media (prefers-reduced-motion: no-preference) {
+  .booking__calendar:not([hidden]) { animation: booking-calendar-in 0.35s ease-out both; }
+}
+@keyframes booking-calendar-in {
+  from { opacity: 0; transform: translateY(0.6rem); }
+  to { opacity: 1; transform: none; }
+}
 
 /* Stap 1 van de aanvraag: de bestemming. Alle reizen staan in één lijst
    (.booking__extras, die zelf al marge boven heeft). */
@@ -3424,6 +3524,8 @@ button.plan__cell.is-gekozen {
 .plan-cta__title { font-family: var(--display); font-weight: 600; font-size: 1.1rem; }
 .plan-cta__text { margin-top: 0.6rem; font-size: 0.95rem; color: var(--ink-soft); }
 .plan-cta__link { margin-top: 1.25rem; display: inline-flex; }
+.plan-cta__actions { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.plan-cta__actions .plan-cta__link { margin-top: 0; }
 
 /* De regel die laat zien welke keuze uit de reiszoeker is meegekomen. */
 .pending__chosen {
@@ -3446,3 +3548,98 @@ button.plan__cell.is-gekozen {
   font-size: 0.95rem;
   color: var(--ink);
 }
+
+/* ==========================================================================
+   Wellness trip page (wellness.html) - small additions, prefixed wl-
+   Reuses the trip-page components above; only what they lack is here.
+   ========================================================================== */
+/* Full-bleed photo band with the section title at the bottom. */
+.layered--band { display: flex; align-items: flex-end; min-height: min(68svh, 36rem); }
+.layered--band .layered__inner { padding-block: 7rem 2.75rem; }
+.layered--band .layered__title { margin-top: 0.9rem; max-width: 18ch; font-size: clamp(2rem, 5vw, 3.6rem); }
+.layered--band .layered__bg { object-position: 50% 55%; }
+
+/* Text that follows the photo band: short statement left, story right. */
+.wl-journey { background: var(--paper); }
+.wl-journey__grid { display: grid; gap: 1.5rem; }
+.wl-journey .story__quote { margin-top: 0; max-width: 20ch; }
+.wl-journey .textband__text:first-child { margin-top: 0; }
+
+/* The green "why" section here has no reasons row below it. */
+.wl-why { padding-bottom: 4.5rem; }
+.wl-why .why__text + .why__text { margin-top: 0.9rem; }
+
+/* Photo on the right on wide screens (image first in the markup for mobile). */
+@media (min-width: 60rem) {
+  .wl-journey__grid { grid-template-columns: 0.9fr 1.1fr; gap: 4rem; align-items: start; }
+  .split-photo--flip { grid-template-columns: 1fr 1.1fr; }
+  .split-photo--flip .split-photo__media { order: 2; }
+  .split-photo--flip .split-photo__media img { border-radius: 1.5rem 0 0 1.5rem; }
+  .split-photo--flip .split-photo__body { padding-inline: var(--pad) 0; justify-self: end; }
+  .wl-why .why__media img { object-position: 50% 40%; }
+}
+
+.wl-subhead { margin-top: 1.8rem; font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
+.wl-subhead + .included__list { margin-top: 0.8rem; }
+.split-photo__body .included__list { margin-top: 0.8rem; }
+.wl-motto { margin-top: 1.5rem; font-family: var(--display); font-weight: 600; font-size: 1.15rem; line-height: 1.35; }
+
+.wl-more { margin-top: 2rem; padding-top: 1.4rem; border-top: 1px solid var(--border); display: grid; gap: 0.7rem; justify-items: start; }
+.wl-more__title { font-family: var(--display); font-weight: 600; }
+.wl-more .link-arrow { color: var(--warm-deep); line-height: 1.45; }
+
+/* "Everything included": a ledger of term + text, not a row of cards. */
+.wl-ledger { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--border); }
+.wl-ledger__row { display: grid; gap: 0.35rem; padding-block: 1.3rem; border-bottom: 1px solid var(--border); }
+.wl-ledger dt { font-family: var(--display); font-weight: 600; font-size: 1.15rem; display: flex; align-items: baseline; gap: 0.6rem; }
+.wl-ledger dd { color: var(--ink-soft); max-width: 46ch; }
+.wl-tag { font-family: var(--sans); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--warm-deep); }
+@media (min-width: 48rem) {
+  .wl-ledger { grid-template-columns: 1fr 1fr; column-gap: 3.5rem; }
+  .wl-ledger__row { grid-template-columns: 8.5rem 1fr; gap: 1.25rem; padding-block: 1.6rem; }
+}
+
+.wl-reasons { margin-top: 0; }
+@media (min-width: 56rem) { .wl-reasons { row-gap: 1rem; } }
+
+.wl-whofor .eyebrow + .h-section { margin-top: 1rem; }
+.wl-whofor .story__quote { margin-top: 1.4rem; }
+
+/* Practical information as a short definition list. */
+.wl-facts { margin-top: 0.6rem; }
+.wl-facts > div { display: grid; grid-template-columns: 1fr; gap: 0.1rem; padding-block: 0.7rem; border-bottom: 1px solid var(--border); }
+.wl-facts dt { font-weight: 600; font-size: 0.9rem; }
+.wl-facts dd { color: var(--ink-soft); font-size: 0.95rem; }
+@media (min-width: 30rem) {
+  .wl-facts > div { grid-template-columns: 11rem 1fr; gap: 1rem; }
+}
+.wl-col-text { margin-top: 1.1rem; color: var(--ink-soft); }
+
+/* Price block */
+.wl-price { margin-top: 1.2rem; font-size: 1.05rem; color: var(--ink-soft); }
+.wl-price strong { font-family: var(--display); font-weight: 700; font-size: clamp(2.2rem, 6vw, 3rem); color: var(--ink); letter-spacing: -0.01em; }
+.wl-price__lists { display: grid; gap: 0 2.5rem; }
+@media (min-width: 40rem) { .wl-price__lists { grid-template-columns: 1fr 1fr; } }
+.wl-list--optional li::before { content: "·"; color: var(--warm-deep); font-size: 1.4rem; line-height: 1; top: 0.05rem; left: 0.3rem; }
+
+/* How booking works: four steps */
+@media (min-width: 52rem) {
+  .wl-steps .steps__list { grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+}
+.wl-steps .step__nr { width: 2.4rem; height: 2.4rem; }
+
+.wl-closing__title { margin-top: 2.2rem; font-family: var(--display); font-weight: 600; font-size: 1.25rem; }
+
+/* Wellness trip page: price per trip length */
+.wl-rates { margin-top: 1.4rem; width: 100%; max-width: 24rem; border-collapse: collapse; }
+.wl-rates th, .wl-rates td { padding: 0.6rem 0; border-bottom: 1px solid var(--border); text-align: left; }
+.wl-rates td { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.wl-rates thead th { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); padding-top: 0; }
+.wl-rates thead th:last-child { text-align: right; }
+.wl-rates tbody th { font-weight: 500; }
+
+/* Booking page: optional price-per-trip-length list (wellness) */
+.booking__rates { margin-top: 0.9rem; display: grid; gap: 0; max-width: 20rem; }
+.booking__rate { display: flex; justify-content: space-between; gap: 1rem; padding: 0.45rem 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+.booking__rate span:last-child { font-weight: 600; font-variant-numeric: tabular-nums; }
+.booking__rate.is-match { font-weight: 600; color: var(--warm-deep); }

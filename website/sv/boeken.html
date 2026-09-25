@@ -88,9 +88,11 @@
   "reizen": {
     "orsa": {
       "naam": "Orsa, Sverige",
-      "zelfTeBoeken": false,
-      "periodeVrij": false,
+      "zelfTeBoeken": true,
+      "periodeVrij": true,
       "maxPersonen": 12,
+      "prijstabel": "data/orsa-prijzen.json",
+      "//prijstabel": "De prijzen per reisduur en de begeleiding op het ijs staan in dat bestand, net als in de kalender op orsa.html. Gerekend met twee personen.",
       "vragen": [
         {
           "sleutel": "vervoer",
@@ -252,15 +254,27 @@
     },
     "weissensee": {
       "naam": "Weissensee, Österrike",
-      "zelfTeBoeken": false,
-      "prijsOpAanvraag": true,
-      "extras": []
+      "zelfTeBoeken": true,
+      "periodeVrij": true,
+      "minimumPersonen": 1,
+      "maxPersonen": 12,
+      "opslagPerPersoonPerNacht": 0,
+      "extras": [],
+      "prijsPerPersoonPerDag": null,
+      "prijstabel": "data/weissensee-prijzen.json",
+      "//prijstabel": "De prijzen per reisduur (ook met eigen vervoer) staan in dat bestand, net als in de kalender op weissensee.html. Gerekend met twee personen."
     },
     "lulea": {
       "naam": "Luleå, Sverige",
-      "zelfTeBoeken": false,
-      "prijsOpAanvraag": true,
-      "extras": []
+      "zelfTeBoeken": true,
+      "periodeVrij": true,
+      "minimumPersonen": 1,
+      "maxPersonen": 12,
+      "opslagPerPersoonPerNacht": 0,
+      "extras": [],
+      "prijsPerPersoonPerDag": null,
+      "prijstabel": "data/lulea-prijzen.json",
+      "//prijstabel": "De prijzen per reisduur staan in dat bestand, net als in de kalender op lulea.html. Gerekend met twee personen."
     }
   }
 }

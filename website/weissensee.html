@@ -118,6 +118,7 @@
           <li><a href="over-novakse.html">Over Novakse</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
+        <a class="header-cta header-cta--ghost" href="offerte.html">Offerte aanvragen</a>
         <a class="header-cta" href="boeken.html?reis=weissensee">Reis aanvragen</a>
       <div class="lang-switch">
         <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
@@ -157,7 +158,7 @@
         <div class="factbar__item"><span class="factbar__label">Ligging</span><span class="factbar__value">Karinthië, Oostenrijk</span></div>
         <div class="factbar__item"><span class="factbar__label">Hoogte</span><span class="factbar__value">± 930 meter</span></div>
         <div class="factbar__item"><span class="factbar__label">Oppervlakte meer</span><span class="factbar__value">6,5 km²</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Data en prijs</span><span class="factbar__value">Volgen binnenkort</span></div>
+        <div class="factbar__item"><span class="factbar__label">Prijs</span><span class="factbar__value">Vanaf &euro;1.095 p.p.</span></div>
       </div>
     </section>
 
@@ -255,14 +256,41 @@
     </section>
 
     <!-- 7. Data en prijs -->
-    <section class="pending" id="data-en-prijs">
-      <div class="wrap pending__inner reveal">
-        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Data en prijs</span>
-        <h2 class="h-section">De reisgegevens voor de Weissensee, seizoen 2026/2027, worden nu uitgewerkt</h2>
-        <p class="pending__text">Zodra de data en de prijs definitief zijn, staan ze hier. Wil je zeker weten dat je op de hoogte blijft? Laat je gegevens achter, dan hoor je het als eerste - zonder dat je ergens aan vastzit.</p>
-        <div class="pending__actions">
-          <a class="btn btn--dark" href="boeken.html?reis=weissensee">Houd me op de hoogte</a>
-          <a class="btn btn--outline-dark" href="offerte.html?reis=weissensee">Offerte aanvragen</a>
+    <section class="prices" id="data-en-prijs">
+      <div class="wrap">
+        <div class="prices__head reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Data en prijzen</span>
+          <h2 class="h-section">Wat kost het, en wanneer kun je</h2>
+          <p class="prices__intro">De prijs begint bij &euro;1.095 per persoon voor 4 dagen met z'n twee&euml;n. Daar zitten de vlucht naar Salzburg met ruimbagage, de huurauto ter plaatse en de accommodatie bij in. Reis je met eigen vervoer, dan begint de prijs bij &euro;730 per persoon. Kies hieronder je aankomst- en je vertrekdag, dan zie je meteen wat jouw periode kost.</p>
+        </div>
+
+        <!-- Dates, prices (also with own transport) and blocked periods: see data/weissensee-prijzen.json (shared by all six languages). -->
+        <div class="calendar reveal" data-calendar>
+          <script type="application/json" class="calendar__data">
+          { "reis": "weissensee", "prijzen": "data/weissensee-prijzen.json" }
+          </script>
+          <p class="calendar__fallback">De beschikbare periodes en prijzen krijg je op aanvraag. Mail naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+        </div>
+
+        <p class="prices__voorbeeld">Je kiest je periode tussen 19 december en 14 maart. Van 19 tot en met 28 januari 2027 is de Alternatieve Elfstedentocht; die dagen zijn niet te kiezen. Of er ijs ligt, hangt af van de winter.</p>
+
+        <div class="prices__notes reveal">
+          <div class="prices__note">
+            <h3>Wat zit erbij in</h3>
+            <p>De vlucht naar Salzburg met ruimbagage, de huurauto ter plaatse en de accommodatie.</p>
+          </div>
+          <div class="prices__note">
+            <h3>Wat niet</h3>
+            <p>Eten en drinken, en je eigen schaatsmateriaal en veiligheidsuitrusting.</p>
+          </div>
+          <div class="prices__note">
+            <h3>Eigen vervoer</h3>
+            <p>Reis je zelf naar de Weissensee? Zet dan in de kalender een vinkje bij eigen vervoer. De prijs begint dan bij &euro;730 per persoon voor 4 dagen, zonder vlucht en huurauto.</p>
+          </div>
+        </div>
+
+        <div class="pending__actions reveal">
+          <a class="btn btn--dark" href="offerte.html?reis=weissensee">Offerte aanvragen</a>
           <a class="link-arrow" href="reisinformatie.html">Praktische reisinformatie</a>
         </div>
       </div>
@@ -300,7 +328,7 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Liever een andere bestemming?</h2>
-        <p class="closing__text">Naast de Weissensee schaats je met Novakse ook in Orsa, Falun, Luleå en Finland. Alle reizen zijn op dit moment zelfstandig, zonder begeleiding op het ijs. Begeleide groepsreizen worden nog gepland.</p>
+        <p class="closing__text">Naast de Weissensee schaats je met Novakse ook in Orsa, Falun, Luleå en Finland. Alle reizen zijn standaard zelfstandig, zonder begeleiding op het ijs. Bij Orsa en Falun kun je begeleiding op het ijs bijboeken. Begeleide groepsreizen worden nog gepland.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reizen.html">Bekijk alle reizen</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20de%20reis%20naar%20de%20Weissensee." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Stel je vraag via WhatsApp</a>
@@ -345,6 +373,7 @@
           <a href="schaatslessen.html">Schaatslessen</a>
           <a href="schaatsonderhoud.html">Schaatsonderhoud</a>
           <a href="over-novakse.html">Over Novakse</a>
+          <a href="offerte.html">Offerte aanvragen</a>
         </div>
       </div>
     </div>

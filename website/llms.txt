@@ -1,6 +1,6 @@
 # Novakse
 
-> Novakse organiseert kleinschalige schaatsreizen op natuurijs in Zweden, Finland en Oostenrijk. Alle reizen zijn op dit moment zelfstandig, zonder begeleiding op het ijs, en persoonlijk geregeld door Joey Novak, met jarenlange ervaring op natuurijs.
+> Novakse organiseert kleinschalige schaatsreizen op natuurijs in Zweden, Finland en Oostenrijk. Alle reizen zijn standaard zelfstandig, zonder begeleiding op het ijs (bij Orsa en Falun is begeleiding op het ijs bij te boeken), en persoonlijk geregeld door Joey Novak, met jarenlange ervaring op natuurijs.
 
 Novakse is gevestigd in Noordwolde, Friesland (Nederland). Naast schaatsreizen biedt Novakse schaatslessen, personal training en schaatsonderhoud (slijpen, richten, skatefitting) aan.
 
@@ -11,6 +11,7 @@ Novakse is gevestigd in Noordwolde, Friesland (Nederland). Naast schaatsreizen b
 - [Lulea, Zweden](https://www.novakse.com/lulea.html)
 - [Finland (Punkaharju)](https://www.novakse.com/finland.html)
 - [Weissensee, Oostenrijk](https://www.novakse.com/weissensee.html)
+- [Wellnessreis, Zweden](https://www.novakse.com/wellness.html): hotel met wellness, ontbijt, vlucht en huurauto; natuurijs en sneeuw als extra.
 - [Reisinformatie](https://www.novakse.com/reisinformatie.html): veelgestelde vragen over ijs en weer, betaling, annulering, materiaal en niveau.
 - [Reis boeken](https://www.novakse.com/boeken.html): reis samenstellen en aanvraag versturen.
 

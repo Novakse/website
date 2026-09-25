@@ -119,6 +119,7 @@
           <li><a href="over-novakse.html">Over Novakse</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
+        <a class="header-cta header-cta--ghost" href="offerte.html">Offerte aanvragen</a>
         <a class="header-cta" href="boeken.html?reis=lulea">Reis aanvragen</a>
       <div class="lang-switch">
         <button type="button" class="lang-switch__toggle" aria-haspopup="true" aria-expanded="false" aria-label="Taal · Language">
@@ -158,7 +159,7 @@
         <div class="factbar__item"><span class="factbar__label">Begeleiding</span><span class="factbar__value">Geen</span></div>
         <div class="factbar__item"><span class="factbar__label">Reisduur</span><span class="factbar__value">Zelf te bepalen</span></div>
         <div class="factbar__item"><span class="factbar__label">Verblijf</span><span class="factbar__value">Hotel naar keuze</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Data en prijs</span><span class="factbar__value">Op aanvraag</span></div>
+        <div class="factbar__item"><span class="factbar__label">Prijs</span><span class="factbar__value">Vanaf &euro;1.095 p.p.</span></div>
       </div>
     </section>
 
@@ -215,7 +216,7 @@
           </div>
           <div class="included__col reveal">
             <h3 class="included__title">Twijfel je of dit bij je past?</h3>
-            <p class="included__lede">Op deze reis beoordeel je het natuurijs zelf. Is dit je eerste schaatsreis naar Scandinavi&euml;, of weet je niet zeker of je het ijs goed kunt inschatten, stel je vraag dan vooraf gerust aan Joey. Alle reizen van Novakse zijn op dit moment zelfstandig; begeleide groepsreizen worden nog gepland.</p>
+            <p class="included__lede">Op deze reis beoordeel je het natuurijs zelf. Is dit je eerste schaatsreis naar Scandinavi&euml;, of weet je niet zeker of je het ijs goed kunt inschatten, stel je vraag dan vooraf gerust aan Joey. Alle reizen van Novakse zijn standaard zelfstandig; bij Orsa en Falun kun je begeleiding op het ijs bijboeken, en begeleide groepsreizen worden nog gepland.</p>
             <p class="included__cta"><a class="link-arrow" href="reizen.html">Bekijk alle reizen</a></p>
           </div>
         </div>
@@ -353,10 +354,20 @@
 
     <!-- 9. Mogelijke onderdelen en prijs -->
     <section class="pending" id="data-en-prijs">
-      <div class="wrap pending__inner reveal">
+      <div class="wrap reveal">
         <span class="eyebrow eyebrow--deep"><span class="dot"></span>Mogelijke onderdelen &amp; prijs</span>
         <h2 class="h-section">Een reis op maat, met een prijs die daarbij past</h2>
-        <p class="pending__text">Omdat jij zelf bepaalt hoe lang je reist en wat je meeneemt, stellen we voor Luleå een offerte op maat samen. Afhankelijk van je wensen kan het arrangement bestaan uit een retourvlucht naar Luleå, hotelovernachtingen, dagelijks ontbijt, bagage en vervoer tussen luchthaven en hotel, en informatie over schaatsverhuur en winteractiviteiten. Schaatshuur, excursies, maaltijden en lokaal vervoer zijn alleen inbegrepen wanneer dat uitdrukkelijk in de reisomschrijving of offerte staat.</p>
+        <p class="pending__lead">Omdat jij zelf bepaalt hoe lang je reist en wat je meeneemt, stellen we voor Luleå een offerte op maat samen. Afhankelijk van je wensen kan het arrangement bestaan uit een retourvlucht naar Luleå, hotelovernachtingen, dagelijks ontbijt, bagage en vervoer tussen luchthaven en hotel, en informatie over schaatsverhuur en winteractiviteiten. Schaatshuur, excursies, maaltijden en lokaal vervoer zijn alleen inbegrepen wanneer dat uitdrukkelijk in de reisomschrijving of offerte staat.</p>
+        <p class="pending__lead">De prijs begint bij &euro;1.095 per persoon voor 4 dagen met z'n twee&euml;n. Kies hieronder je aankomst- en je vertrekdag, dan zie je meteen wat jouw periode kost.</p>
+
+        <!-- Dates, prices and blocked periods: see data/lulea-prijzen.json (shared by all six languages). -->
+        <div class="calendar" data-calendar>
+          <script type="application/json" class="calendar__data">
+          { "reis": "lulea", "prijzen": "data/lulea-prijzen.json" }
+          </script>
+          <p class="calendar__fallback">De beschikbare periodes en prijzen krijg je op aanvraag. Mail naar <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> of app naar +31 6 17467643.</p>
+        </div>
+
         <div class="pending__actions">
           <a class="btn btn--dark" href="offerte.html?reis=lulea">Vraag een offerte aan</a>
           <a class="link-arrow" href="reisinformatie.html">Praktische reisinformatie</a>
@@ -368,7 +379,7 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Liever een andere bestemming?</h2>
-        <p class="closing__text">Naast Luleå schaats je met Novakse ook in Orsa, Falun, Finland en op de Weissensee. Alle reizen zijn op dit moment zelfstandig, zonder begeleiding op het ijs. Begeleide groepsreizen worden nog gepland.</p>
+        <p class="closing__text">Naast Luleå schaats je met Novakse ook in Orsa, Falun, Finland en op de Weissensee. Alle reizen zijn standaard zelfstandig, zonder begeleiding op het ijs. Bij Orsa en Falun kun je begeleiding op het ijs bijboeken. Begeleide groepsreizen worden nog gepland.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reizen.html">Bekijk alle reizen</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20de%20reis%20naar%20Lule%C3%A5." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Stel je vraag via WhatsApp</a>
@@ -413,6 +424,7 @@
           <a href="schaatslessen.html">Schaatslessen</a>
           <a href="schaatsonderhoud.html">Schaatsonderhoud</a>
           <a href="over-novakse.html">Over Novakse</a>
+          <a href="offerte.html">Offerte aanvragen</a>
         </div>
       </div>
     </div>

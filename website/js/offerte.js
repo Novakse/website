@@ -149,7 +149,7 @@
   }
 
   /* Wisselt iemand van bestemming, dan kan een eerder antwoord daar niet meer
-     kloppen: 10 dagen kan wel in Finland maar niet in Falun. Zo'n antwoord
+     kloppen als die bestemming een eigen blokje "reisduur" heeft. Zo'n antwoord
      vervalt, zodat de bezoeker die vraag opnieuw krijgt. */
   function wisAntwoordenBuitenGrens(plek) {
     STAPPEN.forEach(function (stap) {
@@ -162,7 +162,7 @@
       var max = (grenzen && grenzen.max) || stap.max || 12;
       var meerLabel = grenzen && "meerLabel" in grenzen ? grenzen.meerLabel : stap.meerLabel;
       // A typed-in number above the buttons only stays valid when the new
-      // trip also offers the open field (not for Falun, for example).
+      // trip also offers the open field.
       var vrijMax = meerLabel && stap.vrijAantal ? (stap.vrijAantal.max || max) : max;
 
       // 0 staat voor de "meer dan"-knop; die vervalt als hij er niet meer is.
@@ -474,8 +474,7 @@
   function tekenAantal(stap, nummer, totaal) {
     var plek = gekozenBestemming();
 
-    // Sommige bestemmingen hebben een eigen grens, bijvoorbeeld Falun met een
-    // pakketreis van vast 4 of 5 dagen.
+    // Een bestemming kan een eigen grens hebben met een blokje "reisduur".
     var grenzen = (stap.grenzenUitBestemming && plek && plek[stap.grenzenUitBestemming]) || null;
 
     var blok = maak("section", "oq-step-body");
@@ -581,6 +580,12 @@
     melding.setAttribute("role", "alert");
     melding.hidden = true;
     formulier.appendChild(melding);
+
+    // Hide an earlier error as soon as the visitor changes the value.
+    invoer.addEventListener("input", function () {
+      melding.hidden = true;
+      invoer.removeAttribute("aria-invalid");
+    });
 
     var verder = verderKnop();
     verder.type = "submit";
@@ -800,6 +805,12 @@
     melding.setAttribute("role", "alert");
     melding.hidden = true;
     formulier.appendChild(melding);
+
+    // Hide an earlier error as soon as the visitor changes the value.
+    invoer.addEventListener("input", function () {
+      melding.hidden = true;
+      invoer.removeAttribute("aria-invalid");
+    });
 
     var verder = verderKnop();
     verder.type = "submit";

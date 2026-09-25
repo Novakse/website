@@ -2,8 +2,9 @@
    Falun - kalender met de totaalprijs van de gekozen periode
 
    De bezoeker klikt in de kalender een aankomstdag en daarna een vertrekdag
-   aan. De reisduur volgt uit die twee dagen; alleen de duren uit
-   data/falun-prijzen.json (4 of 5 dagen) zijn als vertrekdag te kiezen.
+   aan. De reisduur volgt uit die twee dagen. Iedere vertrekdag vanaf
+   minimumDagen (data/falun-prijzen.json, nu 4 dagen) na aankomst is te
+   kiezen; een maximum is er niet, alleen het seizoen en de bezette weken.
    De prijs verschilt per datum, omdat de huisjes niet het hele seizoen
    hetzelfde kosten. Daarnaast kan de bezoeker drie dingen aanvinken die het
    bedrag veranderen: de vlucht zelf regelen, de huurauto zelf regelen en
@@ -16,14 +17,17 @@
 
    Hoe de prijs wordt opgebouwd:
 
-     basisprijs van de gekozen duur
+     basisprijs van de gekozen duur (langer dan in de tabel staat: de langste
+       duur uit de tabel + extraDagPerPersoon voor elke dag extra)
      + de toeslag van elke nacht die je boekt (kan ook negatief zijn)
      - 250 als je de vlucht zelf regelt
-     - 100 als je de huurauto zelf regelt
+     + de huurauto voor het echte aantal dagen (autoPerDagEUR), min het deel
+       dat al in de basisprijs zit (autoInBasisprijsDagen)
+     - het eigen deel van de huurauto als je je vervoer zelf regelt
      + begeleiding, alleen als de hele reis binnen het begeleidingsvenster valt
        (staat uit zolang begeleiding.prijsPerDag null is)
 
-   Een verblijf van 4 dagen telt 3 nachten, 5 dagen telt 4 nachten.
+   Een verblijf van 4 dagen telt 3 nachten, 5 dagen telt 4 nachten, enzovoort.
 
    In de kalender zelf staan geen bedragen bij de dagen. Pas als de bezoeker
    een aankomstdag aanklikt, verschijnt de totaalprijs voor de hele groep.
@@ -61,8 +65,10 @@
       guiding: "Begeleiding op het ijs",
       guidingLegend: "Wil je begeleiding op het ijs?",
       guidingNone: "Geen",
+      guidingFewer: "Eén dag begeleiding minder",
+      guidingMore: "Eén dag begeleiding meer",
       guidingDays: function (n) { return n + (n === 1 ? " dag" : " dagen"); },
-      guidingExplain: function (bedrag) { return "Joey schaatst mee, met een kampvuur onderweg, lunch en vika\u0027s. " + bedrag + " per dag voor de hele groep, dus hoe meer jullie zijn, hoe minder het per persoon kost."; },
+      guidingExplain: function (bedrag, extra) { return "Joey schaatst mee, met een kampvuur onderweg, lunch en vika\u0027s. " + bedrag + " per dag voor 1 persoon, + " + extra + " per dag voor elke extra persoon, dus hoe meer jullie zijn, hoe minder het per persoon kost."; },
       guidingHint: "Joey schaatst mee, met een kampvuur onderweg, lunch en vika's",
       guidingWindow: function (van, tot) { return "Alleen mogelijk van " + van + " tot en met " + tot; },
       guidingOutside: function (van, tot) { return "Niet mogelijk in de periode die je gekozen hebt. Begeleiding kan van " + van + " tot en met " + tot + "."; },
@@ -118,8 +124,10 @@
       guiding: "Guiding on the ice",
       guidingLegend: "Do you want guiding on the ice?",
       guidingNone: "None",
+      guidingFewer: "One day less guiding",
+      guidingMore: "One day more guiding",
       guidingDays: function (n) { return n + (n === 1 ? " day" : " days"); },
-      guidingExplain: function (bedrag) { return "Joey skates along, with a campfire on the way, lunch and vika\u0027s. " + bedrag + " per day for the whole group, so the more of you there are, the less it costs each."; },
+      guidingExplain: function (bedrag, extra) { return "Joey skates along, with a campfire on the way, lunch and vika\u0027s. " + bedrag + " per day for 1 person, + " + extra + " per day for each additional person, so the more of you there are, the less it costs each."; },
       guidingHint: "Joey skates along, with a campfire on the way, lunch and vika's",
       guidingWindow: function (van, tot) { return "Only available from " + van + " to " + tot; },
       guidingOutside: function (van, tot) { return "Not available in the period you selected. Guiding runs from " + van + " to " + tot + "."; },
@@ -175,8 +183,10 @@
       guiding: "Begleitung auf dem Eis",
       guidingLegend: "Möchtest du Begleitung auf dem Eis?",
       guidingNone: "Keine",
+      guidingFewer: "Einen Tag weniger Begleitung",
+      guidingMore: "Einen Tag mehr Begleitung",
       guidingDays: function (n) { return n + (n === 1 ? " Tag" : " Tage"); },
-      guidingExplain: function (bedrag) { return "Joey läuft mit, mit Lagerfeuer unterwegs, Mittagessen und Vika\u0027s. " + bedrag + " pro Tag für die ganze Gruppe - je mehr ihr seid, desto weniger kostet es pro Person."; },
+      guidingExplain: function (bedrag, extra) { return "Joey läuft mit, mit Lagerfeuer unterwegs, Mittagessen und Vika\u0027s. " + bedrag + " pro Tag für 1 Person, + " + extra + " pro Tag für jede weitere Person - je mehr ihr seid, desto weniger kostet es pro Person."; },
       guidingHint: "Joey läuft mit, mit Lagerfeuer unterwegs, Mittagessen und Vika's",
       guidingWindow: function (van, tot) { return "Nur möglich von " + van + " bis " + tot; },
       guidingOutside: function (van, tot) { return "Im gewählten Zeitraum nicht möglich. Begleitung gibt es von " + van + " bis " + tot + "."; },
@@ -232,8 +242,10 @@
       guiding: "Guidning på isen",
       guidingLegend: "Vill du ha guidning på isen?",
       guidingNone: "Ingen",
+      guidingFewer: "En dag mindre guidning",
+      guidingMore: "En dag mer guidning",
       guidingDays: function (n) { return n + (n === 1 ? " dag" : " dagar"); },
-      guidingExplain: function (bedrag) { return "Joey åker med, med lägereld på vägen, lunch och vikor. " + bedrag + " per dag för hela gruppen, så ju fler ni är, desto mindre kostar det per person."; },
+      guidingExplain: function (bedrag, extra) { return "Joey åker med, med lägereld på vägen, lunch och vikor. " + bedrag + " per dag för 1 person, + " + extra + " per dag för varje extra person, så ju fler ni är, desto mindre kostar det per person."; },
       guidingHint: "Joey åker med, med lägereld på vägen, lunch och vikor",
       guidingWindow: function (van, tot) { return "Endast möjligt från " + van + " till " + tot; },
       guidingOutside: function (van, tot) { return "Inte möjligt under perioden du valt. Guidning finns från " + van + " till " + tot + "."; },
@@ -289,8 +301,10 @@
       guiding: "Guiding på isen",
       guidingLegend: "Vil du ha veiledning på isen?",
       guidingNone: "Ingen",
+      guidingFewer: "Én dag mindre guiding",
+      guidingMore: "Én dag mer guiding",
       guidingDays: function (n) { return n + (n === 1 ? " dag" : " dager"); },
-      guidingExplain: function (bedrag) { return "Joey blir med, med bål underveis, lunsj og vikaer. " + bedrag + " per dag for hele gruppen, så jo flere dere er, desto mindre koster det per person."; },
+      guidingExplain: function (bedrag, extra) { return "Joey blir med, med bål underveis, lunsj og vikaer. " + bedrag + " per dag for 1 person, + " + extra + " per dag for hver ekstra person, så jo flere dere er, desto mindre koster det per person."; },
       guidingHint: "Joey går med, med bål underveis, lunsj og vikaer",
       guidingWindow: function (van, tot) { return "Bare mulig fra " + van + " til " + tot; },
       guidingOutside: function (van, tot) { return "Ikke mulig i perioden du har valgt. Veiledning finnes fra " + van + " til " + tot + "."; },
@@ -346,8 +360,10 @@
       guiding: "Opastus jäällä",
       guidingLegend: "Haluatko opastusta jäällä?",
       guidingNone: "Ei",
+      guidingFewer: "Yksi opastuspäivä vähemmän",
+      guidingMore: "Yksi opastuspäivä enemmän",
       guidingDays: function (n) { return n + (n === 1 ? " päivä" : " päivää"); },
-      guidingExplain: function (bedrag) { return "Joey luistelee mukana, nuotio matkan varrella, lounas ja vikat. " + bedrag + " päivässä koko ryhmälle, eli mitä useampi teitä on, sitä vähemmän se maksaa per henkilö."; },
+      guidingExplain: function (bedrag, extra) { return "Joey luistelee mukana, nuotio matkan varrella, lounas ja vikat. " + bedrag + " päivässä 1 hengelle, + " + extra + " päivässä jokaisesta lisähenkilöstä, eli mitä useampi teitä on, sitä vähemmän se maksaa per henkilö."; },
       guidingHint: "Joey luistelee mukana, nuotio matkan varrella, lounas ja vikat",
       guidingWindow: function (van, tot) { return "Mahdollista vain " + van + " - " + tot; },
       guidingOutside: function (van, tot) { return "Ei mahdollista valitsemanasi ajankohtana. Opastusta on saatavilla " + van + " - " + tot + "."; },
@@ -443,7 +459,26 @@
 
   var seizoenVan = alsDatum(data.seizoenStart);
   var seizoenTot = alsDatum(data.seizoenEind);
-  var duren = data.duur && data.duur.length ? data.duur : [4, 5];
+  /* Shortest trip in days; there is no maximum. Same as minimumDagen() in
+     api/_falun-prijs.js. */
+  var minDagen = typeof data.minimumDagen === "number" && data.minimumDagen > 1 ? data.minimumDagen : 4;
+
+  /* Base price per person for a trip of this many days. A length listed in
+     basisprijs uses that amount; a longer one takes the longest listed length
+     below it plus extraDagPerPersoon for every extra day. Must stay identical
+     to basisprijsVoor() in api/_falun-prijs.js: that one is charged. */
+  function basisprijsVoor(dagen) {
+    var tabel = data.basisprijs || {};
+    if (typeof tabel[String(dagen)] === "number") return tabel[String(dagen)];
+    var langste = 0;
+    Object.keys(tabel).forEach(function (sleutel) {
+      var n = parseInt(sleutel, 10);
+      if (n <= dagen && n > langste && typeof tabel[sleutel] === "number") langste = n;
+    });
+    var extra = data.extraDagPerPersoon;
+    if (!langste || typeof extra !== "number") return null;
+    return tabel[String(langste)] + (dagen - langste) * extra;
+  }
 
   /* De huisjesprijzen komen van Falun Strandby en staan in Zweedse kronen per
      huisje per nacht, precies zoals hun boekingssite ze toont. De basisnacht
@@ -468,7 +503,8 @@
     if (!huisjeMax || n <= huisjeMax) return n;
     return n / Math.ceil(n / huisjeMax);
   }
-  var autoPerReis = data.autoPerReisEUR || 0;
+  var autoPerDag = typeof data.autoPerDagEUR === "number" ? data.autoPerDagEUR : 0;
+  var autoInBasisDagen = typeof data.autoInBasisprijsDagen === "number" ? data.autoInBasisprijsDagen : 0;
   var doorgeven = typeof data.kortingDoorgeven === "number" ? data.kortingDoorgeven : 1;
 
   /* Wordt het duurder dan de basisprijs, dan telt dat helemaal mee. Wordt het
@@ -492,11 +528,17 @@
 
   /* Wat de huurauto deze reiziger kost. Dat is ook wat eraf gaat als hij hem
      zelf regelt, zodat die twee niet uit elkaar kunnen lopen. */
-  function autoDeel(personen) {
-    if (!autoPerReis) return 0;
-    var basis = autoPerReis / basisPersonen;
-    return basis + demp(autoPerReis / perHuisje(personen) - basis);
+  function autoDeel(personen, dagen) {
+    var auto = autoPerDag * dagen;
+    if (!auto) return 0;
+    var basis = auto / basisPersonen;
+    return basis + demp(auto / perHuisje(personen) - basis);
   }
+  /* The car share that basisprijs already contains (autoInBasisprijsDagen
+     days at basisPersonen). It is taken out and the car for the real trip
+     length is added, so the car never counts twice. Same as
+     api/_falun-prijs.js. */
+  var autoInBasis = autoPerDag * autoInBasisDagen / basisPersonen;
   var opties = data.opties || {};
   var vluchtBedrag = Math.abs(opties.vluchtZelf || 0);
   var groterAuto = opties.groterAuto || null;
@@ -505,6 +547,7 @@
   var begeleidingVan = begeleiding && begeleiding.van ? alsDatum(begeleiding.van) : null;
   var begeleidingTot = begeleiding && begeleiding.tot ? alsDatum(begeleiding.tot) : null;
   var begeleidingPerDag = begeleiding && typeof begeleiding.prijsPerDag === "number" ? begeleiding.prijsPerDag : null;
+  var begeleidingExtraPersoon = begeleiding && typeof begeleiding.prijsPerDagExtraPersoon === "number" ? begeleiding.prijsPerDagExtraPersoon : 0;
   var begeleidingPerPersoon = !begeleiding || begeleiding.perPersoon !== false;
 
   var bezet = (data.bezet || []).map(function (blok) {
@@ -546,14 +589,18 @@
   function nachtenVan(dagen) { return dagen - 1; }
 
   /* Begeleiding kost een bedrag per reisdag. Rekent Joey per groep in plaats
-     van per persoon, dan wordt dat bedrag over de deelnemers verdeeld.
+     van per persoon, dan wordt dat bedrag over de deelnemers verdeeld. Het
+     dagbedrag hangt af van de groep: prijsPerDag voor 1 persoon, plus
+     prijsPerDagExtraPersoon voor elke persoon meer. Zelfde als
+     api/_falun-prijs.js.
 
      Dit bedrag wordt bewust niet afgerond: bij drie personen loopt een vooraf
      afgerond deelbedrag uit de pas met de server, en dan staat er een euro
      meer of minder op het scherm dan er afgeschreven wordt. */
   function begeleidingKostenRuw(dagenBegeleid, personen) {
     if (begeleidingPerDag === null || !dagenBegeleid) return 0;
-    var totaal = begeleidingPerDag * dagenBegeleid;
+    var perDag = begeleidingPerDag + begeleidingExtraPersoon * (personen - 1);
+    var totaal = perDag * dagenBegeleid;
     return begeleidingPerPersoon ? totaal : totaal / personen;
   }
 
@@ -581,23 +628,19 @@
     return true;
   }
 
-  // A day is clickable as arrival when at least one allowed trip length fits.
+  // A day is clickable as arrival when at least the shortest trip fits.
   function kanAankomenOoit(datum) {
-    for (var i = 0; i < duren.length; i++) {
-      if (kanAankomen(datum, duren[i])) return true;
-    }
-    return false;
+    return kanAankomen(datum, minDagen);
   }
 
   /* Trip length (in days) that ends on this date for the chosen arrival day,
-     or 0 when the date is not a possible departure day. */
+     or 0 when the date is not a possible departure day. Any length from
+     minDagen up works, as long as the whole stay is free and in season. */
   function duurTotVertrek(datum) {
     if (!aankomst) return 0;
-    for (var i = 0; i < duren.length; i++) {
-      var vertrek = plusDagen(aankomst, nachtenVan(duren[i]));
-      if (vertrek.getTime() === datum.getTime() && kanAankomen(aankomst, duren[i])) return duren[i];
-    }
-    return 0;
+    var dagen = Math.round((datum - aankomst) / 86400000) + 1;
+    if (dagen < minDagen || basisprijsVoor(dagen) === null) return 0;
+    return kanAankomen(aankomst, dagen) ? dagen : 0;
   }
 
   // Arrival and departure are both chosen.
@@ -608,13 +651,13 @@
   /* De basisprijs plus de toeslag van elke nacht. Een nacht die niet in de
      tabel staat, telt als nul: dan geldt gewoon de basisprijs. */
   function verblijfPrijs(datum, dagen) {
-    var basis = data.basisprijs[String(dagen)];
-    if (typeof basis !== "number") return null;
+    var basis = basisprijsVoor(dagen);
+    if (basis === null) return null;
     var totaal = basis;
     for (var i = 0; i < nachtenVan(dagen); i++) {
       totaal += nachtToeslag(plusDagen(datum, i), personen);
     }
-    totaal += autoDeel(personen) - autoDeel(basisPersonen);
+    totaal += autoDeel(personen, dagen) - autoInBasis;
     return totaal;
   }
 
@@ -633,7 +676,7 @@
     var totaal = verblijfPrijs(aankomst, duur);
     if (totaal === null) return null;
     if (vluchtZelf) totaal -= vluchtBedrag;
-    if (autoZelf) totaal -= autoDeel(personen);
+    if (autoZelf) totaal -= autoDeel(personen, duur);
     if (begeleidingDagen && begeleidingKan(aankomst, duur)) totaal += begeleidingKostenRuw(begeleidingDagen, personen);
     return Math.round(totaal);
   }
@@ -902,8 +945,13 @@
       } else {
         return;
       }
-      if (!periodeKlaar() || !begeleidingKan(aankomst, duur)) begeleidingDagen = 0;
-      if (begeleidingDagen > duur) begeleidingDagen = duur;
+      // Guiding days are kept while the visitor picks a new period, then
+      // clamped to the new trip length (or cleared when guiding is not
+      // possible in that period).
+      if (periodeKlaar()) {
+        if (!begeleidingKan(aankomst, duur)) begeleidingDagen = 0;
+        else if (begeleidingDagen > duur) begeleidingDagen = duur;
+      }
       tekenAlles();
       // Keep keyboard focus on the day that was just clicked.
       var zelfde = raster.querySelector('[data-datum="' + alsTekst(datum) + '"]');
@@ -971,26 +1019,45 @@
       return;
     }
 
-    var knoppen = "";
-    for (var n = 0; n <= duur; n++) {
-      var actief = n === begeleidingDagen;
-      var prijs = n === 0 ? "" : '<span class="falun-cal__duur-nachten">+ ' + euro(begeleidingKosten(n, personen)) + "</span>";
-      knoppen += '<button type="button" class="falun-cal__duur' + (actief ? " is-actief" : "") + '"' +
-        ' data-begeleiding="' + n + '" aria-pressed="' + (actief ? "true" : "false") + '">' +
-        "<span>" + (n === 0 ? T.guidingNone : T.guidingDays(n)) + "</span>" + prijs + "</button>";
-    }
-
+    /* A stepper instead of one button per day: minus, the number of guiding
+       days with its price, plus. Range 0 to the trip length; the click
+       handler in tekenDag() clamps the value when the trip gets shorter. */
     begeleidingBox.innerHTML =
-      '<p class="falun-cal__legend">' + T.guidingLegend + "</p>" +
-      '<div class="falun-cal__duren">' + knoppen + "</div>" +
-      '<p class="falun-cal__note falun-cal__note--inline">' + T.guidingExplain(euro(begeleidingPerDag)) + "</p>";
+      '<p class="falun-cal__legend" id="falunBegeleidingLabel">' + T.guidingLegend + "</p>" +
+      '<div class="falun-cal__stepper" role="group" aria-labelledby="falunBegeleidingLabel">' +
+        '<button type="button" class="booking__step-btn" data-begeleiding-stap="-1" aria-label="' + T.guidingFewer + '">\u2212</button>' +
+        '<span class="falun-cal__stepper-out" aria-live="polite" aria-atomic="true">' +
+          '<span class="falun-cal__stepper-value"></span>' +
+          '<span class="falun-cal__stepper-price"></span>' +
+        "</span>" +
+        '<button type="button" class="booking__step-btn" data-begeleiding-stap="1" aria-label="' + T.guidingMore + '">+</button>' +
+      "</div>" +
+      '<p class="falun-cal__note falun-cal__note--inline">' + T.guidingExplain(euro(begeleidingPerDag), euro(begeleidingExtraPersoon)) + "</p>";
 
-    begeleidingBox.querySelectorAll("[data-begeleiding]").forEach(function (knop) {
+    var minder = begeleidingBox.querySelector('[data-begeleiding-stap="-1"]');
+    var meer = begeleidingBox.querySelector('[data-begeleiding-stap="1"]');
+    var waarde = begeleidingBox.querySelector(".falun-cal__stepper-value");
+    var prijs = begeleidingBox.querySelector(".falun-cal__stepper-price");
+
+    // Updates the value in place, so the live region is announced and the
+    // focus stays on the button that was pressed.
+    function zetWaarde() {
+      waarde.textContent = begeleidingDagen === 0 ? T.guidingNone : T.guidingDays(begeleidingDagen);
+      prijs.textContent = begeleidingDagen === 0 ? "" : "+ " + euro(begeleidingKosten(begeleidingDagen, personen));
+      minder.disabled = begeleidingDagen <= 0;
+      meer.disabled = begeleidingDagen >= duur;
+    }
+    zetWaarde();
+
+    [minder, meer].forEach(function (knop) {
       knop.addEventListener("click", function () {
-        var n = parseInt(knop.getAttribute("data-begeleiding"), 10);
+        var n = Math.min(duur, Math.max(0, begeleidingDagen + parseInt(knop.getAttribute("data-begeleiding-stap"), 10)));
         if (n === begeleidingDagen) return;
         begeleidingDagen = n;
-        tekenBegeleiding();
+        zetWaarde();
+        // At the end of the range this button switches off; keep keyboard
+        // focus in the stepper by moving it to the other button.
+        if (knop.disabled) (knop === minder ? meer : minder).focus();
         tekenSamenvatting();
       });
     });
@@ -1015,7 +1082,7 @@
       "<dt>" + T.lineArrival + "</dt><dd>" + schrijfDatum(aankomst) + "</dd>" +
       "<dt>" + T.linePersons + "</dt><dd>" + T.personsLabel(personen) + "</dd>";
     if (vluchtZelf) regels += "<dt>" + T.lineFlight + "</dt><dd>- " + euro(vluchtBedrag) + "</dd>";
-    if (autoZelf) regels += "<dt>" + T.lineCar + "</dt><dd>- " + euro(autoDeel(personen)) + "</dd>";
+    if (autoZelf) regels += "<dt>" + T.lineCar + "</dt><dd>- " + euro(autoDeel(personen, duur)) + "</dd>";
     if (begeleidingDagen && begeleidingKan(aankomst, duur)) {
       regels += "<dt>" + T.lineGuiding + " (" + T.guidingDays(begeleidingDagen) + ")</dt><dd>+ " +
         euro(begeleidingKosten(begeleidingDagen, personen)) + "</dd>";
@@ -1079,7 +1146,9 @@
       naam: T.carSelf,
       toelichting: T.carSelfHint,
       teken: "-",
-      bedrag: Math.round(autoDeel(personen))
+      // Before a period is chosen this shows the car share of the shortest
+      // trip; it follows the chosen trip length as soon as there is one.
+      bedrag: Math.round(autoDeel(personen, duur || minDagen))
     });
 
     // prijsPerDag null in data/falun-prijzen.json means guidance is switched
@@ -1094,7 +1163,9 @@
         sleutel: "begeleiding",
         naam: T.guiding,
         toelichting: hint,
-        inbegrepen: begeleiding.inbegrepen || [],
+        // Translated list when the data file has one for this language,
+        // otherwise the Dutch list.
+        inbegrepen: (begeleiding.inbegrepenPerTaal && begeleiding.inbegrepenPerTaal[LANG]) || begeleiding.inbegrepen || [],
         inbegrepenLabel: T.guidingIncludes,
         teken: "+",
         dagen: begeleidingDagen,
@@ -1152,8 +1223,9 @@
 
      Op de reispagina zelf komt die wens uit de reiszoeker op de home- en
      reizenpagina: die zet van, tot en personen in het webadres. Falun boek je
-     voor 4 of 5 dagen; vroeg iemand om een andere lengte, dan houden we wel
-     zijn aankomstdag aan en zegt een regel erboven hoe het zit. */
+     voor minimaal minDagen dagen; vroeg iemand om een kortere of een niet
+     passende lengte, dan houden we wel zijn aankomstdag aan en zegt een regel
+     erboven hoe het zit. */
   function uitZoeker() {
     var zoek = new URLSearchParams(window.location.search);
     var van = zoek.get("van") || "";
@@ -1177,7 +1249,7 @@
   var wens = periodeModus ? null : uitZoeker();
 
   var gevraagdeDuur = periodeModus ? parseInt(box.getAttribute("data-dagen"), 10) : wens.dagen;
-  if (duren.indexOf(gevraagdeDuur) !== -1) duur = gevraagdeDuur;
+  if (gevraagdeDuur >= minDagen && basisprijsVoor(gevraagdeDuur) !== null) duur = gevraagdeDuur;
 
   var gevraagdeDag = null;
   if (periodeModus) {

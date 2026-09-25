@@ -1,0 +1,55 @@
+{
+  "//": "Prijzen en data voor de Weissensee-kalender. Alle zes de taalversies van weissensee.html en de aanvraagpagina lezen dit bestand, dus je werkt het een keer bij. Het werkt precies zoals data/finland-prijzen.json (zelfde kalender in js/main.js). Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan.",
+
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 19 december tot en met 14 maart (zelfde als Falun en Luleå). Zet je hier andere datums, pas dan ook de zin over het seizoen op weissensee.html aan (zes talen).",
+  "seizoenStart": "2026-12-19",
+  "seizoenEind": "2027-03-14",
+
+  "//minimumNachten": "Kortste verblijf dat iemand kan kiezen: 3 nachten is 4 dagen. Een maximum is er niet.",
+  "minimumNachten": 3,
+
+  "//prijs": "Verkoopprijs per persoon voor het hele verblijf, in hele euro's, gerekend met twee personen. Uit Joey's eigen Excel (blad weissensee): 1095 voor 4 dagen (3 nachten) en 1195 voor 5 dagen (4 nachten). Inclusief de vlucht naar Salzburg met ruimbagage, de huurauto ter plaatse en het verblijf. Zet hier nooit inkoopprijzen in: dit bestand is voor iedereen op de site op te vragen.",
+  "prijsPerPersoon": {
+    "standaard": { "3": 1095, "4": 1195 }
+  },
+
+  "//extraNacht": "Blijft iemand langer dan 5 dagen, dan telt elke dag daarboven dit bedrag per persoon mee: het verschil tussen 5 en 4 dagen (1195 - 1095 = 100). Dus 6 dagen 1295, 7 dagen 1395, 10 dagen 1695.",
+  "extraNachtPerPersoon": { "standaard": 100 },
+
+  "//eigenVervoer": "Wie zelf naar de Weissensee reist, zet in de kalender een vinkje bij eigen vervoer. Dan gelden deze prijzen per persoon, zonder vlucht en huurauto. Uit dezelfde Excel: 730 voor 4 dagen en 830 voor 5 dagen; elke dag erbij telt ook hier het verschil tussen 5 en 4 dagen mee (830 - 730 = 100). Dus 6 dagen 930, 7 dagen 1030. De teksten bij het vinkje staan hieronder per taal.",
+  "eigenVervoer": {
+    "prijsPerPersoon": {
+      "standaard": { "3": 730, "4": 830 }
+    },
+    "extraNachtPerPersoon": { "standaard": 100 },
+    "label": {
+      "nl": "Eigen vervoer",
+      "en": "Own transport",
+      "de": "Eigene Anreise",
+      "sv": "Egen resa",
+      "no": "Egen transport",
+      "fi": "Oma kulkuneuvo"
+    },
+    "uitleg": {
+      "nl": "Je reist zelf naar de Weissensee, zonder vlucht en huurauto",
+      "en": "You travel to the Weissensee yourself, without flight and rental car",
+      "de": "Du reist selbst zum Weissensee, ohne Flug und Mietwagen",
+      "sv": "Du reser själv till Weissensee, utan flyg och hyrbil",
+      "no": "Du reiser selv til Weissensee, uten fly og leiebil",
+      "fi": "Matkustat itse Weissenseelle, ilman lentoa ja vuokra-autoa"
+    }
+  },
+
+  "//basisPersonen": "Voor hoeveel personen de bedragen hierboven gelden. Op de aanvraagpagina krijgt wie met minder mensen komt geen prijsindicatie (die zou te laag uitvallen); wie met meer komt krijgt dezelfde prijs per persoon als indicatie. Joey stuurt daarna het precieze bedrag.",
+  "basisPersonen": 2,
+
+  "//periodes": "De Weissensee heeft een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
+  "periodes": [
+    { "van": "2026-12-19", "tot": "2027-03-14", "tarief": "standaard" }
+  ],
+
+  "//bezet": "Periodes die niet te kiezen zijn. Op weissensee.html staat dat Novakse de reis buiten de Alternatieve Elfstedentocht plant; die loopt in 2027 van 19 tot en met 28 januari, dus die dagen staan dicht (tot is de eerste dag die weer vrij is). Wil je ze toch openzetten, haal de regel dan weg en laat de blokhaken staan: \"bezet\": []. Een extra periode zet je zo dicht: {\"van\": \"2027-02-01\", \"tot\": \"2027-02-05\", \"wat\": \"Niet beschikbaar\"}. Achter elke regel een komma, behalve achter de laatste.",
+  "bezet": [
+    { "van": "2027-01-19", "tot": "2027-01-29", "wat": { "nl": "Alternatieve Elfstedentocht", "en": "Alternatieve Elfstedentocht", "de": "Alternative Elfstedentocht", "sv": "Alternativa Elfstedentocht", "no": "Alternatieve Elfstedentocht", "fi": "Alternatieve Elfstedentocht" } }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "//": "Prijzen en data voor de Luleå-kalender. Alle zes de taalversies van lulea.html en de aanvraagpagina lezen dit bestand, dus je werkt het een keer bij. Het werkt precies zoals data/finland-prijzen.json (zelfde kalender in js/main.js). Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan.",
+
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 19 december tot en met 14 maart (zelfde als Falun).",
+  "seizoenStart": "2026-12-19",
+  "seizoenEind": "2027-03-14",
+
+  "//minimumNachten": "Kortste verblijf dat iemand kan kiezen: 3 nachten is 4 dagen. Een maximum is er niet.",
+  "minimumNachten": 3,
+
+  "//prijs": "Verkoopprijs per persoon voor het hele verblijf, in hele euro's, gerekend met twee personen. Uit Joey's eigen Excel (blad Lulea): 1095 voor 4 dagen (3 nachten) en 1195 voor 5 dagen (4 nachten). Zet hier nooit inkoopprijzen in: dit bestand is voor iedereen op de site op te vragen.",
+  "prijsPerPersoon": {
+    "standaard": { "3": 1095, "4": 1195 }
+  },
+
+  "//extraNacht": "Blijft iemand langer dan 5 dagen, dan telt elke dag daarboven dit bedrag per persoon mee: het verschil tussen 5 en 4 dagen (1195 - 1095 = 100). Dus 6 dagen 1295, 7 dagen 1395, 10 dagen 1695.",
+  "extraNachtPerPersoon": { "standaard": 100 },
+
+  "//basisPersonen": "Voor hoeveel personen de bedragen hierboven gelden. Op de aanvraagpagina krijgt wie met minder mensen komt geen prijsindicatie (die zou te laag uitvallen); wie met meer komt krijgt dezelfde prijs per persoon als indicatie. Joey stuurt daarna het precieze bedrag.",
+  "basisPersonen": 2,
+
+  "//periodes": "Luleå heeft een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
+  "periodes": [
+    { "van": "2026-12-19", "tot": "2027-03-14", "tarief": "standaard" }
+  ],
+
+  "//bezet": "Periodes die niet te kiezen zijn, bijvoorbeeld de dagen van de Grand Prix. Zo zet je er een dicht: {\"van\": \"2027-01-16\", \"tot\": \"2027-01-23\", \"wat\": \"Niet beschikbaar\"}. Achter elke regel een komma, behalve achter de laatste. Het label mag ook een blokje per taal zijn, zoals in data/finland-prijzen.json. Er staat nu niets dicht.",
+  "bezet": [],
+
+  "//toeslagen": "Nachten die duurder zijn, zoals in de kalender van het hotel (Booking.com-screenshots in brand_assets/Andere organisaties foto's en prijzen/Lulea). bedrag is de toeslag per persoon per nacht bovenop de prijs hierboven: het volledige verschil met een gewone nacht bij de leverancier (niet gedeeld door 2, want de kamer en de auto blijven hetzelfde kosten). Duurdere nachten worden duurder, goedkopere nachten geven geen korting. Een nacht is de datum waarop hij begint: wie van 1 tot 4 februari blijft, slaapt de nachten van 1, 2 en 3 februari. In de kalender krijgen deze dagen een stipje. Gebruik hele euro's; komt het totaal per persoon ooit niet op hele euro's uit, dan wordt het altijd naar boven afgerond. Zet hier alleen toeslagen voor de klant neer, nooit inkoopprijzen.",
+  "toeslagen": [
+    { "bedrag": 9,    "nachten": ["2027-02-19", "2027-02-20", "2027-02-26", "2027-03-05", "2027-03-06"] },
+    { "bedrag": 18,   "nachten": ["2027-01-01", "2027-01-21", "2027-01-28", "2027-02-27"] },
+    { "bedrag": 27,   "nachten": ["2026-12-31", "2027-01-05", "2027-01-06", "2027-01-12", "2027-01-13", "2027-01-14", "2027-01-18", "2027-01-25"] },
+    { "bedrag": 36,   "nachten": ["2027-01-19", "2027-01-20", "2027-01-26", "2027-01-27", "2027-02-11", "2027-02-18", "2027-03-11"] },
+    { "bedrag": 45,   "nachten": ["2027-02-05", "2027-02-06", "2027-02-15", "2027-03-08"] },
+    { "bedrag": 53,   "nachten": ["2027-02-08", "2027-02-25", "2027-03-04"] },
+    { "bedrag": 58,   "nachten": ["2027-02-22", "2027-03-01"] },
+    { "bedrag": 62,   "nachten": ["2027-02-01", "2027-02-10", "2027-03-09", "2027-03-10"] },
+    { "bedrag": 71,   "nachten": ["2027-02-09", "2027-02-16", "2027-02-17"] },
+    { "bedrag": 76,   "nachten": ["2027-02-23", "2027-02-24", "2027-03-02", "2027-03-03"] },
+    { "bedrag": 80,   "nachten": ["2027-02-04"] },
+    { "bedrag": 89,   "nachten": ["2027-02-02", "2027-02-03"] }
+  ]
+}

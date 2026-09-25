@@ -49,6 +49,30 @@ function plusDagen(datum, aantal) {
   return new Date(datum.getTime() + aantal * 86400000);
 }
 
+/* Shortest trip in days. There is no maximum: the season and the booked
+   periods are the only upper limit. Same as js/falun-kalender.js. */
+function minimumDagen(data) {
+  return typeof data.minimumDagen === "number" && data.minimumDagen > 1 ? data.minimumDagen : 4;
+}
+
+/* Base price per person for a trip of this many days. A length listed in
+   basisprijs uses that amount; a longer one takes the longest listed length
+   below it plus extraDagPerPersoon for every extra day. Returns null when
+   no price can be given. Must stay identical to basisprijsVoor() in
+   js/falun-kalender.js, or the screen and Stripe disagree. */
+function basisprijsVoor(data, dagen) {
+  var tabel = data.basisprijs || {};
+  if (typeof tabel[String(dagen)] === "number") return tabel[String(dagen)];
+  var langste = 0;
+  Object.keys(tabel).forEach(function (sleutel) {
+    var n = parseInt(sleutel, 10);
+    if (n <= dagen && n > langste && typeof tabel[sleutel] === "number") langste = n;
+  });
+  var extra = data.extraDagPerPersoon;
+  if (!langste || typeof extra !== "number") return null;
+  return tabel[String(langste)] + (dagen - langste) * extra;
+}
+
 /* Geeft het bedrag in hele euro's terug, of een tekst waarom het niet kan. */
 function berekenFalun(keuze) {
   var data;
@@ -62,10 +86,10 @@ function berekenFalun(keuze) {
   var dagen = parseInt(keuze.dagen, 10);
 
   if (!aankomst || !seizoenVan || !seizoenTot) return { fout: "Ongeldige datum." };
-  if ((data.duur || [4, 5]).indexOf(dagen) === -1) return { fout: "Ongeldige reisduur." };
+  if (!/^\d+$/.test(String(keuze.dagen)) || dagen < minimumDagen(data)) return { fout: "Ongeldige reisduur." };
 
-  var basis = data.basisprijs && data.basisprijs[String(dagen)];
-  if (typeof basis !== "number") return { fout: "Ongeldige reisduur." };
+  var basis = basisprijsVoor(data, dagen);
+  if (basis === null) return { fout: "Ongeldige reisduur." };
 
   var nachten = dagen - 1;
   if (aankomst < seizoenVan) return { fout: "Die aankomstdag valt buiten het seizoen." };
@@ -78,7 +102,8 @@ function berekenFalun(keuze) {
 
   var keuze2 = data.personen || { min: 1, max: 4 };
   var basisPersonen = data.basisPersonen || 2;
-  var autoPerReis = data.autoPerReisEUR || 0;
+  var autoPerDag = typeof data.autoPerDagEUR === "number" ? data.autoPerDagEUR : 0;
+  var autoInBasisDagen = typeof data.autoInBasisprijsDagen === "number" ? data.autoInBasisprijsDagen : 0;
   var doorgeven = typeof data.kortingDoorgeven === "number" ? data.kortingDoorgeven : 1;
   var huisjeMax = data.huisjeMaxPersonen || 0;
 
@@ -99,11 +124,19 @@ function berekenFalun(keuze) {
     if (!huisjeMax || n <= huisjeMax) return n;
     return n / Math.ceil(n / huisjeMax);
   }
-  function autoDeel(n) {
-    if (!autoPerReis) return 0;
-    var b = autoPerReis / basisPersonen;
-    return b + demp(autoPerReis / perHuisje(n) - b);
+  // Rental car share per person for a trip of this many days. The car costs
+  // autoPerDag per day and is shared by the people in one cabin. Same as
+  // autoDeel() in js/falun-kalender.js.
+  function autoDeel(n, aantalDagen) {
+    var auto = autoPerDag * aantalDagen;
+    if (!auto) return 0;
+    var b = auto / basisPersonen;
+    return b + demp(auto / perHuisje(n) - b);
   }
+  // The car share that basisprijs already contains (autoInBasisprijsDagen
+  // days at basisPersonen). It is taken out and the car for the real trip
+  // length is added, so the car never counts twice.
+  var autoInBasis = autoPerDag * autoInBasisDagen / basisPersonen;
 
   var totaal = basis;
 
@@ -121,7 +154,7 @@ function berekenFalun(keuze) {
     }
   }
 
-  totaal += autoDeel(personen) - autoDeel(basisPersonen);
+  totaal += autoDeel(personen, dagen) - autoInBasis;
 
   var opties = data.opties || {};
   var omschrijving = "Schaatsreis Falun, " + dagen + " dagen vanaf " + schrijfDatum(aankomst) +
@@ -132,7 +165,7 @@ function berekenFalun(keuze) {
     omschrijving += ", eigen vlucht";
   }
   if (keuze.auto === "zelf") {
-    totaal -= autoDeel(personen);
+    totaal -= autoDeel(personen, dagen);
     omschrijving += ", eigen vervoer";
   }
   var begDagen = parseInt(keuze.begeleiding, 10);
@@ -145,9 +178,13 @@ function berekenFalun(keuze) {
       return { fout: "Begeleiding kan niet in die periode." };
     }
     // Zelfde rekenwijze als in js/falun-kalender.js: per reisdag, en gedeeld
-    // over de groep als het niet per persoon gerekend wordt.
+    // over de groep als het niet per persoon gerekend wordt. Het dagbedrag
+    // hangt af van de groep: prijsPerDag voor 1 persoon, plus
+    // prijsPerDagExtraPersoon voor elke persoon meer.
     if (begDagen > dagen) return { fout: "Zoveel dagen begeleiding passen niet in de reis." };
-    var begTotaal = beg.prijsPerDag * begDagen;
+    var begExtra = typeof beg.prijsPerDagExtraPersoon === "number" ? beg.prijsPerDagExtraPersoon : 0;
+    var begPerDag = beg.prijsPerDag + begExtra * (personen - 1);
+    var begTotaal = begPerDag * begDagen;
     totaal += beg.perPersoon === false ? begTotaal / personen : begTotaal;
     omschrijving += ", met " + begDagen + (begDagen === 1 ? " dag" : " dagen") + " begeleiding";
   }

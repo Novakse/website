@@ -157,7 +157,7 @@
         <div class="factbar__item"><span class="factbar__label">Location</span><span class="factbar__value">Carinthia, Austria</span></div>
         <div class="factbar__item"><span class="factbar__label">Altitude</span><span class="factbar__value">± 930 metres</span></div>
         <div class="factbar__item"><span class="factbar__label">Lake area</span><span class="factbar__value">6.5 km²</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Dates and price</span><span class="factbar__value">Coming soon</span></div>
+        <div class="factbar__item"><span class="factbar__label">Price</span><span class="factbar__value">From &euro;1,095 pp</span></div>
       </div>
     </section>
 
@@ -255,13 +255,40 @@
     </section>
 
     <!-- 7. Data en prijs -->
-    <section class="pending">
-      <div class="wrap pending__inner reveal">
-        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Dates and price</span>
-        <h2 class="h-section">The travel details for the Weissensee are being finalised now</h2>
-        <p class="pending__text">Once the dates and the price are confirmed, they'll appear here. Want to be sure you stay informed? Leave your details and you'll be the first to hear - without any obligation.</p>
-        <div class="pending__actions">
-          <a class="btn btn--dark" href="boeken.html?reis=weissensee">Keep me updated</a>
+    <section class="prices" id="data-en-prijs">
+      <div class="wrap">
+        <div class="prices__head reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Dates and prices</span>
+          <h2 class="h-section">What it costs, and when you can go</h2>
+          <p class="prices__intro">The price starts at &euro;1,095 per person for 4 days with two of you. That includes the flight to Salzburg with hold luggage, the rental car on the spot and the accommodation. If you travel with your own transport, the price starts at &euro;730 per person. Pick your arrival and departure day below and you'll see straight away what your period costs.</p>
+        </div>
+
+        <!-- Dates, prices (also with own transport) and blocked periods: see data/weissensee-prijzen.json (shared by all six languages). -->
+        <div class="calendar reveal" data-calendar>
+          <script type="application/json" class="calendar__data">
+          { "reis": "weissensee", "prijzen": "data/weissensee-prijzen.json" }
+          </script>
+          <p class="calendar__fallback">Available periods and prices are available on request. Email <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> or message +31 6 17467643.</p>
+        </div>
+
+        <p class="prices__voorbeeld">You choose your period between 19 December and 14 March. From 19 to 28 January 2027 the Alternatieve Elfstedentocht takes place; those days can't be chosen. Whether there is ice depends on the winter.</p>
+
+        <div class="prices__notes reveal">
+          <div class="prices__note">
+            <h3>What's included</h3>
+            <p>The flight to Salzburg with hold luggage, the local rental car and the accommodation.</p>
+          </div>
+          <div class="prices__note">
+            <h3>What's not</h3>
+            <p>Food and drinks, and your own skating equipment and safety gear.</p>
+          </div>
+          <div class="prices__note">
+            <h3>Own transport</h3>
+            <p>Travelling to the Weissensee yourself? Tick own transport in the calendar. The price then starts at &euro;730 per person for 4 days, without flight and rental car.</p>
+          </div>
+        </div>
+
+        <div class="pending__actions reveal">
           <a class="link-arrow" href="reisinformatie.html">Practical travel information</a>
         </div>
       </div>
@@ -297,7 +324,7 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Also curious about the other trips?</h2>
-        <p class="closing__text">All our trips are currently without guidance on the ice. Guided group trips are still being planned and will follow later.</p>
+        <p class="closing__text">As standard, all our trips are without guidance on the ice. At Orsa and Falun you can add guidance on the ice. Guided group trips are still being planned and will follow later.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reizen.html">View all trips</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hi%20Joey%2C%20I%20have%20a%20question%20about%20the%20trip%20to%20the%20Weissensee." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Ask your question via WhatsApp</a>

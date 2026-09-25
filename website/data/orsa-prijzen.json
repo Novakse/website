@@ -1,0 +1,40 @@
+{
+  "//": "Prijzen en data voor de Orsa-kalender. Alle zes de taalversies van orsa.html en de aanvraagpagina lezen dit bestand, dus je werkt het een keer bij. Het werkt precies zoals data/lulea-prijzen.json (zelfde kalender in js/main.js), met daarbij begeleiding op het ijs en de streepjes voor onzeker ijs. Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan.",
+
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 19 december tot en met 14 maart (zelfde als Falun en Luleå).",
+  "seizoenStart": "2026-12-19",
+  "seizoenEind": "2027-03-14",
+
+  "//minimumNachten": "Kortste verblijf dat iemand kan kiezen: 3 nachten is 4 dagen. Een maximum is er niet.",
+  "minimumNachten": 3,
+
+  "//prijs": "Verkoopprijs per persoon voor het hele verblijf, in hele euro's, gerekend met twee personen. Uit Joey's eigen Excel (blad Orsa, 'Orsa verkoop prijs per persoon'): 995 voor 4 dagen (3 nachten), 1149 voor 5 dagen (4 nachten) en 1249 voor 6 dagen (5 nachten). Zet hier nooit inkoopprijzen in: dit bestand is voor iedereen op de site op te vragen.",
+  "prijsPerPersoon": {
+    "standaard": { "3": 995, "4": 1149, "5": 1249 }
+  },
+
+  "//extraNacht": "Blijft iemand langer dan 6 dagen, dan telt elke dag daarboven dit bedrag per persoon mee: het verschil tussen de laatste twee prijzen uit de Excel (1249 - 1149 = 100). Dus 7 dagen 1349, 8 dagen 1449, 10 dagen 1649.",
+  "extraNachtPerPersoon": { "standaard": 100 },
+
+  "//basisPersonen": "Voor hoeveel personen de bedragen hierboven gelden. Op de aanvraagpagina krijgt wie met minder mensen komt geen prijsindicatie (die zou te laag uitvallen); wie met meer komt krijgt dezelfde prijs per persoon als indicatie. Joey stuurt daarna het precieze bedrag.",
+  "basisPersonen": 2,
+
+  "//periodes": "Orsa heeft een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
+  "periodes": [
+    { "van": "2026-12-19", "tot": "2027-03-14", "tarief": "standaard" }
+  ],
+
+  "//ijsOnzeker": "Periode waarin het ijs nog onzeker is (zelfde als Falun). Die dagen blijven gewoon te kiezen, maar krijgen een streepje in de kalender en een regel uitleg. tot is de eerste dag die er niet meer bij hoort. Haal het blokje weg om de waarschuwing niet te tonen.",
+  "ijsOnzeker": { "van": "2026-12-19", "tot": "2027-01-01" },
+
+  "//begeleiding": "Begeleiding op het ijs, bij te boeken. Per dag kost het prijsPerDag voor 1 persoon, plus prijsPerDagExtraPersoon voor elke persoon meer: 100 + 50 x (personen - 1), voor de hele groep. De bezoeker kiest zelf voor hoeveel dagen (0 tot en met de hele reis). Het kan alleen als de hele reis binnen van/tot valt (tot is de laatste vertrekdag, zelfde als Falun: 10 januari tot en met 20 februari). Haal van en tot weg om begeleiding het hele seizoen aan te bieden; haal het hele blokje weg om begeleiding niet te tonen.",
+  "begeleiding": {
+    "prijsPerDag": 100,
+    "prijsPerDagExtraPersoon": 50,
+    "van": "2027-01-10",
+    "tot": "2027-02-20"
+  },
+
+  "//bezet": "Periodes die niet te kiezen zijn. Zo zet je er een dicht: {\"van\": \"2027-01-16\", \"tot\": \"2027-01-23\", \"wat\": \"Niet beschikbaar\"}. Achter elke regel een komma, behalve achter de laatste. Het label mag ook een blokje per taal zijn, zoals in data/finland-prijzen.json. Er staat nu niets dicht.",
+  "bezet": []
+}

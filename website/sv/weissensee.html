@@ -157,7 +157,7 @@
         <div class="factbar__item"><span class="factbar__label">Läge</span><span class="factbar__value">Kärnten, Österrike</span></div>
         <div class="factbar__item"><span class="factbar__label">Höjd</span><span class="factbar__value">± 930 meter</span></div>
         <div class="factbar__item"><span class="factbar__label">Sjöns yta</span><span class="factbar__value">6,5 km²</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Datum och pris</span><span class="factbar__value">Kommer snart</span></div>
+        <div class="factbar__item"><span class="factbar__label">Pris</span><span class="factbar__value">Från 1&nbsp;095 &euro; per person</span></div>
       </div>
     </section>
 
@@ -255,13 +255,40 @@
     </section>
 
     <!-- 7. Data en prijs -->
-    <section class="pending">
-      <div class="wrap pending__inner reveal">
-        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Datum och pris</span>
-        <h2 class="h-section">Reseuppgifterna för Weissensee arbetas fram just nu</h2>
-        <p class="pending__text">Så snart datum och pris är fastställda publicerar vi dem här. Vill du vara säker på att hålla dig uppdaterad? Lämna dina uppgifter, så hör du det först - utan att du förbinder dig till något.</p>
-        <div class="pending__actions">
-          <a class="btn btn--dark" href="boeken.html?reis=weissensee">Håll mig uppdaterad</a>
+    <section class="prices" id="data-en-prijs">
+      <div class="wrap">
+        <div class="prices__head reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Datum och priser</span>
+          <h2 class="h-section">Vad kostar det, och när kan du åka</h2>
+          <p class="prices__intro">Priset börjar på 1&nbsp;095 &euro; per person för 4 dagar när ni är två. Där ingår flyget till Salzburg med incheckat bagage, hyrbilen på plats och boendet. Reser du på egen hand börjar priset på 730 &euro; per person. Välj din ankomst- och avresedag nedan, så ser du direkt vad din period kostar.</p>
+        </div>
+
+        <!-- Dates, prices (also with own transport) and blocked periods: see data/weissensee-prijzen.json (shared by all six languages). -->
+        <div class="calendar reveal" data-calendar>
+          <script type="application/json" class="calendar__data">
+          { "reis": "weissensee", "prijzen": "data/weissensee-prijzen.json" }
+          </script>
+          <p class="calendar__fallback">De tillgängliga perioderna och priserna får du på förfrågan. Mejla till <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> eller messa till +31 6 17467643.</p>
+        </div>
+
+        <p class="prices__voorbeeld">Du väljer din period mellan 19 december och 14 mars. Från 19 till och med 28 januari 2027 hålls Alternativa Elfstedentocht; de dagarna går inte att välja. Om det finns is beror på vintern.</p>
+
+        <div class="prices__notes reveal">
+          <div class="prices__note">
+            <h3>Det här ingår</h3>
+            <p>Flyget till Salzburg med incheckat bagage, hyrbilen på plats och boendet.</p>
+          </div>
+          <div class="prices__note">
+            <h3>Det här inte</h3>
+            <p>Mat och dryck, samt din egen skridskoutrustning och säkerhetsutrustning.</p>
+          </div>
+          <div class="prices__note">
+            <h3>Egen resa</h3>
+            <p>Reser du själv till Weissensee? Kryssa då i egen resa i kalendern. Priset börjar då på 730 &euro; per person för 4 dagar, utan flyg och hyrbil.</p>
+          </div>
+        </div>
+
+        <div class="pending__actions reveal">
           <a class="link-arrow" href="reisinformatie.html">Praktisk resinformation</a>
         </div>
       </div>
@@ -297,7 +324,7 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Nyfiken på de andra resorna?</h2>
-        <p class="closing__text">Just nu åker du alla våra resor självständigt, utan guide. Guidade gruppresor planeras fortfarande.</p>
+        <p class="closing__text">Som standard åker du alla våra resor självständigt, utan guide. I Orsa och Falun kan du boka till guidning på isen. Guidade gruppresor planeras fortfarande.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reizen.html">Se alla resor</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hej%20Joey%2C%20jag%20har%20en%20fr%C3%A5ga%20om%20resan%20till%20Weissensee." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Ställ din fråga via WhatsApp</a>

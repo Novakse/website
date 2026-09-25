@@ -814,6 +814,7 @@
   .oq-doc__term { min-width: 100%; }
   .oq-doc__edit { margin-left: auto; }
   .oq-number { width: 3.1rem; height: 3.1rem; font-size: 1.05rem; }
+  .oq-number--wide { width: auto; font-size: 0.95rem; }
   .oq-option { padding: 0.95rem 1rem; }
   .oq-place { min-height: 9.5rem; }
 }

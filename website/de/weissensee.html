@@ -157,7 +157,7 @@
         <div class="factbar__item"><span class="factbar__label">Lage</span><span class="factbar__value">Kärnten, Österreich</span></div>
         <div class="factbar__item"><span class="factbar__label">Höhe</span><span class="factbar__value">± 930 Meter</span></div>
         <div class="factbar__item"><span class="factbar__label">Seefläche</span><span class="factbar__value">6,5 km²</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Termine und Preis</span><span class="factbar__value">Folgen in Kürze</span></div>
+        <div class="factbar__item"><span class="factbar__label">Preis</span><span class="factbar__value">Ab &euro;1.095 p.P.</span></div>
       </div>
     </section>
 
@@ -255,13 +255,40 @@
     </section>
 
     <!-- 7. Data en prijs -->
-    <section class="pending">
-      <div class="wrap pending__inner reveal">
-        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Termine und Preis</span>
-        <h2 class="h-section">Die Reisedaten für den Weissensee werden gerade ausgearbeitet</h2>
-        <p class="pending__text">Sobald die Termine und der Preis feststehen, findest du sie hier. Möchtest du sichergehen, dass du auf dem Laufenden bleibst? Hinterlasse deine Daten, dann hörst du es zuerst - ganz unverbindlich.</p>
-        <div class="pending__actions">
-          <a class="btn btn--dark" href="boeken.html?reis=weissensee">Halte mich auf dem Laufenden</a>
+    <section class="prices" id="data-en-prijs">
+      <div class="wrap">
+        <div class="prices__head reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Termine und Preise</span>
+          <h2 class="h-section">Was es kostet, und wann du kannst</h2>
+          <p class="prices__intro">Der Preis beginnt bei &euro;1.095 pro Person für 4 Tage zu zweit. Darin enthalten sind der Flug nach Salzburg mit Aufgabegepäck, der Mietwagen vor Ort und die Unterkunft. Reist du selbst an, beginnt der Preis bei &euro;730 pro Person. Wähle unten deinen Ankunfts- und deinen Abreisetag, dann siehst du sofort, was dein Zeitraum kostet.</p>
+        </div>
+
+        <!-- Dates, prices (also with own transport) and blocked periods: see data/weissensee-prijzen.json (shared by all six languages). -->
+        <div class="calendar reveal" data-calendar>
+          <script type="application/json" class="calendar__data">
+          { "reis": "weissensee", "prijzen": "data/weissensee-prijzen.json" }
+          </script>
+          <p class="calendar__fallback">Die verfügbaren Zeiträume und Preise erhältst du auf Anfrage. Schreib eine E-Mail an <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> oder eine Nachricht an +31 6 17467643.</p>
+        </div>
+
+        <p class="prices__voorbeeld">Du wählst deinen Zeitraum zwischen dem 19. Dezember und dem 14. März. Vom 19. bis zum 28. Januar 2027 findet die Alternative Elfstedentocht statt; diese Tage sind nicht wählbar. Ob es Eis gibt, hängt vom Winter ab.</p>
+
+        <div class="prices__notes reveal">
+          <div class="prices__note">
+            <h3>Das ist enthalten</h3>
+            <p>Der Flug nach Salzburg mit Aufgabegepäck, der Mietwagen vor Ort und die Unterkunft.</p>
+          </div>
+          <div class="prices__note">
+            <h3>Das nicht</h3>
+            <p>Essen und Trinken, und dein eigenes Schlittschuhmaterial und deine Sicherheitsausrüstung.</p>
+          </div>
+          <div class="prices__note">
+            <h3>Eigene Anreise</h3>
+            <p>Reist du selbst zum Weissensee? Dann setze im Kalender ein Häkchen bei eigene Anreise. Der Preis beginnt dann bei &euro;730 pro Person für 4 Tage, ohne Flug und Mietwagen.</p>
+          </div>
+        </div>
+
+        <div class="pending__actions reveal">
           <a class="link-arrow" href="reisinformatie.html">Praktische Reiseinformationen</a>
         </div>
       </div>
@@ -297,7 +324,7 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Auch Interesse an anderen Reisen?</h2>
-        <p class="closing__text">Am Weissensee läufst du selbstständig. Alle Reisen von Novakse sind derzeit ohne Begleitung auf dem Eis. Begleitete Gruppenreisen werden noch geplant.</p>
+        <p class="closing__text">Am Weissensee läufst du selbstständig. Alle Reisen von Novakse sind standardmäßig ohne Begleitung auf dem Eis. Bei Orsa und Falun kannst du Begleitung auf dem Eis dazubuchen. Begleitete Gruppenreisen werden noch geplant.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reizen.html">Alle Reisen ansehen</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20de%20reis%20naar%20de%20Weissensee." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Stelle deine Frage über WhatsApp</a>

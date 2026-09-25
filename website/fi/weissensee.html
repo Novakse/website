@@ -157,7 +157,7 @@
         <div class="factbar__item"><span class="factbar__label">Sijainti</span><span class="factbar__value">Kärnten, Itävalta</span></div>
         <div class="factbar__item"><span class="factbar__label">Korkeus</span><span class="factbar__value">± 930 metriä</span></div>
         <div class="factbar__item"><span class="factbar__label">Järven pinta-ala</span><span class="factbar__value">6,5 km²</span></div>
-        <div class="factbar__item factbar__item--open"><span class="factbar__label">Päivämäärät ja hinta</span><span class="factbar__value">Julkaistaan pian</span></div>
+        <div class="factbar__item"><span class="factbar__label">Hinta</span><span class="factbar__value">Alkaen 1&nbsp;095 &euro; / hlö</span></div>
       </div>
     </section>
 
@@ -255,13 +255,40 @@
     </section>
 
     <!-- 7. Data en prijs -->
-    <section class="pending">
-      <div class="wrap pending__inner reveal">
-        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Päivämäärät ja hinta</span>
-        <h2 class="h-section">Weissenseen matkatietoja työstetään parhaillaan</h2>
-        <p class="pending__text">Heti kun päivämäärät ja hinta ovat varmistuneet, ne julkaistaan täällä. Haluatko varmasti pysyä ajan tasalla? Jätä yhteystietosi, niin kuulet ensimmäisten joukossa - ilman sitoumuksia.</p>
-        <div class="pending__actions">
-          <a class="btn btn--dark" href="boeken.html?reis=weissensee">Pidä minut ajan tasalla</a>
+    <section class="prices" id="data-en-prijs">
+      <div class="wrap">
+        <div class="prices__head reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Päivämäärät ja hinnat</span>
+          <h2 class="h-section">Mitä se maksaa ja milloin voit lähteä</h2>
+          <p class="prices__intro">Hinta alkaa 1&nbsp;095 &euro; / hlö neljältä päivältä kahden hengen matkalla. Siihen sisältyvät lento Salzburgiin ruumaan menevän matkatavaran kanssa, vuokra-auto paikan päällä ja majoitus. Jos matkustat omalla kulkuneuvolla, hinta alkaa 730 &euro; / hlö. Valitse alta saapumis- ja lähtöpäiväsi, niin näet heti mitä jaksosi maksaa.</p>
+        </div>
+
+        <!-- Dates, prices (also with own transport) and blocked periods: see data/weissensee-prijzen.json (shared by all six languages). -->
+        <div class="calendar reveal" data-calendar>
+          <script type="application/json" class="calendar__data">
+          { "reis": "weissensee", "prijzen": "data/weissensee-prijzen.json" }
+          </script>
+          <p class="calendar__fallback">Saatavilla olevat ajanjaksot ja hinnat saat pyynnöstä. Lähetä sähköpostia osoitteeseen <a href="mailto:schaatsennovakse@outlook.com">schaatsennovakse@outlook.com</a> tai WhatsApp-viesti numeroon +31 6 17467643.</p>
+        </div>
+
+        <p class="prices__voorbeeld">Valitset jaksosi 19. joulukuuta ja 14. maaliskuuta väliltä. Alternatieve Elfstedentocht järjestetään 19. ja 28. tammikuuta 2027 välisenä aikana; niitä päiviä ei voi valita. Se, onko jäätä, riippuu talvesta.</p>
+
+        <div class="prices__notes reveal">
+          <div class="prices__note">
+            <h3>Mitä sisältyy</h3>
+            <p>Lento Salzburgiin ruumaan menevän matkatavaran kanssa, vuokra-auto paikan päällä ja majoitus.</p>
+          </div>
+          <div class="prices__note">
+            <h3>Mitä ei</h3>
+            <p>Ruoka ja juoma sekä omat luisteluvarusteet ja turvavarusteet.</p>
+          </div>
+          <div class="prices__note">
+            <h3>Oma kulkuneuvo</h3>
+            <p>Matkustatko itse Weissenseelle? Rastita kalenterista oma kulkuneuvo. Hinta alkaa silloin 730 &euro; / hlö neljältä päivältä, ilman lentoa ja vuokra-autoa.</p>
+          </div>
+        </div>
+
+        <div class="pending__actions reveal">
           <a class="link-arrow" href="reisinformatie.html">Käytännön matkatietoa</a>
         </div>
       </div>
@@ -297,7 +324,7 @@
     <section class="closing">
       <div class="wrap closing__inner">
         <h2 class="h-section">Mieluummin toinen kohde?</h2>
-        <p class="closing__text">Weissenseen lisäksi voit luistella Novaksen kanssa myös Orsassa, Falunissa, Luleåssa ja Suomessa. Kaikki matkat ovat tällä hetkellä omatoimisia, ilman opastusta jäällä. Opastettuja ryhmämatkoja suunnitellaan vielä.</p>
+        <p class="closing__text">Weissenseen lisäksi voit luistella Novaksen kanssa myös Orsassa, Falunissa, Luleåssa ja Suomessa. Kaikki matkat ovat lähtökohtaisesti omatoimisia, ilman opastusta jäällä. Orsan ja Falunin matkoille voit varata lisäksi opastuksen jäälle. Opastettuja ryhmämatkoja suunnitellaan vielä.</p>
         <div class="closing__actions">
           <a class="btn btn--dark" href="reizen.html">Katso kaikki matkat</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hei%20Joey%2C%20minulla%20on%20kysymys%20Weissenseen-matkasta." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Kysy WhatsAppin kautta</a>

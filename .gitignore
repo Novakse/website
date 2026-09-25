@@ -12,3 +12,10 @@ temporary_screenshots/
 agent/
 .claude/skills/
 skills-lock.json
+
+# Secrets and local tooling output (never commit)
+.env*
+!.env.example
+.vercel/
+node_modules/
+*.log

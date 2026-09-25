@@ -1,9 +1,11 @@
 /* ==========================================================================
    Aanvraagpagina
 
-   Leest de gekozen periode uit het webadres (die zet de kalender erin),
-   rekent de indicatieprijs uit terwijl je invult, en zet de aanvraag klaar
-   als e-mail of als WhatsApp-bericht.
+   Toont bij de gekozen bestemming de kalender die erbij hoort (Falun via
+   js/falun-kalender.js, Finland via de reiskalender in js/main.js), leest
+   een eventuele periode uit het webadres, rekent de indicatieprijs uit
+   terwijl je invult, en zet de aanvraag klaar als e-mail of als
+   WhatsApp-bericht.
 
    De prijzen en activiteiten staan in het blokje <script id="boekingsdata">
    boven in boeken.html. Hier hoeft niets gewijzigd te worden.
@@ -330,8 +332,12 @@
   function schrijfDatum(datum) {
     return datum.getDate() + " " + MAANDEN[datum.getMonth()] + " " + datum.getFullYear();
   }
+  // Amounts use the same format as the calendars (js/main.js and
+  // js/falun-kalender.js) in every language: "€2.040", never "€2,040" or
+  // "€2 040", so the summary and the message match the calendar exactly.
+  var BEDRAG_LOCALE = "nl-NL";
   function euro(bedrag) {
-    return "€" + Math.round(bedrag).toLocaleString(T.locale);
+    return "€" + Math.round(bedrag).toLocaleString(BEDRAG_LOCALE);
   }
   // Opties halen iets van de prijs af of tellen erbij op. Het teken staat
   // los voor het bedrag, zodat er geen "€-100" op het scherm komt.
@@ -379,11 +385,15 @@
      pagina) staan bovenaan, de reizen op aanvraag daaronder.
      ---------------------------------------------------------------------- */
   function reisHint(gegevens) {
+    // Optional per-trip text from the data block (e.g. wellness); trips
+    // without it keep the standard hint.
+    if (gegevens.hint) return gegevens.hint;
     if (gegevens.prijsOpAanvraag) return T.onRequestHint;
     return gegevens.periodeVrij ? T.freePeriodHint : T.fixedDatesHint;
   }
 
   function reisVanafPrijs(gegevens) {
+    if (gegevens.prijsLabel) return gegevens.prijsLabel;
     return gegevens.prijsPerPersoonPerDag
       ? T.fromPerPersonPerDay(euro(gegevens.prijsPerPersoonPerDag))
       : "";
@@ -429,7 +439,7 @@
   function toonReisTeksten() {
     if (reisNaam) reisNaam.textContent = reis.naam;
 
-    // Reizen zonder vaste prijs (zoals Weissensee en Luleå) hebben geen
+    // Reizen zonder vaste prijs (prijsOpAanvraag) hebben geen
     // voorbeeldprijs om te tonen.
     if (voorbeeld) {
       var tekst = reis.prijsOpAanvraag ? "" : (reis.voorbeeld || "");
@@ -449,11 +459,17 @@
 
     // De "Kalender"-knop in de koptekst gaat mee met de reis die open staat.
     if (headerKalender) {
-      headerKalender.href = reisSleutel + ".html" + (reis.periodeVrij ? "#prijzen" : "");
+      headerKalender.href = heeftKalenderHier()
+        ? "#periodeBlok"
+        : reisSleutel + ".html" + (reis.periodeVrij ? "#prijzen" : "");
       headerKalender.textContent = reis.periodeVrij ? T.calendarLabel : T.datesAndPriceLabel;
     }
 
     toonPeriode();
+  }
+
+  function heeftKalenderHier() {
+    return Boolean(reis && (reis.kalender || (reis.prijstabel && window.NovakseReiskalender)));
   }
 
   /* Wat er onder stap 3 staat. Bij een reis met een kalender op deze pagina
@@ -464,19 +480,42 @@
 
     // Staat de kalender hier in de pagina, dan wijst de link naar de
     // reispagina niets nuttigs meer aan.
-    if (terugLink) terugLink.hidden = Boolean(reis.kalender);
+    if (terugLink) terugLink.hidden = heeftKalenderHier();
+
+    // De reiskalender (Finland) toont de gekozen periode zelf al, met de
+    // prijs erbij; dan zou dit blokje hetzelfde nog eens zeggen.
+    periodeBox.hidden = Boolean(reis.prijstabel && reiskalenderKlaar);
 
     if (nachten) {
       periodeBox.innerHTML =
         '<p class="booking__period-dates">' + schrijfDatum(van) + ' – ' + schrijfDatum(tot) + '</p>' +
-        '<p class="booking__period-nights">' + T.nightsLabel(nachten) + '</p>';
+        '<p class="booking__period-nights">' + T.nightsLabel(nachten) + '</p>' +
+        prijsLijst(reis);
     } else if (reis.prijsOpAanvraag) {
-      periodeBox.innerHTML = '<p class="booking__period-empty">' + T.priceOnRequestNote + '</p>';
+      periodeBox.innerHTML = '<p class="booking__period-empty">' +
+        (reis.prijsToelichting || T.priceOnRequestNote) + '</p>' + prijsLijst(reis);
     } else if (!reis.periodeVrij) {
       periodeBox.innerHTML = '<p class="booking__period-empty">' + T.fixedDatesNote + '</p>';
     } else {
       periodeBox.innerHTML = '<p class="booking__period-empty">' + T.chooseFirst + '</p>';
     }
+  }
+
+  /* Optional list of prices per trip length ("prijzenPerDuur" in the data
+     block, e.g. wellness): [{"dagen": 4, "label": "4 dagen", "prijs": 1395}].
+     Entries without a valid whole-euro price are skipped. When a period
+     came in via the address, the row with that many days is marked. */
+  function prijsLijst(gegevens) {
+    var lijst = Array.isArray(gegevens.prijzenPerDuur) ? gegevens.prijzenPerDuur : [];
+    var rijen = lijst.filter(function (regel) {
+      return regel && regel.label && typeof regel.prijs === "number" && isFinite(regel.prijs);
+    }).map(function (regel) {
+      var gekozen = nachten && regel.dagen === nachten + 1;
+      return '<li class="booking__rate' + (gekozen ? ' is-match' : '') + '"' +
+        (gekozen ? ' aria-current="true"' : '') + '>' +
+        '<span>' + regel.label + '</span><span>' + euro(regel.prijs) + '</span></li>';
+    });
+    return rijen.length ? '<ul class="booking__rates">' + rijen.join("") + '</ul>' : '';
   }
 
   /* --- De kalender in stap 3 ---------------------------------------------
@@ -488,58 +527,56 @@
   var kalenderInfo = null;
   var kalenderGeladen = false;
 
-  /* --- Prijstabel per periode (Finland) ----------------------------------
-     Een reis met een prijstabel haalt zijn bedragen uit hetzelfde bestand
-     als de kalender op de reispagina (js/main.js). De rekenwijze hieronder
-     is daar een kopie van: pas je de een aan, pas dan de ander mee aan.
+  /* --- De reiskalender in stap 3 (Finland) ------------------------------
+     Een reis met een prijstabel krijgt hier dezelfde kalender als op zijn
+     reispagina (js/main.js, NovakseReiskalender). Die rekent de prijs uit
+     hetzelfde bestand uit en geeft de gekozen periode meteen door; hier
+     staat geen eigen kopie van die rekenwijze.
      ---------------------------------------------------------------------- */
-  var prijstabel = null;
-  var prijstabelPad = null;
+  var reiskalenderBox = null;
+  var reiskalender = null;
+  var reiskalenderPad = null;
+  var reiskalenderKlaar = false;
 
-  function laadPrijstabel() {
+  function toonReiskalender() {
     var pad = reis && reis.prijstabel;
-    if (!pad) { prijstabel = null; prijstabelPad = null; return; }
-    if (pad === prijstabelPad) return;
-    prijstabelPad = pad;
-    prijstabel = null;
-    fetch(mapVoor() + pad).then(function (antwoord) {
-      return antwoord.ok ? antwoord.json() : null;
-    }).then(function (data) {
-      // Is er inmiddels een andere reis gekozen, dan hoort dit er niet meer bij.
-      if (!data || pad !== prijstabelPad) return;
-      prijstabel = data;
-      ververs();
-    })["catch"](function () { /* dan blijft het bij "nog geen prijsindicatie" */ });
-  }
-
-  function tariefOp(datum) {
-    var lijst = (prijstabel && prijstabel.periodes) || [];
-    for (var i = 0; i < lijst.length; i++) {
-      var begin = alsDatum(lijst[i].van);
-      var eind = alsDatum(lijst[i].tot);
-      if (begin && eind && datum >= begin && datum < eind) return lijst[i].tarief;
+    if (!pad || !window.NovakseReiskalender || !periodeBox) {
+      if (reiskalenderBox) reiskalenderBox.hidden = true;
+      return;
     }
-    return null;
-  }
 
-  function tabelPrijsPerPersoon(aankomst, aantalNachten) {
-    var tabel = prijstabel && prijstabel.prijsPerPersoon;
-    if (!tabel) return 0;
-    var tarief = tariefOp(aankomst);
-    var rij = tarief ? tabel[tarief] : null;
-    if (!rij) return 0;
-    if (typeof rij[String(aantalNachten)] === "number") return rij[String(aantalNachten)];
+    if (!reiskalenderBox) {
+      reiskalenderBox = document.createElement("div");
+      reiskalenderBox.className = "calendar booking__calendar";
+      reiskalenderBox.id = "reiskalenderBox";
+      periodeBox.parentNode.insertBefore(reiskalenderBox, periodeBox);
+    }
+    reiskalenderBox.hidden = false;
 
-    var langste = 0;
-    Object.keys(rij).forEach(function (sleutel) {
-      var n = parseInt(sleutel, 10);
-      if (n > langste && typeof rij[sleutel] === "number") langste = n;
+    if (reiskalender && pad === reiskalenderPad) {
+      // Already built: redraw for the current head count. It reports its
+      // chosen period back, so the form and the calendar agree again.
+      reiskalender.herteken();
+      return;
+    }
+    reiskalenderPad = pad;
+    reiskalenderKlaar = false;
+    reiskalender = window.NovakseReiskalender.start(reiskalenderBox, mapVoor() + pad, {
+      van: van ? alsTekst(van) : null,
+      tot: tot ? alsTekst(tot) : null,
+      personen: personen,
+      // Own transport (Weissensee) chosen on the trip page comes along in
+      // the web address as vervoer=eigen.
+      eigenVervoer: params.get("vervoer") === "eigen",
+      // Guiding days (Orsa) chosen on the trip page: begeleiding=2.
+      begeleidingDagen: params.get("begeleiding"),
+      onKies: function (info) {
+        // Another trip may have been chosen in the meantime.
+        if (!reis || reis.prijstabel !== pad) return;
+        reiskalenderKlaar = true;
+        neemPeriodeOver(info);
+      }
     });
-    if (!langste || aantalNachten < langste) return 0;
-
-    var extra = (prijstabel.extraNachtPerPersoon || {})[tarief] || 0;
-    if (!extra) return 0;
-    return rij[String(langste)] + (aantalNachten - langste) * extra;
   }
 
   // "" op de Nederlandse site, "../" in de taalmappen. De paden in het
@@ -551,11 +588,11 @@
   }
 
   function toonKalender() {
+    toonReiskalender();
     if (!kalenderBox) return;
     var pad = reis && reis.kalender;
     if (!pad) {
       kalenderBox.hidden = true;
-      kalenderInfo = null;
       return;
     }
 
@@ -577,31 +614,40 @@
     document.body.appendChild(script);
   }
 
+  /* Wat een kalender in stap 3 doorgeeft: de periode, de prijs per persoon
+     en bij Falun ook de opties en het aantal personen per huisje. */
+  function neemPeriodeOver(info) {
+    kalenderInfo = info || null;
+    if (!kalenderInfo) return;
+
+    if (kalenderInfo.van && kalenderInfo.tot) {
+      van = alsDatum(kalenderInfo.van);
+      tot = alsDatum(kalenderInfo.tot);
+      nachten = kalenderInfo.nachten;
+    } else {
+      // Arrival picked but no departure day yet: no period in the form.
+      van = null;
+      tot = null;
+      nachten = 0;
+    }
+    // Een huisje heeft een eigen maximum; dat gaat voor op het maximum
+    // van de reis zelf.
+    minPersonen = kalenderInfo.personenMin || minPersonen;
+    maxPersonen = kalenderInfo.personenMax || maxPersonen;
+    stelPersonenIn();
+
+    toonPeriode();
+    bouwOpties();
+    onthoudInAdres();
+    ververs();
+  }
+
   if (kalenderBox) {
     kalenderBox.addEventListener("novakse:periode", function (gebeurtenis) {
-      kalenderInfo = gebeurtenis.detail || null;
-      if (!kalenderInfo) return;
-
-      if (kalenderInfo.van && kalenderInfo.tot) {
-        van = alsDatum(kalenderInfo.van);
-        tot = alsDatum(kalenderInfo.tot);
-        nachten = kalenderInfo.nachten;
-      } else {
-        // Arrival picked but no departure day yet: no period in the form.
-        van = null;
-        tot = null;
-        nachten = 0;
-      }
-      // Een huisje heeft een eigen maximum; dat gaat voor op het maximum
-      // van de reis zelf.
-      minPersonen = kalenderInfo.personenMin || minPersonen;
-      maxPersonen = kalenderInfo.personenMax || maxPersonen;
-      stelPersonenIn();
-
-      toonPeriode();
-      bouwOpties();
-      onthoudInAdres();
-      ververs();
+      // The Falun calendar loads on its own; ignore it once another trip
+      // has been chosen.
+      if (!reis || !reis.kalender) return;
+      neemPeriodeOver(gebeurtenis.detail);
     });
   }
 
@@ -894,15 +940,13 @@
     var uitKalender = kalenderInfo && typeof kalenderInfo.verblijf === "number"
       ? kalenderInfo.verblijf : null;
 
-    // Heeft de reis een prijstabel, dan komt de verblijfprijs daarvandaan.
-    // De bedragen gaan uit van twee personen in een huisje. Met minder mensen
-    // zou de indicatie te laag uitvallen, dus dan geven we er geen; met meer
-    // mensen valt hij hooguit iets te hoog uit en stuurt Joey het precieze
-    // bedrag.
-    if (uitKalender === null && prijstabel && van && nachten &&
-        aantal >= (prijstabel.basisPersonen || 1)) {
-      var uitTabel = Math.round(tabelPrijsPerPersoon(van, nachten));
-      if (uitTabel) uitKalender = uitTabel;
+    // De Finland-bedragen gaan uit van basisPersonen in een huisje. Met
+    // minder mensen zou de indicatie te laag uitvallen, dus dan geven we er
+    // geen; met meer mensen valt hij hooguit iets te hoog uit en stuurt Joey
+    // het precieze bedrag.
+    if (uitKalender !== null && kalenderInfo.basisPersonen &&
+        aantal < kalenderInfo.basisPersonen) {
+      uitKalender = null;
     }
 
     if (nachten && uitKalender) {
@@ -910,9 +954,16 @@
       totaal += pakket;
       regels.push({
         naam: T.nightsLabel(nachten) + " × " + T.personsLabel(aantal) +
-              " (" + euro(uitKalender) + T.perPersonTotal + ")",
+              " (" + euro(uitKalender) + T.perPersonTotal + ")" +
+              (kalenderInfo.eigenVervoerLabel ? ", " + kalenderInfo.eigenVervoerLabel : ""),
         bedrag: pakket
       });
+      // Guiding on the ice (Orsa): the calendar passes the amount for the
+      // whole group, so it is added once, not per person.
+      if (kalenderInfo.begeleidingBedrag) {
+        totaal += kalenderInfo.begeleidingBedrag;
+        regels.push({ naam: kalenderInfo.begeleidingLabel, bedrag: kalenderInfo.begeleidingBedrag });
+      }
     } else if (nachten && perDag) {
       var verblijf = nachten * aantal * perDag;
       totaal += verblijf;
@@ -993,6 +1044,15 @@
       regels.push(T.periodLabel + T.periodNotChosen);
     }
     regels.push(T.personsLabel2 + aantal);
+
+    // Own transport ticked in the Weissensee calendar.
+    if (kalenderInfo && kalenderInfo.eigenVervoerLabel) {
+      regels.push(T.optionsLabel + kalenderInfo.eigenVervoerLabel);
+    }
+    // Guiding days chosen in the Orsa calendar.
+    if (kalenderInfo && kalenderInfo.begeleidingLabel) {
+      regels.push(T.optionsLabel + kalenderInfo.begeleidingLabel);
+    }
 
     antwoorden().forEach(function (keuze) {
       regels.push(keuze.vraag + " " + keuze.antwoord);
@@ -1148,7 +1208,8 @@
     maxPersonen = reis.maxPersonen || 12;
     minPersonen = reis.minimumPersonen || 1;
     opslag = reis.opslagPerPersoonPerNacht || 0;
-    laadPrijstabel();
+    // The calendar of the chosen trip reports its period again below.
+    kalenderInfo = null;
 
     if (handmatig) {
       // Wisselt iemand van reis, dan hoort de periode bij de kalender van de
@@ -1173,6 +1234,8 @@
     bouwOpties();
     toonStappen(true);
     herstel();
+    // herstel() may have changed the head count the price line depends on.
+    if (reis.prijstabel && reiskalender) reiskalender.herteken();
     nummerStappen();
     ververs();
   }
@@ -1185,6 +1248,8 @@
       nieuw.set("van", alsTekst(van));
       nieuw.set("tot", alsTekst(tot));
     }
+    if (kalenderInfo && kalenderInfo.eigenVervoer) nieuw.set("vervoer", "eigen");
+    if (kalenderInfo && kalenderInfo.begeleidingDagen) nieuw.set("begeleiding", String(kalenderInfo.begeleidingDagen));
     try {
       window.history.replaceState(null, "", window.location.pathname + "?" + nieuw.toString());
     } catch (fout) { /* oudere browser */ }
