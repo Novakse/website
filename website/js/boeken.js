@@ -22,8 +22,6 @@
       noEstimate: "Nog geen prijsindicatie voor deze reis.",
       chooseDestination: "Waar wil je heen?",
       chooseDestinationNote: "Kies eerst een bestemming. De stappen hieronder passen zich daarop aan.",
-      groupSelf: "Zelf te boeken",
-      groupGuided: "Begeleid of op maat",
       freePeriodHint: "Je kiest zelf je periode",
       fixedDatesHint: "Vaste reisdata",
       onRequestHint: "Prijs op aanvraag",
@@ -68,8 +66,6 @@
       noEstimate: "No price estimate for this trip yet.",
       chooseDestination: "Where do you want to go?",
       chooseDestinationNote: "Choose a destination first. The steps below adapt to your choice.",
-      groupSelf: "Book it yourself",
-      groupGuided: "Guided or tailor-made",
       freePeriodHint: "You choose your own dates",
       fixedDatesHint: "Fixed travel dates",
       onRequestHint: "Price on request",
@@ -114,8 +110,6 @@
       noEstimate: "Ingen prisuppskattning för den här resan än.",
       chooseDestination: "Vart vill du åka?",
       chooseDestinationNote: "Välj först en destination. Stegen nedan anpassas efter ditt val.",
-      groupSelf: "Boka själv",
-      groupGuided: "Guidad eller skräddarsydd",
       freePeriodHint: "Du väljer själv din period",
       fixedDatesHint: "Fasta resedatum",
       onRequestHint: "Pris på förfrågan",
@@ -160,8 +154,6 @@
       noEstimate: "Für diese Reise gibt es noch keine Preisangabe.",
       chooseDestination: "Wohin möchtest du?",
       chooseDestinationNote: "Wähle zuerst ein Ziel. Die Schritte darunter richten sich danach.",
-      groupSelf: "Selbst buchen",
-      groupGuided: "Begleitet oder maßgeschneidert",
       freePeriodHint: "Du wählst deinen Zeitraum selbst",
       fixedDatesHint: "Feste Reisetermine",
       onRequestHint: "Preis auf Anfrage",
@@ -206,8 +198,6 @@
       noEstimate: "Ingen prisanslag for denne turen ennå.",
       chooseDestination: "Hvor vil du reise?",
       chooseDestinationNote: "Velg først et reisemål. Stegene under tilpasser seg valget ditt.",
-      groupSelf: "Book selv",
-      groupGuided: "Med guide eller skreddersydd",
       freePeriodHint: "Du velger perioden selv",
       fixedDatesHint: "Faste reisedatoer",
       onRequestHint: "Pris på forespørsel",
@@ -252,8 +242,6 @@
       noEstimate: "Tälle matkalle ei ole vielä hinta-arviota.",
       chooseDestination: "Minne haluat matkustaa?",
       chooseDestinationNote: "Valitse ensin kohde. Alla olevat vaiheet mukautuvat valintaasi.",
-      groupSelf: "Varaa itse",
-      groupGuided: "Opastettu tai räätälöity",
       freePeriodHint: "Valitset ajankohdan itse",
       fixedDatesHint: "Kiinteät matkapäivät",
       onRequestHint: "Hinta pyynnöstä",
@@ -386,9 +374,9 @@
   }
 
   /* --- Stap 1: de bestemming ---------------------------------------------
-     De reizen die iemand zelf kan boeken staan bovenaan; de begeleide
-     reizen en de reizen op maat daaronder. Welke reis waar staat, bepaalt
-     "zelfTeBoeken" in het gegevensblokje van de pagina.
+     Alle bestemmingen staan in één lijst, in dezelfde vorm. De reizen die
+     iemand zelf kan boeken ("zelfTeBoeken" in het gegevensblokje van de
+     pagina) staan bovenaan, de reizen op aanvraag daaronder.
      ---------------------------------------------------------------------- */
   function reisHint(gegevens) {
     if (gegevens.prijsOpAanvraag) return T.onRequestHint;
@@ -404,41 +392,25 @@
   function bouwReiskeuze() {
     if (!keuzeBox) return;
     var sleutels = Object.keys(alleReizen);
-    var groepen = [
-      { kop: T.groupSelf, lijst: sleutels.filter(function (s) { return alleReizen[s].zelfTeBoeken; }) },
-      { kop: T.groupGuided, lijst: sleutels.filter(function (s) { return !alleReizen[s].zelfTeBoeken; }) }
-    ];
+    var volgorde = sleutels.filter(function (s) { return alleReizen[s].zelfTeBoeken; })
+      .concat(sleutels.filter(function (s) { return !alleReizen[s].zelfTeBoeken; }));
 
     keuzeBox.innerHTML = "";
-    groepen.forEach(function (groep) {
-      if (!groep.lijst.length) return;
-
-      var blok = document.createElement("div");
-      blok.className = "booking__groep";
-
-      var kop = document.createElement("p");
-      kop.className = "booking__groep-kop";
-      kop.textContent = groep.kop;
-      blok.appendChild(kop);
-
-      var lijst = document.createElement("div");
-      lijst.className = "booking__extras";
-      groep.lijst.forEach(function (sleutel) {
-        var gegevens = alleReizen[sleutel];
-        var rij = document.createElement("label");
-        rij.className = "extra extra--reis";
-        rij.innerHTML =
-          '<input type="radio" name="reis" class="extra__check" value="' + sleutel + '" />' +
-          '<span class="extra__name">' + gegevens.naam +
-            '<span class="extra__hint">' + reisHint(gegevens) + '</span>' +
-          '</span>' +
-          '<span class="extra__price">' + reisVanafPrijs(gegevens) + '</span>';
-        lijst.appendChild(rij);
-      });
-
-      blok.appendChild(lijst);
-      keuzeBox.appendChild(blok);
+    var lijst = document.createElement("div");
+    lijst.className = "booking__extras";
+    volgorde.forEach(function (sleutel) {
+      var gegevens = alleReizen[sleutel];
+      var rij = document.createElement("label");
+      rij.className = "extra extra--reis";
+      rij.innerHTML =
+        '<input type="radio" name="reis" class="extra__check" value="' + sleutel + '" />' +
+        '<span class="extra__name">' + gegevens.naam +
+          '<span class="extra__hint">' + reisHint(gegevens) + '</span>' +
+        '</span>' +
+        '<span class="extra__price">' + reisVanafPrijs(gegevens) + '</span>';
+      lijst.appendChild(rij);
     });
+    keuzeBox.appendChild(lijst);
 
     keuzeBox.addEventListener("change", function (gebeurtenis) {
       var knop = gebeurtenis.target;
@@ -614,6 +586,11 @@
         van = alsDatum(kalenderInfo.van);
         tot = alsDatum(kalenderInfo.tot);
         nachten = kalenderInfo.nachten;
+      } else {
+        // Arrival picked but no departure day yet: no period in the form.
+        van = null;
+        tot = null;
+        nachten = 0;
       }
       // Een huisje heeft een eigen maximum; dat gaat voor op het maximum
       // van de reis zelf.
@@ -687,7 +664,7 @@
   });
   personenVeld.addEventListener("input", personenGewijzigd);
 
-  /* --- Keuzevragen (vervoer, verzekering, eigen groep, materiaal) --------
+  /* --- Keuzevragen (vervoer, verzekering, materiaal) ---------------------
      Elke vraag staat in het gegevensblokje van de reis. Een optie mag een
      prijs hebben; die telt dan per persoon mee in het totaal.
      ---------------------------------------------------------------------- */
@@ -757,7 +734,7 @@
 
   /* --- Opties bij de gekozen bestemming -----------------------------------
      Dit zijn de keuzes die aan de bestemming vastzitten: een grotere
-     huurauto, de vlucht of het vervoer zelf regelen, begeleiding op het ijs.
+     huurauto, de vlucht of het vervoer zelf regelen.
      Bij een reis met een kalender komen ze daarvandaan, inclusief de
      bedragen. Een reis zonder kalender kan ze in het gegevensblokje van de
      pagina zetten onder "opties", in dezelfde vorm.

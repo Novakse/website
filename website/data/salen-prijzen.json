@@ -1,0 +1,36 @@
+{
+  "//": "Prijzen voor de schaatsdagtocht vanuit Sälen, in hele euro's. De pagina schaatsen-salen.html en het afrekenen (api/salen-checkout.js) lezen allebei dit bestand, dus wat op het scherm staat is precies wat er afgeschreven wordt. Zet hier nooit inkoopprijzen in: dit bestand is openbaar.",
+
+  "//season": "Tussen welke datums een dagtocht te boeken is, beide dagen meegerekend.",
+  "season": { "from": "2027-01-10", "to": "2027-02-20" },
+
+  "//packages": "Prijs per volwassene hangt af van het aantal volwassenen in de groep. De hoogste sleutel geldt ook voor grotere groepen: \"4\" betekent 4 of meer volwassenen. child is de prijs per kind van 4 t/m 12 jaar.",
+  "packages": {
+    "half": {
+      "label": "Halve dag",
+      "adultRates": { "1": 105, "2": 95, "3": 85, "4": 75 },
+      "child": 49
+    },
+    "full": {
+      "label": "Hele dag",
+      "adultRates": { "1": 155, "2": 140, "3": 125, "4": 110 },
+      "child": 75
+    }
+  },
+
+  "//toddler": "Kinderen van 0 t/m 3 jaar gaan gratis mee.",
+  "toddler": 0,
+
+  "//transferPerAdult": "Vervoer is een keuze. Het bedrag geldt per volwassene; kinderen en peuters tellen niet mee.",
+  "transferPerAdult": 40,
+
+  "//rentalPerPair": "Schaatsverhuur per gehuurd paar, voor volwassenen en kinderen gelijk.",
+  "rentalPerPair": 15,
+
+  "//limits": "Hoeveel personen er per boeking gekozen kunnen worden.",
+  "limits": {
+    "adults": { "min": 1, "max": 10 },
+    "children": { "min": 0, "max": 10 },
+    "toddlers": { "min": 0, "max": 10 }
+  }
+}

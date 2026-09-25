@@ -1,0 +1,511 @@
+/* ==========================================================================
+   Schaatsen vanuit Sälen - page styles (schaatsen-salen.html only)
+   Loads after styles.css and theme-groen.css. All selectors are scoped to
+   salen-* classes or .salen-page so nothing leaks into other pages.
+   ========================================================================== */
+.salen-page {
+  --ice: #e8eff2;          /* cold light tint for winter sections */
+  --ice-line: #c9d8de;
+  --ice-deep: #1d3640;     /* deep winter blue, full-day panel */
+  --field-border: #7b8682; /* >= 3:1 on white for form controls */
+  --error: #a3261b;
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+.salen-hero .page-hero__bg { object-position: 50% 60%; }
+.salen-hero__inner { width: 100%; }
+@media (min-width: 62rem) {
+  .salen-hero .page-hero__bg { object-position: 50% 100%; }
+}
+.salen-hero__title {
+  font-size: clamp(1.95rem, 6.4vw, 3.9rem);
+  max-width: 19ch;
+}
+.salen-hero__lede { max-width: 52ch; }
+.salen-hero__cta { margin-top: 1.75rem; }
+.salen-hero__cta:focus-visible { outline-color: #fff; }
+
+/* --------------------------------------------------------------------------
+   Route strip: the swept ice line runs from the ski resorts to the lake
+   -------------------------------------------------------------------------- */
+.salen-route {
+  background: var(--ice);
+  padding-block: 2.25rem 2.5rem;
+}
+.salen-route .wrap { position: relative; }
+
+.salen-route__stops {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.6rem;
+  margin: 0;
+  padding-left: 2.6rem;
+  list-style: none;
+}
+.salen-route__stop { position: relative; }
+.salen-route__stop::before {
+  content: "";
+  position: absolute;
+  left: -2.6rem;
+  top: 0.2rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-left: calc(20px - 0.45rem);
+  border-radius: 50%;
+  background: var(--ice);
+  border: 3px solid var(--warm-deep);
+}
+.salen-route__stop:last-child::before { background: var(--warm-deep); }
+
+.salen-route__label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.salen-route__value {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.12rem;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.salen-route__line { position: absolute; color: var(--warm-deep); pointer-events: none; }
+.salen-route__line--wide { display: none; }
+.salen-route__line--tall {
+  left: var(--pad);
+  top: 0.4rem;
+  width: 40px;
+  height: calc(100% - 0.8rem);
+}
+
+@media (min-width: 48rem) {
+  .salen-route { padding-block: 2.75rem 3rem; }
+  .salen-route__stops {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    padding-left: 0;
+    padding-top: 2.4rem;
+  }
+  .salen-route__stop { padding-right: 2rem; }
+  .salen-route__stop::before { left: -0.45rem; top: -1.85rem; margin-left: 0; }
+  .salen-route__value { font-size: 1.3rem; }
+  .salen-route__line--tall { display: none; }
+  .salen-route__line--wide {
+    display: block;
+    left: var(--pad);
+    right: var(--pad);
+    top: 0;
+    width: calc(100% - 2 * var(--pad));
+    height: 2rem;
+  }
+}
+
+/* The one orchestrated moment: the line is revealed once, along its own
+   direction, by a cover that shrinks away (transform only). */
+.salen-route__line { z-index: 0; }
+.salen-route__cover {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--ice);
+  pointer-events: none;
+  transform-origin: center bottom;
+  transform: scaleY(0);
+}
+.js .salen-route:not(.is-drawn) .salen-route__cover { transform: scaleY(1); }
+.js .salen-route.is-drawn .salen-route__cover {
+  transition: transform 1.6s cubic-bezier(0.45, 0.05, 0.25, 1);
+}
+@media (min-width: 48rem) {
+  .salen-route__cover { transform-origin: right center; transform: scaleX(0); }
+  .js .salen-route:not(.is-drawn) .salen-route__cover { transform: scaleX(1); }
+}
+
+/* --------------------------------------------------------------------------
+   De ervaring
+   -------------------------------------------------------------------------- */
+.salen-exp { padding-block: 4rem 3rem; }
+.salen-exp__grid { display: grid; gap: 2.75rem; }
+
+.salen-exp__media { position: relative; padding-bottom: 12%; }
+.salen-exp__photo { overflow: hidden; }
+.salen-exp__photo img { width: 100%; height: 100%; object-fit: cover; }
+.salen-exp__photo--main {
+  width: 88%;
+  aspect-ratio: 4 / 3;
+  border-radius: 1.25rem;
+}
+.salen-exp__photo--aside {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 42%;
+  aspect-ratio: 1;
+  border-radius: 1rem;
+  border: 5px solid var(--paper);
+}
+
+.salen-exp__title { margin-top: 0; max-width: 18ch; }
+.salen-exp__text {
+  margin-top: 1.1rem;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+.salen-highlights {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+.salen-highlights li {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr;
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.salen-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: none;
+  stroke: var(--warm-deep);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.salen-icon--lg { width: 2.2rem; height: 2.2rem; }
+
+@media (min-width: 62rem) {
+  .salen-exp { padding-block: 6rem 4rem; }
+  .salen-exp__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 5rem;
+    align-items: center;
+  }
+  .salen-highlights { grid-template-columns: 1fr 1fr; gap: 1.25rem 2rem; }
+  .salen-highlights li:last-child { grid-column: 1 / -1; }
+}
+
+/* --------------------------------------------------------------------------
+   Pakketten & prijzen: two deliberately different compositions
+   -------------------------------------------------------------------------- */
+.salen-packages { padding-block: 3.5rem 4.5rem; }
+.salen-packages__head { max-width: 40rem; }
+.salen-packages__head .h-section { margin-top: 0; }
+.salen-packages__intro { margin-top: 0.8rem; color: var(--ink-soft); font-size: 1.05rem; }
+
+.salen-packages__grid {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.salen-pack { border-radius: 1.5rem; }
+.salen-pack__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1rem; }
+.salen-pack__title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.salen-pack__duration { font-weight: 600; font-size: 0.95rem; }
+.salen-pack__lead { margin-top: 0.9rem; font-size: 1.05rem; font-weight: 500; }
+.salen-pack__incl { margin-top: 0.8rem; font-size: 0.95rem; max-width: 56ch; }
+.salen-pack__cta { margin-top: 1.75rem; }
+
+/* Half day: light, text-led */
+.salen-pack--half {
+  background: var(--ice);
+  padding: 1.75rem 1.5rem 2rem;
+}
+.salen-pack--half .salen-pack__duration { color: var(--warm-deep); }
+.salen-pack--half .salen-pack__incl { color: var(--ink-soft); }
+
+/* Full day: dark winter blue, photo-led */
+.salen-pack--full {
+  background: var(--ice-deep);
+  color: #fff;
+  overflow: hidden;
+  display: grid;
+  --focus-ring: var(--warm);
+}
+.salen-pack__photo { aspect-ratio: 4 / 3; overflow: hidden; }
+.salen-pack__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+.salen-pack__content { padding: 1.75rem 1.5rem 2rem; }
+.salen-pack--full .salen-pack__duration { color: var(--warm); }
+.salen-pack--full .salen-pack__incl { color: rgba(255, 255, 255, 0.8); }
+
+/* Price ladder: rows get shorter as the group grows */
+.salen-rates {
+  margin-top: 1.5rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.salen-rates caption {
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+}
+.salen-rates th,
+.salen-rates td {
+  padding-block: 0.5rem;
+  white-space: nowrap;
+  border-top: 1px solid var(--ice-line);
+  font-weight: 400;
+  text-align: left;
+}
+.salen-rates td { text-align: right; white-space: nowrap; }
+.salen-rates__bar {
+  display: inline-block;
+  vertical-align: middle;
+  height: 0.35rem;
+  width: calc(var(--w, 0) * 3.5rem);
+  margin-right: 0.75rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.28;
+}
+.salen-rates__price {
+  display: inline-block;
+  min-width: 4.2rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.salen-pack--full .salen-rates th,
+.salen-pack--full .salen-rates td { border-top-color: rgba(255, 255, 255, 0.16); }
+.salen-pack--full .salen-rates__bar { background: var(--warm); opacity: 0.7; }
+
+.salen-kids { margin-top: 1rem; display: grid; gap: 0.35rem; font-size: 0.95rem; }
+.salen-kids > div { display: flex; justify-content: space-between; gap: 1rem; }
+.salen-kids dd { margin: 0; font-weight: 600; text-align: right; white-space: nowrap; }
+.salen-pack--half .salen-kids dt { color: var(--ink-soft); }
+.salen-pack--full .salen-kids dt { color: rgba(255, 255, 255, 0.8); }
+
+@media (min-width: 40rem) {
+  .salen-rates__bar { width: calc(var(--w, 0) * 6rem); }
+  .salen-pack--half { padding: 2.25rem 2.25rem 2.5rem; }
+  .salen-pack__content { padding: 2.25rem 2.25rem 2.5rem; }
+}
+
+@media (min-width: 62rem) {
+  .salen-packages { padding-block: 4.5rem 6rem; }
+  .salen-packages__grid {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 2rem;
+    align-items: start;
+  }
+  .salen-pack--half { margin-top: 4.5rem; }
+  .salen-pack--full { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); }
+  .salen-pack__photo { aspect-ratio: auto; height: 100%; }
+}
+
+/* --------------------------------------------------------------------------
+   Extra's
+   -------------------------------------------------------------------------- */
+.salen-extras { background: var(--ice); padding-block: 3.5rem; }
+.salen-extras__grid { display: grid; gap: 2rem; }
+.salen-extras__title { margin-top: 0; }
+.salen-extra__title {
+  margin-top: 0.9rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+.salen-extra__price {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  color: var(--warm-deep);
+}
+.salen-extra p { margin-top: 0.75rem; color: var(--ink-soft); max-width: 52ch; }
+
+@media (min-width: 62rem) {
+  .salen-extras { padding-block: 4.5rem; }
+  .salen-extras__grid { grid-template-columns: 0.7fr 1fr 1fr; gap: 3.5rem; }
+  .salen-extra + .salen-extra { border-left: 1px solid var(--ice-line); padding-left: 3.5rem; }
+}
+
+/* --------------------------------------------------------------------------
+   FAQ
+   -------------------------------------------------------------------------- */
+.salen-faq .h-section { margin-top: 0; }
+
+/* --------------------------------------------------------------------------
+   Boekingsformulier
+   -------------------------------------------------------------------------- */
+.salen-book {
+  background: var(--paper-soft);
+  padding-block: 4rem 5rem;
+  scroll-margin-top: 4.5rem;
+}
+.salen-book__title { margin-top: 0; }
+
+.salen-notice {
+  margin-top: 1.5rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 0.75rem;
+  border-left: 4px solid;
+  max-width: 44rem;
+}
+/* Focused only so screen readers announce it; it is not interactive. */
+.salen-notice:focus, .salen-notice:focus-visible { outline: none; }
+.salen-notice__title { font-family: var(--display); font-weight: 600; font-size: 1.1rem; }
+.salen-notice p + p { margin-top: 0.3rem; }
+.salen-notice--success { background: #e2eee6; border-color: var(--status-green); }
+.salen-notice--cancel { background: #f6ebe1; border-color: var(--warm-deep); }
+
+.salen-form {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.salen-form__fields {
+  background: var(--paper);
+  border-radius: 1.25rem;
+  padding: 0.5rem 1.25rem 1.5rem;
+}
+
+.salen-fieldset {
+  margin: 0;
+  padding: 1.4rem 0 0;
+  border: 0;
+  min-width: 0;
+}
+.salen-fieldset + .salen-fieldset { border-top: 1px solid var(--border); margin-top: 1.4rem; }
+.salen-fieldset legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0.9rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.salen-fieldset legend + * { clear: both; }
+
+.salen-form__row { display: grid; gap: 1rem; }
+@media (min-width: 36rem) {
+  .salen-form__row { grid-template-columns: 1fr 1fr; }
+  .salen-form__row--three { grid-template-columns: repeat(3, 1fr); align-items: end; }
+}
+
+.salen-field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.salen-field input,
+.salen-field select {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1.5px solid var(--field-border);
+  border-radius: 6px;
+}
+.salen-field select { cursor: pointer; }
+.salen-field input[aria-invalid="true"] { border-color: var(--error); }
+.salen-field__hint { margin-top: 0.35rem; font-size: 0.8rem; color: var(--ink-soft); }
+.salen-field__error { margin-top: 0.35rem; font-size: 0.85rem; font-weight: 600; color: var(--error); }
+
+.salen-choices { display: grid; gap: 0.6rem; }
+@media (min-width: 36rem) { .salen-choices { grid-template-columns: 1fr 1fr; } }
+.salen-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid var(--field-border);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.salen-choice input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--ink);
+}
+.salen-choice:has(input:checked) { border-color: var(--ink); background: var(--ice); }
+.salen-choice:has(input:focus-visible) { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+.salen-choice input:focus-visible { outline: none; }
+
+.salen-rental { margin-top: 1rem; }
+.salen-rental[hidden] { display: none; }
+
+/* Summary: a receipt that follows you on wide screens */
+.salen-summary {
+  align-self: start;
+  background: var(--paper);
+  border-radius: 1.25rem;
+  padding: 1.5rem 1.25rem;
+}
+.salen-summary__title { font-family: var(--display); font-weight: 600; font-size: 1.2rem; }
+.salen-summary__live { margin-top: 1rem; }
+.salen-summary__loading { color: var(--ink-soft); font-size: 0.92rem; }
+.salen-summary__lines { display: grid; gap: 0.55rem; font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+.salen-summary__lines > div { display: flex; justify-content: space-between; gap: 1rem; }
+.salen-summary__lines[hidden],
+.salen-summary__lines > div[hidden] { display: none; }
+.salen-summary__lines dt { color: var(--ink-soft); }
+.salen-summary__lines dd { margin: 0; font-weight: 600; text-align: right; white-space: nowrap; }
+.salen-summary__lines .salen-summary__total {
+  margin-top: 0.4rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+  align-items: baseline;
+}
+.salen-summary__total dt { color: var(--ink); font-weight: 600; }
+.salen-summary__total dd { font-family: var(--display); font-size: 1.6rem; }
+
+.salen-form__error {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--error);
+}
+.salen-submit {
+  margin-top: 1.25rem;
+  width: 100%;
+  justify-content: center;
+  padding-block: 1rem;
+  font-size: 1rem;
+}
+.salen-submit:disabled { opacity: 0.6; cursor: progress; transform: none; }
+.salen-summary__note { margin-top: 0.9rem; font-size: 0.8rem; color: var(--ink-soft); }
+.salen-noscript {
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 40rem) {
+  .salen-form__fields { padding: 0.75rem 2rem 2rem; }
+  .salen-summary { padding: 1.75rem 1.75rem; }
+}
+
+@media (min-width: 62rem) {
+  .salen-book { padding-block: 5.5rem 6.5rem; }
+  .salen-form { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 2rem; }
+  .salen-summary { position: sticky; top: 6rem; }
+}

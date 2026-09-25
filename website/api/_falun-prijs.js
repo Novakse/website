@@ -80,6 +80,7 @@ function berekenFalun(keuze) {
   var basisPersonen = data.basisPersonen || 2;
   var autoPerReis = data.autoPerReisEUR || 0;
   var doorgeven = typeof data.kortingDoorgeven === "number" ? data.kortingDoorgeven : 1;
+  var huisjeMax = data.huisjeMaxPersonen || 0;
 
   var personen = parseInt(keuze.personen, 10) || basisPersonen;
   if (personen < (keuze2.min || 1) || personen > (keuze2.max || 4)) {
@@ -91,10 +92,17 @@ function berekenFalun(keuze) {
   function demp(verschil) {
     return verschil > 0 ? verschil : verschil * doorgeven;
   }
+  // A cabin (and its rental car) holds at most huisjeMax people; a bigger
+  // group is spread over as few cabins as possible (6 people = 2 cabins of 3).
+  // Same as perHuisje() in js/falun-kalender.js.
+  function perHuisje(n) {
+    if (!huisjeMax || n <= huisjeMax) return n;
+    return n / Math.ceil(n / huisjeMax);
+  }
   function autoDeel(n) {
     if (!autoPerReis) return 0;
     var b = autoPerReis / basisPersonen;
-    return b + demp(autoPerReis / n - b);
+    return b + demp(autoPerReis / perHuisje(n) - b);
   }
 
   var totaal = basis;
@@ -109,7 +117,7 @@ function berekenFalun(keuze) {
     if (basisSEK) {
       var sek = huisjes[alsTekst(nacht)];
       if (typeof sek !== "number") sek = basisSEK;
-      totaal += demp(sek / koers / personen - basisSEK / koers / basisPersonen);
+      totaal += demp(sek / koers / perHuisje(personen) - basisSEK / koers / basisPersonen);
     }
   }
 

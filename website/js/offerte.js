@@ -23,7 +23,11 @@
   var T = data.teksten || {};
   var BESTEMMINGEN = data.bestemmingen || [];
   var STAPPEN = data.stappen || [];
-  var BEWAARSLEUTEL = "novakse-offerte";
+  // Bumped to v2 when the travelers counter, departure date and extra city
+  // step arrived: answers saved under the old key (months, experience,
+  // insurance) no longer fit and are dropped on load.
+  var BEWAARSLEUTEL = "novakse-offerte-v2";
+  var OUDE_SLEUTELS = ["novakse-offerte"];
   var EMAIL_PATROON = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   var chipsBox = document.getElementById("oqChips");
@@ -91,6 +95,47 @@
     return "€" + String(bedrag);
   }
 
+  // Fills {stad} and {vliegveld} in a text with the city of the chosen trip.
+  function vulIn(tekst, plek) {
+    if (!tekst) return tekst;
+    var stad = (plek && plek.stad) || {};
+    return String(tekst)
+      .replace(/\{stad\}/g, stad.naam || "")
+      .replace(/\{vliegveld\}/g, stad.vliegveld || stad.naam || "");
+  }
+
+  /* --- Datums -------------------------------------------------------------
+     The date field works with "jjjj-mm-dd". Dutch month names are written
+     out here so the text is the same in every browser. */
+  var MAANDEN = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"];
+  var MAANDEN_KORT = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
+
+  function tweeCijfers(getal) {
+    return (getal < 10 ? "0" : "") + getal;
+  }
+
+  // Local date, not toISOString(): that one is in UTC and can be a day off.
+  function isoDatum(datum) {
+    return datum.getFullYear() + "-" + tweeCijfers(datum.getMonth() + 1) + "-" + tweeCijfers(datum.getDate());
+  }
+
+  function leesDatum(iso) {
+    var delen = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+    if (!delen) return null;
+    var datum = new Date(Number(delen[1]), Number(delen[2]) - 1, Number(delen[3]));
+    // Rejects dates like 2027-02-31 that the Date object would roll over.
+    if (isoDatum(datum) !== iso) return null;
+    return datum;
+  }
+
+  function datumTekst(datum) {
+    return datum.getDate() + " " + MAANDEN[datum.getMonth()] + " " + datum.getFullYear();
+  }
+
+  function datumKort(datum) {
+    return datum.getDate() + " " + MAANDEN_KORT[datum.getMonth()] + " " + datum.getFullYear();
+  }
+
   function bestemmingVan(sleutel) {
     for (var i = 0; i < BESTEMMINGEN.length; i++) {
       if (BESTEMMINGEN[i].sleutel === sleutel) return BESTEMMINGEN[i];
@@ -116,16 +161,20 @@
       var min = (grenzen && grenzen.min) || stap.min || 1;
       var max = (grenzen && grenzen.max) || stap.max || 12;
       var meerLabel = grenzen && "meerLabel" in grenzen ? grenzen.meerLabel : stap.meerLabel;
+      // A typed-in number above the buttons only stays valid when the new
+      // trip also offers the open field (not for Falun, for example).
+      var vrijMax = meerLabel && stap.vrijAantal ? (stap.vrijAantal.max || max) : max;
 
       // 0 staat voor de "meer dan"-knop; die vervalt als hij er niet meer is.
-      var ongeldig = antwoord.getal === 0 ? !meerLabel : (antwoord.getal < min || antwoord.getal > max);
+      var ongeldig = antwoord.getal === 0 ? !meerLabel : (antwoord.getal < min || antwoord.getal > vrijMax);
       if (ongeldig) delete antwoorden[stap.sleutel];
     });
   }
 
   /* --- De route door de stappen -------------------------------------------
      Stappen die niet van toepassing zijn (extra's bij een bestemming zonder
-     activiteiten) vallen vanzelf uit de route.
+     activiteiten, een extra stad zonder vliegveld of bij de eigen auto)
+     vallen vanzelf uit de route.
      ------------------------------------------------------------------------ */
   function route() {
     var plek = gekozenBestemming();
@@ -133,6 +182,13 @@
     STAPPEN.forEach(function (stap) {
       if (stap.soort === "extras") {
         if (!plek || !(plek.extras || []).length) return;
+      }
+      if (stap.soort === "stad") {
+        if (!plek || !plek.stad) return;
+      }
+      if (stap.nietAls) {
+        var ander = antwoorden[stap.nietAls.stap];
+        if (ander && ander.waarde === stap.nietAls.waarde) return;
       }
       lijst.push(stap);
     });
@@ -173,6 +229,7 @@
 
   function haalOp() {
     try {
+      OUDE_SLEUTELS.forEach(function (sleutel) { window.sessionStorage.removeItem(sleutel); });
       var rauw = window.sessionStorage.getItem(BEWAARSLEUTEL);
       if (rauw) antwoorden = JSON.parse(rauw) || {};
     } catch (fout) { antwoorden = {}; }
@@ -395,6 +452,8 @@
         // net als antwoorden die buiten de grenzen van de nieuwe reis vallen.
         if (!antwoorden.bestemming || antwoorden.bestemming.sleutel !== plek.sleutel) {
           delete antwoorden.extras;
+          // The extra city depends on the trip as well (Stockholm, Helsinki...).
+          STAPPEN.forEach(function (s) { if (s.soort === "stad") delete antwoorden[s.sleutel]; });
           wisAntwoordenBuitenGrens(plek);
         }
         bevestig(stap, {
@@ -460,19 +519,375 @@
       })(n);
     }
 
-    // Er is geen bovengrens: wie meer nodig heeft, kiest deze knop en Joey
-    // vraagt het precieze aantal na.
+    // Er is geen bovengrens: wie meer nodig heeft, kiest deze knop. Met
+    // "vrijAantal" opent de knop een veld om zelf het aantal te typen,
+    // anders vraagt Joey het precieze aantal na.
+    var vrijBlok = null;
     if (meerLabel) {
       var meer = maak("button", "oq-number oq-number--wide", meerLabel);
       meer.type = "button";
-      if (gekozen === 0) meer.classList.add("is-chosen");
-      meer.addEventListener("click", function () {
-        bevestig(stap, { getal: 0, waarde: meerLabel, kort: meerLabel }, meer);
-      });
+      if (stap.vrijAantal) {
+        vrijBlok = tekenVrijAantal(stap, max, gekozen, tekstVoor, meer);
+      } else {
+        if (gekozen === 0) meer.classList.add("is-chosen");
+        meer.addEventListener("click", function () {
+          bevestig(stap, { getal: 0, waarde: meerLabel, kort: meerLabel }, meer);
+        });
+      }
       rij.appendChild(meer);
     }
 
     blok.appendChild(rij);
+    if (vrijBlok) blok.appendChild(vrijBlok);
+    blok.appendChild(voet({ terug: true }));
+    return blok;
+  }
+
+  // The open number field behind the "more than" button: the visitor types a
+  // whole number from max + 1 up to vrijAantal.max.
+  function tekenVrijAantal(stap, max, gekozen, tekstVoor, knop) {
+    var instelling = stap.vrijAantal || {};
+    var vrijMin = max + 1;
+    var vrijMax = instelling.max || 90;
+    var meervoud = stap.eenheidMeervoud || "dagen";
+    var eerder = typeof gekozen === "number" && gekozen > max ? gekozen : null;
+
+    var formulier = document.createElement("form");
+    formulier.className = "oq-more";
+    formulier.id = "oqMeer-" + stap.sleutel;
+    formulier.noValidate = true;
+    formulier.hidden = eerder === null;
+
+    var veld = maak("label", "oq-field oq-field--short");
+    veld.appendChild(maak("span", null, instelling.label || "Aantal"));
+    var invoer = document.createElement("input");
+    invoer.type = "number";
+    invoer.inputMode = "numeric";
+    invoer.min = String(vrijMin);
+    invoer.max = String(vrijMax);
+    invoer.step = "1";
+    invoer.placeholder = "Bijvoorbeeld " + Math.min(vrijMin + 6, vrijMax);
+    invoer.id = "oqMeerVeld-" + stap.sleutel;
+    if (eerder !== null) invoer.value = String(eerder);
+    veld.appendChild(invoer);
+    formulier.appendChild(veld);
+
+    var hint = maak("p", "oq-hint", "Vul een heel getal in, van " + vrijMin + " tot en met " + vrijMax + " " + meervoud + ".");
+    hint.id = "oqMeerHint-" + stap.sleutel;
+    invoer.setAttribute("aria-describedby", hint.id);
+    formulier.appendChild(hint);
+
+    var melding = maak("p", "oq-error");
+    melding.setAttribute("role", "alert");
+    melding.hidden = true;
+    formulier.appendChild(melding);
+
+    var verder = verderKnop();
+    verder.type = "submit";
+    var rij = maak("div", "oq-foot oq-foot--tight");
+    rij.appendChild(verder);
+    formulier.appendChild(rij);
+
+    knop.setAttribute("aria-expanded", eerder === null ? "false" : "true");
+    knop.setAttribute("aria-controls", formulier.id);
+    if (eerder !== null) knop.classList.add("is-chosen");
+    knop.addEventListener("click", function () {
+      var open = formulier.hidden;
+      formulier.hidden = !open;
+      knop.setAttribute("aria-expanded", open ? "true" : "false");
+      knop.classList.toggle("is-chosen", open);
+      if (open) invoer.focus();
+    });
+
+    formulier.addEventListener("submit", function (gebeurtenis) {
+      gebeurtenis.preventDefault();
+      var rauw = String(invoer.value || "").trim();
+      var fout = "";
+      if (!/^\d+$/.test(rauw)) {
+        fout = "Vul het aantal " + meervoud + " in als heel getal, bijvoorbeeld " + Math.min(vrijMin + 6, vrijMax) + ".";
+      } else if (Number(rauw) < vrijMin) {
+        fout = "Voor " + max + " " + meervoud + " of minder kies je een knop hierboven. Hier vul je " + vrijMin + " " + meervoud + " of meer in.";
+      } else if (Number(rauw) > vrijMax) {
+        fout = "Vul maximaal " + vrijMax + " " + meervoud + " in. Wil je nog langer blijven, schrijf dat dan bij de opmerkingen.";
+      }
+      if (fout) {
+        melding.textContent = fout;
+        melding.hidden = false;
+        invoer.setAttribute("aria-invalid", "true");
+        invoer.focus();
+        return;
+      }
+      melding.hidden = true;
+      invoer.removeAttribute("aria-invalid");
+      var aantal = Number(rauw);
+      bevestig(stap, { getal: aantal, vrij: true, waarde: tekstVoor(aantal), kort: tekstVoor(aantal) }, null);
+    });
+
+    return formulier;
+  }
+
+  /* --- Reizigers: een teller per leeftijdsgroep, zoals bij een boekingssite */
+  function tekenReizigers(stap, nummer, totaal) {
+    var plek = gekozenBestemming();
+    var blok = maak("section", "oq-step-body");
+    blok.appendChild(kop(stap, nummer, totaal));
+
+    if (stap.perVierTekst && plek && plek.perVierPersonen) {
+      blok.appendChild(maak("p", "oq-callout", stap.perVierTekst));
+    }
+
+    var groepen = stap.groepen || [];
+    var max = stap.max || 12;
+    var enkel = stap.eenheid || "persoon";
+    var meervoud = stap.eenheidMeervoud || "personen";
+    var bewaard = antwoorden[stap.sleutel];
+    var aantallen = {};
+    groepen.forEach(function (groep) {
+      var eerder = bewaard && bewaard.aantallen ? bewaard.aantallen[groep.sleutel] : null;
+      aantallen[groep.sleutel] = typeof eerder === "number" ? eerder : (groep.min || 0);
+    });
+
+    function som() {
+      return groepen.reduce(function (t, groep) { return t + aantallen[groep.sleutel]; }, 0);
+    }
+
+    function uitsplitsing() {
+      return groepen.filter(function (groep) { return aantallen[groep.sleutel] > 0; })
+        .map(function (groep) {
+          var n = aantallen[groep.sleutel];
+          return n + " " + (n === 1 ? groep.enkel : groep.meervoud);
+        }).join(", ");
+    }
+
+    function totaalTekst(n) {
+      return n + " " + (n === 1 ? enkel : meervoud);
+    }
+
+    var lijst = maak("ul", "oq-travelers");
+    var tellers = [];
+
+    groepen.forEach(function (groep) {
+      var regel = maak("li", "oq-traveler");
+      var naamId = "oqGroep-" + groep.sleutel;
+
+      var tekst = maak("div", "oq-traveler__text");
+      var naam = maak("span", "oq-traveler__name", groep.naam);
+      naam.id = naamId;
+      tekst.appendChild(naam);
+      if (groep.toelichting) tekst.appendChild(maak("span", "oq-traveler__note", groep.toelichting));
+      if (groep.korting) tekst.appendChild(maak("span", "oq-traveler__badge", groep.korting));
+      regel.appendChild(tekst);
+
+      var teller = maak("div", "oq-stepper");
+      teller.setAttribute("role", "group");
+      teller.setAttribute("aria-labelledby", naamId);
+
+      var min = maak("button", "oq-stepper__btn");
+      min.type = "button";
+      min.appendChild(maak("span", null, "−")).setAttribute("aria-hidden", "true");
+
+      var getal = maak("span", "oq-stepper__value");
+      getal.setAttribute("aria-hidden", "true");
+
+      var plus = maak("button", "oq-stepper__btn");
+      plus.type = "button";
+      plus.appendChild(maak("span", null, "+")).setAttribute("aria-hidden", "true");
+
+      // aria-disabled instead of disabled keeps keyboard focus on the button
+      // when the counter reaches its limit.
+      min.addEventListener("click", function () {
+        if (aantallen[groep.sleutel] <= (groep.min || 0)) return;
+        aantallen[groep.sleutel] -= 1;
+        werkBij();
+      });
+      plus.addEventListener("click", function () {
+        if (som() >= max) return;
+        aantallen[groep.sleutel] += 1;
+        werkBij();
+      });
+
+      teller.appendChild(min);
+      teller.appendChild(getal);
+      teller.appendChild(plus);
+      regel.appendChild(teller);
+      lijst.appendChild(regel);
+      tellers.push({ groep: groep, min: min, plus: plus, getal: getal });
+    });
+
+    blok.appendChild(lijst);
+
+    var stand = maak("p", "oq-travelers__total");
+    stand.setAttribute("aria-live", "polite");
+    stand.setAttribute("aria-atomic", "true");
+    blok.appendChild(stand);
+
+    var grensMelding = maak("p", "oq-hint", stap.maxTekst || "");
+    grensMelding.hidden = true;
+    blok.appendChild(grensMelding);
+
+    function werkBij() {
+      var n = som();
+      tellers.forEach(function (t) {
+        var waarde = aantallen[t.groep.sleutel];
+        t.getal.textContent = String(waarde);
+        t.min.setAttribute("aria-disabled", waarde <= (t.groep.min || 0) ? "true" : "false");
+        t.plus.setAttribute("aria-disabled", n >= max ? "true" : "false");
+        t.min.setAttribute("aria-label", "Minder " + t.groep.naam.toLowerCase() + " (nu " + waarde + ")");
+        t.plus.setAttribute("aria-label", "Meer " + t.groep.naam.toLowerCase() + " (nu " + waarde + ")");
+      });
+      stand.textContent = "Totaal: " + totaalTekst(n) + (uitsplitsing() ? " (" + uitsplitsing() + ")" : "");
+      grensMelding.hidden = n < max || !stap.maxTekst;
+    }
+    werkBij();
+
+    var meer = null;
+    if (stap.meerLabel) {
+      meer = maak("button", "oq-number oq-number--wide oq-travelers__more", stap.meerLabel);
+      meer.type = "button";
+      if (bewaard && bewaard.getal === 0) meer.classList.add("is-chosen");
+      meer.addEventListener("click", function () {
+        bevestig(stap, { getal: 0, waarde: stap.meerLabel, kort: stap.meerLabel }, meer);
+      });
+      blok.appendChild(meer);
+    }
+
+    var verder = verderKnop();
+    verder.addEventListener("click", function () {
+      var n = som();
+      var kopie = {};
+      groepen.forEach(function (groep) { kopie[groep.sleutel] = aantallen[groep.sleutel]; });
+      // Only mention the breakdown when there are children; "2 personen
+      // (2 volwassenen)" says the same thing twice.
+      var alleenVolwassenen = groepen.length && aantallen[groepen[0].sleutel] === n;
+      bevestig(stap, {
+        getal: n,
+        aantallen: kopie,
+        waarde: totaalTekst(n),
+        onder: alleenVolwassenen ? "" : uitsplitsing(),
+        kort: n + " " + (stap.kortEenheid || meervoud)
+      }, null);
+    });
+
+    blok.appendChild(voet({ verder: verder, terug: true }));
+    return blok;
+  }
+
+  /* --- Vertrekdatum: kalender van de browser, of flexibel ------------------ */
+  function tekenDatum(stap, nummer, totaal) {
+    var blok = maak("section", "oq-step-body");
+    blok.appendChild(kop(stap, nummer, totaal));
+
+    var bewaard = antwoorden[stap.sleutel];
+    var vandaag = new Date();
+    vandaag.setHours(0, 0, 0, 0);
+    var uiterst = new Date(vandaag.getFullYear() + 2, vandaag.getMonth(), vandaag.getDate());
+
+    var formulier = document.createElement("form");
+    formulier.className = "oq-date";
+    formulier.noValidate = true;
+
+    var veld = maak("label", "oq-field oq-field--short");
+    veld.appendChild(maak("span", null, stap.veldLabel || stap.label));
+    var invoer = document.createElement("input");
+    invoer.type = "date";
+    invoer.min = isoDatum(vandaag);
+    invoer.max = isoDatum(uiterst);
+    if (bewaard && bewaard.datum) invoer.value = bewaard.datum;
+    veld.appendChild(invoer);
+    formulier.appendChild(veld);
+
+    var melding = maak("p", "oq-error");
+    melding.setAttribute("role", "alert");
+    melding.hidden = true;
+    formulier.appendChild(melding);
+
+    var verder = verderKnop();
+    verder.type = "submit";
+    var rij = maak("div", "oq-foot oq-foot--tight");
+    rij.appendChild(verder);
+    formulier.appendChild(rij);
+
+    formulier.addEventListener("submit", function (gebeurtenis) {
+      gebeurtenis.preventDefault();
+      var datum = leesDatum(invoer.value);
+      var fout = "";
+      if (!datum) fout = "Kies een datum in de kalender, of kies hieronder voor \"" + (stap.flexLabel || "Ik ben flexibel") + "\".";
+      else if (datum < vandaag) fout = "Die datum is al voorbij. Kies een datum vanaf vandaag.";
+      else if (datum > uiterst) fout = "Kies een datum binnen twee jaar vanaf nu.";
+      if (fout) {
+        melding.textContent = fout;
+        melding.hidden = false;
+        invoer.setAttribute("aria-invalid", "true");
+        invoer.focus();
+        return;
+      }
+      melding.hidden = true;
+      invoer.removeAttribute("aria-invalid");
+      bevestig(stap, { datum: invoer.value, waarde: datumTekst(datum), kort: datumKort(datum) }, null);
+    });
+
+    blok.appendChild(formulier);
+
+    // The flexible alternative, in the same style as the other choices.
+    var of = maak("p", "oq-or", "Of");
+    of.setAttribute("aria-hidden", "true");
+    blok.appendChild(of);
+
+    var flex = maak("button", "oq-option oq-option--compact");
+    flex.type = "button";
+    if (bewaard && bewaard.flexibel) flex.classList.add("is-chosen");
+    var tick = maak("span", "oq-option__tick");
+    tick.appendChild(vinkje());
+    flex.appendChild(tick);
+    var body = maak("span", "oq-option__body");
+    body.appendChild(maak("span", "oq-option__name", stap.flexLabel || "Ik ben flexibel"));
+    if (stap.flexToelichting) body.appendChild(maak("span", "oq-option__note", stap.flexToelichting));
+    flex.appendChild(body);
+    flex.addEventListener("click", function () {
+      bevestig(stap, {
+        flexibel: true,
+        waarde: stap.flexLabel || "Ik ben flexibel",
+        onder: stap.flexToelichting || "",
+        kort: "Flexibel"
+      }, flex);
+    });
+    blok.appendChild(flex);
+
+    blok.appendChild(voet({ terug: true }));
+    return blok;
+  }
+
+  /* --- Extra stad: een hotelnacht bij het vliegveld van aankomst ----------- */
+  function tekenStad(stap, nummer, totaal) {
+    var plek = gekozenBestemming();
+    var blok = maak("section", "oq-step-body");
+    blok.appendChild(kop(stap, nummer, totaal, vulIn(stap.onder, plek)));
+
+    var rooster = maak("div", "oq-options");
+    var bewaard = antwoorden[stap.sleutel];
+
+    (stap.opties || []).forEach(function (optie) {
+      var naam = vulIn(optie.naam, plek);
+      var knop = maak("button", "oq-option");
+      knop.type = "button";
+      if (bewaard && bewaard.waarde === naam) knop.classList.add("is-chosen");
+
+      var tick = maak("span", "oq-option__tick");
+      tick.appendChild(vinkje());
+      knop.appendChild(tick);
+
+      var body = maak("span", "oq-option__body");
+      body.appendChild(maak("span", "oq-option__name", naam));
+      if (optie.toelichting) body.appendChild(maak("span", "oq-option__note", vulIn(optie.toelichting, plek)));
+      knop.appendChild(body);
+
+      knop.addEventListener("click", function () {
+        bevestig(stap, { waarde: naam, kort: vulIn(optie.kort, plek) || naam }, knop);
+      });
+      rooster.appendChild(knop);
+    });
+
+    blok.appendChild(rooster);
     blok.appendChild(voet({ terug: true }));
     return blok;
   }
@@ -830,7 +1245,10 @@
     if (stap.soort === "start") blok = tekenStart();
     else if (stap.soort === "bedankt") blok = tekenBedankt();
     else if (stap.soort === "bestemming") blok = tekenBestemming(stap, nummer, vragen.length);
+    else if (stap.soort === "reizigers") blok = tekenReizigers(stap, nummer, vragen.length);
+    else if (stap.soort === "datum") blok = tekenDatum(stap, nummer, vragen.length);
     else if (stap.soort === "aantal") blok = tekenAantal(stap, nummer, vragen.length);
+    else if (stap.soort === "stad") blok = tekenStad(stap, nummer, vragen.length);
     else if (stap.soort === "extras") blok = tekenExtras(stap, nummer, vragen.length);
     else if (stap.soort === "tekst") blok = tekenTekst(stap, nummer, vragen.length);
     else if (stap.soort === "gegevens") blok = tekenGegevens(stap, nummer, vragen.length);

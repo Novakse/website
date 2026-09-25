@@ -1,7 +1,9 @@
 /* ==========================================================================
    Falun - kalender met de totaalprijs van de gekozen periode
 
-   De bezoeker kiest zelf een aankomstdag en een reisduur (4 of 5 dagen).
+   De bezoeker klikt in de kalender een aankomstdag en daarna een vertrekdag
+   aan. De reisduur volgt uit die twee dagen; alleen de duren uit
+   data/falun-prijzen.json (4 of 5 dagen) zijn als vertrekdag te kiezen.
    De prijs verschilt per datum, omdat de huisjes niet het hele seizoen
    hetzelfde kosten. Daarnaast kan de bezoeker drie dingen aanvinken die het
    bedrag veranderen: de vlucht zelf regelen, de huurauto zelf regelen en
@@ -19,6 +21,7 @@
      - 250 als je de vlucht zelf regelt
      - 100 als je de huurauto zelf regelt
      + begeleiding, alleen als de hele reis binnen het begeleidingsvenster valt
+       (staat uit zolang begeleiding.prijsPerDag null is)
 
    Een verblijf van 4 dagen telt 3 nachten, 5 dagen telt 4 nachten.
 
@@ -35,7 +38,8 @@
     nl: {
       months: ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
       dayHeaders: ["ma", "di", "wo", "do", "vr", "za", "zo"],
-      durationLegend: "Hoe lang blijf je?",
+      prevMonth: "Vorige maand",
+      nextMonth: "Volgende maand",
       personsLegend: "Met hoeveel personen?",
       personsLabel: function (n) { return n + (n === 1 ? " persoon" : " personen"); },
       personsHint: "Jullie slapen samen in een huisje. Hoe voller het huisje, hoe lager de prijs per persoon.",
@@ -78,6 +82,9 @@
       totalFor: function (n) { return "Totaal voor " + n + (n === 1 ? " persoon" : " personen"); },
       book: "Boek en reken af",
       chooseFirst: "Kies eerst een aankomstdag.",
+      chooseDeparture: "Kies nu in de kalender je vertrekdag.",
+      personsFewer: "Eén persoon minder",
+      personsMore: "Eén persoon meer",
       perPerson: "per persoon",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " tot " + tot; },
       bookedSr: function (wat) { return " " + wat + ", niet beschikbaar"; },
@@ -88,7 +95,8 @@
     en: {
       months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       dayHeaders: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-      durationLegend: "How long are you staying?",
+      prevMonth: "Previous month",
+      nextMonth: "Next month",
       personsLegend: "How many people?",
       personsLabel: function (n) { return n + (n === 1 ? " person" : " people"); },
       personsHint: "You share one cabin. The fuller the cabin, the lower the price per person.",
@@ -131,6 +139,9 @@
       totalFor: function (n) { return "Total for " + n + (n === 1 ? " person" : " people"); },
       book: "Book and pay",
       chooseFirst: "Choose an arrival day first.",
+      chooseDeparture: "Now choose your departure day in the calendar.",
+      personsFewer: "One person fewer",
+      personsMore: "One person more",
       perPerson: "per person",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " to " + tot; },
       bookedSr: function (wat) { return " " + wat + ", not available"; },
@@ -141,7 +152,8 @@
     de: {
       months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
       dayHeaders: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
-      durationLegend: "Wie lange bleibst du?",
+      prevMonth: "Vorheriger Monat",
+      nextMonth: "Nächster Monat",
       personsLegend: "Mit wie vielen Personen?",
       personsLabel: function (n) { return n + (n === 1 ? " Person" : " Personen"); },
       personsHint: "Ihr schlaft zusammen in einer Hütte. Je voller die Hütte, desto niedriger der Preis pro Person.",
@@ -184,6 +196,9 @@
       totalFor: function (n) { return "Gesamt für " + n + (n === 1 ? " Person" : " Personen"); },
       book: "Buchen und bezahlen",
       chooseFirst: "Wähle zuerst einen Ankunftstag.",
+      chooseDeparture: "Wähle jetzt im Kalender deinen Abreisetag.",
+      personsFewer: "Eine Person weniger",
+      personsMore: "Eine Person mehr",
       perPerson: "pro Person",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " bis " + tot; },
       bookedSr: function (wat) { return " " + wat + ", nicht verfügbar"; },
@@ -194,7 +209,8 @@
     sv: {
       months: ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"],
       dayHeaders: ["mån", "tis", "ons", "tor", "fre", "lör", "sön"],
-      durationLegend: "Hur länge stannar du?",
+      prevMonth: "Föregående månad",
+      nextMonth: "Nästa månad",
       personsLegend: "Hur många personer?",
       personsLabel: function (n) { return n + (n === 1 ? " person" : " personer"); },
       personsHint: "Ni bor tillsammans i en stuga. Ju fullare stugan är, desto lägre pris per person.",
@@ -237,6 +253,9 @@
       totalFor: function (n) { return "Totalt för " + n + (n === 1 ? " person" : " personer"); },
       book: "Boka och betala",
       chooseFirst: "Välj först en ankomstdag.",
+      chooseDeparture: "Välj nu din avresedag i kalendern.",
+      personsFewer: "En person färre",
+      personsMore: "En person fler",
       perPerson: "per person",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " till " + tot; },
       bookedSr: function (wat) { return " " + wat + ", inte tillgänglig"; },
@@ -247,7 +266,8 @@
     no: {
       months: ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"],
       dayHeaders: ["man", "tir", "ons", "tor", "fre", "lør", "søn"],
-      durationLegend: "Hvor lenge blir du?",
+      prevMonth: "Forrige måned",
+      nextMonth: "Neste måned",
       personsLegend: "Hvor mange personer?",
       personsLabel: function (n) { return n + (n === 1 ? " person" : " personer"); },
       personsHint: "Dere bor sammen i en hytte. Jo fullere hytta er, desto lavere pris per person.",
@@ -290,6 +310,9 @@
       totalFor: function (n) { return "Totalt for " + n + (n === 1 ? " person" : " personer"); },
       book: "Book og betal",
       chooseFirst: "Velg en ankomstdag først.",
+      chooseDeparture: "Velg nå avreisedagen din i kalenderen.",
+      personsFewer: "Én person færre",
+      personsMore: "Én person flere",
       perPerson: "per person",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " til " + tot; },
       bookedSr: function (wat) { return " " + wat + ", ikke tilgjengelig"; },
@@ -300,7 +323,8 @@
     fi: {
       months: ["tammikuu", "helmikuu", "maaliskuu", "huhtikuu", "toukokuu", "kesäkuu", "heinäkuu", "elokuu", "syyskuu", "lokakuu", "marraskuu", "joulukuu"],
       dayHeaders: ["ma", "ti", "ke", "to", "pe", "la", "su"],
-      durationLegend: "Kuinka kauan viivyt?",
+      prevMonth: "Edellinen kuukausi",
+      nextMonth: "Seuraava kuukausi",
       personsLegend: "Kuinka monta henkilöä?",
       personsLabel: function (n) { return n + (n === 1 ? " henkilö" : " henkilöä"); },
       personsHint: "Majoitutte yhdessä mökissä. Mitä täydempi mökki, sitä edullisempi hinta per henkilö.",
@@ -343,6 +367,9 @@
       totalFor: function (n) { return "Yhteensä, " + n + (n === 1 ? " henkilö" : " henkilöä"); },
       book: "Varaa ja maksa",
       chooseFirst: "Valitse ensin saapumispäivä.",
+      chooseDeparture: "Valitse nyt kalenterista lähtöpäiväsi.",
+      personsFewer: "Yksi henkilö vähemmän",
+      personsMore: "Yksi henkilö enemmän",
       perPerson: "/ henkilö",
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " - " + tot; },
       bookedSr: function (wat) { return " " + wat + ", ei vapaa"; },
@@ -428,7 +455,19 @@
   var koers = data.wisselkoersSEK || 1;
 
   var personenKeuze = data.personen || { min: 1, max: 4, standaard: 2 };
+  var personenMin = personenKeuze.min || 1;
+  var personenMax = personenKeuze.max || 4;
   var basisPersonen = data.basisPersonen || 2;
+  var huisjeMax = data.huisjeMaxPersonen || 0;
+
+  /* A cabin (and its rental car) holds at most huisjeMax people. A bigger
+     group is spread over as few cabins as possible, so the cabin and car
+     share is calculated per cabin: 6 people = 2 cabins of 3. Same logic as
+     api/_falun-prijs.js. */
+  function perHuisje(n) {
+    if (!huisjeMax || n <= huisjeMax) return n;
+    return n / Math.ceil(n / huisjeMax);
+  }
   var autoPerReis = data.autoPerReisEUR || 0;
   var doorgeven = typeof data.kortingDoorgeven === "number" ? data.kortingDoorgeven : 1;
 
@@ -446,7 +485,7 @@
     if (!basisSEK) return 0;
     var sek = huisjes[alsTekst(datum)];
     if (typeof sek !== "number") sek = basisSEK;
-    var werkelijk = sek / koers / personen;
+    var werkelijk = sek / koers / perHuisje(personen);
     var basis = basisSEK / koers / basisPersonen;
     return demp(werkelijk - basis);
   }
@@ -456,7 +495,7 @@
   function autoDeel(personen) {
     if (!autoPerReis) return 0;
     var basis = autoPerReis / basisPersonen;
-    return basis + demp(autoPerReis / personen - basis);
+    return basis + demp(autoPerReis / perHuisje(personen) - basis);
   }
   var opties = data.opties || {};
   var vluchtBedrag = Math.abs(opties.vluchtZelf || 0);
@@ -482,15 +521,21 @@
     return !!onzeker && datum >= onzeker.van && datum < onzeker.tot;
   }
 
-  var duur = duren[0];
+  /* Trip length in days. It follows from the arrival and departure day the
+     visitor clicks in the calendar; null until a departure day is chosen. */
+  var duur = null;
   var personen = personenKeuze.standaard || 2;
+
+  function binnenPersonen(n) {
+    return Math.min(personenMax, Math.max(personenMin, n));
+  }
 
   /* In periode-modus telt het aantal personen uit het formulier. Dat staat in
      data-personen en wordt bijgewerkt zodra de bezoeker het daar verandert. */
   function leesPersonenUitFormulier() {
     var uit = parseInt(box.getAttribute("data-personen"), 10);
     if (isNaN(uit)) return;
-    personen = Math.min(personenKeuze.max || 4, Math.max(personenKeuze.min || 1, uit));
+    personen = binnenPersonen(uit);
   }
   if (periodeModus) leesPersonenUitFormulier();
   var aankomst = null;
@@ -536,6 +581,30 @@
     return true;
   }
 
+  // A day is clickable as arrival when at least one allowed trip length fits.
+  function kanAankomenOoit(datum) {
+    for (var i = 0; i < duren.length; i++) {
+      if (kanAankomen(datum, duren[i])) return true;
+    }
+    return false;
+  }
+
+  /* Trip length (in days) that ends on this date for the chosen arrival day,
+     or 0 when the date is not a possible departure day. */
+  function duurTotVertrek(datum) {
+    if (!aankomst) return 0;
+    for (var i = 0; i < duren.length; i++) {
+      var vertrek = plusDagen(aankomst, nachtenVan(duren[i]));
+      if (vertrek.getTime() === datum.getTime() && kanAankomen(aankomst, duren[i])) return duren[i];
+    }
+    return 0;
+  }
+
+  // Arrival and departure are both chosen.
+  function periodeKlaar() {
+    return !!aankomst && duur !== null;
+  }
+
   /* De basisprijs plus de toeslag van elke nacht. Een nacht die niet in de
      tabel staat, telt als nul: dan geldt gewoon de basisprijs. */
   function verblijfPrijs(datum, dagen) {
@@ -550,6 +619,7 @@
   }
 
   function begeleidingKan(datum, dagen) {
+    if (!datum || !dagen) return false;
     if (!begeleiding || begeleidingPerDag === null) return false;
     if (!begeleidingVan || !begeleidingTot) return false;
     var vertrek = plusDagen(datum, nachtenVan(dagen));
@@ -559,7 +629,7 @@
   /* Het bedrag dat de bezoeker uiteindelijk betaalt. Dezelfde berekening
      staat serverside in api/_falun-prijs.js; die is leidend. */
   function totaalPrijs() {
-    if (!aankomst) return null;
+    if (!periodeKlaar()) return null;
     var totaal = verblijfPrijs(aankomst, duur);
     if (totaal === null) return null;
     if (vluchtZelf) totaal -= vluchtBedrag;
@@ -571,9 +641,6 @@
   /* ------------------------------------------------------------------
      Opbouw van het scherm
      ------------------------------------------------------------------ */
-  var duurBox = document.createElement("div");
-  duurBox.className = "falun-cal__block";
-
   var personenBox = document.createElement("div");
   personenBox.className = "falun-cal__block";
 
@@ -599,7 +666,6 @@
   samenvatting.setAttribute("aria-live", "polite");
 
   box.innerHTML = "";
-  box.appendChild(duurBox);
   if (!periodeModus) box.appendChild(personenBox);
   box.appendChild(legenda);
   box.appendChild(raster);
@@ -609,104 +675,169 @@
     notitie.textContent = T.uncertainNote;
     box.appendChild(notitie);
   }
+  // In period mode there is no summary box, so the "now pick a departure day"
+  // hint goes right under the calendar.
+  var vertrekHint = null;
+  if (periodeModus) {
+    vertrekHint = document.createElement("p");
+    vertrekHint.className = "falun-cal__hint";
+    vertrekHint.setAttribute("aria-live", "polite");
+    box.appendChild(vertrekHint);
+  }
   if (!periodeModus) {
     box.appendChild(optieBox);
     box.appendChild(begeleidingBox);
     box.appendChild(samenvatting);
   }
 
-  function tekenDuur() {
-    var knoppen = duren.map(function (dagen) {
-      var actief = dagen === duur;
-      return '<button type="button" class="falun-cal__duur' + (actief ? " is-actief" : "") + '"' +
-        ' data-duur="' + dagen + '" aria-pressed="' + (actief ? "true" : "false") + '">' +
-        "<span>" + T.days(dagen) + "</span>" +
-        '<span class="falun-cal__duur-nachten">' + T.nights(nachtenVan(dagen)) + "</span>" +
-        "</button>";
-    }).join("");
+  /* Number of people: a stepper (minus, number field, plus), the same control
+     as on boeken.html. It is built once so the focus stays on the button the
+     visitor is pressing; tekenPersonen() only updates the value. */
+  var personenVeld = null;
+  var minderKnop = null;
+  var meerKnop = null;
 
-    duurBox.innerHTML =
-      '<p class="falun-cal__legend">' + T.durationLegend + "</p>" +
-      '<div class="falun-cal__duren">' + knoppen + "</div>";
-
-    duurBox.querySelectorAll("[data-duur]").forEach(function (knop) {
-      knop.addEventListener("click", function () {
-        var nieuw = parseInt(knop.getAttribute("data-duur"), 10);
-        if (nieuw === duur) return;
-        duur = nieuw;
-        // De gekozen dag kan bij een langer verblijf niet meer passen.
-        if (aankomst && !kanAankomen(aankomst, duur)) aankomst = null;
-        if (begeleidingDagen > duur) begeleidingDagen = duur;
-        tekenAlles();
-      });
-    });
-  }
-
-  function tekenPersonen() {
-    var knoppen = "";
-    for (var n = personenKeuze.min || 1; n <= (personenKeuze.max || 4); n++) {
-      var actief = n === personen;
-      knoppen += '<button type="button" class="falun-cal__duur' + (actief ? " is-actief" : "") + '"' +
-        ' data-personen="' + n + '" aria-pressed="' + (actief ? "true" : "false") + '">' +
-        "<span>" + T.personsLabel(n) + "</span></button>";
-    }
-
+  function bouwPersonen() {
     personenBox.innerHTML =
-      '<p class="falun-cal__legend">' + T.personsLegend + "</p>" +
-      '<div class="falun-cal__duren">' + knoppen + "</div>" +
+      '<label class="falun-cal__legend" for="falunPersonen">' + T.personsLegend + "</label>" +
+      '<div class="booking__persons">' +
+        '<button type="button" class="booking__step-btn" data-personen-stap="-1" aria-label="' + T.personsFewer + '">−</button>' +
+        '<input type="number" id="falunPersonen" min="' + personenMin + '" max="' + personenMax + '" step="1" inputmode="numeric" value="' + personen + '" />' +
+        '<button type="button" class="booking__step-btn" data-personen-stap="1" aria-label="' + T.personsMore + '">+</button>' +
+      "</div>" +
       '<p class="falun-cal__note falun-cal__note--inline">' + T.personsHint + "</p>";
 
-    personenBox.querySelectorAll("[data-personen]").forEach(function (knop) {
+    personenVeld = personenBox.querySelector("#falunPersonen");
+    minderKnop = personenBox.querySelector('[data-personen-stap="-1"]');
+    meerKnop = personenBox.querySelector('[data-personen-stap="1"]');
+
+    [minderKnop, meerKnop].forEach(function (knop) {
       knop.addEventListener("click", function () {
-        var nieuw = parseInt(knop.getAttribute("data-personen"), 10);
+        var nieuw = binnenPersonen(personen + parseInt(knop.getAttribute("data-personen-stap"), 10));
         if (nieuw === personen) return;
         personen = nieuw;
         tekenAlles();
       });
     });
+
+    // Typing a number works too; an empty or invalid field is ignored until
+    // the visitor leaves it, then the last valid number is shown again.
+    personenVeld.addEventListener("input", function () {
+      var uit = parseInt(personenVeld.value, 10);
+      if (isNaN(uit)) return;
+      var nieuw = binnenPersonen(uit);
+      if (nieuw === personen) return;
+      personen = nieuw;
+      tekenAlles();
+    });
+    personenVeld.addEventListener("change", function () {
+      personenVeld.value = personen;
+    });
   }
 
-  function tekenRaster() {
+  function tekenPersonen() {
+    if (!personenVeld) bouwPersonen();
+    if (parseInt(personenVeld.value, 10) !== personen) personenVeld.value = personen;
+    minderKnop.disabled = personen <= personenMin;
+    meerKnop.disabled = personen >= personenMax;
+  }
+
+  /* De kalender toont een maand tegelijk; met de pijltjes klik je door het
+     seizoen. Verder dan de eerste en laatste seizoensmaand gaat het niet. */
+  var eersteMaand = new Date(seizoenVan.getFullYear(), seizoenVan.getMonth(), 1);
+  var laatsteMaand = new Date(seizoenTot.getFullYear(), seizoenTot.getMonth(), 1);
+  var zichtbareMaand = eersteMaand;
+
+  function maandVan(datum) {
+    return new Date(datum.getFullYear(), datum.getMonth(), 1);
+  }
+
+  /* De maand waarmee de kalender opent: die van de gekozen dag, of anders de
+     eerste maand waarin je nog kunt aankomen. */
+  function startMaand() {
+    if (aankomst) return maandVan(aankomst);
+    var loop = new Date(seizoenVan.getTime());
+    while (loop <= seizoenTot) {
+      if (!bezetOp(loop) && kanAankomenOoit(loop)) return maandVan(loop);
+      loop = plusDagen(loop, 1);
+    }
+    return eersteMaand;
+  }
+
+  function tekenRaster(focusOp) {
     raster.innerHTML = "";
-    var maand = new Date(seizoenVan.getFullYear(), seizoenVan.getMonth(), 1);
-    var laatste = new Date(seizoenTot.getFullYear(), seizoenTot.getMonth(), 1);
+    var maand = zichtbareMaand;
 
-    while (maand <= laatste) {
-      var maandBox = document.createElement("div");
-      maandBox.className = "calendar__month";
+    var kop = document.createElement("div");
+    kop.className = "calendar__month-head";
 
-      var titel = document.createElement("p");
-      titel.className = "calendar__month-name";
-      titel.textContent = T.months[maand.getMonth()] + " " + maand.getFullYear();
-      maandBox.appendChild(titel);
+    var terug = document.createElement("button");
+    terug.type = "button";
+    terug.className = "calendar__month-nav";
+    terug.setAttribute("data-maand-stap", "-1");
+    terug.innerHTML = '<span aria-hidden="true">&#8249;</span><span class="sr-only">' + T.prevMonth + "</span>";
+    terug.disabled = maand <= eersteMaand;
 
-      var dagen = document.createElement("div");
-      dagen.className = "calendar__grid";
+    var titel = document.createElement("p");
+    titel.className = "calendar__month-title";
+    titel.setAttribute("aria-live", "polite");
+    titel.textContent = T.months[maand.getMonth()] + " " + maand.getFullYear();
 
-      T.dayHeaders.forEach(function (naam) {
-        var kop = document.createElement("span");
-        kop.className = "calendar__dayname";
-        kop.textContent = naam;
-        dagen.appendChild(kop);
+    var vooruit = document.createElement("button");
+    vooruit.type = "button";
+    vooruit.className = "calendar__month-nav";
+    vooruit.setAttribute("data-maand-stap", "1");
+    vooruit.innerHTML = '<span aria-hidden="true">&#8250;</span><span class="sr-only">' + T.nextMonth + "</span>";
+    vooruit.disabled = maand >= laatsteMaand;
+
+    [terug, vooruit].forEach(function (knop) {
+      knop.addEventListener("click", function () {
+        var stap = parseInt(knop.getAttribute("data-maand-stap"), 10);
+        zichtbareMaand = new Date(maand.getFullYear(), maand.getMonth() + stap, 1);
+        tekenRaster(stap);
       });
+    });
 
-      // Maandag is de eerste kolom; getDay() geeft zondag als 0.
-      var eerste = new Date(maand.getFullYear(), maand.getMonth(), 1);
-      var schuif = (eerste.getDay() + 6) % 7;
-      for (var g = 0; g < schuif; g++) {
-        var gat = document.createElement("span");
-        gat.className = "calendar__cell is-empty";
-        dagen.appendChild(gat);
-      }
+    kop.appendChild(terug);
+    kop.appendChild(titel);
+    kop.appendChild(vooruit);
+    raster.appendChild(kop);
 
-      var dagenInMaand = new Date(maand.getFullYear(), maand.getMonth() + 1, 0).getDate();
-      for (var d = 1; d <= dagenInMaand; d++) {
-        dagen.appendChild(tekenDag(new Date(maand.getFullYear(), maand.getMonth(), d)));
-      }
+    var maandBox = document.createElement("div");
+    maandBox.className = "calendar__month";
 
-      maandBox.appendChild(dagen);
-      raster.appendChild(maandBox);
-      maand = new Date(maand.getFullYear(), maand.getMonth() + 1, 1);
+    var dagen = document.createElement("div");
+    dagen.className = "calendar__grid";
+
+    T.dayHeaders.forEach(function (naam) {
+      var kop = document.createElement("span");
+      kop.className = "calendar__dayname";
+      kop.textContent = naam;
+      dagen.appendChild(kop);
+    });
+
+    // Maandag is de eerste kolom; getDay() geeft zondag als 0.
+    var eerste = new Date(maand.getFullYear(), maand.getMonth(), 1);
+    var schuif = (eerste.getDay() + 6) % 7;
+    for (var g = 0; g < schuif; g++) {
+      var gat = document.createElement("span");
+      gat.className = "calendar__cell is-empty";
+      dagen.appendChild(gat);
+    }
+
+    var dagenInMaand = new Date(maand.getFullYear(), maand.getMonth() + 1, 0).getDate();
+    for (var d = 1; d <= dagenInMaand; d++) {
+      dagen.appendChild(tekenDag(new Date(maand.getFullYear(), maand.getMonth(), d)));
+    }
+
+    maandBox.appendChild(dagen);
+    raster.appendChild(maandBox);
+
+    // Na het doorklikken blijft de focus op het pijltje, zodat je met het
+    // toetsenbord verder kunt klikken. Is dat pijltje nu uit, dan het andere.
+    if (focusOp) {
+      var doel = focusOp < 0 ? terug : vooruit;
+      (doel.disabled ? (focusOp < 0 ? vooruit : terug) : doel).focus();
     }
   }
 
@@ -714,7 +845,14 @@
     var blok = bezetOp(datum);
     var binnenSeizoen = datum >= seizoenVan && datum <= seizoenTot;
 
-    if (!binnenSeizoen || blok || !kanAankomen(datum, duur)) {
+    // First click picks the arrival day, the second one the departure day.
+    // Only departure days that give an allowed trip length count.
+    var kanStart = binnenSeizoen && !blok && kanAankomenOoit(datum);
+    var vertrekDuur = duurTotVertrek(datum);
+    var isVertrek = periodeKlaar() && vertrekDuur === duur;
+    var isOptie = !!aankomst && duur === null && vertrekDuur > 0;
+
+    if (!kanStart && !vertrekDuur) {
       var uit = document.createElement("span");
       uit.className = "calendar__cell " + (blok ? "is-bezet" : "is-buiten");
       uit.innerHTML = '<span class="calendar__daynr">' + datum.getDate() + "</span>";
@@ -733,21 +871,43 @@
     knop.className = "calendar__cell is-vrij";
     knop.innerHTML =
       '<span class="calendar__daynr">' + datum.getDate() + "</span>";
-    knop.setAttribute("aria-label", T.availableAria(schrijfDatum(datum)));
+    knop.setAttribute("data-datum", alsTekst(datum));
+    // A possible departure day also says how long the trip would be.
+    knop.setAttribute("aria-label", vertrekDuur
+      ? T.availableAria(schrijfDatum(datum)) + ", " + T.days(vertrekDuur)
+      : T.availableAria(schrijfDatum(datum)));
+    if (isOptie) knop.title = T.lineTrip(vertrekDuur);
     if (onzekerOp(datum)) knop.classList.add("is-onzeker");
 
-    if (aankomst && datum.getTime() === aankomst.getTime()) {
+    var isAankomst = !!aankomst && datum.getTime() === aankomst.getTime();
+    if (isAankomst) {
       knop.classList.add("is-gekozen", "is-start");
-    } else if (aankomst) {
+    } else if (isVertrek) {
+      knop.classList.add("is-gekozen", "is-eind");
+    } else if (periodeKlaar()) {
       // De nachten na de aankomstdag kleuren mee, zodat de periode zichtbaar is.
       var vertrek = plusDagen(aankomst, nachtenVan(duur));
-      if (datum > aankomst && datum <= vertrek) knop.classList.add("is-tussen");
+      if (datum > aankomst && datum < vertrek) knop.classList.add("is-tussen");
+    } else if (isOptie) {
+      knop.classList.add("is-vertrekoptie");
     }
+    if (isAankomst || isVertrek) knop.setAttribute("aria-pressed", "true");
 
     knop.addEventListener("click", function () {
-      aankomst = datum;
-      if (begeleidingDagen && !begeleidingKan(aankomst, duur)) begeleidingDagen = 0;
+      if (vertrekDuur && (duur === null || !kanStart)) {
+        duur = vertrekDuur;
+      } else if (kanStart) {
+        aankomst = datum;
+        duur = null;
+      } else {
+        return;
+      }
+      if (!periodeKlaar() || !begeleidingKan(aankomst, duur)) begeleidingDagen = 0;
+      if (begeleidingDagen > duur) begeleidingDagen = duur;
       tekenAlles();
+      // Keep keyboard focus on the day that was just clicked.
+      var zelfde = raster.querySelector('[data-datum="' + alsTekst(datum) + '"]');
+      if (zelfde) zelfde.focus();
     });
     return knop;
   }
@@ -837,8 +997,8 @@
   }
 
   function tekenSamenvatting() {
-    if (!aankomst) {
-      samenvatting.innerHTML = '<p class="falun-cal__hint">' + T.chooseFirst + "</p>";
+    if (!periodeKlaar()) {
+      samenvatting.innerHTML = '<p class="falun-cal__hint">' + (aankomst ? T.chooseDeparture : T.chooseFirst) + "</p>";
       return;
     }
 
@@ -922,11 +1082,11 @@
       bedrag: Math.round(autoDeel(personen))
     });
 
-    if (begeleiding) {
+    // prijsPerDag null in data/falun-prijzen.json means guidance is switched
+    // off entirely: not shown here, not in the form, not charged.
+    if (begeleiding && begeleidingPerDag !== null) {
       var hint = T.guidingHint;
-      if (begeleidingPerDag === null) {
-        hint = T.guidingPriceUnknown;
-      } else if (!mag && begeleidingVan && begeleidingTot) {
+      if (!mag && begeleidingVan && begeleidingTot) {
         hint = aankomst ? T.guidingOutside(schrijfDatum(begeleidingVan), schrijfDatum(begeleidingTot))
                         : T.guidingWindow(schrijfDatum(begeleidingVan), schrijfDatum(begeleidingTot));
       }
@@ -938,7 +1098,7 @@
         inbegrepenLabel: T.guidingIncludes,
         teken: "+",
         dagen: begeleidingDagen,
-        bedrag: begeleidingPerDag === null ? null : begeleidingKosten(begeleidingDagen || duur, personen),
+        bedrag: begeleidingKosten(begeleidingDagen || duur, personen),
         uit: !mag
       });
     }
@@ -948,16 +1108,19 @@
 
   function meldPeriode() {
     if (!periodeModus) return;
-    var vertrek = aankomst ? plusDagen(aankomst, nachtenVan(duur)) : null;
+    // Only a complete period (arrival and departure) is passed on; while the
+    // visitor still has to pick a departure day, the form gets no period.
+    var klaar = periodeKlaar();
+    var vertrek = klaar ? plusDagen(aankomst, nachtenVan(duur)) : null;
     var bericht = {
-      van: aankomst ? alsTekst(aankomst) : null,
-      tot: vertrek ? alsTekst(vertrek) : null,
-      dagen: duur,
-      nachten: nachtenVan(duur),
+      van: klaar ? alsTekst(aankomst) : null,
+      tot: klaar ? alsTekst(vertrek) : null,
+      dagen: klaar ? duur : null,
+      nachten: klaar ? nachtenVan(duur) : 0,
       // Op hele euro's, net als het bedrag dat in de kalender bij de dag staat.
-      verblijf: aankomst ? Math.round(verblijfPrijs(aankomst, duur)) : null,
-      personenMin: personenKeuze.min || 1,
-      personenMax: personenKeuze.max || 4,
+      verblijf: klaar ? Math.round(verblijfPrijs(aankomst, duur)) : null,
+      personenMin: personenMin,
+      personenMax: personenMax,
       opties: optieLijst()
     };
     box.dispatchEvent(new CustomEvent("novakse:periode", { detail: bericht, bubbles: true }));
@@ -971,9 +1134,9 @@
   });
 
   function tekenAlles() {
-    tekenDuur();
     if (!periodeModus) tekenPersonen();
     tekenRaster();
+    if (vertrekHint) vertrekHint.textContent = aankomst && duur === null ? T.chooseDeparture : "";
     if (!periodeModus) {
       tekenOpties();
       tekenBegeleiding();
@@ -999,7 +1162,7 @@
 
     var aantal = parseInt(zoek.get("personen"), 10);
     if (!isNaN(aantal)) {
-      personen = Math.min(personenKeuze.max || 4, Math.max(personenKeuze.min || 1, aantal));
+      personen = binnenPersonen(aantal);
     }
 
     if (!/^\d{4}-\d{2}-\d{2}$/.test(van)) return wens;
@@ -1025,21 +1188,38 @@
   }
 
   // Er staat geen dag vooraf klaar: de totaalprijs verschijnt pas als de
-  // bezoeker zelf een aankomstdag kiest.
-  aankomst = (gevraagdeDag && kanAankomen(gevraagdeDag, duur)) ? gevraagdeDag : null;
+  // bezoeker zelf een aankomstdag kiest. Fits the requested day but not the
+  // requested length, then keep the day and let the visitor pick a departure.
+  aankomst = null;
+  if (gevraagdeDag && duur !== null && kanAankomen(gevraagdeDag, duur)) {
+    aankomst = gevraagdeDag;
+  } else if (gevraagdeDag && kanAankomenOoit(gevraagdeDag)) {
+    aankomst = gevraagdeDag;
+    duur = null;
+  } else {
+    duur = null;
+  }
 
   // De regel boven de kalender: alleen als er echt een wens meekwam die we
   // niet helemaal konden inwilligen.
   if (gevraagdeDag && !periodeModus) {
     var melding = "";
     if (aankomst !== gevraagdeDag) melding = T.searchDayGone;
-    else if (duren.indexOf(wens.dagen) === -1) melding = T.searchKeptDay;
+    else if (duur === null) melding = T.searchKeptDay;
     if (melding) {
       var regel = document.createElement("p");
       regel.className = "falun-cal__note falun-cal__note--search";
       regel.textContent = melding;
       box.insertBefore(regel, box.firstChild);
     }
+  }
+
+  // Kon de gevraagde dag niet, dan opent de kalender toch in die maand, zodat
+  // de bezoeker meteen de dagen eromheen ziet.
+  zichtbareMaand = startMaand();
+  if (!aankomst && gevraagdeDag) {
+    var gevraagdeMaand = maandVan(gevraagdeDag);
+    if (gevraagdeMaand >= eersteMaand && gevraagdeMaand <= laatsteMaand) zichtbareMaand = gevraagdeMaand;
   }
 
   tekenAlles();

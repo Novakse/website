@@ -91,7 +91,7 @@
          "label"    de kop die in het document bovenin komt te staan
          "vraag"    de grote vraag op het scherm
          "onder"    kleine zin onder de vraag (mag weg)
-         "soort"    bestemming | aantal | keuze | extras | tekst | gegevens
+         "soort"    bestemming | reizigers | datum | aantal | keuze | stad | extras | tekst | gegevens
          "opties"   bij soort "keuze": elke regel {"naam": "...", "toelichting": "..."}
          "overslaan" op true: de bezoeker mag deze stap overslaan
 
@@ -107,7 +107,8 @@
       "perVierPersonen": true,
       "naam": "Orsa",
       "regio": "Zweden",
-      "kort": "Begeleide groepsreis op het Orsameer, met een geveegde baan van zo'n 15 kilometer.",
+      "kort": "Zelfstandig schaatsen op het Orsameer, met een geveegde baan van zo'n 15 kilometer.",
+      "stad": { "naam": "Stockholm", "vliegveld": "Stockholm Arlanda" },
       "foto": "orsa-zwart-ijs-baan",
       "alt": "Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer",
       "extras": [
@@ -130,6 +131,7 @@
       "naam": "Falun",
       "regio": "Zweden",
       "kort": "Pakketreis op historisch ijs. Vlucht, huurauto en verblijf zitten erbij in.",
+      "stad": { "naam": "Stockholm", "vliegveld": "Stockholm Arlanda" },
       "foto": "falun-meer",
       "alt": "Schaatsers op een bevroren meer bij Falun",
       "extras": [
@@ -145,6 +147,7 @@
       "naam": "Punkaharju",
       "regio": "Finland",
       "kort": "Zelfstandig op het Saimaameer, met verblijf in eigen huisjes met sauna.",
+      "stad": { "naam": "Helsinki", "vliegveld": "Helsinki" },
       "foto": "finland-baan",
       "alt": "Schaatsbaan op het Saimaameer bij Punkaharju",
       "extras": []
@@ -155,6 +158,7 @@
       "naam": "Weissensee",
       "regio": "Oostenrijk",
       "kort": "Zelfstandig schaatsen op een bergmeer van 6,5 km², bekend van de Alternatieve Elfstedentocht.",
+      "stad": { "naam": "Salzburg", "vliegveld": "Salzburg" },
       "foto": "weissensee-baan",
       "alt": "Geveegde natuurijsbaan op de Weissensee",
       "extras": []
@@ -190,71 +194,52 @@
     {
       "sleutel": "personen",
       "label": "Aantal personen",
-      "soort": "aantal",
+      "soort": "reizigers",
       "vraag": "Met hoeveel personen kom je?",
-      "onder": "Kinderen tellen ook mee. Kom je met een grotere groep, kies dan de laatste knop.",
-      "min": 1,
+      "onder": "Tel iedereen mee die meegaat, ook de kinderen. Kom je met meer dan 12 personen, kies dan de knop onder de teller.",
       "max": 12,
+      "//groepen": "Elke groep krijgt een eigen regel met een min- en plusknop. \"min\" is het kleinste aantal, \"korting\" komt als label naast de naam.",
+      "groepen": [
+        { "sleutel": "volwassenen", "naam": "Volwassenen", "toelichting": "Vanaf 13 jaar", "min": 1, "enkel": "volwassene", "meervoud": "volwassenen" },
+        { "sleutel": "kind6tot12", "naam": "Kinderen 6 t/m 12 jaar", "korting": "€100 korting per kind", "min": 0, "enkel": "kind 6-12 jaar", "meervoud": "kinderen 6-12 jaar" },
+        { "sleutel": "kind0tot5", "naam": "Kinderen 0 t/m 5 jaar", "korting": "€200 korting per kind", "min": 0, "enkel": "kind 0-5 jaar", "meervoud": "kinderen 0-5 jaar" }
+      ],
       "eenheid": "persoon",
       "eenheidMeervoud": "personen",
       "kortEenheid": "pers.",
-      "soloLabel": "alleen",
-      "meerLabel": "Meer dan 12",
+      "meerLabel": "Meer dan 12 personen",
+      "maxTekst": "Meer dan 12 personen past niet op deze teller. Kies dan de knop hieronder.",
       "//perVierTekst": "Komt alleen in beeld bij bestemmingen met \"perVierPersonen\": true hierboven.",
       "perVierTekst": "Een huisje en een huurauto zijn voor vier personen. Kom je met meer, dan komt er een huisje en een auto bij en gaat de prijs per vier personen weer een stap omhoog."
     },
     {
       "sleutel": "periode",
-      "label": "Periode",
-      "soort": "keuze",
-      "vraag": "Wanneer wil je graag weg?",
-      "onder": "Het ijs bepaalt uiteindelijk mee wanneer een reis doorgaat. Je voorkeur helpt Joey op weg.",
-      "opties": [
-        { "naam": "December" },
-        { "naam": "Januari" },
-        { "naam": "Februari" },
-        { "naam": "Maart" },
-        { "naam": "Ik ben flexibel", "toelichting": "Joey kiest de periode met het beste ijs" }
-      ]
+      "label": "Vertrekdatum",
+      "soort": "datum",
+      "vraag": "Wanneer wil je graag vertrekken?",
+      "onder": "Kies de dag waarop je het liefst vertrekt. Het ijs bepaalt uiteindelijk mee wanneer een reis doorgaat. Je voorkeur helpt Joey op weg.",
+      "veldLabel": "Gewenste vertrekdatum",
+      "flexLabel": "Ik ben flexibel",
+      "flexToelichting": "Joey kiest de periode met het beste ijs"
     },
     {
       "sleutel": "duur",
       "label": "Reisduur",
       "soort": "aantal",
       "vraag": "Hoe lang wil je blijven?",
-      "onder": "Een reis duurt minimaal vier dagen. Langer blijven kan altijd, er is geen maximum.",
+      "onder": "Een reis duurt minimaal vier dagen. Wil je langer dan 14 dagen blijven, vul dan zelf het aantal dagen in.",
       "//grenzenUitBestemming": "Heeft de gekozen bestemming een blokje \"reisduur\", dan gelden die grenzen in plaats van de min en max hieronder.",
       "grenzenUitBestemming": "reisduur",
       "min": 4,
       "max": 14,
       "eenheid": "dag",
       "eenheidMeervoud": "dagen",
-      "meerLabel": "Langer dan 14 dagen"
-    },
-    {
-      "sleutel": "begeleiding",
-      "label": "Begeleiding",
-      "soort": "keuze",
-      "vraag": "Wil je begeleiding op het ijs?",
-      "onder": "Bij een begeleide reis gaat Joey zelf mee en bepaalt hij elke ochtend waar de dag het mooist wordt.",
-      "opties": [
-        { "naam": "Graag begeleiding van Joey", "toelichting": "Samen op pad, in een kleine groep" },
-        { "naam": "Liever zelfstandig", "toelichting": "Novakse regelt de reis, jij bepaalt je dagen" },
-        { "naam": "Ik hoor graag wat bij ons past" }
-      ]
-    },
-    {
-      "sleutel": "ervaring",
-      "label": "Ervaring op natuurijs",
-      "soort": "keuze",
-      "vraag": "Hoeveel ervaring heb je op natuurijs?",
-      "onder": "Geen goed of fout antwoord. Het helpt Joey om de juiste reis en het juiste tempo voor te stellen.",
-      "opties": [
-        { "naam": "Dit wordt mijn eerste keer" },
-        { "naam": "Ik heb al een paar keer op natuurijs gestaan" },
-        { "naam": "Ik ben een ervaren toerschaatser" },
-        { "naam": "We komen met een gemengde groep" }
-      ]
+      "meerLabel": "Langer dan 14 dagen",
+      "//vrijAantal": "De knop \"meerLabel\" opent een veld waarin de bezoeker zelf het aantal dagen typt, van max + 1 tot en met vrijAantal.max.",
+      "vrijAantal": {
+        "label": "Hoeveel dagen wil je blijven?",
+        "max": 90
+      }
     },
     {
       "sleutel": "materiaal",
@@ -279,6 +264,20 @@
       ]
     },
     {
+      "sleutel": "extraStad",
+      "label": "Extra stad",
+      "soort": "stad",
+      "vraag": "Wil je er een extra stad bij ontdekken?",
+      "onder": "Reis je met het vliegtuig, dan kom je aan op het vliegveld van {vliegveld}. Met een extra hotelnacht in {stad} heb je tijd om de stad te bekijken.",
+      "//nietAls": "Deze vraag valt weg als de bezoeker met de eigen auto komt, of als de bestemming geen \"stad\" heeft.",
+      "nietAls": { "stap": "heenreis", "waarde": "Met de eigen auto" },
+      "opties": [
+        { "naam": "Een extra nacht in {stad} vóór de reis", "kort": "{stad}, vóór de reis" },
+        { "naam": "Een extra nacht in {stad} na de reis", "kort": "{stad}, na de reis" },
+        { "naam": "Nee, geen extra nacht", "kort": "Nee" }
+      ]
+    },
+    {
       "sleutel": "extras",
       "label": "Extra activiteiten",
       "soort": "extras",
@@ -286,16 +285,6 @@
       "onder": "Optioneel, en je kunt meerdere dingen kiezen. Alle bedragen zijn per persoon; we regelen het ter plaatse voor je. Of een activiteit doorgaat, hangt af van het weer en de omstandigheden.",
       "leegLabel": "Liever alleen schaatsen",
       "overslaan": true
-    },
-    {
-      "sleutel": "verzekering",
-      "label": "Verzekering",
-      "soort": "keuze",
-      "vraag": "Hoe zit het met je verzekering?",
-      "opties": [
-        { "naam": "Reis- en annuleringsverzekering heb ik zelf geregeld" },
-        { "naam": "Ik wil graag advies hierover", "toelichting": "Joey wijst je de weg; afsluiten doe je zelf" }
-      ]
     },
     {
       "sleutel": "opmerkingen",

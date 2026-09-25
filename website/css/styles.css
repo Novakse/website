@@ -1737,20 +1737,46 @@ html:not(.js) .opener__controls { display: none; }
 .calendar__chip.is-bijna-vol { background: var(--warm); }
 .calendar__chip.is-vol { background: #c9ccc6; }
 
+/* Een maand tegelijk; met de pijltjes klik je door het seizoen. Smal
+   gehouden, zodat de dagen op een breed scherm niet enorm worden. */
 .calendar__months {
   margin-top: 1.75rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+  max-width: 26rem;
 }
-.calendar__month-name {
+.calendar__month-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--border);
+}
+.calendar__month-title {
   font-family: var(--display);
   font-weight: 600;
   font-size: 1.05rem;
   text-transform: capitalize;
-  padding-bottom: 0.7rem;
-  border-bottom: 1px solid var(--border);
+  text-align: center;
 }
+.calendar__month-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.5rem; height: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--paper);
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.calendar__month-nav:hover:not(:disabled) { border-color: var(--ink); }
+.calendar__month-nav:active:not(:disabled) { transform: scale(0.94); }
+.calendar__month-nav:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.calendar__month-nav:disabled { opacity: 0.35; cursor: default; }
 .calendar__grid {
   margin-top: 0.6rem;
   display: grid;
@@ -1793,12 +1819,6 @@ a.calendar__cell.is-start:hover { transform: scale(1.08); background: var(--ink)
 a.calendar__cell.is-start:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 a.calendar__cell.is-start:active { transform: scale(0.96); }
 
-@media (min-width: 40rem) {
-  .calendar__months { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
-}
-@media (min-width: 64rem) {
-  .calendar__months { grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-}
 
 /* Dezelfde reizen nog een keer als lijst */
 .calendar__list {
@@ -1869,6 +1889,8 @@ button.calendar__cell.is-gekozen {
 }
 button.calendar__cell.is-start { border-radius: 6px 2px 2px 6px; }
 button.calendar__cell.is-eind { border-radius: 2px 6px 6px 2px; }
+/* After picking an arrival day: the days you can depart on get a ring. */
+button.calendar__cell.is-vertrekoptie { box-shadow: inset 0 0 0 2px var(--ink); font-weight: 700; }
 
 /* Balk onder de kalender met de gekozen periode */
 .calendar__bar {
@@ -1989,15 +2011,7 @@ button.calendar__cell.is-onzeker.is-gekozen { border-bottom-color: var(--warm); 
   border-bottom: 2px dashed var(--warm-deep);
 }
 
-/* Minder maanden naast elkaar dan bij de gewone kalender, want de prijs
-   heeft breedte nodig. */
-.falun-cal .calendar__months { grid-template-columns: minmax(0, 1fr); margin-bottom: 2.25rem; }
-@media (min-width: 44rem) {
-  .falun-cal .calendar__months { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
-}
-@media (min-width: 70rem) {
-  .falun-cal .calendar__months { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
-}
+.falun-cal .calendar__months { margin-bottom: 2.25rem; }
 
 /* --------------------------------------------------------------------------
    Aanvraagpagina
@@ -2175,24 +2189,10 @@ button.calendar__cell.is-onzeker.is-gekozen { border-bottom-color: var(--warm); 
 .booking__calendar { margin-top: 1rem; }
 .booking__calendar .falun-cal__block { margin-bottom: 1.25rem; }
 .booking__calendar .calendar__legend { margin-bottom: 0.9rem; }
-.booking__calendar .calendar__months { grid-template-columns: 1fr; gap: 1.75rem; }
 .booking__calendar .falun-cal__note { margin-top: 0.9rem; }
-@media (min-width: 700px) {
-  .booking__calendar .calendar__months { grid-template-columns: repeat(2, 1fr); }
-}
 
-/* Stap 1 van de aanvraag: de bestemming. De reizen die iemand zelf kan
-   boeken staan in de bovenste groep, de begeleide reizen en het maatwerk
-   daaronder. */
-.booking__destinations { margin-top: 1rem; display: grid; gap: 1.6rem; }
-.booking__groep-kop {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.13em;
-  color: var(--ink-soft);
-}
-.booking__groep .booking__extras { margin-top: 0.7rem; }
+/* Stap 1 van de aanvraag: de bestemming. Alle reizen staan in één lijst
+   (.booking__extras, die zelf al marge boven heeft). */
 .extra--reis { padding: 1.05rem 1.2rem; align-items: start; }
 .extra--reis .extra__check { margin-top: 0.2rem; }
 .extra--reis .extra__name {

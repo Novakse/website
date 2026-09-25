@@ -14,8 +14,9 @@
     "5": 1095
   },
 
-  "//personen": "Voor hoeveel personen kan iemand boeken. Het huisje gaat tot 4 personen. De basisprijs hierboven geldt voor basisPersonen; bij een ander aantal verandert het huisjesdeel en het autodeel mee. Wordt het duurder (alleen reizen), dan wordt dat volledig doorberekend. Wordt het goedkoper (3 of 4 personen), dan wordt daarvan kortingDoorgeven doorgegeven: 0.5 is de helft, 1 is alles, 0 is niets.",
-  "personen": { "min": 1, "max": 4, "standaard": 2 },
+  "//personen": "Voor hoeveel personen kan iemand boeken (max). Een huisje met huurauto gaat tot huisjeMaxPersonen personen. Bij een grotere groep rekent de prijs met meer huisjes en auto's, met de groep verdeeld over zo weinig mogelijk huisjes: 6 personen is 2 huisjes van 3, 8 personen is 2 huisjes van 4. De basisprijs hierboven geldt voor basisPersonen; bij een ander aantal verandert het huisjesdeel en het autodeel mee. Wordt het duurder (alleen reizen), dan wordt dat volledig doorberekend. Wordt het goedkoper (3 personen of meer), dan wordt daarvan kortingDoorgeven doorgegeven: 0.5 is de helft, 1 is alles, 0 is niets.",
+  "personen": { "min": 1, "max": 20, "standaard": 2 },
+  "huisjeMaxPersonen": 4,
   "basisPersonen": 2,
   "autoPerReisEUR": 200,
   "kortingDoorgeven": 0.5,
@@ -34,7 +35,7 @@
   "//ijsOnzeker": "Periode waarin het ijs nog onzeker is. Die dagen blijven gewoon te boeken, maar krijgen een streepje in de kalender en een regel uitleg eronder. Laat leeg (null) om de waarschuwing weg te halen.",
   "ijsOnzeker": {"van": "2026-12-19", "tot": "2027-01-01"},
 
-  "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf gaat per persoon van de prijs af. Voor de huurauto wordt het bedrag uitgerekend uit autoPerReisEUR hierboven, want dat hangt af van hoeveel mensen er meegaan. Begeleiding komt erbij.",
+  "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf gaat per persoon van de prijs af. Voor de huurauto wordt het bedrag uitgerekend uit autoPerReisEUR hierboven, want dat hangt af van hoeveel mensen er meegaan. Begeleiding staat uit (prijsPerDag is null): alle reizen worden nu zonder begeleiding verkocht. Het blokje blijft staan als gegevens voor de latere pagina met begeleide groepsreizen.",
   "opties": {
     "vluchtZelf": 250,
     "//groterAuto": "Een ruimere huurauto, bijvoorbeeld voor meer bagage of meer mensen. Het bedrag is per persoon. Zolang prijs null is, staat de optie er wel in het aanvraagformulier maar telt hij niet mee in de prijs: Joey stuurt er dan een voorstel voor. Haal het hele blokje weg om de optie niet te tonen. NOG INVULLEN: wat kost een grotere auto?",
@@ -43,7 +44,7 @@
     },
     "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en fika's. De bezoeker kiest zelf voor hoeveel dagen hij begeleiding wil; dat hoeft niet de hele reis te zijn. prijsPerDag geldt voor de hele groep en wordt over de deelnemers verdeeld (perPersoon false). Kan alleen als de hele reis binnen van/tot valt. Zet prijsPerDag op null om begeleiding helemaal weg te laten.",
     "begeleiding": {
-      "prijsPerDag": 100,
+      "prijsPerDag": null,
       "perPersoon": false,
       "van": "2027-01-10",
       "tot": "2027-02-20",

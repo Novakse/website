@@ -10,6 +10,8 @@
     nl: {
       months: ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
       dayHeaders: ["ma", "di", "wo", "do", "vr", "za", "zo"],
+      prevMonth: "Vorige maand",
+      nextMonth: "Volgende maand",
       pauseAria: "Diavoorstelling pauzeren",
       playAria: "Diavoorstelling afspelen",
       legendAvailable: "Beschikbaar",
@@ -33,6 +35,8 @@
     en: {
       months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       dayHeaders: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+      prevMonth: "Previous month",
+      nextMonth: "Next month",
       pauseAria: "Pause slideshow",
       playAria: "Play slideshow",
       legendAvailable: "Available",
@@ -56,6 +60,8 @@
     sv: {
       months: ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"],
       dayHeaders: ["mån", "tis", "ons", "tor", "fre", "lör", "sön"],
+      prevMonth: "Föregående månad",
+      nextMonth: "Nästa månad",
       pauseAria: "Pausa bildspelet",
       playAria: "Spela bildspelet",
       legendAvailable: "Tillgänglig",
@@ -79,6 +85,8 @@
     de: {
       months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
       dayHeaders: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+      prevMonth: "Vorheriger Monat",
+      nextMonth: "Nächster Monat",
       pauseAria: "Diashow pausieren",
       playAria: "Diashow abspielen",
       legendAvailable: "Verfügbar",
@@ -102,6 +110,8 @@
     no: {
       months: ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"],
       dayHeaders: ["man", "tir", "ons", "tor", "fre", "lør", "søn"],
+      prevMonth: "Forrige måned",
+      nextMonth: "Neste måned",
       pauseAria: "Sett lysbildefremvisning på pause",
       playAria: "Spill av lysbildefremvisning",
       legendAvailable: "Tilgjengelig",
@@ -125,6 +135,8 @@
     fi: {
       months: ["tammikuu", "helmikuu", "maaliskuu", "huhtikuu", "toukokuu", "kesäkuu", "heinäkuu", "elokuu", "syyskuu", "lokakuu", "marraskuu", "joulukuu"],
       dayHeaders: ["ma", "ti", "ke", "to", "pe", "la", "su"],
+      prevMonth: "Edellinen kuukausi",
+      nextMonth: "Seuraava kuukausi",
       pauseAria: "Pysäytä diaesitys",
       playAria: "Käynnistä diaesitys",
       legendAvailable: "Vapaa",
@@ -905,47 +917,77 @@
         '</div>';
     }
 
-    function tekenRaster() {
+    /* De kalender toont een maand tegelijk; met de pijltjes klik je door het
+       seizoen. Verder dan de eerste en laatste seizoensmaand gaat het niet. */
+    var eersteMaand = new Date(seizoenVan.getFullYear(), seizoenVan.getMonth(), 1);
+    var laatsteMaand = new Date(seizoenTot.getFullYear(), seizoenTot.getMonth(), 1);
+    var zichtbareMaand = eersteMaand;
+
+    function maakPijl(stap, label) {
+      var knop = document.createElement("button");
+      knop.type = "button";
+      knop.className = "calendar__month-nav";
+      knop.innerHTML = '<span aria-hidden="true">' + (stap < 0 ? "&#8249;" : "&#8250;") + '</span>' +
+        '<span class="sr-only">' + label + '</span>';
+      knop.disabled = stap < 0 ? zichtbareMaand <= eersteMaand : zichtbareMaand >= laatsteMaand;
+      knop.addEventListener("click", function () {
+        zichtbareMaand = new Date(zichtbareMaand.getFullYear(), zichtbareMaand.getMonth() + stap, 1);
+        tekenRaster(stap);
+      });
+      return knop;
+    }
+
+    function tekenRaster(focusOp) {
       raster.innerHTML = "";
-      var loop = new Date(seizoenVan.getFullYear(), seizoenVan.getMonth(), 1);
-      var eindMaand = new Date(seizoenTot.getFullYear(), seizoenTot.getMonth(), 1);
+      var jaar = zichtbareMaand.getFullYear();
+      var nr = zichtbareMaand.getMonth();
 
-      while (loop <= eindMaand) {
-        var jaar = loop.getFullYear();
-        var nr = loop.getMonth();
+      var kop = document.createElement("div");
+      kop.className = "calendar__month-head";
+      var terug = maakPijl(-1, T.prevMonth);
+      var titel = document.createElement("h3");
+      titel.className = "calendar__month-title";
+      titel.setAttribute("aria-live", "polite");
+      titel.textContent = MAANDEN[nr] + " " + jaar;
+      var vooruit = maakPijl(1, T.nextMonth);
+      kop.appendChild(terug);
+      kop.appendChild(titel);
+      kop.appendChild(vooruit);
+      raster.appendChild(kop);
 
-        var maandBox = document.createElement("div");
-        maandBox.className = "calendar__month";
-        var titel = document.createElement("h3");
-        titel.className = "calendar__month-name";
-        titel.textContent = MAANDEN[nr] + " " + jaar;
-        maandBox.appendChild(titel);
+      var maandBox = document.createElement("div");
+      maandBox.className = "calendar__month";
 
-        var dagen = document.createElement("div");
-        dagen.className = "calendar__grid";
-        DAGKOPPEN.forEach(function (naam) {
-          var kop = document.createElement("span");
-          kop.className = "calendar__dayname";
-          kop.setAttribute("aria-hidden", "true");
-          kop.textContent = naam;
-          dagen.appendChild(kop);
-        });
+      var dagen = document.createElement("div");
+      dagen.className = "calendar__grid";
+      DAGKOPPEN.forEach(function (naam) {
+        var kop = document.createElement("span");
+        kop.className = "calendar__dayname";
+        kop.setAttribute("aria-hidden", "true");
+        kop.textContent = naam;
+        dagen.appendChild(kop);
+      });
 
-        var start = (new Date(jaar, nr, 1).getDay() + 6) % 7;
-        for (var leeg = 0; leeg < start; leeg++) {
-          var gat = document.createElement("span");
-          gat.className = "calendar__cell is-empty";
-          dagen.appendChild(gat);
-        }
+      var start = (new Date(jaar, nr, 1).getDay() + 6) % 7;
+      for (var leeg = 0; leeg < start; leeg++) {
+        var gat = document.createElement("span");
+        gat.className = "calendar__cell is-empty";
+        dagen.appendChild(gat);
+      }
 
-        var aantal = new Date(jaar, nr + 1, 0).getDate();
-        for (var d = 1; d <= aantal; d++) {
-          dagen.appendChild(maakDag(new Date(jaar, nr, d)));
-        }
+      var aantal = new Date(jaar, nr + 1, 0).getDate();
+      for (var d = 1; d <= aantal; d++) {
+        dagen.appendChild(maakDag(new Date(jaar, nr, d)));
+      }
 
-        maandBox.appendChild(dagen);
-        raster.appendChild(maandBox);
-        loop.setMonth(loop.getMonth() + 1);
+      maandBox.appendChild(dagen);
+      raster.appendChild(maandBox);
+
+      // Na het doorklikken blijft de focus op het pijltje, zodat je met het
+      // toetsenbord verder kunt klikken. Is dat pijltje nu uit, dan het andere.
+      if (focusOp) {
+        var doel = focusOp < 0 ? terug : vooruit;
+        (doel.disabled ? (focusOp < 0 ? vooruit : terug) : doel).focus();
       }
     }
 
@@ -1038,6 +1080,18 @@
       if (bezetOp(uitVan) || bezetTussen(uitVan, uitTot)) return;
       keuzeVan = uitVan;
       keuzeTot = uitTot;
+    })();
+
+    // Staat er al een periode, dan opent de kalender in de maand van de
+    // aankomstdag; anders in de eerste maand met een vrije dag.
+    zichtbareMaand = (function () {
+      if (keuzeVan) return new Date(keuzeVan.getFullYear(), keuzeVan.getMonth(), 1);
+      var loop = new Date(seizoenVan.getTime());
+      while (loop <= seizoenTot) {
+        if (!bezetOp(loop)) return new Date(loop.getFullYear(), loop.getMonth(), 1);
+        loop.setDate(loop.getDate() + 1);
+      }
+      return eersteMaand;
     })();
 
     tekenRaster();

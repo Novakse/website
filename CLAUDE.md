@@ -49,3 +49,19 @@
 - Overschrijf geen bestaande goedgekeurde versie zonder een duidelijke reden.
 - Communiceer in eenvoudig Nederlands.
 - Schrijf code, bestandsnamen, variabelen en commentaar in het Engels.
+
+## Claude-modelrouting en delegatie
+
+1. Never do the work yourself.
+2. Always dispatch a sub-agent.
+3. Don't always use Fable.
+4. Use Opus 5.5 for easier tasks.
+5. # Model routing
+6. - Fable 5.1: architecture, hard bugs, review
+7. - Opus 5.5: edits, tests, docs, refactors
+8. - Haiku 4.5: lookups and summaries
+9. - Pass `model` on every Agent call
+10. # Delegation
+11. - One sub-agent per task, plan first
+12. - Run independent sub-agents in parallel
+13. - Read the report, never the files
