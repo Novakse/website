@@ -397,6 +397,16 @@
   font-size: 1.1rem;
 }
 .salen-fieldset legend + * { clear: both; }
+/* Date block: a single field, so its label doubles as the section heading. */
+.salen-fieldset--date .salen-field label {
+  margin-bottom: 0.9rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+@media (min-width: 36rem) {
+  .salen-fieldset--date .salen-field { max-width: calc(50% - 0.5rem); }
+}
 
 .salen-form__row { display: grid; gap: 1rem; }
 @media (min-width: 36rem) {

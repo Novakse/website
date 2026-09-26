@@ -337,11 +337,8 @@
     var phone = el.phone.value.trim();
     var date = el.date.value;
 
-    if (!name) problems.push([el.name, "Vul je naam in."]);
-    if (!email) problems.push([el.email, "Vul je e-mailadres in."]);
-    else if (!EMAIL_PATTERN.test(email)) problems.push([el.email, "Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl."]);
-    if (!phone) problems.push([el.phone, "Vul je telefoonnummer in."]);
-
+    // Checked in DOM order, so the first problem (which gets focus) is the
+    // first invalid field on the page: date, shoe sizes, then personal details.
     if (!date) {
       problems.push([el.date, "Kies een datum."]);
     } else if (date < today()) {
@@ -353,6 +350,11 @@
     if (isRenting() && !el.shoeSizes.value.trim()) {
       problems.push([el.shoeSizes, "Vul de schoenmaten in voor de huurschaatsen."]);
     }
+
+    if (!name) problems.push([el.name, "Vul je naam in."]);
+    if (!email) problems.push([el.email, "Vul je e-mailadres in."]);
+    else if (!EMAIL_PATTERN.test(email)) problems.push([el.email, "Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl."]);
+    if (!phone) problems.push([el.phone, "Vul je telefoonnummer in."]);
 
     [el.name, el.email, el.phone, el.date, el.shoeSizes].forEach(clearFieldError);
     problems.forEach(function (p) { setFieldError(p[0], p[1]); });
