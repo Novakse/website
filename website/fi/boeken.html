@@ -8,8 +8,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png?v=3" />
   <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=3" />
   <script>document.documentElement.classList.add("js");</script>
-  <title>Kokoa tarjouspyyntösi - Novakse Reizen</title>
-  <meta name="description" content="Kokoa luistelumatkasi: valitse kohde, ajankohta, henkilömäärä ja lisäpalvelut, ja lähetä pyyntösi Novakselle." />
+  <title>Varaa luistelumatkasi - Novakse Reizen</title>
+  <meta name="description" content="Varaa luistelumatkasi: valitse kohde, ajankohta ja henkilömäärä, näe hinta heti ja maksa verkossa." />
   <meta name="robots" content="noindex" />
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -18,13 +18,11 @@
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/theme-groen.css" />
   <style>
-    /* Aanvraagpagina - visuele verfijning; raakt geen ID's, classes of
-       attributen die boeken.js gebruikt. */
+    /* Booking page - visual refinement only; touches no IDs, classes or
+       attributes that boeken.js uses. */
     .booking__title { text-wrap: balance; }
     .booking__intro,
-    .booking__voorbeeld,
     .booking__note { text-wrap: pretty; }
-    .booking__legend--klein { text-wrap: balance; }
     .booking__step-btn { display: inline-flex; align-items: center; justify-content: center; }
   </style>
 </head>
@@ -74,307 +72,49 @@
   <main id="main" class="booking-page">
     <div class="wrap">
       <nav class="crumbs crumbs--dark" aria-label="Murupolku">
-        <a href="reizen.html">Matkat</a> <span aria-hidden="true">/</span> <span>Pyyntö</span>
+        <a href="reizen.html">Matkat</a> <span aria-hidden="true">/</span> <span>Varaus</span>
       </nav>
 
       <p class="booking__trip" id="reisNaam">Luistelumatka</p>
-      <h1 class="booking__title">Kokoa tarjouspyyntösi</h1>
-      <p class="booking__intro">Täytä toiveesi, niin näet heti suunnilleen, mitä se maksaa. Et sitoudu vielä mihinkään - Joey tarkistaa pyyntösi henkilökohtaisesti ja vahvistaa, onko ajankohta vapaa.</p>
+      <h1 class="booking__title">Varaa luistelumatkasi</h1>
+      <p class="booking__intro">Valitse kohde, ajankohta ja montako teitä on. Näet hinnan heti ja maksat sen jälkeen verkossa.</p>
 
+      <!--
+        DESTINATIONS
+        One line per trip. "prijstabel" (or "kalender" for Falun) is the same
+        price file as the calendar on the trip page; prices and the persons
+        limits live there, never here. The web address picks the trip:
+        boeken.html?reis=orsa. A trip with "prijsOpAanvraag" is not paid
+        online and shows its own prices and contact links instead.
+      -->
       <script type="application/json" id="boekingsdata">
 {
+  "//standaard": "Trip the page opens with when the address has none. null: the visitor chooses.",
   "standaard": null,
-  "weerbericht": "Aktiviteetin toteutuminen riippuu säästä ja olosuhteista.",
   "reizen": {
-    "orsa": {
-      "naam": "Orsa, Ruotsi",
-      "zelfTeBoeken": true,
-      "periodeVrij": true,
-      "maxPersonen": 12,
-      "prijstabel": "data/orsa-prijzen.json",
-      "//prijstabel": "De prijzen per reisduur en de begeleiding op het ijs staan in dat bestand, net als in de kalender op orsa.html. Gerekend met twee personen.",
-      "vragen": [
-        {
-          "sleutel": "vervoer",
-          "vraag": "Miten liikut paikan päällä?",
-          "opties": [
-            {
-              "naam": "Paikallinen kuljetus sisältyy matkaan",
-              "toelichting": "Vakiona tällä matkalla"
-            },
-            {
-              "naam": "Haluamme oman vuokra-auton",
-              "toelichting": "Joey lähettää ehdotuksen hinnan kanssa"
-            },
-            {
-              "naam": "Järjestämme kuljetuksen kokonaan itse"
-            }
-          ]
-        },
-        {
-          "sleutel": "verzekering",
-          "vraag": "Entä vakuutuksesi?",
-          "opties": [
-            {
-              "naam": "Olen itse järjestänyt matka- ja peruutusvakuutuksen"
-            },
-            {
-              "naam": "Haluaisin neuvoja tästä",
-              "toelichting": "Joey opastaa sinua; hankit sen itse"
-            }
-          ]
-        },
-        {
-          "sleutel": "materiaal",
-          "vraag": "Otatko omat luistimesi mukaan?",
-          "opties": [
-            {
-              "naam": "Kyllä, minulla on omat retkiluistimet"
-            },
-            {
-              "naam": "En, haluaisin neuvoja vuokraamisesta tai ostamisesta"
-            },
-            {
-              "naam": "En tiedä vielä"
-            }
-          ]
-        }
-      ],
-      "extras": [
-        {
-          "naam": "Hiihtolippu",
-          "prijs": 65,
-          "toelichting": "per henkilö, ilman välineitä - vuokraus järjestät itse"
-        },
-        {
-          "naam": "Moottorikelkkailu",
-          "prijs": 100,
-          "toelichting": "per henkilö"
-        },
-        {
-          "naam": "Murtomaahiihto",
-          "prijs": 25,
-          "toelichting": "per henkilö, ilman välineitä"
-        },
-        {
-          "naam": "Koiravaljakkoajelu",
-          "prijs": 70,
-          "toelichting": "per henkilö, 20 minuuttia"
-        }
-      ]
-    },
-    "finland": {
-      "naam": "Punkaharju, Suomi",
-      "zelfTeBoeken": true,
-      "periodeVrij": true,
-      "minimumPersonen": 1,
-      "maxPersonen": 12,
-      "opslagPerPersoonPerNacht": 0,
-      "extras": [],
-      "prijsPerPersoonPerDag": null,
-      "prijstabel": "data/finland-prijzen.json",
-      "//prijstabel": "De prijzen per periode en per reisduur staan in dat bestand, net als in de kalender op finland.html. Inclusief vlucht, huurauto en het huisje met sauna, gerekend met twee personen per huisje."
-    },
-    "falun": {
-      "naam": "Falun, Ruotsi",
-      "zelfTeBoeken": true,
-      "//kalender": "Met een kalenderbestand erbij kiest de bezoeker zijn periode in stap 3 op deze pagina zelf, met de prijs per aankomstdag erbij. De prijzen staan in dat bestand, niet hier.",
-      "kalender": "data/falun-prijzen.json",
-      "periodeVrij": true,
-      "maxPersonen": 12,
-      "vragen": [
-        {
-          "sleutel": "vervoer",
-          "vraag": "Miten liikut paikan päällä?",
-          "opties": [
-            {
-              "naam": "Paikallinen kuljetus sisältyy matkaan",
-              "toelichting": "Vakiona tällä matkalla"
-            },
-            {
-              "naam": "Haluamme oman vuokra-auton",
-              "toelichting": "Joey lähettää ehdotuksen hinnan kanssa"
-            },
-            {
-              "naam": "Järjestämme kuljetuksen kokonaan itse"
-            }
-          ]
-        },
-        {
-          "sleutel": "verzekering",
-          "vraag": "Entä vakuutuksesi?",
-          "opties": [
-            {
-              "naam": "Olen itse järjestänyt matka- ja peruutusvakuutuksen"
-            },
-            {
-              "naam": "Haluaisin neuvoja tästä",
-              "toelichting": "Joey opastaa sinua; hankit sen itse"
-            }
-          ]
-        },
-        {
-          "sleutel": "materiaal",
-          "vraag": "Otatko omat luistimesi mukaan?",
-          "opties": [
-            {
-              "naam": "Kyllä, minulla on omat retkiluistimet"
-            },
-            {
-              "naam": "En, haluaisin neuvoja vuokraamisesta tai ostamisesta"
-            },
-            {
-              "naam": "En tiedä vielä"
-            }
-          ]
-        }
-      ],
-      "extras": [
-        {
-          "naam": "Hiihtolippu",
-          "prijs": 65,
-          "toelichting": "per henkilö, ilman välineitä - vuokraus järjestät itse"
-        },
-        {
-          "naam": "Moottorikelkkailu",
-          "prijs": 100,
-          "toelichting": "per henkilö"
-        },
-        {
-          "naam": "Murtomaahiihto",
-          "prijs": 25,
-          "toelichting": "per henkilö, ilman välineitä"
-        },
-        {
-          "naam": "Koiravaljakkoajelu",
-          "prijs": 70,
-          "toelichting": "per henkilö, 20 minuuttia"
-        }
-      ]
-    },
-    "weissensee": {
-      "naam": "Weissensee, Itävalta",
-      "zelfTeBoeken": true,
-      "periodeVrij": true,
-      "minimumPersonen": 1,
-      "maxPersonen": 12,
-      "opslagPerPersoonPerNacht": 0,
-      "extras": [],
-      "prijsPerPersoonPerDag": null,
-      "prijstabel": "data/weissensee-prijzen.json",
-      "//prijstabel": "De prijzen per reisduur staan in dat bestand, net als in de kalender op weissensee.html. Gerekend met twee personen."
-    },
-    "lulea": {
-      "naam": "Luleå, Ruotsi",
-      "zelfTeBoeken": true,
-      "periodeVrij": true,
-      "minimumPersonen": 1,
-      "maxPersonen": 12,
-      "opslagPerPersoonPerNacht": 0,
-      "extras": [],
-      "prijsPerPersoonPerDag": null,
-      "prijstabel": "data/lulea-prijzen.json",
-      "//prijstabel": "De prijzen per reisduur staan in dat bestand, net als in de kalender op lulea.html. Gerekend met twee personen."
-    }
+    "orsa": { "naam": "Orsa, Ruotsi", "prijstabel": "data/orsa-prijzen.json" },
+    "finland": { "naam": "Punkaharju, Suomi", "prijstabel": "data/finland-prijzen.json" },
+    "falun": { "naam": "Falun, Ruotsi", "kalender": "data/falun-prijzen.json" },
+    "weissensee": { "naam": "Weissensee, Itävalta", "prijstabel": "data/weissensee-prijzen.json" },
+    "lulea": { "naam": "Luleå, Ruotsi", "prijstabel": "data/lulea-prijzen.json" }
   }
 }
       </script>
 
-      <p class="booking__voorbeeld" id="boekingVoorbeeld" hidden></p>
+      <div class="booking booking--pay" id="boekingsformulier">
+        <fieldset class="booking__block" id="reisBlok">
+          <legend class="booking__legend"><span class="booking__step">1</span> Minne haluat matkustaa?</legend>
+          <p class="booking__note">Valitse ensin kohde. Sen jälkeen valitset ajankohdan ja henkilömäärän.</p>
+          <div class="booking__destinations" id="reisKeuze"></div>
+        </fieldset>
 
-      <form class="booking" id="boekingsformulier" novalidate>
-        <div class="booking__grid">
-          <div class="booking__main">
-
-            <fieldset class="booking__block" id="reisBlok">
-              <legend class="booking__legend"><span class="booking__step">1</span> Minne haluat matkustaa?</legend>
-              <p class="booking__note">Valitse ensin kohde. Alla olevat vaiheet mukautuvat valintaasi.</p>
-              <div class="booking__destinations" id="reisKeuze"></div>
-            </fieldset>
-
-            <fieldset class="booking__block" id="personenBlok">
-              <legend class="booking__legend"><span class="booking__step">2</span> Kuinka moni tulee mukaan</legend>
-              <div class="booking__persons">
-                <button type="button" class="booking__step-btn" id="minderPersonen" aria-label="Yksi henkilö vähemmän">−</button>
-                <input type="number" id="personen" name="personen" value="2" min="1" max="12" inputmode="numeric" aria-label="Henkilömäärä" />
-                <button type="button" class="booking__step-btn" id="meerPersonen" aria-label="Yksi henkilö lisää">+</button>
-              </div>
-              <p class="booking__note">Lapset lasketaan mukaan. Kerro erityistoiveet huomautuskentässä.</p>
-            </fieldset>
-
-            <fieldset class="booking__block" id="periodeBlok">
-              <legend class="booking__legend"><span class="booking__step">3</span> Ajankohtasi</legend>
-              <div class="falun-cal booking__calendar" id="kalenderBox" data-falun-modus="periode" hidden></div>
-              <div class="booking__period" id="periodeBox">
-                <p class="booking__period-empty">Ajankohtaa ei ole vielä valittu.</p>
-              </div>
-              <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Valitse ajankohta kalenterista</a>
-            </fieldset>
-
-            <fieldset class="booking__block" id="detailsBlok">
-              <legend class="booking__legend"><span class="booking__step">4</span> Matkasi yksityiskohdat</legend>
-              <p class="booking__note">Tässä tekemäsi valinnat koskevat yllä valitsemaasi kohdetta.</p>
-
-              <div id="vragenBlokken"></div>
-
-              <div class="booking__sub" id="variantBlok">
-                <p class="booking__sub-kop">Varustevuokran kanssa vai ilman</p>
-                <p class="booking__note">Majoitukseen sisältyy aamiainen ja loppusiivous. Jos otat omat luistimesi mukaan, maksat vähemmän.</p>
-                <div class="booking__extras" id="variantBox"></div>
-              </div>
-
-              <div class="booking__sub" id="optiesBlok">
-                <p class="booking__sub-kop">Tämän matkan vaihtoehdot</p>
-                <div class="booking__extras" id="optiesBox"></div>
-              </div>
-
-              <div class="booking__sub" id="extrasBlok">
-                <p class="booking__sub-kop">Lisäaktiviteetit</p>
-                <p class="booking__note">Valinnaista. Kaikki hinnat ovat henkilöä kohti; järjestämme aktiviteetit puolestasi paikan päällä.</p>
-                <div class="booking__extras" id="extrasBox"></div>
-              </div>
-            </fieldset>
-
-            <fieldset class="booking__block" id="gegevensBlok">
-              <legend class="booking__legend"><span class="booking__step">5</span> Yhteystietosi</legend>
-              <div class="form-grid">
-                <label class="form-field">
-                  <span>Nimi</span>
-                  <input type="text" name="naam" id="naam" autocomplete="name" required />
-                </label>
-                <label class="form-field">
-                  <span>Sähköpostiosoite</span>
-                  <input type="email" name="email" id="email" autocomplete="email" required />
-                </label>
-                <label class="form-field">
-                  <span>Puhelin</span>
-                  <input type="tel" name="telefoon" id="telefoon" autocomplete="tel" />
-                </label>
-                <label class="form-field form-field--wide">
-                  <span>Huomautukset tai kysymykset</span>
-                  <textarea name="opmerkingen" id="opmerkingen" rows="4"></textarea>
-                </label>
-              </div>
-            </fieldset>
-
-          </div>
-
-          <aside class="booking__summary" aria-label="Yhteenveto pyynnöstäsi">
-            <h2 class="booking__summary-title">Pyyntösi</h2>
-            <dl class="booking__lines" id="overzichtRegels"></dl>
-            <div class="booking__total">
-              <span>Yhteensä, arvio</span>
-              <strong id="totaalBedrag">-</strong>
-            </div>
-            <p class="booking__note">Tämä on arvio valintojesi perusteella. Saat lopullisen hinnan Joeylta.</p>
-            <div class="booking__actions">
-              <button type="submit" class="btn btn--dark booking__send">Lähetä pyyntö sähköpostilla</button>
-              <a class="btn btn--outline-dark booking__whatsapp" id="whatsappKnop" href="https://wa.me/31617467643" target="_blank" rel="noopener">Lähetä WhatsAppilla</a>
-            </div>
-            <p class="booking__error" id="formulierFout" role="alert" hidden></p>
-          </aside>
-        </div>
-      </form>
+        <section class="booking__block" id="periodeBlok" aria-labelledby="periodeTitel">
+          <h2 class="booking__legend"><span class="booking__step" aria-hidden="true">2</span> <span id="periodeTitel">Ajankohta ja henkilömäärä</span></h2>
+          <div id="kalenderPlek"></div>
+          <div class="booking__period booking__on-request" id="aanvraagBox" hidden></div>
+          <a class="link-arrow booking__change" id="naarReispagina" href="reizen.html" hidden></a>
+        </section>
+      </div>
     </div>
   </main>
 

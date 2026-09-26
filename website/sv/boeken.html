@@ -8,8 +8,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png?v=3" />
   <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=3" />
   <script>document.documentElement.classList.add("js");</script>
-  <title>Sätt ihop din förfrågan - Novakse Reizen</title>
-  <meta name="description" content="Sätt ihop din skridskoresa: välj destination, period, antal personer och tillval, och skicka din förfrågan till Novakse." />
+  <title>Boka din skridskoresa - Novakse Reizen</title>
+  <meta name="description" content="Boka din skridskoresa: välj destination, period och antal personer, se priset direkt och betala online." />
   <meta name="robots" content="noindex" />
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -18,13 +18,11 @@
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/theme-groen.css" />
   <style>
-    /* Aanvraagpagina - visuele verfijning; raakt geen ID's, classes of
-       attributen die boeken.js gebruikt. */
+    /* Booking page - visual refinement only; touches no IDs, classes or
+       attributes that boeken.js uses. */
     .booking__title { text-wrap: balance; }
     .booking__intro,
-    .booking__voorbeeld,
     .booking__note { text-wrap: pretty; }
-    .booking__legend--klein { text-wrap: balance; }
     .booking__step-btn { display: inline-flex; align-items: center; justify-content: center; }
   </style>
 </head>
@@ -74,307 +72,49 @@
   <main id="main" class="booking-page">
     <div class="wrap">
       <nav class="crumbs crumbs--dark" aria-label="Brödsmulor">
-        <a href="reizen.html">Resor</a> <span aria-hidden="true">/</span> <span>Förfrågan</span>
+        <a href="reizen.html">Resor</a> <span aria-hidden="true">/</span> <span>Boka</span>
       </nav>
 
       <p class="booking__trip" id="reisNaam">Skridskoresa</p>
-      <h1 class="booking__title">Sätt ihop din förfrågan</h1>
-      <p class="booking__intro">Fyll i vad du vill ha, så ser du direkt ungefär vad det kostar. Du binder dig inte till något än - Joey går igenom din förfrågan personligen och bekräftar om perioden är ledig.</p>
+      <h1 class="booking__title">Boka din skridskoresa</h1>
+      <p class="booking__intro">Välj destination, period och hur många ni är. Du ser priset direkt och betalar sedan online.</p>
 
+      <!--
+        DESTINATIONS
+        One line per trip. "prijstabel" (or "kalender" for Falun) is the same
+        price file as the calendar on the trip page; prices and the persons
+        limits live there, never here. The web address picks the trip:
+        boeken.html?reis=orsa. A trip with "prijsOpAanvraag" is not paid
+        online and shows its own prices and contact links instead.
+      -->
       <script type="application/json" id="boekingsdata">
 {
+  "//standaard": "Trip the page opens with when the address has none. null: the visitor chooses.",
   "standaard": null,
-  "weerbericht": "Om en aktivitet blir av beror på väder och förhållanden.",
   "reizen": {
-    "orsa": {
-      "naam": "Orsa, Sverige",
-      "zelfTeBoeken": true,
-      "periodeVrij": true,
-      "maxPersonen": 12,
-      "prijstabel": "data/orsa-prijzen.json",
-      "//prijstabel": "De prijzen per reisduur en de begeleiding op het ijs staan in dat bestand, net als in de kalender op orsa.html. Gerekend met twee personen.",
-      "vragen": [
-        {
-          "sleutel": "vervoer",
-          "vraag": "Hur tar du dig runt på plats?",
-          "opties": [
-            {
-              "naam": "Transport på plats ingår i resan",
-              "toelichting": "Standard för denna resa"
-            },
-            {
-              "naam": "Vi vill ha en egen hyrbil",
-              "toelichting": "Joey skickar ett förslag med pris"
-            },
-            {
-              "naam": "Vi ordnar transporten helt själva"
-            }
-          ]
-        },
-        {
-          "sleutel": "verzekering",
-          "vraag": "Hur är det med din försäkring?",
-          "opties": [
-            {
-              "naam": "Jag har själv ordnat rese- och avbeställningsförsäkring"
-            },
-            {
-              "naam": "Jag vill gärna ha råd om detta",
-              "toelichting": "Joey visar dig vägen; du tecknar den själv"
-            }
-          ]
-        },
-        {
-          "sleutel": "materiaal",
-          "vraag": "Tar du med egen skridskoutrustning?",
-          "opties": [
-            {
-              "naam": "Ja, jag har egna långfärdsskridskor"
-            },
-            {
-              "naam": "Nej, jag vill ha råd om att hyra eller köpa"
-            },
-            {
-              "naam": "Jag vet inte än"
-            }
-          ]
-        }
-      ],
-      "extras": [
-        {
-          "naam": "Skidpass",
-          "prijs": 65,
-          "toelichting": "per person, exklusive utrustning - hyra ordnar du själv"
-        },
-        {
-          "naam": "Snöskoteråkning",
-          "prijs": 100,
-          "toelichting": "per person"
-        },
-        {
-          "naam": "Längdskidåkning",
-          "prijs": 25,
-          "toelichting": "per person, utan utrustning"
-        },
-        {
-          "naam": "Hundspann",
-          "prijs": 70,
-          "toelichting": "per person, per 20 minuter"
-        }
-      ]
-    },
-    "finland": {
-      "naam": "Punkaharju, Finland",
-      "zelfTeBoeken": true,
-      "periodeVrij": true,
-      "minimumPersonen": 1,
-      "maxPersonen": 12,
-      "opslagPerPersoonPerNacht": 0,
-      "extras": [],
-      "prijsPerPersoonPerDag": null,
-      "prijstabel": "data/finland-prijzen.json",
-      "//prijstabel": "De prijzen per periode en per reisduur staan in dat bestand, net als in de kalender op finland.html. Inclusief vlucht, huurauto en het huisje met sauna, gerekend met twee personen per huisje."
-    },
-    "falun": {
-      "naam": "Falun, Sverige",
-      "zelfTeBoeken": true,
-      "//kalender": "Met een kalenderbestand erbij kiest de bezoeker zijn periode in stap 3 op deze pagina zelf, met de prijs per aankomstdag erbij. De prijzen staan in dat bestand, niet hier.",
-      "kalender": "data/falun-prijzen.json",
-      "periodeVrij": true,
-      "maxPersonen": 12,
-      "vragen": [
-        {
-          "sleutel": "vervoer",
-          "vraag": "Hur tar du dig runt på plats?",
-          "opties": [
-            {
-              "naam": "Transport på plats ingår i resan",
-              "toelichting": "Standard för denna resa"
-            },
-            {
-              "naam": "Vi vill ha en egen hyrbil",
-              "toelichting": "Joey skickar ett förslag med pris"
-            },
-            {
-              "naam": "Vi ordnar transporten helt själva"
-            }
-          ]
-        },
-        {
-          "sleutel": "verzekering",
-          "vraag": "Hur är det med din försäkring?",
-          "opties": [
-            {
-              "naam": "Jag har själv ordnat rese- och avbeställningsförsäkring"
-            },
-            {
-              "naam": "Jag vill gärna ha råd om detta",
-              "toelichting": "Joey visar dig vägen; du tecknar den själv"
-            }
-          ]
-        },
-        {
-          "sleutel": "materiaal",
-          "vraag": "Tar du med egen skridskoutrustning?",
-          "opties": [
-            {
-              "naam": "Ja, jag har egna långfärdsskridskor"
-            },
-            {
-              "naam": "Nej, jag vill ha råd om att hyra eller köpa"
-            },
-            {
-              "naam": "Jag vet inte än"
-            }
-          ]
-        }
-      ],
-      "extras": [
-        {
-          "naam": "Skidpass",
-          "prijs": 65,
-          "toelichting": "per person, exklusive utrustning - hyra ordnar du själv"
-        },
-        {
-          "naam": "Snöskoteråkning",
-          "prijs": 100,
-          "toelichting": "per person"
-        },
-        {
-          "naam": "Längdskidåkning",
-          "prijs": 25,
-          "toelichting": "per person, utan utrustning"
-        },
-        {
-          "naam": "Hundspann",
-          "prijs": 70,
-          "toelichting": "per person, per 20 minuter"
-        }
-      ]
-    },
-    "weissensee": {
-      "naam": "Weissensee, Österrike",
-      "zelfTeBoeken": true,
-      "periodeVrij": true,
-      "minimumPersonen": 1,
-      "maxPersonen": 12,
-      "opslagPerPersoonPerNacht": 0,
-      "extras": [],
-      "prijsPerPersoonPerDag": null,
-      "prijstabel": "data/weissensee-prijzen.json",
-      "//prijstabel": "De prijzen per reisduur staan in dat bestand, net als in de kalender op weissensee.html. Gerekend met twee personen."
-    },
-    "lulea": {
-      "naam": "Luleå, Sverige",
-      "zelfTeBoeken": true,
-      "periodeVrij": true,
-      "minimumPersonen": 1,
-      "maxPersonen": 12,
-      "opslagPerPersoonPerNacht": 0,
-      "extras": [],
-      "prijsPerPersoonPerDag": null,
-      "prijstabel": "data/lulea-prijzen.json",
-      "//prijstabel": "De prijzen per reisduur staan in dat bestand, net als in de kalender op lulea.html. Gerekend met twee personen."
-    }
+    "orsa": { "naam": "Orsa, Sverige", "prijstabel": "data/orsa-prijzen.json" },
+    "finland": { "naam": "Punkaharju, Finland", "prijstabel": "data/finland-prijzen.json" },
+    "falun": { "naam": "Falun, Sverige", "kalender": "data/falun-prijzen.json" },
+    "weissensee": { "naam": "Weissensee, Österrike", "prijstabel": "data/weissensee-prijzen.json" },
+    "lulea": { "naam": "Luleå, Sverige", "prijstabel": "data/lulea-prijzen.json" }
   }
 }
       </script>
 
-      <p class="booking__voorbeeld" id="boekingVoorbeeld" hidden></p>
+      <div class="booking booking--pay" id="boekingsformulier">
+        <fieldset class="booking__block" id="reisBlok">
+          <legend class="booking__legend"><span class="booking__step">1</span> Vart vill du åka?</legend>
+          <p class="booking__note">Välj först en destination. Sedan väljer du period och antal personer.</p>
+          <div class="booking__destinations" id="reisKeuze"></div>
+        </fieldset>
 
-      <form class="booking" id="boekingsformulier" novalidate>
-        <div class="booking__grid">
-          <div class="booking__main">
-
-            <fieldset class="booking__block" id="reisBlok">
-              <legend class="booking__legend"><span class="booking__step">1</span> Vart vill du åka?</legend>
-              <p class="booking__note">Välj först en destination. Stegen nedan anpassas efter ditt val.</p>
-              <div class="booking__destinations" id="reisKeuze"></div>
-            </fieldset>
-
-            <fieldset class="booking__block" id="personenBlok">
-              <legend class="booking__legend"><span class="booking__step">2</span> Med hur många personer</legend>
-              <div class="booking__persons">
-                <button type="button" class="booking__step-btn" id="minderPersonen" aria-label="En person färre">−</button>
-                <input type="number" id="personen" name="personen" value="2" min="1" max="12" inputmode="numeric" aria-label="Antal personer" />
-                <button type="button" class="booking__step-btn" id="meerPersonen" aria-label="En person till">+</button>
-              </div>
-              <p class="booking__note">Barn räknas också. Ange eventuella särskilda önskemål i kommentarsfältet.</p>
-            </fieldset>
-
-            <fieldset class="booking__block" id="periodeBlok">
-              <legend class="booking__legend"><span class="booking__step">3</span> Din period</legend>
-              <div class="falun-cal booking__calendar" id="kalenderBox" data-falun-modus="periode" hidden></div>
-              <div class="booking__period" id="periodeBox">
-                <p class="booking__period-empty">Ingen period vald ännu.</p>
-              </div>
-              <a class="link-arrow booking__change" id="terugNaarReis" href="finland.html#prijzen">Välj en period i kalendern</a>
-            </fieldset>
-
-            <fieldset class="booking__block" id="detailsBlok">
-              <legend class="booking__legend"><span class="booking__step">4</span> Detaljer för din resa</legend>
-              <p class="booking__note">Det du väljer här hör till destinationen du valde ovan.</p>
-
-              <div id="vragenBlokken"></div>
-
-              <div class="booking__sub" id="variantBlok">
-                <p class="booking__sub-kop">Med eller utan hyra av utrustning</p>
-                <p class="booking__note">Boendet inkluderar frukost och slutstädning. Tar du med dina egna skridskor betalar du mindre.</p>
-                <div class="booking__extras" id="variantBox"></div>
-              </div>
-
-              <div class="booking__sub" id="optiesBlok">
-                <p class="booking__sub-kop">Alternativ för den här resan</p>
-                <div class="booking__extras" id="optiesBox"></div>
-              </div>
-
-              <div class="booking__sub" id="extrasBlok">
-                <p class="booking__sub-kop">Extra aktiviteter</p>
-                <p class="booking__note">Valfritt. Alla belopp är per person; vi ordnar aktiviteterna på plats åt dig.</p>
-                <div class="booking__extras" id="extrasBox"></div>
-              </div>
-            </fieldset>
-
-            <fieldset class="booking__block" id="gegevensBlok">
-              <legend class="booking__legend"><span class="booking__step">5</span> Dina uppgifter</legend>
-              <div class="form-grid">
-                <label class="form-field">
-                  <span>Namn</span>
-                  <input type="text" name="naam" id="naam" autocomplete="name" required />
-                </label>
-                <label class="form-field">
-                  <span>E-postadress</span>
-                  <input type="email" name="email" id="email" autocomplete="email" required />
-                </label>
-                <label class="form-field">
-                  <span>Telefon</span>
-                  <input type="tel" name="telefoon" id="telefoon" autocomplete="tel" />
-                </label>
-                <label class="form-field form-field--wide">
-                  <span>Kommentarer eller frågor</span>
-                  <textarea name="opmerkingen" id="opmerkingen" rows="4"></textarea>
-                </label>
-              </div>
-            </fieldset>
-
-          </div>
-
-          <aside class="booking__summary" aria-label="Översikt över din förfrågan">
-            <h2 class="booking__summary-title">Din förfrågan</h2>
-            <dl class="booking__lines" id="overzichtRegels"></dl>
-            <div class="booking__total">
-              <span>Totalt, uppskattning</span>
-              <strong id="totaalBedrag">-</strong>
-            </div>
-            <p class="booking__note">Det här är en uppskattning baserad på dina val. Du får ett slutgiltigt pris från Joey.</p>
-            <div class="booking__actions">
-              <button type="submit" class="btn btn--dark booking__send">Mejla förfrågan</button>
-              <a class="btn btn--outline-dark booking__whatsapp" id="whatsappKnop" href="https://wa.me/31617467643" target="_blank" rel="noopener">Skicka via WhatsApp</a>
-            </div>
-            <p class="booking__error" id="formulierFout" role="alert" hidden></p>
-          </aside>
-        </div>
-      </form>
+        <section class="booking__block" id="periodeBlok" aria-labelledby="periodeTitel">
+          <h2 class="booking__legend"><span class="booking__step" aria-hidden="true">2</span> <span id="periodeTitel">Din period och antal personer</span></h2>
+          <div id="kalenderPlek"></div>
+          <div class="booking__period booking__on-request" id="aanvraagBox" hidden></div>
+          <a class="link-arrow booking__change" id="naarReispagina" href="reizen.html" hidden></a>
+        </section>
+      </div>
     </div>
   </main>
 

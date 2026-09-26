@@ -2293,6 +2293,22 @@ button.calendar__cell.is-duurder.is-gekozen::after { background: var(--warm); }
   to { opacity: 1; transform: none; }
 }
 
+/* Booking page: step 1 (destination) and step 2 (the trip's own calendar
+   with the price and the "Book and pay" link). Stacked on a phone; side by
+   side on a wide screen, with the destinations staying in view. */
+.booking--pay { margin-top: 2.5rem; }
+.booking--pay .booking__calendar { margin-top: 0; }
+.booking__contact { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.7rem; }
+@media (min-width: 62rem) {
+  .booking--pay {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 4rem;
+    align-items: start;
+  }
+  .booking--pay #reisBlok { position: sticky; top: 6.5rem; }
+}
+
 /* Stap 1 van de aanvraag: de bestemming. Alle reizen staan in één lijst
    (.booking__extras, die zelf al marge boven heeft). */
 .extra--reis { padding: 1.05rem 1.2rem; align-items: start; }

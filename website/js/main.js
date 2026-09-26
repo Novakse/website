@@ -41,7 +41,6 @@
       guidingPrice: function (bedrag, extra) { return bedrag + " per dag voor 1 persoon, + " + extra + " per dag voor elke extra persoon, dus hoe meer jullie zijn, hoe minder het per persoon kost."; },
       guidingWindow: function (van, tot) { return "Begeleiding kan van " + van + " tot en met " + tot + ". Kies eerst je periode."; },
       guidingOutside: function (van, tot) { return "Niet mogelijk in de periode die je gekozen hebt. Begeleiding kan van " + van + " tot en met " + tot + "."; },
-      guidingLine: "Begeleiding op het ijs",
       legendPricier: "Duurdere nacht",
       pricierNote: "Een stipje betekent dat de nacht die op die dag begint duurder is. Daarvoor komt er per persoon een toeslag bij, die al in het totaal zit.",
       pricierAria: function (bedrag) { return "duurdere nacht, toeslag " + bedrag + " p.p."; },
@@ -85,7 +84,6 @@
       guidingPrice: function (amount, extra) { return amount + " per day for 1 person, + " + extra + " per day for each additional person, so the more of you there are, the less it costs each."; },
       guidingWindow: function (from, to) { return "Guiding is available from " + from + " to " + to + ". Choose your period first."; },
       guidingOutside: function (from, to) { return "Not available in the period you selected. Guiding runs from " + from + " to " + to + "."; },
-      guidingLine: "Guiding on the ice",
       legendPricier: "Higher-priced night",
       pricierNote: "A dot means the night that starts on that day costs more. A surcharge per person is added for it, already included in the total.",
       pricierAria: function (amount) { return "higher-priced night, surcharge " + amount + " per person"; },
@@ -129,7 +127,6 @@
       guidingPrice: function (belopp, extra) { return belopp + " per dag för 1 person, + " + extra + " per dag för varje extra person, så ju fler ni är, desto mindre kostar det per person."; },
       guidingWindow: function (fran, till) { return "Guidning finns från " + fran + " till " + till + ". Välj först din period."; },
       guidingOutside: function (fran, till) { return "Inte möjligt under perioden du valt. Guidning finns från " + fran + " till " + till + "."; },
-      guidingLine: "Guidning på isen",
       legendPricier: "Dyrare natt",
       pricierNote: "En prick betyder att natten som börjar den dagen är dyrare. Då tillkommer ett tillägg per person, som redan ingår i totalen.",
       pricierAria: function (belopp) { return "dyrare natt, tillägg " + belopp + " per person"; },
@@ -173,7 +170,6 @@
       guidingPrice: function (betrag, extra) { return betrag + " pro Tag für 1 Person, + " + extra + " pro Tag für jede weitere Person - je mehr ihr seid, desto weniger kostet es pro Person."; },
       guidingWindow: function (von, bis) { return "Begleitung gibt es von " + von + " bis " + bis + ". Wähle zuerst deinen Zeitraum."; },
       guidingOutside: function (von, bis) { return "Im gewählten Zeitraum nicht möglich. Begleitung gibt es von " + von + " bis " + bis + "."; },
-      guidingLine: "Begleitung auf dem Eis",
       legendPricier: "Teurere Nacht",
       pricierNote: "Ein Punkt bedeutet, dass die Nacht, die an diesem Tag beginnt, teurer ist. Dafür kommt pro Person ein Aufschlag hinzu, der schon im Gesamtpreis enthalten ist.",
       pricierAria: function (betrag) { return "teurere Nacht, Aufschlag " + betrag + " pro Person"; },
@@ -217,7 +213,6 @@
       guidingPrice: function (belop, extra) { return belop + " per dag for 1 person, + " + extra + " per dag for hver ekstra person, så jo flere dere er, desto mindre koster det per person."; },
       guidingWindow: function (fra, til) { return "Veiledning finnes fra " + fra + " til " + til + ". Velg først perioden din."; },
       guidingOutside: function (fra, til) { return "Ikke mulig i perioden du har valgt. Veiledning finnes fra " + fra + " til " + til + "."; },
-      guidingLine: "Veiledning på isen",
       legendPricier: "Dyrere natt",
       pricierNote: "En prikk betyr at natten som begynner den dagen, er dyrere. Da kommer det et tillegg per person, som allerede er med i totalen.",
       pricierAria: function (belop) { return "dyrere natt, tillegg " + belop + " per person"; },
@@ -261,7 +256,6 @@
       guidingPrice: function (summa, lisa) { return summa + " päivässä 1 hengelle, + " + lisa + " päivässä jokaisesta lisähenkilöstä, eli mitä useampi teitä on, sitä vähemmän se maksaa per henkilö."; },
       guidingWindow: function (alkaen, saakka) { return "Opastusta on saatavilla " + alkaen + " - " + saakka + ". Valitse ensin ajanjakso."; },
       guidingOutside: function (alkaen, saakka) { return "Ei mahdollista valitsemanasi ajankohtana. Opastusta on saatavilla " + alkaen + " - " + saakka + "."; },
-      guidingLine: "Opastus jäällä",
       legendPricier: "Kalliimpi yö",
       pricierNote: "Piste tarkoittaa, että sinä päivänä alkava yö on kalliimpi. Siitä tulee lisämaksu per henkilö, joka sisältyy jo kokonaishintaan.",
       pricierAria: function (summa) { return "kalliimpi yö, lisämaksu " + summa + " / henkilö"; },
@@ -883,30 +877,28 @@
     bouwKalender(box, data);
   });
 
-  /* Dezelfde kalender, maar dan als stap in het aanvraagformulier
-     (boeken.html, via js/boeken.js). Er staat dan geen knop "Verder met de
-     aanvraag" onder: wat de bezoeker kiest, gaat meteen naar het formulier.
+  /* The same calendar as a step on the booking page (boeken.html, via
+     js/boeken.js). It works exactly as on the trip page: persons stepper,
+     guiding, the price for the group and the "Book and pay" link to
+     uitchecken.html, so both pages always show the same amount. Only the
+     starting choice comes from opties instead of the web address, and
+     onWijzig hears about every change so the page can keep its address in
+     step.
 
        NovakseReiskalender.start(box, pad, {
-         van: "2027-01-10", tot: "2027-01-14",  // optional starting period
-         personen: function () { return 2; },   // head count from the form
-         onKies: function (info) { ... }         // called on every change
-       })
-
-     info = { van, tot, nachten, verblijf (per person, whole euros, or null),
-              basisPersonen, begeleidingDagen, begeleidingBedrag (whole
-              group), begeleidingLabel }. opties.begeleidingDagen presets the
-     guiding days (only with guiding in the price file). The handle it returns has herteken(), to call
-     when the head count in the form changes. */
+         reis: "lulea",                          // ?reis= for uitchecken.html
+         van: "2027-01-10", tot: "2027-01-14",   // optional starting period
+         personen: "3", begeleidingDagen: "2",   // optional
+         onWijzig: function (keuze) { ... }      // { van, tot, personen, begeleidingDagen }
+       }) */
   window.NovakseReiskalender = {
     start: function (box, pad, opties) {
-      var handvat = { herteken: function () {} };
+      opties = opties || {};
       var data = {};
       laadPrijzen(pad, data, function () {
-        var gebouwd = bouwKalender(box, data, opties || {});
-        if (gebouwd) handvat.herteken = gebouwd.herteken;
+        if (opties.reis) data.reis = opties.reis;
+        bouwKalender(box, data, opties);
       });
-      return handvat;
     }
   };
 
@@ -916,7 +908,13 @@
 
   function bouwKalender(box, data, opties) {
     if (!data.seizoenStart || !data.seizoenEind) return;
-    var ingebed = Boolean(opties && typeof opties.onKies === "function");
+    // On the booking page (boeken.html) the starting choice comes from opties;
+    // on the trip page from the web address (trip finder, shared links).
+    var opBoekpagina = Boolean(opties);
+    var adres = new URLSearchParams(window.location.search);
+    var vooraf = opBoekpagina
+      ? { van: opties.van, tot: opties.tot, personen: opties.personen, begeleiding: opties.begeleidingDagen }
+      : { van: adres.get("van"), tot: adres.get("tot"), personen: adres.get("personen"), begeleiding: adres.get("begeleiding") };
 
     var seizoenVan = alsDatum(data.seizoenStart);
     var seizoenTot = alsDatum(data.seizoenEind);
@@ -927,11 +925,11 @@
     var minNachten = data.minimumNachten || 1;
     var dagprijs = data.prijsPerPersoonPerDag || 0;
 
-    /* Pay online ("afrekenen": true in the price file). On the trip page the
-       calendar then gets a persons stepper and a "Book and pay" link to
-       uitchecken.html instead of the button to the request form. The
-       embedded calendar in boeken.html is not affected. */
-    var afrekenen = !ingebed && data.afrekenen === true;
+    /* Pay online ("afrekenen": true in the price file). The calendar then
+       gets a persons stepper and a "Book and pay" link to uitchecken.html
+       instead of the button to the request form, on the trip page and on
+       the booking page alike. */
+    var afrekenen = data.afrekenen === true;
     var personenKeuze = data.personen || {};
     var personenMin = Math.max(1, parseInt(personenKeuze.min, 10) || 1);
     var personenMax = Math.max(personenMin, parseInt(personenKeuze.max, 10) || 20);
@@ -1085,7 +1083,7 @@
     var keuzeTot = null;
 
     var reizigersUitAdres = (function () {
-      var aantal = parseInt(new URLSearchParams(window.location.search).get("personen"), 10);
+      var aantal = parseInt(vooraf.personen, 10);
       return isNaN(aantal) ? 0 : aantal;
     })();
     // A head count from the trip finder presets the persons stepper.
@@ -1113,17 +1111,6 @@
       // Guiding is a group amount; it is added to the group total and only
       // the per-person figure shown next to it is rounded.
       var begeleid = gekozenBegeleiding();
-      if (ingebed) {
-        // In the form the head count comes from the form itself. The prices
-        // assume basisPersonen per cabin; with fewer people the form gives no
-        // estimate, so the calendar shows none either.
-        var aantal = opties.personen ? opties.personen() : 1;
-        if (aantal < (data.basisPersonen || 1)) return "";
-        var groepIngebed = perPersoon * aantal + begeleidingGroep(begeleid, aantal);
-        return aantal > 1
-          ? T.groupTotalLabel(bedrag(groepIngebed), aantal, bedrag(Math.round(groepIngebed / aantal)))
-          : T.totalLabel(groepIngebed);
-      }
       // Without a head count in the web address, guiding is priced for
       // basisPersonen (the number the prices assume), and the line says so.
       var groepsgrootte = reizigersUitAdres > 1 ? reizigersUitAdres : (begeleid ? reizigers() : 1);
@@ -1158,10 +1145,9 @@
       return (begeleiding.prijsPerDag + (begeleiding.prijsPerDagExtraPersoon || 0) * (aantal - 1)) * dagen;
     }
 
-    // Head count for the guiding price: the form's, the trip finder's, or
+    // Head count for the guiding price: the stepper's, the trip finder's, or
     // else basisPersonen.
     function reizigers() {
-      if (ingebed) return opties.personen ? opties.personen() : 1;
       if (afrekenen) return personen;
       return reizigersUitAdres > 0 ? reizigersUitAdres : (data.basisPersonen || 1);
     }
@@ -1343,25 +1329,17 @@
       }
     }
 
-    /* In the form: pass the current choice on. Only a complete period
-       counts; while the departure day is still open, the form has none. */
+    /* On the booking page: tell the page what is chosen now, so it can keep
+       its web address in step (a refresh or the back button then shows the
+       same choice). Only a complete period counts. */
     function meld() {
-      if (!ingebed) return;
+      if (!opBoekpagina || typeof opties.onWijzig !== "function") return;
       var klaar = Boolean(keuzeVan && keuzeTot);
-      var nachten = klaar ? dagenTussen(keuzeVan, keuzeTot) : 0;
-      var perPersoon = klaar ? heleEuros(prijsPerPersoon(keuzeVan, nachten)) : 0;
-      var begeleid = klaar ? gekozenBegeleiding() : 0;
-      opties.onKies({
-        // Guiding (only with a guiding block in the price file): days, the
-        // amount for the whole group and a line for the request.
-        begeleidingDagen: begeleid,
-        begeleidingBedrag: begeleidingGroep(begeleid, reizigers()),
-        begeleidingLabel: begeleid ? T.guidingLine + " (" + T.guidingDays(begeleid) + ")" : "",
+      opties.onWijzig({
         van: klaar ? alsTekst(keuzeVan) : null,
         tot: klaar ? alsTekst(keuzeTot) : null,
-        nachten: nachten,
-        verblijf: perPersoon || null,
-        basisPersonen: data.basisPersonen || 1
+        personen: afrekenen ? personen : null,
+        begeleidingDagen: klaar ? gekozenBegeleiding() : 0
       });
     }
 
@@ -1393,6 +1371,8 @@
         return '<a class="btn btn--dark calendar__pay" href="' + mapVoorKalender() + 'uitchecken.html?' +
           params.toString().replace(/&/g, "&amp;") + '">' + T.bookPayBtn + '</a>';
       }
+      // The booking page takes no requests; there the calendar is the form.
+      if (opBoekpagina) return "";
       // A head count from the trip finder (or the stepper) stays with the
       // request when someone picks another period here.
       var aantal = afrekenen ? personen : reizigersUitAdres;
@@ -1445,9 +1425,7 @@
         '</div>' +
         '<div class="calendar__bar-actions">' +
           '<button type="button" class="calendar__reset">' + T.reset + '</button>' +
-          // In the form the choice goes straight into the request, so there
-          // is no button to the request page here.
-          (ingebed ? '' : knopHtml(nachten)) +
+          knopHtml(nachten) +
         '</div>';
     }
 
@@ -1622,12 +1600,11 @@
     /* Komt de bezoeker via de reiszoeker binnen, dan staat zijn periode in het
        webadres. Die nemen we hier over, zodat de kalender meteen goed staat.
        Past de periode niet (te kort of over een bezette week heen), dan blijft
-       de kalender gewoon leeg en kiest hij zelf. In het aanvraagformulier
-       geeft het formulier de periode zelf mee. */
+       de kalender gewoon leeg en kiest hij zelf. Op de boekingspagina geeft
+       die pagina de periode zelf mee. */
     (function () {
-      var params = new URLSearchParams(window.location.search);
-      var uitVan = alsDatum(ingebed ? opties.van : params.get("van"));
-      var uitTot = alsDatum(ingebed ? opties.tot : params.get("tot"));
+      var uitVan = alsDatum(vooraf.van);
+      var uitTot = alsDatum(vooraf.tot);
       if (!uitVan || !uitTot || uitTot <= uitVan) return;
       if (uitVan < seizoenVan || uitTot > seizoenTot) return;
       if (dagenTussen(uitVan, uitTot) < minNachten) return;
@@ -1639,9 +1616,7 @@
     // Guiding days can come along the same way (begeleiding=2). toonBalk()
     // fits them to the chosen period.
     if (begeleiding) {
-      var begeleidingUitAdres = parseInt(ingebed
-        ? opties.begeleidingDagen
-        : new URLSearchParams(window.location.search).get("begeleiding"), 10);
+      var begeleidingUitAdres = parseInt(vooraf.begeleiding, 10);
       if (!isNaN(begeleidingUitAdres) && begeleidingUitAdres > 0) begeleidingDagen = begeleidingUitAdres;
     }
 
@@ -1659,10 +1634,6 @@
 
     tekenRaster();
     toonBalk();
-
-    // herteken: the head count in the form changed, so the price line in
-    // the bar (and what the form gets) is redrawn.
-    return { herteken: toonBalk };
   }
 
   /* ------------------------------------------------------------------
