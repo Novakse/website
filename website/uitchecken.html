@@ -54,18 +54,101 @@
       </nav>
 
       <p class="booking__trip" id="reisNaam">Novakse reis</p>
-      <h1 class="booking__title">Je betaling afronden</h1>
-      <p class="booking__intro">Joey heeft dit betaalverzoek voor je klaargezet. Kies hieronder hoe je wilt betalen.</p>
+      <h1 class="booking__title" id="checkoutTitel">Je betaling afronden</h1>
+      <p class="booking__intro">Joey heeft dit betaalverzoek voor je klaargezet. Vul eerst de reisgegevens in, daarna kies je hoe je wilt betalen.</p>
+
+      <ol class="checkout-steps" id="checkoutStappen" aria-label="Stappen van je boeking">
+        <li class="checkout-steps__item is-done"><span class="checkout-steps__num" aria-hidden="true">1</span> Boeken<span class="sr-only"> (klaar)</span></li>
+        <li class="checkout-steps__item" id="stapGegevens" aria-current="step"><span class="checkout-steps__num" aria-hidden="true">2</span> Reisgegevens</li>
+        <li class="checkout-steps__item" id="stapBetalen"><span class="checkout-steps__num" aria-hidden="true">3</span> Betalen</li>
+      </ol>
 
       <div id="checkoutInhoud">
-        <form class="booking" id="betaalformulier" novalidate>
+        <section class="booking__block" aria-labelledby="teBetalenKop">
+          <h2 class="booking__legend" id="teBetalenKop">Te betalen</h2>
+          <div class="booking__total booking__total--standalone">
+            <span id="omschrijvingTekst">Novakse reis</span>
+            <strong id="bedragTekst">-</strong>
+          </div>
+        </section>
+
+        <!-- Step 2: traveller details for the flight and the rental car.
+             js/reisgegevens.js fills in the travellers; js/uitchecken.js only shows the
+             payment form once everything here is valid. -->
+        <form class="booking" id="reisgegevensFormulier" novalidate>
+          <h2 class="checkout-kop" id="reisgegevensKop" tabindex="-1">Reisgegevens</h2>
+          <p class="booking__note checkout-kop__note">Met deze gegevens boekt Joey je vlucht en je huurauto. Velden met een * zijn verplicht.</p>
+
           <fieldset class="booking__block">
-            <legend class="booking__legend">Te betalen</legend>
-            <div class="booking__total booking__total--standalone">
-              <span id="omschrijvingTekst">Novakse reis</span>
-              <strong id="bedragTekst">-</strong>
+            <legend class="booking__legend">Reizigers</legend>
+            <p class="booking__note" id="reizigersUitleg">Vul je naam precies zo in als in je paspoort. Een verschil kan betekenen dat je niet mee mag met de vlucht.</p>
+            <div class="form-field checkout-aantal" id="aantalVeld" hidden>
+              <label for="aantalReizigers">Aantal reizigers *</label>
+              <input type="number" id="aantalReizigers" name="aantalReizigers" value="1" min="1" max="20" inputmode="numeric" required />
+            </div>
+            <div id="reizigersLijst"></div>
+          </fieldset>
+
+          <fieldset class="booking__block">
+            <legend class="booking__legend">Contact</legend>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="contactEmail">E-mailadres *</label>
+                <input type="email" id="contactEmail" name="email" autocomplete="email" required aria-describedby="contactEmailFout" />
+                <p class="field-error" id="contactEmailFout" hidden></p>
+              </div>
+              <div class="form-field">
+                <label for="contactTelefoon">Telefoonnummer *</label>
+                <input type="tel" id="contactTelefoon" name="telefoon" autocomplete="tel" required aria-describedby="contactTelefoonFout" />
+                <p class="field-error" id="contactTelefoonFout" hidden></p>
+              </div>
             </div>
           </fieldset>
+
+          <fieldset class="booking__block" id="autoBlok">
+            <legend class="booking__legend">Huurauto</legend>
+            <div class="form-field">
+              <label for="hoofdbestuurder">Hoofdbestuurder *</label>
+              <select id="hoofdbestuurder" name="hoofdbestuurder" required aria-describedby="hoofdbestuurderUitleg hoofdbestuurderFout"></select>
+              <p class="booking__note" id="hoofdbestuurderUitleg">Kies wie de huurauto ophaalt. We gebruiken de geboortedatum die je hierboven bij deze reiziger hebt ingevuld.</p>
+              <p class="field-error" id="hoofdbestuurderFout" hidden></p>
+            </div>
+            <p class="checkout-info">Extra verzekeringen en extra bestuurders kun je bij het ophalen van de huurauto zelf afsluiten.</p>
+          </fieldset>
+
+          <fieldset class="booking__block">
+            <legend class="booking__legend">Bevestigen</legend>
+            <div class="booking__extras">
+              <div class="checkout-check">
+                <label class="extra">
+                  <input type="checkbox" class="extra__check" id="akkoordVoorwaarden" name="voorwaarden" required aria-describedby="akkoordVoorwaardenFout" />
+                  <span class="extra__name">Ik ga akkoord met de algemene voorwaarden *</span>
+                </label>
+                <p class="booking__note checkout-check__link"><a class="link-inline" href="algemene-voorwaarden.html" target="_blank" rel="noopener">Lees de algemene voorwaarden<span class="sr-only"> (opent in een nieuw tabblad)</span></a></p>
+                <p class="field-error" id="akkoordVoorwaardenFout" hidden></p>
+              </div>
+              <div class="checkout-check" data-alleen-auto>
+                <label class="extra">
+                  <input type="checkbox" class="extra__check" id="akkoordCreditcard" name="creditcard" />
+                  <span class="extra__name">De hoofdbestuurder heeft een creditcard bij zich bij het ophalen van de huurauto</span>
+                </label>
+              </div>
+              <div class="checkout-check" data-alleen-auto>
+                <label class="extra">
+                  <input type="checkbox" class="extra__check" id="akkoordRijbewijs" name="rijbewijs" />
+                  <span class="extra__name">De hoofdbestuurder neemt een geldig rijbewijs mee</span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn--dark booking__send">Verder naar betalen</button>
+          <p class="booking__error" id="gegevensFout" role="alert" hidden></p>
+        </form>
+
+        <form class="booking" id="betaalformulier" novalidate hidden>
+          <h2 class="checkout-kop" id="betalenKop" tabindex="-1">Betalen</h2>
+          <p class="booking__note checkout-kop__note"><button type="button" class="checkout-terug" id="terugNaarGegevens">Reisgegevens wijzigen</button></p>
 
           <fieldset class="booking__block">
             <legend class="booking__legend">Hoe wil je betalen?</legend>
@@ -140,6 +223,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/reisgegevens.js"></script>
   <script src="js/uitchecken.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>

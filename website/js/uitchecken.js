@@ -19,6 +19,12 @@
       Ook hier staat geen bedrag in de link: dat komt van /api/reis-prijs, en
       /api/create-payment rekent het bij het betalen opnieuw uit.
 
+   Before paying, every trip goes through the "Reisgegevens" step
+   (js/reisgegevens.js): travellers for the flight, contact details, the main
+   driver of the rental car and the required confirmations. Only once that
+   form is valid does the payment form appear, and the details are sent along
+   to /api/create-payment, which checks them again.
+
    Bij het doorgaan wordt er een Stripe Checkout-sessie aangemaakt via
    /api/create-payment en stuurt de browser door naar de betaalomgeving.
    ========================================================================== */
@@ -35,7 +41,9 @@
   var bedragEl = document.getElementById("bedragTekst");
   var foutEl = document.getElementById("betaalFout");
   var knop = document.getElementById("betaalKnop");
-  if (!form) return;
+  var gegevensForm = document.getElementById("reisgegevensFormulier");
+  var stappen = document.getElementById("checkoutStappen");
+  if (!form || !gegevensForm) return;
 
   var params = new URLSearchParams(window.location.search);
   var reis = params.get("reis") || "Novakse reis";
@@ -86,6 +94,7 @@
 
   function toonNiets() {
     inhoud.hidden = true;
+    if (stappen) stappen.hidden = true;
     geenBedrag.hidden = false;
   }
 
@@ -157,7 +166,7 @@
     // bezoeker zijn reis zelf in de kalender samengesteld.
     var introEl = document.querySelector(".booking__intro");
     if (introEl) {
-      introEl.textContent = "Dit is de reis die je in de kalender hebt samengesteld. Kies hieronder hoe je wilt betalen.";
+      introEl.textContent = "Dit is de reis die je in de kalender hebt samengesteld. Vul eerst de reisgegevens in, daarna kies je hoe je wilt betalen.";
     }
 
     fetch("/api/falun-prijs", {
@@ -189,7 +198,7 @@
 
     var introTekst = document.querySelector(".booking__intro");
     if (introTekst) {
-      introTekst.textContent = "Dit is de reis die je in de kalender hebt samengesteld. Kies hieronder hoe je wilt betalen.";
+      introTekst.textContent = "Dit is de reis die je in de kalender hebt samengesteld. Vul eerst de reisgegevens in, daarna kies je hoe je wilt betalen.";
     }
 
     var personenAantal = parseInt(reisKeuze.personen, 10);
@@ -255,8 +264,66 @@
     bedragEl.textContent = euro(bedragCent);
   }
 
+  /* ---- Step 2 (Reisgegevens) and step 3 (Betalen) ------------------- */
+  var stapGegevensEl = document.getElementById("stapGegevens");
+  var stapBetalenEl = document.getElementById("stapBetalen");
+  var reisgegevens = null; // set once the details form is valid
+
+  function toonStap(nummer) {
+    var betalen = nummer === 3;
+    gegevensForm.hidden = betalen;
+    form.hidden = !betalen;
+    stapGegevensEl.classList.toggle("is-done", betalen);
+    stapGegevensEl.classList.toggle("is-current", !betalen);
+    stapBetalenEl.classList.toggle("is-current", betalen);
+    if (betalen) {
+      stapGegevensEl.removeAttribute("aria-current");
+      stapBetalenEl.setAttribute("aria-current", "step");
+    } else {
+      stapBetalenEl.removeAttribute("aria-current");
+      stapGegevensEl.setAttribute("aria-current", "step");
+    }
+    // Move focus to the new step's heading so keyboard and screen reader
+    // users land at the start of it.
+    var kop = document.getElementById(betalen ? "betalenKop" : "reisgegevensKop");
+    if (kop) {
+      kop.focus({ preventScroll: true });
+      kop.scrollIntoView({ block: "start", behavior: "smooth" });
+    }
+  }
+
+  // Head count from the booking; a payment link from Joey has none.
+  var bekendePersonen = parseInt((falunKeuze || reisKeuze || {}).personen, 10) || 0;
+
+  var reisgegevensStap = window.NovakseReisgegevens.init({
+    form: gegevensForm,
+    personen: bekendePersonen,
+    // Falun can be booked with own transport and/or an own flight.
+    metAuto: !(falunKeuze && falunKeuze.auto === "zelf"),
+    eigenVlucht: !!(falunKeuze && falunKeuze.vlucht === "zelf"),
+    onKlaar: function (gegevens) {
+      reisgegevens = gegevens;
+      foutEl.hidden = true;
+      toonStap(3);
+    }
+  });
+
+  stapGegevensEl.classList.add("is-current");
+
+  document.getElementById("terugNaarGegevens").addEventListener("click", function () {
+    toonStap(2);
+  });
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
+
+    // Payment is only possible with valid travel details.
+    if (!reisgegevens) {
+      toonStap(2);
+      reisgegevensStap.gegevens();
+      return;
+    }
+
     foutEl.hidden = true;
     knop.disabled = true;
     knop.textContent = "Bezig...";
@@ -288,6 +355,7 @@
         methode: methode
       };
     }
+    lading.reisgegevens = reisgegevens;
 
     fetch("/api/create-payment", {
       method: "POST",
