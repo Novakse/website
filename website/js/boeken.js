@@ -565,9 +565,6 @@
       van: van ? alsTekst(van) : null,
       tot: tot ? alsTekst(tot) : null,
       personen: personen,
-      // Own transport (Weissensee) chosen on the trip page comes along in
-      // the web address as vervoer=eigen.
-      eigenVervoer: params.get("vervoer") === "eigen",
       // Guiding days (Orsa) chosen on the trip page: begeleiding=2.
       begeleidingDagen: params.get("begeleiding"),
       onKies: function (info) {
@@ -954,8 +951,7 @@
       totaal += pakket;
       regels.push({
         naam: T.nightsLabel(nachten) + " × " + T.personsLabel(aantal) +
-              " (" + euro(uitKalender) + T.perPersonTotal + ")" +
-              (kalenderInfo.eigenVervoerLabel ? ", " + kalenderInfo.eigenVervoerLabel : ""),
+              " (" + euro(uitKalender) + T.perPersonTotal + ")",
         bedrag: pakket
       });
       // Guiding on the ice (Orsa): the calendar passes the amount for the
@@ -1045,10 +1041,6 @@
     }
     regels.push(T.personsLabel2 + aantal);
 
-    // Own transport ticked in the Weissensee calendar.
-    if (kalenderInfo && kalenderInfo.eigenVervoerLabel) {
-      regels.push(T.optionsLabel + kalenderInfo.eigenVervoerLabel);
-    }
     // Guiding days chosen in the Orsa calendar.
     if (kalenderInfo && kalenderInfo.begeleidingLabel) {
       regels.push(T.optionsLabel + kalenderInfo.begeleidingLabel);
@@ -1248,7 +1240,6 @@
       nieuw.set("van", alsTekst(van));
       nieuw.set("tot", alsTekst(tot));
     }
-    if (kalenderInfo && kalenderInfo.eigenVervoer) nieuw.set("vervoer", "eigen");
     if (kalenderInfo && kalenderInfo.begeleidingDagen) nieuw.set("begeleiding", String(kalenderInfo.begeleidingDagen));
     try {
       window.history.replaceState(null, "", window.location.pathname + "?" + nieuw.toString());

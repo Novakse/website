@@ -45,7 +45,11 @@
       legendPricier: "Duurdere nacht",
       pricierNote: "Een stipje betekent dat de nacht die op die dag begint duurder is. Daarvoor komt er per persoon een toeslag bij, die al in het totaal zit.",
       pricierAria: function (bedrag) { return "duurdere nacht, toeslag " + bedrag + " p.p."; },
-      pricierLine: function (bedrag, n) { return "Inclusief " + bedrag + " p.p. toeslag voor " + n + (n === 1 ? " duurdere nacht" : " duurdere nachten"); }
+      pricierLine: function (bedrag, n) { return "Inclusief " + bedrag + " p.p. toeslag voor " + n + (n === 1 ? " duurdere nacht" : " duurdere nachten"); },
+      bookPayBtn: "Boeken en betalen",
+      personsLegend: "Met hoeveel personen?",
+      personsFewer: "Eén persoon minder",
+      personsMore: "Eén persoon meer"
     },
     en: {
       months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -85,7 +89,11 @@
       legendPricier: "Higher-priced night",
       pricierNote: "A dot means the night that starts on that day costs more. A surcharge per person is added for it, already included in the total.",
       pricierAria: function (amount) { return "higher-priced night, surcharge " + amount + " per person"; },
-      pricierLine: function (amount, n) { return "Includes " + amount + " per person surcharge for " + n + (n === 1 ? " higher-priced night" : " higher-priced nights"); }
+      pricierLine: function (amount, n) { return "Includes " + amount + " per person surcharge for " + n + (n === 1 ? " higher-priced night" : " higher-priced nights"); },
+      bookPayBtn: "Book and pay",
+      personsLegend: "How many people?",
+      personsFewer: "One person fewer",
+      personsMore: "One person more"
     },
     sv: {
       months: ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"],
@@ -125,7 +133,11 @@
       legendPricier: "Dyrare natt",
       pricierNote: "En prick betyder att natten som börjar den dagen är dyrare. Då tillkommer ett tillägg per person, som redan ingår i totalen.",
       pricierAria: function (belopp) { return "dyrare natt, tillägg " + belopp + " per person"; },
-      pricierLine: function (belopp, n) { return "Inklusive " + belopp + " per person i tillägg för " + n + (n === 1 ? " dyrare natt" : " dyrare nätter"); }
+      pricierLine: function (belopp, n) { return "Inklusive " + belopp + " per person i tillägg för " + n + (n === 1 ? " dyrare natt" : " dyrare nätter"); },
+      bookPayBtn: "Boka och betala",
+      personsLegend: "Hur många personer?",
+      personsFewer: "En person färre",
+      personsMore: "En person fler"
     },
     de: {
       months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
@@ -165,7 +177,11 @@
       legendPricier: "Teurere Nacht",
       pricierNote: "Ein Punkt bedeutet, dass die Nacht, die an diesem Tag beginnt, teurer ist. Dafür kommt pro Person ein Aufschlag hinzu, der schon im Gesamtpreis enthalten ist.",
       pricierAria: function (betrag) { return "teurere Nacht, Aufschlag " + betrag + " pro Person"; },
-      pricierLine: function (betrag, n) { return "Inklusive " + betrag + " pro Person Aufschlag für " + n + (n === 1 ? " teurere Nacht" : " teurere Nächte"); }
+      pricierLine: function (betrag, n) { return "Inklusive " + betrag + " pro Person Aufschlag für " + n + (n === 1 ? " teurere Nacht" : " teurere Nächte"); },
+      bookPayBtn: "Buchen und bezahlen",
+      personsLegend: "Mit wie vielen Personen?",
+      personsFewer: "Eine Person weniger",
+      personsMore: "Eine Person mehr"
     },
     no: {
       months: ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"],
@@ -205,7 +221,11 @@
       legendPricier: "Dyrere natt",
       pricierNote: "En prikk betyr at natten som begynner den dagen, er dyrere. Da kommer det et tillegg per person, som allerede er med i totalen.",
       pricierAria: function (belop) { return "dyrere natt, tillegg " + belop + " per person"; },
-      pricierLine: function (belop, n) { return "Inkludert " + belop + " per person i tillegg for " + n + (n === 1 ? " dyrere natt" : " dyrere netter"); }
+      pricierLine: function (belop, n) { return "Inkludert " + belop + " per person i tillegg for " + n + (n === 1 ? " dyrere natt" : " dyrere netter"); },
+      bookPayBtn: "Book og betal",
+      personsLegend: "Hvor mange personer?",
+      personsFewer: "Én person færre",
+      personsMore: "Én person flere"
     },
     fi: {
       months: ["tammikuu", "helmikuu", "maaliskuu", "huhtikuu", "toukokuu", "kesäkuu", "heinäkuu", "elokuu", "syyskuu", "lokakuu", "marraskuu", "joulukuu"],
@@ -245,7 +265,11 @@
       legendPricier: "Kalliimpi yö",
       pricierNote: "Piste tarkoittaa, että sinä päivänä alkava yö on kalliimpi. Siitä tulee lisämaksu per henkilö, joka sisältyy jo kokonaishintaan.",
       pricierAria: function (summa) { return "kalliimpi yö, lisämaksu " + summa + " / henkilö"; },
-      pricierLine: function (summa, n) { return "Sisältää " + summa + " / henkilö lisämaksua " + n + " kalliimmasta yöstä"; }
+      pricierLine: function (summa, n) { return "Sisältää " + summa + " / henkilö lisämaksua " + n + " kalliimmasta yöstä"; },
+      bookPayBtn: "Varaa ja maksa",
+      personsLegend: "Kuinka monta henkilöä?",
+      personsFewer: "Yksi henkilö vähemmän",
+      personsMore: "Yksi henkilö enemmän"
     }
   };
   var LANG = (document.documentElement.lang || "nl").slice(0, 2).toLowerCase();
@@ -886,8 +910,9 @@
     }
   };
 
-  // Gives every guiding block its own id for aria-labelledby.
+  // Give every guiding block and persons field its own id.
   var begeleidingTeller = 0;
+  var personenTeller = 0;
 
   function bouwKalender(box, data, opties) {
     if (!data.seizoenStart || !data.seizoenEind) return;
@@ -902,13 +927,28 @@
     var minNachten = data.minimumNachten || 1;
     var dagprijs = data.prijsPerPersoonPerDag || 0;
 
-    /* Optional second price list for travellers who get there on their own
-       ("eigenVervoer" in the price file, e.g. Weissensee). The calendar then
-       shows a checkbox; when ticked, its own table and extra-night amount
-       replace the normal ones. Without that block nothing changes. */
-    var eigenVervoer = (data.eigenVervoer && data.eigenVervoer.prijsPerPersoon)
-      ? data.eigenVervoer : null;
-    var eigenVervoerGekozen = false;
+    /* Pay online ("afrekenen": true in the price file). On the trip page the
+       calendar then gets a persons stepper and a "Book and pay" link to
+       uitchecken.html instead of the button to the request form. The
+       embedded calendar in boeken.html is not affected. */
+    var afrekenen = !ingebed && data.afrekenen === true;
+    var personenKeuze = data.personen || {};
+    var personenMin = Math.max(1, parseInt(personenKeuze.min, 10) || 1);
+    var personenMax = Math.max(personenMin, parseInt(personenKeuze.max, 10) || 20);
+    function binnenPersonen(n) {
+      return Math.min(personenMax, Math.max(personenMin, n));
+    }
+    var personen = binnenPersonen(2);
+
+    /* Group pricing ("groepsKorting.perPersoonPerNacht" in the price file):
+       euros per person per night relative to 2 persons, keyed by group size.
+       Negative is a discount; a missing size counts as 0. The server
+       (api/create-payment.js) uses exactly the same rule. */
+    function groepsKortingPerNacht(aantal) {
+      var lijst = data.groepsKorting && data.groepsKorting.perPersoonPerNacht;
+      var waarde = lijst ? lijst[String(aantal)] : 0;
+      return typeof waarde === "number" && isFinite(waarde) ? waarde : 0;
+    }
 
     /* Optional: days with uncertain ice ("ijsOnzeker" in the price file, e.g.
        Orsa). They stay bookable but get a dashed line, a legend chip and a
@@ -1005,8 +1045,7 @@
       return Math.ceil(Math.round(bedrag * 100) / 100);
     }
     function basisPrijsPerPersoon(aankomst, nachten) {
-      var bron = (eigenVervoer && eigenVervoerGekozen) ? eigenVervoer : data;
-      var tabel = bron.prijsPerPersoon;
+      var tabel = data.prijsPerPersoon;
       if (!tabel) return dagprijs ? nachten * dagprijs : 0;
 
       var tarief = tariefOp(aankomst);
@@ -1021,7 +1060,7 @@
       });
       if (!langste || nachten < langste) return 0;
 
-      var extra = (bron.extraNachtPerPersoon || {})[tarief] || 0;
+      var extra = (data.extraNachtPerPersoon || {})[tarief] || 0;
       if (!extra) return 0;
       return rij[String(langste)] + (nachten - langste) * extra;
     }
@@ -1049,6 +1088,22 @@
       var aantal = parseInt(new URLSearchParams(window.location.search).get("personen"), 10);
       return isNaN(aantal) ? 0 : aantal;
     })();
+    // A head count from the trip finder presets the persons stepper.
+    if (afrekenen && reizigersUitAdres > 0) personen = binnenPersonen(reizigersUitAdres);
+
+    /* What the visitor pays when paying online, in whole euros: the price
+       per person (as shown today, plus the group price per night) times the
+       group, plus guiding for the whole group. 0 when there is no price. */
+    function betaalBedragen(aankomst, nachten) {
+      var basis = heleEuros(prijsPerPersoon(aankomst, nachten));
+      if (!basis) return { perPersoon: 0, totaal: 0 };
+      var perPersoon = basis + groepsKortingPerNacht(personen) * nachten;
+      if (!(perPersoon > 0)) return { perPersoon: 0, totaal: 0 };
+      return {
+        perPersoon: perPersoon,
+        totaal: perPersoon * personen + begeleidingGroep(gekozenBegeleiding(), personen)
+      };
+    }
 
     /* De prijzen gelden per persoon. Kwam het aantal reizigers uit de
        reiszoeker mee, dan staat het totaal voor de hele groep erbij, net als
@@ -1107,6 +1162,7 @@
     // else basisPersonen.
     function reizigers() {
       if (ingebed) return opties.personen ? opties.personen() : 1;
+      if (afrekenen) return personen;
       return reizigersUitAdres > 0 ? reizigersUitAdres : (data.basisPersonen || 1);
     }
 
@@ -1144,36 +1200,6 @@
     box.innerHTML = "";
     box.appendChild(legenda);
 
-    // Checkbox for the own-transport prices (only when the price file has them).
-    var vervoerVak = null;
-    if (eigenVervoer) {
-      var vervoerRij = document.createElement("div");
-      vervoerRij.className = "calendar__options";
-      var vervoerLabel = document.createElement("label");
-      vervoerLabel.className = "extra";
-      vervoerVak = document.createElement("input");
-      vervoerVak.type = "checkbox";
-      vervoerVak.className = "extra__check";
-      var vervoerNaam = document.createElement("span");
-      vervoerNaam.className = "extra__name";
-      vervoerNaam.textContent = tekstInTaal(eigenVervoer.label);
-      var uitlegTekst = tekstInTaal(eigenVervoer.uitleg);
-      if (uitlegTekst) {
-        var vervoerHint = document.createElement("span");
-        vervoerHint.className = "extra__hint";
-        vervoerHint.textContent = uitlegTekst;
-        vervoerNaam.appendChild(vervoerHint);
-      }
-      vervoerLabel.appendChild(vervoerVak);
-      vervoerLabel.appendChild(vervoerNaam);
-      vervoerRij.appendChild(vervoerLabel);
-      box.appendChild(vervoerRij);
-      vervoerVak.addEventListener("change", function () {
-        eigenVervoerGekozen = vervoerVak.checked;
-        toonBalk();
-      });
-    }
-
     box.appendChild(raster);
 
     if (onzeker) {
@@ -1188,6 +1214,61 @@
       toeslagUitleg.className = "falun-cal__note falun-cal__note--inline";
       toeslagUitleg.textContent = T.pricierNote;
       box.appendChild(toeslagUitleg);
+    }
+
+    /* Persons stepper (only when paying online): minus, a number field and
+       plus, the same control as in the Falun calendar and on boeken.html.
+       It is built once, so keyboard focus stays on the button being used;
+       tekenPersonen() only updates the value and the buttons. */
+    var personenVeld = null;
+    var personenMinder = null;
+    var personenMeer = null;
+    if (afrekenen) {
+      var personenId = "calendarPersons" + (++personenTeller);
+      var personenBox = document.createElement("div");
+      personenBox.className = "falun-cal__block calendar__persons";
+      personenBox.innerHTML =
+        '<label class="falun-cal__legend" for="' + personenId + '">' + T.personsLegend + '</label>' +
+        '<div class="booking__persons">' +
+          '<button type="button" class="booking__step-btn" data-personen-stap="-1" aria-label="' + T.personsFewer + '" aria-controls="' + personenId + '">−</button>' +
+          '<input type="number" id="' + personenId + '" min="' + personenMin + '" max="' + personenMax + '" step="1" inputmode="numeric" value="' + personen + '" />' +
+          '<button type="button" class="booking__step-btn" data-personen-stap="1" aria-label="' + T.personsMore + '" aria-controls="' + personenId + '">+</button>' +
+        '</div>';
+      box.appendChild(personenBox);
+      personenVeld = personenBox.querySelector("input");
+      personenMinder = personenBox.querySelector('[data-personen-stap="-1"]');
+      personenMeer = personenBox.querySelector('[data-personen-stap="1"]');
+
+      [personenMinder, personenMeer].forEach(function (knop) {
+        knop.addEventListener("click", function () {
+          var nieuw = binnenPersonen(personen + parseInt(knop.getAttribute("data-personen-stap"), 10));
+          if (nieuw === personen) return;
+          personen = nieuw;
+          toonBalk();
+          // At the end of the range this button switches off; keep focus
+          // in the stepper on the other button.
+          if (knop.disabled) (knop === personenMinder ? personenMeer : personenMinder).focus();
+        });
+      });
+      // Typing works too; an empty or invalid field is ignored until the
+      // visitor leaves it, then the last valid number shows again.
+      personenVeld.addEventListener("input", function () {
+        var uit = parseInt(personenVeld.value, 10);
+        if (isNaN(uit)) return;
+        var nieuw = binnenPersonen(uit);
+        if (nieuw === personen) return;
+        personen = nieuw;
+        toonBalk();
+      });
+      personenVeld.addEventListener("change", function () {
+        personenVeld.value = personen;
+      });
+    }
+    function tekenPersonen() {
+      if (!personenVeld) return;
+      if (parseInt(personenVeld.value, 10) !== personen) personenVeld.value = personen;
+      personenMinder.disabled = personen <= personenMin;
+      personenMeer.disabled = personen >= personenMax;
     }
 
     // Guiding stepper (only when the price file offers guiding).
@@ -1280,11 +1361,7 @@
         tot: klaar ? alsTekst(keuzeTot) : null,
         nachten: nachten,
         verblijf: perPersoon || null,
-        basisPersonen: data.basisPersonen || 1,
-        // Only set when the price file offers own transport and it is ticked.
-        eigenVervoer: Boolean(eigenVervoer && eigenVervoerGekozen),
-        eigenVervoerLabel: (eigenVervoer && eigenVervoerGekozen)
-          ? tekstInTaal(eigenVervoer.label) : ""
+        basisPersonen: data.basisPersonen || 1
       });
     }
 
@@ -1294,10 +1371,35 @@
       if (begeleiding && keuzeVan && keuzeTot) {
         begeleidingDagen = gekozenBegeleiding();
       }
+      tekenPersonen();
       tekenBegeleiding();
       tekenBalk();
       koppelReset();
       meld();
+    }
+
+    /* The link under the calendar on the trip page. Paying online: straight
+       to uitchecken.html (in the root, also from the language folders),
+       which recalculates the amount on the server. Otherwise, or when this
+       period has no price, the request form as before. */
+    function knopHtml(nachten) {
+      var params = new URLSearchParams();
+      if (data.reis) params.set("reis", data.reis);
+      params.set("van", alsTekst(keuzeVan));
+      params.set("tot", alsTekst(keuzeTot));
+      if (afrekenen && betaalBedragen(keuzeVan, nachten).totaal > 0) {
+        params.set("personen", String(personen));
+        if (gekozenBegeleiding()) params.set("begeleiding", String(gekozenBegeleiding()));
+        return '<a class="btn btn--dark calendar__pay" href="' + mapVoorKalender() + 'uitchecken.html?' +
+          params.toString().replace(/&/g, "&amp;") + '">' + T.bookPayBtn + '</a>';
+      }
+      // A head count from the trip finder (or the stepper) stays with the
+      // request when someone picks another period here.
+      var aantal = afrekenen ? personen : reizigersUitAdres;
+      if (aantal) params.set("personen", String(aantal));
+      if (gekozenBegeleiding()) params.set("begeleiding", String(gekozenBegeleiding()));
+      return '<a class="btn btn--dark" href="boeken.html?' +
+        params.toString().replace(/&/g, "&amp;") + '">' + T.continueBtn + '</a>';
     }
 
     function tekenBalk() {
@@ -1314,7 +1416,20 @@
       }
       var nachten = dagenTussen(keuzeVan, keuzeTot);
       var totaal = heleEuros(prijsPerPersoon(keuzeVan, nachten));
-      var prijsRegel = totaal ? prijsTekst(totaal) : "";
+      var prijsRegel = "";
+      if (afrekenen) {
+        // Paying online: per person and total for the chosen group, the
+        // same amounts the payment page charges.
+        var bedragen = betaalBedragen(keuzeVan, nachten);
+        if (bedragen.totaal) {
+          prijsRegel = personen > 1
+            ? T.groupTotalLabel(bedragen.totaal.toLocaleString("nl-NL"), personen,
+                Math.round(bedragen.totaal / personen).toLocaleString("nl-NL"))
+            : T.totalLabel(bedragen.totaal.toLocaleString("nl-NL"));
+        }
+      } else if (totaal) {
+        prijsRegel = prijsTekst(totaal);
+      }
       var toeslag = totaal && heeftToeslagen ? toeslagVoor(keuzeVan, nachten) : null;
       var toeslagRegel = toeslag && toeslag.centen
         ? '<span class="calendar__chosen-nights">' + T.pricierLine(centenTekst(toeslag.centen), toeslag.nachten) + '</span>'
@@ -1332,15 +1447,7 @@
           '<button type="button" class="calendar__reset">' + T.reset + '</button>' +
           // In the form the choice goes straight into the request, so there
           // is no button to the request page here.
-          (ingebed ? '' : '<a class="btn btn--dark" href="boeken.html?' +
-            (data.reis ? 'reis=' + encodeURIComponent(data.reis) + '&amp;' : '') +
-            'van=' + alsTekst(keuzeVan) +
-            '&amp;tot=' + alsTekst(keuzeTot) +
-            // Kwam het aantal reizigers uit de reiszoeker mee, dan blijft dat
-            // ook staan als iemand hier een andere periode kiest.
-            (reizigersUitAdres ? '&amp;personen=' + reizigersUitAdres : '') +
-            (eigenVervoer && eigenVervoerGekozen ? '&amp;vervoer=eigen' : '') +
-            (gekozenBegeleiding() ? '&amp;begeleiding=' + gekozenBegeleiding() : '') + '">' + T.continueBtn + '</a>') +
+          (ingebed ? '' : knopHtml(nachten)) +
         '</div>';
     }
 
@@ -1528,15 +1635,6 @@
       keuzeVan = uitVan;
       keuzeTot = uitTot;
     })();
-
-    // Own transport can come along in the web address (vervoer=eigen) or,
-    // in the form, from the form itself.
-    if (eigenVervoer && vervoerVak) {
-      eigenVervoerGekozen = ingebed
-        ? Boolean(opties.eigenVervoer)
-        : new URLSearchParams(window.location.search).get("vervoer") === "eigen";
-      vervoerVak.checked = eigenVervoerGekozen;
-    }
 
     // Guiding days can come along the same way (begeleiding=2). toonBalk()
     // fits them to the chosen period.

@@ -2066,9 +2066,11 @@ button.calendar__cell.is-vertrekoptie { box-shadow: inset 0 0 0 2px var(--ink); 
   max-width: 62ch;
 }
 .falun-cal__note--inline { margin: 0.8rem 0 0; }
-/* Guiding stepper in the shared trip calendar (Orsa), between the months and
-   the bar with the chosen period. */
-.calendar__guiding { margin-top: 1.75rem; }
+/* Persons stepper (trips paid online) and guiding stepper (Orsa) in the
+   shared trip calendar, between the months and the bar with the chosen
+   period. */
+.calendar__guiding,
+.calendar__persons { margin-top: 1.75rem; }
 
 /* Dagen waarop het ijs nog onzeker is: gewoon te boeken, maar met een
    streepje eronder zodat het opvalt. */
@@ -3629,6 +3631,63 @@ button.plan__cell.is-gekozen {
 .wl-steps .step__nr { width: 2.4rem; height: 2.4rem; }
 
 .wl-closing__title { margin-top: 2.2rem; font-family: var(--display); font-weight: 600; font-size: 1.25rem; }
+
+/* Key facts: six items (skating added), so three columns before one row. */
+@media (max-width: 47.99rem) {
+  .wl-factbar .factbar__item:nth-child(odd) { border-left: none; padding-left: 0.25rem; }
+}
+@media (min-width: 48rem) {
+  .wl-factbar .factbar__grid { grid-template-columns: repeat(3, 1fr); }
+  .wl-factbar .factbar__item:nth-child(-n+3) { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+  .wl-factbar .factbar__item:nth-child(4) { border-left: none; padding-left: 0.25rem; }
+}
+@media (min-width: 72rem) {
+  .wl-factbar .factbar__grid { grid-template-columns: repeat(6, 1fr); }
+  .wl-factbar .factbar__item:nth-child(-n+3) { border-bottom: none; }
+  .wl-factbar .factbar__item:nth-child(4) { border-left: 1px solid rgba(255, 255, 255, 0.14); padding-left: 1.25rem; }
+}
+
+/* Day rhythm: morning to evening, skating first and wellness afterwards.
+   Mobile: a vertical track with markers. Wide: four columns under the
+   swept rink line. */
+.wl-rhythm { background: var(--paper-soft); padding-block: 4.5rem; }
+.wl-rhythm__head { max-width: 42rem; }
+.wl-rhythm__head .eyebrow + .h-section { margin-top: 1rem; }
+.wl-rhythm__line { display: none; }
+.wl-rhythm__list {
+  margin-top: 2.25rem;
+  padding: 0 0 0 1.5rem;
+  list-style: none;
+  display: grid;
+  border-left: 2px solid var(--border);
+}
+.wl-rhythm__item { position: relative; padding-bottom: 1.9rem; }
+.wl-rhythm__item:last-child { padding-bottom: 0.25rem; }
+.wl-rhythm__item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.5rem - 7px);
+  top: 0.2rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--paper-soft);
+  border: 2px solid var(--ink);
+}
+.wl-rhythm__item--warm::before { background: var(--warm-deep); border-color: var(--warm-deep); }
+.wl-rhythm__time { display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--warm-deep); }
+.wl-rhythm__title { margin-top: 0.35rem; font-family: var(--display); font-weight: 600; font-size: 1.25rem; line-height: 1.2; }
+.wl-rhythm__text { margin-top: 0.45rem; color: var(--ink-soft); max-width: 36ch; }
+.wl-rhythm__note { margin-top: 2rem; max-width: 46rem; color: var(--ink-soft); }
+.wl-rhythm__note a { color: var(--warm-deep); text-decoration: underline; text-underline-offset: 0.2em; }
+@media (min-width: 60rem) {
+  .wl-rhythm { padding-block: 5.5rem; }
+  .wl-rhythm__line { display: block; margin-top: 2.5rem; line-height: 0; }
+  .wl-rhythm__line svg { display: block; width: 100%; height: 2.5rem; }
+  .wl-rhythm__list { margin-top: 1.25rem; padding-left: 0; border-left: none; grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
+  .wl-rhythm__item { padding-bottom: 0; }
+  .wl-rhythm__item::before { display: none; }
+  .wl-rhythm__item--warm .wl-rhythm__title { color: var(--warm-deep); }
+}
 
 /* Wellness trip page: price per trip length */
 .wl-rates { margin-top: 1.4rem; width: 100%; max-width: 24rem; border-collapse: collapse; }

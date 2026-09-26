@@ -16,8 +16,20 @@
   "//extraNacht": "Blijft iemand langer dan 5 dagen, dan telt elke dag daarboven dit bedrag per persoon mee: het verschil tussen 5 en 4 dagen (1195 - 1095 = 100). Dus 6 dagen 1295, 7 dagen 1395, 10 dagen 1695.",
   "extraNachtPerPersoon": { "standaard": 100 },
 
-  "//basisPersonen": "Voor hoeveel personen de bedragen hierboven gelden. Op de aanvraagpagina krijgt wie met minder mensen komt geen prijsindicatie (die zou te laag uitvallen); wie met meer komt krijgt dezelfde prijs per persoon als indicatie. Joey stuurt daarna het precieze bedrag.",
+  "//basisPersonen": "Voor hoeveel personen de bedragen hierboven gelden. Bij een andere groepsgrootte telt groepsKorting hieronder mee, zodat elke groep van 1 tot en met 20 personen een vaste prijs krijgt en meteen kan afrekenen.",
   "basisPersonen": 2,
+
+  "//personen": "Voor hoeveel personen iemand kan boeken en afrekenen (zelfde als Falun).",
+  "personen": { "min": 1, "max": 20 },
+
+  "//groepsKorting": "Wat er per persoon per nacht bij komt (plus) of af gaat (min) als de groep niet uit basisPersonen bestaat. Prijs per persoon = de prijs hierboven (met toeslagen, afgerond zoals nu) + dit bedrag x het aantal nachten. Staat een aantal er niet bij, dan telt 0. De bedragen komen uit de Falun-prijs: daar is alleen reizen duurder en wordt het met 3 of meer personen per persoon goedkoper, omdat huisje en auto gedeeld worden (per 4 personen een huisje, de helft van de besparing wordt doorgegeven). Het is het gemiddelde per nacht over reizen van 4 tot en met 10 dagen, afgerond op hele euro's. Voorbeeld: 4 personen, 3 nachten is 3 x 20 = 60 euro per persoon minder dan de prijs voor 2.",
+  "groepsKorting": {
+    "uitleg": "Per persoon per nacht, ten opzichte van 2 personen. Alleen reizen kost meer; met 3 of meer personen wordt het per persoon goedkoper, net als bij Falun.",
+    "perPersoonPerNacht": { "1": 81, "3": -14, "4": -20, "5": -8, "6": -14, "7": -17, "8": -20, "9": -14, "10": -16, "11": -18, "12": -20, "13": -16, "14": -17, "15": -19, "16": -20, "17": -17, "18": -18, "19": -19, "20": -20 }
+  },
+
+  "//afrekenen": "Op true kan de bezoeker deze reis meteen online betalen via Stripe, het volledige bedrag voor de hele groep. De server rekent het bedrag zelf uit met dit bestand (api/_reis-prijs.js), net als de kalender. Op false blijft het een aanvraag.",
+  "afrekenen": true,
 
   "//periodes": "Luleå heeft een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
   "periodes": [
