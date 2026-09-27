@@ -1090,6 +1090,7 @@ img[src*="schaatser-bocht-ijsbaan"] { object-position: 75% 35%; }
 img[src*="schaatser-lange-baan"] { object-position: 65% 50%; }
 img[src*="schaatsen-ijs-detail"] { object-position: 65% 15%; }
 img[src*="avondschaatsen"] { object-position: 50% 68%; }
+img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 
 /* Homepage-sectie "Het verhaal achter Novakse": foto's staan dichter bij
    elkaar in rust, en schuiven daardoor tijdens het scrollen zichtbaarder
@@ -1362,6 +1363,20 @@ img[src*="avondschaatsen"] { object-position: 50% 68%; }
 .trip-row__media img.is-active { opacity: 1; }
 .trip-row:hover .trip-row__media img.is-active { transform: scale(1.035); }
 .trip-row__media:focus-visible { outline: 2px solid var(--warm-deep); outline-offset: 3px; }
+/* Pair gallery (wellness trip): while the first (wellness) photo is active,
+   the second (rink) photo shows next to it, 60/40. Tapping continues as a normal
+   gallery. Browsers without :has() simply show the normal gallery. */
+.trip-row__media--pair picture:first-child:has(img.is-active) img {
+  width: calc(60% - 2px);
+  object-position: 45% 50%;
+}
+.trip-row__media--pair picture:first-child:has(img.is-active) + picture img {
+  left: calc(60% + 2px);
+  width: calc(40% - 2px);
+  opacity: 1;
+  object-position: 30% 60%;
+}
+.trip-row:hover .trip-row__media--pair picture:first-child:has(img.is-active) img { transform: none; }
 
 .trip-row__region {
   font-size: 0.78rem;
@@ -3647,6 +3662,48 @@ button.plan__cell.is-gekozen {
 .wl-steps .step__nr { width: 2.4rem; height: 2.4rem; }
 
 .wl-closing__title { margin-top: 2.2rem; font-family: var(--display); font-weight: 600; font-size: 1.25rem; }
+
+/* Photo pairs: the wellness photo leads (larger, first) and a photo of a
+   swept natural-ice rink sits next to it, so the eye reads "warmth + ice"
+   together. Two variants: hero and duo. */
+.wl-hero-pair {
+  position: absolute; inset: 0;
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  gap: 3px;
+  background: var(--ink);
+}
+.wl-hero-pair picture { display: block; min-width: 0; height: 100%; }
+.wl-hero-pair__img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.wl-hero-pair picture:first-child .wl-hero-pair__img { object-position: 38% 50%; }
+.wl-hero-pair picture:last-child .wl-hero-pair__img { object-position: 30% 60%; }
+@media (min-width: 48rem) {
+  .wl-hero-pair { grid-template-columns: 62fr 38fr; gap: 4px; }
+  .wl-hero-pair picture:first-child .wl-hero-pair__img { object-position: 50% 55%; }
+}
+
+/* Duo: tall wellness photo first and larger, rink photo smaller and lower. */
+.wl-pair--duo { display: grid; grid-template-columns: 1.25fr 1fr; gap: 0.75rem; align-items: start; }
+.wl-pair__item { margin: 0; min-width: 0; }
+.wl-pair__item picture { display: block; }
+.wl-pair--duo .wl-pair__item img { display: block; width: 100%; height: auto; object-fit: cover; border-radius: 1rem; }
+.wl-pair--duo .wl-pair__item--warm img { aspect-ratio: 3 / 4; object-position: 50% 60%; }
+.wl-pair--duo .wl-pair__item--ice { margin-top: 4.5rem; }
+.wl-pair--duo .wl-pair__item--ice img { aspect-ratio: 4 / 5; object-position: 45% 50%; }
+.wl-pair__item figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--warm);
+}
+@media (min-width: 60rem) {
+  .wl-pair--duo { gap: 1rem; }
+  .wl-pair--duo .wl-pair__item--warm { margin-top: 1.5rem; }
+  .wl-pair--duo .wl-pair__item--ice { margin-top: 7rem; }
+  .wl-pair--duo .wl-pair__item--ice img { border-radius: 1rem 0 0 1rem; }
+}
 
 /* Key facts: six items (skating added), so three columns before one row. */
 @media (max-width: 47.99rem) {

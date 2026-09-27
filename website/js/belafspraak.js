@@ -444,6 +444,31 @@
     koppelFormulier();
   }
 
+  /* A link from boeken.html may say what the call is about:
+     ?onderwerp= only counts when it is exactly one of the options,
+     ?toelichting= fills the text field (as long as the server accepts). */
+  function vulVooraf() {
+    var params;
+    try { params = new URLSearchParams(window.location.search); } catch (fout) { return; }
+    var keuzelijst = formEl.querySelector('select[name="onderwerp"]');
+    var onderwerp = params.get("onderwerp");
+    if (keuzelijst && onderwerp) {
+      Array.prototype.forEach.call(keuzelijst.options, function (optie) {
+        if (optie.value && optie.value === onderwerp) {
+          optie.selected = true;
+          optie.defaultSelected = true;
+        }
+      });
+    }
+    var tekstveld = formEl.querySelector('textarea[name="toelichting"]');
+    var toelichting = (params.get("toelichting") || "").trim().slice(0, 2000);
+    if (tekstveld && toelichting) {
+      tekstveld.value = toelichting;
+      tekstveld.defaultValue = toelichting;
+    }
+  }
+  vulVooraf();
+
   var bron = doos.getAttribute("data-belafspraak");
   if (!bron) return;
   fetch(bron)
