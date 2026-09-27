@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/theme-groen.css" />
+  <link rel="stylesheet" href="css/reizen.css" />
   <link rel="canonical" href="https://www.novakse.com/reizen.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
@@ -33,26 +34,23 @@
     /* Verfijning reizen-overzicht: voorkomt wees-woorden in koppen en lopende tekst. */
     .page-hero__title,
     .intro__lead,
-    .trip-row__title,
+    .trip-map__title,
     .why__title,
     .closing .h-section {
       text-wrap: balance;
     }
     .page-hero__lede,
-    .trip-row__text,
+    .trip-map__text,
     .why__text,
     .why__reason p,
     .closing__text {
       text-wrap: pretty;
     }
 
-    /* Animaties op deze pagina bewust rustiger: trager inscrollen en trager wisselen van foto. */
+    /* Animaties op deze pagina bewust rustiger: trager inscrollen. */
     .js .reveal {
       transition: opacity 1.6s cubic-bezier(0.22, 0.61, 0.36, 1),
                   transform 1.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-    .trip-row__media img {
-      transition: opacity 1.1s ease, transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
     /* De inleiding heeft twee vervolglinks; die horen onder elkaar te staan,
@@ -235,172 +233,240 @@
       </div>
     </section>
 
-    <!-- 3. De reizen, één voor één -->
-    <section class="trip-rows" id="bestemmingen">
-      <article class="trip-row reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Orsa, tik om te wisselen">
-          <picture><source type="image/avif" srcset="images/orsa-zwart-ijs-baan-480.avif 480w, images/orsa-zwart-ijs-baan-800.avif 800w, images/orsa-zwart-ijs-baan.avif 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/orsa-zwart-ijs-baan-480.webp 480w, images/orsa-zwart-ijs-baan-800.webp 800w, images/orsa-zwart-ijs-baan.webp 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/orsa-zwart-ijs-baan.jpg" alt="Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer" loading="lazy" srcset="images/orsa-zwart-ijs-baan-480.jpg 480w, images/orsa-zwart-ijs-baan-800.jpg 800w, images/orsa-zwart-ijs-baan.jpg 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/orsa-accommodatie-480.avif 480w, images/orsa-accommodatie-800.avif 800w, images/orsa-accommodatie.avif 900w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/orsa-accommodatie-480.webp 480w, images/orsa-accommodatie-800.webp 800w, images/orsa-accommodatie.webp 900w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/orsa-accommodatie.jpg" alt="Accommodatie bij Orsa in Dalarna" loading="lazy" srcset="images/orsa-accommodatie-480.jpg 480w, images/orsa-accommodatie-800.jpg 800w, images/orsa-accommodatie.jpg 900w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/orsa-baan-mora-480.avif 480w, images/orsa-baan-mora-800.avif 800w, images/orsa-baan-mora.avif 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/orsa-baan-mora-480.webp 480w, images/orsa-baan-mora-800.webp 800w, images/orsa-baan-mora.webp 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/orsa-baan-mora.jpg" alt="Natuurijsbaan bij Orsa, Zweden" loading="lazy" srcset="images/orsa-baan-mora-480.jpg 480w, images/orsa-baan-mora-800.jpg 800w, images/orsa-baan-mora.jpg 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <div class="trip-card__dots"><span class="is-active"></span><span></span><span></span></div>
-        </div>
-        <div class="trip-row__body">
-          <span class="trip-row__region">Orsa, Zweden</span>
-          <h2 class="trip-row__title">Orsa</h2>
-          <p class="trip-row__text">Zelfstandige schaatsreis op het Orsameer, met een geveegde baan van zo'n 15 kilometer en verblijf in eigen huisjes vlak bij het ijs. Vlucht, verblijf en vervoer ter plaatse zitten erbij in. Beperkte beschikbaarheid.</p>
-          <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs bij te boeken</dd></div>
-            <div><dt>Verblijf</dt><dd>Eigen huisjes bij het meer</dd></div>
-            <div><dt>Data</dt><dd>Volgen binnenkort</dd></div>
-            <div><dt>Prijs</dt><dd>Volgt binnenkort</dd></div>
-          </dl>
-          <div class="trip-row__actions">
-            <a class="btn btn--dark" href="orsa.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="boeken.html?reis=orsa">Vraag aan</a>
+    <!-- 3. De reizen: één geveegde baan met een halte per reis, en één
+         groot paneel voor de gekozen reis. Zonder JavaScript staan alle
+         reizen onder elkaar en zijn de haltes gewone ankerlinks
+         (zie js/reizen.js en css/reizen.css). -->
+    <section class="trip-map" id="bestemmingen" data-trip-map>
+      <div class="wrap">
+        <div class="trip-map__rail">
+          <div class="trip-map__track">
+            <svg class="trip-map__line" viewBox="0 8 400 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <path class="trip-map__lane" d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
+              <path class="trip-map__stroke" d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
+            </svg>
+            <ul class="trip-map__stops" aria-label="Kies een reis">
+              <li class="trip-map__item">
+                <a class="trip-map__stop" id="tab-orsa" href="#orsa">
+                  <span class="trip-map__marker" aria-hidden="true"></span>
+                  <span class="trip-map__name">Orsa</span>
+                  <span class="trip-map__country">Zweden</span>
+                  <span class="trip-map__price">Vanaf €995</span>
+                </a>
+              </li>
+              <li class="trip-map__item">
+                <a class="trip-map__stop" id="tab-finland" href="#finland">
+                  <span class="trip-map__marker" aria-hidden="true"></span>
+                  <span class="trip-map__name">Punkaharju</span>
+                  <span class="trip-map__country">Finland</span>
+                  <span class="trip-map__price">Vanaf €895</span>
+                </a>
+              </li>
+              <li class="trip-map__item">
+                <a class="trip-map__stop" id="tab-falun" href="#falun">
+                  <span class="trip-map__marker" aria-hidden="true"></span>
+                  <span class="trip-map__name">Falun</span>
+                  <span class="trip-map__country">Zweden</span>
+                  <span class="trip-map__price">Vanaf €995</span>
+                </a>
+              </li>
+              <li class="trip-map__item">
+                <a class="trip-map__stop" id="tab-weissensee" href="#weissensee">
+                  <span class="trip-map__marker" aria-hidden="true"></span>
+                  <span class="trip-map__name">Weissensee</span>
+                  <span class="trip-map__country">Oostenrijk</span>
+                  <span class="trip-map__price">Vanaf €1.095</span>
+                </a>
+              </li>
+              <li class="trip-map__item">
+                <a class="trip-map__stop" id="tab-lulea" href="#lulea">
+                  <span class="trip-map__marker" aria-hidden="true"></span>
+                  <span class="trip-map__name">Luleå</span>
+                  <span class="trip-map__country">Zweden</span>
+                  <span class="trip-map__price">Vanaf €1.095</span>
+                </a>
+              </li>
+              <li class="trip-map__item">
+                <a class="trip-map__stop" id="tab-wellness" href="#wellness">
+                  <span class="trip-map__marker" aria-hidden="true"></span>
+                  <span class="trip-map__name">Wellnessreis</span>
+                  <span class="trip-map__country">Zweden</span>
+                  <span class="trip-map__price">Vanaf €1.395</span>
+                </a>
+              </li>
+              <li class="trip-map__item">
+                <a class="trip-map__stop" id="tab-salen" href="#salen">
+                  <span class="trip-map__marker" aria-hidden="true"></span>
+                  <span class="trip-map__name">Dagtocht vanuit Sälen</span>
+                  <span class="trip-map__country">Zweden</span>
+                  <span class="trip-map__price">Vanaf €155</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-      </article>
 
-      <article class="trip-row trip-row--flip reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Finland, tik om te wisselen">
-          <picture><source type="image/avif" srcset="images/finland-baan-480.avif 480w, images/finland-baan-800.avif 800w, images/finland-baan.avif 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/finland-baan-480.webp 480w, images/finland-baan-800.webp 800w, images/finland-baan.webp 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/finland-baan.jpg" alt="Schaatsbaan op het Saimaameer bij Punkaharju" loading="lazy" srcset="images/finland-baan-480.jpg 480w, images/finland-baan-800.jpg 800w, images/finland-baan.jpg 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/finland-meer-avond-480.avif 480w, images/finland-meer-avond-800.avif 800w, images/finland-meer-avond-1200.avif 1200w, images/finland-meer-avond.avif 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/finland-meer-avond-480.webp 480w, images/finland-meer-avond-800.webp 800w, images/finland-meer-avond-1200.webp 1200w, images/finland-meer-avond.webp 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/finland-meer-avond.jpg" alt="Fins merenlandschap bij avondlicht, Punkaharju" loading="lazy" srcset="images/finland-meer-avond-480.jpg 480w, images/finland-meer-avond-800.jpg 800w, images/finland-meer-avond-1200.jpg 1200w, images/finland-meer-avond.jpg 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/finland-uitzicht-480.avif 480w, images/finland-uitzicht-800.avif 800w, images/finland-uitzicht-1200.avif 1200w, images/finland-uitzicht.avif 1400w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/finland-uitzicht-480.webp 480w, images/finland-uitzicht-800.webp 800w, images/finland-uitzicht-1200.webp 1200w, images/finland-uitzicht.webp 1400w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/finland-uitzicht.jpg" alt="Uitzicht over bevroren Fins merenlandschap" loading="lazy" srcset="images/finland-uitzicht-480.jpg 480w, images/finland-uitzicht-800.jpg 800w, images/finland-uitzicht-1200.jpg 1200w, images/finland-uitzicht.jpg 1400w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <div class="trip-card__dots"><span class="is-active"></span><span></span><span></span></div>
-        </div>
-        <div class="trip-row__body">
-          <span class="trip-row__region">Punkaharju, Finland</span>
-          <h2 class="trip-row__title">Punkaharju</h2>
-          <p class="trip-row__text">Zelfstandige schaatsreis op het Saimaameer bij Punkaharju, in het nationaal park. Je gaat zonder begeleiding op pad; het verblijf is in eigen huisjes met sauna.</p>
-          <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
-            <div><dt>Verblijf</dt><dd>Eigen huisjes met sauna</dd></div>
-            <div><dt>Prijs</dt><dd>Vanaf €895</dd></div>
-          </dl>
-          <div class="trip-row__actions">
-            <a class="btn btn--dark" href="finland.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="boeken.html?reis=finland">Vraag aan</a>
-          </div>
-        </div>
-      </article>
+        <div class="trip-map__panels">
+          <article class="trip-map__panel" id="orsa" aria-labelledby="orsa-title">
+            <div class="trip-map__media">
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/orsa-zwart-ijs-baan-480.avif 480w, images/orsa-zwart-ijs-baan-800.avif 800w, images/orsa-zwart-ijs-baan.avif 1000w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="images/orsa-zwart-ijs-baan-480.webp 480w, images/orsa-zwart-ijs-baan-800.webp 800w, images/orsa-zwart-ijs-baan.webp 1000w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><img src="images/orsa-zwart-ijs-baan.jpg" alt="Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer" srcset="images/orsa-zwart-ijs-baan-480.jpg 480w, images/orsa-zwart-ijs-baan-800.jpg 800w, images/orsa-zwart-ijs-baan.jpg 1000w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/orsa-accommodatie-480.avif 480w, images/orsa-accommodatie-800.avif 800w, images/orsa-accommodatie.avif 900w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><source type="image/webp" srcset="images/orsa-accommodatie-480.webp 480w, images/orsa-accommodatie-800.webp 800w, images/orsa-accommodatie.webp 900w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><img src="images/orsa-accommodatie.jpg" alt="Accommodatie bij Orsa in Dalarna" loading="lazy" srcset="images/orsa-accommodatie-480.jpg 480w, images/orsa-accommodatie-800.jpg 800w, images/orsa-accommodatie.jpg 900w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/orsa-baan-mora-480.avif 480w, images/orsa-baan-mora-800.avif 800w, images/orsa-baan-mora.avif 1000w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><source type="image/webp" srcset="images/orsa-baan-mora-480.webp 480w, images/orsa-baan-mora-800.webp 800w, images/orsa-baan-mora.webp 1000w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><img src="images/orsa-baan-mora.jpg" alt="Natuurijsbaan bij Orsa, Zweden" loading="lazy" srcset="images/orsa-baan-mora-480.jpg 480w, images/orsa-baan-mora-800.jpg 800w, images/orsa-baan-mora.jpg 1000w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /></picture>
+            </div>
+            <div class="trip-map__body">
+              <span class="trip-map__region">Orsa, Zweden</span>
+              <h2 class="trip-map__title" id="orsa-title">Orsa</h2>
+              <p class="trip-map__text">Zelfstandige schaatsreis op het Orsameer, met een geveegde baan van zo'n 15 kilometer en verblijf in eigen huisjes vlak bij het ijs. Vlucht, verblijf en vervoer ter plaatse zitten erbij in. Beperkte beschikbaarheid.</p>
+              <dl class="trip-map__facts">
+                <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs bij te boeken</dd></div>
+                <div><dt>Verblijf</dt><dd>Eigen huisjes bij het meer</dd></div>
+                <div><dt>Data</dt><dd>Volgen binnenkort</dd></div>
+                <div><dt>Prijs</dt><dd>Vanaf €995</dd></div>
+              </dl>
+              <div class="trip-map__actions">
+                <a class="btn btn--dark" href="orsa.html">Bekijk deze reis</a>
+                <a class="link-arrow" href="orsa.html#data-en-prijs">Boek je reis</a>
+              </div>
+            </div>
+          </article>
 
-      <article class="trip-row reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Falun, tik om te wisselen">
-          <picture><source type="image/avif" srcset="images/falun-meer-480.avif 480w, images/falun-meer-800.avif 800w, images/falun-meer.avif 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/falun-meer-480.webp 480w, images/falun-meer-800.webp 800w, images/falun-meer.webp 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/falun-meer.jpg" alt="Schaatsers op een bevroren meer bij Falun" loading="lazy" srcset="images/falun-meer-480.jpg 480w, images/falun-meer-800.jpg 800w, images/falun-meer.jpg 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/falun-accommodatie-480.avif 480w, images/falun-accommodatie-800.avif 800w, images/falun-accommodatie.avif 900w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/falun-accommodatie-480.webp 480w, images/falun-accommodatie-800.webp 800w, images/falun-accommodatie.webp 900w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/falun-accommodatie.jpg" alt="Accommodatie bij Falun" loading="lazy" srcset="images/falun-accommodatie-480.jpg 480w, images/falun-accommodatie-800.jpg 800w, images/falun-accommodatie.jpg 900w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/falun-schaatsers-eiland-480.avif 480w, images/falun-schaatsers-eiland-800.avif 800w, images/falun-schaatsers-eiland.avif 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/falun-schaatsers-eiland-480.webp 480w, images/falun-schaatsers-eiland-800.webp 800w, images/falun-schaatsers-eiland.webp 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/falun-schaatsers-eiland.jpg" alt="Schaatsers bij een eilandje op het bevroren meer bij Falun" loading="lazy" srcset="images/falun-schaatsers-eiland-480.jpg 480w, images/falun-schaatsers-eiland-800.jpg 800w, images/falun-schaatsers-eiland.jpg 1000w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <div class="trip-card__dots"><span class="is-active"></span><span></span><span></span></div>
-        </div>
-        <div class="trip-row__body">
-          <span class="trip-row__region">Falun, Zweden</span>
-          <h2 class="trip-row__title">Falun</h2>
-          <p class="trip-row__text">Pakketreis op historisch ijs, met de karakteristieke rode mijngebouwen van Falun op de achtergrond. Vlucht, huurauto en verblijf zitten erbij in.</p>
-          <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs bij te boeken</dd></div>
-            <div><dt>Reisduur</dt><dd>Vanaf 4 dagen</dd></div>
-            <div><dt>Verblijf</dt><dd>Volgt binnenkort</dd></div>
-            <div><dt>Data</dt><dd>Volgen binnenkort</dd></div>
-            <div><dt>Prijs</dt><dd>Vanaf €995</dd></div>
-          </dl>
-          <div class="trip-row__actions">
-            <a class="btn btn--dark" href="falun.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="boeken.html?reis=falun">Vraag aan</a>
-          </div>
-        </div>
-      </article>
+          <article class="trip-map__panel" id="finland" aria-labelledby="finland-title">
+            <div class="trip-map__media">
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/finland-baan-480.avif 480w, images/finland-baan-800.avif 800w, images/finland-baan.avif 1000w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="images/finland-baan-480.webp 480w, images/finland-baan-800.webp 800w, images/finland-baan.webp 1000w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><img src="images/finland-baan.jpg" alt="Schaatsbaan op het Saimaameer bij Punkaharju" loading="lazy" srcset="images/finland-baan-480.jpg 480w, images/finland-baan-800.jpg 800w, images/finland-baan.jpg 1000w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/finland-meer-avond-480.avif 480w, images/finland-meer-avond-800.avif 800w, images/finland-meer-avond-1200.avif 1200w, images/finland-meer-avond.avif 1600w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><source type="image/webp" srcset="images/finland-meer-avond-480.webp 480w, images/finland-meer-avond-800.webp 800w, images/finland-meer-avond-1200.webp 1200w, images/finland-meer-avond.webp 1600w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><img src="images/finland-meer-avond.jpg" alt="Fins merenlandschap bij avondlicht, Punkaharju" loading="lazy" srcset="images/finland-meer-avond-480.jpg 480w, images/finland-meer-avond-800.jpg 800w, images/finland-meer-avond-1200.jpg 1200w, images/finland-meer-avond.jpg 1600w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/finland-uitzicht-480.avif 480w, images/finland-uitzicht-800.avif 800w, images/finland-uitzicht-1200.avif 1200w, images/finland-uitzicht.avif 1400w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><source type="image/webp" srcset="images/finland-uitzicht-480.webp 480w, images/finland-uitzicht-800.webp 800w, images/finland-uitzicht-1200.webp 1200w, images/finland-uitzicht.webp 1400w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><img src="images/finland-uitzicht.jpg" alt="Uitzicht over bevroren Fins merenlandschap" loading="lazy" srcset="images/finland-uitzicht-480.jpg 480w, images/finland-uitzicht-800.jpg 800w, images/finland-uitzicht-1200.jpg 1200w, images/finland-uitzicht.jpg 1400w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /></picture>
+            </div>
+            <div class="trip-map__body">
+              <span class="trip-map__region">Punkaharju, Finland</span>
+              <h2 class="trip-map__title" id="finland-title">Punkaharju</h2>
+              <p class="trip-map__text">Zelfstandige schaatsreis op het Saimaameer bij Punkaharju, in het nationaal park. Je gaat zonder begeleiding op pad; het verblijf is in eigen huisjes met sauna.</p>
+              <dl class="trip-map__facts">
+                <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
+                <div><dt>Verblijf</dt><dd>Eigen huisjes met sauna</dd></div>
+                <div><dt>Prijs</dt><dd>Vanaf €895</dd></div>
+              </dl>
+              <div class="trip-map__actions">
+                <a class="btn btn--dark" href="finland.html">Bekijk deze reis</a>
+                <a class="link-arrow" href="finland.html#prijzen">Boek je reis</a>
+              </div>
+            </div>
+          </article>
 
-      <article class="trip-row trip-row--flip reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van de Weissensee, tik om te wisselen">
-          <picture><source type="image/avif" srcset="images/weissensee-baan-480.avif 480w, images/weissensee-baan-800.avif 800w, images/weissensee-baan.avif 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/weissensee-baan-480.webp 480w, images/weissensee-baan-800.webp 800w, images/weissensee-baan.webp 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/weissensee-baan.jpg" alt="Geveegde natuurijsbaan op de Weissensee" loading="lazy" srcset="images/weissensee-baan-480.jpg 480w, images/weissensee-baan-800.jpg 800w, images/weissensee-baan.jpg 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/weissensee-schaatsers-480.avif 480w, images/weissensee-schaatsers-800.avif 800w, images/weissensee-schaatsers.avif 999w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/weissensee-schaatsers-480.webp 480w, images/weissensee-schaatsers-800.webp 800w, images/weissensee-schaatsers.webp 999w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/weissensee-schaatsers.jpg" alt="Schaatsers op de Weissensee tussen de bergen" loading="lazy" srcset="images/weissensee-schaatsers-480.jpg 480w, images/weissensee-schaatsers-800.jpg 800w, images/weissensee-schaatsers.jpg 999w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <div class="trip-card__dots"><span class="is-active"></span><span></span></div>
-        </div>
-        <div class="trip-row__body">
-          <span class="trip-row__region">Weissensee, Oostenrijk</span>
-          <h2 class="trip-row__title">Weissensee</h2>
-          <p class="trip-row__text">Zelfstandig schaatsen op een bergmeer van 6,5 km², dat bij gunstige omstandigheden verandert in Europa's grootste geprepareerde natuurijsoppervlakte. Bekend van de Alternatieve Elfstedentocht.</p>
-          <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
-            <div><dt>Hoogte</dt><dd>± 930 meter</dd></div>
-            <div><dt>Data</dt><dd>Zelf te bepalen</dd></div>
-            <div><dt>Prijs</dt><dd>Vanaf €1.095</dd></div>
-          </dl>
-          <div class="trip-row__actions">
-            <a class="btn btn--dark" href="weissensee.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="boeken.html?reis=weissensee">Vraag aan</a>
-          </div>
-        </div>
-      </article>
+          <article class="trip-map__panel" id="falun" aria-labelledby="falun-title">
+            <div class="trip-map__media">
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/falun-meer-480.avif 480w, images/falun-meer-800.avif 800w, images/falun-meer.avif 1000w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="images/falun-meer-480.webp 480w, images/falun-meer-800.webp 800w, images/falun-meer.webp 1000w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><img src="images/falun-meer.jpg" alt="Schaatsers op een bevroren meer bij Falun" loading="lazy" srcset="images/falun-meer-480.jpg 480w, images/falun-meer-800.jpg 800w, images/falun-meer.jpg 1000w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/falun-accommodatie-480.avif 480w, images/falun-accommodatie-800.avif 800w, images/falun-accommodatie.avif 900w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><source type="image/webp" srcset="images/falun-accommodatie-480.webp 480w, images/falun-accommodatie-800.webp 800w, images/falun-accommodatie.webp 900w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><img src="images/falun-accommodatie.jpg" alt="Accommodatie bij Falun" loading="lazy" srcset="images/falun-accommodatie-480.jpg 480w, images/falun-accommodatie-800.jpg 800w, images/falun-accommodatie.jpg 900w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/falun-schaatsers-eiland-480.avif 480w, images/falun-schaatsers-eiland-800.avif 800w, images/falun-schaatsers-eiland.avif 1000w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><source type="image/webp" srcset="images/falun-schaatsers-eiland-480.webp 480w, images/falun-schaatsers-eiland-800.webp 800w, images/falun-schaatsers-eiland.webp 1000w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><img src="images/falun-schaatsers-eiland.jpg" alt="Schaatsers bij een eilandje op het bevroren meer bij Falun" loading="lazy" srcset="images/falun-schaatsers-eiland-480.jpg 480w, images/falun-schaatsers-eiland-800.jpg 800w, images/falun-schaatsers-eiland.jpg 1000w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /></picture>
+            </div>
+            <div class="trip-map__body">
+              <span class="trip-map__region">Falun, Zweden</span>
+              <h2 class="trip-map__title" id="falun-title">Falun</h2>
+              <p class="trip-map__text">Pakketreis op historisch ijs, met de karakteristieke rode mijngebouwen van Falun op de achtergrond. Vlucht, huurauto en verblijf zitten erbij in.</p>
+              <dl class="trip-map__facts">
+                <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs bij te boeken</dd></div>
+                <div><dt>Reisduur</dt><dd>Vanaf 4 dagen</dd></div>
+                <div><dt>Verblijf</dt><dd>Volgt binnenkort</dd></div>
+                <div><dt>Data</dt><dd>Volgen binnenkort</dd></div>
+                <div><dt>Prijs</dt><dd>Vanaf €995</dd></div>
+              </dl>
+              <div class="trip-map__actions">
+                <a class="btn btn--dark" href="falun.html">Bekijk deze reis</a>
+                <a class="link-arrow" href="boeken.html?reis=falun">Reis aanvragen</a>
+              </div>
+            </div>
+          </article>
 
-      <article class="trip-row reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van Luleå, tik om te wisselen">
-          <picture><source type="image/avif" srcset="images/lulea-ijs-zonsondergang-480.avif 480w, images/lulea-ijs-zonsondergang-800.avif 800w, images/lulea-ijs-zonsondergang-1200.avif 1200w, images/lulea-ijs-zonsondergang-1600.avif 1600w, images/lulea-ijs-zonsondergang.avif 1800w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/lulea-ijs-zonsondergang-480.webp 480w, images/lulea-ijs-zonsondergang-800.webp 800w, images/lulea-ijs-zonsondergang-1200.webp 1200w, images/lulea-ijs-zonsondergang-1600.webp 1600w, images/lulea-ijs-zonsondergang.webp 1800w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij Luleå" loading="lazy" srcset="images/lulea-ijs-zonsondergang-480.jpg 480w, images/lulea-ijs-zonsondergang-800.jpg 800w, images/lulea-ijs-zonsondergang-1200.jpg 1200w, images/lulea-ijs-zonsondergang-1600.jpg 1600w, images/lulea-ijs-zonsondergang.jpg 1800w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/lulea-berkenbomen-baai-480.avif 480w, images/lulea-berkenbomen-baai-800.avif 800w, images/lulea-berkenbomen-baai-1200.avif 1200w, images/lulea-berkenbomen-baai.avif 1400w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/lulea-berkenbomen-baai-480.webp 480w, images/lulea-berkenbomen-baai-800.webp 800w, images/lulea-berkenbomen-baai-1200.webp 1200w, images/lulea-berkenbomen-baai.webp 1400w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" srcset="images/lulea-berkenbomen-baai-480.jpg 480w, images/lulea-berkenbomen-baai-800.jpg 800w, images/lulea-berkenbomen-baai-1200.jpg 1200w, images/lulea-berkenbomen-baai.jpg 1400w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/lulea-rendiergewei-480.avif 480w, images/lulea-rendiergewei-800.avif 800w, images/lulea-rendiergewei.avif 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/lulea-rendiergewei-480.webp 480w, images/lulea-rendiergewei-800.webp 800w, images/lulea-rendiergewei.webp 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/lulea-rendiergewei.jpg" alt="Rendiergewei in de sneeuw bij Luleå" loading="lazy" srcset="images/lulea-rendiergewei-480.jpg 480w, images/lulea-rendiergewei-800.jpg 800w, images/lulea-rendiergewei.jpg 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <div class="trip-card__dots"><span class="is-active"></span><span></span><span></span></div>
-        </div>
-        <div class="trip-row__body">
-          <span class="trip-row__region">Luleå, Zweden</span>
-          <h2 class="trip-row__title">Luleå</h2>
-          <p class="trip-row__text">Individuele, zelfstandige schaatsreis op de openbare natuurijsroute langs de bevroren Botnische Golf. Geen begeleiding of vast programma; je bepaalt zelf je reisduur en dagindeling.</p>
-          <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Individueel, zelfstandig</dd></div>
-            <div><dt>Reisduur</dt><dd>Zelf te bepalen</dd></div>
-            <div><dt>Verblijf</dt><dd>Hotel naar keuze</dd></div>
-            <div><dt>Prijs</dt><dd>Op aanvraag</dd></div>
-          </dl>
-          <div class="trip-row__actions">
-            <a class="btn btn--dark" href="lulea.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="boeken.html?reis=lulea">Vraag aan</a>
-          </div>
-        </div>
-      </article>
+          <article class="trip-map__panel" id="weissensee" aria-labelledby="weissensee-title">
+            <div class="trip-map__media">
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/weissensee-schaatsers-480.avif 480w, images/weissensee-schaatsers-800.avif 800w, images/weissensee-schaatsers.avif 999w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="images/weissensee-schaatsers-480.webp 480w, images/weissensee-schaatsers-800.webp 800w, images/weissensee-schaatsers.webp 999w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><img src="images/weissensee-schaatsers.jpg" alt="Schaatsers op de Weissensee tussen de bergen" loading="lazy" srcset="images/weissensee-schaatsers-480.jpg 480w, images/weissensee-schaatsers-800.jpg 800w, images/weissensee-schaatsers.jpg 999w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/weissensee-baan-480.avif 480w, images/weissensee-baan-800.avif 800w, images/weissensee-baan.avif 1200w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><source type="image/webp" srcset="images/weissensee-baan-480.webp 480w, images/weissensee-baan-800.webp 800w, images/weissensee-baan.webp 1200w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><img src="images/weissensee-baan.jpg" alt="Geveegde natuurijsbaan op de Weissensee" loading="lazy" srcset="images/weissensee-baan-480.jpg 480w, images/weissensee-baan-800.jpg 800w, images/weissensee-baan.jpg 1200w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /></picture>
+            </div>
+            <div class="trip-map__body">
+              <span class="trip-map__region">Weissensee, Oostenrijk</span>
+              <h2 class="trip-map__title" id="weissensee-title">Weissensee</h2>
+              <p class="trip-map__text">Zelfstandig schaatsen op een bergmeer van 6,5 km², dat bij gunstige omstandigheden verandert in Europa's grootste geprepareerde natuurijsoppervlakte. Bekend van de Alternatieve Elfstedentocht.</p>
+              <dl class="trip-map__facts">
+                <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
+                <div><dt>Hoogte</dt><dd>± 930 meter</dd></div>
+                <div><dt>Data</dt><dd>Zelf te bepalen</dd></div>
+                <div><dt>Prijs</dt><dd>Vanaf €1.095</dd></div>
+              </dl>
+              <div class="trip-map__actions">
+                <a class="btn btn--dark" href="weissensee.html">Bekijk deze reis</a>
+                <a class="link-arrow" href="weissensee.html#data-en-prijs">Boek je reis</a>
+              </div>
+            </div>
+          </article>
 
-      <article class="trip-row trip-row--flip reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van de Wellnessreis, tik om te wisselen">
-          <picture><source type="image/avif" srcset="images/wellness-zwembad-480.avif 480w, images/wellness-zwembad-800.avif 800w, images/wellness-zwembad-1200.avif 1200w, images/wellness-zwembad.avif 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/wellness-zwembad-480.webp 480w, images/wellness-zwembad-800.webp 800w, images/wellness-zwembad-1200.webp 1200w, images/wellness-zwembad.webp 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/wellness-zwembad-1200.jpg" alt="Binnenzwembad met uitzicht op besneeuwde bomen" loading="lazy" srcset="images/wellness-zwembad-480.jpg 480w, images/wellness-zwembad-800.jpg 800w, images/wellness-zwembad-1200.jpg 1200w, images/wellness-zwembad.jpg 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/wellness-buitenbad-480.avif 480w, images/wellness-buitenbad-800.avif 800w, images/wellness-buitenbad-1200.avif 1200w, images/wellness-buitenbad.avif 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/wellness-buitenbad-480.webp 480w, images/wellness-buitenbad-800.webp 800w, images/wellness-buitenbad-1200.webp 1200w, images/wellness-buitenbad.webp 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/wellness-buitenbad-1200.jpg" alt="Winters bad in een wak in een bevroren meer" loading="lazy" srcset="images/wellness-buitenbad-480.jpg 480w, images/wellness-buitenbad-800.jpg 800w, images/wellness-buitenbad-1200.jpg 1200w, images/wellness-buitenbad.jpg 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/schaatser-lange-baan-480.avif 480w, images/schaatser-lange-baan-800.avif 800w, images/schaatser-lange-baan-1200.avif 1200w, images/schaatser-lange-baan.avif 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/schaatser-lange-baan-480.webp 480w, images/schaatser-lange-baan-800.webp 800w, images/schaatser-lange-baan-1200.webp 1200w, images/schaatser-lange-baan.webp 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/schaatser-lange-baan-1200.jpg" alt="Schaatser op een lang geveegde natuurijsbaan" loading="lazy" srcset="images/schaatser-lange-baan-480.jpg 480w, images/schaatser-lange-baan-800.jpg 800w, images/schaatser-lange-baan-1200.jpg 1200w, images/schaatser-lange-baan.jpg 1600w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <div class="trip-card__dots"><span class="is-active"></span><span></span><span></span></div>
+          <article class="trip-map__panel" id="lulea" aria-labelledby="lulea-title">
+            <div class="trip-map__media">
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/lulea-ijs-zonsondergang-480.avif 480w, images/lulea-ijs-zonsondergang-800.avif 800w, images/lulea-ijs-zonsondergang-1200.avif 1200w, images/lulea-ijs-zonsondergang-1600.avif 1600w, images/lulea-ijs-zonsondergang.avif 1800w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="images/lulea-ijs-zonsondergang-480.webp 480w, images/lulea-ijs-zonsondergang-800.webp 800w, images/lulea-ijs-zonsondergang-1200.webp 1200w, images/lulea-ijs-zonsondergang-1600.webp 1600w, images/lulea-ijs-zonsondergang.webp 1800w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><img src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij Luleå" loading="lazy" srcset="images/lulea-ijs-zonsondergang-480.jpg 480w, images/lulea-ijs-zonsondergang-800.jpg 800w, images/lulea-ijs-zonsondergang-1200.jpg 1200w, images/lulea-ijs-zonsondergang-1600.jpg 1600w, images/lulea-ijs-zonsondergang.jpg 1800w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/lulea-berkenbomen-baai-480.avif 480w, images/lulea-berkenbomen-baai-800.avif 800w, images/lulea-berkenbomen-baai-1200.avif 1200w, images/lulea-berkenbomen-baai.avif 1400w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><source type="image/webp" srcset="images/lulea-berkenbomen-baai-480.webp 480w, images/lulea-berkenbomen-baai-800.webp 800w, images/lulea-berkenbomen-baai-1200.webp 1200w, images/lulea-berkenbomen-baai.webp 1400w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" srcset="images/lulea-berkenbomen-baai-480.jpg 480w, images/lulea-berkenbomen-baai-800.jpg 800w, images/lulea-berkenbomen-baai-1200.jpg 1200w, images/lulea-berkenbomen-baai.jpg 1400w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/lulea-rendiergewei-480.avif 480w, images/lulea-rendiergewei-800.avif 800w, images/lulea-rendiergewei.avif 1200w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><source type="image/webp" srcset="images/lulea-rendiergewei-480.webp 480w, images/lulea-rendiergewei-800.webp 800w, images/lulea-rendiergewei.webp 1200w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><img src="images/lulea-rendiergewei.jpg" alt="Rendiergewei in de sneeuw bij Luleå" loading="lazy" srcset="images/lulea-rendiergewei-480.jpg 480w, images/lulea-rendiergewei-800.jpg 800w, images/lulea-rendiergewei.jpg 1200w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /></picture>
+            </div>
+            <div class="trip-map__body">
+              <span class="trip-map__region">Luleå, Zweden</span>
+              <h2 class="trip-map__title" id="lulea-title">Luleå</h2>
+              <p class="trip-map__text">Individuele, zelfstandige schaatsreis op de openbare natuurijsroute langs de bevroren Botnische Golf. Geen begeleiding of vast programma; je bepaalt zelf je reisduur en dagindeling.</p>
+              <dl class="trip-map__facts">
+                <div><dt>Soort reis</dt><dd>Individueel, zelfstandig</dd></div>
+                <div><dt>Reisduur</dt><dd>Zelf te bepalen</dd></div>
+                <div><dt>Verblijf</dt><dd>Hotel naar keuze</dd></div>
+                <div><dt>Prijs</dt><dd>Vanaf €1.095</dd></div>
+              </dl>
+              <div class="trip-map__actions">
+                <a class="btn btn--dark" href="lulea.html">Bekijk deze reis</a>
+                <a class="link-arrow" href="lulea.html#data-en-prijs">Boek je reis</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="trip-map__panel" id="wellness" aria-labelledby="wellness-title">
+            <div class="trip-map__media">
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/wellness-zwembad-480.avif 480w, images/wellness-zwembad-800.avif 800w, images/wellness-zwembad-1200.avif 1200w, images/wellness-zwembad.avif 1600w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="images/wellness-zwembad-480.webp 480w, images/wellness-zwembad-800.webp 800w, images/wellness-zwembad-1200.webp 1200w, images/wellness-zwembad.webp 1600w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><img src="images/wellness-zwembad-1200.jpg" alt="Binnenzwembad met uitzicht op besneeuwde bomen" loading="lazy" srcset="images/wellness-zwembad-480.jpg 480w, images/wellness-zwembad-800.jpg 800w, images/wellness-zwembad-1200.jpg 1200w, images/wellness-zwembad.jpg 1600w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/wellness-buitenbad-480.avif 480w, images/wellness-buitenbad-800.avif 800w, images/wellness-buitenbad-1200.avif 1200w, images/wellness-buitenbad.avif 1600w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><source type="image/webp" srcset="images/wellness-buitenbad-480.webp 480w, images/wellness-buitenbad-800.webp 800w, images/wellness-buitenbad-1200.webp 1200w, images/wellness-buitenbad.webp 1600w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><img src="images/wellness-buitenbad-1200.jpg" alt="Winters bad in een wak in een bevroren meer" loading="lazy" srcset="images/wellness-buitenbad-480.jpg 480w, images/wellness-buitenbad-800.jpg 800w, images/wellness-buitenbad-1200.jpg 1200w, images/wellness-buitenbad.jpg 1600w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/schaatser-lange-baan-480.avif 480w, images/schaatser-lange-baan-800.avif 800w, images/schaatser-lange-baan-1200.avif 1200w, images/schaatser-lange-baan.avif 1600w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><source type="image/webp" srcset="images/schaatser-lange-baan-480.webp 480w, images/schaatser-lange-baan-800.webp 800w, images/schaatser-lange-baan-1200.webp 1200w, images/schaatser-lange-baan.webp 1600w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><img src="images/schaatser-lange-baan-1200.jpg" alt="Schaatser op een lang geveegde natuurijsbaan" loading="lazy" srcset="images/schaatser-lange-baan-480.jpg 480w, images/schaatser-lange-baan-800.jpg 800w, images/schaatser-lange-baan-1200.jpg 1200w, images/schaatser-lange-baan.jpg 1600w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /></picture>
+            </div>
+            <div class="trip-map__body">
+              <span class="trip-map__region">Zweden</span>
+              <h2 class="trip-map__title" id="wellness-title">Wellnessreis</h2>
+              <p class="trip-map__text">Een winterreis naar Zweden, maar dan net even anders. Je verblijft in een comfortabel hotel met wellness, ontbijt en alle ruimte om te ontspannen. Wellness staat centraal; schaatsen, sneeuw en avontuur zijn de extra's.</p>
+              <dl class="trip-map__facts">
+                <div><dt>Vervoer</dt><dd>Vlucht + huurauto inbegrepen</dd></div>
+                <div><dt>Verblijf</dt><dd>Hotel met wellness</dd></div>
+                <div><dt>Ontbijt</dt><dd>Inbegrepen</dd></div>
+                <div><dt>Prijs</dt><dd>Vanaf €1.395</dd></div>
+              </dl>
+              <div class="trip-map__actions">
+                <a class="btn btn--dark" href="wellness.html">Bekijk deze reis</a>
+                <a class="link-arrow" href="boeken.html?reis=wellness">Vraag deze reis aan</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="trip-map__panel" id="salen" aria-labelledby="salen-title">
+            <div class="trip-map__media">
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/geveegde-baan-schaatsers-480.avif 480w, images/geveegde-baan-schaatsers-800.avif 800w, images/geveegde-baan-schaatsers-1200.avif 1200w, images/geveegde-baan-schaatsers.avif 1366w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="images/geveegde-baan-schaatsers-480.webp 480w, images/geveegde-baan-schaatsers-800.webp 800w, images/geveegde-baan-schaatsers-1200.webp 1200w, images/geveegde-baan-schaatsers.webp 1366w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /><img src="images/geveegde-baan-schaatsers-1200.jpg" alt="Schaatsers op een geveegde baan met sneeuwranden over een bevroren Zweeds meer" loading="lazy" srcset="images/geveegde-baan-schaatsers-480.jpg 480w, images/geveegde-baan-schaatsers-800.jpg 800w, images/geveegde-baan-schaatsers-1200.jpg 1200w, images/geveegde-baan-schaatsers.jpg 1366w" sizes="(min-width: 80rem) 41rem, (min-width: 64rem) 50vw, (min-width: 48rem) calc(100vw - 6rem), calc(100vw - 3rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/kampvuur-fika-ijs-480.avif 480w, images/kampvuur-fika-ijs-800.avif 800w, images/kampvuur-fika-ijs.avif 1200w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><source type="image/webp" srcset="images/kampvuur-fika-ijs-480.webp 480w, images/kampvuur-fika-ijs-800.webp 800w, images/kampvuur-fika-ijs.webp 1200w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /><img src="images/kampvuur-fika-ijs.jpg" alt="Twee schaatsers warmen zich op en roosteren eten bij een kampvuur tussen de dennen, naast het ijs" loading="lazy" srcset="images/kampvuur-fika-ijs-480.jpg 480w, images/kampvuur-fika-ijs-800.jpg 800w, images/kampvuur-fika-ijs.jpg 1200w" sizes="(min-width: 80rem) 17rem, (min-width: 64rem) 21vw, 42vw" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /><img src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" loading="lazy" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 80rem) 20rem, (min-width: 64rem) 25vw, 50vw" /></picture>
+            </div>
+            <div class="trip-map__body">
+              <span class="trip-map__region">Sälen, Stöten en Tandådalen, Zweden</span>
+              <h2 class="trip-map__title" id="salen-title">Dagtocht vanuit Sälen</h2>
+              <p class="trip-map__text">Verruil je ski's een dagje voor de mooiste natuurijs-ervaring van Zweden. Een geveegde ijsbaan van 12 kilometer (enkel) op een meer, op ongeveer 1 uur en 10 minuten rijden van Sälen, Tandådalen en Stöten.</p>
+              <dl class="trip-map__facts">
+                <div><dt>Soort reis</dt><dd>Dagtocht, halve of hele dag</dd></div>
+                <div><dt>Data</dt><dd>10 januari t/m 20 februari 2027</dd></div>
+                <div><dt>Prijs</dt><dd>Vanaf €155</dd></div>
+              </dl>
+              <div class="trip-map__actions">
+                <a class="btn btn--dark" href="schaatsen-salen.html">Bekijk deze reis</a>
+                <a class="link-arrow" href="schaatsen-salen.html#boeken">Boek je dagtocht</a>
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="trip-row__body">
-          <span class="trip-row__region">Zweden</span>
-          <h2 class="trip-row__title">Wellnessreis</h2>
-          <p class="trip-row__text">Een winterreis naar Zweden, maar dan net even anders. Je verblijft in een comfortabel hotel met wellness, ontbijt en alle ruimte om te ontspannen. Wellness staat centraal; schaatsen, sneeuw en avontuur zijn de extra's.</p>
-          <dl class="trip-row__facts">
-            <div><dt>Vervoer</dt><dd>Vlucht + huurauto inbegrepen</dd></div>
-            <div><dt>Verblijf</dt><dd>Hotel met wellness</dd></div>
-            <div><dt>Ontbijt</dt><dd>Inbegrepen</dd></div>
-            <div><dt>Prijs</dt><dd>Vanaf €1.395</dd></div>
-          </dl>
-          <div class="trip-row__actions">
-            <a class="btn btn--dark" href="wellness.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="boeken.html?reis=wellness">Vraag aan</a>
-          </div>
-        </div>
-      </article>
-      <article class="trip-row reveal">
-        <div class="trip-row__media" data-gallery role="button" tabindex="0" aria-label="Foto's van de dagtocht vanuit Sälen, tik om te wisselen">
-          <picture><source type="image/avif" srcset="images/geveegde-baan-schaatsers-480.avif 480w, images/geveegde-baan-schaatsers-800.avif 800w, images/geveegde-baan-schaatsers-1200.avif 1200w, images/geveegde-baan-schaatsers.avif 1366w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/geveegde-baan-schaatsers-480.webp 480w, images/geveegde-baan-schaatsers-800.webp 800w, images/geveegde-baan-schaatsers-1200.webp 1200w, images/geveegde-baan-schaatsers.webp 1366w" sizes="(min-width: 60rem) 45vw, 100vw" /><img class="is-active" src="images/geveegde-baan-schaatsers-1200.jpg" alt="Schaatsers op een geveegde baan met sneeuwranden over een bevroren Zweeds meer" loading="lazy" srcset="images/geveegde-baan-schaatsers-480.jpg 480w, images/geveegde-baan-schaatsers-800.jpg 800w, images/geveegde-baan-schaatsers-1200.jpg 1200w, images/geveegde-baan-schaatsers.jpg 1366w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/kampvuur-fika-ijs-480.avif 480w, images/kampvuur-fika-ijs-800.avif 800w, images/kampvuur-fika-ijs.avif 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/kampvuur-fika-ijs-480.webp 480w, images/kampvuur-fika-ijs-800.webp 800w, images/kampvuur-fika-ijs.webp 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/kampvuur-fika-ijs.jpg" alt="Twee schaatsers warmen zich op en roosteren eten bij een kampvuur tussen de dennen, naast het ijs" loading="lazy" srcset="images/kampvuur-fika-ijs-480.jpg 480w, images/kampvuur-fika-ijs-800.jpg 800w, images/kampvuur-fika-ijs.jpg 1200w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <picture><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 60rem) 45vw, 100vw" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 60rem) 45vw, 100vw" /><img src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" loading="lazy" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 60rem) 45vw, 100vw" /></picture>
-          <div class="trip-card__dots"><span class="is-active"></span><span></span><span></span></div>
-        </div>
-        <div class="trip-row__body">
-          <span class="trip-row__region">Sälen, Stöten en Tandådalen, Zweden</span>
-          <h2 class="trip-row__title">Dagtocht vanuit Sälen</h2>
-          <p class="trip-row__text">Verruil je ski's een dagje voor de mooiste natuurijs-ervaring van Zweden. Een geveegde ijsbaan van 12 kilometer (enkel) op een meer, op ongeveer 1 uur en 10 minuten rijden van Sälen, Tandådalen en Stöten.</p>
-          <dl class="trip-row__facts">
-            <div><dt>Soort reis</dt><dd>Dagtocht, halve of hele dag</dd></div>
-            <div><dt>Data</dt><dd>10 januari t/m 20 februari 2027</dd></div>
-            <div><dt>Prijs</dt><dd>Vanaf €155</dd></div>
-          </dl>
-          <div class="trip-row__actions">
-            <a class="btn btn--dark" href="schaatsen-salen.html">Bekijk deze reis</a>
-            <a class="link-arrow" href="schaatsen-salen.html#boeken">Boek direct</a>
-          </div>
-        </div>
-      </article>
+      </div>
     </section>
 
     <!-- 4. Hoe een reis werkt -->
@@ -521,6 +587,11 @@
 
   <script src="js/main.js"></script>
   <script src="js/trip-search.js"></script>
+  <!-- Safety net: if js/reizen.js fails to load or never marks the trip map
+       ready, show every trip stacked (like without JS). Deferred scripts run
+       before DOMContentLoaded, so this check runs after it. -->
+  <script>document.addEventListener("DOMContentLoaded",function(){var m=document.querySelector("[data-trip-map]");if(m&&!m.classList.contains("is-ready"))m.classList.add("is-static");});</script>
+  <script defer src="js/reizen.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

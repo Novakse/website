@@ -1,0 +1,377 @@
+/* ==========================================================================
+   Reizen overview - "trip map" (reizen.html only)
+   Loads after styles.css and theme-groen.css. All selectors are scoped to
+   trip-map__* so nothing leaks into other pages.
+
+   One swept ice-rink line (the same path as .baanlijn, stretched) with a stop
+   per trip, and one large panel for the chosen trip below it.
+   - Without JavaScript: every panel is shown stacked and the stops are plain
+     anchor links to them.
+   - With JavaScript (js/reizen.js): the stops become WAI-ARIA tabs, the
+     section gets .is-ready and only the chosen panel is shown.
+   ========================================================================== */
+
+.trip-map {
+  --ice: #e7eef1;          /* swept-lane tint and photo placeholder */
+  --line-h: 2.75rem;       /* height of the line band above the labels */
+  --stop-w: 7.75rem;       /* width of one stop in the swipe strip */
+  --overlap: 2.75rem;      /* how far the side photo overlaps the main photo */
+  background: var(--paper);
+  padding-block: 1.25rem 5rem;
+}
+
+/* --------------------------------------------------------------------------
+   The line with the stops
+   Mobile first: a horizontal swipe strip. From 64rem all seven stops fit
+   next to each other and the strip becomes a static line.
+   -------------------------------------------------------------------------- */
+.trip-map__rail {
+  --fade-start: 0px;
+  --fade-end: 3.5rem;
+  position: relative;
+  margin-inline: calc(-1 * var(--pad));
+  padding: 0.5rem var(--pad) 0.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--pad);
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent 100%);
+}
+.trip-map__rail::-webkit-scrollbar { display: none; }
+
+/* Edge fades follow the scroll position once js/reizen.js runs. */
+.trip-map.has-more-start .trip-map__rail { --fade-start: 2.5rem; }
+.trip-map.is-ready:not(.has-more-end) .trip-map__rail { --fade-end: 0px; }
+
+/* A mouse gets a thin scrollbar as an extra cue; touch keeps the clean strip. */
+@media (pointer: fine) {
+  .trip-map__rail { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+}
+
+.trip-map__track {
+  position: relative;
+  width: max-content;
+}
+
+.trip-map__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--line-h);
+  overflow: visible;
+  pointer-events: none;
+}
+.trip-map__line path {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.trip-map__lane { stroke: var(--ice); stroke-width: 18; }
+.trip-map__stroke { stroke: var(--warm-deep); stroke-width: 2; }
+
+/* Seven equal columns without gaps, so every stop centre sits at a known
+   point of the path. */
+.trip-map__stops {
+  display: grid;
+  grid-template-columns: repeat(7, var(--stop-w));
+}
+.trip-map__item {
+  display: flex;
+  scroll-snap-align: start;
+}
+
+/* Height of the path at each stop centre, as a share of the line band.
+   Measured on "M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" in a
+   viewBox from y=8 to y=32. */
+.trip-map__item:nth-child(1) { --y: 0.357; }
+.trip-map__item:nth-child(2) { --y: 0.339; }
+.trip-map__item:nth-child(3) { --y: 0.539; }
+.trip-map__item:nth-child(4) { --y: 0.652; }
+.trip-map__item:nth-child(5) { --y: 0.4375; }
+.trip-map__item:nth-child(6) { --y: 0.316; }
+.trip-map__item:nth-child(7) { --y: 0.418; }
+
+.trip-map__stop {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: calc(var(--line-h) + 0.55rem) 0.55rem 0.6rem;
+  border-radius: 1rem;
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+}
+.trip-map__stop:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: -3px;
+}
+
+.trip-map__marker {
+  position: absolute;
+  top: calc(var(--y, 0.5) * var(--line-h));
+  left: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin: -0.4rem 0 0 -0.4rem;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  transition: transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+              background-color 0.22s ease, border-color 0.22s ease;
+}
+
+.trip-map__name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+}
+.trip-map__country {
+  margin-top: 0.15rem;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+.trip-map__price {
+  margin-top: 0.4rem;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Chosen stop: a filled warm marker with a ring, warm name with underline.
+   Colour is never the only cue (size and underline change too). */
+.trip-map__stop[aria-selected="true"] .trip-map__marker {
+  background: var(--warm-deep);
+  border-color: var(--warm-deep);
+  transform: scale(1.45);
+  box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.5px var(--warm-deep);
+}
+.trip-map__stop[aria-selected="true"] .trip-map__name {
+  color: var(--warm-deep);
+  text-decoration-color: currentColor;
+}
+
+@media (hover: hover) {
+  .trip-map__stop:hover .trip-map__marker { border-color: var(--warm-deep); transform: scale(1.2); }
+  .trip-map__stop[aria-selected="true"]:hover .trip-map__marker { transform: scale(1.45); }
+  .trip-map__stop:hover .trip-map__name { text-decoration-color: var(--border); }
+  .trip-map__stop[aria-selected="true"]:hover .trip-map__name { text-decoration-color: currentColor; }
+}
+
+/* --------------------------------------------------------------------------
+   Panels
+   -------------------------------------------------------------------------- */
+.trip-map__panels {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 4.5rem;             /* only visible without JS, when all are stacked */
+}
+
+.trip-map__panel {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+  border-radius: 1.5rem;
+}
+.trip-map__panel[hidden] { display: none; }
+/* Deep links (#orsa, #lulea, ...) land with the line still in view.
+   js/reizen.js measures header + line height into this variable. */
+.trip-map.is-ready .trip-map__panel { scroll-margin-top: var(--panel-scroll-margin, 5rem); }
+
+/* Before js/reizen.js has run, show only the first trip. This avoids a big
+   layout jump (seven stacked trips collapsing to one) on page load.
+   If the script fails to load or never gets ready, an inline check in
+   reizen.html adds .is-static on DOMContentLoaded and every trip shows
+   stacked again, like without JavaScript. */
+.js .trip-map:not(.is-ready):not(.is-static) .trip-map__panel:not(:first-child) { display: none; }
+
+/* Photo composition: one large photo, a smaller one that overlaps its lower
+   corner (cut out with a paper-coloured outline, no shadow) and an optional
+   third one that sits below it, a column in. Every other trip is mirrored. */
+.trip-map__media {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+}
+.trip-map__photo {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: var(--ice);
+}
+.trip-map__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.trip-map__photo--main {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  aspect-ratio: 3 / 2;
+  border-radius: 1.5rem;
+}
+.trip-map__photo--side {
+  z-index: 1;
+  grid-column: 8 / -1;
+  grid-row: 2;
+  margin-top: calc(-1 * var(--overlap));
+  aspect-ratio: 4 / 5;
+  border-radius: 1rem;
+  outline: 0.35rem solid var(--paper);
+}
+.trip-map__photo--square { aspect-ratio: 1 / 1; }
+.trip-map__photo--below {
+  grid-column: 2 / 8;
+  grid-row: 2;
+  margin: 0.75rem 0.9rem 0 0;
+  aspect-ratio: 3 / 2;
+  border-radius: 1rem;
+}
+.trip-map__panel:nth-child(even) .trip-map__photo--side { grid-column: 1 / 6; }
+.trip-map__panel:nth-child(even) .trip-map__photo--below {
+  grid-column: 6 / 12;
+  margin: 0.75rem 0 0 0.9rem;
+}
+
+/* Two photos only (Weissensee has no third one): nothing fills the row
+   beside the side photo, so the composition becomes a staggered pair. The
+   main photo steps in two columns from the side photo's edge and the side
+   photo overlaps its lower corner, hanging just below it. Side photo
+   columns stay as set above; without :has() the default layout remains. */
+.trip-map__media:not(:has(.trip-map__photo--below)) {
+  --hang: 2rem;            /* how far the side photo hangs below the main */
+  grid-template-rows: auto var(--hang);
+}
+.trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--main {
+  grid-column: 1 / 11;
+  aspect-ratio: 5 / 4;
+}
+.trip-map__panel:nth-child(even) .trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--main {
+  grid-column: 3 / -1;
+}
+.trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--side {
+  grid-row: 1 / 3;
+  align-self: end;
+  margin-top: 0;
+}
+
+/* Crops for photos whose subject is not in the middle. */
+#weissensee .trip-map__photo--main img { object-position: 50% 30%; }
+#wellness .trip-map__photo--side img { object-position: 50% 70%; }
+#salen .trip-map__photo--side img { object-position: 40% 50%; }
+
+/* Text */
+.trip-map__region {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--warm-deep);
+}
+.trip-map__title {
+  margin-top: 0.3rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 5.2vw, 3.3rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+.trip-map__text {
+  margin-top: 1rem;
+  max-width: 46ch;
+  color: var(--ink-soft);
+}
+
+.trip-map__facts {
+  margin: 1.6rem 0 0;
+  border-top: 1px solid var(--border);
+}
+.trip-map__facts > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding-block: 0.7rem;
+  border-bottom: 1px solid var(--border);
+}
+.trip-map__facts dt { flex: none; font-size: 0.88rem; color: var(--ink-soft); }
+.trip-map__facts dd { margin: 0; font-size: 0.92rem; font-weight: 500; text-align: right; }
+
+.trip-map__actions {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+}
+.trip-map__actions .link-arrow {
+  min-height: 2.75rem;
+  color: var(--warm-deep);
+}
+
+/* Panel switch: fade and a short rise, opacity and transform only. */
+@media (prefers-reduced-motion: no-preference) {
+  .trip-map.is-ready .trip-map__panel {
+    transition: opacity 0.26s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 0.26s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .trip-map__panel.is-entering {
+    opacity: 0;
+    transform: translateY(0.6rem);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Larger screens
+   -------------------------------------------------------------------------- */
+@media (min-width: 48rem) {
+  .trip-map { --stop-w: 9rem; --overlap: 4rem; padding-block: 1.75rem 5.5rem; }
+  .trip-map__panels { margin-top: 2rem; }
+  .trip-map__body { max-width: 40rem; }
+}
+
+@media (min-width: 64rem) {
+  .trip-map { --line-h: 3rem; --overlap: 5rem; padding-block: 2.25rem 6.5rem; }
+
+  .trip-map__rail {
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .trip-map__track { width: auto; }
+  .trip-map__stops { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .trip-map__stop { padding-inline: 0.4rem; }
+  .trip-map__name { font-size: 1.08rem; }
+
+  .trip-map__panels { margin-top: 3rem; }
+  .trip-map__panel {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    column-gap: clamp(3rem, 5vw, 5rem);
+  }
+  .trip-map__body { max-width: none; padding-top: 1.25rem; }
+
+  /* Wider main photo, slimmer side photo: keeps the composition about as
+     tall as the text next to it. */
+  .trip-map__photo--main { aspect-ratio: 16 / 10; }
+  .trip-map__photo--side { grid-column: 9 / -1; }
+  .trip-map__photo--below { grid-column: 2 / 9; aspect-ratio: 16 / 10; }
+  .trip-map__panel:nth-child(even) .trip-map__photo--side { grid-column: 1 / 5; }
+  .trip-map__panel:nth-child(even) .trip-map__photo--below { grid-column: 5 / 12; }
+  .trip-map__media:not(:has(.trip-map__photo--below)) { --hang: 3.5rem; }
+}
