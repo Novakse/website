@@ -78,6 +78,73 @@ function queryString(paren) {
     .join("&");
 }
 
+/* Travel details from the "Reisgegevens" step (js/reisgegevens.js). Every
+   trip payment must carry them: travellers for the flight, contact details
+   and the accepted terms (required); with a rental car also the main driver
+   and the optional credit card and driving licence confirmations. Returns
+   { metadata, email } or { fout: "Dutch message" }. The values end up in the
+   Stripe metadata (max 500 characters per value, 50 keys in total). */
+var MAX_REIZIGERS = 20;
+var EMAIL_PATROON = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function tekstVeld(waarde, max) {
+  var tekst = typeof waarde === "string" ? waarde.replace(/\s+/g, " ").trim() : "";
+  return tekst.length && tekst.length <= max ? tekst : "";
+}
+function geboortedatum(waarde) {
+  var tekst = alleenDatum(waarde);
+  if (!tekst) return "";
+  var d = tekst.split("-");
+  var datum = new Date(Date.UTC(+d[0], +d[1] - 1, +d[2]));
+  if (isNaN(datum.getTime()) || datum.getUTCDate() !== +d[2]) return "";
+  if (datum.getTime() > Date.now() || +d[0] < 1900) return "";
+  return tekst;
+}
+function leesReisgegevens(gegevens, verwachtAantal, metAuto) {
+  var ontbreekt = { fout: "Vul eerst de reisgegevens volledig in." };
+  if (!gegevens || typeof gegevens !== "object") return ontbreekt;
+
+  var lijst = Array.isArray(gegevens.reizigers) ? gegevens.reizigers : [];
+  if (!lijst.length || lijst.length > MAX_REIZIGERS) return ontbreekt;
+  if (verwachtAantal && lijst.length !== verwachtAantal) {
+    return { fout: "Het aantal reizigers klopt niet met je boeking." };
+  }
+
+  var metadata = {};
+  var namen = [];
+  for (var i = 0; i < lijst.length; i++) {
+    var r = lijst[i] || {};
+    var voornamen = tekstVeld(r.voornamen, 100);
+    var achternaam = tekstVeld(r.achternaam, 100);
+    var geboren = geboortedatum(r.geboortedatum);
+    var nationaliteit = tekstVeld(r.nationaliteit, 60);
+    if (!voornamen || !achternaam || !geboren || !nationaliteit) return ontbreekt;
+    namen.push(voornamen + " " + achternaam);
+    metadata["reiziger_" + (i + 1)] = voornamen + " " + achternaam + " | geb. " + geboren + " | " + nationaliteit;
+  }
+
+  var email = tekstVeld(gegevens.email, 200);
+  var telefoon = tekstVeld(gegevens.telefoon, 40);
+  if (!email || !EMAIL_PATROON.test(email) || !telefoon) return ontbreekt;
+  if (gegevens.voorwaarden !== true) return { fout: "Ga eerst akkoord met de algemene voorwaarden." };
+
+  metadata.contact_email = email;
+  metadata.contact_telefoon = telefoon;
+  metadata.voorwaarden_akkoord = "ja";
+
+  if (metAuto) {
+    var bestuurder = parseInt(gegevens.hoofdbestuurder, 10);
+    if (!(bestuurder >= 1 && bestuurder <= lijst.length)) return ontbreekt;
+    metadata.hoofdbestuurder = namen[bestuurder - 1] + " | geb. " + geboortedatum(lijst[bestuurder - 1].geboortedatum);
+    // Optional confirmations: recorded, but they do not block payment.
+    metadata.creditcard_bevestigd = gegevens.creditcard === true ? "ja" : "nee";
+    metadata.rijbewijs_bevestigd = gegevens.rijbewijs === true ? "ja" : "nee";
+  } else {
+    metadata.huurauto = "eigen vervoer";
+  }
+
+  return { metadata: metadata, email: email };
+}
+
 function origineOngeldig(req) {
   var origin = req.headers.origin;
   if (!origin) return false; // geen Origin-header (bv. curl/oude browser): niet blokkeren
@@ -105,7 +172,7 @@ module.exports = async function handler(req, res) {
   var bedrag; // in cents
   var omschrijving;
   var productNaam;
-  var metadata; // only for trip payments
+  var metadata; // trip details; always set once the travel details are added
   var serverBerekend = false; // true when the amount comes from a price file
   var terugQuery = ""; // query string for the cancel URL
   var reisSleutel = String(body.reis || "").toLowerCase();
@@ -206,6 +273,23 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  // Travel details: a calendar booking must name exactly the booked head
+  // count; a payment link from Joey carries no head count. Falun with own
+  // transport has no rental car.
+  var verwachtAantal = 0;
+  if (body.reis === "Falun" && body.aankomst) verwachtAantal = parseInt(alleenGetal(body.personen), 10) || 0;
+  else if (metadata && metadata.personen) verwachtAantal = parseInt(metadata.personen, 10) || 0;
+  var metAuto = !(body.reis === "Falun" && body.aankomst && body.auto === "zelf");
+  var reisgegevens = leesReisgegevens(body.reisgegevens, verwachtAantal, metAuto);
+  if (reisgegevens.fout) {
+    res.status(400).json({ error: reisgegevens.fout });
+    return;
+  }
+  if (!metadata) metadata = { reis: kort(omschrijving) };
+  Object.keys(reisgegevens.metadata).forEach(function (sleutel) {
+    metadata[sleutel] = kort(reisgegevens.metadata[sleutel], 500);
+  });
+
   var basis = basisUrl(req);
 
   var sessieData = {
@@ -221,11 +305,12 @@ module.exports = async function handler(req, res) {
       }
     ],
     success_url: basis + "/betaling-verwerkt.html",
-    cancel_url: basis + "/uitchecken.html" + (terugQuery ? "?" + terugQuery : "")
+    cancel_url: basis + "/uitchecken.html" + (terugQuery ? "?" + terugQuery : ""),
+    customer_email: reisgegevens.email
   };
 
-  // Trip details visible in the Stripe dashboard, on both the session and
-  // the payment. undefined values are skipped by toFormParams().
+  // Trip and travel details visible in the Stripe dashboard, on both the
+  // session and the payment. undefined values are skipped by toFormParams().
   if (metadata) {
     sessieData.metadata = metadata;
     sessieData.payment_intent_data = { metadata: metadata };
