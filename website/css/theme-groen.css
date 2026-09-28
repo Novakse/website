@@ -60,6 +60,13 @@
 .form-field textarea::placeholder { color: #9aa19c; }
 .form-field select option { background: var(--paper); color: var(--ink); }
 .form-note { color: var(--ink-soft); }
+/* The base status colours are meant for the dark request section; on this
+   light version they fall below WCAG AA, so use the same light-surface
+   colours as the contact form. */
+.request .form-status--error { color: #b3261e; }
+.request .form-status--success { color: var(--warm-deep); }
+/* These sections are light in this theme, so use the darker focus ring (3:1+). */
+.request, .site-footer { --focus-ring: var(--warm-deep); }
 .request .btn--warm { background: var(--green); color: #fff; }
 .request .btn--warm:hover { background: var(--green-deep); }
 
