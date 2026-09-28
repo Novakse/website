@@ -336,3 +336,407 @@ Ter vergelijking, waarom de andere talen minder opleveren:
 - **Verenigd Koninkrijk**: nordic skating 110/mnd. Te klein.
 - **Noorwegen**: geen meetbaar volume op geen van de zes termen. Die taalversie levert
   via zoekmachines niets op.
+
+---
+
+# Nieuwe linkkansen (27-09-2026)
+
+Onderzocht op 27-09-2026. Alleen onderzoek en conceptmails: er is niemand gemaild of
+gebeld, er is nergens een account aangemaakt en er is niets aan de website veranderd.
+De Sälen-kansen (Kids in de bergen, accommodaties in Sälen, Voigt, BBI enzovoort) staan
+al in `SEO-SALEN-ONDERZOEK.md` hoofdstuk 14 en zijn hier niet herhaald.
+
+## Correctie: er bestaat wél een Google Bedrijfsprofiel
+
+§1 hierboven zegt dat er op 16-08-2026 geen profiel bestond. Dat klopt niet (meer).
+Op 27-09-2026 rechtstreeks uit Google Maps opgehaald:
+
+| Veld | Wat Google toont |
+|---|---|
+| Naam | Novakse |
+| Adres | Johannes Mooijstraat 23, 8391 LP Noordwolde (zichtbaar, geen servicegebied) |
+| Website | `http://www.novakse.com/` (dus al novakse.com, niet meer .nl) |
+| Telefoon | 06 17467643 |
+| Beoordeling | 5 sterren (de homepage noemt 22 Google-reviews) |
+| Beheer | Er staan foto's van "Novakse (eigenaar)", dus het profiel wordt beheerd |
+| Hoofdcategorie | Skate-instructeur |
+| Andere categorieën | Schaatsclub, IJsleverancier, Organisator van buitenactiviteiten, Rolschaatsclub, Sportwinkel, Sportclub, Sportkledingwinkel, Trainingscentrum, Reisbureau |
+| Link | <https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np> |
+
+Hoe zeker: **hoog**. De gegevens komen uit de live Maps-data, en de homepage van
+novakse.com linkt al sinds 08-08-2026 naar dit profiel (knop "Bekijk alle reviews op
+Google" en de sterren in het beginscherm). Wat er op 16-08 is misgegaan: waarschijnlijk
+is toen gezocht op het oude Joure-adres en novakse.nl.
+
+Kleine verbeterpunten, alleen als Joey dat wil (in het profiel zelf, niet op de site):
+
+- **Categorieën opschonen.** "IJsleverancier" betekent iemand die ijsblokken levert.
+  "Rolschaatsclub", "Schaatsclub", "Sportclub", "Sportwinkel" en "Sportkledingwinkel"
+  kloppen ook niet: Novakse is geen club en verkoopt geen kleding. Die categorieën laten
+  Google twijfelen waar het bedrijf over gaat.
+- **"Reisbureau" hoger zetten**, of kijken of Google "Touroperator" aanbiedt. De reizen
+  zijn de kern van Novakse; nu staat dat helemaal achteraan.
+- **Beschrijving:** noemt "Noorwegen", maar op de site staat geen reis naar Noorwegen.
+  En "ervaren trainers" (meervoud), terwijl Novakse alleen Joey is. Even nalopen.
+- **Website** mag `https://www.novakse.com/` worden. Werkt nu ook, want http stuurt door.
+- Het profiel telt nauwelijks als backlink. Het helpt wel bij lokale zoekopdrachten
+  (slijpen, lessen) en het is een bestaanssignaal.
+
+Let op: Google toont bij sommige zoekopdrachten (bijvoorbeeld "schaatsreizen natuurijs")
+nog steeds de oude homepage van novakse.nl met de oude titel. Dat is de oude index,
+geen actuele site.
+
+## Top 10, op volgorde
+
+Kans = kans dat er echt een link komt. Alle contactadressen zijn openbaar en op
+27-09-2026 gecontroleerd op de site zelf.
+
+| # | Wie | Pagina waar de link past | Contact | Linkdoel | Kans |
+|---|---|---|---|---|---|
+| 1 | **Runn Winter Week** (schaatseninzweden.nl) | <https://www.schaatseninzweden.nl/partners.html> | Christian van Dartel, `christian@runnwinterweek.se`, +46 76 824 81 71 (Nederlandstalig) | `/falun.html` | Middel |
+| 2 | **Swedish Lapland** (toeristenbureau) | <https://www.swedishlapland.com/getting-here/tour-operators-swedish-lapland/> | `info@swedishlapland.com` | `/lulea.html` | Middel |
+| 3 | **Harjun Portti** (jouw verblijf in Finland) | Winterpagina's, bv. <https://www.harjunportti.fi/fi/aktiviteetit/talvi/retkiluistelureitit/> | Je eigen contactpersoon, anders `sales@harjunportti.fi` | `/finland.html` | Middel |
+| 4 | **Zwarts in Zweden** (blog, Nederlanders in Dalarna) | <https://zwartsinzweden.nl/schaatsen-in-zweden/> | Formulier op <https://zwartsinzweden.nl/contact/samenwerken/> | `/schaatsreizen-zweden.html` | Middel |
+| 5 | **Team FrySk** | <https://teamfrysk.nl/sponsoring/> (blokken "Partners" en "Vrienden van Team Frysk") | Contactpagina op teamfrysk.nl (geen mailadres gevonden) | `/schaatsonderhoud.html` | Middel |
+| 6 | **Orsa-Mora Skating** (veegt de baan op het Orsameer) | Site heeft nog geen linkpagina: <https://www.orsamoraskating.com/> | `info@orsamoraskating.com`, +46 70 344 91 08 | `/orsa.html` | Laag tot middel |
+| 7 | **Visit Sweden Nederland** | <https://visitsweden.nl/te-doen/natuur-buitenleven/winter-activiteiten/schaatsen-zweden/> | `office.nl@visitsweden.com` | `/schaatsreizen-zweden.html` | Laag tot middel |
+| 8 | **The New Journey** (reisblog) | <https://thenewjourney.nl/zweden/tips-voor-het-schaatsen-op-de-zweedse-meren-in-falun-en-orsa-mora/> | `info@thenewjourney.nl` | `/schaatsreizen-zweden.html` | Laag tot middel |
+| 9 | **Alles over Oostenrijk** | <https://www.allesoveroostenrijk.nl/karinthie/alternatieve-elfstedentocht-weissensee/> | Formulier op <https://www.allesoveroostenrijk.nl/contact/> | `/weissensee.html` | Laag tot middel |
+| 10 | **Visit Dalarna** (Nederlandstalige Skating Dalarna-pagina's) | <https://www.visitdalarna.eu/nl/skatingdalarna/orsa-mora> | `info@visitdalarna.se` | `/orsa.html` | Laag |
+
+Alle linkdoelen beginnen met `https://www.novakse.com`.
+
+### Waarom deze tien
+
+1. **Runn Winter Week.** Staat zelf op plek 21 voor "schaatsen in zweden" en is dé site
+   over Runn, het meer van je Falun-reis. De partnerpagina linkt al naar Nederlandse
+   organisaties (Nordic Skating Center) en naar natuurijszweden.nl. Dat laatste domein
+   heeft geen website meer; dat is een nette aanleiding om te mailen. De contactpersoon
+   spreekt Nederlands.
+2. **Swedish Lapland.** Officieel toeristenbureau. De lijst heeft een blok "From BeNeLux"
+   met zes Nederlandse aanbieders, ook kleine (Untamed Travelling, Senja Reizen). Novakse
+   verkoopt Luleå, dus je hoort in dat rijtje. Er staat niet bij hoe je erop komt; gewoon
+   vragen.
+3. **Harjun Portti.** Je bent al klant bij ze. Hun site heeft geen partnerpagina, dus de
+   vraag is of ze Novakse ergens willen noemen (winterpagina's, skating diary). Een link
+   vanaf een Finse schaatslocatie is precies de soort link die telt. **Stuur nooit hun
+   nettoprijzen mee of door.** Wil je iets terugdoen: Harjun Portti wordt nu nergens op
+   novakse.com bij naam genoemd. Dat aanpassen is een aparte keuze voor de site.
+4. **Zwarts in Zweden.** Sebas en Maaike wonen in Dalarna. Hun artikel van 28-01-2026
+   noemt Orsa (Orsa-Mora Skating) en Runn, maar geen enkele reisorganisatie. Ze bieden
+   ook gastblogs aan; een stuk van jou over natuurijs is een tweede route.
+5. **Team FrySk.** Je werkte als materiaalman voor de ploeg (staat zo op
+   schaatsonderhoud.html). De sponsorpagina linkt gewoon door naar partners, ook naar
+   kleine lokale bedrijven. Reken erop dat ze iets terug willen. Zie de let-op hieronder.
+6. **Orsa-Mora Skating.** De vereniging die de 15 km op het Orsameer veegt waar jouw
+   reizigers schaatsen. Ze hebben ook Nederlandse leden. Ze hebben nu geen pagina met
+   bedrijven, dus de kans op een link is klein. De relatie is wel waardevol; lidmaatschap
+   kost 100 kronen per jaar.
+7. **Visit Sweden Nederland.** Staat op plek 6 voor "schaatsen in zweden". Noemt tien
+   organisaties, waaronder Schaatsen Luleå, maar geen Nederlandse schaatsreisorganisatie
+   voor Dalarna. Grote site, dus kleine kans, maar één mail kost niets.
+8. **The New Journey.** Staat op plek 4 voor "schaatsen in zweden", met een artikel over
+   precies Falun en Orsa. Ze noemen Travel.se en BEAT, geen Nederlandse organisator. Ze
+   werken ook met betaalde samenwerkingen; zie de let-op.
+9. **Alles over Oostenrijk.** Nederlandstalige pagina over de Alternatieve Elfstedentocht
+   die niets zegt over schaatsen buiten de toertochtweken. Dat is precies wat jouw
+   Weissensee-reis is. Weissensee is je grootste zoekvolume (1300 per maand).
+10. **Visit Dalarna.** Heeft aparte Nederlandstalige schaatspagina's (plek 24 en 43 voor
+    "schaatsen in zweden"), maar noemt daar alleen verenigingen, geen reisorganisaties.
+    Kleine kans; alleen doen als je toch in contact bent.
+
+### Let op: betaalde links
+
+Team FrySk (sponsoring) en The New Journey (advertorials en affiliate) kunnen om geld
+vragen. Dat is geen linkfarm, maar wel een betaalde link. Google wil dat zo'n link als
+`sponsored` wordt gemarkeerd, en dan telt hij niet mee voor je positie. Beslis per geval:
+bij Team FrySk gaat het vooral om naam en klanten in Friesland, bij The New Journey om
+bezoekers. Betaal nooit voor alleen een link.
+
+### Bijvangst bij Natuurijswijzer
+
+Stuur je de herinnering aan Natuurijswijzer (§3), vraag dan meteen of Novakse ook op hun
+artikel <https://www.natuurijswijzer.nl/nordic-skating/natuurijs-zweden/> mag. Dat artikel
+staat op plek 11 voor "schaatsen in zweden" en noemt Orsa en Falun. Eén mail, twee vragen.
+
+### Bekeken en afgevallen
+
+| Site | Waarom niet |
+|---|---|
+| zweedslapland.nl | Is van Luleå Travel AB, die zelf reizen naar Luleå verkoopt |
+| ecktiv.nl | Is zelf een reisorganisatie. Hun artikel linkt nog naar het dode natuurijszweden.nl |
+| natuurijszweden.nl | Domein bestaat nog, maar er staat geen website meer op |
+| natuurlijkscandinavie.nl | Geen contactgegevens gevonden, linkt naar Nordic Skating Center |
+| weekjeweissensee.nl, Nordic Skating Center, schaatsenlulea.nl | Concurrenten |
+| mountainreporters.com | Commercieel netwerk met adverteerders; artikel uit 2020 |
+| schaatspeloton.nl | Gaat over marathonschaatsen voor masters; Zweden-artikel uit 2011 |
+| First Camp Orsa | Keten. Hun winterpagina linkt naar Orsa Grönklitt en Orsa-Mora Skating, niet naar organisatoren. Hooguit terloops vragen via je eigen contactpersoon (+46 250 67 03 00) |
+| Visit Luleå, Visit Savonlinna, Visit Punkaharju | Geen lijst met reisorganisaties, alleen lokale bedrijven |
+| karinthie.com (Kärnten Werbung, `info@kaernten.at`), weissensee.com (`info@weissensee.com`), natureislauf.at | Linken alleen naar weissensee.nl en lokale bedrijven. Eventueel later, laag |
+
+## Kant-en-klare mails voor de top 10
+
+Controleer voor het versturen of alles nog klopt met de site. Alle feiten komen van
+novakse.com. Waar een naam ontbreekt, staat "Beste" of "Hello".
+
+### Mail 1 - Runn Winter Week
+
+> **Aan:** christian@runnwinterweek.se
+> **Onderwerp:** Novakse op de partnerpagina van Runn Winter Week?
+>
+> Hoi Christian,
+>
+> Ik ben Joey Novak van Novakse, een kleine schaatsreisorganisatie uit Friesland. Een
+> van mijn reizen gaat naar Falun: een pakketreis met vlucht, huurauto en verblijf,
+> waarbij je zelfstandig schaatst op Runn.
+>
+> Op jullie partnerpagina (schaatseninzweden.nl/partners.html) staan al een paar
+> Nederlandse organisaties. Zou Novakse daar ook bij mogen? De reis staat hier:
+> https://www.novakse.com/falun.html
+>
+> Wat me nog opviel: de link naar natuurijszweden.nl op die pagina werkt niet meer. Op
+> dat domein staat geen website meer.
+>
+> Als het jullie helpt, wijs ik mijn reizigers graag op Runn Winter Week.
+>
+> Groet,
+> Joey Novak
+> Novakse
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+### Mail 2 - Swedish Lapland
+
+> **To:** info@swedishlapland.com
+> **Subject:** Dutch skating trips to Luleå - request to be listed
+>
+> Hello,
+>
+> My name is Joey Novak. I run Novakse, a small Dutch company that organises trips for
+> skaters on natural ice. One of our trips goes to Luleå: travellers skate independently
+> on the public ice track on the frozen Gulf of Bothnia and stay in a hotel of their
+> choice. We plan these trips outside the Grand Prix days, for skaters who want quiet
+> and space.
+>
+> Your page "Find your Swedish Lapland tour operator or travel agent" has a section for
+> the BeNeLux. Would it be possible to add Novakse there?
+>
+> Trip page (Dutch): https://www.novakse.com/lulea.html
+> English version: https://www.novakse.com/en/lulea.html
+>
+> Thank you, and let me know if you need anything from me.
+>
+> Kind regards,
+> Joey Novak
+> Novakse, the Netherlands
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+### Mail 3 - Harjun Portti
+
+Stuur deze aan je eigen contactpersoon daar; anders aan het algemene adres.
+
+> **To:** sales@harjunportti.fi
+> **Subject:** Novakse - Dutch skaters at Harjun Portti
+>
+> Hello,
+>
+> This is Joey Novak from Novakse in the Netherlands. As you know, our Finland trip is
+> built around Harjun Portti: Dutch skaters stay in one of your cottages with sauna and
+> skate on the Saimaa ice around Punkaharju. This is our page for that trip:
+> https://www.novakse.com/finland.html
+>
+> I have a small question. Is there a place on your website where you mention tour
+> operators or partners that bring guests, for example on your winter or Nordic skating
+> pages? We would be very happy to be mentioned there with a link to the page above.
+>
+> Thank you for the good cooperation so far.
+>
+> Kind regards,
+> Joey Novak
+> Novakse
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+### Mail 4 - Zwarts in Zweden
+
+> **Via:** formulier op zwartsinzweden.nl/contact/samenwerken/
+> **Onderwerp:** Jullie artikel over schaatsen in Zweden
+>
+> Hoi Sebas en Maaike,
+>
+> Ik las jullie artikel over schaatsen in Zweden, met alle geveegde banen in Dalarna. Mooi
+> overzicht, en fijn dat Orsa en Runn erin staan.
+>
+> Ik ben Joey Novak van Novakse. Ik organiseer schaatsreizen naar Orsa en Falun: vlucht
+> en verblijf zijn geregeld en je schaatst zelfstandig, met begeleiding op het ijs als
+> optie. Voor lezers die het liever geregeld hebben, past misschien een korte tip met
+> een link naar https://www.novakse.com/schaatsreizen-zweden.html
+>
+> Ik zag ook dat jullie gastblogs plaatsen. Ik schrijf graag een stuk over schaatsen op
+> natuurijs, bijvoorbeeld over je voorbereiding of je materiaal.
+>
+> Groet,
+> Joey Novak
+> Novakse
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+### Mail 5 - Team FrySk
+
+> **Via:** contactpagina op teamfrysk.nl
+> **Onderwerp:** Novakse als partner van Team FrySk?
+>
+> Beste,
+>
+> Ik ben Joey Novak. Ik heb als materiaalman voor Team FrySk gewerkt en heb nu mijn eigen
+> bedrijf, Novakse, met een werkplaats in Noordwolde. Ik slijp en onderhoud schaatsen,
+> doe skatefitting, geef schaatstraining en organiseer schaatsreizen op natuurijs.
+>
+> Op jullie sponsorpagina zie ik ook partners en Vrienden van Team FrySk. Is daar ruimte
+> voor Novakse? Ik hoor graag wat jullie daarbij van een partner verwachten.
+>
+> Meer over mijn werk: https://www.novakse.com/schaatsonderhoud.html
+>
+> Groet,
+> Joey Novak
+> Novakse
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+### Mail 6 - Orsa-Mora Skating
+
+In het Engels; de vereniging heeft ook Nederlandse leden, dus een Nederlandstalig
+antwoord is goed mogelijk.
+
+> **To:** info@orsamoraskating.com
+> **Subject:** Dutch skaters on your track on Orsasjön
+>
+> Hej,
+>
+> My name is Joey Novak from Novakse in the Netherlands. We organise skating trips to
+> Orsa. Our travellers stay in cottages at First Camp Orsa and skate independently on
+> the track you plough on Orsasjön. Thank you for all the work you put into the tracks
+> and the ice reports.
+>
+> Would you be open to mentioning Novakse somewhere on your website, for example as an
+> organiser that brings Dutch skaters to Orsa? This is our trip page:
+> https://www.novakse.com/orsa.html
+>
+> I am also happy to point our travellers to your ice report and your membership.
+>
+> Kind regards,
+> Joey Novak
+> Novakse
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+### Mail 7 - Visit Sweden Nederland
+
+> **Aan:** office.nl@visitsweden.com
+> **Onderwerp:** Nederlandse schaatsreizen voor jullie pagina "Schaatsen in Zweden"
+>
+> Beste,
+>
+> Op visitsweden.nl staat een mooie pagina over schaatsen in Zweden, met tien
+> organisaties, van Stockholm tot Luleå. Een Nederlandse reisorganisatie voor Dalarna
+> staat er nog niet bij.
+>
+> Ik ben Joey Novak van Novakse, een kleine schaatsreisorganisatie uit Friesland. Wij
+> organiseren zelfstandige schaatsreizen naar Orsa en Falun in Dalarna en naar Luleå, en
+> een dagtocht op natuurijs vanuit Sälen. Voor Nederlanders die hun reis liever in het
+> Nederlands regelen, past Novakse misschien in dat rijtje:
+> https://www.novakse.com/schaatsreizen-zweden.html
+>
+> Groet,
+> Joey Novak
+> Novakse
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+### Mail 8 - The New Journey
+
+> **Aan:** info@thenewjourney.nl
+> **Onderwerp:** Jullie artikel over schaatsen in Falun en Orsa
+>
+> Hoi Marloes en Madeleen,
+>
+> Jullie artikel met tips voor het schaatsen in Falun en Orsa Mora kwam ik tegen toen ik
+> zocht op "schaatsen in Zweden". Leuk om te lezen, want dat zijn precies de twee plekken
+> waar ik mijn reizigers naartoe breng.
+>
+> Ik ben Joey Novak van Novakse, een kleine schaatsreisorganisatie uit Friesland. Bij
+> Orsa en Falun zijn vlucht en verblijf geregeld en schaats je zelfstandig, met
+> begeleiding op het ijs als optie. Zouden jullie Novakse willen noemen voor lezers die
+> het liever geregeld hebben?
+> https://www.novakse.com/schaatsreizen-zweden.html
+>
+> Groet,
+> Joey Novak
+> Novakse
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+### Mail 9 - Alles over Oostenrijk
+
+> **Via:** formulier op allesoveroostenrijk.nl/contact/
+> **Onderwerp:** Schaatsen op de Weissensee buiten de Alternatieve Elfstedentocht
+>
+> Hoi Vincent,
+>
+> Je pagina over de Alternatieve Elfstedentocht op de Weissensee legt goed uit wat die
+> week is. Wat ik mis: dat je er ook buiten de toertochtweken kunt schaatsen, als de
+> winter meewerkt. Veel mensen weten dat niet.
+>
+> Ik ben Joey Novak van Novakse. Ik organiseer zelfstandige schaatsreizen naar de
+> Weissensee, bewust buiten de evenementdagen: minder drukte en meer ruimte op het ijs.
+> Vlucht naar Salzburg, huurauto en accommodatie zijn geregeld. Misschien past een korte
+> alinea of link voor lezers die rust zoeken:
+> https://www.novakse.com/weissensee.html
+>
+> Groet,
+> Joey Novak
+> Novakse
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+### Mail 10 - Visit Dalarna
+
+> **To:** info@visitdalarna.se
+> **Subject:** Dutch organiser for your Skating Dalarna pages
+>
+> Hello,
+>
+> Your Dutch Skating Dalarna pages are read by many Dutch skaters. I am Joey Novak from
+> Novakse, a small Dutch company that organises skating trips to Orsa and Falun.
+> Travellers skate independently on the ploughed tracks, and flight and accommodation
+> are arranged.
+>
+> Would there be a place on those pages, for example on the Orsa-Mora page, to mention
+> organisers that bring Dutch skaters to Dalarna? Our trip page:
+> https://www.novakse.com/orsa.html
+>
+> Kind regards,
+> Joey Novak
+> Novakse, the Netherlands
+> +31 6 17467643
+> schaatsennovakse@outlook.com
+
+## Wanneer
+
+Nu, eind september en oktober. Toeristenbureaus en bloggers passen hun wintermateriaal
+in het najaar aan. Begin met 1 tot en met 5; de rest kan in oktober. Houd hieronder bij
+wat je verstuurd hebt, dan weet je wanneer je een herinnering stuurt (na 2 tot 3 weken).
+
+| # | Verstuurd op | Antwoord | Link gecontroleerd |
+|---|---|---|---|
+| 1 Runn Winter Week | | | |
+| 2 Swedish Lapland | | | |
+| 3 Harjun Portti | | | |
+| 4 Zwarts in Zweden | | | |
+| 5 Team FrySk | | | |
+| 6 Orsa-Mora Skating | | | |
+| 7 Visit Sweden NL | | | |
+| 8 The New Journey | | | |
+| 9 Alles over Oostenrijk | | | |
+| 10 Visit Dalarna | | | |

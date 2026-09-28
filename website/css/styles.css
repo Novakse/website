@@ -965,6 +965,9 @@ html:not(.js) .opener__controls { display: none; }
   border-radius: 999px;
   transition: width 0.1s linear;
 }
+/* Text link to the Sweden hub below the trip carousel. */
+.trips__more { margin-top: 1.25rem; }
+.trips__more .link-arrow { color: var(--warm-deep); }
 
 /* ==========================================================================
    4. Waarom Novakse — dark, split with bleeding photo
