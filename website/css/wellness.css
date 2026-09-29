@@ -54,24 +54,19 @@
   --lx-night: #0e1519;
   --lx-night-2: #142027;
   --lx-espresso: #1c1512;
-  /* linen: the light surface of this page instead of white; a warm
-     champagne / cashmere tone, like pale sauna wood in low sun.
-     sand: the deeper warm tone of the alternating light sections.
-     sheen: a lighter champagne, only used in the soft glow on large
-     light surfaces (never as a flat surface of its own). */
-  --lx-linen: #ede2d1;
-  --lx-linen-rgb: 237, 226, 209;
+  /* linen: the light surface of this page instead of white; the warm
+     grey-beige frostpaper tone of the natural-ice section, chosen by the
+     client. sand and sheen point to linen too: one flat light surface. */
+  --lx-linen: #e9e3d8;           /* one light surface: the frostpaper tone */
+  --lx-linen-rgb: 233, 227, 216;
   --lx-ivory: var(--lx-linen);
-  --lx-sand: #e5d6c1;
-  --lx-sheen-rgb: 244, 236, 223;
-  /* frost: the ice sections. It used to be a cool grey-blue, which read as
-     grey against the warm page; now a pale pearl, a touch less warm than
-     linen, so the ice sections still feel a little cooler */
-  --lx-frostpaper: #e9e3d8;
-  --lx-ink: #231913;            /* espresso: 13.4:1 on linen, 12.0:1 on sand */
-  --lx-ink-soft: #5b4a3d;       /* warm taupe: 6.6:1 on linen, 5.9:1 on sand */
+  --lx-sand: var(--lx-linen);
+  --lx-sheen-rgb: 233, 227, 216; /* same as linen: glow is flat now */
+  --lx-frostpaper: var(--lx-linen);
+  --lx-ink: #231913;            /* espresso: 13.5:1 on linen */
+  --lx-ink-soft: #5b4a3d;       /* warm taupe: 6.6:1 on linen */
   --lx-amber: #d9a46c;          /* accent on dark: 8:1 on night */
-  --lx-amber-deep: #7a4519;     /* cognac accent on light: 6.1:1 on linen, 5.4:1 on sand */
+  --lx-amber-deep: #7a4519;     /* cognac accent on light: 6.1:1 on linen */
   --lx-bronze-rgb: 138, 94, 48; /* hairlines on light surfaces (decorative) */
   --lx-on-dark: #f3eee6;
   --lx-on-dark-soft: rgba(243, 238, 230, 0.74);
@@ -1036,7 +1031,7 @@
 .page-wellness .lx-together { background: var(--lx-sand); }
 .page-wellness .lx-together__grid { display: grid; gap: 3rem; }
 .page-wellness .lx-together__media { aspect-ratio: 4 / 3; }
-.page-wellness .lx-together__media img { width: 100%; height: 100%; object-fit: cover; }
+.page-wellness .lx-together__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 85%; }
 .page-wellness .lx-together__body { padding-inline: var(--pad); }
 .page-wellness .lx-motto {
   margin-top: 5rem;
