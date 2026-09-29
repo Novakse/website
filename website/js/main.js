@@ -1846,7 +1846,7 @@
   var COLLAGE_TRAVEL = 40;
 
   if (collage && !reducedMotion.matches) {
-    var collageItems = collage.querySelectorAll(".collage__item");
+    var collageItems = collage.querySelectorAll("[data-speed]");
     var collageMaxSpeed = 0;
     collageItems.forEach(function (item) {
       collageMaxSpeed = Math.max(collageMaxSpeed, Math.abs(parseFloat(item.dataset.speed) || 0));
