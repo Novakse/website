@@ -268,6 +268,76 @@
   };
   var LANG = (document.documentElement.lang || "nl").slice(0, 2).toLowerCase();
   var T = I18N[LANG] || I18N.nl;
+  // A text that is not translated (yet) falls back to the Dutch one.
+  Object.keys(I18N.nl).forEach(function (sleutel) {
+    if (!(sleutel in T)) T[sleutel] = I18N.nl[sleutel];
+  });
+
+  /* ------------------------------------------------------------------
+     Elfsight widgets (reviews, Instagram) get their height reserved in CSS
+     so the page does not jump when they load. If the Elfsight script cannot
+     load (blocked by an ad blocker, offline), that reserve would stay empty:
+     .no-elfsight drops it again. Error events do not bubble, so listen in
+     the capture phase; main.js runs before the async script tag is parsed.
+     ------------------------------------------------------------------ */
+  window.addEventListener("error", function (event) {
+    var el = event.target;
+    if (el && el.tagName === "SCRIPT" && /elfsight/i.test(el.src || "")) {
+      document.documentElement.classList.add("no-elfsight");
+    }
+  }, true);
+
+  /* Elfsight's lazy mode (data-elfsight-app-lazy) boots a widget on the
+     visitor's first scroll or touch, wherever the widget is. On the homepage
+     that meant about a second of Elfsight script (long tasks of 170-480 ms
+     on a phone) right when the visitor starts scrolling down from the top,
+     so the page stuttered. Instead the widget is taken out of the page until
+     it comes within 3 screens of the viewport (far enough ahead for Elfsight
+     to finish, including its own 1 s delay, before the widget scrolls in),
+     and is then put back at the first pause in scrolling, so that work does
+     not land in the middle of a scroll either. Once the widget itself is on
+     screen it goes back straight away. Elfsight's own MutationObserver picks
+     it up from there. A placeholder keeps the reserved height (see
+     .insta-follow in css/styles.css). This runs before Elfsight's async
+     platform.js, so Elfsight never sees the widget early. */
+  if ("IntersectionObserver" in window) {
+    Array.prototype.forEach.call(
+      document.querySelectorAll('[class^="elfsight-app-"][data-elfsight-app-lazy]'),
+      function (widget) {
+        var placeholder = document.createElement("div");
+        placeholder.setAttribute("data-elfsight-deferred", "");
+        widget.parentNode.replaceChild(placeholder, widget);
+
+        var pauseTimer = null;
+        var observers = [];
+        var restore = function () {
+          if (!placeholder.parentNode) return;
+          observers.forEach(function (observer) { observer.disconnect(); });
+          window.clearTimeout(pauseTimer);
+          window.removeEventListener("scroll", waitForPause);
+          placeholder.parentNode.replaceChild(widget, placeholder);
+        };
+        var waitForPause = function () {
+          window.clearTimeout(pauseTimer);
+          pauseTimer = window.setTimeout(restore, 250);
+        };
+        var watch = function (margin, onEnter) {
+          var observer = new IntersectionObserver(function (entries) {
+            if (entries.some(function (entry) { return entry.isIntersecting; })) onEnter();
+          }, { rootMargin: margin });
+          observer.observe(placeholder);
+          observers.push(observer);
+        };
+
+        watch("300% 0px 300% 0px", function () {
+          observers[0].disconnect();
+          window.addEventListener("scroll", waitForPause, { passive: true });
+          waitForPause();
+        });
+        watch("0px", restore);
+      }
+    );
+  }
 
   /* ------------------------------------------------------------------
      Mobile navigation
@@ -493,6 +563,15 @@
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   var wordBlocks = [];
 
+  // Viewport height for the scroll-linked effects below (words, collage).
+  // On phones window.innerHeight grows and shrinks whenever the address bar
+  // slides out or back in (typically when the scroll direction reverses),
+  // which made these effects jump on the resize event. The root element's
+  // clientHeight stays the same while the address bar moves.
+  function stableViewportHeight() {
+    return document.documentElement.clientHeight || window.innerHeight;
+  }
+
   document.querySelectorAll("[data-reveal-words]").forEach(function (el) {
     var parts = el.textContent.split(/(\s+)/);
     el.textContent = "";
@@ -513,7 +592,7 @@
   });
 
   function syncWords() {
-    var vh = window.innerHeight;
+    var vh = stableViewportHeight();
 
     // Eerst alles meten, daarna pas schrijven. Door lezen en schrijven niet af
     // te wisselen hoeft de browser de pagina niet telkens opnieuw te berekenen,
@@ -1649,7 +1728,7 @@
 
     var syncCollage = function () {
       var rect = collage.getBoundingClientRect();
-      var vh = window.innerHeight;
+      var vh = stableViewportHeight();
 
       // Niets uitrekenen zolang de collage ver buiten beeld is.
       if (rect.bottom < -vh || rect.top > vh * 2) return;
@@ -1847,173 +1926,26 @@
   });
 
   /* ------------------------------------------------------------------
-     Leesrust: de pagina komt na het scrollen zachtjes tot stilstand bij een
-     kop, zodat je van kop naar kop leest in plaats van er middenin te blijven
-     hangen. Ligt er geen kop in de buurt, dan blijft de pagina staan waar je
-     stopte - er wordt dus nooit een heel eind gesprongen.
+     Smooth in-page scrolling, only after the visitor has interacted.
+     With `scroll-behavior: smooth` on <html> from the start, the browser
+     also animates its own scroll restoration (reload, back button) and the
+     jump to a #fragment while the page loads: the page appears at one spot
+     and then glides to another. So the smooth behaviour is switched on at
+     the first pointer or key press, which still comes before the click on
+     an in-page link. See html.smooth-scroll in css/styles.css.
 
-     Bewust geen CSS scroll-snap: dat vecht met de vloeiende scroll van de
-     browser en met de vaartafloop van een trackpad, wat gehaper geeft. Hier
-     gebeurt er tijdens het scrollen niets. Pas als je echt stilstaat en er al
-     een kop dichtbij staat, schuift de pagina dat laatste stukje bij.
-     Elke muis-, toets- of scrollbeweging breekt dat direct af.
+     (The former "reading rest" that auto-scrolled the page to the nearest
+     heading 180 ms after scrolling stopped has been removed: it moved the
+     page on its own after every scroll and made it jerk.)
      ------------------------------------------------------------------ */
-  var settleMedia = window.matchMedia("(min-width: 48rem) and (pointer: fine)");
-
-  if (!reducedMotion.matches && settleMedia.matches) {
-    var SETTLE_IDLE = 180;     // ms stilstand voordat we bijsturen
-    var SETTLE_RANGE = 0.2;    // deel van het scherm waarbinnen we bijsturen
-    var SETTLE_MIN = 6;        // px, kleiner verschil laten we staan
-    var SETTLE_MAX_MS = 480;
-
-    // Hoogte van de vaste balk; valt terug op 5rem als de balk er niet is.
-    var headerOffset = function () {
-      return header ? header.offsetHeight : 80;
+  if (!reducedMotion.matches) {
+    var enableSmoothScroll = function () {
+      document.documentElement.classList.add("smooth-scroll");
+      window.removeEventListener("pointerdown", enableSmoothScroll, true);
+      window.removeEventListener("keydown", enableSmoothScroll, true);
     };
-
-    var settleTimer = null;
-    var settleFrame = null;
-    var settleActive = false;
-
-    var stopSettle = function () {
-      if (settleFrame !== null) window.cancelAnimationFrame(settleFrame);
-      settleFrame = null;
-      settleActive = false;
-      // De vloeiende scroll van de browser weer aan de stylesheet overlaten.
-      document.documentElement.style.scrollBehavior = "";
-    };
-
-    var maxScrollY = function () {
-      return Math.max(
-        0,
-        document.documentElement.scrollHeight - window.innerHeight
-      );
-    };
-
-    // De rustpunten van de pagina: de koppen. Je leest zo van kop naar kop.
-    // Heeft een sectie geen eigen kop (bijvoorbeeld de openingsfoto), dan
-    // telt de bovenkant van die sectie, zodat er geen blok wordt overgeslagen.
-    var settlePoints = function () {
-      var y = window.scrollY;
-      var vh = window.innerHeight;
-      var offset = headerOffset();
-      var air = Math.min(48, Math.round(vh * 0.05)); // beetje lucht boven de kop
-      var points = [];
-
-      document.querySelectorAll("main > section").forEach(function (section) {
-        var found = false;
-
-        section.querySelectorAll("h1, h2").forEach(function (heading) {
-          // Verborgen koppen (dichtgeklapt, andere taal) tellen niet mee.
-          if (!heading.getClientRects().length) return;
-          points.push(Math.round(y + heading.getBoundingClientRect().top - offset - air));
-          found = true;
-        });
-
-        if (!found) {
-          points.push(Math.round(y + section.getBoundingClientRect().top - offset));
-        }
-      });
-
-      points.sort(function (a, b) { return a - b; });
-
-      // Koppen die vlak bij elkaar staan - twee kolommen naast elkaar, of een
-      // kop direct onder een tussenkop - leveren samen één rustpunt op.
-      var minGap = Math.max(140, vh * 0.35);
-      var spread = [];
-
-      points.forEach(function (point) {
-        if (!spread.length || point - spread[spread.length - 1] >= minGap) {
-          spread.push(point);
-        }
-      });
-
-      return spread;
-    };
-
-    // Het dichtstbijzijnde rustpunt, gemeten vanaf de huidige scrollpositie.
-    var nearestPoint = function (y) {
-      var best = null;
-      var bestGap = Infinity;
-
-      settlePoints().forEach(function (point) {
-        var gap = Math.abs(point - y);
-        if (gap < bestGap) {
-          bestGap = gap;
-          best = point;
-        }
-      });
-
-      return best;
-    };
-
-    var runSettle = function (from, to) {
-      var distance = to - from;
-      var duration = Math.min(SETTLE_MAX_MS, 200 + Math.abs(distance) * 1.1);
-      var start = null;
-
-      // De eigen animatie zet de scrollpositie per frame; de vloeiende scroll
-      // van de browser moet daar even uit, anders animeren er twee dingen.
-      document.documentElement.style.scrollBehavior = "auto";
-
-      settleActive = true;
-
-      var step = function (now) {
-        if (start === null) start = now;
-
-        var t = Math.min(1, (now - start) / duration);
-        var eased = 1 - Math.pow(1 - t, 3); // easeOutCubic: rustig uitlopen
-        var y = Math.round(from + distance * eased);
-
-        window.scrollTo(0, y);
-
-        if (t < 1 && settleActive) {
-          settleFrame = window.requestAnimationFrame(step);
-          return;
-        }
-
-        stopSettle();
-      };
-
-      settleFrame = window.requestAnimationFrame(step);
-    };
-
-    var settle = function () {
-      if (settleActive) return;
-
-      var y = window.scrollY;
-      var limit = maxScrollY();
-
-      // Boven- en onderkant van de pagina laten we met rust.
-      if (y <= 4 || y >= limit - 4) return;
-
-      var target = nearestPoint(y);
-      if (target === null) return;
-
-      target = Math.max(0, Math.min(limit, target));
-
-      var delta = Math.abs(target - y);
-      if (delta < SETTLE_MIN || delta > window.innerHeight * SETTLE_RANGE) return;
-
-      runSettle(y, target);
-    };
-
-    window.addEventListener("scroll", function () {
-      // Tijdens de eigen animatie komen de scroll-events van onszelf.
-      if (settleActive) return;
-
-      if (settleTimer) window.clearTimeout(settleTimer);
-      settleTimer = window.setTimeout(settle, SETTLE_IDLE);
-    }, { passive: true });
-
-    // Elke eigen beweging van de bezoeker gaat voor: de wachttijd wordt
-    // opnieuw ingesteld en een lopende bijstuur-animatie stopt meteen.
-    ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (type) {
-      window.addEventListener(type, function () {
-        if (settleTimer) window.clearTimeout(settleTimer);
-        if (settleActive) stopSettle();
-      }, { passive: true });
-    });
+    window.addEventListener("pointerdown", enableSmoothScroll, true);
+    window.addEventListener("keydown", enableSmoothScroll, true);
   }
 
 })();

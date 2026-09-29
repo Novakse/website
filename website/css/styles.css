@@ -14,8 +14,10 @@
   --border: #e2e3df;
   --border-dark: rgba(255, 255, 255, 0.18);
 
-  --display: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
-  --sans: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  /* "... Fallback" (css/fonts.css) keeps the text in place while the web
+     fonts load, so nothing jumps when they swap in. */
+  --display: "Space Grotesk", "Space Grotesk Fallback", -apple-system, BlinkMacSystemFont, sans-serif;
+  --sans: "Work Sans", "Work Sans Fallback", -apple-system, BlinkMacSystemFont, sans-serif;
 
   --wrap: 80rem;
   --pad: 1.5rem;
@@ -30,7 +32,11 @@
    ========================================================================== */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { -webkit-text-size-adjust: 100%; }
+/* Smooth in-page scrolling is switched on by main.js at the first pointer or
+   key press, so the browser's own scroll restoration (reload, back button)
+   and the #fragment jump during page load stay instant instead of gliding. */
+html.smooth-scroll { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -106,7 +112,7 @@ summary:focus-visible,
 .skip-link:focus { top: 0.75rem; }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html, html.smooth-scroll { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
@@ -1130,7 +1136,23 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 .reviews__intro { max-width: 40rem; margin-inline: auto; }
 .reviews__title { font-family: var(--display); font-weight: 600; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-top: 0.8rem; line-height: 1.2; }
 .reviews__text { margin-top: 0.8rem; color: var(--ink-soft); }
-.reviews__widget { margin-top: 2.2rem; min-height: 14rem; }
+/* The Elfsight reviews widget loads lazily, when it scrolls into view, and
+   then grows to roughly 440-580px. Reserve most of that height up front so
+   the text below does not jump while the visitor is scrolling. Measured:
+   444px at 320 wide, 479 at 390, 499 at 430, 529-584 from 600 up; the
+   reserve stays just under those, so it never adds empty space. When the
+   Elfsight script is blocked, main.js adds .no-elfsight and the old small
+   reserve returns. */
+.reviews__widget { margin-top: 2.2rem; min-height: min(calc(17.5rem + 50vw), 33rem); }
+.no-elfsight .reviews__widget { min-height: 14rem; }
+/* Same for the lazy Elfsight Instagram feed on the about pages
+   (over-novakse.html in every language): it grows from 0 to 590-910px.
+   36rem stays under the smallest measured height. Until it comes near the
+   viewport, main.js holds its place with a [data-elfsight-deferred] div. */
+.insta-follow [class^="elfsight-app-"],
+.insta-follow [data-elfsight-deferred] { min-height: 36rem; }
+.no-elfsight .insta-follow [class^="elfsight-app-"],
+.no-elfsight .insta-follow [data-elfsight-deferred] { min-height: 0; }
 .reviews__link { display: inline-block; margin-top: 1.6rem; color: var(--warm-deep); }
 
 @media (min-width: 56rem) {
@@ -3850,3 +3872,186 @@ button.plan__cell.is-gekozen {
   cursor: pointer;
 }
 .checkout-terug:hover { text-decoration-thickness: 2px; }
+
+/* ==========================================================================
+   Photo mosaic "In beeld" (reusable photo section for trip pages)
+   First used on falun.html (#in-beeld). Pure CSS, no JavaScript.
+
+   Idea: the photos stand on and hang from the swept ice-rink line. One band
+   of photos sits ABOVE the line (bottoms on the line, ragged top edge), one
+   band hangs BELOW it (tops on the line, ragged bottom edge). The line is the
+   same path as .baanlijn, drawn on top of a wide pale "swept lane" like the
+   trip map on reizen.html, and runs from screen edge to screen edge.
+
+   Markup (see falun.html for a full example):
+     section.photo-mosaic
+       div.wrap.photo-mosaic__head.reveal       eyebrow + h2.h-section
+       div.photo-mosaic__scroller               role=region, tabindex=0,
+                                                aria-labelledby = the h2
+         div.photo-mosaic__track
+           div.photo-mosaic__lane               aria-hidden SVG line
+           ul.photo-mosaic__band--above.reveal  2-4 tiles
+           ul.photo-mosaic__band--below.reveal  2-4 tiles
+   Tile: li.photo-mosaic__tile + one size + one shape (+ optional --cross)
+     size:  --xl | --l | --m | --s    (tile width, see below)
+     shape: --wide 2:1 | --land 3:2 | --square 1:1 | --tall 4:5 |
+            --portrait 2:3            (crop via object-fit)
+     --cross: the tile reaches over the line (from 64rem; once per band)
+
+   Phones and tablets: one horizontal strip, scroll-snap, the lower band
+   starts a little later so the photos zigzag along the line. The strip is
+   focusable (tabindex) so arrow keys scroll it.
+   From 64rem: no scrolling; both bands share the content width of .wrap,
+   the upper band leans left and the lower band leans right.
+   ========================================================================== */
+.photo-mosaic {
+  --pm-lane-h: 3rem;                     /* room for the line between the bands */
+  --pm-ice: #e7eef1;                     /* same lane tint as .trip-map (reizen.css) */
+  --pm-ice-w: 16px;                      /* width of the swept lane */
+  --pm-gap: 0.75rem;
+  --pm-radius: 1rem;                     /* same as the story collage */
+  --pm-drift: min(18vw, 7rem);           /* how much later the lower band starts */
+  background: var(--paper);
+  padding-block: 4.5rem;
+}
+
+.photo-mosaic__scroller {
+  margin-top: 1rem;
+  padding-block: 0.5rem;    /* keeps the focus ring clear of the photos */
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--pad);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+/* The strip runs edge to edge, so draw the focus ring inside it. */
+.photo-mosaic__scroller:focus-visible { outline-offset: -3px; }
+
+/* Three rows: photos above, the line, photos below. Three columns: the
+   outer ones are the page gutter, so the line runs to the screen edges
+   while the photos keep the page margin. */
+.photo-mosaic__track {
+  display: grid;
+  grid-template-columns: var(--pad) auto var(--pad);
+  grid-template-rows: auto var(--pm-lane-h) auto;
+  width: max-content;
+  min-width: 100%;
+}
+
+.photo-mosaic__lane {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  line-height: 0;
+  pointer-events: none;
+}
+.photo-mosaic__lane svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.photo-mosaic__lane path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.photo-mosaic__lane-ice { stroke: var(--pm-ice); stroke-width: var(--pm-ice-w); }
+.photo-mosaic__lane-line { stroke: var(--warm-deep); stroke-width: 2; }
+
+.photo-mosaic__band {
+  grid-column: 2;
+  position: relative;
+  z-index: 1;               /* photos that cross the line cover it */
+  display: flex;
+  gap: var(--pm-gap);
+}
+.photo-mosaic__band--above { grid-row: 1; align-items: flex-end; }
+.photo-mosaic__band--below { grid-row: 3; align-items: flex-start; padding-left: var(--pm-drift); }
+.js .photo-mosaic__band--below.reveal { transition-delay: 0.12s; }
+
+.photo-mosaic__tile {
+  flex: none;
+  width: var(--pm-w, min(46vw, 17rem));
+  scroll-snap-align: start;
+}
+.photo-mosaic__tile picture { display: block; }
+.photo-mosaic__tile img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--pm-ratio, 3 / 2);
+  object-fit: cover;
+  border-radius: var(--pm-radius);
+  background: var(--pm-ice); /* calm placeholder while a lazy photo loads */
+}
+
+/* Sizes. Phones/tablets: width of the tile in the strip. */
+.photo-mosaic__tile--xl { --pm-w: min(76vw, 28rem); }
+.photo-mosaic__tile--l  { --pm-w: min(60vw, 22rem); }
+.photo-mosaic__tile--m  { --pm-w: min(46vw, 17rem); }
+.photo-mosaic__tile--s  { --pm-w: min(38vw, 14rem); }
+
+/* Shapes (crop). */
+.photo-mosaic__tile--wide     { --pm-ratio: 2 / 1; }
+.photo-mosaic__tile--land     { --pm-ratio: 3 / 2; }
+.photo-mosaic__tile--square   { --pm-ratio: 1 / 1; }
+.photo-mosaic__tile--tall     { --pm-ratio: 4 / 5; }
+.photo-mosaic__tile--portrait { --pm-ratio: 2 / 3; }
+
+/* Focal points of the photos used here (same approach as "Photo framing"
+   above: per photo, so every crop keeps the people in view). */
+img[src*="falun-island-sunset-skaters"] { object-position: 62% 50%; }
+img[src*="falun-drone-group-black-ice"] { object-position: 50% 45%; }
+img[src*="falun-group-break-sun"] { object-position: 50% 40%; }
+img[src*="falun-kicksled-rest"] { object-position: 42% 60%; }
+img[src*="falun-shore-campfire"] { object-position: 50% 55%; }
+img[src*="falun-campfire-sandwiches"] { object-position: 60% 50%; }
+img[src*="falun-blade-blue-ice"] { object-position: 50% 25%; }
+img[src*="falun-rest-on-rocks"] { object-position: 50% 70%; }
+/* Salen */
+img[src*="salen-group-selfie"] { object-position: 50% 45%; }
+img[src*="salen-campfire-picnic-sunset"] { object-position: 50% 60%; }
+img[src*="salen-skates-circle"] { object-position: 50% 70%; }
+img[src*="salen-goggles-reflection"] { object-position: 48% 50%; }
+img[src*="salen-frosted-face"] { object-position: 55% 45%; }
+img[src*="salen-swept-track-sun"] { object-position: 48% 50%; }
+img[src*="salen-arms-up"] { object-position: 50% 55%; }
+img[src*="salen-campfire-coffee"] { object-position: 50% 0%; }
+/* Orsa */
+img[src*="orsa-group-silhouettes-black-ice"] { object-position: 50% 60%; }
+img[src*="orsa-two-skaters-golden-hour"] { object-position: 45% 50%; }
+img[src*="orsa-cross-country-group"] { object-position: 50% 30%; }
+img[src*="orsa-winter-walk-lake"] { object-position: 50% 70%; }
+img[src*="orsa-fika-shelter"] { object-position: 50% 70%; }
+img[src*="orsa-swept-track-low-sun"] { object-position: 50% 75%; }
+/* Finland */
+img[src*="finland-cottage-fireplace"] { object-position: 50% 15%; }
+img[src*="finland-tour-skating-1"] { object-position: 50% 40%; }
+img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
+
+@media (min-width: 64rem) {
+  .photo-mosaic {
+    --pm-lane-h: 5rem;
+    --pm-ice-w: 26px;
+    --pm-gap: 1rem;
+    --pm-drift: 7%;         /* share of the page width */
+    padding-block: 5.5rem;
+  }
+  .photo-mosaic__scroller { margin-top: 2rem; padding-block: 0.75rem; overflow: visible; scroll-snap-type: none; }
+  /* Middle column = the content width of .wrap. */
+  .photo-mosaic__track {
+    width: auto;
+    grid-template-columns: 1fr min(100% - 2 * var(--pad), var(--wrap) - 2 * var(--pad)) 1fr;
+  }
+  /* The lower band leans to the right, so a band that does not fill the
+     width leaves its empty space on the opposite side of the upper band:
+     the photos then follow the line diagonally instead of leaving a hole. */
+  .photo-mosaic__band--below { justify-content: flex-end; }
+  /* Widths as a share of the page width. A band may add up to more than
+     100%: the tiles then shrink together and keep their shapes. */
+  .photo-mosaic__tile { flex: 0 1 var(--pm-share, 23%); width: auto; min-width: 0; }
+  .photo-mosaic__tile--xl { --pm-share: 42%; }
+  .photo-mosaic__tile--l  { --pm-share: 31%; }
+  .photo-mosaic__tile--m  { --pm-share: 23%; }
+  .photo-mosaic__tile--s  { --pm-share: 17%; }
+
+  /* A tile that reaches over the line: the swept lane runs behind it.
+     Wide screens only; on the phone strip the line stays fully visible. */
+  .photo-mosaic__band--above .photo-mosaic__tile--cross { margin-bottom: calc(var(--pm-lane-h) * -0.55); }
+  .photo-mosaic__band--below .photo-mosaic__tile--cross { margin-top: calc(var(--pm-lane-h) * -0.55); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .photo-mosaic .reveal { transform: none; transition: none; }
+}
