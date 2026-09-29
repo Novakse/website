@@ -4081,3 +4081,91 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 @media (prefers-reduced-motion: reduce) {
   .js .photo-mosaic .reveal { transform: none; transition: none; }
 }
+
+/* ==========================================================================
+   Mosaic collage (index "Het verhaal achter Novakse", finland "Waar je
+   schaatst"). A square-ish frame split into a 12-column grid with fixed
+   rows, so every photo gets its own ratio and overlaps stay small and
+   predictable at every width. Photos: slight tilt, a paper-coloured print
+   edge instead of a drop shadow, staggered reveal and a swept ice line.
+   Motion uses transform and opacity only.
+   ========================================================================== */
+.mosaic { max-width: 36rem; }
+.mosaic .collage__frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(var(--mosaic-rows), minmax(0, 1fr));
+  aspect-ratio: 12 / var(--mosaic-rows);
+}
+.mosaic--home .collage__frame { --mosaic-rows: 13; }
+.mosaic--finland .collage__frame { --mosaic-rows: 14; }
+
+.mosaic .mosaic__item {
+  align-self: stretch;
+  margin: 0;
+  aspect-ratio: auto;
+  border-radius: 0.9rem;
+  box-shadow: 0 0 0 4px var(--paper);
+  transform: translate3d(0, var(--collage-shift, 0px), 0) rotate(var(--tilt, 0deg));
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.mosaic .mosaic__item picture { display: block; width: 100%; height: 100%; }
+.mosaic .mosaic__item img { transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1); }
+
+/* Home: tall portrait of Joey, the ice photo across the lower right,
+   the campfire portrait tucked in at the top right. */
+.mosaic--home .mosaic__item--a { grid-column: 1 / 9; grid-row: 1 / 10; --tilt: -1deg; z-index: 1; }
+.mosaic--home .mosaic__item--b { grid-column: 6 / 13; grid-row: 9 / 14; --tilt: 1.2deg; z-index: 3; }
+.mosaic--home .mosaic__item--c { grid-column: 9 / 13; grid-row: 2 / 8; --tilt: 2deg; z-index: 2; margin-left: 0.5rem; }
+.mosaic--home .mosaic__line { grid-column: 1 / 7; grid-row: 10 / 14; }
+
+/* Finland: wide lake track on top, forest portrait left, aerial view right,
+   small bend photo at the bottom. */
+.mosaic--finland .mosaic__item--a { grid-column: 3 / 13; grid-row: 1 / 7; --tilt: 0.8deg; z-index: 1; }
+.mosaic--finland .mosaic__item--b { grid-column: 1 / 6; grid-row: 6 / 12; --tilt: -1.6deg; z-index: 2; }
+.mosaic--finland .mosaic__item--c { grid-column: 7 / 13; grid-row: 6 / 11; --tilt: 1.4deg; z-index: 3; }
+.mosaic--finland .mosaic__item--d { grid-column: 5 / 10; grid-row: 11 / 15; --tilt: -0.8deg; z-index: 4; }
+.mosaic--finland .mosaic__line { grid-column: 9 / 13; grid-row: 11 / 15; }
+
+.mosaic__line {
+  align-self: center;
+  width: 100%; height: 60%;
+  overflow: visible;
+  transform-origin: left center;
+}
+
+/* Hover (pointer devices only): the photo straightens and lifts a little. */
+@media (hover: hover) and (pointer: fine) {
+  .mosaic .mosaic__item:hover {
+    transform: translate3d(0, calc(var(--collage-shift, 0px) - 6px), 0) rotate(0deg);
+    z-index: 5;
+  }
+  .mosaic .mosaic__item:hover img { transform: scale(1.04); }
+}
+
+/* Staggered reveal when the figure scrolls in (.is-visible from main.js). */
+.js .mosaic.reveal { transform: none; }
+.js .mosaic .mosaic__item picture,
+.js .mosaic .mosaic__line {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.js .mosaic .mosaic__item picture { transform: translate3d(0, 1.5rem, 0) scale(1.05); }
+.js .mosaic .mosaic__line { transform: scaleX(0.2); }
+.js .mosaic.is-visible .mosaic__item picture { opacity: 1; transform: none; }
+.js .mosaic.is-visible .mosaic__line { opacity: 1; transform: scaleX(1); transition-delay: 0.6s; }
+.js .mosaic.is-visible .mosaic__item--b picture { transition-delay: 0.15s; }
+.js .mosaic.is-visible .mosaic__item--c picture { transition-delay: 0.3s; }
+.js .mosaic.is-visible .mosaic__item--d picture { transition-delay: 0.45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mosaic .mosaic__item,
+  .mosaic .mosaic__item img,
+  .js .mosaic .mosaic__item picture,
+  .js .mosaic .mosaic__line { transition: none; }
+  .js .mosaic .mosaic__item picture,
+  .js .mosaic .mosaic__line { opacity: 1; transform: none; }
+  .mosaic .mosaic__item { transform: rotate(var(--tilt, 0deg)); }
+}
