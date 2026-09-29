@@ -96,7 +96,42 @@
     "finland": { "naam": "Punkaharju, Finland", "prijstabel": "data/finland-prijzen.json" },
     "falun": { "naam": "Falun, Sverige", "kalender": "data/falun-prijzen.json" },
     "weissensee": { "naam": "Weissensee, Österrike", "prijstabel": "data/weissensee-prijzen.json" },
-    "lulea": { "naam": "Luleå, Sverige", "prijstabel": "data/lulea-prijzen.json" }
+    "lulea": { "naam": "Luleå, Sverige", "prijstabel": "data/lulea-prijzen.json" },
+    "wellness": {
+      "naam": "Wellness & skridskor, Sverige",
+      "//prijsOpAanvraag": "Same entry as on the Dutch boeken.html, translated. No online payment here; the calendar on sv/wellness.html handles paying for 2 persons. belOnderwerp must stay equal to a choice on the Dutch belafspraak.html (there is no Swedish call planner).",
+      "prijsOpAanvraag": true,
+      "prijsLabel": "från 1 395 € per person",
+      "prijsToelichting": "Pris per person, beroende på resans längd. Det slutliga priset beror på resedatum och beläggning, därför sätter Joey ihop resan personligen tillsammans med dig. Berätta för honom när du vill resa.",
+      "prijzenPerDuur": [
+        { "dagen": 4, "label": "4 dagar", "prijs": 1395 },
+        { "dagen": 5, "label": "5 dagar", "prijs": 1595 },
+        { "dagen": 6, "label": "6 dagar", "prijs": 1795 },
+        { "dagen": 7, "label": "7 dagar", "prijs": 1995 }
+      ],
+      "keuzeTeksten": {
+        "duurVraag": "Hur länge vill du resa?",
+        "prijsPerPersoon": "{bedrag} € per person",
+        "datumLabel": "Önskat avresedatum",
+        "personenLabel": "Antal personer",
+        "personenMinder": "En person färre",
+        "personenMeer": "En person fler",
+        "persoon": "{n} person",
+        "personen": "{n} personer",
+        "vertrek": "avresa {datum}",
+        "whatsappBericht": "Hej Joey, jag vill gärna boka resan {naam}.",
+        "regelReis": "Resa: {naam}",
+        "regelDuur": "Reslängd: {duur}",
+        "regelDatum": "Önskat avresedatum: {datum}",
+        "regelPersonen": "Antal personer: {n}",
+        "belOnderwerp": "Een schaatsreis"
+      },
+      "contact": [
+        { "tekst": "Boka ett telefonsamtal", "href": "../belafspraak.html", "metKeuze": "belafspraak" },
+        { "tekst": "Ställ din fråga via WhatsApp", "href": "https://wa.me/31617467643?text=Hej%20Joey%2C%20jag%20har%20en%20fr%C3%A5ga%20om%20wellness-%20och%20skridskoresan.", "metKeuze": "whatsapp" },
+        { "tekst": "Ring +31 6 17467643", "href": "tel:+31617467643" }
+      ]
+    }
   }
 }
       </script>
