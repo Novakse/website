@@ -150,7 +150,15 @@
       bookPayBtn: "Boka och betala",
       personsLegend: "Hur många personer?",
       personsFewer: "En person färre",
-      personsMore: "En person fler"
+      personsMore: "En person fler",
+      durationsLegend: "Hur länge vill du stanna?",
+      durationDays: function (n) { return n + (n === 1 ? " dag" : " dagar"); },
+      durationAria: function (n, belopp) { return n + (n === 1 ? " dag" : " dagar") + (belopp ? ", " + belopp + " per person" : ""); },
+      durationsLonger: "Du kan också stanna längre: klicka då på din avresedag i kalendern.",
+      payPersonsNote: function (min, max) {
+        var grupp = min === max ? min + (min === 1 ? " person" : " personer") : min + " till " + max + " personer";
+        return "Du kan boka online för " + grupp + ". För andra gruppstorlekar skickar du en förfrågan om resan.";
+      }
     },
     de: {
       months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
