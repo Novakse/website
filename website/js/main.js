@@ -1846,7 +1846,7 @@
   var COLLAGE_TRAVEL = 40;
 
   if (collage && !reducedMotion.matches) {
-    var collageItems = collage.querySelectorAll(".collage__item");
+    var collageItems = collage.querySelectorAll("[data-speed]");
     var collageMaxSpeed = 0;
     collageItems.forEach(function (item) {
       collageMaxSpeed = Math.max(collageMaxSpeed, Math.abs(parseFloat(item.dataset.speed) || 0));
@@ -1891,6 +1891,39 @@
     window.addEventListener("resize", syncCollage);
 
     syncCollage();
+  }
+
+  /* ------------------------------------------------------------------
+     Photo wall (.wall[data-wall]): a small scroll-linked offset on top of
+     the CSS drift. The columns take the value with alternating sign
+     (--dir in the CSS), so scrolling nudges them apart a little. Transform
+     only, capped, and only while the wall is near the viewport.
+     ------------------------------------------------------------------ */
+  var walls = document.querySelectorAll("[data-wall]");
+  var WALL_TRAVEL = 28;
+
+  if (walls.length && !reducedMotion.matches) {
+    var syncWalls = function () {
+      var vh = stableViewportHeight();
+      walls.forEach(function (wall) {
+        var rect = wall.getBoundingClientRect();
+        if (rect.bottom < -vh || rect.top > vh * 2) return;
+        var progress = ((vh - rect.top) / (vh + rect.height)) * 2 - 1;
+        progress = Math.min(1, Math.max(-1, progress));
+        wall.style.setProperty("--wall-scroll", (progress * WALL_TRAVEL).toFixed(1) + "px");
+      });
+    };
+    var wallTicking = false;
+    window.addEventListener("scroll", function () {
+      if (wallTicking) return;
+      wallTicking = true;
+      window.requestAnimationFrame(function () {
+        syncWalls();
+        wallTicking = false;
+      });
+    }, { passive: true });
+    window.addEventListener("resize", syncWalls);
+    syncWalls();
   }
 
   /* ------------------------------------------------------------------
