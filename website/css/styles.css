@@ -7,8 +7,8 @@
   --paper: #ffffff;
   --paper-soft: #f2f3f0;
   --ink-soft: #5f635e;
-  --warm: #dd9752;        /* accent on dark backgrounds */
-  --warm-deep: #7a4620;   /* accent on light backgrounds (WCAG AA on white) */
+  --warm: #e8893f;        /* accent on dark backgrounds (nudged toward logo orange #f05a0a) */
+  --warm-deep: #9a4412;   /* accent on light backgrounds (WCAG AA on white, 6.5:1) */
   --status-green: #1b4332; /* status/success accent */
   --focus-ring: var(--warm-deep); /* light surfaces by default; see dark override */
   --border: #e2e3df;

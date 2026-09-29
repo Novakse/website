@@ -8,11 +8,11 @@
    ========================================================================== */
 
 :root {
-  --green: #050d08;        /* hoofdgroen — zwartgroen, dicht tegen zwart aan */
+  --green: #04121a;        /* near-black with logo petrol undertone (#0a4a66); hoofdgroen — zwartgroen, dicht tegen zwart aan */
   --green-deep: #020603;   /* diepste groen */
   --paper-soft: #f1f3f1;   /* zeer licht groengrijs */
-  --ink: #050d08;          /* tekstkleur krijgt dezelfde groenzwarte ondertoon */
-  --ink-soft: #52615c;
+  --ink: #04121a;          /* tekstkleur krijgt dezelfde groenzwarte ondertoon */
+  --ink-soft: #4d5f66;
   --border: #dfe3df;
 }
 
