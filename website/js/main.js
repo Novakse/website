@@ -115,7 +115,7 @@
       prevMonth: "Föregående månad",
       nextMonth: "Nästa månad",
       pauseAria: "Pausa bildspelet",
-      playAria: "Spela bildspelet",
+      playAria: "Spela upp bildspelet",
       legendAvailable: "Tillgänglig",
       legendBooked: "Redan bokad",
       legendChosen: "Ditt val",
