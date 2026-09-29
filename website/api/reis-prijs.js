@@ -1,5 +1,5 @@
 /* Vercel serverless function: returns the price of a Lulea, Orsa,
-   Weissensee or Finland choice.
+   Weissensee, Finland or Wellness choice.
 
    The checkout page asks for the amount here, so the screen shows exactly
    what will be charged. Nothing is paid or stored; this only calculates. The

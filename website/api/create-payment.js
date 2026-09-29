@@ -28,7 +28,10 @@ var berekenFalun = require("./_falun-prijs.js").berekenFalun;
 
 // Trips whose price is calculated by api/_reis-prijs.js. The browser sends
 // only the choices; the amount always comes from the server.
-var REIS_NAMEN = { lulea: "Lulea", orsa: "Orsa", weissensee: "Weissensee", finland: "Finland" };
+var REIS_NAMEN = { lulea: "Lulea", orsa: "Orsa", weissensee: "Weissensee", finland: "Finland", wellness: "Wellness & schaatsen" };
+// Product name when the description is missing; without an entry it is
+// "Schaatsreis <name>". Same as reis.product in api/_reis-prijs.js.
+var REIS_PRODUCTEN = { wellness: "Wellness & schaatsen" };
 
 // Base URL for the return pages. Always the fixed production domain, so a
 // spoofed Host header can never send a paying visitor elsewhere. Only a local
@@ -212,7 +215,7 @@ module.exports = async function handler(req, res) {
       begeleiding: alleenGetal(body.begeleiding)
     });
   } else if (REIS_NAMEN.hasOwnProperty(reisSleutel) && body.van) {
-    // Lulea, Orsa, Weissensee, Finland from a price calendar: the browser
+    // Lulea, Orsa, Weissensee, Finland, Wellness from a price calendar: the browser
     // amount is ignored, the server calculates the full group price from the
     // choices. Without "van" it is one of Joey's payment links and falls
     // through to the generic flow below, just like Falun without "aankomst".
@@ -241,8 +244,9 @@ module.exports = async function handler(req, res) {
     bedrag = naarCenten(reisPrijs.bedrag);
     serverBerekend = true;
     omschrijving = String(reisPrijs.omschrijving || "").slice(0, 255);
-    // The description already starts with "Schaatsreis <trip>".
-    productNaam = omschrijving || ("Schaatsreis " + naam);
+    // The description already starts with the product name ("Schaatsreis
+    // <trip>", or the trip's own product name such as "Wellness & schaatsen").
+    productNaam = omschrijving || (REIS_PRODUCTEN[reisSleutel] || ("Schaatsreis " + naam));
 
     metadata = {
       reis: naam,

@@ -94,6 +94,7 @@
          "soort"    bestemming | reizigers | datum | aantal | keuze | stad | extras | tekst | gegevens
          "opties"   bij soort "keuze": elke regel {"naam": "...", "toelichting": "..."}
          "overslaan" op true: de bezoeker mag deze stap overslaan
+         "verplicht" true: the request is only sent once this step has an answer
 
        Bij "extras" staan de activiteiten per bestemming, onderaan bij de
        bestemming zelf. Prijzen zijn per persoon, in hele euro's. Heeft een
@@ -204,6 +205,18 @@
       "maxTekst": "Meer dan 12 personen past niet op deze teller. Kies dan de knop hieronder.",
       "//perVierTekst": "Komt alleen in beeld bij bestemmingen met \"perVierPersonen\": true hierboven.",
       "perVierTekst": "Een huisje en een huurauto zijn voor vier personen. Kom je met meer, dan komt er een huisje en een auto bij en gaat de prijs per vier personen weer een stap omhoog."
+    },
+    {
+      "sleutel": "reisvorm",
+      "label": "Reisvorm",
+      "soort": "keuze",
+      "vraag": "Hoe wil je op reis?",
+      "verplicht": true,
+      "opties": [
+        { "naam": "Eigen groepsreis aanvragen met mijn eigen groep" },
+        { "naam": "Aansluiten bij een groepsreis" },
+        { "naam": "Zelfstandig op reis gaan" }
+      ]
     },
     {
       "sleutel": "periode",

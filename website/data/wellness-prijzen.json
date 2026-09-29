@@ -1,0 +1,38 @@
+{
+  "//": "Prijzen en data voor de kalender op wellness.html (Wellness & schaatsen). Het werkt precies zoals data/orsa-prijzen.json (zelfde kalender in js/main.js); de server rekent met hetzelfde bestand (api/_reis-prijs.js). Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan. Zet hier nooit inkoopprijzen in: dit bestand is voor iedereen op de site op te vragen.",
+
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken: 19 december tot en met 14 maart, zelfde als de andere reizen.",
+  "seizoenStart": "2026-12-19",
+  "seizoenEind": "2027-03-14",
+
+  "//minimumNachten": "Kortste verblijf dat iemand kan kiezen: 3 nachten is 4 dagen. Een maximum is er niet.",
+  "minimumNachten": 3,
+
+  "//prijs": "Verkoopprijs per persoon voor het hele verblijf, in hele euro's, met twee personen. Gelijk aan de prijzen op wellness.html: 1395 voor 4 dagen (3 nachten), 1595 voor 5 dagen, 1795 voor 6 dagen en 1995 voor 7 dagen (6 nachten).",
+  "prijsPerPersoon": {
+    "standaard": { "3": 1395, "4": 1595, "5": 1795, "6": 1995 }
+  },
+
+  "//extraNacht": "Blijft iemand langer dan 7 dagen, dan telt elke dag daarboven dit bedrag per persoon mee: het verschil tussen twee opeenvolgende prijzen hierboven (200). Dus 8 dagen 2195, 9 dagen 2395, 10 dagen 2595.",
+  "extraNachtPerPersoon": { "standaard": 200 },
+
+  "//personen": "Voor hoeveel personen iemand de kalender kan invullen.",
+  "personen": { "min": 1, "max": 20 },
+
+  "//betaalPersonen": "Met hoeveel personen iemand meteen online kan boeken en betalen. De prijzen hierboven gelden voor 2 personen. Kiest iemand een ander aantal, dan toont de kalender geen totaal maar de knop naar de aanvraag (boeken.html), en de server weigert de betaling.",
+  "betaalPersonen": { "min": 2, "max": 2 },
+
+  "//duurKnoppen": "Na het kiezen van de aankomstdag verschijnen knoppen voor deze reisduren (in dagen) met hun prijs per persoon. Een knop zet de vertrekdag. Langer blijven kan ook: dan klikt de bezoeker zelf op de vertrekdag. Haal de regel weg om de knoppen niet te tonen.",
+  "duurKnoppen": [4, 5, 6, 7],
+
+  "//afrekenen": "Op true kan de bezoeker deze reis meteen online betalen via Stripe, het volledige bedrag voor de hele groep. De server rekent het bedrag zelf uit met dit bestand (api/_reis-prijs.js), net als de kalender. Op false blijft het een aanvraag.",
+  "afrekenen": true,
+
+  "//periodes": "Een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
+  "periodes": [
+    { "van": "2026-12-19", "tot": "2027-03-14", "tarief": "standaard" }
+  ],
+
+  "//bezet": "Periodes die niet te kiezen zijn. Zo zet je er een dicht: {\"van\": \"2027-01-16\", \"tot\": \"2027-01-23\", \"wat\": \"Niet beschikbaar\"}. tot is de eerste dag die weer vrij is. Achter elke regel een komma, behalve achter de laatste. Er staat nu niets dicht.",
+  "bezet": []
+}

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Lulea, Orsa, Weissensee and Finland: the server-side price.
+   Lulea, Orsa, Weissensee, Finland and Wellness: the server-side price.
 
    This module is the only place where the amount for these four trips is
    decided on the server. The calendar in js/main.js ([data-calendar]) shows
@@ -11,7 +11,7 @@
    guiding days), never an amount: whatever the browser sends can be edited.
 
    berekenReis(keuze)
-     keuze = { reis: "lulea" | "orsa" | "weissensee" | "finland",
+     keuze = { reis: "lulea" | "orsa" | "weissensee" | "finland" | "wellness",
                van: "YYYY-MM-DD",   // arrival day
                tot: "YYYY-MM-DD",   // departure day
                personen: int,       // group size
@@ -26,11 +26,13 @@ var fs = require("fs");
 var path = require("path");
 
 // Whitelist: only these trips can be priced, each with its own price file.
+// product is the name on the Stripe payment; without it "Schaatsreis <naam>".
 var REIZEN = {
   lulea: { bestand: "lulea-prijzen.json", naam: "Luleå" },
   orsa: { bestand: "orsa-prijzen.json", naam: "Orsa" },
   weissensee: { bestand: "weissensee-prijzen.json", naam: "Weissensee" },
-  finland: { bestand: "finland-prijzen.json", naam: "Finland" }
+  finland: { bestand: "finland-prijzen.json", naam: "Finland" },
+  wellness: { bestand: "wellness-prijzen.json", naam: "Wellness & schaatsen", product: "Wellness & schaatsen" }
 };
 
 /* The file is read on every call (it is small), so a running server never
@@ -137,6 +139,20 @@ function berekenReis(keuze) {
   var personen = alsGetal(keuze.personen);
   if (!(personen >= personenMin && personen <= personenMax)) return { fout: "Ongeldig aantal personen." };
 
+  // main.js magBetalen(): optional betaalPersonen, the group sizes that can
+  // book and pay online (wellness: only 2). Any other size is a request.
+  var betaalKeuze = data.betaalPersonen && typeof data.betaalPersonen === "object" ? data.betaalPersonen : null;
+  if (betaalKeuze) {
+    var betaalMin = parseInt(betaalKeuze.min, 10) || personenMin;
+    var betaalMax = parseInt(betaalKeuze.max, 10) || personenMax;
+    if (personen < betaalMin || personen > betaalMax) {
+      var groep = betaalMin === betaalMax
+        ? betaalMin + (betaalMin === 1 ? " persoon" : " personen")
+        : betaalMin + " tot en met " + betaalMax + " personen";
+      return { fout: "Online boeken kan voor " + reis.naam + " alleen met " + groep + ". Vraag de reis aan voor een andere groep." };
+    }
+  }
+
   // main.js toeslagCenten: surcharge per person per night, in cents.
   var toeslagCenten = {};
   (Array.isArray(data.toeslagen) ? data.toeslagen : []).forEach(function (regel) {
@@ -231,7 +247,7 @@ function berekenReis(keuze) {
 
   var bedrag = perPersoon * personen + begeleidingBedrag;
 
-  var omschrijving = "Schaatsreis " + reis.naam + ", " + schrijfDatum(van) + " tot " + schrijfDatum(tot) +
+  var omschrijving = (reis.product || "Schaatsreis " + reis.naam) + ", " + schrijfDatum(van) + " tot " + schrijfDatum(tot) +
     " (" + nachten + " nachten), " + personen + (personen === 1 ? " persoon" : " personen") +
     ", " + euro(perPersoon) + " p.p.";
   if (begeleidingDagen > 0) {

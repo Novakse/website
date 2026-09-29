@@ -1,0 +1,628 @@
+/* ==========================================================================
+   Wellness booking calendar (wellness.html, #reserveren)
+
+   The shared trip calendar from js/main.js, dressed for this page: a linen
+   card with a bronze hairline on the dark price section. Round day cells,
+   the stay as a soft amber band, arrival and departure in espresso with
+   linen figures, the total in the serif and the pay button as an espresso
+   pill. Loaded after css/wellness.css and only by wellness.html; every
+   selector is scoped under .page-wellness .lx-booking, so the calendars of
+   the other trips keep the styles from css/styles.css. The --lx-* tokens
+   come from css/wellness.css (read only).
+
+   Motion only moves transform and opacity and is switched off for reduced
+   motion (bottom of this file).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Card
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-booking {
+  --lx-cell: 2.75rem;                                /* day circle, 44px touch target */
+  --lx-band: rgba(217, 164, 108, 0.34);              /* soft warm amber: the stay */
+  --lx-hair: rgba(var(--lx-bronze-rgb), 0.42);       /* bronze hairline */
+  --lx-hair-soft: rgba(var(--lx-bronze-rgb), 0.2);
+  --lx-ink-rgb: 35, 25, 19;
+  /* the card is light on a dark section: the cognac focus ring, not the
+     pale amber of the dark surfaces (6.1:1 on linen) */
+  --focus-ring: var(--lx-amber-deep);
+
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  padding: 1.5rem 0.75rem 1.25rem;
+  border: 1px solid var(--lx-hair);
+  border-radius: 1.4rem;
+  background:
+    radial-gradient(28rem 18rem at 0% 0%, rgba(var(--lx-sheen-rgb), 0.95), rgba(var(--lx-sheen-rgb), 0) 72%),
+    var(--lx-linen);
+  color: var(--lx-ink);
+  /* the label above the card stays in view under the fixed header */
+  scroll-margin-top: 8.5rem;
+}
+/* passe-partout: a second, finer hairline just inside the edge */
+.page-wellness .lx-booking::before {
+  content: "";
+  position: absolute;
+  inset: 0.4rem;
+  z-index: -1;
+  border: 1px solid var(--lx-hair-soft);
+  border-radius: 1rem;
+  pointer-events: none;
+}
+/* phones: the card keeps to the text edge of the section; its narrow inner
+   padding leaves room for seven day circles of 44px from 375px (see the
+   month bleed below) */
+@media (min-width: 30rem) {
+  .page-wellness .lx-booking {
+    --lx-cell: 2.875rem;
+    padding: 1.9rem 1.5rem 1.6rem;
+  }
+}
+@media (min-width: 64rem) {
+  .page-wellness .lx-booking {
+    --lx-cell: 3rem;
+    padding: 2.1rem 2rem 1.8rem;
+  }
+}
+/* the month measures its own width for the circles (--lx-circle below);
+   on phones it reaches 4px into the side padding on each side, so the day
+   circles stay 44px from a 375px screen up while the other blocks keep the
+   card's padding */
+.page-wellness .lx-booking .calendar__months { container-type: inline-size; }
+@media (max-width: 29.99rem) {
+  .page-wellness .lx-booking .calendar__months { margin-inline: -0.25rem; }
+  /* the month title and arrows stay on the card's padding line */
+  .page-wellness .lx-booking .calendar__month-head { margin-inline: 0.25rem; }
+}
+
+.page-wellness .lx-booking [hidden] { display: none !important; }
+
+/* Visual order: month first, then its legend; the choices below that. */
+.page-wellness .lx-booking > * { order: 2; }
+.page-wellness .lx-booking > .calendar__months { order: 0; }
+.page-wellness .lx-booking > .calendar__legend { order: 1; }
+
+.page-wellness .lx-booking .calendar__fallback {
+  font-size: 0.95rem;
+  color: var(--lx-ink-soft);
+}
+.page-wellness .lx-booking .calendar__fallback a {
+  color: var(--lx-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* --------------------------------------------------------------------------
+   Month head: serif title between two round arrows, on a swept line
+   (the rink curve of the hero, as a hairline) instead of a straight rule
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-booking .calendar__months {
+  max-width: none;
+  margin-top: 0;
+}
+.page-wellness .lx-booking .calendar__month-head {
+  padding-bottom: 1.05rem;
+  border-bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 10' preserveAspectRatio='none'%3E%3Cpath d='M0 8.2C90 9.6 150 1.4 250 2.6S360 6.4 400 5.4' fill='none' stroke='%238a5e30' stroke-opacity='.45' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") left bottom / 100% 0.625rem no-repeat;
+}
+.page-wellness .lx-booking .calendar__month-title {
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(1.65rem, 6.4vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+  color: var(--lx-ink);
+}
+.page-wellness .lx-booking .calendar__month-nav {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--lx-hair);
+  background: transparent;
+  color: var(--lx-ink);
+  font-size: 1.4rem;
+  transition: transform 0.45s var(--lx-ease), opacity 0.3s var(--lx-ease);
+}
+.page-wellness .lx-booking .calendar__month-nav:hover:not(:disabled) {
+  border-color: var(--lx-ink);
+  background: rgba(var(--lx-bronze-rgb), 0.1);
+}
+.page-wellness .lx-booking .calendar__month-nav:active:not(:disabled) { transform: scale(0.92); }
+.page-wellness .lx-booking .calendar__month-nav:disabled { opacity: 0.28; }
+
+/* --------------------------------------------------------------------------
+   Day grid
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-booking .calendar__grid {
+  /* circle size: --lx-cell, or a seventh of the card where that is less
+     (narrow phones), so the circles always stay round */
+  --lx-circle: min(var(--lx-cell), calc(100cqi / 7));
+  margin-top: 0.95rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  column-gap: 0;          /* the stay reads as one band across the week */
+  row-gap: 0.3rem;
+}
+.page-wellness .lx-booking .calendar__dayname {
+  padding-bottom: 0.5rem;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--lx-ink-soft);
+}
+.page-wellness .lx-booking .calendar__cell {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  height: var(--lx-circle);
+  aspect-ratio: auto;
+  border-radius: 0;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--lx-ink);
+}
+/* days outside the season: quiet, not clickable */
+.page-wellness .lx-booking .calendar__cell.is-buiten { color: rgba(var(--lx-ink-rgb), 0.3); }
+/* a closed period (none now; data/wellness-prijzen.json "bezet") */
+.page-wellness .lx-booking .calendar__cell.is-bezet {
+  background: none;
+  color: var(--lx-ink-soft);
+  text-decoration: line-through;
+}
+.page-wellness .lx-booking .calendar__cell.is-bezet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: var(--lx-circle);
+  margin-inline: auto;
+  border-radius: 50%;
+  background: repeating-linear-gradient(135deg, rgba(var(--lx-bronze-rgb), 0.18) 0 2px, transparent 2px 6px);
+}
+
+/* A free day: the button fills the cell (touch target), the circle sits
+   in its middle. Layers inside the button: the amber band (::before), the
+   hover wash (circle ::before) and the circle with its figure on top. */
+.page-wellness .lx-booking button.calendar__cell {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--lx-ink);
+  transition: none;
+}
+.page-wellness .lx-booking button.calendar__cell:hover { background: transparent; }
+.page-wellness .lx-booking button.calendar__cell:active { transform: none; }
+.page-wellness .lx-booking button.calendar__cell:focus-visible {
+  z-index: 1;   /* its ring is drawn over the neighbouring band */
+  outline: none;
+}
+.page-wellness .lx-booking .calendar__daynr {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: var(--lx-circle);
+  height: var(--lx-circle);
+  margin: auto;
+  border-radius: 50%;
+  transition: transform 0.45s var(--lx-ease);
+}
+.page-wellness .lx-booking .calendar__daynr::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgba(var(--lx-bronze-rgb), 0.16);
+  opacity: 0;
+  transition: opacity 0.3s var(--lx-ease);
+}
+.page-wellness .lx-booking button.calendar__cell:hover .calendar__daynr { transform: scale(1.06); }
+.page-wellness .lx-booking button.calendar__cell:hover .calendar__daynr::before { opacity: 1; }
+.page-wellness .lx-booking button.calendar__cell:active .calendar__daynr { transform: scale(0.94); }
+.page-wellness .lx-booking button.calendar__cell:focus-visible .calendar__daynr {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* The stay: a soft amber band behind the nights in between, half a cell
+   into the arrival and departure day. The arrival day only gets its half
+   once the departure day is chosen. */
+.page-wellness .lx-booking button.calendar__cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--lx-band);
+  opacity: 0;
+}
+.page-wellness .lx-booking button.calendar__cell.is-tussen,
+.page-wellness .lx-booking button.calendar__cell.is-gekozen {
+  background: transparent;
+  border-radius: 0;
+}
+.page-wellness .lx-booking button.calendar__cell.is-tussen::before { opacity: 1; }
+.page-wellness .lx-booking:has(.calendar__bar.is-done) button.calendar__cell.is-start::before {
+  left: 50%;
+  opacity: 1;
+}
+.page-wellness .lx-booking button.calendar__cell.is-eind::before {
+  right: 50%;
+  opacity: 1;
+}
+/* the band rounds off where a week row starts or ends */
+.page-wellness .lx-booking .calendar__grid > button.calendar__cell.is-tussen:nth-child(7n + 1)::before {
+  border-radius: 999px 0 0 999px;
+}
+.page-wellness .lx-booking .calendar__grid > button.calendar__cell.is-tussen:nth-child(7n)::before {
+  border-radius: 0 999px 999px 0;
+}
+/* arrival and departure: dark ink circle, linen figure */
+.page-wellness .lx-booking button.calendar__cell.is-gekozen {
+  color: var(--lx-linen);
+  font-weight: 600;
+}
+.page-wellness .lx-booking button.calendar__cell.is-gekozen .calendar__daynr {
+  background: var(--lx-ink);
+}
+.page-wellness .lx-booking button.calendar__cell.is-gekozen:hover .calendar__daynr { transform: scale(1.04); }
+
+/* Legend: small round chips under the month */
+.page-wellness .lx-booking .calendar__legend {
+  margin-top: 1.15rem;
+  gap: 0.45rem 1.3rem;
+  font-size: 0.78rem;
+  color: var(--lx-ink-soft);
+}
+.page-wellness .lx-booking .calendar__chip {
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 50%;
+}
+.page-wellness .lx-booking .calendar__chip.is-vrij {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--lx-ink-soft);
+}
+.page-wellness .lx-booking .calendar__chip.is-bezet {
+  background: repeating-linear-gradient(135deg, rgba(var(--lx-bronze-rgb), 0.55) 0 1.5px, transparent 1.5px 3.5px);
+  box-shadow: inset 0 0 0 1px rgba(var(--lx-bronze-rgb), 0.45);
+}
+.page-wellness .lx-booking .calendar__chip.is-gekozen { background: var(--lx-ink); }
+
+/* --------------------------------------------------------------------------
+   Blocks under the month: trip length, persons, the chosen period
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-booking .falun-cal__block {
+  margin: 1.35rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--lx-hair-soft);
+}
+.page-wellness .lx-booking .falun-cal__legend {
+  margin-bottom: 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--lx-ink);
+}
+.page-wellness .lx-booking .falun-cal__note {
+  font-size: 0.86rem;
+  color: var(--lx-ink-soft);
+}
+
+/* Trip length shortcuts (duurKnoppen), shown once the arrival day is set */
+.page-wellness .lx-booking .calendar__duration-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+@container (min-width: 27rem) {
+  .page-wellness .lx-booking .calendar__duration-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.page-wellness .lx-booking .calendar__duration {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 0.35rem;
+  min-height: 3.75rem;
+  padding: 0.7rem 0.95rem 0.75rem;
+  border-radius: 0.9rem;
+  box-shadow: inset 0 0 0 1px var(--lx-hair);
+  color: var(--lx-ink);
+  text-align: left;
+  transition: transform 0.5s var(--lx-ease), opacity 0.3s var(--lx-ease);
+}
+.page-wellness .lx-booking .calendar__duration::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgba(var(--lx-bronze-rgb), 0.1);
+  opacity: 0;
+  transition: opacity 0.3s var(--lx-ease);
+}
+.page-wellness .lx-booking .calendar__duration:hover:not(:disabled) { transform: translateY(-2px); }
+.page-wellness .lx-booking .calendar__duration:hover:not(:disabled)::before { opacity: 1; }
+.page-wellness .lx-booking .calendar__duration:active:not(:disabled) { transform: scale(0.97); }
+.page-wellness .lx-booking .calendar__duration:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.page-wellness .lx-booking .calendar__duration.is-actief {
+  background: var(--lx-ink);
+  box-shadow: none;
+  color: var(--lx-linen);
+}
+.page-wellness .lx-booking .calendar__duration-days {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.page-wellness .lx-booking .calendar__duration-price {
+  font-family: var(--lx-serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+.page-wellness .lx-booking .calendar__duration-price:empty { display: none; }
+
+/* Persons: label and stepper on one line */
+.page-wellness .lx-booking .calendar__persons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+}
+.page-wellness .lx-booking .calendar__persons .falun-cal__legend { margin: 0; }
+.page-wellness .lx-booking .booking__persons { gap: 0.3rem; }
+.page-wellness .lx-booking .booking__step-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--lx-hair);
+  background: transparent;
+  color: var(--lx-ink);
+  font-size: 1.25rem;
+  transition: transform 0.4s var(--lx-ease), opacity 0.3s var(--lx-ease);
+}
+.page-wellness .lx-booking .booking__step-btn:hover:not(:disabled) {
+  border-color: var(--lx-ink);
+  background: rgba(var(--lx-bronze-rgb), 0.1);
+}
+.page-wellness .lx-booking .booking__step-btn:active:not(:disabled) { transform: scale(0.92); }
+.page-wellness .lx-booking .booking__step-btn:disabled { opacity: 0.3; cursor: default; }
+.page-wellness .lx-booking .booking__persons input {
+  width: 3.25rem;
+  padding: 0.2rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--lx-hair);
+  border-radius: 0;
+  background: transparent;
+  color: var(--lx-ink);
+  font-family: var(--lx-serif);
+  font-size: 1.7rem;
+  font-weight: 500;
+  line-height: 1.1;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.page-wellness .lx-booking .booking__persons input::-webkit-outer-spin-button,
+.page-wellness .lx-booking .booking__persons input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* The chosen period, the total and the pay button */
+.page-wellness .lx-booking .calendar__bar {
+  order: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-content: stretch;
+  gap: 1.1rem;
+  margin-top: 1.35rem;
+  padding: 1.35rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--lx-hair);
+  border-radius: 0;
+  background: none;
+}
+.page-wellness .lx-booking .calendar__bar.is-done { background: none; }
+.page-wellness .lx-booking .calendar__hint {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--lx-ink-soft);
+  text-wrap: pretty;
+}
+.page-wellness .lx-booking .calendar__bar.is-warn .calendar__hint {
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--lx-amber-deep);
+  color: var(--lx-ink);
+}
+.page-wellness .lx-booking .calendar__chosen { gap: 0.2rem; }
+.page-wellness .lx-booking .calendar__chosen-label {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--lx-ink-soft);
+}
+.page-wellness .lx-booking .calendar__chosen-dates {
+  font-family: var(--lx-serif);
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--lx-ink);
+}
+.page-wellness .lx-booking .calendar__chosen-nights {
+  font-size: 0.86rem;
+  color: var(--lx-ink-soft);
+}
+.page-wellness .lx-booking .calendar__chosen-price {
+  margin-top: 0.7rem;
+  font-family: var(--lx-serif);
+  font-size: clamp(1.55rem, 6vw, 1.95rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  color: var(--lx-ink);
+  text-wrap: balance;
+}
+.page-wellness .lx-booking .calendar__chosen-note {
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-left: 2px solid var(--lx-amber-deep);
+  border-radius: 0 0.6rem 0.6rem 0;
+  background: rgba(var(--lx-bronze-rgb), 0.09);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--lx-ink);
+}
+.page-wellness .lx-booking .calendar__bar-actions {
+  justify-content: space-between;
+  gap: 0.5rem 1.25rem;
+}
+.page-wellness .lx-booking .calendar__reset {
+  min-height: 2.75rem;
+  padding: 0.6rem 0;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--lx-ink-soft);
+  text-underline-offset: 0.25em;
+}
+.page-wellness .lx-booking .calendar__reset:hover { color: var(--lx-ink); }
+
+/* Pay button ("Boeken en betalen") and, for another group size, the link to
+   the request form: an espresso pill with the arrow in its own circle, like
+   the other buttons on this page */
+.page-wellness .lx-booking .calendar__bar-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.95rem;
+  min-height: 3.25rem;
+  margin-left: auto;
+  padding: 0.4rem 0.4rem 0.4rem 1.5rem;
+  border-radius: 999px;
+  background: var(--lx-espresso);
+  color: var(--lx-linen);
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  transition: transform 0.6s var(--lx-ease);
+}
+.page-wellness .lx-booking .calendar__bar-actions .btn::after {
+  content: "";
+  flex: none;
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 50%;
+  background: rgba(var(--lx-linen-rgb), 0.14) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8h10M9 4l4 4-4 4' fill='none' stroke='%23ede2d1' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 1rem no-repeat;
+  transition: transform 0.6s var(--lx-ease);
+}
+.page-wellness .lx-booking .calendar__bar-actions .btn:hover {
+  background: var(--lx-espresso);
+  transform: translateY(-2px);
+}
+.page-wellness .lx-booking .calendar__bar-actions .btn:hover::after,
+.page-wellness .lx-booking .calendar__bar-actions .btn:focus-visible::after {
+  transform: translateX(3px) rotate(-45deg);
+}
+.page-wellness .lx-booking .calendar__bar-actions .btn:active { transform: scale(0.98); }
+/* narrow card: the button takes the full width under "Opnieuw kiezen" */
+@container (max-width: 26.99rem) {
+  .page-wellness .lx-booking .calendar__bar-actions .btn {
+    flex: 1 1 100%;
+    margin-left: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Wide screens: the card spans the price section (see .lx-price__booking in
+   css/wellness.css). The month stands on the left, the choices, the total
+   and the pay button on the right, top-aligned with the month.
+   -------------------------------------------------------------------------- */
+@media (min-width: 64rem) {
+  .page-wellness .lx-booking {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: clamp(3rem, 5vw, 4.5rem);
+    align-items: start;
+    padding: 2.4rem 2.6rem 2.2rem;
+  }
+  .page-wellness .lx-booking > .calendar__fallback { grid-column: 1 / -1; }
+  .page-wellness .lx-booking > .calendar__months { grid-column: 1; grid-row: 1 / 4; }
+  .page-wellness .lx-booking > .calendar__legend { grid-column: 1; grid-row: 4; }
+  .page-wellness .lx-booking > .falun-cal__block,
+  .page-wellness .lx-booking > .falun-cal__note { grid-column: 2; }
+  .page-wellness .lx-booking > .calendar__durations { grid-row: 1; }
+  .page-wellness .lx-booking > .calendar__persons { grid-row: 2; }
+  .page-wellness .lx-booking > .calendar__bar { grid-column: 2; grid-row: 3 / 5; }
+  /* the first block of the right column starts on the month's top line */
+  .page-wellness .lx-booking > .calendar__durations,
+  .page-wellness .lx-booking > .calendar__durations[hidden] + .calendar__persons {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Motion: new choices ease in (opacity and transform only)
+   -------------------------------------------------------------------------- */
+@keyframes lx-booking-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes lx-booking-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes lx-booking-pop {
+  from { opacity: 0.4; transform: scale(0.82); }
+  to { opacity: 1; transform: none; }
+}
+.page-wellness .lx-booking .calendar__durations:not([hidden]) {
+  animation: lx-booking-rise 0.55s var(--lx-ease) both;
+}
+.page-wellness .lx-booking .calendar__chosen-price,
+.page-wellness .lx-booking .calendar__chosen-note {
+  animation: lx-booking-rise 0.5s var(--lx-ease) both;
+}
+.page-wellness .lx-booking button.calendar__cell.is-tussen::before,
+.page-wellness .lx-booking button.calendar__cell.is-eind::before {
+  animation: lx-booking-fade 0.4s var(--lx-ease) both;
+}
+.page-wellness .lx-booking button.calendar__cell.is-gekozen .calendar__daynr {
+  animation: lx-booking-pop 0.45s var(--lx-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-wellness .lx-booking,
+  .page-wellness .lx-booking *,
+  .page-wellness .lx-booking *::before,
+  .page-wellness .lx-booking *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .page-wellness .lx-booking button.calendar__cell:hover .calendar__daynr,
+  .page-wellness .lx-booking .calendar__duration:hover:not(:disabled),
+  .page-wellness .lx-booking .calendar__bar-actions .btn:hover {
+    transform: none;
+  }
+}

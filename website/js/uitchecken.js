@@ -13,8 +13,8 @@
       /api/falun-prijs. De server rekent het uit, niet de browser, zodat er
       niet met het bedrag te knoeien valt.
 
-   3. Via de kalender op de pagina van Luleå, Orsa, de Weissensee of Finland,
-      bijvoorbeeld
+   3. Via de kalender op de pagina van Luleå, Orsa, de Weissensee, Finland of
+      Wellness & schaatsen, bijvoorbeeld
       uitchecken.html?reis=lulea&van=2027-01-10&tot=2027-01-14&personen=2.
       Ook hier staat geen bedrag in de link: dat komt van /api/reis-prijs, en
       /api/create-payment rekent het bij het betalen opnieuw uit.
@@ -70,7 +70,8 @@
     lulea: { naam: "Luleå", pagina: "lulea.html" },
     orsa: { naam: "Orsa", pagina: "orsa.html", begeleiding: true },
     weissensee: { naam: "Weissensee", pagina: "weissensee.html" },
-    finland: { naam: "Finland", pagina: "finland.html" }
+    finland: { naam: "Finland", pagina: "finland.html" },
+    wellness: { naam: "Wellness & schaatsen", pagina: "wellness.html" }
   };
 
   /* A calendar link always carries van; a payment link from Joey

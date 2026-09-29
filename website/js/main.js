@@ -48,7 +48,15 @@
       bookPayBtn: "Boeken en betalen",
       personsLegend: "Met hoeveel personen?",
       personsFewer: "Eén persoon minder",
-      personsMore: "Eén persoon meer"
+      personsMore: "Eén persoon meer",
+      durationsLegend: "Hoe lang wil je blijven?",
+      durationDays: function (n) { return n + (n === 1 ? " dag" : " dagen"); },
+      durationAria: function (n, bedrag) { return n + (n === 1 ? " dag" : " dagen") + (bedrag ? ", " + bedrag + " per persoon" : ""); },
+      durationsLonger: "Langer blijven kan ook: klik dan in de kalender op je vertrekdag.",
+      payPersonsNote: function (min, max) {
+        var groep = min === max ? min + (min === 1 ? " persoon" : " personen") : min + " tot en met " + max + " personen";
+        return "Online boeken kan voor " + groep + ". Met een andere groep vraag je de reis aan.";
+      }
     },
     en: {
       months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -91,7 +99,15 @@
       bookPayBtn: "Book and pay",
       personsLegend: "How many people?",
       personsFewer: "One person fewer",
-      personsMore: "One person more"
+      personsMore: "One person more",
+      durationsLegend: "How long would you like to stay?",
+      durationDays: function (n) { return n + (n === 1 ? " day" : " days"); },
+      durationAria: function (n, amount) { return n + (n === 1 ? " day" : " days") + (amount ? ", " + amount + " per person" : ""); },
+      durationsLonger: "Staying longer is possible too: click your departure day in the calendar.",
+      payPersonsNote: function (min, max) {
+        var group = min === max ? min + (min === 1 ? " person" : " people") : min + " to " + max + " people";
+        return "Online booking is possible for " + group + ". For a different group, send us a request.";
+      }
     },
     sv: {
       months: ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"],
@@ -984,6 +1000,7 @@
   // Give every guiding block and persons field its own id.
   var begeleidingTeller = 0;
   var personenTeller = 0;
+  var duurTeller = 0;
 
   function bouwKalender(box, data, opties) {
     if (!data.seizoenStart || !data.seizoenEind) return;
@@ -1016,6 +1033,18 @@
       return Math.min(personenMax, Math.max(personenMin, n));
     }
     var personen = binnenPersonen(2);
+
+    /* Optional ("betaalPersonen" in the price file, e.g. wellness): the group
+       sizes that can book and pay online. For any other size there is no
+       amount to pay, so the calendar shows the link to the request form
+       instead, with a short note. The server (api/_reis-prijs.js) refuses
+       the same sizes. Without it every size from "personen" can pay. */
+    var betaalKeuze = data.betaalPersonen && typeof data.betaalPersonen === "object" ? data.betaalPersonen : null;
+    var betaalMin = betaalKeuze ? (parseInt(betaalKeuze.min, 10) || personenMin) : personenMin;
+    var betaalMax = betaalKeuze ? (parseInt(betaalKeuze.max, 10) || personenMax) : personenMax;
+    function magBetalen(aantal) {
+      return !betaalKeuze || (aantal >= betaalMin && aantal <= betaalMax);
+    }
 
     /* Group pricing ("groepsKorting.perPersoonPerNacht" in the price file):
        euros per person per night relative to 2 persons, keyed by group size.
@@ -1172,6 +1201,7 @@
        per person (as shown today, plus the group price per night) times the
        group, plus guiding for the whole group. 0 when there is no price. */
     function betaalBedragen(aankomst, nachten) {
+      if (!magBetalen(personen)) return { perPersoon: 0, totaal: 0 };
       var basis = heleEuros(prijsPerPersoon(aankomst, nachten));
       if (!basis) return { perPersoon: 0, totaal: 0 };
       var perPersoon = basis + groepsKortingPerNacht(personen) * nachten;
@@ -1279,6 +1309,87 @@
       toeslagUitleg.className = "falun-cal__note falun-cal__note--inline";
       toeslagUitleg.textContent = T.pricierNote;
       box.appendChild(toeslagUitleg);
+    }
+
+    /* Optional ("duurKnoppen" in the price file, e.g. wellness): once the
+       arrival day is picked, one button per trip length (in days) with its
+       price per person. A button sets the departure day. A length that would
+       run past the season or into a booked period is switched off. Longer
+       stays are still picked by clicking the departure day; there is no
+       maximum. Built once and updated in place (tekenDuren), so keyboard
+       focus stays on the button being used. */
+    var duurLijst = (Array.isArray(data.duurKnoppen) ? data.duurKnoppen : []).filter(function (dagen, i, lijst) {
+      return typeof dagen === "number" && dagen % 1 === 0 && dagen - 1 >= minNachten && lijst.indexOf(dagen) === i;
+    });
+    var duurBox = null;
+    var duurHint = null;
+    if (duurLijst.length) {
+      var duurId = "calendarDurations" + (++duurTeller);
+      duurBox = document.createElement("div");
+      duurBox.className = "falun-cal__block calendar__durations";
+      duurBox.hidden = true;
+      duurBox.innerHTML =
+        '<p class="falun-cal__legend" id="' + duurId + '">' + T.durationsLegend + '</p>' +
+        '<div class="calendar__duration-list" role="group" aria-labelledby="' + duurId + '">' +
+          duurLijst.map(function (dagen) {
+            return '<button type="button" class="calendar__duration" data-dagen="' + dagen + '" aria-pressed="false">' +
+              '<span class="calendar__duration-days">' + T.durationDays(dagen) + '</span>' +
+              '<span class="calendar__duration-price"></span>' +
+            '</button>';
+          }).join("") +
+        '</div>' +
+        '<p class="falun-cal__note falun-cal__note--inline calendar__duration-hint">' + T.durationsLonger + '</p>';
+      box.appendChild(duurBox);
+      duurHint = duurBox.querySelector(".calendar__duration-hint");
+
+      Array.prototype.forEach.call(duurBox.querySelectorAll(".calendar__duration"), function (knop) {
+        knop.addEventListener("click", function () {
+          var dagen = parseInt(knop.getAttribute("data-dagen"), 10);
+          if (!keuzeVan || !duurKan(dagen)) return;
+          keuzeTot = vertrekNa(dagen);
+          tekenRaster();
+          toonBalk();
+        });
+      });
+    }
+    // Departure day for a stay of this many days from the arrival day.
+    function vertrekNa(dagen) {
+      return new Date(keuzeVan.getFullYear(), keuzeVan.getMonth(), keuzeVan.getDate() + dagen - 1);
+    }
+    // Same rules as picking the departure day in the grid (kiesDag).
+    function duurKan(dagen) {
+      var tot = vertrekNa(dagen);
+      return dagen - 1 >= minNachten && tot <= seizoenTot && !bezetTussen(keuzeVan, tot);
+    }
+    // Price per person for that length, as the bar would show it.
+    // No price for a group size that cannot pay online (betaalPersonen):
+    // the listed prices are for that group only, the bar shows none either.
+    function duurPrijs(dagen) {
+      if (afrekenen && !magBetalen(personen)) return 0;
+      var nachten = dagen - 1;
+      var basis = heleEuros(prijsPerPersoon(keuzeVan, nachten));
+      if (!basis) return 0;
+      var perPersoon = afrekenen ? basis + groepsKortingPerNacht(personen) * nachten : basis;
+      return perPersoon > 0 ? perPersoon : 0;
+    }
+    function tekenDuren() {
+      if (!duurBox) return;
+      duurBox.hidden = !keuzeVan;
+      if (!keuzeVan) return;
+      var gekozen = keuzeTot ? reisDagen() : 0;
+      Array.prototype.forEach.call(duurBox.querySelectorAll(".calendar__duration"), function (knop) {
+        var dagen = parseInt(knop.getAttribute("data-dagen"), 10);
+        var prijs = duurPrijs(dagen);
+        var prijsTekst = prijs ? "€" + prijs.toLocaleString("nl-NL") : "";
+        knop.querySelector(".calendar__duration-price").textContent = prijsTekst ? prijsTekst + " p.p." : "";
+        knop.setAttribute("aria-label", T.durationAria(dagen, prijsTekst));
+        knop.disabled = !duurKan(dagen);
+        knop.setAttribute("aria-pressed", gekozen === dagen ? "true" : "false");
+        knop.classList.toggle("is-actief", gekozen === dagen);
+      });
+      // Clicking a day after a complete period starts a new arrival, so the
+      // tip about picking the departure day only shows while choosing it.
+      if (duurHint) duurHint.hidden = Boolean(keuzeTot);
     }
 
     /* Persons stepper (only when paying online): minus, a number field and
@@ -1429,6 +1540,7 @@
         begeleidingDagen = gekozenBegeleiding();
       }
       tekenPersonen();
+      tekenDuren();
       tekenBegeleiding();
       tekenBalk();
       koppelReset();
@@ -1476,6 +1588,11 @@
       var nachten = dagenTussen(keuzeVan, keuzeTot);
       var totaal = heleEuros(prijsPerPersoon(keuzeVan, nachten));
       var prijsRegel = "";
+      // A group size that cannot pay online (betaalPersonen): say why the
+      // request button shows instead of the total.
+      var betaalNotitie = afrekenen && !magBetalen(personen)
+        ? '<span class="calendar__chosen-nights calendar__chosen-note">' + T.payPersonsNote(betaalMin, betaalMax) + '</span>'
+        : "";
       if (afrekenen) {
         // Paying online: per person and total for the chosen group, the
         // same amounts the payment page charges.
@@ -1501,6 +1618,7 @@
           '<span class="calendar__chosen-nights">' + T.nightsLabel(nachten) + '</span>' +
           (prijsRegel ? '<span class="calendar__chosen-price">' + prijsRegel + '</span>' : '') +
           toeslagRegel +
+          betaalNotitie +
         '</div>' +
         '<div class="calendar__bar-actions">' +
           '<button type="button" class="calendar__reset">' + T.reset + '</button>' +
@@ -1717,14 +1835,22 @@
 
   /* ------------------------------------------------------------------
      Collage bij het persoonlijke verhaal: elke foto schuift tijdens het
-     scrollen een klein stukje mee in een eigen tempo. De afstand staat per
-     foto in data-speed (in pixels over de hele doorloop). Er wordt alleen een
+     scrollen een klein stukje mee in een eigen tempo. Er wordt alleen een
      transform gezet, en alleen zolang de collage in beeld is.
+     data-speed in the HTML only sets the relative pace of each photo; the
+     fastest photo moves at most COLLAGE_TRAVEL px over the whole pass (on a
+     wide screen), so the motion can never pull the composition apart or
+     push a photo into the caption, whatever data-speed says.
      ------------------------------------------------------------------ */
   var collage = document.querySelector("[data-collage]");
+  var COLLAGE_TRAVEL = 40;
 
   if (collage && !reducedMotion.matches) {
     var collageItems = collage.querySelectorAll(".collage__item");
+    var collageMaxSpeed = 0;
+    collageItems.forEach(function (item) {
+      collageMaxSpeed = Math.max(collageMaxSpeed, Math.abs(parseFloat(item.dataset.speed) || 0));
+    });
 
     var syncCollage = function () {
       var rect = collage.getBoundingClientRect();
@@ -1741,14 +1867,14 @@
       // groter, dus daar wordt de afstand teruggeschroefd.
       var scale = Math.max(0.45, Math.min(1, window.innerWidth / 1100));
 
-      // De onderste twee foto's lopen sneller dan de grote bovenste (zie
-      // data-speed in de HTML): daardoor kruipen ze tijdens het scrollen
-      // naar elkaar toe. De afstand is bewust groot — dat is het effect.
+      // The two small photos move a little faster than the large one (see
+      // data-speed in the HTML), so they creep over it while scrolling.
       collageItems.forEach(function (item) {
         var speed = parseFloat(item.dataset.speed) || 0;
+        var travel = collageMaxSpeed ? (speed / collageMaxSpeed) * COLLAGE_TRAVEL : 0;
         item.style.setProperty(
           "--collage-shift",
-          (progress * speed * scale).toFixed(1) + "px"
+          (progress * travel * scale).toFixed(1) + "px"
         );
       });
     };

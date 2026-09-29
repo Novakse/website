@@ -336,6 +336,18 @@
       for (var i = 0; i < duren.length; i++) if (duren[i].dagen === dagen) return duren[i];
       return null;
     }
+    /* A stay longer than the longest listed length (picked in the calendar
+       on the trip page), labelled like the listed ones in the page's
+       language: the number in the first label is swapped ("4 dagen" becomes
+       "9 dagen"). It has no price. null for any other length. */
+    function langereDuur(dagen) {
+      var langste = 0;
+      duren.forEach(function (regel) { if (regel.dagen > langste) langste = regel.dagen; });
+      if (!(dagen > langste && dagen <= 99)) return null;
+      var voorbeeld = String(duren[0].label);
+      var label = /\d+/.test(voorbeeld) ? voorbeeld.replace(/\d+/, String(dagen)) : dagen + " " + voorbeeld;
+      return { dagen: dagen, label: label, prijs: null };
+    }
     function prijsPerPersoon(bedrag) {
       return tk.prijsPerPersoon
         ? vul(tk.prijsPerPersoon, { bedrag: Math.round(bedrag).toLocaleString("nl-NL") })
@@ -349,18 +361,25 @@
       }
     }
 
-    /* The start values come from the web address. A trip length only counts
-       when it is one of the listed ones; without one, arrival and departure
-       dates may give it (days = nights + 1). The date is never before today. */
+    /* The start values come from the web address. A trip length counts when
+       it is one of the listed ones or longer than all of them; without one,
+       arrival and departure dates may give it (days = nights + 1). The date
+       is never before today. */
     var nu = new Date();
     var vandaag = new Date(nu.getFullYear(), nu.getMonth(), nu.getDate());
     var duur = null;
     if (keuze.dagen === null || keuze.dagen === undefined || keuze.dagen === "") {
       var uitVan = alsDatum(keuze.van);
       var uitTot = alsDatum(keuze.tot);
-      if (uitVan && uitTot) duur = duurMet(Math.round((uitTot.getTime() - uitVan.getTime()) / 86400000) + 1);
+      if (uitVan && uitTot && uitTot > uitVan) {
+        var uitDagen = Math.round((uitTot.getTime() - uitVan.getTime()) / 86400000) + 1;
+        // A length that is not in the price list (a longer stay picked in
+        // the calendar on the trip page) still goes along as "N dagen",
+        // without a price: none of the radio buttons is checked for it.
+        duur = duurMet(uitDagen) || langereDuur(uitDagen);
+      }
     } else if (/^[1-9]\d?$/.test(String(keuze.dagen))) {
-      duur = duurMet(parseInt(keuze.dagen, 10));
+      duur = duurMet(parseInt(keuze.dagen, 10)) || langereDuur(parseInt(keuze.dagen, 10));
     }
     var datum = alsDatum(keuze.van);
     if (datum && datum < vandaag) datum = null;
@@ -414,7 +433,8 @@
       var delen = [];
       if (duur) {
         regels.push(vul(tk.regelDuur, { duur: duur.label }));
-        delen.push(duur.label, prijsPerPersoon(duur.prijs));
+        delen.push(duur.label);
+        if (typeof duur.prijs === "number") delen.push(prijsPerPersoon(duur.prijs));
       }
       if (datum) {
         regels.push(vul(tk.regelDatum, { datum: leesbareDatum(datum) }));

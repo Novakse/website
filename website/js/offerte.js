@@ -196,6 +196,17 @@
     return lijst;
   }
 
+  // First step marked "verplicht" that has no answer yet. A choice step only
+  // moves on after a choice, so normally this is null; it catches answers that
+  // were saved before the step existed or a jump straight to a later step.
+  function ontbrekendeStap() {
+    var lijst = route();
+    for (var i = 0; i < lijst.length; i++) {
+      if (lijst[i].verplicht && !antwoorden[lijst[i].sleutel]) return lijst[i];
+    }
+    return null;
+  }
+
   function stapVan(sleutel) {
     var lijst = route();
     for (var i = 0; i < lijst.length; i++) {
@@ -1147,6 +1158,14 @@
       };
       bewaar();
       verversDocument();
+
+      // A required question without an answer: send the visitor there first.
+      var ontbreekt = ontbrekendeStap();
+      if (ontbreekt) {
+        ga(ontbreekt.sleutel, -1);
+        return;
+      }
+
       verstuurAanvraag(verstuur, melding, lok.value);
     });
 

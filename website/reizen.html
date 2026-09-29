@@ -59,6 +59,29 @@
       display: flex;
       width: fit-content;
     }
+
+    /* The page title holds one very long word ("natuurijsbestemmingen",
+       about 11.15 times the font size wide). On phones the size shrinks just
+       enough for that word to fit between the side margins; the other rules
+       make sure it can never widen the hero or the page. */
+    .page-hero__title {
+      font-size: min(clamp(2.1rem, 6vw, 4rem), calc((100vw - 2 * var(--pad)) / 11.4));
+      overflow-wrap: break-word;
+    }
+    .page-hero__inner { min-width: 0; }
+
+    /* Heading above the trip map ("Onze schaatsreizen"). */
+    .trips-head { background: var(--paper); padding-block: 0.5rem 0.25rem; }
+    .trips-head .h-section { margin-top: 0; text-wrap: balance; }
+    .trips-head .lede-text { text-wrap: pretty; }
+
+    /* A trip's text is a few short paragraphs. */
+    .trip-map__text p + p { margin-top: 0.5em; }
+
+    /* How it works: the short tagline under the heading, and a little less
+       room between the paragraphs than between heading and text. */
+    .why__body .why__sub { margin-top: 0.9rem; }
+    .why__body .why__text + .why__text { margin-top: 0.75rem; }
   </style>
   <script type="application/ld+json">
   {
@@ -145,8 +168,8 @@
       <picture><source type="image/avif" srcset="images/hero-baan-zonsondergang-480.avif 480w, images/hero-baan-zonsondergang-800.avif 800w, images/hero-baan-zonsondergang-1200.avif 1200w, images/hero-baan-zonsondergang-1600.avif 1600w, images/hero-baan-zonsondergang.avif 1920w" sizes="100vw" /><source type="image/webp" srcset="images/hero-baan-zonsondergang-480.webp 480w, images/hero-baan-zonsondergang-800.webp 800w, images/hero-baan-zonsondergang-1200.webp 1200w, images/hero-baan-zonsondergang-1600.webp 1600w, images/hero-baan-zonsondergang.webp 1920w" sizes="100vw" /><img class="page-hero__bg" src="images/hero-baan-zonsondergang.jpg" alt="Geveegde schaatsbaan over een bevroren meer bij zonsondergang" fetchpriority="high" srcset="images/hero-baan-zonsondergang-480.jpg 480w, images/hero-baan-zonsondergang-800.jpg 800w, images/hero-baan-zonsondergang-1200.jpg 1200w, images/hero-baan-zonsondergang-1600.jpg 1600w, images/hero-baan-zonsondergang.jpg 1920w" sizes="100vw" /></picture>
       <div class="wrap page-hero__inner">
         <span class="eyebrow eyebrow--light"><span class="dot"></span>Onze reizen</span>
-        <h1 class="page-hero__title">Onze schaatsreizen op natuurijs</h1>
-        <p class="page-hero__lede">Zeven bestemmingen, één seizoen - de meren en zeeën van natuurijs in Scandinavië: Zweden en Finland, plus de Weissensee in Oostenrijk.</p>
+        <h1 class="page-hero__title">Ontdek de mooiste natuurijsbestemmingen van Scandinavië</h1>
+        <p class="page-hero__lede">Schaats op prachtige natuurijsbanen in Zweden en Finland, of ontdek de Weissensee in Oostenrijk. Bij Novakse vind je bijzondere schaatsreizen naar plekken waar natuur, rust en schaatsplezier samenkomen.</p>
       </div>
     </section>
 
@@ -210,7 +233,7 @@
             <span>Bekijk je reis</span>
           </button>
 
-          <p class="trip-search__note">Je komt op de pagina van je bestemming, met je keuzes al ingevuld.</p>
+          <p class="trip-search__note">Je komt daarna op de pagina van je gekozen bestemming. Je keuzes zijn daar al ingevuld.</p>
         </form>
       </div>
     </div>
@@ -224,14 +247,23 @@
     <!-- 2. Inleiding -->
     <section class="intro">
       <div class="wrap intro__grid">
-        <p class="intro__lead" data-reveal-words>Bij Novakse schaats je op natuurijs door schitterende winterlandschappen. Met comfortabele accommodaties en een reis die persoonlijk voor je geregeld is, ervaar je de combinatie van avontuur en gezelligheid.</p>
+        <p class="intro__lead" data-reveal-words>Wij regelen de reis, jij geniet van het natuurijs.</p>
         <div class="intro__aside reveal">
-          <p>Alle reizen zijn standaard zelfstandig, zonder begeleiding op het ijs. Bij Orsa en Falun kun je begeleiding op het ijs bijboeken. Bij de dagtocht vanuit Sälen gaan we samen het ijs op, maar Novakse is niet verantwoordelijk op het ijs. Joey regelt de reis vooraf, en verder deel je de dagen zelf in. Begeleide groepsreizen worden nog gepland.</p>
+          <p>Of je nu een paar dagen wilt schaatsen of er een complete wintervakantie van wilt maken: we zorgen dat je reis goed geregeld is. Eenmaal ter plaatse bepaal je zelf hoe je je dagen invult.</p>
           <a class="link-arrow" href="schaatsreizen-zweden.html">Alle schaatsreizen naar Zweden</a>
           <a class="link-arrow" href="reisinformatie.html">Praktische reisinformatie</a>
         </div>
       </div>
     </section>
+
+    <!-- 3a. Heading and short intro for the trips. Kept outside the trip map,
+         so the map itself still fills one screen below the header. -->
+    <div class="trips-head">
+      <div class="wrap">
+        <h2 class="h-section">Onze schaatsreizen</h2>
+        <p class="lede-text">Van Zweedse meren tussen de besneeuwde bossen tot het indrukwekkende ijs van de Botnische Golf en de Weissensee tussen de bergen. Iedere bestemming heeft zijn eigen sfeer en mogelijkheden.</p>
+      </div>
+    </div>
 
     <!-- 3. De reizen: one swept ice-rink line with a stop per trip, and one
          horizontal scroll-snap row with every trip side by side (the next
@@ -323,17 +355,21 @@
         <div class="trip-map__panels" id="tripPanels">
           <article class="trip-map__panel" id="orsa" aria-labelledby="orsa-title">
             <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/orsa-zwart-ijs-baan-480.avif 480w, images/orsa-zwart-ijs-baan-800.avif 800w, images/orsa-zwart-ijs-baan.avif 1000w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/orsa-zwart-ijs-baan-480.webp 480w, images/orsa-zwart-ijs-baan-800.webp 800w, images/orsa-zwart-ijs-baan.webp 1000w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/orsa-zwart-ijs-baan.jpg" alt="Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer" srcset="images/orsa-zwart-ijs-baan-480.jpg 480w, images/orsa-zwart-ijs-baan-800.jpg 800w, images/orsa-zwart-ijs-baan.jpg 1000w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/orsa-cabins-winter-480.avif 480w, images/orsa-cabins-winter-800.avif 800w, images/orsa-cabins-winter-1200.avif 1200w, images/orsa-cabins-winter.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/orsa-cabins-winter-480.webp 480w, images/orsa-cabins-winter-800.webp 800w, images/orsa-cabins-winter-1200.webp 1200w, images/orsa-cabins-winter.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/orsa-cabins-winter.jpg" alt="Houten huisjes in de sneeuw bij het bevroren Orsameer in Dalarna" loading="lazy" srcset="images/orsa-cabins-winter-480.jpg 480w, images/orsa-cabins-winter-800.jpg 800w, images/orsa-cabins-winter-1200.jpg 1200w, images/orsa-cabins-winter.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/orsa-baan-mora-480.avif 480w, images/orsa-baan-mora-800.avif 800w, images/orsa-baan-mora.avif 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/orsa-baan-mora-480.webp 480w, images/orsa-baan-mora-800.webp 800w, images/orsa-baan-mora.webp 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/orsa-baan-mora.jpg" alt="Natuurijsbaan bij Orsa, Zweden" loading="lazy" srcset="images/orsa-baan-mora-480.jpg 480w, images/orsa-baan-mora-800.jpg 800w, images/orsa-baan-mora.jpg 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/orsa-zwart-ijs-baan-480.avif 480w, images/orsa-zwart-ijs-baan-800.avif 800w, images/orsa-zwart-ijs-baan.avif 1000w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/orsa-zwart-ijs-baan-480.webp 480w, images/orsa-zwart-ijs-baan-800.webp 800w, images/orsa-zwart-ijs-baan.webp 1000w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/orsa-zwart-ijs-baan.jpg" alt="Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer" srcset="images/orsa-zwart-ijs-baan-480.jpg 480w, images/orsa-zwart-ijs-baan-800.jpg 800w, images/orsa-zwart-ijs-baan.jpg 1000w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/orsa-cabins-winter-480.avif 480w, images/orsa-cabins-winter-800.avif 800w, images/orsa-cabins-winter-1200.avif 1200w, images/orsa-cabins-winter.avif 1600w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/orsa-cabins-winter-480.webp 480w, images/orsa-cabins-winter-800.webp 800w, images/orsa-cabins-winter-1200.webp 1200w, images/orsa-cabins-winter.webp 1600w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/orsa-cabins-winter.jpg" alt="Houten huisjes in de sneeuw bij het bevroren Orsameer in Dalarna" loading="lazy" srcset="images/orsa-cabins-winter-480.jpg 480w, images/orsa-cabins-winter-800.jpg 800w, images/orsa-cabins-winter-1200.jpg 1200w, images/orsa-cabins-winter.jpg 1600w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/orsa-baan-mora-480.avif 480w, images/orsa-baan-mora-800.avif 800w, images/orsa-baan-mora.avif 1000w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/orsa-baan-mora-480.webp 480w, images/orsa-baan-mora-800.webp 800w, images/orsa-baan-mora.webp 1000w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/orsa-baan-mora.jpg" alt="Natuurijsbaan bij Orsa, Zweden" loading="lazy" srcset="images/orsa-baan-mora-480.jpg 480w, images/orsa-baan-mora-800.jpg 800w, images/orsa-baan-mora.jpg 1000w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
             </div>
             <div class="trip-map__body">
               <span class="trip-map__region">Orsa, Zweden</span>
-              <h2 class="trip-map__title" id="orsa-title">Orsa</h2>
-              <p class="trip-map__text">Zelfstandige schaatsreis op het Orsameer, met een geveegde baan van zo'n 15 kilometer en verblijf in eigen huisjes vlak bij het ijs. Vlucht, verblijf en vervoer ter plaatse zitten erbij in. Beperkte beschikbaarheid.</p>
+              <h3 class="trip-map__title" id="orsa-title">Orsa</h3>
+              <div class="trip-map__text">
+                <p>Schaats op het prachtige Orsameer in Dalarna. Bij goede omstandigheden ligt hier een geveegde baan van ongeveer 15 kilometer.</p>
+                <p>Je verblijft in je eigen huisje vlak bij het meer. Vlucht, verblijf en vervoer ter plaatse zijn inbegrepen.</p>
+                <p>Je schaatst zelfstandig, maar bij deze reis kun je begeleiding op het ijs bijboeken.</p>
+              </div>
               <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs bij te boeken</dd></div>
-                <div><dt>Verblijf</dt><dd>Eigen huisjes bij het meer</dd></div>
+                <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs mogelijk</dd></div>
+                <div><dt>Verblijf</dt><dd>Eigen huisje bij het meer</dd></div>
                 <div><dt>Data</dt><dd>Zelf te bepalen</dd></div>
                 <div><dt>Prijs</dt><dd>Vanaf €995</dd></div>
               </dl>
@@ -346,17 +382,20 @@
 
           <article class="trip-map__panel" id="finland" aria-labelledby="finland-title">
             <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/finland-schaatsbaan-bocht-480.avif 480w, images/finland-schaatsbaan-bocht-800.avif 800w, images/finland-schaatsbaan-bocht-1200.avif 1200w, images/finland-schaatsbaan-bocht.avif 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/finland-schaatsbaan-bocht-480.webp 480w, images/finland-schaatsbaan-bocht-800.webp 800w, images/finland-schaatsbaan-bocht-1200.webp 1200w, images/finland-schaatsbaan-bocht.webp 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/finland-schaatsbaan-bocht.jpg" alt="Geveegde schaatsbaan die langs de beboste oever van het Saimaameer buigt, met twee schaatsers" loading="lazy" srcset="images/finland-schaatsbaan-bocht-480.jpg 480w, images/finland-schaatsbaan-bocht-800.jpg 800w, images/finland-schaatsbaan-bocht-1200.jpg 1200w, images/finland-schaatsbaan-bocht.jpg 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/finland-schaatser-bos-480.avif 480w, images/finland-schaatser-bos-800.avif 800w, images/finland-schaatser-bos.avif 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/finland-schaatser-bos-480.webp 480w, images/finland-schaatser-bos-800.webp 800w, images/finland-schaatser-bos.webp 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/finland-schaatser-bos.jpg" alt="Schaatser op de baan langs het besneeuwde dennenbos bij Punkaharju" loading="lazy" srcset="images/finland-schaatser-bos-480.jpg 480w, images/finland-schaatser-bos-800.jpg 800w, images/finland-schaatser-bos.jpg 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/finland-huisjes-winter-480.avif 480w, images/finland-huisjes-winter-800.avif 800w, images/finland-huisjes-winter-1200.avif 1200w, images/finland-huisjes-winter.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/finland-huisjes-winter-480.webp 480w, images/finland-huisjes-winter-800.webp 800w, images/finland-huisjes-winter-1200.webp 1200w, images/finland-huisjes-winter.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/finland-huisjes-winter.jpg" alt="Houten huisjes in de sneeuw tussen de dennen bij Punkaharju" loading="lazy" srcset="images/finland-huisjes-winter-480.jpg 480w, images/finland-huisjes-winter-800.jpg 800w, images/finland-huisjes-winter-1200.jpg 1200w, images/finland-huisjes-winter.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/finland-schaatsbaan-bocht-480.avif 480w, images/finland-schaatsbaan-bocht-800.avif 800w, images/finland-schaatsbaan-bocht-1200.avif 1200w, images/finland-schaatsbaan-bocht.avif 1600w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/finland-schaatsbaan-bocht-480.webp 480w, images/finland-schaatsbaan-bocht-800.webp 800w, images/finland-schaatsbaan-bocht-1200.webp 1200w, images/finland-schaatsbaan-bocht.webp 1600w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/finland-schaatsbaan-bocht.jpg" alt="Geveegde schaatsbaan die langs de beboste oever van het Saimaameer buigt, met twee schaatsers" loading="lazy" srcset="images/finland-schaatsbaan-bocht-480.jpg 480w, images/finland-schaatsbaan-bocht-800.jpg 800w, images/finland-schaatsbaan-bocht-1200.jpg 1200w, images/finland-schaatsbaan-bocht.jpg 1600w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/finland-schaatser-bos-480.avif 480w, images/finland-schaatser-bos-800.avif 800w, images/finland-schaatser-bos.avif 1000w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/finland-schaatser-bos-480.webp 480w, images/finland-schaatser-bos-800.webp 800w, images/finland-schaatser-bos.webp 1000w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/finland-schaatser-bos.jpg" alt="Schaatser op de baan langs het besneeuwde dennenbos bij Punkaharju" loading="lazy" srcset="images/finland-schaatser-bos-480.jpg 480w, images/finland-schaatser-bos-800.jpg 800w, images/finland-schaatser-bos.jpg 1000w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/finland-huisjes-winter-480.avif 480w, images/finland-huisjes-winter-800.avif 800w, images/finland-huisjes-winter-1200.avif 1200w, images/finland-huisjes-winter.avif 1600w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/finland-huisjes-winter-480.webp 480w, images/finland-huisjes-winter-800.webp 800w, images/finland-huisjes-winter-1200.webp 1200w, images/finland-huisjes-winter.webp 1600w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/finland-huisjes-winter.jpg" alt="Houten huisjes in de sneeuw tussen de dennen bij Punkaharju" loading="lazy" srcset="images/finland-huisjes-winter-480.jpg 480w, images/finland-huisjes-winter-800.jpg 800w, images/finland-huisjes-winter-1200.jpg 1200w, images/finland-huisjes-winter.jpg 1600w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
             </div>
             <div class="trip-map__body">
               <span class="trip-map__region">Punkaharju, Finland</span>
-              <h2 class="trip-map__title" id="finland-title">Punkaharju</h2>
-              <p class="trip-map__text">Zelfstandige schaatsreis op het Saimaameer bij Punkaharju, in het nationaal park. Je gaat zonder begeleiding op pad; het verblijf is in eigen huisjes met sauna.</p>
+              <h3 class="trip-map__title" id="finland-title">Punkaharju</h3>
+              <div class="trip-map__text">
+                <p>Schaats door het prachtige Finse merengebied bij Punkaharju. De natuurijsbaan op het Saimaameer loopt door een indrukwekkend winterlandschap, met bossen en bevroren water om je heen.</p>
+                <p>Je verblijft in een eigen huisje met sauna. Je gaat zelfstandig op pad en bepaalt zelf wanneer en hoe lang je het ijs op gaat.</p>
+              </div>
               <dl class="trip-map__facts">
                 <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
-                <div><dt>Verblijf</dt><dd>Eigen huisjes met sauna</dd></div>
+                <div><dt>Verblijf</dt><dd>Eigen huisje met sauna</dd></div>
                 <div><dt>Prijs</dt><dd>Vanaf €895</dd></div>
               </dl>
               <div class="trip-map__actions">
@@ -368,18 +407,23 @@
 
           <article class="trip-map__panel" id="falun" aria-labelledby="falun-title">
             <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/falun-skaters-swept-track-sunset-480.avif 480w, images/falun-skaters-swept-track-sunset-800.avif 800w, images/falun-skaters-swept-track-sunset-1200.avif 1200w, images/falun-skaters-swept-track-sunset.avif 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/falun-skaters-swept-track-sunset-480.webp 480w, images/falun-skaters-swept-track-sunset-800.webp 800w, images/falun-skaters-swept-track-sunset-1200.webp 1200w, images/falun-skaters-swept-track-sunset.webp 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/falun-skaters-swept-track-sunset-1200.jpg" alt="Twee schaatsers op een geveegde baan bij Falun tijdens zonsondergang" loading="lazy" srcset="images/falun-skaters-swept-track-sunset-480.jpg 480w, images/falun-skaters-swept-track-sunset-800.jpg 800w, images/falun-skaters-swept-track-sunset-1200.jpg 1200w, images/falun-skaters-swept-track-sunset.jpg 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/falun-accommodatie-480.avif 480w, images/falun-accommodatie-800.avif 800w, images/falun-accommodatie.avif 900w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/falun-accommodatie-480.webp 480w, images/falun-accommodatie-800.webp 800w, images/falun-accommodatie.webp 900w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/falun-accommodatie.jpg" alt="Accommodatie bij Falun" loading="lazy" srcset="images/falun-accommodatie-480.jpg 480w, images/falun-accommodatie-800.jpg 800w, images/falun-accommodatie.jpg 900w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/falun-skaters-sunny-lake-480.avif 480w, images/falun-skaters-sunny-lake-800.avif 800w, images/falun-skaters-sunny-lake.avif 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/falun-skaters-sunny-lake-480.webp 480w, images/falun-skaters-sunny-lake-800.webp 800w, images/falun-skaters-sunny-lake.webp 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/falun-skaters-sunny-lake.jpg" alt="Groepje schaatsers op het bevroren meer bij Falun onder een blauwe lucht" loading="lazy" srcset="images/falun-skaters-sunny-lake-480.jpg 480w, images/falun-skaters-sunny-lake-800.jpg 800w, images/falun-skaters-sunny-lake.jpg 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/falun-skaters-swept-track-sunset-480.avif 480w, images/falun-skaters-swept-track-sunset-800.avif 800w, images/falun-skaters-swept-track-sunset-1200.avif 1200w, images/falun-skaters-swept-track-sunset.avif 1600w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/falun-skaters-swept-track-sunset-480.webp 480w, images/falun-skaters-swept-track-sunset-800.webp 800w, images/falun-skaters-swept-track-sunset-1200.webp 1200w, images/falun-skaters-swept-track-sunset.webp 1600w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/falun-skaters-swept-track-sunset-1200.jpg" alt="Twee schaatsers op een geveegde baan bij Falun tijdens zonsondergang" loading="lazy" srcset="images/falun-skaters-swept-track-sunset-480.jpg 480w, images/falun-skaters-swept-track-sunset-800.jpg 800w, images/falun-skaters-swept-track-sunset-1200.jpg 1200w, images/falun-skaters-swept-track-sunset.jpg 1600w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/falun-accommodatie-480.avif 480w, images/falun-accommodatie-800.avif 800w, images/falun-accommodatie.avif 900w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/falun-accommodatie-480.webp 480w, images/falun-accommodatie-800.webp 800w, images/falun-accommodatie.webp 900w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/falun-accommodatie.jpg" alt="Accommodatie bij Falun" loading="lazy" srcset="images/falun-accommodatie-480.jpg 480w, images/falun-accommodatie-800.jpg 800w, images/falun-accommodatie.jpg 900w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/falun-skaters-sunny-lake-480.avif 480w, images/falun-skaters-sunny-lake-800.avif 800w, images/falun-skaters-sunny-lake.avif 1000w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/falun-skaters-sunny-lake-480.webp 480w, images/falun-skaters-sunny-lake-800.webp 800w, images/falun-skaters-sunny-lake.webp 1000w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/falun-skaters-sunny-lake.jpg" alt="Groepje schaatsers op het bevroren meer bij Falun onder een blauwe lucht" loading="lazy" srcset="images/falun-skaters-sunny-lake-480.jpg 480w, images/falun-skaters-sunny-lake-800.jpg 800w, images/falun-skaters-sunny-lake.jpg 1000w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
             </div>
             <div class="trip-map__body">
               <span class="trip-map__region">Falun, Zweden</span>
-              <h2 class="trip-map__title" id="falun-title">Falun</h2>
-              <p class="trip-map__text">Pakketreis op historisch ijs, met de karakteristieke rode mijngebouwen van Falun op de achtergrond. Vlucht, huurauto en verblijf zitten erbij in.</p>
+              <h3 class="trip-map__title" id="falun-title">Falun</h3>
+              <div class="trip-map__text">
+                <p>Een schaatsreis naar het historische Falun, midden in het Zweedse winterlandschap.</p>
+                <p>Je gaat met je eigen huurauto op pad en schaatst op natuurijs. Op de achtergrond zie je de karakteristieke rode gebouwen van Falun.</p>
+                <p>Vlucht, huurauto en verblijf zijn bij de reis inbegrepen.</p>
+                <p>Ook hier kun je begeleiding op het ijs bijboeken.</p>
+              </div>
               <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs bij te boeken</dd></div>
+                <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs mogelijk</dd></div>
                 <div><dt>Reisduur</dt><dd>Vanaf 4 dagen</dd></div>
-                <div><dt>Verblijf</dt><dd>Volgt binnenkort</dd></div>
+                <div><dt>Verblijf</dt><dd>Binnenkort beschikbaar</dd></div>
                 <div><dt>Data</dt><dd>Zelf te bepalen</dd></div>
                 <div><dt>Prijs</dt><dd>Vanaf €995</dd></div>
               </dl>
@@ -392,16 +436,20 @@
 
           <article class="trip-map__panel" id="weissensee" aria-labelledby="weissensee-title">
             <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/weissensee-schaatsers-480.avif 480w, images/weissensee-schaatsers-800.avif 800w, images/weissensee-schaatsers.avif 999w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/weissensee-schaatsers-480.webp 480w, images/weissensee-schaatsers-800.webp 800w, images/weissensee-schaatsers.webp 999w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/weissensee-schaatsers.jpg" alt="Schaatsers op de Weissensee tussen de bergen" loading="lazy" srcset="images/weissensee-schaatsers-480.jpg 480w, images/weissensee-schaatsers-800.jpg 800w, images/weissensee-schaatsers.jpg 999w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/weissensee-baan-480.avif 480w, images/weissensee-baan-800.avif 800w, images/weissensee-baan.avif 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/weissensee-baan-480.webp 480w, images/weissensee-baan-800.webp 800w, images/weissensee-baan.webp 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/weissensee-baan.jpg" alt="Geveegde natuurijsbaan op de Weissensee" loading="lazy" srcset="images/weissensee-baan-480.jpg 480w, images/weissensee-baan-800.jpg 800w, images/weissensee-baan.jpg 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/weissensee-schaatsers-480.avif 480w, images/weissensee-schaatsers-800.avif 800w, images/weissensee-schaatsers.avif 999w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/weissensee-schaatsers-480.webp 480w, images/weissensee-schaatsers-800.webp 800w, images/weissensee-schaatsers.webp 999w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/weissensee-schaatsers.jpg" alt="Schaatsers op de Weissensee tussen de bergen" loading="lazy" srcset="images/weissensee-schaatsers-480.jpg 480w, images/weissensee-schaatsers-800.jpg 800w, images/weissensee-schaatsers.jpg 999w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/weissensee-baan-480.avif 480w, images/weissensee-baan-800.avif 800w, images/weissensee-baan.avif 1200w" sizes="(min-width: 80rem) 12rem, (min-width: 64rem) calc(17vw - 2.25rem), (min-width: 48rem) 6rem, 4rem" /><source type="image/webp" srcset="images/weissensee-baan-480.webp 480w, images/weissensee-baan-800.webp 800w, images/weissensee-baan.webp 1200w" sizes="(min-width: 80rem) 12rem, (min-width: 64rem) calc(17vw - 2.25rem), (min-width: 48rem) 6rem, 4rem" /><img src="images/weissensee-baan.jpg" alt="Geveegde natuurijsbaan op de Weissensee" loading="lazy" srcset="images/weissensee-baan-480.jpg 480w, images/weissensee-baan-800.jpg 800w, images/weissensee-baan.jpg 1200w" sizes="(min-width: 80rem) 12rem, (min-width: 64rem) calc(17vw - 2.25rem), (min-width: 48rem) 6rem, 4rem" /></picture>
             </div>
             <div class="trip-map__body">
               <span class="trip-map__region">Weissensee, Oostenrijk</span>
-              <h2 class="trip-map__title" id="weissensee-title">Weissensee</h2>
-              <p class="trip-map__text">Zelfstandig schaatsen op een bergmeer van 6,5 km², dat bij gunstige omstandigheden verandert in Europa's grootste geprepareerde natuurijsoppervlakte. Bekend van de Alternatieve Elfstedentocht.</p>
+              <h3 class="trip-map__title" id="weissensee-title">Weissensee</h3>
+              <div class="trip-map__text">
+                <p>Schaats tussen de bergen op de Weissensee in Oostenrijk, op ongeveer 930 meter hoogte.</p>
+                <p>Het meer heeft een oppervlakte van ongeveer 6,5 km². Bij gunstige omstandigheden ontstaat hier een enorme geprepareerde natuurijsbaan. De Weissensee is vooral bekend als locatie van de Alternatieve Elfstedentocht.</p>
+                <p>Je schaatst zelfstandig en deelt je dagen zelf in.</p>
+              </div>
               <dl class="trip-map__facts">
                 <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
-                <div><dt>Hoogte</dt><dd>± 930 meter</dd></div>
+                <div><dt>Hoogte</dt><dd>Circa 930 meter</dd></div>
                 <div><dt>Data</dt><dd>Zelf te bepalen</dd></div>
                 <div><dt>Prijs</dt><dd>Vanaf €1.095</dd></div>
               </dl>
@@ -414,16 +462,20 @@
 
           <article class="trip-map__panel" id="lulea" aria-labelledby="lulea-title">
             <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/lulea-ijs-zonsondergang-480.avif 480w, images/lulea-ijs-zonsondergang-800.avif 800w, images/lulea-ijs-zonsondergang-1200.avif 1200w, images/lulea-ijs-zonsondergang-1600.avif 1600w, images/lulea-ijs-zonsondergang.avif 1800w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/lulea-ijs-zonsondergang-480.webp 480w, images/lulea-ijs-zonsondergang-800.webp 800w, images/lulea-ijs-zonsondergang-1200.webp 1200w, images/lulea-ijs-zonsondergang-1600.webp 1600w, images/lulea-ijs-zonsondergang.webp 1800w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij Luleå" loading="lazy" srcset="images/lulea-ijs-zonsondergang-480.jpg 480w, images/lulea-ijs-zonsondergang-800.jpg 800w, images/lulea-ijs-zonsondergang-1200.jpg 1200w, images/lulea-ijs-zonsondergang-1600.jpg 1600w, images/lulea-ijs-zonsondergang.jpg 1800w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/lulea-berkenbomen-baai-480.avif 480w, images/lulea-berkenbomen-baai-800.avif 800w, images/lulea-berkenbomen-baai-1200.avif 1200w, images/lulea-berkenbomen-baai.avif 1400w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/lulea-berkenbomen-baai-480.webp 480w, images/lulea-berkenbomen-baai-800.webp 800w, images/lulea-berkenbomen-baai-1200.webp 1200w, images/lulea-berkenbomen-baai.webp 1400w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" srcset="images/lulea-berkenbomen-baai-480.jpg 480w, images/lulea-berkenbomen-baai-800.jpg 800w, images/lulea-berkenbomen-baai-1200.jpg 1200w, images/lulea-berkenbomen-baai.jpg 1400w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/lulea-rendiergewei-480.avif 480w, images/lulea-rendiergewei-800.avif 800w, images/lulea-rendiergewei.avif 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/lulea-rendiergewei-480.webp 480w, images/lulea-rendiergewei-800.webp 800w, images/lulea-rendiergewei.webp 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/lulea-rendiergewei.jpg" alt="Rendiergewei in de sneeuw bij Luleå" loading="lazy" srcset="images/lulea-rendiergewei-480.jpg 480w, images/lulea-rendiergewei-800.jpg 800w, images/lulea-rendiergewei.jpg 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/lulea-ijs-zonsondergang-480.avif 480w, images/lulea-ijs-zonsondergang-800.avif 800w, images/lulea-ijs-zonsondergang-1200.avif 1200w, images/lulea-ijs-zonsondergang-1600.avif 1600w, images/lulea-ijs-zonsondergang.avif 1800w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/lulea-ijs-zonsondergang-480.webp 480w, images/lulea-ijs-zonsondergang-800.webp 800w, images/lulea-ijs-zonsondergang-1200.webp 1200w, images/lulea-ijs-zonsondergang-1600.webp 1600w, images/lulea-ijs-zonsondergang.webp 1800w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij Luleå" loading="lazy" srcset="images/lulea-ijs-zonsondergang-480.jpg 480w, images/lulea-ijs-zonsondergang-800.jpg 800w, images/lulea-ijs-zonsondergang-1200.jpg 1200w, images/lulea-ijs-zonsondergang-1600.jpg 1600w, images/lulea-ijs-zonsondergang.jpg 1800w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/lulea-berkenbomen-baai-480.avif 480w, images/lulea-berkenbomen-baai-800.avif 800w, images/lulea-berkenbomen-baai-1200.avif 1200w, images/lulea-berkenbomen-baai.avif 1400w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/lulea-berkenbomen-baai-480.webp 480w, images/lulea-berkenbomen-baai-800.webp 800w, images/lulea-berkenbomen-baai-1200.webp 1200w, images/lulea-berkenbomen-baai.webp 1400w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" srcset="images/lulea-berkenbomen-baai-480.jpg 480w, images/lulea-berkenbomen-baai-800.jpg 800w, images/lulea-berkenbomen-baai-1200.jpg 1200w, images/lulea-berkenbomen-baai.jpg 1400w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/lulea-rendiergewei-480.avif 480w, images/lulea-rendiergewei-800.avif 800w, images/lulea-rendiergewei.avif 1200w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/lulea-rendiergewei-480.webp 480w, images/lulea-rendiergewei-800.webp 800w, images/lulea-rendiergewei.webp 1200w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/lulea-rendiergewei.jpg" alt="Rendiergewei in de sneeuw bij Luleå" loading="lazy" srcset="images/lulea-rendiergewei-480.jpg 480w, images/lulea-rendiergewei-800.jpg 800w, images/lulea-rendiergewei.jpg 1200w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
             </div>
             <div class="trip-map__body">
               <span class="trip-map__region">Luleå, Zweden</span>
-              <h2 class="trip-map__title" id="lulea-title">Luleå</h2>
-              <p class="trip-map__text">Individuele, zelfstandige schaatsreis op de openbare natuurijsroute langs de bevroren Botnische Golf. Geen begeleiding of vast programma; je bepaalt zelf je reisduur en dagindeling.</p>
+              <h3 class="trip-map__title" id="lulea-title">Luleå</h3>
+              <div class="trip-map__text">
+                <p>Een bijzondere schaatservaring op de bevroren Botnische Golf.</p>
+                <p>Bij Luleå ligt een openbare natuurijsroute waar je zelfstandig kunt schaatsen. Je rijdt of schaatst door het winterse landschap langs de kust en geniet van de ruimte en rust van Noord-Zweden.</p>
+                <p>Deze reis is volledig individueel. Je kiest zelf je hotel, reisduur en dagindeling.</p>
+              </div>
               <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Individueel, zelfstandig</dd></div>
+                <div><dt>Soort reis</dt><dd>Individueel en zelfstandig</dd></div>
                 <div><dt>Reisduur</dt><dd>Zelf te bepalen</dd></div>
                 <div><dt>Verblijf</dt><dd>Hotel naar keuze</dd></div>
                 <div><dt>Prijs</dt><dd>Vanaf €1.095</dd></div>
@@ -437,18 +489,22 @@
 
           <article class="trip-map__panel" id="wellness" aria-labelledby="wellness-title">
             <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/wellness-zwembad-480.avif 480w, images/wellness-zwembad-800.avif 800w, images/wellness-zwembad-1200.avif 1200w, images/wellness-zwembad.avif 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/wellness-zwembad-480.webp 480w, images/wellness-zwembad-800.webp 800w, images/wellness-zwembad-1200.webp 1200w, images/wellness-zwembad.webp 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/wellness-zwembad-1200.jpg" alt="Binnenzwembad met uitzicht op besneeuwde bomen" loading="lazy" srcset="images/wellness-zwembad-480.jpg 480w, images/wellness-zwembad-800.jpg 800w, images/wellness-zwembad-1200.jpg 1200w, images/wellness-zwembad.jpg 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/wellness-sauna-480.avif 480w, images/wellness-sauna-800.avif 800w, images/wellness-sauna-1200.avif 1200w, images/wellness-sauna.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/wellness-sauna-480.webp 480w, images/wellness-sauna-800.webp 800w, images/wellness-sauna-1200.webp 1200w, images/wellness-sauna.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/wellness-sauna-1200.jpg" alt="Houten sauna met stoom boven de saunakachel" loading="lazy" srcset="images/wellness-sauna-480.jpg 480w, images/wellness-sauna-800.jpg 800w, images/wellness-sauna-1200.jpg 1200w, images/wellness-sauna.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" loading="lazy" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/wellness-zwembad-480.avif 480w, images/wellness-zwembad-800.avif 800w, images/wellness-zwembad-1200.avif 1200w, images/wellness-zwembad.avif 1600w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/wellness-zwembad-480.webp 480w, images/wellness-zwembad-800.webp 800w, images/wellness-zwembad-1200.webp 1200w, images/wellness-zwembad.webp 1600w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/wellness-zwembad-1200.jpg" alt="Binnenzwembad met uitzicht op besneeuwde bomen" loading="lazy" srcset="images/wellness-zwembad-480.jpg 480w, images/wellness-zwembad-800.jpg 800w, images/wellness-zwembad-1200.jpg 1200w, images/wellness-zwembad.jpg 1600w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/wellness-sauna-480.avif 480w, images/wellness-sauna-800.avif 800w, images/wellness-sauna-1200.avif 1200w, images/wellness-sauna.avif 1600w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/wellness-sauna-480.webp 480w, images/wellness-sauna-800.webp 800w, images/wellness-sauna-1200.webp 1200w, images/wellness-sauna.webp 1600w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/wellness-sauna-1200.jpg" alt="Houten sauna met stoom boven de saunakachel" loading="lazy" srcset="images/wellness-sauna-480.jpg 480w, images/wellness-sauna-800.jpg 800w, images/wellness-sauna-1200.jpg 1200w, images/wellness-sauna.jpg 1600w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" loading="lazy" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
             </div>
             <div class="trip-map__body">
               <span class="trip-map__region">Zweden</span>
-              <h2 class="trip-map__title" id="wellness-title">Wellness &amp; schaatsen</h2>
-              <p class="trip-map__text">Een winterreis naar Zweden, maar dan net even anders. Je verblijft in een comfortabel hotel met wellness en ontbijt, en met je eigen huurauto ga je het natuurijs op. Wellness en schaatsen gaan hier samen, en je vult je dagen zelf in.</p>
+              <h3 class="trip-map__title" id="wellness-title">Wellness &amp; schaatsen</h3>
+              <div class="trip-map__text">
+                <p>Een wintervakantie waarin schaatsen en ontspannen centraal staan.</p>
+                <p>Je verblijft in een comfortabel hotel met wellness en ontbijt. Met je eigen huurauto rijd je naar het natuurijs, dat op ongeveer 50 minuten van je verblijf ligt.</p>
+                <p>Overdag lekker naar buiten en het ijs op, daarna heerlijk ontspannen in de wellness. Je bepaalt zelf hoe je je dagen invult.</p>
+              </div>
               <dl class="trip-map__facts">
-                <div><dt>Verblijf</dt><dd>Hotel met wellness</dd></div>
-                <div><dt>Schaatsen</dt><dd>Natuurijs op ca. 50 min rijden</dd></div>
-                <div><dt>Vervoer</dt><dd>Vlucht + huurauto inbegrepen</dd></div>
+                <div><dt>Verblijf</dt><dd>Hotel met wellness en ontbijt</dd></div>
+                <div><dt>Schaatsen</dt><dd>Natuurijs op circa 50 minuten rijden</dd></div>
+                <div><dt>Vervoer</dt><dd>Vlucht en huurauto inbegrepen</dd></div>
                 <div><dt>Prijs</dt><dd>Vanaf €1.395</dd></div>
               </dl>
               <div class="trip-map__actions">
@@ -460,14 +516,19 @@
 
           <article class="trip-map__panel" id="salen" aria-labelledby="salen-title">
             <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/geveegde-baan-schaatsers-480.avif 480w, images/geveegde-baan-schaatsers-800.avif 800w, images/geveegde-baan-schaatsers-1200.avif 1200w, images/geveegde-baan-schaatsers.avif 1366w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/geveegde-baan-schaatsers-480.webp 480w, images/geveegde-baan-schaatsers-800.webp 800w, images/geveegde-baan-schaatsers-1200.webp 1200w, images/geveegde-baan-schaatsers.webp 1366w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/geveegde-baan-schaatsers-1200.jpg" alt="Schaatsers op een geveegde baan met sneeuwranden over een bevroren Zweeds meer" loading="lazy" srcset="images/geveegde-baan-schaatsers-480.jpg 480w, images/geveegde-baan-schaatsers-800.jpg 800w, images/geveegde-baan-schaatsers-1200.jpg 1200w, images/geveegde-baan-schaatsers.jpg 1366w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/kampvuur-fika-ijs-480.avif 480w, images/kampvuur-fika-ijs-800.avif 800w, images/kampvuur-fika-ijs.avif 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/kampvuur-fika-ijs-480.webp 480w, images/kampvuur-fika-ijs-800.webp 800w, images/kampvuur-fika-ijs.webp 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/kampvuur-fika-ijs.jpg" alt="Twee schaatsers warmen zich op en roosteren eten bij een kampvuur tussen de dennen, naast het ijs" loading="lazy" srcset="images/kampvuur-fika-ijs-480.jpg 480w, images/kampvuur-fika-ijs-800.jpg 800w, images/kampvuur-fika-ijs.jpg 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" loading="lazy" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/geveegde-baan-schaatsers-480.avif 480w, images/geveegde-baan-schaatsers-800.avif 800w, images/geveegde-baan-schaatsers-1200.avif 1200w, images/geveegde-baan-schaatsers.avif 1366w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/geveegde-baan-schaatsers-480.webp 480w, images/geveegde-baan-schaatsers-800.webp 800w, images/geveegde-baan-schaatsers-1200.webp 1200w, images/geveegde-baan-schaatsers.webp 1366w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/geveegde-baan-schaatsers-1200.jpg" alt="Schaatsers op een geveegde baan met sneeuwranden over een bevroren Zweeds meer" loading="lazy" srcset="images/geveegde-baan-schaatsers-480.jpg 480w, images/geveegde-baan-schaatsers-800.jpg 800w, images/geveegde-baan-schaatsers-1200.jpg 1200w, images/geveegde-baan-schaatsers.jpg 1366w" sizes="(min-width: 80rem) 30.5rem, (min-width: 64rem) calc(40vw - 3.5rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/kampvuur-fika-ijs-480.avif 480w, images/kampvuur-fika-ijs-800.avif 800w, images/kampvuur-fika-ijs.avif 1200w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/kampvuur-fika-ijs-480.webp 480w, images/kampvuur-fika-ijs-800.webp 800w, images/kampvuur-fika-ijs.webp 1200w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/kampvuur-fika-ijs.jpg" alt="Twee schaatsers warmen zich op en roosteren eten bij een kampvuur tussen de dennen, naast het ijs" loading="lazy" srcset="images/kampvuur-fika-ijs-480.jpg 480w, images/kampvuur-fika-ijs-800.jpg 800w, images/kampvuur-fika-ijs.jpg 1200w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /><img src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" loading="lazy" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 80rem) 9.5rem, (min-width: 64rem) calc(13.5vw - 2rem), (min-width: 48rem) 9rem, 6rem" /></picture>
             </div>
             <div class="trip-map__body">
               <span class="trip-map__region">Sälen, Stöten en Tandådalen, Zweden</span>
-              <h2 class="trip-map__title" id="salen-title">Dagtocht vanuit Sälen</h2>
-              <p class="trip-map__text">Verruil je ski's een dagje voor de mooiste natuurijs-ervaring van Zweden. Een geveegde ijsbaan van 12 kilometer (enkel) op een meer, op ongeveer 1 uur en 10 minuten rijden van Sälen, Tandådalen en Stöten.</p>
+              <h3 class="trip-map__title" id="salen-title">Dagtocht vanuit Sälen, Stöten en Tandådalen</h3>
+              <div class="trip-map__text">
+                <p>Ben je in de winter in Sälen, Stöten of Tandådalen? Verruil dan een dag je ski's voor schaatsen.</p>
+                <p>Op ongeveer 1 uur en 10 minuten rijden ligt een prachtige geveegde natuurijsbaan van ongeveer 12 kilometer enkele reis. Je schaatst door het Zweedse winterlandschap en kunt onderweg genieten van de omgeving.</p>
+                <p>Je kunt kiezen voor een halve of een hele dag.</p>
+                <p>Tijdens deze dagtocht gaan we samen het ijs op. Novakse is niet verantwoordelijk voor de veiligheid op het ijs.</p>
+              </div>
               <dl class="trip-map__facts">
                 <div><dt>Soort reis</dt><dd>Dagtocht, halve of hele dag</dd></div>
                 <div><dt>Data</dt><dd>10 januari t/m 20 februari 2027</dd></div>
@@ -488,8 +549,11 @@
         <div class="why__split">
           <div class="why__body reveal">
             <span class="eyebrow eyebrow--warm"><span class="dot"></span>Hoe een reis werkt</span>
-            <h2 class="why__title">Je boekt geen route. Je boekt een week op het ijs.</h2>
-            <p class="why__text">Natuurijs laat zich niet plannen. Waar je schaatst hangt af van het weer en de ijskwaliteit, en dat zie je pas ter plekke. Wat wél vaststaat, is hoe de reis geregeld is.</p>
+            <h2 class="why__title">Hoe werkt een schaatsreis met Novakse?</h2>
+            <p class="why__sub">Wij regelen de reis, jij geniet van het natuurijs.</p>
+            <p class="why__text">Natuurijs is afhankelijk van het weer. Daarom kunnen we vooraf niet altijd bepalen waar je precies zult schaatsen of hoe het ijs er op een bepaalde dag bij ligt.</p>
+            <p class="why__text">We zorgen er wel voor dat de reis goed geregeld is. Afhankelijk van de bestemming zijn bijvoorbeeld vlucht, accommodatie, huurauto en vervoer inbegrepen.</p>
+            <p class="why__text">Eenmaal ter plaatse heb je alle vrijheid om je dagen zelf in te delen.</p>
           </div>
           <div class="why__media reveal">
             <picture><source type="image/avif" srcset="images/zwart-ijs-scheuren-480.avif 480w, images/zwart-ijs-scheuren-800.avif 800w, images/zwart-ijs-scheuren-1200.avif 1200w, images/zwart-ijs-scheuren.avif 1280w" sizes="(min-width: 60rem) 50vw, 100vw" /><source type="image/webp" srcset="images/zwart-ijs-scheuren-480.webp 480w, images/zwart-ijs-scheuren-800.webp 800w, images/zwart-ijs-scheuren-1200.webp 1200w, images/zwart-ijs-scheuren.webp 1280w" sizes="(min-width: 60rem) 50vw, 100vw" /><img src="images/zwart-ijs-scheuren.jpg" alt="Zwart natuurijs met lange scheuren" loading="lazy" srcset="images/zwart-ijs-scheuren-480.jpg 480w, images/zwart-ijs-scheuren-800.jpg 800w, images/zwart-ijs-scheuren-1200.jpg 1200w, images/zwart-ijs-scheuren.jpg 1280w" sizes="(min-width: 60rem) 50vw, 100vw" /></picture>
@@ -498,16 +562,30 @@
 
         <div class="why__reasons">
           <div class="why__reason reveal">
-            <h3>Zelfstandig op het ijs</h3>
-            <p>Je schaatst standaard zonder begeleiding en deelt je dagen zelf in. Bij Orsa en Falun kun je begeleiding op het ijs bijboeken. Bij de dagtocht vanuit Sälen gaan we samen het ijs op, maar Novakse is niet verantwoordelijk op het ijs. Begeleide groepsreizen worden nog gepland.</p>
+            <h3>Zelfstandig schaatsen</h3>
+            <p>De meeste reizen zijn zelfstandig. Er is geen vast programma en je gaat zonder begeleiding het ijs op.</p>
+            <p>Bij Orsa en Falun kun je begeleiding op het ijs bijboeken.</p>
+            <p>Bij de dagtocht vanuit Sälen gaan we gezamenlijk het ijs op. Novakse is daarbij niet verantwoordelijk voor de veiligheid op het ijs.</p>
+            <p>Begeleide groepsreizen zijn momenteel nog in voorbereiding.</p>
+          </div>
+          <div class="why__reason reveal">
+            <h3>Het weer bepaalt het ijs</h3>
+            <p>Natuurijs blijft natuurijs. Temperatuur, sneeuw, wind en andere weersomstandigheden hebben invloed op de kwaliteit en toegankelijkheid van het ijs.</p>
+            <p>Daarom kan het programma ter plaatse anders verlopen dan je vooraf had verwacht. We houden de omstandigheden goed in de gaten en informeren je waar nodig.</p>
+            <p>Juist dat maakt schaatsen op natuurijs bijzonder: iedere dag is anders.</p>
+          </div>
+          <div class="why__reason reveal">
+            <h3>Persoonlijk geregeld</h3>
+            <p>Bij Novakse heb je geen grote standaard groepsreis, maar een reis die persoonlijk voor je wordt geregeld.</p>
+            <p>Joey regelt vooraf de praktische zaken. Eenmaal aangekomen kun je zelf je dagen indelen en op ontdekkingstocht gaan.</p>
           </div>
           <div class="why__reason reveal">
             <h3>In één keer betalen</h3>
-            <p>Je betaalt de hele reissom bij het boeken.</p>
+            <p>Bij het boeken betaal je de volledige reissom.</p>
           </div>
           <div class="why__reason reveal">
-            <h3>Ruim vooraf duidelijk</h3>
-            <p>Eventuele prijswijzigingen horen we minimaal 4 weken voor vertrek.</p>
+            <h3>Ruim vooraf duidelijkheid</h3>
+            <p>Als er een prijswijziging is, laten we dit minimaal vier weken voor vertrek weten.</p>
           </div>
         </div>
       </div>
@@ -538,13 +616,15 @@
       </div>
     </section>
 
-    <!-- 5. Verder lezen of aanvragen -->
+    <!-- 5. Afsluiting: terug naar de reizen of een vraag stellen -->
     <section class="closing">
       <div class="wrap closing__inner">
-        <h2 class="h-section">Nog vragen voordat je kiest?</h2>
-        <p class="closing__text">Op de reisinformatie staat wat je meeneemt, hoe een dag eruitziet en hoe het zit met betalen en annuleren. Kom je er niet uit, stel je vraag dan gewoon rechtstreeks aan Joey.</p>
+        <h2 class="h-section">Klaar voor het natuurijs?</h2>
+        <p class="closing__text">Een paar dagen schaatsen op een Zweeds meer, een winterse ontdekkingstocht in Finland of schaatsen tussen de bergen van Oostenrijk.</p>
+        <p class="closing__text">Welke bestemming je ook kiest: bij Novakse begint je reis met een goed geregeld vertrek en krijg je ter plaatse alle ruimte om er je eigen schaatsavontuur van te maken.</p>
+        <p class="closing__text">Bekijk de bestemmingen en kies jouw schaatsreis.</p>
         <div class="closing__actions">
-          <a class="btn btn--dark" href="reisinformatie.html">Naar de reisinformatie</a>
+          <a class="btn btn--dark" href="#bestemmingen">Bekijk alle schaatsreizen</a>
           <a class="btn btn--outline-dark" href="offerte.html">Offerte aanvragen</a>
           <a class="btn btn--outline-dark btn--whatsapp" href="https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20jullie%20schaatsreizen." target="_blank" rel="noopener"><svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 7.6c.3-.1.6 0 .8.3l.9 1.5c.1.3.1.6-.1.8l-.6.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.6c.2-.2.5-.2.8-.1l1.5.9c.3.2.4.5.3.8-.3.9-1.2 1.5-2.1 1.3-3-.5-5.4-2.9-5.9-5.9-.2-.9.4-1.8 1.3-2.1z" fill="currentColor"/></svg>Stel je vraag via WhatsApp</a>
         </div>

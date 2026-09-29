@@ -9,6 +9,8 @@
    - Previous/next buttons and a "1 / 7" counter; the buttons are disabled
      at either end.
    - Tabbing into a trip that is off screen brings it into the row.
+   - Phones: a trip text that does not fit one screen is clamped, with a
+     "Lees meer" button (see below).
    - Each panel has a stable id (#orsa, #finland, ...). A matching hash on
      load opens that trip with the line in view below the header; once a new
      trip settles, the hash follows with replaceState (no scroll jump and no
@@ -348,10 +350,11 @@
     });
   });
 
-  // Line and row in view, just below the fixed header.
+  // The top of the line right below the fixed header: the map (line, row
+  // and controls) is sized to fill exactly the rest of the screen.
   function jumpToMap() {
     var headerH = header ? header.offsetHeight : 0;
-    var y = rail.getBoundingClientRect().top + (window.pageYOffset || 0) - headerH - 8;
+    var y = rail.getBoundingClientRect().top + (window.pageYOffset || 0) - headerH;
     var html = document.documentElement;
     html.style.scrollBehavior = "auto";
     window.scrollTo(0, Math.max(0, Math.round(y)));
@@ -364,6 +367,136 @@
     go(i, false);
     jumpToMap();
   });
+
+  /* --- Phones: "Lees meer" ------------------------------------------------
+     Below 48rem every trip fills one screen. A text that is too long for it
+     is clamped to the whole lines that still fit (at least two), with a
+     "Lees meer" button right after it; "Lees minder" closes it again. The
+     full text always stays in the page (the clamp only hides the overflow).
+     An open text stays open when the row moves on to another trip: closing
+     it there would shift the page. See css/reizen.css (.trip-map__more). */
+  var phone = window.matchMedia
+    ? window.matchMedia("(max-width: 47.99rem)")
+    : { matches: false };
+  var more = [];
+
+  function setOpen(item, open) {
+    item.open = open;
+    item.button.setAttribute("aria-expanded", open ? "true" : "false");
+    item.button.textContent = open ? "Lees minder" : "Lees meer";
+  }
+
+  // The bottom of every line of a text, measured from the top of the text.
+  function lineBottoms(text) {
+    var top = text.getBoundingClientRect().top;
+    var lineH = parseFloat(window.getComputedStyle(text).lineHeight) || 0;
+    var bottoms = [];
+    var walker = document.createTreeWalker(text, NodeFilter.SHOW_TEXT, null);
+    var range = document.createRange();
+    var node;
+    while ((node = walker.nextNode())) {
+      if (!/\S/.test(node.nodeValue)) continue;
+      range.selectNodeContents(node);
+      Array.prototype.forEach.call(range.getClientRects(), function (r) {
+        if (!r.width) return;
+        // A line box is lineH high, centred on the glyphs.
+        var bottom = (r.top + r.bottom) / 2 + lineH / 2 - top;
+        var last = bottoms[bottoms.length - 1];
+        if (last === undefined || bottom > last + 2) bottoms.push(bottom);
+      });
+    }
+    return bottoms;
+  }
+
+  function layoutMore() {
+    if (!more.length) return;
+    if (!phone.matches) {
+      more.forEach(function (item) {
+        item.panel.classList.remove("is-clamped");
+        item.button.hidden = true;
+      });
+      return;
+    }
+    // Measure every trip with its full text. A button that shows keeps
+    // showing while we measure (hiding it would take its focus away); its
+    // room is left out of the sum instead: min-height plus the margins.
+    more.forEach(function (item) { item.panel.classList.remove("is-clamped"); });
+    var cs = window.getComputedStyle(more[0].button);
+    var buttonSpace = (parseFloat(cs.minHeight) || 0) + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+
+    // A trip may reach into the row's bottom padding: it is still on screen.
+    var slack = parseFloat(window.getComputedStyle(row).paddingBottom) || 0;
+
+    // Reads first...
+    var plans = more.map(function (item) {
+      var budget = parseFloat(window.getComputedStyle(item.panel).minHeight) || 0;
+      var shown = item.button.hidden ? 0 : buttonSpace;
+      var over = item.panel.getBoundingClientRect().height - shown - budget - slack;
+      if (over <= 0.5) return null;
+      var bottoms = lineBottoms(item.text);
+      var allowed = item.text.getBoundingClientRect().height - over - buttonSpace;
+      var lines = 0;
+      for (var i = 0; i < bottoms.length; i++) {
+        if (i >= 2 && bottoms[i] > allowed + 0.5) break;
+        lines = i + 1;
+      }
+      // Clamping only helps when it hides at least one line.
+      if (lines >= bottoms.length) return null;
+      return Math.ceil(bottoms[lines - 1]);
+    });
+
+    // ...then writes.
+    more.forEach(function (item, i) {
+      var cut = plans[i];
+      if (cut === null) {
+        if (item.open) setOpen(item, false);
+        item.button.hidden = true;
+        return;
+      }
+      item.button.hidden = false;
+      if (item.open) return;
+      item.text.style.setProperty("--text-max", cut + "px");
+      item.panel.classList.add("is-clamped");
+    });
+  }
+
+  panels.forEach(function (panel) {
+    var text = panel.querySelector(".trip-map__text");
+    if (!text) return;
+    if (!text.id) text.id = panel.id + "-text";
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "trip-map__more";
+    button.setAttribute("aria-controls", text.id);
+    button.hidden = true;
+    text.parentNode.insertBefore(button, text.nextSibling);
+    var item = { panel: panel, text: text, button: button, open: false };
+    setOpen(item, false);
+    button.addEventListener("click", function () {
+      setOpen(item, !item.open);
+      layoutMore();
+      // Closed again: back to the one-screen map if the page was scrolled
+      // into it. The button keeps focus.
+      if (!item.open && header && rail.getBoundingClientRect().top < header.offsetHeight - 1) {
+        jumpToMap();
+      }
+    });
+    more.push(item);
+  });
+
+  var moreTicking = false;
+  function queueLayoutMore() {
+    if (moreTicking) return;
+    moreTicking = true;
+    window.requestAnimationFrame(function () {
+      moreTicking = false;
+      layoutMore();
+    });
+  }
+  window.addEventListener("resize", queueLayoutMore);
+  window.addEventListener("orientationchange", queueLayoutMore);
+  window.addEventListener("load", queueLayoutMore, { once: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(queueLayoutMore);
 
   /* --- Start ------------------------------------------------------------- */
   var fromHash = indexFromHash();
@@ -381,6 +514,7 @@
     countLive.setAttribute("aria-atomic", "true");
   }
   syncFades();
+  layoutMore();
 
   if (fromHash >= 0) {
     // Jump straight to the trip, and once more after load (fonts and images

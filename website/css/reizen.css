@@ -9,6 +9,9 @@
      without JavaScript. The first trip lines up with the page content, the
      next one peeks in on the right and the row runs on to the screen edge:
      that is what shows there are more trips.
+   - Line and row together fill one screen below the fixed header. Names,
+     text, facts and buttons keep their natural size; the photos take the
+     room that is left, so they grow on a laptop and shrink on a phone.
    - Without JavaScript the stops are plain anchor links to the panels.
    - With JavaScript (js/reizen.js) the stops, the row, the previous/next
      buttons and the "1 / 7" counter stay in sync, as a carousel.
@@ -16,9 +19,10 @@
 
 .trip-map {
   --ice: #e7eef1;          /* swept-lane tint and photo placeholder */
-  --line-h: 2.75rem;       /* height of the line band above the labels */
+  --line-h: 1.625rem;      /* height of the line band above the labels */
   --stop-w: 7.75rem;       /* width of one stop in the swipe strip */
   --gap: 0.75rem;          /* space between two trips in the row */
+  --row-gap: 0.5rem;       /* space between the line and the row */
   /* Width of one trip. In the row, 100% is the width of the page content.
      Phones: the next trip peeks in about 2.25rem. */
   --panel-w: calc(100% + var(--pad) - 3rem);
@@ -30,8 +34,49 @@
      scrolling align "nearest"; this makes them line a trip up at the start
      instead of stopping halfway and snapping to the trip before it. */
   --snap-end: calc(3rem - 2px);
+  /* Right edge of the current trip, measured from the right edge of .wrap.
+     The previous/next controls sit there, next to the trip's name; the name
+     keeps --controls-w free for them. */
+  --panel-end: 3rem;
+  --controls-w: 8.5rem;
+  /* The map fills one screen below the fixed header. .site-header is 67px
+     high, 71px from 72rem (styles.css). svh keeps the height steady while a
+     phone's address bar slides in and out; older browsers use vh. */
+  --header-h: 4.2rem;
+  --vh: 100vh;
+  --map-h: calc(var(--vh) - var(--header-h));
+  /* Height of the stop strip, used for the height of a trip (see
+     .trip-map__panel). Phones and tablets: it is fixed, because the longest
+     name wraps once and the stops share one row (see .trip-map__rail and
+     .trip-map__stop): 0.5rem + line + 0.55rem + name (2 * 1.02rem * 1.2) +
+     0.15rem + country (0.82rem * 1.55) + 0.4rem + price (0.9rem * 1.55) +
+     0.6rem + 0.125rem. Keep it in step when those change. */
+  --rail-h: 9.0625rem;
+  --map-top: 1.25rem;      /* space above the line */
+  --map-bottom: 5rem;      /* section padding below the row */
+  display: flex;
+  flex-direction: column;
+  min-height: calc(var(--map-h) + var(--map-bottom));
+  /* The space above is a margin, not padding, so the top edge of the
+     section is the top of the line. js/reizen.js places deep links on that
+     edge (the section has no h1/h2 of its own), which puts the line right
+     below the header. */
+  margin-top: var(--map-top);
+  padding-bottom: var(--map-bottom);
+  /* "#bestemmingen" lands with the line just below the header. */
+  scroll-margin-top: var(--header-h);
   background: var(--paper);
-  padding-block: 1.25rem 5rem;
+}
+@supports (height: 100svh) {
+  .trip-map { --vh: 100svh; }
+}
+@media (min-width: 72rem) {
+  .trip-map { --header-h: 4.44rem; }
+}
+.trip-map > .wrap {
+  position: relative;      /* anchors the controls */
+  flex: none;
+  width: 100%;
 }
 
 /* --------------------------------------------------------------------------
@@ -44,7 +89,7 @@
   --fade-end: 3.5rem;
   position: relative;
   margin-inline: calc(-1 * var(--pad));
-  padding: 0.5rem var(--pad) 0.75rem;
+  padding: 0.5rem var(--pad) 0.125rem;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
@@ -109,6 +154,7 @@
 .trip-map__item:nth-child(6) { --y: 0.316; }
 .trip-map__item:nth-child(7) { --y: 0.418; }
 
+/* Name, country and price stacked, each on its own line. */
 .trip-map__stop {
   position: relative;
   flex: 1;
@@ -187,24 +233,31 @@
 
 /* --------------------------------------------------------------------------
    Previous / next and the "1 / 7" counter
-   Only with JavaScript. The .js class (set in the page head) keeps their
-   space from the start, so the row does not jump when reizen.js runs.
+   Only with JavaScript. They sit at the top right of the current trip, on
+   the row of its name (the name keeps that room free, see .trip-map__title),
+   so they take no height of their own. .wrap ends where the row starts, so
+   100% below is the top of the row.
    -------------------------------------------------------------------------- */
 .trip-map__controls { display: none; }
 .js .trip-map__controls {
+  /* Nudge down to line up with the region and the first line of the name:
+     (0.85rem * 1.55 + 0.15rem + 1.65rem * 1.05 - 2.5rem) / 2. */
+  --controls-dy: 0.35rem;
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + var(--row-gap) + var(--controls-dy));
+  right: var(--panel-end);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: 0;
+  gap: 0.375rem;
   visibility: hidden;
 }
 .trip-map.is-ready .trip-map__controls { visibility: visible; }
 
 .trip-map__count {
-  margin-right: 0.55rem;
+  margin-right: 0.25rem;
   font-family: var(--display);
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: var(--ink-soft);
@@ -216,8 +269,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   border: 1.5px solid currentColor;
   color: var(--ink);
@@ -244,13 +297,17 @@
    The row of trips
    Full width of the screen; its padding lines the first trip up with the
    page content. The room after the last trip lets it line up there too.
+   The row takes the height the line leaves over, and every trip fills that
+   height on its own (min-height), so a trip with more text than fits only
+   makes itself taller.
    -------------------------------------------------------------------------- */
 .trip-map__panels {
+  flex: 1 0 auto;
   display: flex;
   align-items: flex-start;
   gap: var(--gap);
-  margin-top: 1.25rem;
-  padding: 0.35rem var(--row-inset) 0.75rem;
+  margin-top: var(--row-gap);
+  padding: 0 var(--row-inset) 0.5rem;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
@@ -267,34 +324,66 @@
   content: "";
   flex: 0 0 calc(100% - var(--panel-w) - var(--gap));
 }
-.js .trip-map__panels { margin-top: 0.6rem; }
 
+/* Phones and tablets: one column, name first, then the photos, then text,
+   facts and buttons (the body wrapper steps aside, so its parts can be
+   ordered around the photos). */
 .trip-map__panel {
   flex: 0 0 var(--panel-w);
   min-width: 0;
+  /* The rest of the screen: below the strip, the gap and the row's 0.5rem
+     bottom padding. */
+  min-height: calc(var(--map-h) - var(--rail-h) - var(--row-gap) - 0.5rem);
+  display: flex;
+  flex-direction: column;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   /* Deep links (#orsa, #lulea, ...) without JavaScript land with the line
-     still in view below the header (header + line + gap); js/reizen.js
-     places the page itself. */
-  scroll-margin-top: 17.25rem;
+     just below the header (header + line + gap); js/reizen.js places the
+     page itself. */
+  scroll-margin-top: calc(var(--header-h) + var(--rail-h) + var(--row-gap));
 }
+.trip-map__body { display: contents; }
+.trip-map__region { order: 1; }
+.trip-map__title { order: 2; }
+.trip-map__media { order: 3; }
+.trip-map__text { order: 4; }
+.trip-map__facts { order: 5; }
+.trip-map__actions { order: 6; }
 
 /* Photo composition: one main photo with the smaller ones overlapping its
    lower edge (cut out with a paper-coloured outline, no shadow). A portrait
    photo hangs furthest below, a landscape one sits a little higher next to
-   it. Every other trip is mirrored. */
+   it. Every other trip is mirrored.
+   The main photo is the flexible part: it fills whatever height the trip
+   leaves over, down to a minimum. All photos are placed absolutely, so they
+   never push the trip taller than the screen. Phones: small thumbnails of a
+   fixed height; from 64rem their width follows the main photo. */
 .trip-map__media {
-  --hang: 1.35rem;         /* how far the smaller photos hang below the main */
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: auto var(--hang);
-  align-content: start;
-  align-self: start;
+  --hang: 0.5rem;          /* how far the smaller photos hang below the main */
+  --thumb-h: 4rem;         /* phones: height of the smaller photos */
+  --edge: 0.75rem;         /* inset of the smaller photos from the side */
+  --pair-gap: 0.25rem;     /* between the two smaller photos */
+  --side-w: calc(var(--thumb-h) * 0.8);
+  --below-w: calc(var(--thumb-h) * 1.5);
+  position: relative;
+  /* Grows from its minimum: the main photo is at least 9rem high. */
+  flex: 1 1 9.5rem;
+  min-height: 9.5rem;
+  margin-top: 0.375rem;
 }
+/* Short phones (up to 660px high): the main photo may shrink to 120px. */
+@media (max-width: 47.99rem) and (max-height: 41.25rem) {
+  .trip-map__media { flex-basis: 8rem; min-height: 8rem; }
+}
+.trip-map__media:has(.trip-map__photo--square) { --side-w: var(--thumb-h); }
+/* Two photos only (Weissensee has no third one): the one smaller photo is a
+   little larger, so the pair still feels balanced. */
+.trip-map__media:not(:has(.trip-map__photo--below)) { --side-w: var(--thumb-h); }
+
 .trip-map__photo {
   display: block;
-  position: relative;
+  position: absolute;
   overflow: hidden;
   background: var(--ice);
 }
@@ -304,53 +393,60 @@
   object-fit: cover;
 }
 .trip-map__photo--main {
-  grid-column: 1 / -1;
-  grid-row: 1;
-  aspect-ratio: 16 / 10;
+  inset: 0 0 var(--hang) 0;
   border-radius: 1.25rem;
 }
 .trip-map__photo--side,
 .trip-map__photo--below {
   z-index: 1;
-  grid-row: 1 / 3;
-  align-self: end;
-  outline: 0.3rem solid var(--paper);
+  outline: 0.25rem solid var(--paper);
 }
 .trip-map__photo--side {
-  grid-column: 9 / -1;
-  margin-right: 0.8rem;
+  bottom: 0;
+  right: var(--edge);
+  width: var(--side-w);
   aspect-ratio: 4 / 5;
-  border-radius: 0.9rem;
+  border-radius: 0.75rem;
 }
 .trip-map__photo--square { aspect-ratio: 1 / 1; }
 .trip-map__photo--below {
-  grid-column: 5 / 9;
-  margin: 0 0.75rem calc(var(--hang) * 0.55) 0.25rem;
+  bottom: calc(var(--hang) * 0.55);
+  right: calc(var(--edge) + var(--side-w) + var(--pair-gap));
+  width: var(--below-w);
   aspect-ratio: 3 / 2;
-  border-radius: 0.8rem;
+  border-radius: 0.7rem;
 }
 .trip-map__panel:nth-child(even) .trip-map__photo--side {
-  grid-column: 1 / 5;
-  margin: 0 0 0 0.8rem;
+  right: auto;
+  left: var(--edge);
 }
 .trip-map__panel:nth-child(even) .trip-map__photo--below {
-  grid-column: 5 / 9;
-  margin: 0 0.25rem calc(var(--hang) * 0.55) 0.75rem;
+  right: auto;
+  left: calc(var(--edge) + var(--side-w) + var(--pair-gap));
 }
-
-/* Two photos only (Weissensee has no third one): the one smaller photo is a
-   little larger, so the pair still feels balanced. */
-.trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--side { grid-column: 8 / -1; }
-.trip-map__panel:nth-child(even) .trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--side { grid-column: 1 / 6; }
 
 /* Crops for photos whose subject is not in the middle. */
 #weissensee .trip-map__photo--main img { object-position: 50% 30%; }
 #falun .trip-map__photo--main img { object-position: 50% 20%; }
 #wellness .trip-map__photo--side img { object-position: 50% 70%; }
 #salen .trip-map__photo--side img { object-position: 40% 50%; }
+/* The skaters sit right of centre, where the side photo covers them; the
+   photo has no text, so mirror it to bring them into view. object-position
+   is already at its edge, so a 10% zoom anchored on the visible right edge
+   (origin 100% / 2.1 for scale -1.1) shifts them a little further left. */
+#salen .trip-map__photo--main img { transform: scale(-1.1, 1.1); transform-origin: calc(100% / 2.1) 50%; object-position: 0% 50%; }
+/* From 64rem the main photo is taller than it is wide on most laptops, so
+   much more of a wide photo is cut away at the sides. Orsa: keep the three
+   skaters clear of the left edge. Luleå: keep the lone tree in view next to
+   the sun. Sälen: a crop from the left edge would cut the skaters off;
+   centred, the mirrored skaters stay in view, left of the smaller photos. */
+@media (min-width: 64rem) {
+  #orsa .trip-map__photo--main img { object-position: 15% 50%; }
+  #lulea .trip-map__photo--main img { object-position: 25% 50%; }
+  #salen .trip-map__photo--main img { object-position: 50% 50%; }
+}
 
 /* Text */
-.trip-map__body { padding-top: 0.75rem; }
 .trip-map__region {
   display: block;
   font-size: 0.85rem;
@@ -365,8 +461,23 @@
   line-height: 1.05;
   letter-spacing: -0.02em;
 }
+/* Keep the controls' corner free (only when they exist): the region line(s)
+   and the first line of the name. A 1px float shortens just that first
+   line, so a long name wraps below it at full width. */
+.js .trip-map__region { padding-right: var(--controls-w); }
+.js .trip-map__title::before {
+  content: "";
+  float: right;
+  width: var(--controls-w);
+  height: 1px;
+}
+/* "balance" (set in the page head) keeps a name on one line when it fits the
+   full width, ignoring the float, so it would run under the controls. */
+.js .trip-map__title { text-wrap: pretty; }
+/* The text follows the photos, with the same room below them as the text
+   block used to have. */
 .trip-map__text {
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   max-width: 54ch;
   font-size: 0.875rem;
   line-height: 1.45;
@@ -402,6 +513,59 @@
   font-size: 0.84rem;
   color: var(--warm-deep);
 }
+/* Narrow phones: a touch tighter, so the longest link still shares the line
+   with the button. */
+@media (max-width: 22.5rem) {
+  .trip-map__actions { column-gap: 0.625rem; }
+  .trip-map__actions .btn { padding-inline: 0.875rem; }
+  .trip-map__actions .link-arrow { font-size: 0.8125rem; }
+}
+
+/* Phones: "Lees meer". js/reizen.js clamps a long text to the whole lines
+   that still fit in one screen (at least two, see --text-max) and adds this
+   button right after it; it opens the full text. Without JavaScript, and
+   from 48rem, nothing is clamped. The button is a 44px touch target that
+   takes only about 26px of height: the rest reaches into the space around
+   it. */
+.trip-map__more {
+  order: 4;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  margin: -0.375rem 0 -0.75rem;
+  padding-right: 0.375rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--warm-deep);
+  -webkit-tap-highlight-color: transparent;
+}
+.trip-map__more[hidden] { display: none; }
+.trip-map__more::after {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-0.12rem) rotate(45deg);
+  transition: transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.trip-map__more[aria-expanded="true"]::after { transform: translateY(0.12rem) rotate(-135deg); }
+.trip-map__more:focus-visible { outline-offset: -3px; }
+@media (max-width: 47.99rem) {
+  .trip-map__panel.is-clamped .trip-map__text {
+    max-height: var(--text-max, none);
+    overflow: hidden;
+    /* The last visible line fades a little: there is more. */
+    -webkit-mask-image: linear-gradient(#000 calc(100% - 1.25em), rgba(0, 0, 0, 0.3));
+    mask-image: linear-gradient(#000 calc(100% - 1.25em), rgba(0, 0, 0, 0.3));
+  }
+}
+@media (min-width: 48rem) {
+  .trip-map__more { display: none; }
+}
 
 /* A trip that is not the current one can be tapped to bring it in. */
 .trip-map.is-ready .trip-map__panel:not(.is-current) { cursor: pointer; }
@@ -415,17 +579,21 @@
     --gap: 1.25rem;
     --panel-w: 62%;
     --snap-end: calc(38% + 0.24 * var(--row-inset) - 2px);
-    padding-block: 1.75rem 5.5rem;
+    /* The trip is 62% of the content; % is the width of .wrap here. */
+    --panel-end: calc(38% + 0.24 * var(--pad));
+    --controls-w: 9.5rem;
+    --map-top: 1.75rem;
+    --map-bottom: 5.5rem;
   }
-  .trip-map__panels { margin-top: 1.75rem; }
-  .js .trip-map__panels { margin-top: 0.75rem; }
-  .trip-map__panel { scroll-margin-top: 17.75rem; }
-  .trip-map__media { --hang: 2.25rem; }
+  /* (0.85rem * 1.55 + 0.15rem + 2.1rem * 1.05 - 2.75rem) / 2 */
+  .js .trip-map__controls { --controls-dy: 0.45rem; gap: 0.5rem; }
+  .trip-map__nav { width: 2.75rem; height: 2.75rem; }
+  .trip-map__count { margin-right: 0.3rem; font-size: 0.95rem; }
+  .trip-map__media { --hang: 0.75rem; --thumb-h: 6rem; --edge: 0.9rem; margin-top: 0.75rem; }
   .trip-map__photo--main { border-radius: 1.5rem; }
   .trip-map__photo--side { border-radius: 1rem; }
-  .trip-map__body { padding-top: 1rem; }
   .trip-map__title { font-size: 2.1rem; }
-  .trip-map__text { font-size: 0.95rem; line-height: 1.5; }
+  .trip-map__text { margin-top: 1rem; font-size: 0.95rem; line-height: 1.5; }
 
   .trip-map__facts {
     display: block;
@@ -449,19 +617,31 @@
 
 /* Side by side: the name spans the whole trip (so the start of the next
    trip's name shows in the peek), with the photos under it on the left and
-   the text on the right. */
+   the text on the right. The photo column runs down to the bottom of the
+   screen; the text column keeps its natural height. */
 @media (min-width: 64rem) {
   .trip-map {
-    --line-h: 3rem;
+    --line-h: 2.5rem;
     --gap: 2rem;
-    --panel-w: 74%;
-    --snap-end: calc(26% + 0.48 * var(--row-inset) - 2px);
-    padding-block: 2.25rem 6.5rem;
+    --row-gap: 0.75rem;
+    --panel-w: 84%;
+    --snap-end: calc(16% + 0.68 * var(--row-inset) - 2px);
+    --panel-end: calc(16% + 0.68 * var(--pad));
+    --controls-w: 9.75rem;
+    /* Very tall screens: stop growing, so the main photo does not turn into
+       a narrow portrait. */
+    --map-h: min(calc(var(--vh) - var(--header-h)), 54rem);
+    /* Height of the static line: every name fits on two lines from 64rem
+       (the longest wrap once): 0.5rem + line + 0.55rem + 2 * 1.08rem * 1.2 +
+       0.15rem + 0.82rem * 1.55 + 0.4rem + 0.9rem * 1.55 + 0.6rem + 0.25rem. */
+    --rail-h: 10.1875rem;
+    --map-top: 2.25rem;
+    --map-bottom: 6.5rem;
   }
 
   .trip-map__rail {
     margin-inline: 0;
-    padding-inline: 0;
+    padding: 0.5rem 0 0.25rem;
     overflow: visible;
     scroll-snap-type: none;
     -webkit-mask-image: none;
@@ -472,23 +652,47 @@
   .trip-map__stop { padding-inline: 0.4rem; }
   .trip-map__name { font-size: 1.08rem; }
 
-  .js .trip-map__controls { margin-top: 0.25rem; }
-  .trip-map__panels { margin-top: 2rem; }
-  .js .trip-map__panels { margin-top: 0.75rem; }
+  /* Controls on the line of the name, level with it:
+     0.85rem * 1.55 + 0.15rem + (2.6rem * 1.05 - 2.75rem) / 2. */
+  .js .trip-map__controls { --controls-dy: 1.45rem; }
+  .js .trip-map__region { padding-right: 0; }
+
+  /* Photos and text share the trip about equally: the photo column runs the
+     full height, the text column is wide enough for a few short paragraphs.
+     Smaller laptops give the text a little more room, so the longest trip
+     still fits; see the 80rem block. */
   .trip-map__panel {
     display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.9fr) minmax(19rem, 1fr);
     grid-template-rows: auto auto auto auto 1fr;
     column-gap: 2.5rem;
-    scroll-margin-top: 18.75rem;
   }
-  .trip-map__body { display: contents; }
   .trip-map__region { grid-column: 1 / -1; grid-row: 1; }
   .trip-map__title { grid-column: 1 / -1; grid-row: 2; font-size: 2.6rem; }
-  .trip-map__media { grid-column: 1; grid-row: 3 / -1; margin-top: 1.1rem; --hang: 2.5rem; }
+  .trip-map__media { grid-column: 1; grid-row: 3 / -1; margin-top: 1.1rem; min-height: 14rem; }
   .trip-map__text { grid-column: 2; grid-row: 3; margin-top: 1.1rem; font-size: 0.97rem; }
   .trip-map__facts { grid-column: 2; grid-row: 4; margin-top: 1.1rem; }
   .trip-map__actions { grid-column: 2; grid-row: 5; align-self: start; margin-top: 1.25rem; }
 
-  .trip-map__photo--main { aspect-ratio: 3 / 2; }
+  /* The smaller photos now follow the width of the main photo: a third of
+     it each, the single one of Weissensee a little more. */
+  .trip-map__media,
+  .trip-map__media:has(.trip-map__photo--square) {
+    --hang: 2.5rem;
+    --edge: 0.8rem;
+    --pair-gap: 0.75rem;
+    --side-w: calc(33.333% - 0.8rem);
+    --below-w: calc(33.333% - 1rem);
+  }
+  .trip-map__media:not(:has(.trip-map__photo--below)) { --side-w: calc(41.667% - 0.8rem); }
+  .trip-map__photo--side,
+  .trip-map__photo--below { outline-width: 0.3rem; }
+  .trip-map__photo--below { border-radius: 0.8rem; }
+}
+
+/* Wide laptops (the page is at its full width): a photo column a little
+   wider than the text. */
+@media (min-width: 80rem) {
+  .trip-map { --controls-w: 10.5rem; }
+  .trip-map__panel { grid-template-columns: minmax(0, 1.05fr) minmax(19rem, 1fr); }
 }

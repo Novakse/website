@@ -1,0 +1,1937 @@
+/* ==========================================================================
+   Wellness & schaatsen (wellness.html) - page-only luxury layout
+   Loads after styles.css + theme-groen.css. Every rule is scoped under
+   .page-wellness, so no other page is affected.
+
+   Concept: "warm after the cold". Two temperatures carry the page:
+   - ice: deep nordic night and a cool frost-white paper
+   - wellness: warm ivory and a dark espresso section, with an amber accent
+     taken from the sauna wood and the low winter sun in our own photos.
+   Wellness photos sit in arches (spa windows), ice photos in plain frames and
+   a porthole. The swept rink line returns as a thin amber stroke.
+
+   Dark sections also carry the shared .factbar class: main.js uses it to turn
+   the fixed header text white over them. Its base colours are overridden here.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("../fonts/cormorant-garamond-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("../fonts/cormorant-garamond-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: italic;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("../fonts/cormorant-garamond-italic-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: italic;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("../fonts/cormorant-garamond-italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* --------------------------------------------------------------------------
+   Tokens
+   -------------------------------------------------------------------------- */
+.page-wellness {
+  --lx-night: #0e1519;
+  --lx-night-2: #142027;
+  --lx-espresso: #1c1512;
+  /* linen: the light surface of this page instead of white; a warm
+     champagne / cashmere tone, like pale sauna wood in low sun.
+     sand: the deeper warm tone of the alternating light sections.
+     sheen: a lighter champagne, only used in the soft glow on large
+     light surfaces (never as a flat surface of its own). */
+  --lx-linen: #ede2d1;
+  --lx-linen-rgb: 237, 226, 209;
+  --lx-ivory: var(--lx-linen);
+  --lx-sand: #e5d6c1;
+  --lx-sheen-rgb: 244, 236, 223;
+  /* frost: the ice sections. It used to be a cool grey-blue, which read as
+     grey against the warm page; now a pale pearl, a touch less warm than
+     linen, so the ice sections still feel a little cooler */
+  --lx-frostpaper: #e9e3d8;
+  --lx-ink: #231913;            /* espresso: 13.4:1 on linen, 12.0:1 on sand */
+  --lx-ink-soft: #5b4a3d;       /* warm taupe: 6.6:1 on linen, 5.9:1 on sand */
+  --lx-amber: #d9a46c;          /* accent on dark: 8:1 on night */
+  --lx-amber-deep: #7a4519;     /* cognac accent on light: 6.1:1 on linen, 5.4:1 on sand */
+  --lx-bronze-rgb: 138, 94, 48; /* hairlines on light surfaces (decorative) */
+  --lx-on-dark: #f3eee6;
+  --lx-on-dark-soft: rgba(243, 238, 230, 0.74);
+  --lx-hair-light: rgba(var(--lx-bronze-rgb), 0.3);
+  --lx-hair-dark: rgba(217, 164, 108, 0.24);  /* soft gold on the dark sections */
+  --lx-serif: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
+  --lx-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --lx-section: 5.5rem;
+  --focus-ring: var(--lx-amber-deep);
+  /* shared light surfaces (skip link, language menu, form fields) use
+     --paper, which is pure white site-wide; here it becomes linen */
+  --paper: var(--lx-linen);
+  --paper-soft: var(--lx-sand);
+  /* shared header, menu and footer text: espresso instead of green-black */
+  --ink: var(--lx-ink);
+  --ink-soft: var(--lx-ink-soft);
+  --border: rgba(var(--lx-bronze-rgb), 0.3);
+
+  background: var(--lx-ivory);
+  color: var(--lx-ink);
+  /* Cormorant defaults to old-style figures; prices and facts read better lining */
+  font-variant-numeric: lining-nums;
+}
+@media (min-width: 64rem) {
+  .page-wellness { --lx-section: 9rem; }
+}
+.page-wellness main ol { list-style: none; margin: 0; padding: 0; }
+
+/* Dark surfaces: light text + amber focus ring */
+.page-wellness .factbar {
+  --focus-ring: var(--lx-amber);
+  background: var(--lx-night);
+  color: var(--lx-on-dark);
+}
+
+/* Fine film grain over the whole page: one fixed, static layer. Only from
+   tablet width up; on phones it costs paint time and is barely visible. */
+@media (min-width: 48rem) {
+  .page-wellness::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Type
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--lx-amber-deep);
+}
+.page-wellness .lx-eyebrow::before {
+  content: "";
+  width: 2.25rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+.page-wellness .factbar .lx-eyebrow { color: var(--lx-amber); }
+
+/* Eyebrows that only repeat their own heading (FAQ, why, who for) are kept
+   for screen readers but hidden visually: fewer identical labels. */
+.page-wellness .lx-reasons__head .lx-eyebrow,
+.page-wellness .lx-whofor .lx-eyebrow,
+.page-wellness .lx-faq__head .lx-eyebrow {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.page-wellness .lx-reasons__head .lx-h2,
+.page-wellness .lx-whofor .lx-h2,
+.page-wellness .lx-faq__head .lx-h2 { margin-top: 0; }
+
+/* One numeral style for every "01, 02" on the page (days, reasons, steps) */
+.page-wellness .lx-day__num,
+.page-wellness .lx-reason::before,
+.page-wellness .lx-step__nr {
+  font-family: var(--lx-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 2.25rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--lx-amber-deep);
+}
+
+.page-wellness .lx-h2 {
+  margin-top: 1.4rem;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.page-wellness .lx-h2 em,
+.page-wellness .lx-hero__title em,
+.page-wellness .lx-band__title em,
+.page-wellness .lx-closing__title em,
+.page-wellness .lx-motto em,
+.page-wellness .lx-journey__quote em {
+  font-style: italic;
+  font-weight: 400;
+}
+.page-wellness .lx-h2 em { color: var(--lx-amber-deep); }
+.page-wellness .factbar .lx-h2 em { color: var(--lx-amber); }
+
+.page-wellness .lx-h3 {
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.page-wellness .lx-lede {
+  margin-top: 1.75rem;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 1.9vw, 1.6rem);
+  line-height: 1.38;
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+.page-wellness .lx-text {
+  margin-top: 1.1rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--lx-ink-soft);
+  max-width: 36rem;
+  text-wrap: pretty;
+}
+.page-wellness .factbar .lx-text { color: var(--lx-on-dark-soft); }
+
+.page-wellness .lx-note {
+  margin-top: 1.75rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--lx-hair-light);
+  max-width: 34rem;
+  font-size: 0.9rem;
+  font-style: normal;
+  color: var(--lx-ink-soft);
+  text-wrap: pretty;
+}
+.page-wellness .factbar .lx-note { border-top-color: var(--lx-hair-dark); color: var(--lx-on-dark-soft); }
+
+.page-wellness .lx-label {
+  margin-top: 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lx-ink);
+}
+.page-wellness .factbar .lx-label { color: var(--lx-on-dark); }
+
+/* List with a small amber diamond instead of a bullet */
+.page-wellness .lx-list {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.7rem;
+}
+.page-wellness .lx-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.page-wellness .lx-list li::before {
+  content: "";
+  position: absolute;
+  left: 0.1rem;
+  top: 0.55em;
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--lx-amber-deep);
+  transform: rotate(45deg);
+}
+.page-wellness .factbar .lx-list li::before { background: var(--lx-amber); }
+.page-wellness .lx-list--optional li::before { background: transparent; box-shadow: inset 0 0 0 1px var(--lx-amber); }
+
+/* Text link with an amber underline that grows on hover */
+.page-wellness .lx-link {
+  display: inline;
+  color: inherit;
+  font-weight: 500;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 0.15em;
+  text-decoration: none;
+}
+.page-wellness .lx-link:hover,
+.page-wellness .lx-link:focus-visible { color: var(--lx-amber-deep); }
+.page-wellness .factbar .lx-link:hover,
+.page-wellness .factbar .lx-link:focus-visible { color: var(--lx-amber); }
+
+/* Pill button with the arrow in its own circle (button-in-button) */
+.page-wellness .lx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.95rem;
+  min-height: 3.25rem;
+  padding: 0.4rem 0.4rem 0.4rem 1.6rem;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  transition: transform 0.6s var(--lx-ease), background-color 0.4s var(--lx-ease), color 0.4s var(--lx-ease);
+}
+.page-wellness .lx-btn:active { transform: scale(0.98); }
+.page-wellness .lx-btn__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 50%;
+  background: rgba(14, 21, 25, 0.12);
+  transition: transform 0.6s var(--lx-ease);
+}
+.page-wellness .lx-btn__icon svg { width: 1rem; height: 1rem; }
+.page-wellness .lx-btn:hover .lx-btn__icon,
+.page-wellness .lx-btn:focus-visible .lx-btn__icon { transform: translateX(3px) rotate(-45deg); }
+.page-wellness .lx-btn--amber { background: var(--lx-amber); color: var(--lx-night); }
+.page-wellness .lx-btn--amber:hover { background: #e5b684; }
+.page-wellness .lx-btn--ghost {
+  padding: 0.4rem 1.6rem;
+  gap: 0.6rem;
+  color: var(--lx-on-dark);
+  box-shadow: inset 0 0 0 1px rgba(243, 238, 230, 0.45);
+}
+.page-wellness .lx-btn--ghost:hover { background: rgba(243, 238, 230, 0.1); }
+.page-wellness .lx-btn__wa { width: 1.1rem; height: 1.1rem; }
+
+.page-wellness .lx-actions {
+  margin-top: 2.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+}
+
+/* Section rhythm */
+.page-wellness .lx-section { padding-block: var(--lx-section); }
+
+/* Image frames */
+.page-wellness .lx-arch,
+.page-wellness .lx-porthole { overflow: hidden; }
+.page-wellness .lx-arch { border-radius: 999px 999px 0.4rem 0.4rem; }
+.page-wellness .lx-porthole { border-radius: 50%; }
+/* <picture> is inline by default; inside a frame it must fill the frame */
+.page-wellness .lx-arch picture,
+.page-wellness .lx-porthole picture,
+.page-wellness .lx-zoom picture,
+.page-wellness .lx-day__media picture,
+.page-wellness .lx-wellness__ice-frame picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.page-wellness .lx-band > picture,
+.page-wellness .lx-closing > picture { position: absolute; inset: 0; }
+.page-wellness .lx-arch img,
+.page-wellness .lx-porthole img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   Motion: slower, heavier reveal than the rest of the site. Photos also
+   settle from a slight zoom. Only transform + opacity; styles.css already
+   switches all transitions off for prefers-reduced-motion.
+   -------------------------------------------------------------------------- */
+.js .page-wellness .reveal {
+  transform: translateY(28px);
+  transition: opacity 1.1s var(--lx-ease), transform 1.3s var(--lx-ease);
+}
+.js .page-wellness .reveal.is-visible { transform: none; }
+.page-wellness .lx-zoom { overflow: hidden; }
+.js .page-wellness .lx-zoom img {
+  transform: scale(1.09);
+  transition: transform 2.2s var(--lx-ease);
+}
+.js .page-wellness .lx-zoom.is-visible img { transform: none; }
+
+.page-wellness .lx-rhythm__item:nth-child(2),
+.page-wellness .lx-reason:nth-child(2),
+.page-wellness .lx-step:nth-child(2) { transition-delay: 0.08s; }
+.page-wellness .lx-rhythm__item:nth-child(3),
+.page-wellness .lx-reason:nth-child(3),
+.page-wellness .lx-step:nth-child(3) { transition-delay: 0.16s; }
+.page-wellness .lx-rhythm__item:nth-child(4),
+.page-wellness .lx-reason:nth-child(4),
+.page-wellness .lx-step:nth-child(4) { transition-delay: 0.24s; }
+
+@keyframes lx-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes lx-settle {
+  from { transform: scale(1.12); }
+  to { transform: none; }
+}
+@keyframes lx-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .page-wellness .reveal,
+  .js .page-wellness .lx-zoom img { transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Header: on this page the light glass takes the ivory tone, and over the
+   dark night sections the light wordmark is used (the dark one disappears
+   against --lx-night).
+   -------------------------------------------------------------------------- */
+.page-wellness .site-header:not(.site-header--on-light) .logo-word-img--light { display: block; }
+.page-wellness .site-header:not(.site-header--on-light) .logo-word-img--dark { display: none; }
+.page-wellness .site-header.site-header--scrolled.site-header--on-light::after {
+  background-color: rgba(var(--lx-linen-rgb), 0.72);
+}
+/* opened mobile menu over a light section: linen glass instead of white */
+.page-wellness .site-header.site-header--on-light .main-nav::before {
+  background-color: rgba(var(--lx-linen-rgb), 0.55);
+}
+/* over photos (band, closing) the dark glass must be dense enough for the white logo */
+.page-wellness .site-header--scrolled:not(.site-header--on-light)::after {
+  background-color: rgba(14, 21, 25, 0.6);
+}
+.page-wellness .header-cta { background: var(--lx-amber); color: var(--lx-night); }
+
+/* --------------------------------------------------------------------------
+   1. Hero
+   -------------------------------------------------------------------------- */
+.page-wellness .page-hero.lx-hero {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  background: var(--lx-night);
+  color: var(--lx-on-dark);
+  overflow: hidden;
+}
+.page-wellness .page-hero.lx-hero::after { content: none; }
+/* Soft warm glow behind the arch, like light from the pool windows */
+.page-wellness .lx-hero::before {
+  content: "";
+  position: absolute;
+  width: 70rem;
+  height: 70rem;
+  right: -30rem;
+  top: -26rem;
+  background: radial-gradient(closest-side, rgba(217, 164, 108, 0.16), rgba(217, 164, 108, 0));
+  pointer-events: none;
+}
+
+.page-wellness .lx-hero__sweep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.25rem;
+  width: 100%;
+  height: 3.5rem;
+  color: var(--lx-amber);
+  opacity: 0.5;
+  pointer-events: none;
+  animation: lx-fade 2.4s var(--lx-ease) 0.6s both;
+}
+
+.page-wellness .lx-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 2.75rem;
+  padding-top: 5.25rem;
+  padding-bottom: 5.5rem;
+}
+
+.page-wellness .lx-hero__media {
+  position: relative;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 26rem;
+}
+.page-wellness .lx-hero__arch {
+  height: clamp(20rem, 50svh, 34rem);
+  box-shadow: 0 0 0 1px rgba(243, 238, 230, 0.08);
+}
+.page-wellness .lx-hero__arch img {
+  object-position: 42% 50%;
+  animation: lx-settle 2.8s var(--lx-ease) both;
+}
+.page-wellness .lx-hero__porthole img {
+  /* a light zoom: the curve of the swept track stays readable */
+  transform: scale(1.1);
+  transform-origin: 45% 45%;
+}
+.page-wellness .lx-hero__porthole {
+  position: absolute;
+  right: -0.25rem;
+  bottom: -2.25rem;
+  width: 8.5rem;
+  height: 8.5rem;
+  /* ring in the page colour, then a hairline: the porthole reads as set into the page */
+  box-shadow: 0 0 0 0.45rem var(--lx-night), 0 0 0 calc(0.45rem + 1px) rgba(217, 164, 108, 0.55);
+  animation: lx-rise 1.4s var(--lx-ease) 0.5s both;
+}
+
+.page-wellness .lx-hero__text > * { animation: lx-rise 1.3s var(--lx-ease) both; }
+.page-wellness .lx-hero__text > :nth-child(2) { animation-delay: 0.08s; }
+.page-wellness .lx-hero__text > :nth-child(3) { animation-delay: 0.16s; }
+.page-wellness .lx-hero__text > :nth-child(4) { animation-delay: 0.26s; }
+.page-wellness .lx-hero__text > :nth-child(5) { animation-delay: 0.36s; }
+
+.page-wellness .lx-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.55rem;
+  margin-bottom: 1.75rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  color: var(--lx-on-dark-soft);
+}
+.page-wellness .lx-crumbs a { color: var(--lx-on-dark-soft); padding-block: 0.3rem; }
+.page-wellness .lx-crumbs a:hover { color: var(--lx-on-dark); }
+.page-wellness .lx-crumbs > span:last-child { color: var(--lx-on-dark); }
+
+.page-wellness .lx-hero .lx-eyebrow { color: var(--lx-amber); }
+
+.page-wellness .lx-hero__title {
+  margin-top: 1.25rem;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(2.9rem, 8.6vw, 6.6rem);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.page-wellness .lx-hero__title em { color: var(--lx-amber); white-space: nowrap; }
+
+.page-wellness .lx-hero__lede {
+  margin-top: 1.5rem;
+  max-width: 30ch;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: var(--lx-on-dark-soft);
+}
+
+.page-wellness .lx-hero__actions {
+  margin-top: 2.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem 1.75rem;
+}
+.page-wellness .lx-hero__price {
+  font-size: 0.92rem;
+  color: var(--lx-on-dark-soft);
+}
+.page-wellness .lx-hero__price strong {
+  font-family: var(--lx-serif);
+  font-size: 1.55rem;
+  font-weight: 500;
+  color: var(--lx-on-dark);
+  margin-inline: 0.15rem;
+}
+
+/* phones and tablets: a shorter arch and tighter spacing, so the button and
+   the price are visible without scrolling (390x844) */
+@media (max-width: 63.99rem) {
+  .page-wellness .lx-hero__grid { padding-top: 4.5rem; gap: 2rem; }
+  .page-wellness .lx-hero__arch { height: clamp(15rem, 34svh, 34rem); }
+  /* smaller overhang: the porthole stays clear of the breadcrumbs */
+  .page-wellness .lx-hero__porthole { bottom: -1rem; width: 7.5rem; height: 7.5rem; }
+  .page-wellness .lx-crumbs { margin-bottom: 0.7rem; }
+  .page-wellness .lx-hero__title { margin-top: 1rem; }
+  .page-wellness .lx-hero__lede { margin-top: 1.1rem; }
+  .page-wellness .lx-hero__actions { margin-top: 1.6rem; gap: 0.75rem 1.75rem; }
+}
+/* phones: plain wrapping keeps "schaatsen in de" together (balance left "de"
+   stranded before the italic), and a slightly smaller breadcrumb fits on one
+   line from 390px, so no line ends on a lone slash */
+@media (max-width: 47.99rem) {
+  /* the porthole's ring ends on the text edge instead of near the screen edge */
+  .page-wellness .lx-hero__porthole { right: calc(0.45rem + 1px); }
+  .page-wellness .lx-hero__title { text-wrap: wrap; }
+  .page-wellness .lx-crumbs { font-size: 0.72rem; letter-spacing: 0; gap: 0.3rem 0.4rem; }
+}
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-hero__title { font-size: clamp(4.5rem, 7.8vw, 6.6rem); }
+  .page-wellness .lx-hero__grid {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    align-items: end;
+    gap: 4rem;
+    min-height: min(100svh, 62rem);
+    padding-top: 8rem;
+    padding-bottom: 5.5rem;
+  }
+  .page-wellness .lx-hero__media {
+    grid-column: 2;
+    grid-row: 1;
+    max-width: 30rem;
+    margin: 0 0 0 auto;
+  }
+  .page-wellness .lx-hero__text { grid-column: 1; grid-row: 1; padding-bottom: 1rem; }
+  .page-wellness .lx-hero__arch { height: min(74svh, 44rem); }
+  .page-wellness .lx-hero__porthole {
+    right: auto;
+    left: -5.5rem;
+    bottom: 3.5rem;
+    width: 12.5rem;
+    height: 12.5rem;
+    box-shadow: 0 0 0 0.6rem var(--lx-night), 0 0 0 calc(0.6rem + 1px) rgba(217, 164, 108, 0.55);
+  }
+  .page-wellness .lx-hero__sweep { bottom: -1rem; height: 13rem; }
+}
+/* small desktops: the arch column is narrow, so a smaller porthole sits a bit
+   higher and less far out, clear of the price next to the button */
+@media (min-width: 64rem) and (max-width: 71.99rem) {
+  .page-wellness .lx-hero__porthole { left: -3rem; bottom: 7rem; width: 10rem; height: 10rem; }
+}
+
+/* hero entrance without motion: no animation at all, everything in its end
+   state (placed after the hero rules so it wins on source order) */
+@media (prefers-reduced-motion: reduce) {
+  .page-wellness .lx-hero__text > *,
+  .page-wellness .lx-hero__porthole,
+  .page-wellness .lx-hero__sweep,
+  .page-wellness .lx-hero__arch img { animation: none; }
+  .page-wellness .lx-hero__text > *,
+  .page-wellness .lx-hero__porthole { opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   2. Key facts
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-facts { border-top: 1px solid var(--lx-hair-dark); }
+.page-wellness .lx-facts__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0 auto;
+}
+.page-wellness .lx-facts__item {
+  padding: 1.35rem 0.75rem 1.35rem 0;
+  border-bottom: 1px solid var(--lx-hair-dark);
+}
+.page-wellness .lx-facts__item:nth-last-child(-n+2) { border-bottom: none; }
+.page-wellness .lx-facts__item dt {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lx-on-dark-soft);
+}
+.page-wellness .lx-facts__item dd {
+  margin: 0.45rem 0 0;
+  font-family: var(--lx-serif);
+  font-size: 1.28rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.page-wellness .lx-facts__item--price dd { color: var(--lx-amber); }
+
+@media (min-width: 48rem) {
+  .page-wellness .lx-facts__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .page-wellness .lx-facts__item:nth-last-child(-n+3) { border-bottom: none; }
+}
+@media (min-width: 72rem) {
+  .page-wellness .lx-facts__list { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .page-wellness .lx-facts__item {
+    border-bottom: none;
+    padding: 2rem 1.25rem 2.1rem;
+    border-left: 1px solid var(--lx-hair-dark);
+  }
+  .page-wellness .lx-facts__item:first-child { border-left: none; padding-left: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   3. Intro
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-intro { background: var(--lx-ivory); }
+.page-wellness .lx-intro__grid { display: grid; gap: 3rem; }
+/* the italic half starts its own line, so "maar" never hangs at a line end */
+.page-wellness .lx-intro__head .lx-h2 em { display: block; }
+.page-wellness .lx-intro__media {
+  aspect-ratio: 4 / 5;
+  border-radius: 0.4rem 7rem 0.4rem 0.4rem;
+}
+.page-wellness .lx-intro__media img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
+/* phones and tablets: the photo keeps the full text width (left edge in line
+   with the heading and text), but in a landscape crop close to the photo's
+   own 3:2 shape, so it takes far less height than the old 4:5 portrait
+   (which filled half a phone screen and most of a tablet screen). */
+@media (max-width: 63.99rem) {
+  .page-wellness .lx-intro__media {
+    aspect-ratio: 5 / 4;
+    border-radius: 0.4rem 6rem 0.4rem 0.4rem;
+  }
+  .page-wellness .lx-intro__media img { object-position: 40% 60%; }
+}
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .page-wellness .lx-intro__media { aspect-ratio: 3 / 2; }
+}
+.page-wellness .lx-intro .lx-list { grid-template-columns: 1fr; }
+/* the grid gap already spaces the lede from the photo (even rhythm on phones) */
+.page-wellness .lx-intro__body .lx-lede { margin-top: 0; }
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-intro__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    row-gap: 4.5rem;
+  }
+  .page-wellness .lx-intro__head { grid-column: 1 / span 9; }
+  .page-wellness .lx-intro__media { grid-column: 1 / span 5; align-self: start; }
+  .page-wellness .lx-intro__body { grid-column: 7 / span 6; padding-top: 5rem; }
+  .page-wellness .lx-intro__body .lx-lede { margin-top: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   4. Day rhythm
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-rhythm { background: var(--lx-night); }
+.page-wellness .lx-rhythm__head { max-width: 44rem; }
+.page-wellness .lx-rhythm__track { position: relative; margin-top: 4rem; }
+.page-wellness .lx-rhythm__line { display: none; }
+.page-wellness .lx-rhythm__list {
+  position: relative;
+  display: grid;
+  gap: 2.75rem;
+  padding-left: 2rem;
+}
+/* mobile: a thin vertical line through the dots */
+.page-wellness .lx-rhythm__list::before {
+  content: "";
+  position: absolute;
+  left: 0.3rem;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(217, 164, 108, 0.7), rgba(217, 164, 108, 0.15));
+}
+.page-wellness .lx-rhythm__item { position: relative; }
+.page-wellness .lx-rhythm__item::before {
+  content: "";
+  position: absolute;
+  left: -2rem;
+  top: 0.45rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--lx-night);
+  box-shadow: inset 0 0 0 1.5px var(--lx-on-dark);
+}
+.page-wellness .lx-rhythm__item--warm::before {
+  background: var(--lx-amber);
+  box-shadow: 0 0 0 0.45rem rgba(217, 164, 108, 0.18);
+}
+.page-wellness .lx-rhythm__time {
+  display: block;
+  font-family: var(--lx-serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--lx-amber);
+}
+.page-wellness .lx-rhythm__title {
+  margin-top: 0.35rem;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: 1.9rem;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.page-wellness .lx-rhythm__text {
+  margin-top: 0.75rem;
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: var(--lx-on-dark-soft);
+  max-width: 30rem;
+  text-wrap: pretty;
+}
+.page-wellness .lx-rhythm__item--warm .lx-rhythm__title { color: var(--lx-amber); }
+.page-wellness .lx-rhythm__note {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--lx-hair-dark);
+  max-width: 44rem;
+  font-family: var(--lx-serif);
+  font-size: 1.3rem;
+  line-height: 1.45;
+  color: var(--lx-on-dark);
+}
+.page-wellness .lx-rhythm__note a {
+  color: var(--lx-amber);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-rhythm__track { margin-top: 5.5rem; }
+  /* desktop: the swept rink line weaves through the four dots */
+  .page-wellness .lx-rhythm__line {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -0.5rem;
+    width: 100%;
+    height: 2.5rem;
+    color: var(--lx-amber);
+    opacity: 0.75;
+  }
+  .page-wellness .lx-rhythm__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    padding-left: 0;
+    padding-top: 3.25rem;
+  }
+  .page-wellness .lx-rhythm__list::before { content: none; }
+  .page-wellness .lx-rhythm__item { padding-right: 2.5rem; }
+  .page-wellness .lx-rhythm__item::before { left: -0.32rem; top: -2.8rem; }
+}
+/* small desktops: four columns are narrow, so the titles stay on one line */
+@media (min-width: 64rem) and (max-width: 71.99rem) {
+  .page-wellness .lx-rhythm__item { padding-right: 1.5rem; }
+  .page-wellness .lx-rhythm__title { font-size: 1.55rem; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Wellness (warm dark)
+   -------------------------------------------------------------------------- */
+/* starts in the night tone of the section above and warms up to espresso,
+   so there is no hard seam between the two dark sections */
+.page-wellness .lx-wellness.factbar {
+  background:
+    radial-gradient(60rem 40rem at 15% 20%, rgba(217, 164, 108, 0.12), rgba(217, 164, 108, 0) 70%),
+    linear-gradient(180deg, var(--lx-night), var(--lx-espresso) 16rem);
+  background-color: var(--lx-espresso);
+  overflow: hidden;
+}
+.page-wellness .lx-wellness__grid { display: grid; gap: 4.5rem; }
+.page-wellness .lx-wellness__media {
+  position: relative;
+  width: min(76%, 22rem);
+  margin-left: 2rem;
+  /* room for the ice caption, which hangs below the shared bottom edge */
+  margin-bottom: 2.25rem;
+}
+.page-wellness .lx-wellness__sauna { aspect-ratio: 2 / 3; }
+.page-wellness .lx-wellness__sauna img { width: 100%; height: 100%; object-fit: cover; }
+.page-wellness .lx-wellness__sauna figcaption,
+.page-wellness .lx-wellness__ice figcaption {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--lx-on-dark-soft);
+}
+/* the sauna caption runs up the left edge, outside the arch */
+.page-wellness .lx-wellness__sauna { overflow: visible; }
+.page-wellness .lx-wellness__sauna picture {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 999px 999px 0.4rem 0.4rem;
+}
+.page-wellness .lx-wellness__sauna figcaption {
+  position: absolute;
+  left: -1.9rem;
+  bottom: 0;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+/* the ice photo shares the bottom edge of the sauna arch; its caption hangs
+   below that edge, so the two frames line up exactly */
+.page-wellness .lx-wellness__ice {
+  position: absolute;
+  right: -16%;
+  bottom: 0;
+  width: 62%;
+}
+.page-wellness .lx-wellness__ice-frame {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 0 0.5rem var(--lx-espresso);
+}
+.page-wellness .lx-wellness__ice img { width: 100%; height: 100%; object-fit: cover; }
+.page-wellness .lx-wellness__ice figcaption {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 1rem;
+}
+
+.page-wellness .lx-pull {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--lx-hair-dark);
+  max-width: 30ch;
+  font-family: var(--lx-serif);
+  font-style: italic;
+  font-size: clamp(1.6rem, 2.5vw, 2.15rem);
+  line-height: 1.25;
+  color: var(--lx-amber);
+}
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-wellness__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: center;
+  }
+  .page-wellness .lx-wellness__media {
+    grid-column: 2 / span 4;
+    width: auto;
+    margin: 0;
+  }
+  .page-wellness .lx-wellness__body { grid-column: 8 / span 5; }
+  .page-wellness .lx-wellness__ice { right: -42%; width: 70%; }
+  /* caption to the right, clear of the sauna arch */
+  .page-wellness .lx-wellness__ice figcaption { text-align: right; }
+}
+/* narrower desktops: the media column is small, so the ice photo moves
+   further out, otherwise its caption still runs into the sauna arch */
+@media (min-width: 64rem) and (max-width: 79.99rem) {
+  .page-wellness .lx-wellness__ice { right: -56%; width: 64%; }
+}
+
+/* --------------------------------------------------------------------------
+   6. Natural ice (cool paper)
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-ice { background: var(--lx-frostpaper); }
+.page-wellness .lx-ice__grid { display: grid; gap: 4rem; }
+.page-wellness .lx-more {
+  margin-top: 2.5rem;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--lx-hair-light);
+  display: grid;
+  gap: 0.9rem;
+  max-width: 34rem;
+}
+.page-wellness .lx-more__title {
+  font-family: var(--lx-serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  text-wrap: balance;
+}
+/* multi-line links: a real text underline per line, not one bar under the block */
+.page-wellness .lx-more .lx-link {
+  justify-self: start;
+  line-height: 1.55;
+  padding-bottom: 0;
+  background: none;
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+/* Collage: one wide photo on top, below it a portrait and a landscape that
+   share the same top and bottom edge. The 4/8 column split with a 3:4
+   portrait gives the landscape roughly its own 3:2 shape, so neither photo
+   is cropped square. One gutter everywhere, no overlaps. */
+.page-wellness .lx-ice__collage {
+  --ice-gap: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--ice-gap);
+  row-gap: var(--ice-gap);
+  align-items: stretch;
+}
+.page-wellness .lx-ice__main,
+.page-wellness .lx-ice__tall,
+.page-wellness .lx-ice__wide {
+  overflow: hidden;
+  border-radius: 0.3rem;
+}
+.page-wellness .lx-ice__main {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  aspect-ratio: 16 / 9;
+}
+.page-wellness .lx-ice__tall {
+  grid-column: 1 / span 4;
+  grid-row: 2;
+  aspect-ratio: 3 / 4;
+}
+/* no own ratio: stretches to the height of the portrait beside it */
+.page-wellness .lx-ice__wide {
+  grid-column: 5 / -1;
+  grid-row: 2;
+  min-height: 0;
+}
+.page-wellness .lx-ice__main picture,
+.page-wellness .lx-ice__tall picture,
+.page-wellness .lx-ice__wide picture { display: block; height: 100%; }
+.page-wellness .lx-ice__main img,
+.page-wellness .lx-ice__tall img,
+.page-wellness .lx-ice__wide img { width: 100%; height: 100%; object-fit: cover; }
+.page-wellness .lx-ice__main img { object-position: 60% 50%; }
+.page-wellness .lx-ice__tall img { object-position: 50% 55%; }
+.page-wellness .lx-ice__wide img { object-position: 50% 60%; }
+.page-wellness .lx-ice__caption {
+  grid-column: 5 / -1;
+  grid-row: 3;
+  margin-top: 0.65rem;
+  font-family: var(--lx-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--lx-ink-soft);
+  text-wrap: balance;
+}
+@media (min-width: 48rem) {
+  .page-wellness .lx-ice__collage { --ice-gap: 1rem; }
+}
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-ice__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: start;
+  }
+  .page-wellness .lx-ice__body { grid-column: 1 / span 5; position: sticky; top: 7rem; }
+  .page-wellness .lx-ice__collage { grid-column: 7 / span 6; }
+}
+
+/* --------------------------------------------------------------------------
+   7. Skate with us (sand)
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-together { background: var(--lx-sand); }
+.page-wellness .lx-together__grid { display: grid; gap: 3rem; }
+.page-wellness .lx-together__media { aspect-ratio: 4 / 3; }
+.page-wellness .lx-together__media img { width: 100%; height: 100%; object-fit: cover; }
+.page-wellness .lx-together__body { padding-inline: var(--pad); }
+.page-wellness .lx-motto {
+  margin-top: 5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--lx-hair-light);
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(2.1rem, 5vw, 4.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.page-wellness .lx-motto em { display: block; color: var(--lx-amber-deep); }
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-together__grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 5rem;
+    align-items: stretch;
+  }
+  /* the campfire photo keeps its own proportion instead of stretching with
+     the text; it starts level with the text and stays in view (sticky)
+     while the longer text scrolls past */
+  .page-wellness .lx-together__media {
+    aspect-ratio: 5 / 4;
+    min-height: 0;
+    align-self: start;
+    position: sticky;
+    top: 7rem;
+    border-radius: 0 0.4rem 0.4rem 0;
+  }
+  .page-wellness .lx-together__body {
+    padding-inline: 0 max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad)));
+    padding-block: 2rem;
+  }
+  .page-wellness .lx-motto { margin-top: 7rem; }
+}
+
+/* --------------------------------------------------------------------------
+   8. Full-bleed band + the journey text
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-band.factbar {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: min(78svh, 56rem);
+  padding-block: 8rem 4rem;
+  overflow: hidden;
+  background: var(--lx-night);
+}
+.page-wellness .lx-band__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 60%;
+}
+@media (min-width: 64rem) {
+  .page-wellness .lx-band.factbar { min-height: min(92svh, 56rem); }
+}
+.page-wellness .lx-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(14, 21, 25, 0.5) 0%, rgba(14, 21, 25, 0) 28%, rgba(14, 21, 25, 0.6) 48%, rgba(14, 21, 25, 0.88) 100%);
+}
+.page-wellness .lx-band__inner { position: relative; z-index: 1; width: 100%; }
+/* over the photo the amber eyebrow is too weak: light text instead */
+.page-wellness .lx-band .lx-eyebrow { color: var(--lx-on-dark); }
+.page-wellness .lx-band__title {
+  margin-top: 1.4rem;
+  max-width: 17ch;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 6.6vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.page-wellness .lx-band__title em { color: var(--lx-amber); }
+
+/* journey and snow share the ivory tone: half the usual spacing between them */
+.page-wellness .lx-journey { background: var(--lx-ivory); padding-bottom: calc(var(--lx-section) * 0.5); }
+.page-wellness .lx-journey__grid { display: grid; gap: 2.5rem; }
+.page-wellness .lx-journey__quote {
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  max-width: 21ch;
+  text-wrap: balance;
+}
+.page-wellness .lx-journey__quote em { display: block; color: var(--lx-amber-deep); }
+.page-wellness .lx-journey__body > :first-child { margin-top: 0; }
+.page-wellness .lx-journey__body .lx-lede { max-width: 30ch; margin-block: 1.75rem 0.5rem; }
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-journey__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+  .page-wellness .lx-journey__quote { grid-column: 1 / span 5; }
+  .page-wellness .lx-journey__body { grid-column: 7 / span 5; padding-top: 0.75rem; }
+}
+
+/* --------------------------------------------------------------------------
+   9. Snow
+   -------------------------------------------------------------------------- */
+/* clip: the photo bleeds to the screen edge; 100vw includes a classic
+   scrollbar, so without the clip that could add a few px of sideways scroll */
+.page-wellness .lx-snow {
+  background: var(--lx-ivory);
+  padding-top: calc(var(--lx-section) * 0.5);
+  overflow-x: clip;
+}
+.page-wellness .lx-snow__grid { display: grid; gap: 3.5rem; }
+.page-wellness .lx-snow__media {
+  aspect-ratio: 4 / 3;
+  border-radius: 7rem 0.4rem 0.4rem 0.4rem;
+}
+.page-wellness .lx-snow__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-snow__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: center;
+  }
+  .page-wellness .lx-snow__body { grid-column: 1 / span 5; grid-row: 1; }
+  /* bleeds to the right screen edge at every desktop width */
+  .page-wellness .lx-snow__media {
+    grid-column: 7 / span 6;
+    grid-row: 1;
+    /* landscape, close to the photo's own shape: a square cut off the trees */
+    aspect-ratio: 5 / 4;
+    border-radius: 7rem 0 0 0.4rem;
+    margin-right: calc(-1 * max(var(--pad), (100vw - var(--wrap)) / 2 + var(--pad)));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Included (ledger)
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-ledger { background: var(--lx-night); }
+.page-wellness .lx-ledger__grid { display: grid; gap: 3rem; }
+.page-wellness .lx-ledger__list { margin: 0; }
+.page-wellness .lx-ledger__row {
+  display: grid;
+  gap: 0.5rem;
+  padding-block: 1.6rem;
+  border-top: 1px solid var(--lx-hair-dark);
+}
+.page-wellness .lx-ledger__row:last-child { border-bottom: 1px solid var(--lx-hair-dark); }
+.page-wellness .lx-ledger__row dt {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+.page-wellness .lx-ledger__row dd {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--lx-on-dark-soft);
+  max-width: 34rem;
+  text-wrap: pretty;
+}
+.page-wellness .lx-ledger__row--optional dt { font-style: italic; color: var(--lx-on-dark-soft); }
+.page-wellness .lx-tag {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lx-amber);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(217, 164, 108, 0.6);
+}
+
+@media (min-width: 48rem) {
+  .page-wellness .lx-ledger__row { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2rem; align-items: baseline; }
+}
+@media (min-width: 64rem) {
+  .page-wellness .lx-ledger__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: start;
+  }
+  .page-wellness .lx-ledger__head { grid-column: 1 / span 4; position: sticky; top: 7rem; }
+  .page-wellness .lx-ledger__list { grid-column: 6 / -1; }
+  .page-wellness .lx-ledger__row dt { font-size: 2.3rem; }
+}
+
+/* --------------------------------------------------------------------------
+   11. Day by day
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-days { background: var(--lx-sand); overflow: hidden; }
+.page-wellness .lx-days__track {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--pad);
+  padding-inline: var(--pad);
+  padding-block: 0.5rem 1rem;
+  scrollbar-width: none;
+}
+.page-wellness .lx-days__track::-webkit-scrollbar { display: none; }
+.page-wellness .lx-days__track:focus-visible { outline-offset: -3px; }
+.page-wellness .lx-day {
+  flex: 0 0 80%;
+  max-width: 23rem;
+  scroll-snap-align: start;
+}
+.page-wellness .lx-day__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 0.3rem;
+  background: rgba(var(--lx-bronze-rgb), 0.12);
+}
+.page-wellness .lx-day--arch .lx-day__media { border-radius: 999px 999px 0.3rem 0.3rem; }
+.page-wellness .lx-day__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--lx-ease);
+}
+.page-wellness .lx-day:hover .lx-day__media img { transform: scale(1.04); }
+.page-wellness .lx-day__media::after {
+  content: "";
+  position: absolute;
+  inset: 55% 0 0;
+  background: linear-gradient(180deg, rgba(14, 21, 25, 0), rgba(14, 21, 25, 0.55));
+  pointer-events: none;
+}
+.page-wellness .lx-day__num {
+  position: absolute;
+  left: 1.1rem;
+  bottom: 0.9rem;
+  z-index: 1;
+  color: var(--lx-on-dark);
+}
+.page-wellness .lx-day__label {
+  display: block;
+  margin-top: 1.4rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--lx-amber-deep);
+}
+.page-wellness .lx-day__title {
+  margin-top: 0.5rem;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: 1.75rem;
+  line-height: 1.1;
+}
+.page-wellness .lx-day__text {
+  margin-top: 0.7rem;
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: var(--lx-ink-soft);
+  text-wrap: pretty;
+}
+.page-wellness .lx-days__progress {
+  margin-top: 2.25rem;
+  position: relative;
+}
+.page-wellness .lx-days__progress::before {
+  content: "";
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  top: 0;
+  height: 1px;
+  background: var(--lx-hair-light);
+}
+.page-wellness .lx-days__progress .days__progress-bar {
+  position: relative;
+  height: 1px;
+  width: 20%;
+  background: var(--lx-amber-deep);
+}
+
+@media (min-width: 48rem) {
+  .page-wellness .lx-day { flex-basis: 23rem; }
+}
+/* desktop: a thin visible scrollbar, so the row can be scrolled with a mouse
+   (touch and trackpads swipe; the progress line below stays as well) */
+@media (min-width: 64rem) {
+  .page-wellness .lx-days__track {
+    scrollbar-width: thin;
+    scrollbar-color: var(--lx-amber-deep) transparent;
+  }
+  .page-wellness .lx-days__track::-webkit-scrollbar { display: block; height: 6px; }
+  .page-wellness .lx-days__track::-webkit-scrollbar-track { background: transparent; }
+  .page-wellness .lx-days__track::-webkit-scrollbar-thumb {
+    background: var(--lx-amber-deep);
+    border-radius: 999px;
+  }
+}
+@media (min-width: 72rem) {
+  .page-wellness .lx-days__track {
+    gap: 2.25rem;
+    padding-inline: max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad)));
+    scroll-padding-inline: max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad)));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   12. Why this trip
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-reasons { background: var(--lx-ivory); }
+.page-wellness .lx-reasons__grid { display: grid; gap: 3rem; }
+.page-wellness .lx-reasons__list {
+  display: grid;
+  gap: 0;
+  counter-reset: lx-reason;
+}
+.page-wellness .lx-reason {
+  counter-increment: lx-reason;
+  padding-block: 1.9rem;
+  border-top: 1px solid var(--lx-hair-light);
+}
+.page-wellness .lx-reason::before {
+  content: counter(lx-reason, decimal-leading-zero);
+  display: block;
+}
+.page-wellness .lx-reason h3 {
+  margin-top: 0.75rem;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: 1.75rem;
+  line-height: 1.12;
+}
+.page-wellness .lx-reason p {
+  margin-top: 0.6rem;
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: var(--lx-ink-soft);
+  max-width: 30rem;
+  text-wrap: pretty;
+}
+
+@media (min-width: 48rem) {
+  .page-wellness .lx-reasons__list { grid-template-columns: 1fr 1fr; column-gap: 3rem; }
+}
+@media (min-width: 64rem) {
+  .page-wellness .lx-reasons__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: start;
+  }
+  .page-wellness .lx-reasons__head { grid-column: 1 / span 4; position: sticky; top: 7rem; }
+  .page-wellness .lx-reasons__list { grid-column: 6 / -1; column-gap: 3.5rem; }
+  /* offset the second column for a looser, less grid-like rhythm */
+  .page-wellness .lx-reason:nth-child(even) { transform: translateY(3.5rem); }
+  .js .page-wellness .lx-reason.reveal:nth-child(even) { transform: translateY(calc(3.5rem + 28px)); }
+  .js .page-wellness .lx-reason.reveal.is-visible:nth-child(even) { transform: translateY(3.5rem); }
+  .page-wellness .lx-reasons { padding-bottom: calc(var(--lx-section) + 3.5rem); }
+}
+
+/* --------------------------------------------------------------------------
+   13. Who is this for (warm dark)
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-whofor.factbar {
+  background:
+    radial-gradient(50rem 30rem at 50% 0%, rgba(217, 164, 108, 0.1), rgba(217, 164, 108, 0) 70%),
+    var(--lx-espresso);
+  text-align: center;
+}
+.page-wellness .lx-whofor__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 50rem;
+}
+.page-wellness .lx-whofor .lx-lede { max-width: 38ch; margin-inline: auto; }
+.page-wellness .lx-whofor__maybe {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 0.9rem;
+  color: var(--lx-on-dark-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 36rem;
+  text-wrap: pretty;
+}
+.page-wellness .lx-whofor__answer {
+  margin-top: 2.75rem;
+  font-family: var(--lx-serif);
+  font-style: italic;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 1;
+  color: var(--lx-amber);
+}
+.page-wellness .lx-whofor .lx-text { margin-inline: auto; margin-top: 1.5rem; }
+
+/* Photo: a porthole (like the one in the hero) with a thin amber ring set
+   off from the image. Mobile: centred under the text. Desktop: beside it. */
+.page-wellness .lx-voorwie__photo {
+  width: min(78%, 20rem);
+  margin-top: 3.75rem;
+}
+.page-wellness .lx-voorwie__photo picture {
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 50%;
+  outline: 1px solid rgba(217, 164, 108, 0.55);
+  outline-offset: 0.6rem;
+}
+.page-wellness .lx-voorwie__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+@media (min-width: 64rem) {
+  /* text left, porthole right; the last row (1fr) takes up any extra height
+     of the photo, so the text rows keep their own spacing */
+  .page-wellness .lx-whofor.factbar:has(.lx-voorwie__photo) { text-align: left; }
+  .page-wellness .lx-whofor__inner:has(> .lx-voorwie__photo) {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-rows: repeat(6, auto) 1fr;
+    column-gap: clamp(3.5rem, 7vw, 7.5rem);
+    justify-items: start;
+    align-items: start;
+    max-width: var(--wrap);
+  }
+  .page-wellness .lx-whofor__inner:has(> .lx-voorwie__photo) > :not(.lx-voorwie__photo) { grid-column: 1; }
+  .page-wellness .lx-whofor__inner:has(> .lx-voorwie__photo) .lx-lede,
+  .page-wellness .lx-whofor__inner:has(> .lx-voorwie__photo) .lx-text { margin-inline: 0; }
+  .page-wellness .lx-voorwie__photo {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: center;
+    justify-self: center;
+    /* leaves room for the ring (outline + offset) inside the column */
+    width: min(calc(100% - 1.4rem), 27rem);
+    margin: 3rem 0 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Practical
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-practical { background: var(--lx-frostpaper); }
+.page-wellness .lx-practical__grid { display: grid; gap: 4.5rem; }
+.page-wellness .lx-specs { margin: 2rem 0 0; }
+.page-wellness .lx-specs > div {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 1.25rem;
+  padding-block: 1rem;
+  border-top: 1px solid var(--lx-hair-light);
+}
+.page-wellness .lx-specs > div:last-child { border-bottom: 1px solid var(--lx-hair-light); }
+.page-wellness .lx-specs dt {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lx-ink-soft);
+  padding-top: 0.35rem;
+}
+.page-wellness .lx-specs dd {
+  margin: 0;
+  font-family: var(--lx-serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+/* small phones: label above its value, so long labels never collide */
+@media (max-width: 29.99rem) {
+  .page-wellness .lx-specs > div { grid-template-columns: 1fr; gap: 0.3rem; }
+  .page-wellness .lx-specs dt { padding-top: 0; }
+}
+.page-wellness .lx-practical__ice .lx-text:first-of-type { margin-top: 2rem; }
+.page-wellness .lx-practical__safety {
+  margin-top: 2.25rem;
+  font-family: var(--lx-serif);
+  font-style: italic;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  line-height: 1.1;
+  color: var(--lx-amber-deep);
+}
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-practical__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+  .page-wellness .lx-practical__facts { grid-column: 1 / span 6; }
+  .page-wellness .lx-practical__ice { grid-column: 8 / span 5; padding-top: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   15. Price (night)
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-price.factbar {
+  background:
+    radial-gradient(56rem 36rem at 0% 100%, rgba(217, 164, 108, 0.1), rgba(217, 164, 108, 0) 70%),
+    var(--lx-night);
+}
+.page-wellness .lx-price__grid { display: grid; gap: 3.5rem; }
+.page-wellness .lx-price__intro .lx-h2 em { display: block; }
+.page-wellness .lx-price__from {
+  margin-top: 2.5rem;
+  font-size: 1rem;
+  color: var(--lx-on-dark-soft);
+}
+.page-wellness .lx-price__from strong {
+  display: block;
+  margin-block: 0.25rem 0.2rem;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(4.2rem, 11vw, 8.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--lx-amber);
+}
+
+.page-wellness .lx-rates {
+  width: 100%;
+  border-collapse: collapse;
+}
+.page-wellness .lx-rates thead th {
+  padding-bottom: 0.9rem;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lx-on-dark-soft);
+  text-align: left;
+}
+.page-wellness .lx-rates thead th:last-child,
+.page-wellness .lx-rates td { text-align: right; }
+.page-wellness .lx-rates tbody th,
+.page-wellness .lx-rates td {
+  padding-block: 1.05rem;
+  border-top: 1px solid var(--lx-hair-dark);
+  font-family: var(--lx-serif);
+  font-size: 1.65rem;
+  font-weight: 500;
+  line-height: 1.1;
+}
+.page-wellness .lx-rates tbody th { text-align: left; }
+.page-wellness .lx-rates tbody tr:last-child > * { border-bottom: 1px solid var(--lx-hair-dark); }
+.page-wellness .lx-rates tbody tr:first-child td { color: var(--lx-amber); }
+
+/* The lists open the detail column (the booking calendar below has the
+   duration buttons): no space above the first labels. */
+.page-wellness .lx-price__lists > div:first-child > .lx-label { margin-top: 0; }
+.page-wellness .lx-price__lists { display: grid; gap: 0.5rem; }
+.page-wellness .lx-price__lists .lx-list li { color: var(--lx-on-dark-soft); }
+/* two list columns only where there is room: 40-64rem (full width) and
+   from 80rem (wide detail column) */
+@media (min-width: 40rem) and (max-width: 63.99rem), (min-width: 80rem) {
+  .page-wellness .lx-price__lists { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .page-wellness .lx-price__lists > div > .lx-label { margin-top: 0; }
+}
+
+/* Photo under the big price: an arch (spa window), with the same thin
+   amber ring as the porthole in "Voor wie" */
+/* the right margin equals the ring's offset, so the ring (not the photo)
+   lines up with the text edge */
+.page-wellness .lx-price__photo {
+  width: min(64%, 17rem);
+  margin: 3rem calc(0.6rem + 1px) 0 auto;
+}
+.page-wellness .lx-price__photo picture {
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 999px 999px 0.4rem 0.4rem;
+  outline: 1px solid rgba(217, 164, 108, 0.55);
+  outline-offset: 0.6rem;
+}
+.page-wellness .lx-price__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 50%;
+}
+
+/* phones: the arch stands beside the price instead of on a row of its own
+   (right-aligned under the price it left a loose empty area to its left).
+   Heading across the full width; below it the price on the left and the
+   arch on the right, their feet on one line. The ring's offset is kept as
+   right margin, so the ring ends on the text edge. */
+@media (max-width: 39.99rem) {
+  .page-wellness .lx-price__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 1.25rem;
+  }
+  .page-wellness .lx-price__intro > * { grid-column: 1 / -1; }
+  .page-wellness .lx-price__intro > .lx-eyebrow { justify-self: start; }
+  .page-wellness .lx-price__from {
+    grid-column: 1;
+    align-self: end;
+  }
+  .page-wellness .lx-price__from strong {
+    font-size: clamp(3.2rem, 14vw, 4.2rem);
+    white-space: nowrap;
+  }
+  .page-wellness .lx-price__photo {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: end;
+    width: min(34vw, 10rem);
+    margin: 2.5rem calc(0.6rem + 1px) 0 0;
+  }
+}
+
+/* tablets: the arch stands beside the heading and the price instead of on a
+   row of its own (which left a wide empty area to its left); the last row
+   takes any extra height, so the price lines up with the foot of the arch */
+@media (min-width: 40rem) and (max-width: 63.99rem) {
+  .page-wellness .lx-price__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto 1fr;
+    column-gap: 2.5rem;
+  }
+  .page-wellness .lx-price__intro > * { grid-column: 1; }
+  .page-wellness .lx-price__intro > .lx-eyebrow { justify-self: start; }
+  .page-wellness .lx-price__from { align-self: end; }
+  .page-wellness .lx-price__photo {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: end;
+    width: 15rem;
+    margin: 0 calc(0.6rem + 1px) 0 0;
+  }
+}
+
+/* the line trip-search.js inserts when dates arrive via the URL */
+.page-wellness .lx-price .pending__chosen {
+  margin-top: 1.75rem;
+  padding: 0.9rem 1.1rem;
+  border-left: 2px solid var(--lx-amber);
+  border-radius: 0 0.4rem 0.4rem 0;
+  background: rgba(243, 238, 230, 0.06);
+  color: var(--lx-on-dark);
+  font-size: 0.95rem;
+}
+.page-wellness .lx-price .lx-link { color: var(--lx-on-dark); }
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-price__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: start;
+  }
+  /* no sticky columns here: sticky holds for the whole grid, so a stuck
+     column would slide over the booking row below them */
+  .page-wellness .lx-price__intro { grid-column: 1 / span 6; }
+  .page-wellness .lx-price__detail { grid-column: 7 / -1; padding-top: 0.5rem; }
+  .page-wellness .lx-price__photo { width: min(100%, 19rem); margin: 3.5rem 0 0 clamp(2rem, 6vw, 6rem); }
+}
+
+/* Booking row: "Kies je data" and the calendar card (styled in
+   css/wellness-kalender.css). The request buttons follow it on phones and
+   tablets; from 64rem the booking row spans both columns and the buttons
+   stand under the price details, beside the photo, as before. The negative
+   margin keeps the buttons 2.25rem from what is above them (grid gap 3.5rem). */
+.page-wellness .lx-price__booking > .lx-label { margin-top: 0; }
+.page-wellness .lx-price__grid > .pending__actions { margin-top: -1.25rem; }
+@media (min-width: 64rem) {
+  /* the photo column's extra height goes to row 2, below the buttons */
+  .page-wellness .lx-price__grid { grid-template-rows: auto 1fr auto; }
+  .page-wellness .lx-price__intro { grid-row: 1 / span 2; }
+  .page-wellness .lx-price__detail { grid-row: 1; }
+  .page-wellness .lx-price__grid > .pending__actions { grid-column: 7 / -1; grid-row: 2; }
+  .page-wellness .lx-price__booking { grid-column: 1 / -1; grid-row: 3; }
+}
+
+/* --------------------------------------------------------------------------
+   16. Booking steps
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-steps { background: var(--lx-ivory); }
+
+/* Large linen surfaces: a faint champagne glow from the top corner, like low
+   sun on pale wood. It fades out well before the section's lower edge, so
+   sections that run on into the next one (journey > snow, steps > faq)
+   meet on flat linen without a seam. */
+.page-wellness .lx-intro,
+.page-wellness .lx-journey,
+.page-wellness .lx-reasons,
+.page-wellness .lx-steps {
+  background:
+    radial-gradient(60rem 22rem at 100% 0%, rgba(var(--lx-sheen-rgb), 0.9), rgba(var(--lx-sheen-rgb), 0) 100%),
+    var(--lx-linen);
+}
+.page-wellness .lx-reasons {
+  background:
+    radial-gradient(60rem 22rem at 0% 0%, rgba(var(--lx-sheen-rgb), 0.9), rgba(var(--lx-sheen-rgb), 0) 100%),
+    var(--lx-linen);
+}
+.page-wellness .lx-steps__head { max-width: 44rem; }
+.page-wellness .lx-steps__list {
+  margin-top: 4rem;
+  display: grid;
+  gap: 2.5rem;
+}
+.page-wellness .lx-step {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--lx-hair-light);
+}
+.page-wellness .lx-step__nr { display: block; }
+.page-wellness .lx-step__title {
+  margin-top: 0.75rem;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.page-wellness .lx-step__text {
+  margin-top: 0.7rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--lx-ink-soft);
+  text-wrap: pretty;
+}
+@media (min-width: 48rem) {
+  .page-wellness .lx-steps__list { grid-template-columns: 1fr 1fr; column-gap: 2.5rem; }
+}
+@media (min-width: 72rem) {
+  .page-wellness .lx-steps__list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .page-wellness .lx-step:nth-child(2) { margin-top: 2.5rem; }
+  .page-wellness .lx-step:nth-child(3) { margin-top: 5rem; }
+  .page-wellness .lx-step:nth-child(4) { margin-top: 7.5rem; }
+}
+
+/* --------------------------------------------------------------------------
+   17. FAQ
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-faq { background: var(--lx-ivory); padding-top: 0; }
+.page-wellness .lx-faq__grid {
+  position: relative;
+  display: grid;
+  gap: 2.5rem;
+  padding-top: var(--lx-section);
+}
+/* divider aligned with the content, not with the wrap's padding box */
+.page-wellness .lx-faq__grid::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--pad);
+  right: var(--pad);
+  height: 1px;
+  background: var(--lx-hair-light);
+}
+.page-wellness .lx-faq__item { border-bottom: 1px solid var(--lx-hair-light); }
+.page-wellness .lx-faq__item:first-child { border-top: 1px solid var(--lx-hair-light); }
+.page-wellness .lx-faq__item summary {
+  position: relative;
+  display: block;
+  padding: 1.4rem 3rem 1.4rem 0;
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: 1.45rem;
+  line-height: 1.25;
+  cursor: pointer;
+  list-style: none;
+  text-wrap: balance;
+}
+.page-wellness .lx-faq__item summary::-webkit-details-marker { display: none; }
+.page-wellness .lx-faq__item summary::before,
+.page-wellness .lx-faq__item summary::after {
+  content: "";
+  position: absolute;
+  right: 0.4rem;
+  top: 50%;
+  width: 1rem;
+  height: 1px;
+  background: var(--lx-amber-deep);
+  transition: transform 0.5s var(--lx-ease);
+}
+.page-wellness .lx-faq__item summary::after { transform: rotate(90deg); }
+.page-wellness .lx-faq__item[open] summary::after { transform: rotate(0deg); }
+.page-wellness .lx-faq__item summary:hover { color: var(--lx-amber-deep); }
+.page-wellness .lx-faq__answer { padding: 0 3rem 1.6rem 0; }
+.page-wellness .lx-faq__answer p {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--lx-ink-soft);
+  max-width: 40rem;
+  text-wrap: pretty;
+}
+.page-wellness .lx-faq__answer p + p { margin-top: 0.8rem; }
+.page-wellness .lx-faq__item[open] .lx-faq__answer { animation: lx-rise 0.7s var(--lx-ease) both; }
+
+@media (min-width: 64rem) {
+  .page-wellness .lx-faq__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: start;
+  }
+  .page-wellness .lx-faq__head { grid-column: 1 / span 4; }
+  .page-wellness .lx-faq__list { grid-column: 6 / -1; }
+}
+
+/* --------------------------------------------------------------------------
+   18. Closing
+   -------------------------------------------------------------------------- */
+.page-wellness .lx-closing.factbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: min(100svh, 58rem);
+  padding-block: 8rem 6rem;
+  overflow: hidden;
+  text-align: center;
+}
+.page-wellness .lx-closing__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.page-wellness .lx-closing::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 55%, rgba(14, 21, 25, 0.62), rgba(14, 21, 25, 0.86) 75%),
+    rgba(14, 21, 25, 0.25);
+}
+.page-wellness .lx-closing__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.page-wellness .lx-closing__title {
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: clamp(2.9rem, 7.5vw, 6.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  max-width: 14ch;
+  text-wrap: balance;
+}
+.page-wellness .lx-closing__title em { color: var(--lx-amber); }
+.page-wellness .lx-closing__lines {
+  margin-top: 1.75rem;
+  font-family: var(--lx-serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  line-height: 1.4;
+  /* narrow enough that "Het" moves to the second sentence line */
+  max-width: 32ch;
+}
+.page-wellness .lx-closing .lx-text { margin-inline: auto; color: rgba(243, 238, 230, 0.82); }
+.page-wellness .lx-closing__request {
+  margin-top: 3rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--lx-hair-dark);
+  max-width: 38rem;
+}
+.page-wellness .lx-closing__sub {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--lx-amber);
+  text-wrap: balance;
+}
+.page-wellness .lx-closing__request .lx-text { margin-top: 0.9rem; }
+.page-wellness .lx-actions--center { justify-content: center; margin-top: 2.5rem; }
+
+/* --------------------------------------------------------------------------
+   Footer: sits on the ivory tone of this page
+   -------------------------------------------------------------------------- */
+.page-wellness .site-footer { background: var(--lx-sand); --focus-ring: var(--lx-amber-deep); }
