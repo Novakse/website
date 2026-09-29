@@ -50,6 +50,16 @@
 - Communiceer in eenvoudig Nederlands.
 - Schrijf code, bestandsnamen, variabelen en commentaar in het Engels.
 
+## Afronding en rapportage
+
+- Geef na afloop geen lange teksten. Alleen een heel simpel en compact overzicht.
+- Gebruik altijd deze drie gescheiden blokken, in deze volgorde:
+  - **Gedaan**: wat er is aangepast.
+  - **Niet gedaan**: wat is overgeslagen of niet gelukt, met een korte reden.
+  - **Wat jij moet doen**: concrete acties voor de klant (bijvoorbeeld controleren, goedkeuren, committen of publiceren).
+- Eén korte regel per punt. Geen uitleg of achtergrond tenzij daarom gevraagd wordt.
+- Laat geen blok weg. Zet "Niets" onder een leeg blok.
+
 ## Claude-modelrouting en delegatie
 
 1. Never do the work yourself.
