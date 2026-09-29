@@ -4083,106 +4083,139 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 }
 
 /* ==========================================================================
-   Mosaic collage (index "Het verhaal achter Novakse", finland "Waar je
-   schaatst"). An editorial grid: one dominant photo, smaller ones with their
-   own ratios, small clean overlaps and an ice-blue block as a depth layer.
-   Nothing is tilted; everything sits on a 12-column grid with fixed rows so
-   the frame keeps its height while the lazy photos load. Motion: each photo
-   wipes open (clip-path) while the picture inside settles from 1.15 to 1,
-   staggered; on scroll the layers drift a few pixels at their own pace
-   (--collage-shift from main.js, transform only); on hover the photo zooms a
-   little inside its frame. All transitions name their properties.
+   Photo wall (index "Het verhaal achter Novakse", finland "Waar je
+   schaatst"). Vertical columns of rounded photos with even gaps, the whole
+   wall rotated as one unit so every photo shares the same angle and stays
+   aligned to its neighbours. Columns are staggered and drift slowly up or
+   down in a seamless loop: each column holds its tiles twice (the second
+   copy is aria-hidden) and translates by exactly one copy. The wall sits on
+   an icy background and fades out towards its edges (mask), no borders, no
+   shadows. main.js adds a small scroll-linked offset (--wall-scroll) and the
+   generic .reveal/.is-visible hook fades the tiles in on first view.
+   Markup: figure.wall[data-wall] > .wall__stage > .wall__col* > .wall__run x2
+   > .wall__tile[style=--r] > picture. Column pace: --dur on .wall__col.
    ========================================================================== */
-.mosaic { --mosaic-radius: 0.75rem; --mosaic-ice: #e3edf3; max-width: 36rem; }
-.mosaic .collage__frame {
+.wall {
+  --wall-gap: 0.9rem;
+  --wall-radius: 0.9rem;
+  --wall-tilt: -12deg;
+  --wall-zoom: 1.32;
+  --wall-scroll: 0px;
+  max-width: 36rem;
+}
+/* The window onto the wall: icy background, clipped, fading out towards the
+   edges (soft at top/left, long at right/bottom). The caption sits below it
+   in normal flow, so it is never masked. */
+.wall__view {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: repeat(var(--mosaic-rows), minmax(0, 1fr));
-  aspect-ratio: 12 / var(--mosaic-rows);
-}
-.mosaic--home .collage__frame { --mosaic-rows: 13; }
-.mosaic--finland .collage__frame { --mosaic-rows: 14; }
-
-.mosaic .mosaic__item {
-  align-self: stretch;
-  margin: 0;
-  aspect-ratio: auto;
-  border-radius: var(--mosaic-radius);
-  box-shadow: none;
-  transform: translate3d(0, var(--collage-shift, 0px), 0);
-}
-.mosaic .mosaic__item picture { display: block; width: 100%; height: 100%; }
-.mosaic .mosaic__item img { transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1); }
-
-/* Depth layer: a flat ice-blue block behind one photo, offset so it shows
-   along two edges. It drifts with the photos (data-speed) but is never a
-   photo itself. */
-.mosaic__block {
-  border-radius: var(--mosaic-radius);
-  background: var(--mosaic-ice);
-  transform: translate3d(0, var(--collage-shift, 0px), 0);
+  overflow: hidden;
+  aspect-ratio: 5 / 6;
+  border-radius: var(--wall-radius);
+  background:
+    radial-gradient(ellipse at 20% 15%, #ffffff 0%, rgba(255, 255, 255, 0) 55%),
+    linear-gradient(160deg, #eef4f8 0%, #dfe9f0 60%, #d7e3ec 100%);
+  -webkit-mask-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 7%, #000 72%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 6%, #000 74%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 7%, #000 72%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 6%, #000 74%, rgba(0, 0, 0, 0) 100%);
+  mask-composite: intersect;
 }
 
-/* Home: tall portrait of Joey dominates the left, the campfire portrait
-   sits top right, the ice photo runs across the lower right and overlaps the
-   portrait by one column. The ice block sits behind the portrait, offset
-   down and to the left. */
-.mosaic--home .mosaic__block    { grid-column: 1 / 8;  grid-row: 2 / 12; z-index: 0; margin-left: -0.75rem; }
-.mosaic--home .mosaic__item--a  { grid-column: 1 / 8;  grid-row: 1 / 11; z-index: 1; margin-right: 0.5rem; }
-.mosaic--home .mosaic__item--c  { grid-column: 9 / 13; grid-row: 1 / 7;  z-index: 2; margin-bottom: 0.5rem; }
-.mosaic--home .mosaic__item--b  { grid-column: 7 / 13; grid-row: 8 / 14; z-index: 3; margin-top: 0.5rem; }
-
-/* Finland: the wide lake track across the top, the forest portrait bottom
-   left, the aerial view bottom right, and the small bend photo tucked below
-   it. The ice block sits behind the forest portrait. */
-.mosaic--finland .mosaic__item--a { grid-column: 1 / 13; grid-row: 1 / 7;   z-index: 1; }
-.mosaic--finland .mosaic__block   { grid-column: 1 / 6;  grid-row: 8 / 15;  z-index: 0; margin-left: -0.75rem; }
-.mosaic--finland .mosaic__item--b { grid-column: 1 / 6;  grid-row: 7 / 14;  z-index: 2; margin-top: 0.5rem; margin-right: 0.5rem; }
-.mosaic--finland .mosaic__item--c { grid-column: 6 / 13; grid-row: 6 / 11;  z-index: 3; margin-top: 0.5rem; margin-left: 0.5rem; }
-.mosaic--finland .mosaic__item--d { grid-column: 8 / 13; grid-row: 11 / 15; z-index: 4; margin-top: 0.5rem; margin-left: 0.5rem; }
-
-/* Hover (pointer devices only): the photo zooms a little inside its frame. */
-@media (hover: hover) and (pointer: fine) {
-  .mosaic .mosaic__item:hover img { transform: scale(1.05); }
+/* The stage is rotated and scaled as one piece so the rotated wall still
+   covers the corners of the figure. */
+.wall__stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  gap: var(--wall-gap);
+  align-items: flex-start;
+  justify-content: center;
+  padding-inline: 8%;
+  transform: translate3d(0, -6%, 0) rotate(var(--wall-tilt)) scale(var(--wall-zoom));
+  transform-origin: 50% 50%;
 }
 
-/* Reveal when the figure scrolls in (.is-visible from main.js): each photo
-   wipes open from one edge while the picture inside settles. */
-.js .mosaic.reveal { transform: none; }
-.js .mosaic .mosaic__item {
-  clip-path: inset(0 100% 0 0 round var(--mosaic-radius));
-  transition: clip-path 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+/* Columns: equal width; the stagger comes from a different start offset per
+   column, and the drift direction alternates. */
+.wall__col {
+  --dir: 1;
+  flex: 1 1 0;
+  min-width: 0;
+  transform: translate3d(0, calc(var(--wall-scroll) * var(--dir)), 0);
+  will-change: transform;
 }
-.js .mosaic .mosaic__item--b,
-.js .mosaic .mosaic__item--d { clip-path: inset(100% 0 0 0 round var(--mosaic-radius)); }
-.js .mosaic .mosaic__item--c { clip-path: inset(0 0 0 100% round var(--mosaic-radius)); }
-.js .mosaic .mosaic__item picture {
-  transform: scale(1.15);
-  transition: transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+.wall__col:nth-child(1) { margin-top: -18%; }
+.wall__col:nth-child(2) { --dir: -1; margin-top: -60%; }
+.wall__col:nth-child(3) { margin-top: -34%; }
+.wall__col:nth-child(4) { --dir: -1; margin-top: -76%; }
+
+.wall__run {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wall-gap);
+  padding-bottom: var(--wall-gap); /* keeps the gap between the two copies even */
+  animation: wall-drift var(--dur, 50s) linear infinite;
 }
-.js .mosaic .mosaic__block {
+.wall__col:nth-child(even) .wall__run { animation-direction: reverse; }
+@keyframes wall-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(0, -100%, 0); }
+}
+.wall:hover .wall__run,
+.wall:focus-within .wall__run { animation-play-state: paused; }
+
+.wall__tile {
+  aspect-ratio: var(--r, 4 / 5);
+  overflow: hidden;
+  border-radius: var(--wall-radius);
+  background: #cfdbe4;
+}
+.wall__tile picture,
+.wall__tile img { display: block; width: 100%; height: 100%; }
+.wall__tile img {
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@media (hover: hover) {
+  .wall__tile:hover img { transform: scale(1.06); }
+}
+
+/* Reveal: the figure itself never moves (the generic .reveal shift is
+   dropped); the tiles fade and scale in with a small stagger. */
+.js .wall.reveal { transform: none; opacity: 1; }
+.js .wall .wall__tile {
   opacity: 0;
-  transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform: scale(0.9);
+  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-.js .mosaic.is-visible .mosaic__item { clip-path: inset(0 0 0 0 round var(--mosaic-radius)); }
-.js .mosaic.is-visible .mosaic__item picture { transform: none; }
-.js .mosaic.is-visible .mosaic__block { opacity: 1; transition-delay: 0.5s; }
-.js .mosaic.is-visible .mosaic__item--c,
-.js .mosaic.is-visible .mosaic__item--c picture { transition-delay: 0.18s; }
-.js .mosaic.is-visible .mosaic__item--b,
-.js .mosaic.is-visible .mosaic__item--b picture { transition-delay: 0.34s; }
-.js .mosaic.is-visible .mosaic__item--d,
-.js .mosaic.is-visible .mosaic__item--d picture { transition-delay: 0.5s; }
+.js .wall.is-visible .wall__tile { opacity: 1; transform: none; }
+.js .wall.is-visible .wall__tile:nth-child(2) { transition-delay: 0.1s; }
+.js .wall.is-visible .wall__tile:nth-child(3) { transition-delay: 0.2s; }
+.js .wall.is-visible .wall__tile:nth-child(4) { transition-delay: 0.3s; }
+.js .wall.is-visible .wall__col:nth-child(2) .wall__tile { transition-delay: 0.15s; }
+.js .wall.is-visible .wall__col:nth-child(3) .wall__tile { transition-delay: 0.3s; }
+.js .wall.is-visible .wall__col:nth-child(4) .wall__tile { transition-delay: 0.45s; }
+
+/* Two walls, one style: the home wall leans a little more and its columns
+   are wider (3 columns); the Finland wall has 4 columns and leans less. */
+.wall--home { --wall-tilt: -13deg; }
+.wall--finland { --wall-tilt: -11deg; --wall-zoom: 1.36; }
+
+/* Phones and tablets: two columns, hide the rest. */
+@media (max-width: 59.99rem) {
+  .wall { --wall-zoom: 1.4; }
+  .wall__view { aspect-ratio: 4 / 5; }
+  .wall__col:nth-child(n + 3) { display: none; }
+  .wall__stage { padding-inline: 12%; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .mosaic .mosaic__item,
-  .mosaic__block { transform: none; }
-  .mosaic .mosaic__item img,
-  .js .mosaic .mosaic__item,
-  .js .mosaic .mosaic__item picture,
-  .js .mosaic .mosaic__block { transition: none; }
-  .js .mosaic .mosaic__item { clip-path: none; }
-  .js .mosaic .mosaic__item picture { transform: none; }
-  .js .mosaic .mosaic__block { opacity: 1; }
+  .wall__run { animation: none; }
+  .wall__col { transform: none; will-change: auto; }
+  .wall__tile img { transition: none; }
+  .js .wall .wall__tile { opacity: 1; transform: none; transition: none; }
 }
