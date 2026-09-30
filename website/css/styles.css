@@ -2320,6 +2320,8 @@ button.calendar__cell.is-duurder.is-gekozen::after { background: var(--warm); }
 }
 .extra__name { display: flex; flex-direction: column; gap: 0.15rem; }
 .extra__hint { font-size: 0.8rem; font-weight: 400; color: var(--ink-soft); }
+/* Unavailable payment option (e.g. iDEAL): muted and not selectable */
+.extra--disabled { opacity: 0.55; cursor: not-allowed; }
 .extra__price { font-weight: 600; }
 
 /* Keuzevragen in de aanvraag: kleiner dan de hoofdstappen, zonder nummer. */

@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <script>document.documentElement.classList.add("js");</script>
   <title>Je betaling afronden - Novakse Reizen</title>
-  <meta name="description" content="Rond je betaling voor je Novakse-reis af via Stripe: iDEAL of creditcard." />
+  <meta name="description" content="Rond je betaling voor je Novakse-reis af via Stripe per creditcard. Betalen via iDEAL is op dit moment niet beschikbaar." />
   <meta name="robots" content="noindex" />
 
   <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -153,12 +153,12 @@
           <fieldset class="booking__block">
             <legend class="booking__legend">Hoe wil je betalen?</legend>
             <div class="booking__extras">
-              <label class="extra">
-                <input type="radio" name="methode" class="extra__check" value="ideal" checked />
-                <span class="extra__name">iDEAL<span class="extra__hint">Voor Nederlandse rekeningen - de standaardoptie</span></span>
+              <label class="extra extra--disabled">
+                <input type="radio" name="methode" class="extra__check" value="ideal" disabled aria-describedby="idealNiet" />
+                <span class="extra__name">iDEAL<span class="extra__hint" id="idealNiet">Betalen via iDEAL is op dit moment niet beschikbaar.</span></span>
               </label>
               <label class="extra">
-                <input type="radio" name="methode" class="extra__check" value="creditcard" />
+                <input type="radio" name="methode" class="extra__check" value="creditcard" checked />
                 <span class="extra__name">Creditcard<span class="extra__hint">Voor betalingen vanuit het buitenland</span></span>
               </label>
             </div>
