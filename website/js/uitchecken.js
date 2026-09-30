@@ -52,7 +52,9 @@
   /* De keuzes uit de Falun-kalender. Staat aankomst erin, dan komt het bedrag
      van de server en niet uit het webadres. */
   var falunKeuze = null;
-  if (reis === "Falun" && params.get("aankomst")) {
+  // ?reis=falun is accepted as well: the other trips are also lowercase.
+  if (reis.toLowerCase() === "falun" && params.get("aankomst")) {
+    reis = "Falun";
     falunKeuze = {
       reis: "Falun",
       aankomst: params.get("aankomst"),

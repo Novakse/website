@@ -179,8 +179,10 @@ module.exports = async function handler(req, res) {
   var serverBerekend = false; // true when the amount comes from a price file
   var terugQuery = ""; // query string for the cancel URL
   var reisSleutel = String(body.reis || "").toLowerCase();
+  // Falun: "Falun" from the calendar, "falun" from a hand-typed link.
+  var isFalun = reisSleutel === "falun" && Boolean(body.aankomst);
 
-  if (body.reis === "Falun" && body.aankomst) {
+  if (isFalun) {
     // Het bedrag dat de browser meestuurt wordt hier genegeerd.
     var falun = berekenFalun(body);
     if (falun.fout) {
@@ -281,9 +283,9 @@ module.exports = async function handler(req, res) {
   // count; a payment link from Joey carries no head count. Falun with own
   // transport has no rental car.
   var verwachtAantal = 0;
-  if (body.reis === "Falun" && body.aankomst) verwachtAantal = parseInt(alleenGetal(body.personen), 10) || 0;
+  if (isFalun) verwachtAantal = parseInt(alleenGetal(body.personen), 10) || 0;
   else if (metadata && metadata.personen) verwachtAantal = parseInt(metadata.personen, 10) || 0;
-  var metAuto = !(body.reis === "Falun" && body.aankomst && body.auto === "zelf");
+  var metAuto = !(isFalun && body.auto === "zelf");
   var reisgegevens = leesReisgegevens(body.reisgegevens, verwachtAantal, metAuto);
   if (reisgegevens.fout) {
     res.status(400).json({ error: reisgegevens.fout });
