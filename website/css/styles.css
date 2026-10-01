@@ -4377,3 +4377,28 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 @media (min-width: 48rem) {
   .factroute__sweep { background: linear-gradient(90deg, #7fa9bd 0%, #a9c6d3 60%, var(--warm) 100%); }
 }
+
+/* Price stop: compact, and the whole warm bar links to the booking calendar
+   (#data-en-prijs). A <dl> cannot hold an <a> directly, so the link sits in
+   the <dd> and its ::after stretches over the full bar. */
+.factroute__stop--price { margin-top: 0.15rem; padding: 0.4rem 0.75rem 0.4rem 0; min-height: 2.75rem; }
+.factroute__stop--price .factroute__value { font-size: 1.05rem; line-height: 1.2; }
+.factroute__stop--price .factroute__label { line-height: 1.2; }
+.factroute__link { color: inherit; text-decoration: none; }
+.factroute__link::after { content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; }
+.factroute__link:focus-visible { outline: none; }
+.factroute__stop--price:has(.factroute__link:focus-visible) { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+/* Decorative chevron as a visible "go to" cue that does not depend on hover. */
+.factroute__stop--price .factroute__value::after {
+  content: ""; display: inline-block; width: 0.42em; height: 0.42em; margin-left: 0.45em;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: translateY(-0.12em) rotate(45deg);
+}
+@media (hover: hover) {
+  .factroute__stop--price .factroute__value::after { transition: transform 0.2s ease; }
+  .factroute__stop--price:hover .factroute__value::after { transform: translateY(0.05em) rotate(45deg); }
+}
+@media (min-width: 48rem) {
+  .factroute__stop--price { margin: -0.6rem 0; padding: 0.6rem 1rem; min-height: 0; }
+  .factroute__stop--price .factroute__value { font-size: 1.3rem; }
+}
