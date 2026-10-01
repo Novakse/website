@@ -4221,7 +4221,7 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 }
 
 /* --------------------------------------------------------------------------
-   Factbar as a route (orsa.html): a swept ice lane connects the facts like
+   Factbar as a route (orsa.html and the other trip pages): a swept ice lane connects the facts like
    stops; the price is the warm end point. Motion: transform/opacity only.
    -------------------------------------------------------------------------- */
 .factbar--route { background: transparent; color: #fff; position: relative; z-index: 2; }
@@ -4407,7 +4407,8 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
   .factroute__stop--price .factroute__icon svg { width: 16px; height: 16px; }
   .factroute__stop--price .factroute__label { font-size: 0.64rem; line-height: 1.15; }
   .factroute__stop--price .factroute__value { font-size: 1rem; line-height: 1.15; }
-  #data-en-prijs { scroll-margin-top: 0.75rem; }
+  #data-en-prijs,
+  #prijzen { scroll-margin-top: 0.75rem; } /* finland.html calls its booking section #prijzen */
 }
 @media (min-width: 48rem) {
   .factroute__stop--price { margin: -0.6rem 0; padding: 0.6rem 1rem; min-height: 0; }
