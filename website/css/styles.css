@@ -33,6 +33,11 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; }
+/* Nothing may widen the page sideways: on phones a page that is even a few
+   pixels wider than the screen gets zoomed by the browser, which shows up as
+   the photos scaling and jumping while scrolling. `clip` (not `hidden`) adds
+   no scroll container, so position: sticky keeps working. */
+html, body { overflow-x: clip; }
 /* Smooth in-page scrolling is switched on by main.js at the first pointer or
    key press, so the browser's own scroll restoration (reload, back button)
    and the #fragment jump during page load stay instant instead of gliding. */
@@ -1056,9 +1061,9 @@ html:not(.js) .opener__controls { display: none; }
    a fixed-ratio frame, so the frame is exactly as tall as its photos: no
    empty band between them and nothing can run into the caption. Every slot
    has a fixed ratio close to its source photos (cropped with object-fit,
-   never stretched), so nothing jumps while the lazy images load. While
-   scrolling each photo moves a few pixels at its own pace (transform only;
-   the value comes from main.js, which caps the distance). */
+   never stretched), so nothing jumps while the lazy images load. The photos
+   do not move with the scroll position (that made scrolling stutter on
+   phones). */
 .story__collage {
   margin: 0;
   max-width: 34rem;
@@ -1076,8 +1081,6 @@ html:not(.js) .opener__controls { display: none; }
   overflow: hidden;
   border-radius: 1rem;
   box-shadow: 0 16px 36px rgba(20, 24, 26, 0.16);
-  transform: translate3d(0, var(--collage-shift, 0px), 0);
-  will-change: transform;
 }
 .collage__item img {
   display: block;
@@ -1100,10 +1103,6 @@ html:not(.js) .opener__controls { display: none; }
    Matching on src also covers the language versions. */
 .collage__item--left:has(img[src*="joey-kampvuur"]) { grid-column: 1 / 6; aspect-ratio: 4 / 5; }
 .collage__item--right:has(img[src*="joey-kampvuur"]) { grid-column: 9 / 13; margin-top: 0; aspect-ratio: 4 / 5; }
-
-@media (prefers-reduced-motion: reduce) {
-  .collage__item { transform: none; will-change: auto; }
-}
 
 /* Photo framing: focal points per photo, not per component.
    Cropped photos (object-fit: cover) are centred by default, which cuts off
