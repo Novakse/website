@@ -4398,6 +4398,18 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
   .factroute__stop--price .factroute__value::after { transition: transform 0.2s ease; }
   .factroute__stop--price:hover .factroute__value::after { transform: translateY(0.05em) rotate(45deg); }
 }
+/* Mobile: an even slimmer price bar (still a 44px tap target), and the
+   booking section lands with its eyebrow and heading right under the fixed
+   header (~67px) instead of after the full 4rem section padding, so as much
+   of the calendar as possible is in view after the jump. */
+@media (max-width: 47.99rem) {
+  .factroute__stop--price { margin-top: 0.1rem; padding: 0.2rem 0.75rem 0.2rem 0; }
+  .factroute__stop--price .factroute__icon { width: 2rem; height: 2rem; justify-self: center; }
+  .factroute__stop--price .factroute__icon svg { width: 16px; height: 16px; }
+  .factroute__stop--price .factroute__label { font-size: 0.64rem; line-height: 1.15; }
+  .factroute__stop--price .factroute__value { font-size: 1rem; line-height: 1.15; }
+  #data-en-prijs { scroll-margin-top: 0.75rem; }
+}
 @media (min-width: 48rem) {
   .factroute__stop--price { margin: -0.6rem 0; padding: 0.6rem 1rem; min-height: 0; }
   .factroute__stop--price .factroute__value { font-size: 1.3rem; }
