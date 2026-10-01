@@ -4318,3 +4318,26 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 /* Room in the hero for the overlapping route panel. */
 .page-hero:has(+ .factbar--route) .page-hero__inner { padding-bottom: 3rem; }
 @media (min-width: 48rem) { .page-hero:has(+ .factbar--route) .page-hero__inner { padding-bottom: 4.5rem; } }
+
+/* Frosted-glass variant of the route panel (client feedback: black too heavy). */
+.factbar--route { color: #10202e; }
+.factroute {
+  background: rgba(244, 248, 250, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 18px 40px -18px rgba(24, 52, 74, 0.35), 0 2px 6px rgba(24, 52, 74, 0.08);
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .factroute {
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6);
+    backdrop-filter: blur(18px) saturate(1.6);
+  }
+}
+.factroute__track { background: rgba(16, 32, 46, 0.1); }
+.factroute__sweep { background: linear-gradient(180deg, #7fa9bd 0%, #a9c6d3 60%, var(--warm) 100%); }
+.factroute__label { color: #3d5466; }
+.factroute__value { color: #10202e; }
+.factroute__icon { background: #fff; border-color: rgba(16, 32, 46, 0.25); color: #1d3a50; }
+@media (min-width: 48rem) {
+  .factroute__sweep { background: linear-gradient(90deg, #7fa9bd 0%, #a9c6d3 60%, var(--warm) 100%); }
+}
