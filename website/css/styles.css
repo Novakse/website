@@ -4319,6 +4319,42 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 .page-hero:has(+ .factbar--route) .page-hero__inner { padding-bottom: 3rem; }
 @media (min-width: 48rem) { .page-hero:has(+ .factbar--route) .page-hero__inner { padding-bottom: 4.5rem; } }
 
+/* Mobile: breadcrumb sits directly under the header, title block at the
+   bottom of the photo, and a shorter hero so the route panel lands in the
+   first viewport while still overlapping the image. Desktop is untouched. */
+@media (max-width: 47.99rem) {
+  .page-hero--tall:has(+ .factbar--route) {
+    align-items: stretch;
+    min-height: clamp(23rem, 100svh - 20rem, 34rem);
+    padding-block: 4.9rem 0.75rem;
+  }
+  .page-hero--tall:has(+ .factbar--route) .page-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .page-hero--tall:has(+ .factbar--route) .crumbs { margin-bottom: 1.5rem; }
+  .page-hero--tall:has(+ .factbar--route) .crumbs + * { margin-top: auto; }
+  .page-hero--tall:has(+ .factbar--route) .page-hero__title { margin-top: 0.5rem; }
+  .page-hero--tall:has(+ .factbar--route) .page-hero__lede { margin-top: 0.7rem; font-size: 0.98rem; line-height: 1.5; }
+
+  .factroute {
+    --stop: 2.25rem;
+    padding: 1.1rem 1rem 1rem;
+    gap: 0.7rem;
+  }
+  .factroute__track {
+    left: calc(1rem + var(--stop) / 2 - 3px);
+    top: calc(1.1rem + var(--stop) / 2);
+    bottom: 3.5rem;
+  }
+  .factroute__icon svg { width: 18px; height: 18px; }
+  .factroute__label { font-size: 0.68rem; }
+  .factroute__value { font-size: 0.93rem; line-height: 1.3; }
+  .factroute__stop--price { margin-top: 0.2rem; padding: 0.6rem 0.9rem 0.6rem 0; }
+  .factroute__stop--price .factroute__value { font-size: 1.2rem; }
+}
+
 /* Frosted-glass variant of the route panel (client feedback: black too heavy). */
 .factbar--route { color: #10202e; }
 .factroute {
