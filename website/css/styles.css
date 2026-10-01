@@ -4220,3 +4220,101 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
   .wall__tile img { transition: none; }
   .js .wall .wall__tile { opacity: 1; transform: none; transition: none; }
 }
+
+/* --------------------------------------------------------------------------
+   Factbar as a route (orsa.html): a swept ice lane connects the facts like
+   stops; the price is the warm end point. Motion: transform/opacity only.
+   -------------------------------------------------------------------------- */
+.factbar--route { background: transparent; color: #fff; position: relative; z-index: 2; }
+.factroute {
+  --stop: 2.75rem;
+  position: relative;
+  margin: -2.5rem 0 0;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: var(--ink);
+  border-radius: 1.25rem;
+  display: grid;
+  gap: 1.1rem;
+}
+.factroute__track {
+  position: absolute;
+  left: calc(1.25rem + var(--stop) / 2 - 3px);
+  top: calc(1.5rem + var(--stop) / 2);
+  bottom: 4.5rem;
+  width: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.factroute__sweep {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #cfe3ea 0%, #e7eef1 60%, var(--warm) 100%);
+  transform-origin: top center;
+}
+.factroute__stop { position: relative; display: grid; grid-template-columns: var(--stop) 1fr; column-gap: 0.9rem; align-items: center; }
+.factroute__label {
+  display: contents;
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.68);
+}
+.factroute__icon {
+  grid-row: 1 / span 2;
+  width: var(--stop); height: var(--stop);
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--ink-2, #1d2224);
+  border: 1.5px solid rgba(231, 238, 241, 0.55);
+  color: #e7eef1;
+  position: relative; z-index: 1;
+}
+.factroute__stop > .factroute__label { grid-column: 2; }
+.factroute__value { margin: 0; grid-column: 2; font-weight: 600; font-size: 0.98rem; line-height: 1.35; color: #fff; }
+.factroute__stop--price {
+  margin-top: 0.35rem;
+  padding: 0.85rem 1rem 0.85rem 0;
+  background: var(--warm);
+  border-radius: 0.9rem;
+  color: var(--ink);
+}
+.factroute__stop--price .factroute__label { color: rgba(5, 13, 8, 0.75); }
+.factroute__stop--price .factroute__icon { background: var(--ink); border-color: var(--ink); color: var(--warm); }
+.factroute__stop--price .factroute__value { color: var(--ink); font-family: var(--display); font-size: 1.35rem; font-weight: 700; }
+
+@media (min-width: 48rem) {
+  .factroute {
+    --stop: 3rem;
+    margin-top: -3.5rem;
+    padding: 2rem 2rem 2rem;
+    grid-template-columns: repeat(4, 1fr) 1.25fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .factroute__track {
+    left: calc(2rem + var(--stop) / 2); right: 20%;
+    top: calc(2rem + var(--stop) / 2 - 3px); bottom: auto;
+    width: auto; height: 6px;
+  }
+  .factroute__sweep { background: linear-gradient(90deg, #cfe3ea 0%, #e7eef1 60%, var(--warm) 100%); transform-origin: left center; }
+  .factroute__stop { grid-template-columns: 1fr; row-gap: 0.4rem; align-content: start; }
+  .factroute__icon { grid-row: auto; margin-bottom: 0.5rem; }
+  .factroute__stop > .factroute__label, .factroute__value { grid-column: 1; }
+  .factroute__stop--price { margin: -1rem 0 -1rem; padding: 1rem 1.25rem; }
+  .factroute__stop--price .factroute__value { font-size: 1.6rem; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .factroute.reveal { opacity: 1; transform: none; }
+  .js .factroute__sweep { transform: scaleY(0); transition: transform 1.4s cubic-bezier(.65,0,.25,1) 0.15s; }
+  .js .factroute__stop { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.6s cubic-bezier(.2,.7,.2,1); transition-delay: calc(0.2s + var(--i) * 0.22s); }
+  .js .factroute__icon { transform: scale(0.6); transition: transform 0.5s cubic-bezier(.3,1.6,.5,1); transition-delay: calc(0.3s + var(--i) * 0.22s); }
+  .js .factroute.is-visible .factroute__sweep { transform: none; }
+  .js .factroute.is-visible .factroute__stop { opacity: 1; transform: none; }
+  .js .factroute.is-visible .factroute__icon { transform: none; }
+  @media (min-width: 48rem) { .js .factroute__sweep { transform: scaleX(0); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .factroute.reveal { opacity: 1; transform: none; transition: none; }
+}
+/* Room in the hero for the overlapping route panel. */
+.page-hero:has(+ .factbar--route) .page-hero__inner { padding-bottom: 3rem; }
+@media (min-width: 48rem) { .page-hero:has(+ .factbar--route) .page-hero__inner { padding-bottom: 4.5rem; } }
