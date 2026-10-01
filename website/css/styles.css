@@ -623,6 +623,10 @@ body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header_
    ========================================================================== */
 .opener {
   position: relative;
+  /* Hero heights use svh (small viewport height): it stays fixed while the
+     mobile address/toolbar slides in and out, so the photo does not resize
+     while scrolling. The vh line is only a fallback for old browsers. */
+  min-height: 100vh;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -800,6 +804,7 @@ html:not(.js) .opener__controls { display: none; }
   position: relative;
   color: #fff;
   overflow: hidden;
+  min-height: 78vh;
   min-height: 78svh;
 }
 .layered__bg {
@@ -1319,6 +1324,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
   position: relative;
   display: flex;
   align-items: flex-end;
+  min-height: min(62vh, 34rem);
   min-height: min(62svh, 34rem);
   padding-block: 8rem 3rem;
   color: #fff;
@@ -1483,7 +1489,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 /* --------------------------------------------------------------------------
    Reispagina: kruimelpad, feitenbalk, gesplitst fotoblok en "volgt nog"-blok
    -------------------------------------------------------------------------- */
-.page-hero--tall { min-height: min(76svh, 42rem); }
+.page-hero--tall { min-height: min(76vh, 42rem); min-height: min(76svh, 42rem); }
 
 .crumbs {
   font-size: 0.82rem;
@@ -3637,7 +3643,7 @@ button.plan__cell.is-gekozen {
    Reuses the trip-page components above; only what they lack is here.
    ========================================================================== */
 /* Full-bleed photo band with the section title at the bottom. */
-.layered--band { display: flex; align-items: flex-end; min-height: min(68svh, 36rem); }
+.layered--band { display: flex; align-items: flex-end; min-height: min(68vh, 36rem); min-height: min(68svh, 36rem); }
 .layered--band .layered__inner { padding-block: 7rem 2.75rem; }
 .layered--band .layered__title { margin-top: 0.9rem; max-width: 18ch; font-size: clamp(2rem, 5vw, 3.6rem); }
 .layered--band .layered__bg { object-position: 50% 55%; }
@@ -4324,6 +4330,7 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 @media (max-width: 47.99rem) {
   .page-hero--tall:has(+ .factbar--route) {
     align-items: stretch;
+    min-height: clamp(23rem, 100vh - 20rem, 34rem);
     min-height: clamp(23rem, 100svh - 20rem, 34rem);
     padding-block: 4.9rem 0.75rem;
   }

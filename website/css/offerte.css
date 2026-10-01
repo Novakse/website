@@ -14,6 +14,7 @@
   --focus-ring: var(--warm);
   background: var(--green, #050d08);
   color: #fff;
+  min-height: 100vh;
   min-height: 100svh;
 }
 
@@ -150,6 +151,7 @@
 .oq-doc {
   border-top: 1px solid var(--oq-line);
   background: rgba(5, 13, 8, 0.96);
+  max-height: min(70vh, 34rem);
   max-height: min(70svh, 34rem);
   overflow-y: auto;
 }
@@ -214,6 +216,7 @@
    ========================================================================== */
 .oq-main {
   position: relative;
+  min-height: 100vh;
   min-height: 100svh;
   padding-top: calc(var(--oq-bar) + 2px);
   display: flex;
