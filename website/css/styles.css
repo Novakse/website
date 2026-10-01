@@ -4090,9 +4090,11 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
    down in a seamless loop: each column holds its tiles twice (the second
    copy is aria-hidden) and translates by exactly one copy. The wall sits on
    an icy background and fades out towards its edges (mask), no borders, no
-   shadows. main.js adds a small scroll-linked offset (--wall-scroll) and the
+   shadows. Every column drifts upward at a calm, steady pace; scrolling
+   does not affect it. Each column holds its tiles three times (copies are
+   aria-hidden) so the loop stays seamless with large tiles. The
    generic .reveal/.is-visible hook fades the tiles in on first view.
-   Markup: figure.wall[data-wall] > .wall__stage > .wall__col* > .wall__run x2
+   Markup: figure.wall[data-wall] > .wall__stage > .wall__col x3 > .wall__run x3
    > .wall__tile[style=--r] > picture. Column pace: --dur on .wall__col.
    ========================================================================== */
 .wall {
@@ -4100,8 +4102,7 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
   --wall-radius: 0.9rem;
   --wall-tilt: -12deg;
   --wall-zoom: 1.32;
-  --wall-scroll: 0px;
-  max-width: 36rem;
+  max-width: 46rem;
 }
 /* The window onto the wall: icy background, clipped, fading out towards the
    edges (soft at top/left, long at right/bottom). The caption sits below it
@@ -4115,12 +4116,12 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
     radial-gradient(ellipse at 20% 15%, #ffffff 0%, rgba(255, 255, 255, 0) 55%),
     linear-gradient(160deg, #eef4f8 0%, #dfe9f0 60%, #d7e3ec 100%);
   -webkit-mask-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 7%, #000 72%, rgba(0, 0, 0, 0) 100%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 6%, #000 74%, rgba(0, 0, 0, 0) 100%);
+    linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 3.5%, #000 86%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 3%, #000 87%, rgba(0, 0, 0, 0) 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 7%, #000 72%, rgba(0, 0, 0, 0) 100%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 6%, #000 74%, rgba(0, 0, 0, 0) 100%);
+    linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 3.5%, #000 86%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 3%, #000 87%, rgba(0, 0, 0, 0) 100%);
   mask-composite: intersect;
 }
 
@@ -4139,27 +4140,23 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 }
 
 /* Columns: equal width; the stagger comes from a different start offset per
-   column, and the drift direction alternates. */
+   column. All columns drift in the same direction. */
 .wall__col {
-  --dir: 1;
   flex: 1 1 0;
   min-width: 0;
-  transform: translate3d(0, calc(var(--wall-scroll) * var(--dir)), 0);
-  will-change: transform;
 }
-.wall__col:nth-child(1) { margin-top: -18%; }
-.wall__col:nth-child(2) { --dir: -1; margin-top: -60%; }
-.wall__col:nth-child(3) { margin-top: -34%; }
-.wall__col:nth-child(4) { --dir: -1; margin-top: -76%; }
+.wall__col:nth-child(1) { margin-top: -30%; }
+.wall__col:nth-child(2) { margin-top: -95%; }
+.wall__col:nth-child(3) { margin-top: -60%; }
 
 .wall__run {
   display: flex;
   flex-direction: column;
   gap: var(--wall-gap);
   padding-bottom: var(--wall-gap); /* keeps the gap between the two copies even */
-  animation: wall-drift var(--dur, 50s) linear infinite;
+  animation: wall-drift var(--dur, 70s) linear infinite;
+  will-change: transform;
 }
-.wall__col:nth-child(even) .wall__run { animation-direction: reverse; }
 @keyframes wall-drift {
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(0, -100%, 0); }
@@ -4198,12 +4195,16 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 .js .wall.is-visible .wall__tile:nth-child(4) { transition-delay: 0.3s; }
 .js .wall.is-visible .wall__col:nth-child(2) .wall__tile { transition-delay: 0.15s; }
 .js .wall.is-visible .wall__col:nth-child(3) .wall__tile { transition-delay: 0.3s; }
-.js .wall.is-visible .wall__col:nth-child(4) .wall__tile { transition-delay: 0.45s; }
 
-/* Two walls, one style: the home wall leans a little more and its columns
-   are wider (3 columns); the Finland wall has 4 columns and leans less. */
+/* Two walls, one style (both 3 columns); the home wall leans a little more. */
 .wall--home { --wall-tilt: -13deg; }
-.wall--finland { --wall-tilt: -11deg; --wall-zoom: 1.36; }
+.wall--finland { --wall-tilt: -11deg; }
+
+/* Laptop and up: the wall takes the larger share of the story grid. */
+@media (min-width: 60rem) {
+  .story__grid:has(> .wall) { grid-template-columns: 1.25fr 1fr; gap: 3.5rem; }
+  .wall__stage { padding-inline: 4%; }
+}
 
 /* Phones and tablets: two columns, hide the rest. */
 @media (max-width: 59.99rem) {
@@ -4215,7 +4216,7 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 
 @media (prefers-reduced-motion: reduce) {
   .wall__run { animation: none; }
-  .wall__col { transform: none; will-change: auto; }
+  .wall__run { will-change: auto; }
   .wall__tile img { transition: none; }
   .js .wall .wall__tile { opacity: 1; transform: none; transition: none; }
 }
