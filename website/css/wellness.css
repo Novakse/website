@@ -361,9 +361,10 @@
 }
 
 /* --------------------------------------------------------------------------
-   Motion: slower, heavier reveal than the rest of the site. Photos also
-   settle from a slight zoom. Only transform + opacity; styles.css already
-   switches all transitions off for prefers-reduced-motion.
+   Motion: slower, heavier reveal than the rest of the site. Photos fade in
+   with their block but are not zoomed while scrolling (that made scrolling
+   stutter on phones). Only transform + opacity; styles.css already switches
+   all transitions off for prefers-reduced-motion.
    -------------------------------------------------------------------------- */
 .js .page-wellness .reveal {
   transform: translateY(28px);
@@ -371,11 +372,6 @@
 }
 .js .page-wellness .reveal.is-visible { transform: none; }
 .page-wellness .lx-zoom { overflow: hidden; }
-.js .page-wellness .lx-zoom img {
-  transform: scale(1.09);
-  transition: transform 2.2s var(--lx-ease);
-}
-.js .page-wellness .lx-zoom.is-visible img { transform: none; }
 
 .page-wellness .lx-rhythm__item:nth-child(2),
 .page-wellness .lx-reason:nth-child(2),
@@ -401,8 +397,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js .page-wellness .reveal,
-  .js .page-wellness .lx-zoom img { transform: none; }
+  .js .page-wellness .reveal { transform: none; }
 }
 
 /* --------------------------------------------------------------------------

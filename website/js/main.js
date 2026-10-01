@@ -587,7 +587,7 @@
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   var wordBlocks = [];
 
-  // Viewport height for the scroll-linked effects below (words, collage).
+  // Viewport height for the scroll-linked word effect below.
   // On phones window.innerHeight grows and shrinks whenever the address bar
   // slides out or back in (typically when the scroll direction reverses),
   // which made these effects jump on the resize event. The root element's
@@ -1842,64 +1842,10 @@
   }
 
   /* ------------------------------------------------------------------
-     Collage bij het persoonlijke verhaal: elke foto schuift tijdens het
-     scrollen een klein stukje mee in een eigen tempo. Er wordt alleen een
-     transform gezet, en alleen zolang de collage in beeld is.
-     data-speed in the HTML only sets the relative pace of each photo; the
-     fastest photo moves at most COLLAGE_TRAVEL px over the whole pass (on a
-     wide screen), so the motion can never pull the composition apart or
-     push a photo into the caption, whatever data-speed says.
+     Collage: the photos used to move with the scroll position (a small
+     parallax). That scroll-linked motion made scrolling stutter on phones,
+     so the collage now stays still; it only fades in via .reveal.
      ------------------------------------------------------------------ */
-  var collage = document.querySelector("[data-collage]");
-  var COLLAGE_TRAVEL = 40;
-
-  if (collage && !reducedMotion.matches) {
-    var collageItems = collage.querySelectorAll("[data-speed]");
-    var collageMaxSpeed = 0;
-    collageItems.forEach(function (item) {
-      collageMaxSpeed = Math.max(collageMaxSpeed, Math.abs(parseFloat(item.dataset.speed) || 0));
-    });
-
-    var syncCollage = function () {
-      var rect = collage.getBoundingClientRect();
-      var vh = stableViewportHeight();
-
-      // Niets uitrekenen zolang de collage ver buiten beeld is.
-      if (rect.bottom < -vh || rect.top > vh * 2) return;
-
-      // -1 net onder het scherm, +1 net erboven; 0 als de collage in het midden staat
-      var progress = ((vh - rect.top) / (vh + rect.height)) * 2 - 1;
-      progress = Math.min(1, Math.max(-1, progress));
-
-      // Op een smal scherm is dezelfde verschuiving verhoudingsgewijs veel
-      // groter, dus daar wordt de afstand teruggeschroefd.
-      var scale = Math.max(0.45, Math.min(1, window.innerWidth / 1100));
-
-      // The two small photos move a little faster than the large one (see
-      // data-speed in the HTML), so they creep over it while scrolling.
-      collageItems.forEach(function (item) {
-        var speed = parseFloat(item.dataset.speed) || 0;
-        var travel = collageMaxSpeed ? (speed / collageMaxSpeed) * COLLAGE_TRAVEL : 0;
-        item.style.setProperty(
-          "--collage-shift",
-          (progress * travel * scale).toFixed(1) + "px"
-        );
-      });
-    };
-
-    var collageTicking = false;
-    window.addEventListener("scroll", function () {
-      if (collageTicking) return;
-      collageTicking = true;
-      window.requestAnimationFrame(function () {
-        syncCollage();
-        collageTicking = false;
-      });
-    }, { passive: true });
-    window.addEventListener("resize", syncCollage);
-
-    syncCollage();
-  }
 
   /* ------------------------------------------------------------------
      Muisvolger: een ring die de muis volgt en een stipje dat er iets
