@@ -364,10 +364,7 @@ summary:focus-visible,
 
 /* Anchor targets clear the fixed header */
 [id] { scroll-margin-top: 5rem; }
-/* Logo-lockup: het vrijstaande beeldmerk naast de naam. De naam staat laag
-   tegen het beeldmerk aan, op dezelfde plek als in het originele logo. */
-.site-header__logo { display: inline-flex; align-items: flex-end; gap: 0.6rem; }
-.site-header__logo .logo-word-img { margin-bottom: 0.22rem; }
+.site-header__logo { display: inline-flex; align-items: center; }
 /* Op de homepage staat hetzelfde beeldmerk groot in het openingsscherm. Het
    kleine logo in de balk blijft daar weg zolang het grote nog in beeld is en
    schuift pas rustig binnen zodra er voorbij het grote logo is gescrold
@@ -381,16 +378,6 @@ body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header_
   visibility: hidden;
   transform: translateY(-0.4rem);
 }
-/* De naam houdt altijd zijn eigen donkere logokleur, ook boven een foto. */
-.site-header .logo-word-img--light { display: none; }
-.site-header .logo-word-img--dark { display: block; }
-
-/* In de balk staat de naam bewust klein en ingetogen naast het beeldmerk:
-   het beeldmerk draagt de herkenning, de naam is alleen ondersteunend. */
-.site-header .logo-word-img { height: 0.85rem; opacity: 0.78; transition: opacity 0.3s ease; }
-.site-header__logo:hover .logo-word-img,
-.site-header__logo:focus-visible .logo-word-img { opacity: 1; }
-
 .logo-mark { height: 2.2rem; width: auto; }
 
 /* Het woordmerk is het originele logobeeld, niet nagemaakt met een lettertype.
