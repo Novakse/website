@@ -290,8 +290,24 @@
   }
 
   // Keyboard focus that lands in another trip (Tab into its links) brings
-  // that trip into the row.
+  // that trip into the row. Focus that comes from a mouse press or tap is
+  // left alone: the browser focuses a link on mousedown, and scrolling the
+  // row then would pull the link away before mouseup, so the click (e.g.
+  // "Bekijk deze reis" on the peeking trip) would get lost.
+  // The flag only lives for the press itself: the focus that a press causes
+  // happens in the same task as its mousedown.
+  var pointerFocus = false;
+  var pointerTimer = 0;
+  function markPointer() {
+    pointerFocus = true;
+    window.clearTimeout(pointerTimer);
+    pointerTimer = window.setTimeout(function () { pointerFocus = false; }, 0);
+  }
+  row.addEventListener("pointerdown", markPointer, { passive: true });
+  row.addEventListener("mousedown", markPointer, { passive: true });
+
   row.addEventListener("focusin", function (event) {
+    if (pointerFocus) return;
     var i = panelIndexOf(event.target);
     if (i < 0 || i === (pending >= 0 ? pending : current)) return;
     go(i);
