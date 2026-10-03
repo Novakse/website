@@ -4324,6 +4324,13 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 .page-hero:has(+ .factbar--route) .page-hero__inner { padding-bottom: 3rem; }
 @media (min-width: 48rem) { .page-hero:has(+ .factbar--route) .page-hero__inner { padding-bottom: 4.5rem; } }
 
+/* Trip pages: breadcrumb hidden on mobile (the mobile menu covers
+   navigation), shown from the desktop breakpoint. */
+.page-hero--tall:has(+ .factbar--route) .crumbs { display: none; }
+@media (min-width: 48rem) {
+  .page-hero--tall:has(+ .factbar--route) .crumbs { display: block; }
+}
+
 /* Mobile: breadcrumb sits directly under the header, title block at the
    bottom of the photo, and a shorter hero so the route panel lands in the
    first viewport while still overlapping the image. Desktop is untouched. */
