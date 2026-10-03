@@ -2,6 +2,36 @@
   "use strict";
 
   /* ------------------------------------------------------------------
+     Frozen viewport height (--svh, see :root in styles.css).
+     Hero and band heights are sized from --svh. Some mobile browsers
+     (Brave and Firefox on iOS, among others) resize the viewport itself
+     whenever their toolbars collapse or return, so even svh changes there
+     and every hero jolted while scrolling. Measure once on load, write the
+     value in px, and only refresh it when the width changes (rotation,
+     split view); a height-only change is a toolbar and is ignored.
+     ------------------------------------------------------------------ */
+  (function freezeViewportHeight() {
+    var root = document.documentElement;
+    var frozenWidth = 0;
+
+    function measure() {
+      var width = root.clientWidth || window.innerWidth;
+      var height = root.clientHeight || window.innerHeight;
+      if (!height || width === frozenWidth) return;
+      frozenWidth = width;
+      root.style.setProperty("--svh", height / 100 + "px");
+    }
+
+    measure();
+    window.addEventListener("resize", measure);
+    window.addEventListener("orientationchange", function () {
+      // Give the browser a frame to settle on the new size.
+      frozenWidth = 0;
+      window.requestAnimationFrame(measure);
+    });
+  })();
+
+  /* ------------------------------------------------------------------
      Vertalingen voor teksten die door JS worden gegenereerd (kalender,
      diavoorstelling). De rest van de pagina staat al vertaald in de HTML;
      dit zijn alleen de stukjes die main.js zelf op het scherm zet.

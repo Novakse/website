@@ -469,8 +469,7 @@
   max-width: 26rem;
 }
 .page-wellness .lx-hero__arch {
-  height: clamp(20rem, 50vh, 34rem);
-  height: clamp(20rem, 50svh, 34rem);
+  height: clamp(20rem, calc(50 * var(--svh)), 34rem);
   box-shadow: 0 0 0 1px rgba(243, 238, 230, 0.08);
 }
 .page-wellness .lx-hero__arch img {
@@ -557,7 +556,7 @@
    the price are visible without scrolling (390x844) */
 @media (max-width: 63.99rem) {
   .page-wellness .lx-hero__grid { padding-top: 4.5rem; gap: 2rem; }
-  .page-wellness .lx-hero__arch { height: clamp(15rem, 34vh, 34rem); height: clamp(15rem, 34svh, 34rem); }
+  .page-wellness .lx-hero__arch { height: clamp(15rem, calc(34 * var(--svh)), 34rem); }
   /* smaller overhang: the porthole stays clear of the breadcrumbs */
   .page-wellness .lx-hero__porthole { bottom: -1rem; width: 7.5rem; height: 7.5rem; }
   .page-wellness .lx-crumbs { margin-bottom: 0.7rem; }
@@ -581,8 +580,7 @@
     grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
     align-items: end;
     gap: 4rem;
-    min-height: min(100vh, 62rem);
-    min-height: min(100svh, 62rem);
+    min-height: min(calc(100 * var(--svh)), 62rem);
     padding-top: 8rem;
     padding-bottom: 5.5rem;
   }
@@ -593,7 +591,7 @@
     margin: 0 0 0 auto;
   }
   .page-wellness .lx-hero__text { grid-column: 1; grid-row: 1; padding-bottom: 1rem; }
-  .page-wellness .lx-hero__arch { height: min(74vh, 44rem); height: min(74svh, 44rem); }
+  .page-wellness .lx-hero__arch { height: min(calc(74 * var(--svh)), 44rem); }
   .page-wellness .lx-hero__porthole {
     right: auto;
     left: -5.5rem;
@@ -1070,8 +1068,7 @@
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: min(78vh, 56rem);
-  min-height: min(78svh, 56rem);
+  min-height: min(calc(78 * var(--svh)), 56rem);
   padding-block: 8rem 4rem;
   overflow: hidden;
   background: var(--lx-night);
@@ -1085,7 +1082,7 @@
   object-position: 62% 60%;
 }
 @media (min-width: 64rem) {
-  .page-wellness .lx-band.factbar { min-height: min(92vh, 56rem); min-height: min(92svh, 56rem); }
+  .page-wellness .lx-band.factbar { min-height: min(calc(92 * var(--svh)), 56rem); }
 }
 .page-wellness .lx-band::after {
   content: "";
@@ -1854,8 +1851,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-height: min(100vh, 58rem);
-  min-height: min(100svh, 58rem);
+  min-height: min(calc(100 * var(--svh)), 58rem);
   padding-block: 8rem 6rem;
   overflow: hidden;
   text-align: center;

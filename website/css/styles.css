@@ -2,6 +2,13 @@
    Novakse Reizen — design tokens
    ========================================================================== */
 :root {
+  /* 1% of the small viewport height. Hero and band heights use this instead
+     of svh/vh directly: some mobile browsers (Brave and Firefox on iOS, for
+     one) resize the viewport itself whenever their toolbars collapse, which
+     made every hero grow and shrink with a visible jolt while scrolling.
+     main.js freezes this value in px on load and only refreshes it when the
+     viewport width changes (rotation, split view). */
+  --svh: 1vh;
   --ink: #14181a;
   --ink-2: #1d2224;
   --paper: #ffffff;
@@ -33,6 +40,9 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; }
+@supports (height: 1svh) {
+  :root { --svh: 1svh; }
+}
 /* Nothing may widen the page sideways: on phones a page that is even a few
    pixels wider than the screen gets zoomed by the browser, which shows up as
    the photos scaling and jumping while scrolling. `clip` (not `hidden`) adds
@@ -610,11 +620,10 @@ body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header_
    ========================================================================== */
 .opener {
   position: relative;
-  /* Hero heights use svh (small viewport height): it stays fixed while the
-     mobile address/toolbar slides in and out, so the photo does not resize
-     while scrolling. The vh line is only a fallback for old browsers. */
-  min-height: 100vh;
-  min-height: 100svh;
+  /* Hero heights use --svh (frozen small viewport height, see :root): it
+     stays fixed while the mobile address/toolbar slides in and out, so the
+     photo does not resize while scrolling. */
+  min-height: calc(100 * var(--svh));
   display: flex;
   flex-direction: column;
   color: #fff;
@@ -791,8 +800,7 @@ html:not(.js) .opener__controls { display: none; }
   position: relative;
   color: #fff;
   overflow: hidden;
-  min-height: 78vh;
-  min-height: 78svh;
+  min-height: calc(78 * var(--svh));
 }
 .layered__bg {
   position: absolute; inset: 0;
@@ -1311,8 +1319,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: min(62vh, 34rem);
-  min-height: min(62svh, 34rem);
+  min-height: min(calc(62 * var(--svh)), 34rem);
   padding-block: 8rem 3rem;
   color: #fff;
   overflow: hidden;
@@ -1476,7 +1483,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 /* --------------------------------------------------------------------------
    Reispagina: kruimelpad, feitenbalk, gesplitst fotoblok en "volgt nog"-blok
    -------------------------------------------------------------------------- */
-.page-hero--tall { min-height: min(76vh, 42rem); min-height: min(76svh, 42rem); }
+.page-hero--tall { min-height: min(calc(76 * var(--svh)), 42rem); }
 
 .crumbs {
   font-size: 0.82rem;
@@ -3630,7 +3637,7 @@ button.plan__cell.is-gekozen {
    Reuses the trip-page components above; only what they lack is here.
    ========================================================================== */
 /* Full-bleed photo band with the section title at the bottom. */
-.layered--band { display: flex; align-items: flex-end; min-height: min(68vh, 36rem); min-height: min(68svh, 36rem); }
+.layered--band { display: flex; align-items: flex-end; min-height: min(calc(68 * var(--svh)), 36rem); }
 .layered--band .layered__inner { padding-block: 7rem 2.75rem; }
 .layered--band .layered__title { margin-top: 0.9rem; max-width: 18ch; font-size: clamp(2rem, 5vw, 3.6rem); }
 .layered--band .layered__bg { object-position: 50% 55%; }
@@ -4324,8 +4331,7 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 @media (max-width: 47.99rem) {
   .page-hero--tall:has(+ .factbar--route) {
     align-items: stretch;
-    min-height: clamp(23rem, 100vh - 20rem, 34rem);
-    min-height: clamp(23rem, 100svh - 20rem, 34rem);
+    min-height: clamp(23rem, calc(100 * var(--svh)) - 20rem, 34rem);
     padding-block: 4.9rem 0.75rem;
   }
   .page-hero--tall:has(+ .factbar--route) .page-hero__inner {

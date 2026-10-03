@@ -40,10 +40,10 @@
   --panel-end: 3rem;
   --controls-w: 8.5rem;
   /* The map fills one screen below the fixed header. .site-header is 67px
-     high, 71px from 72rem (styles.css). svh keeps the height steady while a
-     phone's address bar slides in and out; older browsers use vh. */
+     high, 71px from 72rem (styles.css). --svh (styles.css + main.js) keeps
+     the height steady while a phone's address bar slides in and out. */
   --header-h: 4.2rem;
-  --vh: 100vh;
+  --vh: calc(100 * var(--svh));
   --map-h: calc(var(--vh) - var(--header-h));
   /* Height of the stop strip, used for the height of a trip (see
      .trip-map__panel). Phones and tablets: it is fixed, because the longest
@@ -66,9 +66,6 @@
   /* "#bestemmingen" lands with the line just below the header. */
   scroll-margin-top: var(--header-h);
   background: var(--paper);
-}
-@supports (height: 100svh) {
-  .trip-map { --vh: 100svh; }
 }
 @media (min-width: 72rem) {
   .trip-map { --header-h: 4.44rem; }

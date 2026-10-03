@@ -9,6 +9,28 @@
 (function () {
   "use strict";
 
+  /* Frozen viewport height (--svh): this page does not load main.js, so the
+     same freeze lives here. See the top of main.js for why. */
+  (function freezeViewportHeight() {
+    var root = document.documentElement;
+    var frozenWidth = 0;
+
+    function measure() {
+      var width = root.clientWidth || window.innerWidth;
+      var height = root.clientHeight || window.innerHeight;
+      if (!height || width === frozenWidth) return;
+      frozenWidth = width;
+      root.style.setProperty("--svh", height / 100 + "px");
+    }
+
+    measure();
+    window.addEventListener("resize", measure);
+    window.addEventListener("orientationchange", function () {
+      frozenWidth = 0;
+      window.requestAnimationFrame(measure);
+    });
+  })();
+
   var databron = document.getElementById("offertedata");
   var speelveld = document.getElementById("oqStage");
   if (!databron || !speelveld) return;
