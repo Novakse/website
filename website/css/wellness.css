@@ -401,12 +401,8 @@
 }
 
 /* --------------------------------------------------------------------------
-   Header: on this page the light glass takes the ivory tone, and over the
-   dark night sections the light wordmark is used (the dark one disappears
-   against --lx-night).
+   Header: on this page the light glass takes the ivory tone.
    -------------------------------------------------------------------------- */
-.page-wellness .site-header:not(.site-header--on-light) .logo-word-img--light { display: block; }
-.page-wellness .site-header:not(.site-header--on-light) .logo-word-img--dark { display: none; }
 .page-wellness .site-header.site-header--scrolled.site-header--on-light::after {
   background-color: rgba(var(--lx-linen-rgb), 0.72);
 }

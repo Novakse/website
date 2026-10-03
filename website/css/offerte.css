@@ -51,7 +51,6 @@
   flex: none;
 }
 .oq-bar__logo .logo-mark { height: 1.6rem; width: auto; }
-.oq-bar__logo .logo-word-img { height: 0.72rem; width: auto; }
 
 /* De chips zijn het document in het klein: elke beantwoorde vraag één chip. */
 .oq-chips {
@@ -813,7 +812,6 @@
   .oq-chips { display: none; }
   .oq-bar__exit { display: none; }
   .oq-bar__row { gap: 0.75rem; justify-content: space-between; }
-  .oq-bar__logo .logo-word-img { display: none; }
   .oq-doc__term { min-width: 100%; }
   .oq-doc__edit { margin-left: auto; }
   .oq-number { width: 3.1rem; height: 3.1rem; font-size: 1.05rem; }
