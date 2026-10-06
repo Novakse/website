@@ -57,6 +57,10 @@
     .trip-row__media img {
       transition: opacity 1.1s ease, transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
+
+    /* The introduction sits below the trips; the trip rows already end with
+       generous bottom padding, so the intro needs little extra on top. */
+    .trip-rows + .intro { padding-top: 1rem; }
   </style>
   <script type="application/ld+json">
   {
@@ -158,17 +162,6 @@
         <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
       </svg>
     </div>
-
-    <!-- 2. Inleiding -->
-    <section class="intro">
-      <div class="wrap intro__grid">
-        <p class="intro__lead" data-reveal-words>Bei Novakse läufst du Schlittschuh auf Natureis durch atemberaubende Winterlandschaften. Mit persönlicher Organisation und komfortablen Unterkünften erlebst du die Kombination aus Abenteuer und Geselligkeit.</p>
-        <div class="intro__aside reveal">
-          <p>Alle Reisen sind standardmäßig ohne Begleitung auf dem Eis: Du läufst selbstständig, in deinem eigenen Tempo. Bei Orsa und Falun kannst du Begleitung auf dem Eis dazubuchen. Begleitete Gruppenreisen werden noch geplant.</p>
-          <a class="link-arrow" href="reisinformatie.html">Praktische Reiseinformationen</a>
-        </div>
-      </div>
-    </section>
 
     <!-- 3. De reizen, één voor één -->
     <section class="trip-rows" id="bestemmingen">
@@ -291,6 +284,17 @@
           </div>
         </div>
       </article>
+    </section>
+
+    <!-- 3b. Introduction, placed below the trips so the trips come first. -->
+    <section class="intro">
+      <div class="wrap intro__grid">
+        <p class="intro__lead" data-reveal-words>Bei Novakse läufst du Schlittschuh auf Natureis durch atemberaubende Winterlandschaften. Mit persönlicher Organisation und komfortablen Unterkünften erlebst du die Kombination aus Abenteuer und Geselligkeit.</p>
+        <div class="intro__aside reveal">
+          <p>Alle Reisen sind standardmäßig ohne Begleitung auf dem Eis: Du läufst selbstständig, in deinem eigenen Tempo. Bei Orsa und Falun kannst du Begleitung auf dem Eis dazubuchen. Begleitete Gruppenreisen werden noch geplant.</p>
+          <a class="link-arrow" href="reisinformatie.html">Praktische Reiseinformationen</a>
+        </div>
+      </div>
     </section>
 
     <!-- 4. Hoe een reis werkt -->

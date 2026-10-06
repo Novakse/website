@@ -57,6 +57,10 @@
     .trip-row__media img {
       transition: opacity 1.1s ease, transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
+
+    /* The introduction sits below the trips; the trip rows already end with
+       generous bottom padding, so the intro needs little extra on top. */
+    .trip-rows + .intro { padding-top: 1rem; }
   </style>
   <script type="application/ld+json">
   {
@@ -150,17 +154,6 @@
         <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
       </svg>
     </div>
-
-    <!-- 2. Inleiding -->
-    <section class="intro">
-      <div class="wrap intro__grid">
-        <p class="intro__lead" data-reveal-words>At Novakse you skate on natural ice through stunning winter landscapes. With comfortable accommodation and a trip that is personally arranged for you, you experience the combination of adventure and good company.</p>
-        <div class="intro__aside reveal">
-          <p>All trips are independent as standard, without guidance on the ice. At Orsa and Falun you can add guidance on the ice. Joey arranges the trip beforehand, and from there you plan your days yourself. Guided group trips are still being planned.</p>
-          <a class="link-arrow" href="reisinformatie.html">Practical travel information</a>
-        </div>
-      </div>
-    </section>
 
     <!-- 3. De reizen, één voor één -->
     <section class="trip-rows" id="bestemmingen">
@@ -282,6 +275,17 @@
           </div>
         </div>
       </article>
+    </section>
+
+    <!-- 3b. Introduction, placed below the trips so the trips come first. -->
+    <section class="intro">
+      <div class="wrap intro__grid">
+        <p class="intro__lead" data-reveal-words>At Novakse you skate on natural ice through stunning winter landscapes. With comfortable accommodation and a trip that is personally arranged for you, you experience the combination of adventure and good company.</p>
+        <div class="intro__aside reveal">
+          <p>All trips are independent as standard, without guidance on the ice. At Orsa and Falun you can add guidance on the ice. Joey arranges the trip beforehand, and from there you plan your days yourself. Guided group trips are still being planned.</p>
+          <a class="link-arrow" href="reisinformatie.html">Practical travel information</a>
+        </div>
+      </div>
     </section>
 
     <!-- 4. Hoe een reis werkt -->
