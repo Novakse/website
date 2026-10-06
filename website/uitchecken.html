@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/theme-groen.css" />
+  <link rel="stylesheet" href="css/activiteiten.css" />
 </head>
 <body>
   <a class="skip-link" href="#main">Ga naar de inhoud</a>
@@ -66,7 +67,29 @@
       <div id="checkoutInhoud">
         <section class="booking__block" aria-labelledby="teBetalenKop">
           <h2 class="booking__legend" id="teBetalenKop">Te betalen</h2>
-          <div class="booking__total booking__total--standalone">
+
+          <!-- Optional activities, only for Falun and Wellness & schaatsen.
+               js/uitchecken.js shows this block once the trip price is known
+               and fills the list from data/activiteiten.json. The checkbox
+               opens the list; unticked, nothing extra is booked or sent. -->
+          <fieldset class="activiteiten" id="activiteitenBlok" hidden>
+            <legend class="activiteiten__legend">Activiteiten bijboeken (optioneel)</legend>
+            <label class="extra activiteiten__keuze">
+              <input type="checkbox" class="extra__check" id="activiteitenAan" aria-controls="activiteitenPaneel" aria-expanded="false" aria-describedby="activiteitenTelling" />
+              <span class="extra__name">
+                Ik wil huurspullen of activiteiten bijboeken
+                <span class="extra__hint activiteiten__telling" id="activiteitenTelling" hidden>Nog niets gekozen</span>
+              </span>
+            </label>
+            <div class="activiteiten__paneel" id="activiteitenPaneel" hidden>
+              <p class="activiteiten__uitleg">Wat je hier kiest, betaal je in dezelfde betaling als je reis.</p>
+              <ul class="act-lijst" id="activiteitenLijst"></ul>
+            </div>
+          </fieldset>
+
+          <dl class="booking__lines activiteiten__overzicht" id="activiteitenOverzicht" hidden></dl>
+
+          <div class="booking__total booking__total--standalone" aria-live="polite" aria-atomic="true">
             <span id="omschrijvingTekst">Novakse reis</span>
             <strong id="bedragTekst">-</strong>
           </div>
@@ -171,7 +194,7 @@
       </div>
 
       <div class="booking__block" id="geenBedrag" hidden>
-        <p class="booking__note">Deze betaallink is nog niet compleet. Vraag Joey om een nieuwe link, of neem contact op.</p>
+        <p class="booking__note" style="margin-bottom: 1.25rem">Deze betaallink is nog niet compleet. Vraag Joey om een nieuwe link, of neem contact op.</p>
         <a class="btn btn--outline-dark" href="contact.html">Contact opnemen</a>
       </div>
     </div>
@@ -225,6 +248,7 @@
 
   <script src="js/main.js"></script>
   <script src="js/reisgegevens.js"></script>
+  <script src="js/activiteiten-prijs.js"></script>
   <script src="js/uitchecken.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>

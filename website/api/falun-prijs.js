@@ -3,7 +3,11 @@
    De betaalpagina vraagt hier het bedrag op, zodat op het scherm precies staat
    wat er straks afgeschreven wordt. Er wordt niets betaald of opgeslagen; dit
    rekent alleen. Het echte afrekenen loopt via create-payment.js, dat dezelfde
-   berekening gebruikt. */
+   berekening gebruikt.
+
+   Naast personen kan de keuze kinderen (2 t/m 11 jaar) en baby (0 en 1 jaar)
+   bevatten. Het antwoord geeft dan ook de prijs per kind en per baby; het
+   vliegbedrag zelf blijft op de server (api/_prijsbeleid.js). */
 
 var berekenFalun = require("./_falun-prijs.js").berekenFalun;
 
@@ -27,10 +31,21 @@ module.exports = function handler(req, res) {
   }
 
   var uitkomst = berekenFalun(req.body || {});
+  res.setHeader("Cache-Control", "no-store");
   if (uitkomst.fout) {
     res.status(400).json({ error: uitkomst.fout });
     return;
   }
 
-  res.status(200).json({ bedrag: uitkomst.bedrag, omschrijving: uitkomst.omschrijving });
+  res.status(200).json({
+    bedrag: uitkomst.bedrag,
+    perPersoon: uitkomst.perPersoon,
+    perKind: uitkomst.perKind,
+    perBaby: uitkomst.perBaby,
+    personen: uitkomst.personen,
+    volwassenen: uitkomst.volwassenen,
+    kinderen: uitkomst.kinderen,
+    baby: uitkomst.baby,
+    omschrijving: uitkomst.omschrijving
+  });
 };

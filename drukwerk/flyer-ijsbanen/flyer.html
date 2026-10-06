@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="nl" class="size-a4">
+<head>
+<meta charset="utf-8">
+<title>Novakse flyer ijsbanen</title>
+<!--
+  Print flyer for notice boards at Dutch ice rinks.
+  One design, laid out in "design units" (--u): 1u = 1 mm on A4 and
+  0.70711 mm on A5. Geometry scales exactly; A5 has its own minimum type
+  and QR sizes (see .size-a5) and drops the per-trip descriptions.
+  URL parameters (used by build.py):
+    ?size=a4|a5   paper size (default a4)
+    &bleed=1      adds 3 mm bleed on every side for a print shop
+  Everything that carries information stays at least 12u inside the trim;
+  photo, scrim and ink panel run 6u past the trim so they fill the bleed.
+-->
+<style>
+  /* Static instances (500/600/700 and 400) cut from the website's variable
+     woff2 files, so Chromium embeds them as real TrueType fonts in the PDF
+     instead of Type 3 outlines. */
+  @font-face {
+    font-family: "Space Grotesk";
+    font-weight: 500;
+    src: url("assets/space-grotesk-500.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Space Grotesk";
+    font-weight: 600;
+    src: url("assets/space-grotesk-600.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Space Grotesk";
+    font-weight: 700;
+    src: url("assets/space-grotesk-700.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Work Sans";
+    font-weight: 400;
+    src: url("assets/work-sans-400.woff2") format("woff2");
+  }
+
+  :root {
+    /* Brand tokens, same values as website/css/styles.css */
+    --ink: #14181a;
+    --paper: #ffffff;
+    --warm: #dd9752;      /* accent on dark */
+    --on-ink-soft: #c9ccc7;
+
+    --display: "Space Grotesk", sans-serif;
+    --sans: "Work Sans", sans-serif;
+
+    /* Layout geometry in design units (A4 millimetres) */
+    --margin: 12;       /* safe margin for all text and the QR code */
+    --curve-top: 145;   /* top of the swept-track curve band */
+
+    /* Type and QR sizes in design units, A4 values */
+    --fs-lede: 7;
+    --fs-country: 4.2;
+    --fs-name: 4.5;
+    --fs-desc: 4.1;
+    --fs-contact: 4.2;
+    --fs-site: 8.5;
+    --fs-cta: 9.4;
+    --logo-w: 46;
+    --qr: 42;           /* QR code incl. 4-module quiet zone */
+
+    --b: 0mm;           /* bleed, set to 3mm by .bleed */
+  }
+  .size-a4 { --u: 1mm;       --tw: 210mm; --th: 297mm; }
+  /* A5: same geometry, but its own minimums so it still reads when small:
+     body text ~3.45 mm (10 pt), call to action ~6.9 mm, QR 36 mm. */
+  .size-a5 {
+    --u: 0.70711mm; --tw: 148mm; --th: 210mm;
+    --fs-country: 5;
+    --fs-name: 5;
+    --fs-contact: 4.88;
+    --fs-site: 8;
+    --fs-cta: 9.7;
+    --logo-w: 40;
+    --qr: 50.9;
+  }
+  .bleed { --b: 3mm; }
+
+  @page { margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #7d8388; }
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-family: var(--sans);
+    color: var(--paper);
+    font-kerning: normal;
+    text-rendering: geometricPrecision;
+  }
+  @media print { html, body { background: none; } }
+  h1, p, ul, dl, dd { margin: 0; padding: 0; }
+  ul { list-style: none; }
+
+  /* 1 mm extra on the right and bottom: Chromium snaps painted boxes to
+     whole CSS pixels, which would leave a hair-thin white edge. build.py
+     crops the PDF back to the exact paper size. */
+  .sheet {
+    position: relative;
+    width: calc(var(--tw) + 2 * var(--b) + 1mm);
+    height: calc(var(--th) + 2 * var(--b) + 1mm);
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .trim {
+    position: absolute;
+    left: var(--b);
+    top: var(--b);
+    width: var(--tw);
+    height: var(--th);
+  }
+
+  /* ---------- Background: photo, scrim, ink panel (run into the bleed) */
+  .photo {
+    position: absolute;
+    left: calc(-20 * var(--u));
+    top: calc(-6 * var(--u));
+    width: calc(250 * var(--u));
+    height: auto;
+    display: block;
+  }
+  .scrim {
+    position: absolute;
+    left: calc(-6 * var(--u));
+    right: calc(-6 * var(--u));
+    top: calc(-6 * var(--u));
+    height: calc(112 * var(--u));
+    background: linear-gradient(
+      to bottom,
+      rgba(20, 24, 26, 0.58) 0%,
+      rgba(20, 24, 26, 0.42) 38%,
+      rgba(20, 24, 26, 0.16) 70%,
+      rgba(20, 24, 26, 0) 100%
+    );
+  }
+  /* The ink panel's top edge is the swept-track line from the website
+     (path "M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" in a 400x40
+     box), stretched to the page width and made taller (12u wave). */
+  .panel {
+    position: absolute;
+    left: calc(-6 * var(--u));
+    top: calc(var(--curve-top) * var(--u));
+    width: calc(222 * var(--u));
+    height: calc((303 - var(--curve-top)) * var(--u));
+    display: block;
+    overflow: visible;
+  }
+
+  /* ---------- Headline in the sky */
+  .headline {
+    position: absolute;
+    left: calc(var(--margin) * var(--u));
+    top: calc(11 * var(--u));
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: calc(28.4 * var(--u));
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    color: var(--paper);
+  }
+  .headline span { display: block; }
+
+  /* ---------- Content on the ink panel */
+  .body {
+    position: absolute;
+    left: calc(var(--margin) * var(--u));
+    right: calc(var(--margin) * var(--u));
+    top: calc((var(--curve-top) + 16) * var(--u));
+    bottom: calc(var(--margin) * var(--u));
+    display: flex;
+    flex-direction: column;
+  }
+  .lede {
+    font-size: calc(var(--fs-lede) * var(--u));
+    line-height: 1.16;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  .trips {
+    margin-top: calc(5 * var(--u));
+    display: grid;
+    grid-template-columns: calc(26 * var(--u)) 1fr;
+    column-gap: calc(5 * var(--u));
+    row-gap: calc(1.5 * var(--u));
+    align-items: baseline;
+  }
+  .group { display: contents; }
+  .country {
+    grid-column: 1;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: calc(var(--fs-country) * var(--u));
+    line-height: 1.2;
+    color: var(--warm);
+  }
+  .group dl {
+    grid-column: 2;
+    display: grid;
+    row-gap: calc(0.8 * var(--u));
+  }
+  .trip {
+    display: flex;
+    align-items: baseline;
+    column-gap: calc(2.6 * var(--u));
+  }
+  .trip dt {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: calc(var(--fs-name) * var(--u));
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+  .trip dd {
+    font-size: calc(var(--fs-desc) * var(--u));
+    line-height: 1.2;
+    color: var(--on-ink-soft);
+  }
+
+  .foot {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: auto 1fr calc(var(--qr) * var(--u));
+    grid-template-areas:
+      "logo    cta     cta"
+      "contact contact qr";
+    column-gap: calc(5 * var(--u));
+    row-gap: calc(2 * var(--u));
+    align-items: end;
+  }
+  .logo {
+    grid-area: logo;
+    display: block;
+    width: calc(var(--logo-w) * var(--u));
+    height: auto;
+    margin-bottom: calc(1.4 * var(--u));
+  }
+  .cta {
+    grid-area: cta;
+    justify-self: end;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: calc(var(--fs-cta) * var(--u));
+    line-height: 1;
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+    color: var(--warm);
+  }
+  .contact {
+    grid-area: contact;
+    font-size: calc(var(--fs-contact) * var(--u));
+    line-height: 1.38;
+  }
+  .contact .also {
+    color: var(--on-ink-soft);
+    text-wrap: balance;
+    margin-bottom: calc(3.5 * var(--u));
+  }
+  .contact .site {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: calc(var(--fs-site) * var(--u));
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: calc(0.6 * var(--u));
+  }
+  .qr {
+    grid-area: qr;
+    display: block;
+    width: calc(var(--qr) * var(--u));
+    height: calc(var(--qr) * var(--u));
+  }
+
+  /* ---------- A5: names only, one flowing line per country */
+  .size-a5 .group dl { display: block; line-height: 1.25; }
+  .size-a5 .trip { display: inline; }
+  .size-a5 .trip dd { display: none; }
+  .size-a5 .trip dt { display: inline; }
+  .size-a5 .trip:not(:last-child) dt::after { content: ","; }
+  .size-a5 .trips { row-gap: calc(1.6 * var(--u)); }
+  .size-a5 .country { line-height: 1.25; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="trim">
+    <img class="photo" src="assets/weissensee-schaatsen.jpg" alt="Schaatsers op een geveegde natuurijsbaan op de Weissensee, met besneeuwde bergen en blauwe lucht">
+    <div class="scrim" aria-hidden="true"></div>
+    <svg class="panel" aria-hidden="true" viewBox="0 0 222 158" preserveAspectRatio="none">
+      <!-- Site path scaled: x * 222/400, (y - 14) * 1.24 + 1.5 -->
+      <path fill="#14181a" d="M0,8.94 C55.5,-10.9 88.8,28.78 144.3,6.46 C172.05,-5.94 194.25,16.38 222,1.5 L222,158 L0,158 Z"/>
+      <path fill="none" stroke="#dd9752" stroke-width="2.2" stroke-linecap="round" d="M0,8.94 C55.5,-10.9 88.8,28.78 144.3,6.46 C172.05,-5.94 194.25,16.38 222,1.5"/>
+    </svg>
+
+    <h1 class="headline"><span>Schaatsreizen</span><span>op natuurijs</span></h1>
+
+    <div class="body">
+      <p class="lede">Kleinschalige schaatsreizen op natuurijs in Zweden, Finland en Oostenrijk, persoonlijk geregeld door Joey.</p>
+
+      <div class="trips">
+        <div class="group">
+          <p class="country">Zweden</p>
+          <dl>
+            <div class="trip"><dt>Orsa</dt> <dd>Geveegde baan van zo’n 15 kilometer</dd></div>
+            <div class="trip"><dt>Falun</dt> <dd>Historisch ijs, rode mijngebouwen</dd></div>
+            <div class="trip"><dt>Luleå</dt> <dd>Natuurijsroute langs de bevroren Botnische Golf</dd></div>
+            <div class="trip"><dt>Dagtocht vanuit Sälen</dt> <dd>Geveegde baan van 12 kilometer</dd></div>
+            <div class="trip"><dt>Wellness &amp; schaatsen</dt> <dd>Comfortabel hotel met wellness</dd></div>
+          </dl>
+        </div>
+        <div class="group">
+          <p class="country">Finland</p>
+          <dl>
+            <div class="trip"><dt>Punkaharju</dt> <dd>Saimaameer, huisjes met sauna</dd></div>
+          </dl>
+        </div>
+        <div class="group">
+          <p class="country">Oostenrijk</p>
+          <dl>
+            <div class="trip"><dt>Weissensee</dt> <dd>Bekend van de Alternatieve Elfstedentocht</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="foot">
+        <img class="logo" src="assets/logo-word-light.png" alt="Novakse">
+        <p class="cta">Scan en bekijk alle reizen</p>
+        <div class="contact">
+          <p class="also">Ook: schaatslessen in Leeuwarden en schaatsonderhoud.</p>
+          <p class="site">novakse.com</p>
+          <ul>
+            <li>+31 6 17467643, ook via WhatsApp</li>
+            <li>schaatsennovakse@outlook.com</li>
+            <li>Instagram @schaatsreizennovakse</li>
+          </ul>
+        </div>
+        <img class="qr" src="assets/qr-reizen.svg" alt="QR-code naar novakse.com/reizen.html">
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Size and bleed come from the URL, so build.py can render every variant
+  // from this one file.
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var root = document.documentElement;
+    if (q.get("size") === "a5") root.className = "size-a5";
+    if (q.get("bleed") === "1") root.classList.add("bleed");
+  })();
+</script>
+</body>
+</html>

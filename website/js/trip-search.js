@@ -30,7 +30,8 @@
     dialogLabel: "Kies je aankomst- en vertrekdag",
     hintStart: "Kies je aankomstdag.",
     hintEnd: "Kies nu je vertrekdag.",
-    nights: function (n) { return n + (n === 1 ? " nacht" : " nachten"); },
+    // Trip length in days: arrival and departure day both count (3 nights is 4 days).
+    days: function (n) { return n + (n === 1 ? " dag" : " dagen"); },
     prev: "Vorige maand",
     next: "Volgende maand",
     clear: "Selectie wissen",
@@ -39,11 +40,14 @@
   };
 
   /* --- Datumhulpjes ------------------------------------------------------ */
+  // "2027-01-16" -> Date; anything else, or a day that does not exist
+  // (31 February, which Date would roll over), gives null.
   function parseDate(text) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(text || "")) return null;
     var p = text.split("-");
     var d = new Date(+p[0], +p[1] - 1, +p[2]);
-    return isNaN(d) ? null : d;
+    if (isNaN(d) || d.getMonth() !== +p[1] - 1 || d.getDate() !== +p[2]) return null;
+    return d;
   }
   function toText(date) {
     var m = date.getMonth() + 1;
@@ -233,7 +237,7 @@
 
     function drawHint() {
       if (from && to) {
-        hint.textContent = longDate(from) + " - " + longDate(to) + " (" + T.nights(nightsBetween(from, to)) + ")";
+        hint.textContent = longDate(from) + " - " + longDate(to) + " (" + T.days(nightsBetween(from, to) + 1) + ")";
       } else if (from) {
         hint.textContent = T.hintEnd;
       } else {
@@ -477,7 +481,9 @@
     var params = new URLSearchParams(window.location.search);
     var from = parseDate(params.get("van"));
     var to = parseDate(params.get("tot"));
-    var persons = parseInt(params.get("personen"), 10);
+    // Digits only, 1 or more: "3abc", "-2" or "0" in the address is ignored.
+    var personsText = params.get("personen") || "";
+    var persons = /^\d{1,3}$/.test(personsText) && +personsText >= 1 ? parseInt(personsText, 10) : NaN;
     var hasPeriod = from && to && to > from;
     if (!hasPeriod && isNaN(persons)) return;
 
@@ -503,7 +509,7 @@
 
     var parts = [];
     if (hasPeriod) {
-      parts.push(longDate(from) + " - " + longDate(to) + " (" + T.nights(nightsBetween(from, to)) + ")");
+      parts.push(longDate(from) + " - " + longDate(to) + " (" + T.days(nightsBetween(from, to) + 1) + ")");
     }
     if (!isNaN(persons)) parts.push(persons + (persons === 1 ? " reiziger" : " reizigers"));
 

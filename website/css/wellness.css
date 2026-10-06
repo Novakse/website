@@ -280,6 +280,18 @@
   padding-bottom: 0.15em;
   text-decoration: none;
 }
+/* invisible 44px tap area around the short text link; looks the same */
+.page-wellness .lx-link { position: relative; }
+.page-wellness .lx-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  min-height: 2.75rem;
+  height: 100%;
+  transform: translateY(-50%);
+}
 .page-wellness .lx-link:hover,
 .page-wellness .lx-link:focus-visible { color: var(--lx-amber-deep); }
 .page-wellness .factbar .lx-link:hover,
@@ -415,9 +427,10 @@
 .page-wellness .site-header.site-header--scrolled.site-header--on-light::after {
   background-color: rgba(var(--lx-linen-rgb), 0.72);
 }
-/* opened mobile menu over a light section: linen glass instead of white */
+/* opened mobile menu over a light section: linen glass instead of white,
+   as dense as the global light glass (0.86) so the menu text keeps AA contrast */
 .page-wellness .site-header.site-header--on-light .main-nav::before {
-  background-color: rgba(var(--lx-linen-rgb), 0.55);
+  background-color: rgba(var(--lx-linen-rgb), 0.86);
 }
 /* over photos (band, closing) the dark glass must be dense enough for the white logo */
 .page-wellness .site-header--scrolled:not(.site-header--on-light)::after {
@@ -1716,6 +1729,8 @@
    margin keeps the buttons 2.25rem from what is above them (grid gap 3.5rem). */
 .page-wellness .lx-price__booking > .lx-label { margin-top: 0; }
 .page-wellness .lx-price__grid > .pending__actions { margin-top: -1.25rem; }
+/* persons field as tall as the stepper buttons beside it: a 44px tap target */
+.page-wellness .lx-booking .booking__persons input { min-height: 2.75rem; }
 @media (min-width: 64rem) {
   /* the photo column's extra height goes to row 2, below the buttons */
   .page-wellness .lx-price__grid { grid-template-rows: auto 1fr auto; }

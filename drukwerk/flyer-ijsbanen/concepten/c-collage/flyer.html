@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Novakse flyer, concept C: collage van echte reizen</title>
+<!--
+  Concept C preview (A4 portrait, 210 x 297 mm). All geometry in mm.
+  Text and QR stay >= 12 mm inside the trim; photos may run 3 mm past it.
+
+  Idea: Joey's own trip photos in different sizes, tied together by the
+  website's swept-track line. The line comes in over the paper, runs across
+  the snow in the Orsa photo and passes BEHIND the skater (a cut-out of that
+  skater is layered on top of the line), so it reads as a track on the ice
+  rather than a divider.
+-->
+<style>
+  @font-face {
+    font-family: "Space Grotesk";
+    font-weight: 400 700;
+    src: url("assets/space-grotesk-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+  }
+  @font-face {
+    font-family: "Space Grotesk";
+    font-weight: 400 700;
+    src: url("assets/space-grotesk-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F;
+  }
+  @font-face {
+    font-family: "Work Sans";
+    font-weight: 300 600;
+    src: url("assets/work-sans-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+  }
+  @font-face {
+    font-family: "Work Sans";
+    font-weight: 300 600;
+    src: url("assets/work-sans-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F;
+  }
+  @font-face {
+    font-family: "Cormorant Garamond";
+    font-style: italic;
+    font-weight: 400 500;
+    src: url("assets/cormorant-garamond-italic-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+  }
+  @font-face {
+    font-family: "Cormorant Garamond";
+    font-style: italic;
+    font-weight: 400 500;
+    src: url("assets/cormorant-garamond-italic-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F;
+  }
+
+  :root {
+    --ink: #14181a;
+    --paper: #ffffff;
+    --paper-soft: #f2f3f0;
+    --warm: #dd9752;
+    --warm-deep: #7a4620;
+    --display: "Space Grotesk", sans-serif;
+    --sans: "Work Sans", sans-serif;
+    --caption: "Cormorant Garamond", Georgia, serif;
+  }
+
+  @page { size: 210mm 297mm; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #8a8f93; }
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-kerning: normal;
+    text-rendering: geometricPrecision;
+  }
+  h1, p { margin: 0; }
+
+  .sheet {
+    position: relative;
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .sheet > * { position: absolute; }
+
+  /* ---------- Photos */
+  .photo {
+    display: block;
+    object-fit: cover;
+    z-index: 1;
+  }
+  /* Dominant photo: Orsa, 4:5 portrait, bleeds off the right edge */
+  .photo--orsa,
+  .cutout--orsa {
+    left: 84mm; top: 62mm;
+    width: 129mm; height: 161.25mm;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+  .cutout--orsa { z-index: 3; display: block; }
+  .photo--falun {
+    left: 12mm; top: 96mm;
+    width: 58mm; height: 58mm;
+    object-position: 50% 62%;
+  }
+  /* Group at the ice edge: wide crop, bleeds left and overlaps the
+     snowy lower-left corner of the Orsa photo */
+  .photo--groep {
+    left: -3mm; top: 188mm;
+    width: 123mm; height: 53mm;
+    object-position: 50% 72%;
+    z-index: 4;
+  }
+
+  /* ---------- Swept-track line: runs over the Orsa photo, behind the skater */
+  .track {
+    left: 0; top: 0;
+    width: 210mm; height: 297mm;
+    z-index: 2;
+    overflow: visible;
+  }
+  .track path {
+    fill: none;
+    stroke: var(--warm);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+
+  .caption {
+    font-family: var(--caption);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 5mm;
+    line-height: 1;
+    color: var(--warm-deep);
+    white-space: nowrap;
+  }
+  .caption--falun { left: 12mm; top: 157mm; }
+  .caption--orsa { right: 12mm; top: 226mm; }
+
+  /* ---------- Type */
+  .headline {
+    left: 12mm; top: 12mm;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 22mm;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+  .headline span { display: block; }
+
+  .lede {
+    left: 12mm; top: 62mm;
+    width: 66mm;
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 5.2mm;
+    line-height: 1.34;
+  }
+
+  .cta {
+    left: 12mm; top: 250mm;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 8.8mm;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .site {
+    left: 12mm; top: 263mm;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 9mm;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--warm-deep);
+  }
+  .contact {
+    left: 12mm; top: 276.5mm;
+    font-family: var(--sans);
+    font-size: 4.3mm;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .contact span + span { margin-left: 6mm; }
+  .logo {
+    right: 12mm; top: 16.5mm;
+    width: 34mm;
+    height: auto;
+  }
+  .qr {
+    left: 156mm; top: 243mm;
+    width: 42mm; height: 42mm;
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <h1 class="headline"><span>Schaatsreizen</span><span>op natuurijs</span></h1>
+  <p class="lede">Zweden, Finland en Oostenrijk. Persoonlijk geregeld door Joey.</p>
+
+  <img class="photo photo--orsa" src="assets/orsa-geveegde-baan-zon.jpg" alt="Twee schaatsers op een geveegde baan bij Orsa, met de lage zon">
+  <img class="photo photo--falun" src="assets/falun-schaatser-berk.jpg" alt="Lachende schaatser met stokken op het ijs bij Falun">
+  <img class="photo photo--groep" src="assets/groep-ijsrand-blauwe-lucht.jpg" alt="Vijf schaatsers samen aan de rand van het ijs onder een blauwe lucht">
+
+  <svg class="track" viewBox="0 0 210 297" aria-hidden="true">
+    <!-- Website baanlijn "M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14"
+         (400 x 40 box), scaled x 0.54 / y 0.55 and placed at y 170. -->
+    <path d="M-3,170 C51,161.2 83.4,178.8 137.4,168.9 C164.4,163.4 186,173.3 213,166.7" />
+  </svg>
+  <img class="cutout--orsa" src="assets/orsa-schaatser-uitsnede.png" alt="">
+
+  <p class="caption caption--falun">Falun</p>
+  <p class="caption caption--orsa">Orsa</p>
+
+  <p class="cta">Scan en bekijk alle reizen</p>
+  <p class="site">novakse.com</p>
+  <p class="contact"><span>+31 6 17467643</span><span>@schaatsreizennovakse</span></p>
+  <img class="logo" src="assets/logo-word-dark.png" alt="Novakse">
+  <img class="qr" src="assets/qr-reizen.svg" alt="QR-code naar novakse.com/reizen.html">
+</main>
+</body>
+</html>

@@ -17,10 +17,11 @@
   <link rel="canonical" href="https://www.novakse.com/fi/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
+  <meta property="og:locale" content="fi_FI" />
   <meta property="og:title" content="Novakse Reizen - luonnonjääluistelumatkat" />
   <meta property="og:description" content="Novakse järjestää pienimuotoisia luonnonjääluistelumatkoja Ruotsissa, Suomessa ja Itävallassa. Joey Novak hoitaa järjestelyt henkilökohtaisesti." />
   <meta property="og:url" content="https://www.novakse.com/fi/" />
-  <meta property="og:image" content="https://www.novakse.com/images/hero-opener-poster.jpg" />
+  <meta property="og:image" content="https://www.novakse.com/images/hero-video-novakse-poster.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="alternate" hreflang="nl" href="https://www.novakse.com/" />
   <link rel="alternate" hreflang="en" href="https://www.novakse.com/en/" />
@@ -128,7 +129,7 @@
         "name": "Voinko lähteä mukaan, jos tämä on ensimmäinen luistelumatkani Ruotsiin tai Suomeen?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Kyllä, matkasta ja luistelukokemuksestasi riippuen. Kaikki matkat ovat lähtökohtaisesti omatoimisia, ilman opastusta jäällä. Orsan ja Falunin matkoille voit varata lisäksi opastuksen jäälle. Siksi ne sopivat parhaiten luistelijoille, jotka osaavat itse arvioida senhetkiset olosuhteet. Opastettuja ryhmämatkoja suunnitellaan vielä."
+          "text": "Kyllä, matkasta ja luistelukokemuksestasi riippuen. Kaikki matkat ovat lähtökohtaisesti omatoimisia, ilman opastusta jäällä. Siksi ne sopivat parhaiten luistelijoille, jotka osaavat itse arvioida senhetkiset olosuhteet. Orsan ja Falunin matkoille voit varata lisäksi opastuksen jäälle. Opastettuja ryhmämatkoja suunnitellaan vielä."
         }
       },
       {
@@ -198,11 +199,11 @@
     <!-- 1. Opener -->
     <section class="opener" id="top">
       <video class="opener__video" autoplay muted loop playsinline preload="none"
-             poster="../images/hero-opener-poster.jpg" aria-hidden="true"
-             data-src-wide="../images/hero-opener.mp4"
-             data-src-tall="../images/hero-opener-mobile.mp4"
-             data-poster-wide="../images/hero-opener-poster.jpg"
-             data-poster-tall="../images/hero-opener-poster-mobile.jpg"></video>
+             poster="../images/hero-video-novakse-poster.jpg" aria-hidden="true"
+             data-src-wide="../images/hero-video-novakse.mp4"
+             data-src-tall="../images/hero-video-novakse-mobile.mp4"
+             data-poster-wide="../images/hero-video-novakse-poster.jpg"
+             data-poster-tall="../images/hero-video-novakse-poster-mobile.jpg"></video>
       <div class="opener__inner">
         <img class="opener__mark" src="../images/logo-mark.png" alt="" width="401" height="600" fetchpriority="high" />
         <h1 class="opener__title">Luistelumatkoja luonnonjäällä</h1>
@@ -406,18 +407,18 @@
     <!-- 6. Persoonlijk verhaal -->
     <section class="story" id="verhaal">
       <div class="wrap story__grid">
-        <!-- Collage: drie foto's met afgeronde hoeken die tijdens het scrollen
-             ieder een klein stukje meebewegen (zie main.js). -->
+        <!-- Collage: the photos take turns in front, one lap like skaters on a
+             rink (see main.js). -->
         <figure class="story__collage story__collage--home reveal" data-collage>
           <div class="collage__frame">
-            <div class="collage__item collage__item--main" data-speed="-360">
-              <picture><source type="image/avif" srcset="../images/joey-hond-persoonlijk-480.avif 480w, ../images/joey-hond-persoonlijk-800.avif 800w, ../images/joey-hond-persoonlijk.avif 1200w" sizes="(min-width: 62rem) 32vw, 76vw" /><source type="image/webp" srcset="../images/joey-hond-persoonlijk-480.webp 480w, ../images/joey-hond-persoonlijk-800.webp 800w, ../images/joey-hond-persoonlijk.webp 1200w" sizes="(min-width: 62rem) 32vw, 76vw" /><img src="../images/joey-hond-persoonlijk.jpg" alt="Joey Novak koiransa kanssa veden äärellä" loading="lazy" srcset="../images/joey-hond-persoonlijk-480.jpg 480w, ../images/joey-hond-persoonlijk-800.jpg 800w, ../images/joey-hond-persoonlijk.jpg 1200w" sizes="(min-width: 62rem) 32vw, 76vw" /></picture>
+            <div class="collage__item" data-slot="front">
+              <picture><source type="image/avif" srcset="../images/joey-hond-persoonlijk-480.avif 480w, ../images/joey-hond-persoonlijk-800.avif 800w, ../images/joey-hond-persoonlijk.avif 1200w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><source type="image/webp" srcset="../images/joey-hond-persoonlijk-480.webp 480w, ../images/joey-hond-persoonlijk-800.webp 800w, ../images/joey-hond-persoonlijk.webp 1200w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><img src="../images/joey-hond-persoonlijk.jpg" alt="Joey Novak koiransa kanssa veden äärellä" loading="lazy" srcset="../images/joey-hond-persoonlijk-480.jpg 480w, ../images/joey-hond-persoonlijk-800.jpg 800w, ../images/joey-hond-persoonlijk.jpg 1200w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /></picture>
             </div>
-            <div class="collage__item collage__item--left" data-speed="-540">
-              <picture><source type="image/avif" srcset="../images/joey-op-het-ijs-480.avif 480w, ../images/joey-op-het-ijs-800.avif 800w, ../images/joey-op-het-ijs.avif 1100w" sizes="(min-width: 62rem) 19vw, 46vw" /><source type="image/webp" srcset="../images/joey-op-het-ijs-480.webp 480w, ../images/joey-op-het-ijs-800.webp 800w, ../images/joey-op-het-ijs.webp 1100w" sizes="(min-width: 62rem) 19vw, 46vw" /><img src="../images/joey-op-het-ijs.jpg" alt="Joey luistelemassa jäätyneellä järvellä" loading="lazy" srcset="../images/joey-op-het-ijs-480.jpg 480w, ../images/joey-op-het-ijs-800.jpg 800w, ../images/joey-op-het-ijs.jpg 1100w" sizes="(min-width: 62rem) 19vw, 46vw" /></picture>
+            <div class="collage__item" data-slot="left">
+              <picture><source type="image/avif" srcset="../images/joey-op-het-ijs-480.avif 480w, ../images/joey-op-het-ijs-800.avif 800w, ../images/joey-op-het-ijs.avif 1100w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><source type="image/webp" srcset="../images/joey-op-het-ijs-480.webp 480w, ../images/joey-op-het-ijs-800.webp 800w, ../images/joey-op-het-ijs.webp 1100w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><img src="../images/joey-op-het-ijs.jpg" alt="Joey luistelemassa jäätyneellä järvellä" loading="lazy" srcset="../images/joey-op-het-ijs-480.jpg 480w, ../images/joey-op-het-ijs-800.jpg 800w, ../images/joey-op-het-ijs.jpg 1100w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /></picture>
             </div>
-            <div class="collage__item collage__item--right" data-speed="-460">
-              <picture><source type="image/avif" srcset="../images/joey-kampvuur-480.avif 480w, ../images/joey-kampvuur.avif 720w" sizes="(min-width: 62rem) 19vw, 46vw" /><source type="image/webp" srcset="../images/joey-kampvuur-480.webp 480w, ../images/joey-kampvuur.webp 720w" sizes="(min-width: 62rem) 19vw, 46vw" /><img src="../images/joey-kampvuur.jpg" alt="Joey valmistaa ruokaa nuotiolla luistelumatkan aikana" loading="lazy" srcset="../images/joey-kampvuur-480.jpg 480w, ../images/joey-kampvuur.jpg 720w" sizes="(min-width: 62rem) 19vw, 46vw" /></picture>
+            <div class="collage__item collage__item--portrait" data-slot="right">
+              <picture><source type="image/avif" srcset="../images/joey-kampvuur-480.avif 480w, ../images/joey-kampvuur.avif 720w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><source type="image/webp" srcset="../images/joey-kampvuur-480.webp 480w, ../images/joey-kampvuur.webp 720w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><img src="../images/joey-kampvuur.jpg" alt="Joey valmistaa ruokaa nuotiolla luistelumatkan aikana" loading="lazy" srcset="../images/joey-kampvuur-480.jpg 480w, ../images/joey-kampvuur.jpg 720w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /></picture>
             </div>
           </div>
           <figcaption class="story__caption">Joey Novak, Novaksen perustaja</figcaption>
@@ -437,13 +438,13 @@
     <section class="reviews">
       <div class="wrap reviews__grid">
         <div class="reviews__media reveal">
-          <picture><source type="image/avif" srcset="../images/handen-omhoog-zonsondergang-480.avif 480w, ../images/handen-omhoog-zonsondergang-800.avif 800w, ../images/handen-omhoog-zonsondergang-1200.avif 1200w, ../images/handen-omhoog-zonsondergang.avif 1400w" sizes="100vw" /><source type="image/webp" srcset="../images/handen-omhoog-zonsondergang-480.webp 480w, ../images/handen-omhoog-zonsondergang-800.webp 800w, ../images/handen-omhoog-zonsondergang-1200.webp 1200w, ../images/handen-omhoog-zonsondergang.webp 1400w" sizes="100vw" /><img src="../images/handen-omhoog-zonsondergang.jpg" alt="Kaksi osallistujaa juhlimassa jäällä auringonlaskussa" loading="lazy" srcset="../images/handen-omhoog-zonsondergang-480.jpg 480w, ../images/handen-omhoog-zonsondergang-800.jpg 800w, ../images/handen-omhoog-zonsondergang-1200.jpg 1200w, ../images/handen-omhoog-zonsondergang.jpg 1400w" sizes="100vw" /></picture>
+          <picture><source type="image/avif" srcset="../images/handen-omhoog-zonsondergang-480.avif 480w, ../images/handen-omhoog-zonsondergang-800.avif 800w, ../images/handen-omhoog-zonsondergang-1200.avif 1200w, ../images/handen-omhoog-zonsondergang.avif 1400w" sizes="100vw" /><source type="image/webp" srcset="../images/handen-omhoog-zonsondergang-480.webp 480w, ../images/handen-omhoog-zonsondergang-800.webp 800w, ../images/handen-omhoog-zonsondergang-1200.webp 1200w, ../images/handen-omhoog-zonsondergang.webp 1400w" sizes="100vw" /><img src="../images/handen-omhoog-zonsondergang.jpg" alt="Kaksi osallistujaa juhlimassa jäällä auringonlaskussa" width="1400" height="989" loading="lazy" srcset="../images/handen-omhoog-zonsondergang-480.jpg 480w, ../images/handen-omhoog-zonsondergang-800.jpg 800w, ../images/handen-omhoog-zonsondergang-1200.jpg 1200w, ../images/handen-omhoog-zonsondergang.jpg 1400w" sizes="100vw" /></picture>
         </div>
         <div class="reviews__body reveal">
           <span class="eyebrow eyebrow--deep"><span class="dot"></span>Kokemuksia</span>
           <h2 class="reviews__title">Mitä aiemmat matkailijat ovat sanoneet</h2>
-          <p class="reviews__text">Aiempien osallistujien palautteet löytyvät Google-sivultamme. Lisäämme tänne pian suoran linkin sinne.</p>
-          <a class="link-arrow reviews__link" href="#aanvraag">Esitä kysymyksesi Joeylle</a>
+          <p class="reviews__text">Aiempien osallistujien aidot palautteet löydät suoraan Google-sivultamme.</p>
+          <a class="link-arrow reviews__link" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Katso kaikki arviot Googlessa</a>
         </div>
       </div>
     </section>
@@ -472,7 +473,7 @@
           </details>
           <details class="faq__item">
             <summary>Voinko lähteä mukaan, jos tämä on ensimmäinen luistelumatkani Ruotsiin tai Suomeen?</summary>
-            <p>Kyllä, matkasta ja luistelukokemuksestasi riippuen. Kaikki matkat ovat lähtökohtaisesti omatoimisia, ilman opastusta jäällä. Orsan ja Falunin matkoille voit varata lisäksi opastuksen jäälle. Siksi ne sopivat parhaiten luistelijoille, jotka osaavat itse arvioida senhetkiset olosuhteet. Opastettuja ryhmämatkoja suunnitellaan vielä.</p>
+            <p>Kyllä, matkasta ja luistelukokemuksestasi riippuen. Kaikki matkat ovat lähtökohtaisesti omatoimisia, ilman opastusta jäällä. Siksi ne sopivat parhaiten luistelijoille, jotka osaavat itse arvioida senhetkiset olosuhteet. Orsan ja Falunin matkoille voit varata lisäksi opastuksen jäälle. Opastettuja ryhmämatkoja suunnitellaan vielä.</p>
           </details>
           <details class="faq__item">
             <summary>Millaisia luisteluvarusteita tarvitsen?</summary>
@@ -531,6 +532,7 @@
                 <option value="falun">Falun, Ruotsi</option>
                 <option value="finland">Punkaharju, Suomi</option>
                 <option value="weissensee">Weissensee, Itävalta</option>
+                <option value="lulea">Luleå, Ruotsi</option>
                 <option value="onbekend">En vielä tiedä</option>
               </select>
             </div>

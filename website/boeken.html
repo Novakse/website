@@ -100,8 +100,8 @@
     "lulea": { "naam": "Luleå, Zweden", "prijstabel": "data/lulea-prijzen.json" },
     "wellness": {
       "naam": "Wellness & schaatsen, Zweden",
-      "//prijsOpAanvraag": "Geen online betaling: er is geen vaste prijs (zie wellness.html, vanaf-prijs per persoon). De definitieve prijs hangt af van reisdatum en bezetting, Joey stelt de reis persoonlijk samen.",
-      "prijsOpAanvraag": true,
+      "//prijstabel": "Zelfde kalender als op wellness.html: online boeken en betalen met 2 personen (betaalPersonen in data/wellness-prijzen.json). Bij een ander aantal personen toont de kalender geen bedrag en staan de contactknoppen hieronder eronder, met de gekozen reisduur, datum en personen. Zet \"prijsOpAanvraag\": true terug om alleen aanvragen te tonen (dan gelden prijsToelichting en prijzenPerDuur weer).",
+      "prijstabel": "data/wellness-prijzen.json",
       "prijsLabel": "vanaf €1.395 p.p.",
       "prijsToelichting": "Prijs per persoon, per reisduur. De definitieve prijs hangt af van de reisdatum en de bezetting, daarom stelt Joey deze reis persoonlijk met je samen. Laat hem weten wanneer je wilt gaan.",
       "//prijzenPerDuur": "Verkoopprijzen per persoon per reisduur, gelijk aan de tabel op wellness.html.",
@@ -111,7 +111,7 @@
         { "dagen": 6, "label": "6 dagen", "prijs": 1795 },
         { "dagen": 7, "label": "7 dagen", "prijs": 1995 }
       ],
-      "//keuzeTeksten": "Teksten bij de keuze van reisduur, vertrekdatum en aantal personen. Er wordt niets betaald: de keuze gaat mee in het WhatsApp-bericht en naar de belafspraak. Wat tussen { } staat vult de pagina zelf in. belOnderwerp moet precies gelijk zijn aan een keuze in de lijst op belafspraak.html.",
+      "//keuzeTeksten": "Teksten bij de keuze van reisduur, vertrekdatum en aantal personen voor een aanvraag (een ander aantal dan 2 personen). Er wordt niets betaald: de keuze gaat mee in het WhatsApp-bericht en naar de belafspraak. Wat tussen { } staat vult de pagina zelf in. belOnderwerp moet precies gelijk zijn aan een keuze in de lijst op belafspraak.html.",
       "keuzeTeksten": {
         "duurVraag": "Hoe lang wil je gaan?",
         "prijsPerPersoon": "€ {bedrag} p.p.",
@@ -129,7 +129,7 @@
         "regelPersonen": "Aantal personen: {n}",
         "belOnderwerp": "Een schaatsreis"
       },
-      "//contact": "Knoppen onder de prijzen. De eerste is de hoofdknop. metKeuze: de pagina zet de gekozen reisduur, datum en personen in deze link (whatsapp of belafspraak).",
+      "//contact": "Knoppen onder de kalender bij een ander aantal dan 2 personen. De eerste is de hoofdknop. metKeuze: de pagina zet de gekozen reisduur, datum en personen in deze link (whatsapp of belafspraak).",
       "contact": [
         { "tekst": "Plan een belafspraak", "href": "belafspraak.html", "metKeuze": "belafspraak" },
         { "tekst": "Stel je vraag via WhatsApp", "href": "https://wa.me/31617467643?text=Hoi%20Joey%2C%20ik%20heb%20een%20vraag%20over%20de%20wellness-%20en%20schaatsreis.", "metKeuze": "whatsapp" },

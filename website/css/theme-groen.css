@@ -56,8 +56,9 @@
   border-color: var(--border);
   color: var(--ink);
 }
+/* #6c756f: 4.7:1 on white (WCAG AA), still lighter than typed text. */
 .form-field input::placeholder,
-.form-field textarea::placeholder { color: #9aa19c; }
+.form-field textarea::placeholder { color: #6c756f; }
 .form-field select option { background: var(--paper); color: var(--ink); }
 .form-note { color: var(--ink-soft); }
 /* The base status colours are meant for the dark request section; on this

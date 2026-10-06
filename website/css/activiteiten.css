@@ -1,0 +1,201 @@
+/* ==========================================================================
+   Activiteiten bijboeken (uitchecken.html)
+
+   Optional block inside "Te betalen" for Falun and Wellness & schaatsen.
+   Built by js/uitchecken.js; loads after styles.css and theme-groen.css and
+   only uses their tokens. Calm rows instead of cards: name and detail on the
+   left, price per unit and a stepper on the right (under the name on a
+   phone). Motion is limited to transform and opacity.
+   ========================================================================== */
+
+/* Several of these elements get a display value below; keep [hidden] working. */
+.activiteiten[hidden],
+.activiteiten__paneel[hidden],
+.activiteiten__overzicht[hidden],
+.act-regel__samen[hidden] { display: none; }
+
+/* Falun: the trip description moves here, the total becomes "Totaal". */
+.activiteiten__reis {
+  max-width: 60ch;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.activiteiten {
+  /* A fieldset is as wide as its content by default; min-width: 0 keeps it
+     inside a 375px screen. */
+  min-width: 0;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  border: none;
+}
+
+.activiteiten__legend {
+  padding: 0;
+  margin-bottom: 0.7rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* The checkbox that opens the options: the same .extra row as the
+   confirmations further down the page, with the count underneath. */
+.activiteiten__keuze {
+  grid-template-columns: auto 1fr;
+  min-height: 3.25rem;
+  background: var(--paper);
+}
+.activiteiten__keuze .extra__name { min-width: 0; }
+.activiteiten__telling[hidden] { display: none; }
+.activiteiten__telling { font-size: 0.82rem; }
+.activiteiten__telling.is-gekozen { color: var(--warm-deep); font-weight: 600; }
+
+.activiteiten__paneel {
+  margin-top: 0.6rem;
+  padding: 1.1rem 1rem 0.4rem;
+  border-radius: 0.9rem;
+  background: var(--paper-soft);
+  animation: act-open 0.22s ease both;
+}
+@keyframes act-open {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+.activiteiten__uitleg { font-size: 0.86rem; color: var(--ink-soft); max-width: 52ch; }
+
+/* ---- The list: one plain item per activity, one under another --------- */
+.act-lijst { list-style: none; margin: 0; padding: 0; }
+.act-item { padding: 0.9rem 0; }
+.act-item + .act-item { border-top: 1px solid var(--border); }
+.act-item__naam {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.act-item__detail { margin-top: 0.15rem; font-size: 0.84rem; line-height: 1.4; color: var(--ink-soft); }
+.act-item__regels { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+.act-item__gratis { margin: 0.45rem 0 0; font-size: 0.84rem; line-height: 1.4; color: var(--status-green); font-weight: 500; }
+.act-item__aantal { margin: 0.45rem 0 0; font-size: 0.84rem; font-weight: 600; color: var(--warm-deep); }
+.act-item__aantal[hidden], .act-item__huur[hidden] { display: none; }
+
+/* "Spullen huren": a text button under the activity row. */
+.act-item__huurknop {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: 0.35rem;
+  padding: 0 0.2rem;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--warm-deep);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+.act-item__huurknop:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 0.25rem; }
+.act-item__huur {
+  margin-top: 0.4rem;
+  padding: 0.2rem 0.9rem;
+  border-radius: 0.9rem;
+  background: var(--paper-soft);
+}
+.act-item__huur .act-regel:first-child { border-top: none; }
+.act-item__huur:not([hidden]) { animation: act-open 0.22s ease both; }
+
+/* ---- One line: text, price, stepper ------------------------------------ */
+.act-regel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "tekst tekst"
+    "prijs stepper";
+  align-items: center;
+  gap: 0.45rem 1rem;
+  padding: 0.85rem 0;
+}
+.act-regel + .act-regel { border-top: 1px solid var(--border); }
+.act-regel__tekst { grid-area: tekst; min-width: 0; }
+.act-regel__naam { font-weight: 500; line-height: 1.35; overflow-wrap: anywhere; }
+.act-regel__detail { margin-top: 0.1rem; font-size: 0.84rem; line-height: 1.4; color: var(--ink-soft); }
+
+.act-regel__prijs {
+  grid-area: prijs;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  min-width: 0;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+.act-regel__bedrag { font-size: 0.95rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.act-regel__samen { color: var(--warm-deep); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.act-stepper {
+  grid-area: stepper;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.act-stepper__knop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  border: 1px solid color-mix(in srgb, var(--ink) 32%, transparent);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+.act-stepper__knop:hover { border-color: var(--ink); }
+.act-stepper__knop:active { transform: scale(0.93); }
+/* aria-disabled instead of disabled: the button keeps its focus, and a
+   screen reader still finds it and hears that it is unavailable. */
+.act-stepper__knop[aria-disabled="true"] { opacity: 0.35; cursor: default; }
+.act-stepper__knop[aria-disabled="true"]:hover { border-color: color-mix(in srgb, var(--ink) 32%, transparent); }
+.act-stepper__knop[aria-disabled="true"]:active { transform: none; }
+.act-stepper__waarde {
+  min-width: 1.75rem;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.act-regel.is-gekozen .act-stepper__waarde { color: var(--warm-deep); }
+
+/* ---- Summary under the block ------------------------------------------- */
+.activiteiten__overzicht { margin-top: 1.25rem; }
+.booking__lines .activiteiten__detailregel {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+.booking__lines dt.activiteiten__detailregel { padding-left: 0.9rem; }
+
+/* ---- Wider screens: one row per line, price right-aligned -------------- */
+@media (min-width: 40rem) {
+  .activiteiten__paneel { padding: 1.4rem 1.5rem 0.6rem; }
+  .act-regel {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas: "tekst prijs stepper";
+    gap: 0.5rem 1.75rem;
+  }
+  .act-regel__prijs { align-items: flex-end; text-align: right; min-width: 8.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .activiteiten__paneel,
+  .act-item__huur:not([hidden]) { animation: none; }
+  .act-stepper__knop { transition: none; }
+}

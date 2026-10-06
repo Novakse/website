@@ -91,8 +91,10 @@
     return svg;
   }
 
+  // "€1.395", the same format as the calendars and the booking page.
   function euro(bedrag) {
-    return "€" + String(bedrag);
+    var getal = Number(bedrag);
+    return "€" + (isFinite(getal) ? getal.toLocaleString("nl-NL") : String(bedrag));
   }
 
   // Fills {stad} and {vliegveld} in a text with the city of the chosen trip.

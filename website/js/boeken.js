@@ -8,21 +8,27 @@
 
      Falun                          js/falun-kalender.js (data/falun-prijzen.json)
      Lulea, Orsa, Weissensee,       js/main.js, NovakseReiskalender
-     Finland                        (data/<trip>-prijzen.json)
+     Finland, Wellness              (data/<trip>-prijzen.json)
 
    The server recalculates the amount from the same price files
    (api/_falun-prijs.js, api/_reis-prijs.js) before anything is charged.
 
-   A trip without a fixed price ("prijsOpAanvraag", wellness) cannot be paid
-   online; step 2 then lets the visitor pick a trip length (with its price
-   per person), a departure date and the number of people, and passes that
-   choice on in the WhatsApp message and the link to the call planner
-   (belafspraak.html). The texts for this are in the data block.
+   Wellness can only be paid online for 2 people (betaalPersonen in its
+   price file). For another group size the calendar says so and shows no
+   "Book and pay" link; the contact links from the data block then show
+   under it, with the choice in the WhatsApp message and the link to the
+   call planner (belafspraak.html).
+
+   A trip without a fixed price ("prijsOpAanvraag") cannot be paid online;
+   step 2 then lets the visitor pick a trip length (with its price per
+   person), a departure date and the number of people, and passes that
+   choice on in the same contact links. The texts for this are in the data
+   block.
 
    Links into this page may carry the choice: ?reis=lulea&van=2027-01-10&
    tot=2027-01-14&personen=3&begeleiding=2 (and &vlucht=zelf for an own
-   flight), or ?reis=wellness&dagen=5. The address follows what the visitor
-   picks, so a refresh or the back button shows the same choice.
+   flight), or ?reis=<trip on request>&dagen=5. The address follows what the
+   visitor picks, so a refresh or the back button shows the same choice.
 
    The destinations and their price files are in <script id="boekingsdata">
    in boeken.html.
@@ -160,6 +166,59 @@
     });
   }
 
+  function leesbareDatum(datum) {
+    try {
+      return datum.toLocaleDateString(LOCALE, { day: "numeric", month: "long", year: "numeric" });
+    } catch (fout) {
+      return alsTekst(datum);
+    }
+  }
+
+  /* The contact links of a trip from the data block, as buttons; the first
+     is the main one. metKeuze: mark the WhatsApp and call planner links so
+     vulKeuzeLinks() can put the visitor's choice in them. */
+  function contactHtml(gegevens, metKeuze) {
+    var knoppen = (Array.isArray(gegevens.contact) ? gegevens.contact : []).filter(function (link) {
+      return link && link.tekst && link.href;
+    }).map(function (link, i) {
+      var extern = /^https?:/.test(link.href);
+      var soort = metKeuze && (link.metKeuze === "whatsapp" || link.metKeuze === "belafspraak") ? link.metKeuze : "";
+      return '<a class="btn ' + (i === 0 ? "btn--dark" : "btn--outline-dark") + '" href="' + escapeHtml(link.href) + '"' +
+        (soort ? ' data-met-keuze="' + soort + '"' : '') +
+        (extern ? ' target="_blank" rel="noopener"' : '') + '>' + escapeHtml(link.tekst) + '</a>';
+    });
+    return knoppen.length ? '<div class="booking__contact">' + knoppen.join("") + '</div>' : "";
+  }
+
+  /* Puts the choice into the marked contact links inside a box: regels are
+     lines like "Reisduur: 5 dagen". The WhatsApp message starts with the
+     greeting, the call planner gets the subject and the lines as its
+     explanation. With no lines the WhatsApp link keeps its general question
+     from the data block. */
+  function vulKeuzeLinks(box, gegevens, tk, regels) {
+    Array.prototype.forEach.call(box.querySelectorAll("[data-met-keuze]"), function (el) {
+      var origineel = el.getAttribute("data-basis");
+      if (!origineel) {
+        origineel = el.getAttribute("href");
+        el.setAttribute("data-basis", origineel);
+      }
+      var basis = origineel.split("?")[0];
+      var soort = el.getAttribute("data-met-keuze");
+      if (soort === "whatsapp") {
+        // Nothing picked yet: the general question from the data block.
+        el.href = regels.length
+          ? basis + "?text=" + encodeURIComponent([vul(tk.whatsappBericht, { naam: gegevens.naam })].concat(regels).filter(Boolean).join("\n"))
+          : origineel;
+      } else if (soort === "belafspraak") {
+        var query = [];
+        if (tk.belOnderwerp) query.push("onderwerp=" + encodeURIComponent(tk.belOnderwerp));
+        var uitleg = [vul(tk.regelReis, { naam: gegevens.naam })].concat(regels).filter(Boolean).join("\n");
+        if (uitleg) query.push("toelichting=" + encodeURIComponent(uitleg));
+        el.href = basis + (query.length ? "?" + query.join("&") : "");
+      }
+    });
+  }
+
   // A trip that can be booked and paid here has a price calendar.
   function isTeBoeken(reis) {
     return Boolean(reis && !reis.prijsOpAanvraag && (reis.kalender || reis.prijstabel));
@@ -285,6 +344,7 @@
           if (reisSleutel !== sleutel) return;
           neemKeuzeOver(info);
           schrijfAdres();
+          aanvraagBijKalender(sleutel);
         }
       });
     }
@@ -331,16 +391,7 @@
     var toelichting = gegevens.prijsToelichting
       ? '<p class="' + (metKeuze ? "booking__note" : "booking__period-empty") + '">' + escapeHtml(gegevens.prijsToelichting) + '</p>'
       : "";
-    var knoppen = (Array.isArray(gegevens.contact) ? gegevens.contact : []).filter(function (link) {
-      return link && link.tekst && link.href;
-    }).map(function (link, i) {
-      var extern = /^https?:/.test(link.href);
-      var soort = metKeuze && (link.metKeuze === "whatsapp" || link.metKeuze === "belafspraak") ? link.metKeuze : "";
-      return '<a class="btn ' + (i === 0 ? "btn--dark" : "btn--outline-dark") + '" href="' + escapeHtml(link.href) + '"' +
-        (soort ? ' data-met-keuze="' + soort + '"' : '') +
-        (extern ? ' target="_blank" rel="noopener"' : '') + '>' + escapeHtml(link.tekst) + '</a>';
-    });
-    var contact = knoppen.length ? '<div class="booking__contact">' + knoppen.join("") + '</div>' : "";
+    var contact = contactHtml(gegevens, metKeuze);
 
     if (!metKeuze) {
       var rijen = duren.map(function (regel) {
@@ -370,13 +421,6 @@
       return tk.prijsPerPersoon
         ? vul(tk.prijsPerPersoon, { bedrag: getal(Math.round(bedrag)) })
         : euro(bedrag);
-    }
-    function leesbareDatum(datum) {
-      try {
-        return datum.toLocaleDateString(LOCALE, { day: "numeric", month: "long", year: "numeric" });
-      } catch (fout) {
-        return alsTekst(datum);
-      }
     }
 
     /* The start values come from the web address. A trip length counts when
@@ -438,9 +482,6 @@
     var minder = aanvraagBox.querySelector('[data-personen-stap="-1"]');
     var meer = aanvraagBox.querySelector('[data-personen-stap="1"]');
     var samenvatting = aanvraagBox.querySelector("[data-aanvraag-samenvatting]");
-    var keuzeLinks = Array.prototype.map.call(aanvraagBox.querySelectorAll("[data-met-keuze]"), function (link) {
-      return { el: link, soort: link.getAttribute("data-met-keuze"), basis: link.getAttribute("href") };
-    });
 
     /* Summary, links and web address after every change. Parts that are not
        filled in are left out. */
@@ -471,21 +512,7 @@
           : "";
       }
 
-      keuzeLinks.forEach(function (link) {
-        var basis = link.basis.split("?")[0];
-        if (link.soort === "whatsapp") {
-          // Nothing picked yet: the general question from the data block.
-          link.el.href = regels.length
-            ? basis + "?text=" + encodeURIComponent([vul(tk.whatsappBericht, { naam: gegevens.naam })].concat(regels).filter(Boolean).join("\n"))
-            : link.basis;
-        } else if (link.soort === "belafspraak") {
-          var query = [];
-          if (tk.belOnderwerp) query.push("onderwerp=" + encodeURIComponent(tk.belOnderwerp));
-          var uitleg = [vul(tk.regelReis, { naam: gegevens.naam })].concat(regels).filter(Boolean).join("\n");
-          if (uitleg) query.push("toelichting=" + encodeURIComponent(uitleg));
-          link.el.href = basis + (query.length ? "?" + query.join("&") : "");
-        }
-      });
+      vulKeuzeLinks(aanvraagBox, gegevens, tk, regels);
 
       keuze.dagen = duur ? duur.dagen : null;
       keuze.van = datum ? alsTekst(datum) : null;
@@ -550,6 +577,56 @@
     werkBij();
   }
 
+  /* A trip paid online whose data block also has contact links (wellness:
+     online only for 2 people). When its calendar has a complete period but
+     no "Book and pay" link, the calendar says why (another group size) and
+     the contact links show under it, with the trip length, the arrival date
+     and the head count in the WhatsApp message and the link to the call
+     planner. Hidden in every other case, and for trips without contact
+     links (Falun, Orsa, Lulea, Weissensee, Finland). */
+  function aanvraagBijKalender(sleutel) {
+    if (!aanvraagBox) return;
+    var gegevens = alleReizen[sleutel];
+    var info = laatsteKeuze[sleutel];
+    var van = info && alsDatum(info.van);
+    var tot = info && alsDatum(info.tot);
+    var contact = gegevens ? contactHtml(gegevens, Boolean(gegevens.keuzeTeksten)) : "";
+    if (!contact || !van || !tot || tot <= van || info.betalen !== false) {
+      aanvraagBox.hidden = true;
+      return;
+    }
+
+    // Built once per trip; toonAanvraag() rebuilds the box for a trip on
+    // request, as its marker is different.
+    var merk = sleutel + ":kalender";
+    if (aanvraagBox.getAttribute("data-aanvraag-reis") !== merk) {
+      aanvraagBox.setAttribute("data-aanvraag-reis", merk);
+      aanvraagBijwerken = null;
+      aanvraagBox.innerHTML = contact;
+    }
+
+    var tk = gegevens.keuzeTeksten && typeof gegevens.keuzeTeksten === "object" ? gegevens.keuzeTeksten : {};
+    // Trip length as in the data block's list ("5 dagen"); a longer stay
+    // gets the number swapped in the first label ("9 dagen").
+    var dagen = Math.round((tot.getTime() - van.getTime()) / 86400000) + 1;
+    var duren = Array.isArray(gegevens.prijzenPerDuur) ? gegevens.prijzenPerDuur : [];
+    var label = "";
+    duren.forEach(function (regel) {
+      if (!label && regel && regel.dagen === dagen && regel.label) label = String(regel.label);
+    });
+    if (!label && duren[0] && /\d+/.test(String(duren[0].label || ""))) {
+      label = String(duren[0].label).replace(/\d+/, String(dagen));
+    }
+    var personen = alsAantal(info.personen);
+    var regels = [
+      label && tk.regelDuur ? vul(tk.regelDuur, { duur: label }) : "",
+      tk.regelDatum ? vul(tk.regelDatum, { datum: leesbareDatum(van) }) : "",
+      personen && tk.regelPersonen ? vul(tk.regelPersonen, { n: personen }) : ""
+    ].filter(Boolean);
+    vulKeuzeLinks(aanvraagBox, gegevens, tk, regels);
+    aanvraagBox.hidden = false;
+  }
+
   /* --- Choosing a destination --------------------------------------------
      handmatig: the visitor clicked it here (not from the web address). */
   function kiesReis(sleutel, handmatig) {
@@ -580,7 +657,7 @@
     Object.keys(kalenders).forEach(function (s) { kalenders[s].hidden = s !== sleutel; });
     if (teBoeken) {
       kalenderVoor(sleutel).hidden = false;
-      if (aanvraagBox) aanvraagBox.hidden = true;
+      aanvraagBijKalender(sleutel);
     } else {
       toonAanvraag(reis);
       if (aanvraagBox) aanvraagBox.hidden = false;

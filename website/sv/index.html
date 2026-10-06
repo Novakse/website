@@ -17,10 +17,11 @@
   <link rel="canonical" href="https://www.novakse.com/sv/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
+  <meta property="og:locale" content="sv_SE" />
   <meta property="og:title" content="Novakse Reizen - skridskoresor på naturis" />
   <meta property="og:description" content="Novakse anordnar småskaliga skridskoresor på naturis till Orsa, Falun och Finland. Personligt ordnade av Joey Novak, med mångårig erfarenhet av naturis." />
   <meta property="og:url" content="https://www.novakse.com/sv/" />
-  <meta property="og:image" content="https://www.novakse.com/images/hero-opener-poster.jpg" />
+  <meta property="og:image" content="https://www.novakse.com/images/hero-video-novakse-poster.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="alternate" hreflang="nl" href="https://www.novakse.com/" />
   <link rel="alternate" hreflang="en" href="https://www.novakse.com/en/" />
@@ -199,11 +200,11 @@
     <!-- 1. Opener -->
     <section class="opener" id="top">
       <video class="opener__video" autoplay muted loop playsinline preload="none"
-             poster="../images/hero-opener-poster.jpg" aria-hidden="true"
-             data-src-wide="../images/hero-opener.mp4"
-             data-src-tall="../images/hero-opener-mobile.mp4"
-             data-poster-wide="../images/hero-opener-poster.jpg"
-             data-poster-tall="../images/hero-opener-poster-mobile.jpg"></video>
+             poster="../images/hero-video-novakse-poster.jpg" aria-hidden="true"
+             data-src-wide="../images/hero-video-novakse.mp4"
+             data-src-tall="../images/hero-video-novakse-mobile.mp4"
+             data-poster-wide="../images/hero-video-novakse-poster.jpg"
+             data-poster-tall="../images/hero-video-novakse-poster-mobile.jpg"></video>
       <div class="opener__inner">
         <img class="opener__mark" src="../images/logo-mark.png" alt="" width="401" height="600" fetchpriority="high" />
         <h1 class="opener__title">Skridskoresor på naturis</h1>
@@ -421,18 +422,18 @@
     <!-- 6. Persoonlijk verhaal -->
     <section class="story" id="verhaal">
       <div class="wrap story__grid">
-        <!-- Collage: drie foto's met afgeronde hoeken die tijdens het scrollen
-             ieder een klein stukje meebewegen (zie main.js). -->
+        <!-- Collage: the photos take turns in front, one lap like skaters on a
+             rink (see main.js). -->
         <figure class="story__collage story__collage--home reveal" data-collage>
           <div class="collage__frame">
-            <div class="collage__item collage__item--main" data-speed="-360">
-              <picture><source type="image/avif" srcset="../images/joey-hond-persoonlijk-480.avif 480w, ../images/joey-hond-persoonlijk-800.avif 800w, ../images/joey-hond-persoonlijk.avif 1200w" sizes="(min-width: 62rem) 32vw, 76vw" /><source type="image/webp" srcset="../images/joey-hond-persoonlijk-480.webp 480w, ../images/joey-hond-persoonlijk-800.webp 800w, ../images/joey-hond-persoonlijk.webp 1200w" sizes="(min-width: 62rem) 32vw, 76vw" /><img src="../images/joey-hond-persoonlijk.jpg" alt="Joey Novak med sin hund vid vattnet" loading="lazy" srcset="../images/joey-hond-persoonlijk-480.jpg 480w, ../images/joey-hond-persoonlijk-800.jpg 800w, ../images/joey-hond-persoonlijk.jpg 1200w" sizes="(min-width: 62rem) 32vw, 76vw" /></picture>
+            <div class="collage__item" data-slot="front">
+              <picture><source type="image/avif" srcset="../images/joey-hond-persoonlijk-480.avif 480w, ../images/joey-hond-persoonlijk-800.avif 800w, ../images/joey-hond-persoonlijk.avif 1200w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><source type="image/webp" srcset="../images/joey-hond-persoonlijk-480.webp 480w, ../images/joey-hond-persoonlijk-800.webp 800w, ../images/joey-hond-persoonlijk.webp 1200w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><img src="../images/joey-hond-persoonlijk.jpg" alt="Joey Novak med sin hund vid vattnet" loading="lazy" srcset="../images/joey-hond-persoonlijk-480.jpg 480w, ../images/joey-hond-persoonlijk-800.jpg 800w, ../images/joey-hond-persoonlijk.jpg 1200w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /></picture>
             </div>
-            <div class="collage__item collage__item--left" data-speed="-540">
-              <picture><source type="image/avif" srcset="../images/joey-op-het-ijs-480.avif 480w, ../images/joey-op-het-ijs-800.avif 800w, ../images/joey-op-het-ijs.avif 1100w" sizes="(min-width: 62rem) 19vw, 46vw" /><source type="image/webp" srcset="../images/joey-op-het-ijs-480.webp 480w, ../images/joey-op-het-ijs-800.webp 800w, ../images/joey-op-het-ijs.webp 1100w" sizes="(min-width: 62rem) 19vw, 46vw" /><img src="../images/joey-op-het-ijs.jpg" alt="Joey på skridskor på en frusen sjö" loading="lazy" srcset="../images/joey-op-het-ijs-480.jpg 480w, ../images/joey-op-het-ijs-800.jpg 800w, ../images/joey-op-het-ijs.jpg 1100w" sizes="(min-width: 62rem) 19vw, 46vw" /></picture>
+            <div class="collage__item" data-slot="left">
+              <picture><source type="image/avif" srcset="../images/joey-op-het-ijs-480.avif 480w, ../images/joey-op-het-ijs-800.avif 800w, ../images/joey-op-het-ijs.avif 1100w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><source type="image/webp" srcset="../images/joey-op-het-ijs-480.webp 480w, ../images/joey-op-het-ijs-800.webp 800w, ../images/joey-op-het-ijs.webp 1100w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><img src="../images/joey-op-het-ijs.jpg" alt="Joey på skridskor på en frusen sjö" loading="lazy" srcset="../images/joey-op-het-ijs-480.jpg 480w, ../images/joey-op-het-ijs-800.jpg 800w, ../images/joey-op-het-ijs.jpg 1100w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /></picture>
             </div>
-            <div class="collage__item collage__item--right" data-speed="-460">
-              <picture><source type="image/avif" srcset="../images/joey-kampvuur-480.avif 480w, ../images/joey-kampvuur.avif 720w" sizes="(min-width: 62rem) 19vw, 46vw" /><source type="image/webp" srcset="../images/joey-kampvuur-480.webp 480w, ../images/joey-kampvuur.webp 720w" sizes="(min-width: 62rem) 19vw, 46vw" /><img src="../images/joey-kampvuur.jpg" alt="Joey lagar mat över en lägereld under en skridskotur" loading="lazy" srcset="../images/joey-kampvuur-480.jpg 480w, ../images/joey-kampvuur.jpg 720w" sizes="(min-width: 62rem) 19vw, 46vw" /></picture>
+            <div class="collage__item collage__item--portrait" data-slot="right">
+              <picture><source type="image/avif" srcset="../images/joey-kampvuur-480.avif 480w, ../images/joey-kampvuur.avif 720w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><source type="image/webp" srcset="../images/joey-kampvuur-480.webp 480w, ../images/joey-kampvuur.webp 720w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /><img src="../images/joey-kampvuur.jpg" alt="Joey lagar mat över en lägereld under en skridskotur" loading="lazy" srcset="../images/joey-kampvuur-480.jpg 480w, ../images/joey-kampvuur.jpg 720w" sizes="(min-width: 60rem) 23rem, (min-width: 36rem) 26rem, 68vw" /></picture>
             </div>
           </div>
           <figcaption class="story__caption">Joey Novak, grundare av Novakse</figcaption>
@@ -443,7 +444,7 @@
           <p class="story__text">Joey har åkt skridskor sedan han var liten och byggde med åren upp stor erfarenhet av naturis. Senare utbildade han sig till idrottslärare och skaffade sig erfarenhet i 11shop i Elfstedenhal, med skridskomaterial och slipning.</p>
           <p class="story__text">Men i slutändan handlar det för honom inte längre om prestationer - det handlar om att uppleva skridskoåkningen och naturen. I Nederländerna blir bra naturis allt sällsyntare; i Sverige och Finland kan man fortfarande åka i det oändliga.</p>
           <p class="story__sign">Joey Novak</p>
-          <p class="story__role">Grundare</p>
+          <p class="story__role">Grundare och reseledare</p>
         </div>
       </div>
     </section>
@@ -452,13 +453,13 @@
     <section class="reviews">
       <div class="wrap reviews__grid">
         <div class="reviews__media reveal">
-          <picture><source type="image/avif" srcset="../images/handen-omhoog-zonsondergang-480.avif 480w, ../images/handen-omhoog-zonsondergang-800.avif 800w, ../images/handen-omhoog-zonsondergang-1200.avif 1200w, ../images/handen-omhoog-zonsondergang.avif 1400w" sizes="100vw" /><source type="image/webp" srcset="../images/handen-omhoog-zonsondergang-480.webp 480w, ../images/handen-omhoog-zonsondergang-800.webp 800w, ../images/handen-omhoog-zonsondergang-1200.webp 1200w, ../images/handen-omhoog-zonsondergang.webp 1400w" sizes="100vw" /><img src="../images/handen-omhoog-zonsondergang.jpg" alt="Två deltagare jublar på isen vid solnedgången" loading="lazy" srcset="../images/handen-omhoog-zonsondergang-480.jpg 480w, ../images/handen-omhoog-zonsondergang-800.jpg 800w, ../images/handen-omhoog-zonsondergang-1200.jpg 1200w, ../images/handen-omhoog-zonsondergang.jpg 1400w" sizes="100vw" /></picture>
+          <picture><source type="image/avif" srcset="../images/handen-omhoog-zonsondergang-480.avif 480w, ../images/handen-omhoog-zonsondergang-800.avif 800w, ../images/handen-omhoog-zonsondergang-1200.avif 1200w, ../images/handen-omhoog-zonsondergang.avif 1400w" sizes="100vw" /><source type="image/webp" srcset="../images/handen-omhoog-zonsondergang-480.webp 480w, ../images/handen-omhoog-zonsondergang-800.webp 800w, ../images/handen-omhoog-zonsondergang-1200.webp 1200w, ../images/handen-omhoog-zonsondergang.webp 1400w" sizes="100vw" /><img src="../images/handen-omhoog-zonsondergang.jpg" alt="Två deltagare jublar på isen vid solnedgången" width="1400" height="989" loading="lazy" srcset="../images/handen-omhoog-zonsondergang-480.jpg 480w, ../images/handen-omhoog-zonsondergang-800.jpg 800w, ../images/handen-omhoog-zonsondergang-1200.jpg 1200w, ../images/handen-omhoog-zonsondergang.jpg 1400w" sizes="100vw" /></picture>
         </div>
         <div class="reviews__body reveal">
           <span class="eyebrow eyebrow--deep"><span class="dot"></span>Erfarenheter</span>
           <h2 class="reviews__title">Vad tidigare resenärer tyckte</h2>
-          <p class="reviews__text">Tidigare deltagares omdömen finns på vår Google-sida. Vi lägger snart till en direktlänk hit.</p>
-          <a class="link-arrow reviews__link" href="#aanvraag">Ställ din fråga till Joey</a>
+          <p class="reviews__text">Äkta omdömen från tidigare deltagare hittar du direkt på vår Google-sida.</p>
+          <a class="link-arrow reviews__link" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Se alla omdömen på Google</a>
         </div>
       </div>
     </section>
@@ -546,6 +547,7 @@
                 <option value="falun">Falun, Sverige</option>
                 <option value="finland">Punkaharju, Finland</option>
                 <option value="weissensee">Weissensee, Österrike</option>
+                <option value="lulea">Luleå, Sverige</option>
                 <option value="wellness">Wellness &amp; skridskor, Sverige</option>
                 <option value="onbekend">Vet inte än</option>
               </select>

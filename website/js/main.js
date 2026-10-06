@@ -772,7 +772,7 @@
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   var wordBlocks = [];
 
-  // Viewport height for the scroll-linked effects below (words, collage).
+  // Viewport height for the scroll-linked word effect below.
   // On phones window.innerHeight grows and shrinks whenever the address bar
   // slides out or back in (typically when the scroll direction reverses),
   // which made these effects jump on the resize event. The root element's
@@ -1190,7 +1190,7 @@
          van: "2027-01-10", tot: "2027-01-14",   // optional starting period
          personen: "3", begeleidingDagen: "2",   // optional
          vlucht: "zelf",                         // optional: own flight ticked
-         onWijzig: function (keuze) { ... }      // { van, tot, personen, begeleidingDagen, vlucht }
+         onWijzig: function (keuze) { ... }      // { van, tot, personen, begeleidingDagen, vlucht, betalen }
        }) */
   window.NovakseReiskalender = {
     start: function (box, pad, opties) {
@@ -1949,7 +1949,11 @@
         kinderen: afrekenen ? kinderen : 0,
         baby: afrekenen ? baby : 0,
         begeleidingDagen: klaar ? gekozenBegeleiding() : 0,
-        vlucht: vluchtAftrek() ? "zelf" : ""
+        vlucht: vluchtAftrek() ? "zelf" : "",
+        // The "Book and pay" link is on screen (same test as knopHtml). False
+        // for a complete period without a price to pay online, e.g. a group
+        // size outside betaalPersonen (wellness: only 2 people).
+        betalen: klaar && afrekenen && betaalBedragen(keuzeVan, dagenTussen(keuzeVan, keuzeTot)).totaal > 0
       });
     }
 
@@ -2299,63 +2303,89 @@
   }
 
   /* ------------------------------------------------------------------
-     Collage bij het persoonlijke verhaal: elke foto schuift tijdens het
-     scrollen een klein stukje mee in een eigen tempo. Er wordt alleen een
-     transform gezet, en alleen zolang de collage in beeld is.
-     data-speed in the HTML only sets the relative pace of each photo; the
-     fastest photo moves at most COLLAGE_TRAVEL px over the whole pass (on a
-     wide screen), so the motion can never pull the composition apart or
-     push a photo into the caption, whatever data-speed says.
+     Story collage, "a lap on the rink" (the slots live in styles.css).
+     When the collage comes into view the prints spread out from one
+     stack, then take turns in front: every few seconds each print moves
+     one slot round the lap. After one full lap they rest in their first
+     slots again; the next time the collage comes into view it plays
+     again. Only data-slot, two classes and z-index change here; the CSS
+     moves the prints with transforms. Nothing runs while the collage is
+     off screen, and with reduced motion the prints simply stay put.
      ------------------------------------------------------------------ */
   var collage = document.querySelector("[data-collage]");
-  var COLLAGE_TRAVEL = 40;
 
-  if (collage && !reducedMotion.matches) {
-    var collageItems = collage.querySelectorAll(".collage__item");
-    var collageMaxSpeed = 0;
-    collageItems.forEach(function (item) {
-      collageMaxSpeed = Math.max(collageMaxSpeed, Math.abs(parseFloat(item.dataset.speed) || 0));
-    });
+  if (collage && !reducedMotion.matches && "IntersectionObserver" in window) {
+    var lapFrame = collage.querySelector(".collage__frame");
+    var lapPrints = Array.prototype.slice.call(collage.querySelectorAll("[data-slot]"));
+    // Slots in lap order: front -> right -> left -> front, counter-clockwise
+    // like skaters on a rink. A pair of prints simply swaps places.
+    var LAP = lapPrints.length === 2 ? ["front", "back"] : ["front", "right", "left"];
+    var LAP_MOVE = 1100; // ms, same as --lap-time in styles.css
+    var LAP_HOLD = 2300; // ms a print stays in front before the next move
+    var lapTimers = [];
+    var lapStepsLeft = 0;
 
-    var syncCollage = function () {
-      var rect = collage.getBoundingClientRect();
-      var vh = stableViewportHeight();
-
-      // Niets uitrekenen zolang de collage ver buiten beeld is.
-      if (rect.bottom < -vh || rect.top > vh * 2) return;
-
-      // -1 net onder het scherm, +1 net erboven; 0 als de collage in het midden staat
-      var progress = ((vh - rect.top) / (vh + rect.height)) * 2 - 1;
-      progress = Math.min(1, Math.max(-1, progress));
-
-      // Op een smal scherm is dezelfde verschuiving verhoudingsgewijs veel
-      // groter, dus daar wordt de afstand teruggeschroefd.
-      var scale = Math.max(0.45, Math.min(1, window.innerWidth / 1100));
-
-      // The two small photos move a little faster than the large one (see
-      // data-speed in the HTML), so they creep over it while scrolling.
-      collageItems.forEach(function (item) {
-        var speed = parseFloat(item.dataset.speed) || 0;
-        var travel = collageMaxSpeed ? (speed / collageMaxSpeed) * COLLAGE_TRAVEL : 0;
-        item.style.setProperty(
-          "--collage-shift",
-          (progress * travel * scale).toFixed(1) + "px"
-        );
-      });
+    var lapLater = function (fn, ms) {
+      lapTimers.push(window.setTimeout(fn, ms));
+    };
+    var lapStop = function () {
+      lapTimers.forEach(window.clearTimeout);
+      lapTimers = [];
+      lapPrints.forEach(function (print) { print.style.zIndex = ""; });
     };
 
-    var collageTicking = false;
-    window.addEventListener("scroll", function () {
-      if (collageTicking) return;
-      collageTicking = true;
-      window.requestAnimationFrame(function () {
-        syncCollage();
-        collageTicking = false;
+    var lapStep = function () {
+      var n = LAP.length;
+      var leaver, mover;
+      lapPrints.forEach(function (print) {
+        var i = LAP.indexOf(print.getAttribute("data-slot"));
+        if (i === 0) leaver = print;
+        if (i === n - 1) mover = print;
+        // The print going back stays on top until halfway, the one coming
+        // forward right under it, and one crossing behind stays at the bottom.
+        print.style.zIndex = i === 0 ? n : i === n - 1 ? n - 1 : 1;
+        print.setAttribute("data-slot", LAP[(i + 1) % n]);
       });
-    }, { passive: true });
-    window.addEventListener("resize", syncCollage);
+      // Halfway the print coming forward overtakes the one going back.
+      lapLater(function () {
+        // Both are missing when a print has a data-slot outside the lap.
+        if (!mover || !leaver) return;
+        mover.style.zIndex = n;
+        leaver.style.zIndex = n - 1;
+      }, LAP_MOVE / 2);
+      lapLater(function () {
+        lapPrints.forEach(function (print) { print.style.zIndex = ""; });
+        lapStepsLeft -= 1;
+        if (lapStepsLeft > 0) lapLater(lapStep, LAP_HOLD);
+      }, LAP_MOVE);
+    };
 
-    syncCollage();
+    // Spread the stack out, then run one lap.
+    var lapPlay = function () {
+      lapStop();
+      lapFrame.classList.add("is-dealing");
+      lapFrame.classList.remove("is-stacked");
+      lapLater(function () { lapFrame.classList.remove("is-dealing"); }, LAP_MOVE + 300);
+      lapStepsLeft = LAP.length;
+      lapLater(lapStep, LAP_MOVE + LAP_HOLD);
+    };
+    // Off screen: stop and gather the prints for the next visit.
+    var lapPark = function () {
+      lapStop();
+      lapFrame.classList.remove("is-dealing");
+      lapFrame.classList.add("is-stacked");
+    };
+
+    lapPark();
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.intersectionRatio >= 0.4) {
+          if (lapFrame.classList.contains("is-stacked")) lapPlay();
+        } else if (!entry.isIntersecting) {
+          lapPark();
+        }
+      });
+    }, { threshold: [0, 0.4] }).observe(lapFrame);
   }
 
   /* ------------------------------------------------------------------

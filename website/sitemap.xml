@@ -1,499 +1,1094 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.novakse.com/</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/" />
   </url>
   <url>
     <loc>https://www.novakse.com/reizen.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reizen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/schaatsreizen-zweden.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/contact.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/contact.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/contact.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/contact.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/contact.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/belafspraak.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-28</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/falun.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/falun.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/falun.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/falun.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/falun.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/falun.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/falun.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/falun.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/finland.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/finland.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/finland.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/finland.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/finland.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/finland.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/finland.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/finland.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/orsa.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/orsa.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/lulea.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/lulea.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/weissensee.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/weissensee.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/wellness.html</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/wellness.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/wellness.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/wellness.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/schaatsen-salen.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/over-novakse.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/over-novakse.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/reisinformatie.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reisinformatie.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/schaatslessen.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatslessen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/schaatsonderhoud.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatsonderhoud.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/algemene-voorwaarden.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/algemene-voorwaarden.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/privacyverklaring.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/privacyverklaring.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/blog.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-28</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/kledingadvies-natuurijs.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-afstellen.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatstechniek-rechte-stuk.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/pootje-over-bocht.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/eerste-schaatsreis-beginner.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-zweden.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-orsa.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-falun.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/orsa-versus-falun.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-lulea.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-weissensee.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/beste-periode-schaatsen-scandinavie.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/wat-als-het-ijs-niet-goed-is.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-25</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-punkaharju-finland.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/zweden-of-finland.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/kosten-schaatsreis.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/veiligheid-natuurijs.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/paklijst-schaatsreis-scandinavie.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/langlaufschaatsen-versus-noren.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-meenemen-vliegtuig.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/hoe-vaak-schaatsen-slijpen.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsronding-18-21-24-27-meter.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/wat-is-skatefitting.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/leren-schaatsen-als-volwassene.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatstermen-uitgelegd.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-natuurijs-nederland.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/alternatieve-elfstedentocht-weissensee.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/wanneer-schaatsen-weissensee.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/schaatsen-weissensee-beginners.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/voorbereiden-200-km-schaatsen-weissensee.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/kosten-schaatsreis-weissensee.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/wat-meenemen-schaatsen-weissensee.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/wat-te-doen-in-salen.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/blog/salen-met-kinderen.html</loc>
-    <lastmod>2026-09-27</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://www.novakse.com/de/</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/reizen.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reizen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/contact.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/contact.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/contact.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/contact.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/contact.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/falun.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/falun.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/falun.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/falun.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/falun.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/falun.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/falun.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/falun.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/finland.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/finland.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/finland.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/finland.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/finland.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/finland.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/finland.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/finland.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/orsa.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/orsa.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/over-novakse.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/over-novakse.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/reisinformatie.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reisinformatie.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/schaatslessen.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatslessen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/schaatsonderhoud.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatsonderhoud.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/algemene-voorwaarden.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/algemene-voorwaarden.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/lulea.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/lulea.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/privacyverklaring.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/privacyverklaring.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/de/weissensee.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/weissensee.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/reizen.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reizen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/contact.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/contact.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/contact.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/contact.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/contact.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/falun.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/falun.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/falun.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/falun.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/falun.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/falun.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/falun.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/falun.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/finland.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/finland.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/finland.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/finland.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/finland.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/finland.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/finland.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/finland.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/orsa.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/orsa.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/over-novakse.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/over-novakse.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/reisinformatie.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reisinformatie.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/schaatslessen.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatslessen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/schaatsonderhoud.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatsonderhoud.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/algemene-voorwaarden.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/algemene-voorwaarden.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/lulea.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/lulea.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/privacyverklaring.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/privacyverklaring.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/en/weissensee.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/weissensee.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/reizen.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reizen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/contact.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/contact.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/contact.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/contact.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/contact.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/falun.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/falun.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/falun.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/falun.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/falun.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/falun.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/falun.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/falun.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/finland.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/finland.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/finland.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/finland.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/finland.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/finland.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/finland.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/finland.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/orsa.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/orsa.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/over-novakse.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/over-novakse.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/reisinformatie.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reisinformatie.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/schaatslessen.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatslessen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/schaatsonderhoud.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatsonderhoud.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/algemene-voorwaarden.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/algemene-voorwaarden.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/lulea.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/lulea.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/privacyverklaring.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/privacyverklaring.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/fi/weissensee.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/weissensee.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/reizen.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reizen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/contact.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/contact.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/contact.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/contact.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/contact.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/falun.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/falun.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/falun.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/falun.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/falun.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/falun.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/falun.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/falun.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/finland.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/finland.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/finland.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/finland.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/finland.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/finland.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/finland.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/finland.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/orsa.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/orsa.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/over-novakse.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/over-novakse.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/reisinformatie.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reisinformatie.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/schaatslessen.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatslessen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/schaatsonderhoud.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatsonderhoud.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/algemene-voorwaarden.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/algemene-voorwaarden.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/lulea.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/lulea.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/privacyverklaring.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/privacyverklaring.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/no/weissensee.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/weissensee.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/reizen.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reizen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reizen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/contact.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/contact.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/contact.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/contact.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/contact.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/falun.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/falun.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/falun.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/falun.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/falun.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/falun.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/falun.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/falun.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/finland.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/finland.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/finland.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/finland.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/finland.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/finland.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/finland.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/finland.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/orsa.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/orsa.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/orsa.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/over-novakse.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/over-novakse.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/over-novakse.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/reisinformatie.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/reisinformatie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reisinformatie.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/schaatslessen.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatslessen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatslessen.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/schaatsonderhoud.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/schaatsonderhoud.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/schaatsonderhoud.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/algemene-voorwaarden.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/algemene-voorwaarden.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/algemene-voorwaarden.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/lulea.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/lulea.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/lulea.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/privacyverklaring.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/privacyverklaring.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/privacyverklaring.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/weissensee.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.novakse.com/en/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.novakse.com/de/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://www.novakse.com/no/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="fi" href="https://www.novakse.com/fi/weissensee.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/weissensee.html" />
   </url>
   <url>
     <loc>https://www.novakse.com/sv/wellness.html</loc>
     <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.novakse.com/wellness.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.novakse.com/sv/wellness.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novakse.com/wellness.html" />
   </url>
 </urlset>

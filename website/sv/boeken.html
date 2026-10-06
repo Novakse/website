@@ -99,9 +99,9 @@
     "lulea": { "naam": "Luleå, Sverige", "prijstabel": "data/lulea-prijzen.json" },
     "wellness": {
       "naam": "Wellness & skridskor, Sverige",
-      "//prijsOpAanvraag": "Same entry as on the Dutch boeken.html, translated. No online payment here; the calendar on sv/wellness.html handles paying for 2 persons. belOnderwerp must stay equal to a choice on the Dutch belafspraak.html (there is no Swedish call planner).",
-      "prijsOpAanvraag": true,
-      "prijsLabel": "från 1 395 € per person",
+      "//prijstabel": "Same entry as on the Dutch boeken.html, translated. Same calendar as on sv/wellness.html: book and pay online for 2 persons (betaalPersonen in data/wellness-prijzen.json). For another group size the calendar shows no amount and the contact links below appear under it, with the chosen length, date and persons. Put \"prijsOpAanvraag\": true back to show requests only. belOnderwerp must stay equal to a choice on the Dutch belafspraak.html (there is no Swedish call planner).",
+      "prijstabel": "data/wellness-prijzen.json",
+      "prijsLabel": "från €1 395 per person",
       "prijsToelichting": "Pris per person, beroende på resans längd. Det slutliga priset beror på resedatum och beläggning, därför sätter Joey ihop resan personligen tillsammans med dig. Berätta för honom när du vill resa.",
       "prijzenPerDuur": [
         { "dagen": 4, "label": "4 dagar", "prijs": 1395 },
@@ -111,7 +111,7 @@
       ],
       "keuzeTeksten": {
         "duurVraag": "Hur länge vill du resa?",
-        "prijsPerPersoon": "{bedrag} € per person",
+        "prijsPerPersoon": "€{bedrag} per person",
         "datumLabel": "Önskat avresedatum",
         "personenLabel": "Antal personer",
         "personenMinder": "En person färre",

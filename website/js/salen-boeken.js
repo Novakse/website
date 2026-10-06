@@ -267,7 +267,7 @@
 
     var childLabel = "Kinderen";
     if (input.children > 0) childLabel += " (" + input.children + " × " + euro(result.childRateCents) + ")";
-    if (input.toddlers > 0) childLabel += (input.children > 0 ? ", " : " (") + input.toddlers + " t/m 3 jaar gratis" + (input.children > 0 ? "" : ")");
+    if (input.toddlers > 0) childLabel += (input.children > 0 ? ", " : " (") + input.toddlers + " van 0 t/m 3 jaar gratis" + (input.children > 0 ? "" : ")");
     el.sumChildrenLabel.textContent = childLabel;
     el.sumChildren.textContent = euro(result.childrenTotalCents);
     // Lines without anything in them are hidden. Children 0-3 are free but
@@ -464,6 +464,15 @@
           : "Boeken lukte niet: " + reason + ". Probeer het opnieuw of neem contact op via " + MAIL + ".");
         render();
       });
+  });
+
+  /* Back from Stripe with the browser's back button: the page may come out
+     of the back/forward cache with the button still on "Bezig met
+     doorsturen...". */
+  window.addEventListener("pageshow", function (event) {
+    if (!event.persisted || !submitting) return;
+    submitting = false;
+    render();
   });
 
   /* Start ---------------------------------------------------------------- */

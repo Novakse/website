@@ -44,10 +44,21 @@
 }
 
 .oq-bar__logo {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.55rem;
   flex: none;
+}
+/* Invisible 44px tap area around the small logo; the look stays the same. */
+.oq-bar__logo::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 2.75rem);
+  height: max(100%, 2.75rem);
+  transform: translate(-50%, -50%);
 }
 .oq-bar__logo .logo-mark { height: 1.6rem; width: auto; }
 .oq-bar__logo .logo-word-img { height: 0.72rem; width: auto; }
@@ -692,6 +703,17 @@
 }
 .oq-back:hover,
 .oq-skip:hover { color: #fff; border-bottom-color: var(--warm); }
+/* Invisible 44px tap area around the short "Terug" link; looks the same. */
+.oq-back { position: relative; }
+.oq-back::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 2.75rem);
+  height: max(100%, 2.75rem);
+  transform: translate(-50%, -50%);
+}
 
 .oq-hint {
   margin-top: 1.1rem;

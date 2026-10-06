@@ -75,9 +75,9 @@
     }
   },
 
-  "//bezet": "Periodes waarin Falun Strandby geen gewone aankomst toelaat. In februari en begin maart verhuren ze alleen weekpakketten vanaf 25.000 SEK omdat er een groot evenement in Falun is, dus daar valt niets normaals te boeken. Wil je die weken toch open zetten, haal dan de tweede regel hieronder weg.",
+  "//bezet": "Periodes waarin Falun Strandby geen gewone aankomst toelaat. In februari en begin maart verhuren ze alleen weekpakketten vanaf 25.000 SEK omdat er een groot evenement in Falun is, dus daar valt niets normaals te boeken. Wil je die weken toch open zetten, haal dan de tweede regel hieronder weg. Het label (wat) staat per taal, zodat de Engelse en andere versies geen Nederlands tonen; een losse regel mag ook, die verschijnt dan in alle talen.",
   "bezet": [
-    {"van": "2027-01-07", "tot": "2027-01-09", "wat": "Geen aankomst mogelijk"},
-    {"van": "2027-02-14", "tot": "2027-03-08", "wat": "Niet beschikbaar"}
+    {"van": "2027-01-07", "tot": "2027-01-09", "wat": {"nl": "Geen aankomst mogelijk", "en": "No arrival possible", "de": "Keine Anreise möglich", "sv": "Ingen ankomst möjlig", "no": "Ingen ankomst mulig", "fi": "Saapuminen ei mahdollista"}},
+    {"van": "2027-02-14", "tot": "2027-03-08", "wat": {"nl": "Niet beschikbaar", "en": "Not available", "de": "Nicht verfügbar", "sv": "Inte tillgänglig", "no": "Ikke tilgjengelig", "fi": "Ei saatavilla"}}
   ]
 }
