@@ -14,6 +14,7 @@
   --focus-ring: var(--warm);
   background: var(--green, #050d08);
   color: #fff;
+  min-height: 100vh;
   min-height: 100svh;
 }
 
@@ -61,7 +62,6 @@
   transform: translate(-50%, -50%);
 }
 .oq-bar__logo .logo-mark { height: 1.6rem; width: auto; }
-.oq-bar__logo .logo-word-img { height: 0.72rem; width: auto; }
 
 /* De chips zijn het document in het klein: elke beantwoorde vraag één chip. */
 .oq-chips {
@@ -161,6 +161,7 @@
 .oq-doc {
   border-top: 1px solid var(--oq-line);
   background: rgba(5, 13, 8, 0.96);
+  max-height: min(70vh, 34rem);
   max-height: min(70svh, 34rem);
   overflow-y: auto;
 }
@@ -225,6 +226,7 @@
    ========================================================================== */
 .oq-main {
   position: relative;
+  min-height: 100vh;
   min-height: 100svh;
   padding-top: calc(var(--oq-bar) + 2px);
   display: flex;
@@ -832,7 +834,6 @@
   .oq-chips { display: none; }
   .oq-bar__exit { display: none; }
   .oq-bar__row { gap: 0.75rem; justify-content: space-between; }
-  .oq-bar__logo .logo-word-img { display: none; }
   .oq-doc__term { min-width: 100%; }
   .oq-doc__edit { margin-left: auto; }
   .oq-number { width: 3.1rem; height: 3.1rem; font-size: 1.05rem; }

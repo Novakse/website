@@ -42,7 +42,7 @@ Clinics, Skatefitting en Workshop slijpen zijn dus **geen aparte pagina's**, maa
 ## Reizen-pagina: welke bestemmingen wel/niet
 
 - **Orsa, Falun, Finland en Weissensee** krijgen een volledige, eigen reispagina.
-  - **Update 6 augustus 2026:** de klant heeft besloten de Weissensee (Karinthië, Oostenrijk) alsnog als vierde bestemming te verkopen. Dit was eerder bewust uitgesloten (zie hieronder), maar is nu een expliciet besluit. De reis is **zelfstandig** (geen begeleiding van Novakse op het ijs, net als Finland); data en prijs staan nog als "volgt binnenkort".
+  - **Update 6 augustus 2026:** de klant heeft besloten de Weissensee (Karinthië, Oostenrijk) alsnog als vierde bestemming te verkopen. Dit was eerder bewust uitgesloten (zie hieronder), maar is nu een expliciet besluit. De reis is **zelfstandig** (geen begeleiding van Novakse op het ijs, net als Finland); data en prijs zijn bekend: "Vanaf €1.095 p.p." met een boekingskalender (periode 19 december t/m 14 maart) op `weissensee.html`.
 - Bestemmingen waarvoor **momenteel geen actuele reis beschikbaar is** (bijv. Lulea, Oslo, Gidsreis Stockholm) krijgen **geen eigen of lege pagina**.
 - Zulke toekomstige bestemmingen mogen alleen genoemd worden als **"reizen in ontwikkeling"** op de Reizen-overzichtspagina, en alleen als dat inhoudelijk klopt (dus alleen als er daadwerkelijk plannen zijn — niet als vaste marketingtekst zonder onderbouwing). Dit moet nog per bestemming geverifieerd worden voordat het zo op de site komt.
 

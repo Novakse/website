@@ -2303,90 +2303,10 @@
   }
 
   /* ------------------------------------------------------------------
-     Story collage, "a lap on the rink" (the slots live in styles.css).
-     When the collage comes into view the prints spread out from one
-     stack, then take turns in front: every few seconds each print moves
-     one slot round the lap. After one full lap they rest in their first
-     slots again; the next time the collage comes into view it plays
-     again. Only data-slot, two classes and z-index change here; the CSS
-     moves the prints with transforms. Nothing runs while the collage is
-     off screen, and with reduced motion the prints simply stay put.
+     Collage: the photos used to move with the scroll position (a small
+     parallax). That scroll-linked motion made scrolling stutter on phones,
+     so the collage now stays still; it only fades in via .reveal.
      ------------------------------------------------------------------ */
-  var collage = document.querySelector("[data-collage]");
-
-  if (collage && !reducedMotion.matches && "IntersectionObserver" in window) {
-    var lapFrame = collage.querySelector(".collage__frame");
-    var lapPrints = Array.prototype.slice.call(collage.querySelectorAll("[data-slot]"));
-    // Slots in lap order: front -> right -> left -> front, counter-clockwise
-    // like skaters on a rink. A pair of prints simply swaps places.
-    var LAP = lapPrints.length === 2 ? ["front", "back"] : ["front", "right", "left"];
-    var LAP_MOVE = 1100; // ms, same as --lap-time in styles.css
-    var LAP_HOLD = 2300; // ms a print stays in front before the next move
-    var lapTimers = [];
-    var lapStepsLeft = 0;
-
-    var lapLater = function (fn, ms) {
-      lapTimers.push(window.setTimeout(fn, ms));
-    };
-    var lapStop = function () {
-      lapTimers.forEach(window.clearTimeout);
-      lapTimers = [];
-      lapPrints.forEach(function (print) { print.style.zIndex = ""; });
-    };
-
-    var lapStep = function () {
-      var n = LAP.length;
-      var leaver, mover;
-      lapPrints.forEach(function (print) {
-        var i = LAP.indexOf(print.getAttribute("data-slot"));
-        if (i === 0) leaver = print;
-        if (i === n - 1) mover = print;
-        // The print going back stays on top until halfway, the one coming
-        // forward right under it, and one crossing behind stays at the bottom.
-        print.style.zIndex = i === 0 ? n : i === n - 1 ? n - 1 : 1;
-        print.setAttribute("data-slot", LAP[(i + 1) % n]);
-      });
-      // Halfway the print coming forward overtakes the one going back.
-      lapLater(function () {
-        // Both are missing when a print has a data-slot outside the lap.
-        if (!mover || !leaver) return;
-        mover.style.zIndex = n;
-        leaver.style.zIndex = n - 1;
-      }, LAP_MOVE / 2);
-      lapLater(function () {
-        lapPrints.forEach(function (print) { print.style.zIndex = ""; });
-        lapStepsLeft -= 1;
-        if (lapStepsLeft > 0) lapLater(lapStep, LAP_HOLD);
-      }, LAP_MOVE);
-    };
-
-    // Spread the stack out, then run one lap.
-    var lapPlay = function () {
-      lapStop();
-      lapFrame.classList.add("is-dealing");
-      lapFrame.classList.remove("is-stacked");
-      lapLater(function () { lapFrame.classList.remove("is-dealing"); }, LAP_MOVE + 300);
-      lapStepsLeft = LAP.length;
-      lapLater(lapStep, LAP_MOVE + LAP_HOLD);
-    };
-    // Off screen: stop and gather the prints for the next visit.
-    var lapPark = function () {
-      lapStop();
-      lapFrame.classList.remove("is-dealing");
-      lapFrame.classList.add("is-stacked");
-    };
-
-    lapPark();
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.intersectionRatio >= 0.4) {
-          if (lapFrame.classList.contains("is-stacked")) lapPlay();
-        } else if (!entry.isIntersecting) {
-          lapPark();
-        }
-      });
-    }, { threshold: [0, 0.4] }).observe(lapFrame);
-  }
 
   /* ------------------------------------------------------------------
      Muisvolger: een ring die de muis volgt en een stipje dat er iets

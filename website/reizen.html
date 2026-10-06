@@ -70,8 +70,13 @@
     }
     .page-hero__inner { min-width: 0; }
 
-    /* Heading above the trip map ("Onze schaatsreizen"). */
-    .trips-head { background: var(--paper); padding-block: 0.5rem 0.25rem; }
+    /* Heading above the trip map ("Onze schaatsreizen"). It now follows the
+       swept line under the search bar directly, so it gets a bit more room. */
+    .trips-head { background: var(--paper); padding-block: 1.5rem 0.25rem; }
+
+    /* The introduction sits below the trips; the trip map already ends with
+       generous bottom padding, so the intro needs little extra on top. */
+    .trip-map + .intro { padding-top: 1rem; }
     .trips-head .h-section { margin-top: 0; text-wrap: balance; }
     .trips-head .lede-text { text-wrap: pretty; }
 
@@ -125,8 +130,6 @@
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="./" aria-label="Novakse Reizen - naar de homepage">
         <img class="logo-mark" src="images/logo-mark.png" alt="" width="401" height="600" />
-        <img class="logo-word-img logo-word-img--light" src="images/logo-word-light.png" alt="Novakse Reizen" width="1099" height="184" />
-        <img class="logo-word-img logo-word-img--dark" src="images/logo-word-dark.png" alt="" aria-hidden="true" width="1099" height="184" />
       </a>
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
@@ -243,18 +246,6 @@
         <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
       </svg>
     </div>
-
-    <!-- 2. Inleiding -->
-    <section class="intro">
-      <div class="wrap intro__grid">
-        <p class="intro__lead" data-reveal-words>Wij regelen de reis, jij geniet van het natuurijs.</p>
-        <div class="intro__aside reveal">
-          <p>Of je nu een paar dagen wilt schaatsen of er een complete wintervakantie van wilt maken: we zorgen dat je reis goed geregeld is. Eenmaal ter plaatse bepaal je zelf hoe je je dagen invult.</p>
-          <a class="link-arrow" href="schaatsreizen-zweden.html">Alle schaatsreizen naar Zweden</a>
-          <a class="link-arrow" href="reisinformatie.html">Praktische reisinformatie</a>
-        </div>
-      </div>
-    </section>
 
     <!-- 3a. Heading and short intro for the trips, kept outside the trip
          map section. -->
@@ -542,6 +533,18 @@
             </div>
           </article>
         </div>
+    </section>
+
+    <!-- 3b. Introduction, placed below the trips so the trips come first. -->
+    <section class="intro">
+      <div class="wrap intro__grid">
+        <p class="intro__lead" data-reveal-words>Wij regelen de reis, jij geniet van het natuurijs.</p>
+        <div class="intro__aside reveal">
+          <p>Of je nu een paar dagen wilt schaatsen of er een complete wintervakantie van wilt maken: we zorgen dat je reis goed geregeld is. Eenmaal ter plaatse bepaal je zelf hoe je je dagen invult.</p>
+          <a class="link-arrow" href="schaatsreizen-zweden.html">Alle schaatsreizen naar Zweden</a>
+          <a class="link-arrow" href="reisinformatie.html">Praktische reisinformatie</a>
+        </div>
+      </div>
     </section>
 
     <!-- 4. Hoe een reis werkt -->

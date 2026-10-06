@@ -335,7 +335,19 @@
       pick(parseDate(cell.getAttribute("data-date")));
     });
 
+    // Hover preview for a real mouse only. On touch screens the tap itself
+    // fires mouseover first; redrawing the days then (iOS treats that as a
+    // hover menu opening) can swallow the tap, so a day needs a second tap.
+    var lastPointer = "mouse";
+    monthsBox.addEventListener("pointerdown", function (event) {
+      lastPointer = event.pointerType || "mouse";
+    }, { passive: true });
+    monthsBox.addEventListener("pointerover", function (event) {
+      if (event.pointerType) lastPointer = event.pointerType;
+    }, { passive: true });
+
     monthsBox.addEventListener("mouseover", function (event) {
+      if (lastPointer !== "mouse") return;
       var cell = event.target.closest(".trip-cal__day");
       if (!cell || cell.disabled || !from || to) return;
       var date = parseDate(cell.getAttribute("data-date"));

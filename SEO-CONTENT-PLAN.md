@@ -97,7 +97,7 @@ Belangrijk bij het schrijven van elk artikel: geen feiten verzinnen (ijsdiktes, 
 - **Money page:** /weissensee.html
 - **Interne links:** Weissensee-pagina
 - **CTA:** "Bekijk de reis naar de Weissensee"
-- **Let op:** wacht met publiceren tot data/prijs bekend zijn — nu zou het artikel alleen naar een "volgt binnenkort"-pagina leiden
+- **Let op:** data/prijs zijn inmiddels bekend ("Vanaf €1.095 p.p." met boekingskalender op `/weissensee.html`), dus publiceren kan
 - **Cannibalization-check:** geen risico, enige content over deze bestemming
 
 ## 8. Natuurijs schaatsen in Oostenrijk: meer dan alleen de Weissensee?
@@ -211,4 +211,4 @@ Belangrijk bij het schrijven van elk artikel: geen feiten verzinnen (ijsdiktes, 
 4. **#5 Saimaameer/Punkaharju** — specifiek, ondersteunt Finland goed
 5. **#9 Welke schaatsen voor natuurijs** — voedt schaatsonderhoud, breed zoekvolume
 6. **#3 Zweeds Lapland/Luleå** — vult het enige bestemmingscluster zonder ondersteunende content
-7. Overige naar wens, met **#7 Weissensee-gids en #13 beste periode** pas nadat de ontbrekende feitelijke informatie (prijs/data) bekend is
+7. Overige naar wens, met **#13 beste periode** pas nadat de ontbrekende feitelijke informatie (prijs/data) bekend is; #7 Weissensee-gids kan nu (prijs/data van de Weissensee zijn bekend)
