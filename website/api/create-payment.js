@@ -44,12 +44,97 @@ function basisUrl(req) {
   return PRODUCTIE_BASIS;
 }
 
+// Age rules for children and babies (api/_kinderprijs.js). Loaded on first
+// use, like the trip module below; a payment link from Joey never needs it.
+function kinderprijs() {
+  return require("./_kinderprijs.js");
+}
+
 // Loaded on first use, so a problem in the trip module can never break the
 // Falun flow or Joey's payment links.
 function berekenReis(keuze) {
   var module;
   try { module = require("./_reis-prijs.js"); } catch (fout) { return { fout: "De prijzen zijn niet beschikbaar." }; }
   return module.berekenReis(keuze);
+}
+
+/* Optional activities at checkout (Falun and Wellness only). Priced with
+   js/activiteiten-prijs.js and data/activiteiten.json, the same code and file
+   uitchecken.html uses, so the page and Stripe always agree. Both are loaded
+   only when a booking sends activities, so a problem there can never break a
+   payment without them. */
+function activiteitenCatalogus() {
+  var fs = require("fs");
+  var path = require("path");
+  var kandidaten = [
+    path.join(process.cwd(), "website", "data", "activiteiten.json"),
+    path.join(process.cwd(), "data", "activiteiten.json"),
+    path.join(__dirname, "..", "data", "activiteiten.json")
+  ];
+  for (var i = 0; i < kandidaten.length; i++) {
+    if (fs.existsSync(kandidaten[i])) {
+      return JSON.parse(fs.readFileSync(kandidaten[i], "utf8"));
+    }
+  }
+  throw new Error("activiteiten.json not found");
+}
+
+// Did the browser send any activities? {} and "" count as none.
+function heeftActiviteiten(waarde) {
+  if (waarde === undefined || waarde === null || waarde === "") return false;
+  if (typeof waarde !== "object" || Array.isArray(waarde)) return true; // bereken() refuses it
+  return Object.keys(waarde).length > 0;
+}
+
+/* Returns null (no activities chosen), { fout, status } or the result of
+   bereken() plus query (the validated choice as "id:2,id2:1"). ctx holds the
+   head count and days the server calculated for the trip itself. */
+function berekenActiviteiten(reis, keuze, ctx) {
+  if (!heeftActiviteiten(keuze)) return null;
+  var module;
+  var catalogus;
+  try {
+    module = require("../js/activiteiten-prijs.js");
+    catalogus = activiteitenCatalogus();
+  } catch (fout) {
+    return { fout: "De activiteiten zijn nu niet beschikbaar.", status: 500 };
+  }
+  var uitkomst;
+  try {
+    uitkomst = module.bereken(catalogus, reis, keuze, ctx);
+  } catch (fout) {
+    uitkomst = { fout: "De activiteiten konden niet worden berekend." };
+  }
+  if (!uitkomst || uitkomst.fout) {
+    return { fout: (uitkomst && uitkomst.fout) || "De activiteiten konden niet worden berekend.", status: 400 };
+  }
+  if (!uitkomst.regels.length) return null; // only zeros: nothing to charge
+  var gekozen = {};
+  uitkomst.regels.forEach(function (regel) { gekozen[regel.id] = regel.aantal; });
+  uitkomst.query = module.naarQuery(gekozen);
+  uitkomst.euro = module.euro;
+  return uitkomst;
+}
+
+// Stripe metadata values may be at most 500 characters: split a long
+// "id:2,id2:1" list at the commas over activiteiten, activiteiten_2, ...
+function activiteitenMetadata(query) {
+  var delen = [];
+  var huidig = "";
+  query.split(",").forEach(function (stuk) {
+    if (huidig && (huidig + "," + stuk).length > 500) {
+      delen.push(huidig);
+      huidig = stuk;
+    } else {
+      huidig = huidig ? huidig + "," + stuk : stuk;
+    }
+  });
+  if (huidig) delen.push(huidig);
+  var uit = {};
+  delen.slice(0, 4).forEach(function (deel, index) {
+    uit[index ? "activiteiten_" + (index + 1) : "activiteiten"] = deel.slice(0, 500);
+  });
+  return uit;
 }
 
 // Euros (possibly with cents, e.g. 199.5) to a whole number of cents.
@@ -102,7 +187,13 @@ function geboortedatum(waarde) {
   if (datum.getTime() > Date.now() || +d[0] < 1900) return "";
   return tekst;
 }
-function leesReisgegevens(gegevens, verwachtAantal, metAuto) {
+/* leeftijdsControle (calendar bookings only) = { datum, volwassenen, kinderen,
+   baby }: the outbound day and the head count the server priced. The dates of
+   birth must give exactly that split (age on the outbound day), so a date of
+   birth can never silently change the price: a mismatch is refused and the
+   visitor corrects the head count in the calendar. At least one traveller,
+   and the main driver, must be 21 or older. */
+function leesReisgegevens(gegevens, verwachtAantal, metAuto, leeftijdsControle) {
   var ontbreekt = { fout: "Vul eerst de reisgegevens volledig in." };
   if (!gegevens || typeof gegevens !== "object") return ontbreekt;
 
@@ -114,6 +205,8 @@ function leesReisgegevens(gegevens, verwachtAantal, metAuto) {
 
   var metadata = {};
   var namen = [];
+  var leeftijden = []; // whole years on the outbound day (calendar bookings)
+  var telling = { volwassene: 0, kind: 0, baby: 0 };
   for (var i = 0; i < lijst.length; i++) {
     var r = lijst[i] || {};
     var voornamen = tekstVeld(r.voornamen, 100);
@@ -122,7 +215,28 @@ function leesReisgegevens(gegevens, verwachtAantal, metAuto) {
     var nationaliteit = tekstVeld(r.nationaliteit, 60);
     if (!voornamen || !achternaam || !geboren || !nationaliteit) return ontbreekt;
     namen.push(voornamen + " " + achternaam);
-    metadata["reiziger_" + (i + 1)] = voornamen + " " + achternaam + " | geb. " + geboren + " | " + nationaliteit;
+    var categorie = "";
+    if (leeftijdsControle) {
+      var jaren = kinderprijs().leeftijdOp(geboren, leeftijdsControle.datum);
+      categorie = kinderprijs().categorieVoorLeeftijd(jaren);
+      leeftijden.push(jaren);
+      if (categorie) telling[categorie]++;
+    }
+    metadata["reiziger_" + (i + 1)] = voornamen + " " + achternaam + " | geb. " + geboren + " | " + nationaliteit +
+      (categorie ? " | " + categorie : "");
+  }
+
+  if (leeftijdsControle) {
+    if (telling.volwassene !== leeftijdsControle.volwassenen || telling.kind !== leeftijdsControle.kinderen ||
+        telling.baby !== leeftijdsControle.baby) {
+      return { fout: "De geboortedata passen niet bij het aantal volwassenen, kinderen en baby's in je boeking. " +
+        "De leeftijd telt op de dag van aankomst: volwassene vanaf 12 jaar, kind van 2 t/m 11 jaar, baby van 0 en 1 jaar. " +
+        "Pas het aantal aan in de kalender of controleer de geboortedatum." };
+    }
+    var minimum = kinderprijs().MIN_LEEFTIJD_BESTUURDER;
+    if (!leeftijden.some(function (jaren) { return jaren >= minimum; })) {
+      return { fout: "Minstens een reiziger moet " + minimum + " jaar of ouder zijn op de dag van aankomst." };
+    }
   }
 
   var email = tekstVeld(gegevens.email, 200);
@@ -137,6 +251,9 @@ function leesReisgegevens(gegevens, verwachtAantal, metAuto) {
   if (metAuto) {
     var bestuurder = parseInt(gegevens.hoofdbestuurder, 10);
     if (!(bestuurder >= 1 && bestuurder <= lijst.length)) return ontbreekt;
+    if (leeftijdsControle && !(leeftijden[bestuurder - 1] >= kinderprijs().MIN_LEEFTIJD_BESTUURDER)) {
+      return { fout: "De hoofdbestuurder moet " + kinderprijs().MIN_LEEFTIJD_BESTUURDER + " jaar of ouder zijn op de dag van aankomst." };
+    }
     metadata.hoofdbestuurder = namen[bestuurder - 1] + " | geb. " + geboortedatum(lijst[bestuurder - 1].geboortedatum);
     // Optional confirmations: recorded, but they do not block payment.
     metadata.creditcard_bevestigd = gegevens.creditcard === true ? "ja" : "nee";
@@ -179,6 +296,15 @@ module.exports = async function handler(req, res) {
   var serverBerekend = false; // true when the amount comes from a price file
   var terugQuery = ""; // query string for the cancel URL
   var reisSleutel = String(body.reis || "").toLowerCase();
+  var activiteiten = null; // chosen activities (Falun and Wellness only)
+  var leeftijdsControle = null; // outbound day and head count split, set for calendar bookings
+
+  // Activities can only be added to a Falun or Wellness calendar booking.
+  var metActiviteiten = (body.reis === "Falun" && body.aankomst) || (reisSleutel === "wellness" && body.van);
+  if (!metActiviteiten && heeftActiviteiten(body.activiteiten)) {
+    res.status(400).json({ error: "Bij deze reis zijn geen activiteiten te boeken." });
+    return;
+  }
 
   if (body.reis === "Falun" && body.aankomst) {
     // Het bedrag dat de browser meestuurt wordt hier genegeerd.
@@ -192,27 +318,49 @@ module.exports = async function handler(req, res) {
     omschrijving = falun.omschrijving.slice(0, 255);
     productNaam = omschrijving;
 
+    activiteiten = berekenActiviteiten("falun", body.activiteiten, { personen: falun.personen, dagen: falun.dagen });
+    if (activiteiten && activiteiten.fout) {
+      res.status(activiteiten.status).json({ error: activiteiten.fout });
+      return;
+    }
+
+    // Metadata and the cancel link use the values berekenFalun() validated,
+    // so they always match what is charged.
     var falunOpties = [];
     if (body.vlucht === "zelf") falunOpties.push("eigen vlucht");
     if (body.auto === "zelf") falunOpties.push("eigen vervoer");
-    if (alleenGetal(body.begeleiding) > 0) falunOpties.push("begeleiding " + alleenGetal(body.begeleiding) + " dagen");
+    if (falun.begeleidingDagen > 0) falunOpties.push("begeleiding " + falun.begeleidingDagen + " dagen");
     metadata = {
       reis: "Falun",
       aankomst: kort(alleenDatum(body.aankomst)),
-      dagen: kort(alleenGetal(body.dagen)),
-      personen: kort(alleenGetal(body.personen)),
+      dagen: kort(falun.dagen),
+      personen: kort(falun.personen),
+      volwassenen: kort(falun.volwassenen),
+      kinderen: falun.kinderen > 0 ? kort(falun.kinderen) : undefined,
+      baby: falun.baby > 0 ? kort(falun.baby) : undefined,
       opties: kort(falunOpties.join(", "), 200),
       per_persoon_eur: kort(falun.perPersoon),
+      per_kind_eur: falun.kinderen > 0 ? kort(falun.perKind) : undefined,
+      per_baby_eur: falun.baby > 0 ? kort(falun.perBaby) : undefined,
       totaal_eur: kort(falun.bedrag)
+    };
+    leeftijdsControle = {
+      datum: alleenDatum(body.aankomst),
+      volwassenen: falun.volwassenen,
+      kinderen: falun.kinderen,
+      baby: falun.baby
     };
     terugQuery = queryString({
       reis: "Falun",
       aankomst: alleenDatum(body.aankomst),
-      dagen: alleenGetal(body.dagen),
-      personen: alleenGetal(body.personen),
+      dagen: String(falun.dagen),
+      personen: String(falun.personen),
+      kinderen: falun.kinderen > 0 ? String(falun.kinderen) : "",
+      baby: falun.baby > 0 ? String(falun.baby) : "",
       vlucht: body.vlucht === "zelf" ? "zelf" : "",
       auto: body.auto === "zelf" ? "zelf" : "",
-      begeleiding: alleenGetal(body.begeleiding)
+      begeleiding: falun.begeleidingDagen > 0 ? String(falun.begeleidingDagen) : "",
+      act: activiteiten ? activiteiten.query : ""
     });
   } else if (REIS_NAMEN.hasOwnProperty(reisSleutel) && body.van) {
     // Lulea, Orsa, Weissensee, Finland, Wellness from a price calendar: the browser
@@ -226,7 +374,11 @@ module.exports = async function handler(req, res) {
       van: String(body.van || ""),
       tot: String(body.tot || ""),
       personen: typeof body.personen === "number" ? body.personen : String(body.personen || ""),
-      begeleiding: typeof body.begeleiding === "number" ? body.begeleiding : String(body.begeleiding || "")
+      kinderen: typeof body.kinderen === "number" ? body.kinderen : String(body.kinderen || ""),
+      baby: typeof body.baby === "number" ? body.baby : String(body.baby || ""),
+      begeleiding: typeof body.begeleiding === "number" ? body.begeleiding : String(body.begeleiding || ""),
+      // Own flight: only "zelf" counts, as in the Falun flow above.
+      vlucht: body.vlucht === "zelf" ? "zelf" : ""
     };
 
     var reisPrijs;
@@ -248,22 +400,50 @@ module.exports = async function handler(req, res) {
     // <trip>", or the trip's own product name such as "Wellness & schaatsen").
     productNaam = omschrijving || (REIS_PRODUCTEN[reisSleutel] || ("Schaatsreis " + naam));
 
+    if (reisSleutel === "wellness") {
+      activiteiten = berekenActiviteiten("wellness", body.activiteiten, { personen: reisPrijs.personen, dagen: reisPrijs.dagen });
+      if (activiteiten && activiteiten.fout) {
+        res.status(activiteiten.status).json({ error: activiteiten.fout });
+        return;
+      }
+    }
+
+    // Metadata and the cancel link use what berekenReis() validated, so they
+    // always match what is charged.
+    var reisOpties = [];
+    if (reisPrijs.eigenVlucht) reisOpties.push("eigen vlucht");
+    if (reisPrijs.begeleidingDagen > 0) reisOpties.push("begeleiding " + reisPrijs.begeleidingDagen + " dagen");
     metadata = {
       reis: naam,
       van: kort(alleenDatum(body.van)),
       tot: kort(alleenDatum(body.tot)),
       nachten: kort(reisPrijs.nachten),
       personen: kort(reisPrijs.personen),
-      opties: reisPrijs.begeleidingDagen > 0 ? kort("begeleiding " + reisPrijs.begeleidingDagen + " dagen") : undefined,
+      volwassenen: kort(reisPrijs.volwassenen),
+      kinderen: reisPrijs.kinderen > 0 ? kort(reisPrijs.kinderen) : undefined,
+      baby: reisPrijs.baby > 0 ? kort(reisPrijs.baby) : undefined,
+      opties: reisOpties.length ? kort(reisOpties.join(", "), 200) : undefined,
       per_persoon_eur: kort(reisPrijs.perPersoon),
+      per_kind_eur: reisPrijs.kinderen > 0 ? kort(reisPrijs.perKind) : undefined,
+      per_baby_eur: reisPrijs.baby > 0 ? kort(reisPrijs.perBaby) : undefined,
       totaal_eur: kort(reisPrijs.bedrag)
+    };
+    leeftijdsControle = {
+      datum: alleenDatum(body.van),
+      volwassenen: reisPrijs.volwassenen,
+      kinderen: reisPrijs.kinderen,
+      baby: reisPrijs.baby
     };
     terugQuery = queryString({
       reis: reisSleutel, // whitelisted key, as used by uitchecken.html
       van: alleenDatum(body.van),
       tot: alleenDatum(body.tot),
       personen: String(reisPrijs.personen),
-      begeleiding: reisPrijs.begeleidingDagen > 0 ? String(reisPrijs.begeleidingDagen) : ""
+      kinderen: reisPrijs.kinderen > 0 ? String(reisPrijs.kinderen) : "",
+      baby: reisPrijs.baby > 0 ? String(reisPrijs.baby) : "",
+      begeleiding: reisPrijs.begeleidingDagen > 0 ? String(reisPrijs.begeleidingDagen) : "",
+      vlucht: reisPrijs.eigenVlucht ? "zelf" : "",
+      act: activiteiten ? activiteiten.query : ""
     });
   } else {
     bedrag = parseInt(body.bedrag, 10); // bedrag in centen
@@ -271,20 +451,38 @@ module.exports = async function handler(req, res) {
     productNaam = omschrijving;
   }
 
+  // bedrag is the trip; the activities come on top as their own lines.
+  var activiteitenCenten = activiteiten ? activiteiten.totaalCenten : 0;
   var maxBedrag = serverBerekend ? MAX_SERVER_BEDRAG_CENTEN : MAX_BEDRAG_CENTEN;
-  if (!bedrag || bedrag < 100 || bedrag > maxBedrag) {
+  if (!bedrag || bedrag < 100 || bedrag + activiteitenCenten > maxBedrag) {
     res.status(400).json({ error: "Ongeldig bedrag." });
     return;
+  }
+
+  // The page sends the total it showed. If that is not what would be
+  // charged now (prices changed while the page was open), stop here.
+  if (body.verwachtCenten !== undefined && body.verwachtCenten !== null && body.verwachtCenten !== "") {
+    var verwacht = typeof body.verwachtCenten === "number" ? body.verwachtCenten
+      : /^\d{1,9}$/.test(String(body.verwachtCenten)) ? parseInt(body.verwachtCenten, 10) : NaN;
+    if (verwacht !== bedrag + activiteitenCenten) {
+      res.status(409).json({ error: "De prijs is gewijzigd, laad de pagina opnieuw." });
+      return;
+    }
   }
 
   // Travel details: a calendar booking must name exactly the booked head
   // count; a payment link from Joey carries no head count. Falun with own
   // transport has no rental car.
-  var verwachtAantal = 0;
-  if (body.reis === "Falun" && body.aankomst) verwachtAantal = parseInt(alleenGetal(body.personen), 10) || 0;
-  else if (metadata && metadata.personen) verwachtAantal = parseInt(metadata.personen, 10) || 0;
+  // metadata.personen is the server-validated head count (Falun and the
+  // calendar trips alike).
+  var verwachtAantal = metadata && metadata.personen ? parseInt(metadata.personen, 10) || 0 : 0;
   var metAuto = !(body.reis === "Falun" && body.aankomst && body.auto === "zelf");
-  var reisgegevens = leesReisgegevens(body.reisgegevens, verwachtAantal, metAuto);
+  var reisgegevens;
+  try {
+    reisgegevens = leesReisgegevens(body.reisgegevens, verwachtAantal, metAuto, leeftijdsControle);
+  } catch (fout) {
+    reisgegevens = { fout: "De reisgegevens konden niet worden gecontroleerd." };
+  }
   if (reisgegevens.fout) {
     res.status(400).json({ error: reisgegevens.fout });
     return;
@@ -293,6 +491,13 @@ module.exports = async function handler(req, res) {
   Object.keys(reisgegevens.metadata).forEach(function (sleutel) {
     metadata[sleutel] = kort(reisgegevens.metadata[sleutel], 500);
   });
+  // The chosen activities as "id:aantal" (at most 4 keys, well under
+  // Stripe's 50) and their total, e.g. "1.234,56".
+  if (activiteiten) {
+    var actMetadata = activiteitenMetadata(activiteiten.query);
+    Object.keys(actMetadata).forEach(function (sleutel) { metadata[sleutel] = actMetadata[sleutel]; });
+    metadata.activiteiten_eur = activiteiten.euro(activiteitenCenten).replace("€", "");
+  }
 
   var basis = basisUrl(req);
 
@@ -318,6 +523,23 @@ module.exports = async function handler(req, res) {
   if (metadata) {
     sessieData.metadata = metadata;
     sessieData.payment_intent_data = { metadata: metadata };
+  }
+
+  // One line per activity or rental after the trip. quantity x unit_amount
+  // is exactly the line's cents from bereken(). The name is the one from
+  // bereken() (activity name, line name, unit): no place or provider names.
+  if (activiteiten) {
+    activiteiten.regels.forEach(function (regel) {
+      sessieData.line_items.push({
+        quantity: regel.aantal,
+        price_data: {
+          currency: "eur",
+          unit_amount: regel.centenPerStuk,
+          product_data: { name: regel.productNaam.slice(0, 250) }
+        }
+      });
+    });
+    sessieData.payment_intent_data.description = (productNaam.replace(/[.\s]+$/, "") + ". Activiteiten: " + activiteiten.samenvatting).slice(0, 1000);
   }
 
   try {

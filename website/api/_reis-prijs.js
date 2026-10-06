@@ -14,16 +14,27 @@
      keuze = { reis: "lulea" | "orsa" | "weissensee" | "finland" | "wellness",
                van: "YYYY-MM-DD",   // arrival day
                tot: "YYYY-MM-DD",   // departure day
-               personen: int,       // group size
-               begeleiding: int }   // guiding days, Orsa only (optional)
-     returns { bedrag, perPersoon, nachten, dagen, personen,
-               begeleidingDagen, begeleidingBedrag, omschrijving }
+               personen: int,       // group size, all ages together
+               kinderen: int,       // of which children 2-11 (optional, default 0)
+               baby: int,           // of which babies 0-1 (optional, default 0)
+               begeleiding: int,    // guiding days, Orsa only (optional)
+               vlucht: "zelf" }     // own flight (optional; any other value: flight included)
+     returns { bedrag, perPersoon, perKind, perBaby, nachten, dagen,
+               personen, volwassenen, kinderen, baby,
+               begeleidingDagen, begeleidingBedrag,
+               eigenVlucht, vluchtAftrek, omschrijving }
      or      { fout: "Dutch message" }
-   bedrag is the whole group in whole euros: perPersoon * personen plus the
-   guiding amount (a group amount).
+   bedrag is the whole group in whole euros: the price per person of every
+   category times its head count, plus the guiding amount (a group amount).
+   perPersoon is the adult price; perKind and perBaby are the prices with the
+   reduced flight part (api/_kinderprijs.js, api/_prijsbeleid.js); with an
+   own flight they equal the adult price. A group of only adults gives
+   exactly the amount it always did. eigenVlucht tells whether the own-flight
+   amount (vluchtAftrek, per person) came off.
    ========================================================================== */
 var fs = require("fs");
 var path = require("path");
+var kinderprijs = require("./_kinderprijs.js");
 
 // Whitelist: only these trips can be priced, each with its own price file.
 // product is the name on the Stripe payment; without it "Schaatsreis <naam>".
@@ -82,6 +93,15 @@ function alsGetal(waarde) {
   return /^\d+$/.test(String(waarde)) ? parseInt(waarde, 10) : NaN;
 }
 
+/* The own-flight amount per person in whole euros (opties.vluchtZelf in the
+   price file), or 0 when the trip does not offer it or the value is not a
+   positive number. Same check as vluchtBedrag in js/main.js. */
+function vluchtZelfBedrag(data) {
+  var waarde = data && data.opties && data.opties.vluchtZelf;
+  if (typeof waarde !== "number" || !isFinite(waarde) || waarde <= 0) return 0;
+  return Math.round(waarde);
+}
+
 function berekenReis(keuze) {
   keuze = keuze || {};
   var reis = typeof keuze.reis === "string" && Object.prototype.hasOwnProperty.call(REIZEN, keuze.reis)
@@ -114,7 +134,7 @@ function berekenReis(keuze) {
 
   // main.js kiesDag(): at least minimumNachten nights, no maximum.
   if (nachten < minNachten) {
-    return { fout: "Kies minstens " + minNachten + " nachten (" + (minNachten + 1) + " dagen)." };
+    return { fout: "Kies minstens " + (minNachten + 1) + " dagen." };
   }
 
   // main.js bezet / bezetTussen(): no night from arrival up to (not
@@ -152,6 +172,10 @@ function berekenReis(keuze) {
       return { fout: "Online boeken kan voor " + reis.naam + " alleen met " + groep + ". Vraag de reis aan voor een andere groep." };
     }
   }
+
+  // Adults (12+), children (2-11) and babies (0-1); at least one adult.
+  var aantallen = kinderprijs.leesAantallen(keuze, personen);
+  if (aantallen.fout) return { fout: aantallen.fout };
 
   // main.js toeslagCenten: surcharge per person per night, in cents.
   var toeslagCenten = {};
@@ -217,9 +241,23 @@ function berekenReis(keuze) {
   // Group size: groepsKorting.perPersoonPerNacht[personen] euros per person
   // per night on top (negative is a discount; a missing size counts as 0).
   var kortingLijst = data.groepsKorting && data.groepsKorting.perPersoonPerNacht;
-  var korting = kortingLijst ? kortingLijst[String(personen)] : 0;
+  // Babies (0-1) do not count towards the group size for this discount:
+  // adults and children only. They still count as travellers everywhere else.
+  var korting = kortingLijst ? kortingLijst[String(personen - aantallen.baby)] : 0;
   if (typeof korting !== "number" || !isFinite(korting)) korting = 0;
-  var perPersoon = heleEuros + korting * nachten;
+
+  // main.js vluchtAftrek(): "I'll arrange my own flight" (opties.vluchtZelf in
+  // the price file, as in data/falun-prijzen.json) takes a fixed amount per
+  // person off, after the group price. Only the value "zelf" counts; without
+  // it the flight stays in the price exactly as before. A trip without a
+  // valid amount refuses it rather than charging a flight the visitor
+  // believes they arrange themselves.
+  var eigenVlucht = keuze.vlucht === "zelf";
+  var vluchtBedrag = vluchtZelfBedrag(data);
+  if (eigenVlucht && !vluchtBedrag) return { fout: "Bij deze reis kun je de vlucht niet zelf regelen." };
+  var vluchtAftrek = eigenVlucht ? vluchtBedrag : 0;
+
+  var perPersoon = heleEuros + korting * nachten - vluchtAftrek;
   if (!(perPersoon > 0)) return { fout: "Ongeldig bedrag." };
 
   // main.js begeleidingKan() / begeleidingGroep(): guiding (Orsa) is a group
@@ -245,11 +283,20 @@ function berekenReis(keuze) {
       begeleidingDagen;
   }
 
-  var bedrag = perPersoon * personen + begeleidingBedrag;
+  // Only the flight part is lower for children and babies; the group
+  // discount, surcharges and guiding above stay as they are. With an own
+  // flight there is no flight in the package, so nothing is left to discount
+  // and everyone pays the adult price (same as api/_falun-prijs.js).
+  var prijzen = kinderprijs.prijzenPerCategorie(keuze.reis, perPersoon, { zonderVlucht: eigenVlucht });
+  var bedrag = kinderprijs.groepsPrijs(aantallen, prijzen) + begeleidingBedrag;
 
   var omschrijving = (reis.product || "Schaatsreis " + reis.naam) + ", " + schrijfDatum(van) + " tot " + schrijfDatum(tot) +
-    " (" + nachten + " nachten), " + personen + (personen === 1 ? " persoon" : " personen") +
-    ", " + euro(perPersoon) + " p.p.";
+    " (" + dagen + (dagen === 1 ? " dag" : " dagen") + "), " + personen + (personen === 1 ? " persoon" : " personen") +
+    kinderprijs.omschrijvingDeel(aantallen) +
+    (eigenVlucht ? ", eigen vlucht" : "") +
+    ", " + (aantallen.kinderen + aantallen.baby > 0 ? "volwassene " : "") + euro(perPersoon) + " p.p.";
+  if (aantallen.kinderen > 0) omschrijving += ", kind " + euro(prijzen.kind) + " p.p.";
+  if (aantallen.baby > 0) omschrijving += ", baby " + euro(prijzen.baby) + " p.p.";
   if (begeleidingDagen > 0) {
     omschrijving += ", met " + begeleidingDagen + (begeleidingDagen === 1 ? " dag" : " dagen") +
       " begeleiding (" + euro(begeleidingBedrag) + ")";
@@ -258,11 +305,18 @@ function berekenReis(keuze) {
   return {
     bedrag: bedrag,
     perPersoon: perPersoon,
+    perKind: prijzen.kind,
+    perBaby: prijzen.baby,
     nachten: nachten,
     dagen: dagen,
     personen: personen,
+    volwassenen: aantallen.volwassenen,
+    kinderen: aantallen.kinderen,
+    baby: aantallen.baby,
     begeleidingDagen: begeleidingDagen,
     begeleidingBedrag: begeleidingBedrag,
+    eigenVlucht: eigenVlucht,
+    vluchtAftrek: vluchtAftrek,
     omschrijving: omschrijving
   };
 }

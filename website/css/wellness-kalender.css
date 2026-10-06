@@ -582,6 +582,17 @@
   }
 }
 
+/* With the own-flight checkbox (opties.vluchtZelf in the price file) the
+   right column gets one more row: trip length, persons, own flight, then the
+   total and the pay button. */
+@media (min-width: 64rem) {
+  .page-wellness .lx-booking:has(> .calendar__flight) { grid-template-rows: auto auto auto 1fr auto; }
+  .page-wellness .lx-booking:has(> .calendar__flight) > .calendar__months { grid-row: 1 / 5; }
+  .page-wellness .lx-booking:has(> .calendar__flight) > .calendar__legend { grid-row: 5; }
+  .page-wellness .lx-booking > .calendar__flight { grid-row: 3; }
+  .page-wellness .lx-booking:has(> .calendar__flight) > .calendar__bar { grid-row: 4 / 6; }
+}
+
 /* --------------------------------------------------------------------------
    Motion: new choices ease in (opacity and transform only)
    -------------------------------------------------------------------------- */

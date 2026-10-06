@@ -16,6 +16,7 @@
    ========================================================================== */
 var fs = require("fs");
 var path = require("path");
+var kinderprijs = require("./_kinderprijs.js");
 
 /* Het bestand wordt elke keer opnieuw gelezen. Dat kost niets - het is een
    paar regels - en het voorkomt dat een draaiende server nog met oude prijzen
@@ -29,11 +30,15 @@ function falunPrijzen() {
   return JSON.parse(fs.readFileSync(bestand, "utf8"));
 }
 
+/* Impossible dates (31 February) are rejected instead of rolling over into
+   the next month, same as api/_reis-prijs.js. */
 function alsDatum(tekst) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(tekst))) return null;
   var d = String(tekst).split("-");
   var uit = new Date(Date.UTC(+d[0], +d[1] - 1, +d[2]));
-  return isNaN(uit.getTime()) ? null : uit;
+  if (isNaN(uit.getTime())) return null;
+  if (uit.getUTCMonth() !== +d[1] - 1 || uit.getUTCDate() !== +d[2]) return null;
+  return uit;
 }
 function alsTekst(datum) {
   return datum.toISOString().slice(0, 10);
@@ -107,10 +112,18 @@ function berekenFalun(keuze) {
   var doorgeven = typeof data.kortingDoorgeven === "number" ? data.kortingDoorgeven : 1;
   var huisjeMax = data.huisjeMaxPersonen || 0;
 
-  var personen = parseInt(keuze.personen, 10) || basisPersonen;
+  // Digits only ("3", not "3abc"); without a head count basisPersonen counts.
+  var leegPersonen = keuze.personen === undefined || keuze.personen === null || keuze.personen === "";
+  if (!leegPersonen && !/^\d+$/.test(String(keuze.personen))) return { fout: "Ongeldig aantal personen." };
+  var personen = leegPersonen ? basisPersonen : parseInt(keuze.personen, 10);
   if (personen < (keuze2.min || 1) || personen > (keuze2.max || 4)) {
     return { fout: "Ongeldig aantal personen." };
   }
+
+  // Adults (12+), children (2-11) and babies (0-1); at least one adult.
+  // Without kinderen/baby everyone is an adult, as before.
+  var aantallen = kinderprijs.leesAantallen(keuze, personen);
+  if (aantallen.fout) return { fout: aantallen.fout };
 
   // Zelfde rekenwijze als in js/falun-kalender.js. Een besparing doordat er
   // meer mensen in het huisje slapen, wordt maar deels doorgegeven.
@@ -158,7 +171,7 @@ function berekenFalun(keuze) {
 
   var opties = data.opties || {};
   var omschrijving = "Schaatsreis Falun, " + dagen + " dagen vanaf " + schrijfDatum(aankomst) +
-    ", " + personen + (personen === 1 ? " persoon" : " personen");
+    ", " + personen + (personen === 1 ? " persoon" : " personen") + kinderprijs.omschrijvingDeel(aantallen);
 
   if (keuze.vlucht === "zelf") {
     totaal -= Math.abs(opties.vluchtZelf || 0);
@@ -168,7 +181,9 @@ function berekenFalun(keuze) {
     totaal -= autoDeel(personen, dagen);
     omschrijving += ", eigen vervoer";
   }
-  var begDagen = parseInt(keuze.begeleiding, 10);
+  var leegBegeleiding = keuze.begeleiding === undefined || keuze.begeleiding === null || keuze.begeleiding === "";
+  if (!leegBegeleiding && !/^\d+$/.test(String(keuze.begeleiding))) return { fout: "Ongeldig aantal dagen begeleiding." };
+  var begDagen = leegBegeleiding ? 0 : parseInt(keuze.begeleiding, 10);
   if (begDagen > 0) {
     var beg = opties.begeleiding || {};
     var begVan = alsDatum(beg.van);
@@ -193,15 +208,28 @@ function berekenFalun(keuze) {
   // eerst per persoon afronden, dan vermenigvuldigen, net als de kalender.
   var perPersoon = Math.round(totaal);
   if (!(perPersoon > 0)) return { fout: "Ongeldig bedrag." };
-  omschrijving += ", €" + perPersoon.toLocaleString("nl-NL") + " p.p.";
-  return { bedrag: perPersoon * personen, perPersoon: perPersoon, omschrijving: omschrijving };
-}
 
-function origineOngeldig(req) {
-  var origin = req.headers.origin;
-  if (!origin) return false; // geen Origin-header (bv. curl/oude browser): niet blokkeren
-  return TOEGESTANE_ORIGINS.indexOf(origin) === -1;
+  // Only the flight part is lower for children and babies. With an own flight
+  // there is no flight in the package, so nothing is left to discount (the
+  // own-flight deduction above already applies per person).
+  var prijzen = kinderprijs.prijzenPerCategorie("falun", perPersoon, { zonderVlucht: keuze.vlucht === "zelf" });
+  var kindPrijsTekst = function (n) { return "€" + n.toLocaleString("nl-NL"); };
+  omschrijving += ", " + (aantallen.kinderen + aantallen.baby > 0 ? "volwassene " : "") + kindPrijsTekst(perPersoon) + " p.p.";
+  if (aantallen.kinderen > 0) omschrijving += ", kind " + kindPrijsTekst(prijzen.kind) + " p.p.";
+  if (aantallen.baby > 0) omschrijving += ", baby " + kindPrijsTekst(prijzen.baby) + " p.p.";
+  return {
+    bedrag: kinderprijs.groepsPrijs(aantallen, prijzen),
+    perPersoon: perPersoon,
+    perKind: prijzen.kind,
+    perBaby: prijzen.baby,
+    personen: personen,
+    volwassenen: aantallen.volwassenen,
+    kinderen: aantallen.kinderen,
+    baby: aantallen.baby,
+    dagen: dagen,
+    begeleidingDagen: begDagen > 0 ? begDagen : 0,
+    omschrijving: omschrijving
+  };
 }
-
 
 module.exports = { berekenFalun: berekenFalun };

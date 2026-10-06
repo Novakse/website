@@ -18,18 +18,18 @@
       legendBooked: "Al bezet",
       legendChosen: "Jouw keuze",
       hintStart: "Klik je aankomstdag aan, en daarna je vertrekdag.",
-      hintEnd: function (aankomst, min) { return "Aankomst op " + aankomst + ". Kies nu je vertrekdag - minimaal " + min + " nachten."; },
+      hintEnd: function (aankomst, min) { return "Aankomst op " + aankomst + ". Kies nu je vertrekdag - minimaal " + min + " dagen."; },
       reset: "Opnieuw kiezen",
       chosenLabel: "Jouw periode",
-      nightsLabel: function (n) { return n + (n === 1 ? " nacht" : " nachten"); },
+      daysLabel: function (n) { return n + (n === 1 ? " dag" : " dagen"); },
       continueBtn: "Verder met de aanvraag",
       defaultBooked: "Bezet",
       availableAria: function (datum) { return datum + ", beschikbaar"; },
       totalLabel: function (totaal) { return "Totaal €" + totaal + " per persoon"; },
-      groupTotalLabel: function (totaal, n, pp) { return "Totaal €" + totaal + " voor " + n + " personen (€" + pp + " p.p.)"; },
+      groupTotalLabel: function (totaal, n, pp) { return "Totaal €" + pp + " per persoon (€" + totaal + " voor " + n + " personen)"; },
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " tot " + tot; },
       bookedSr: function (wat) { return " " + wat + ", niet beschikbaar"; },
-      warnMinNights: function (min) { return "Een verblijf duurt minimaal " + min + " nachten. Kies een latere vertrekdag."; },
+      warnMinDays: function (min) { return "Een verblijf duurt minimaal " + min + " dagen. Kies een latere vertrekdag."; },
       warnOverlap: "In die periode zit een week die al bezet is. Kies een periode ervoor of erna.",
       legendUncertain: "IJs onzeker",
       uncertainNote: "De dagen met een streepje kun je gewoon boeken, maar in december is het ijs nog het onzekerst.",
@@ -46,6 +46,27 @@
       pricierAria: function (bedrag) { return "duurdere nacht, toeslag " + bedrag + " p.p."; },
       pricierLine: function (bedrag, n) { return "Inclusief " + bedrag + " p.p. toeslag voor " + n + (n === 1 ? " duurdere nacht" : " duurdere nachten"); },
       bookPayBtn: "Boeken en betalen",
+      // Own flight: the same texts as in js/falun-kalender.js.
+      optionsLegend: "Wat wil je zelf regelen?",
+      flightSelf: "Ik regel mijn vlucht zelf",
+      flightSelfHint: "De heen- en terugvlucht zit anders bij de prijs in",
+      lineFlight: "Vlucht zelf geregeld",
+      childFlightSelfNote: "Regel je je vlucht zelf, dan vervalt de lagere prijs voor kinderen en baby's: er is dan geen vliegdeel meer om te verlagen.",
+      adultsLabel: "Volwassenen",
+      adultsAge: "12 jaar en ouder",
+      childrenLabel: "Kinderen",
+      childrenAge: "2 t/m 11 jaar",
+      babiesLabel: "Baby's",
+      babiesAge: "0 en 1 jaar",
+      fewerOf: function (naam) { return "Eén minder: " + naam; },
+      moreOf: function (naam) { return "Eén meer: " + naam; },
+      perPersonPrice: function (bedrag) { return "€" + bedrag + " p.p."; },
+      categoryLine: function (naam, n, prijs) { return naam + " (" + n + "): " + prijs; },
+      groupTotalMixed: function (totaal, n) { return "Totaal €" + totaal + " voor " + n + " personen"; },
+      childNote: "Kinderen en baby's betalen een lagere prijs voor het vliegdeel van het pakket. De rest van de reis kost voor iedereen hetzelfde. De leeftijd telt op de dag van aankomst.",
+      ageRuleNote: "Minstens één reiziger moet 21 jaar of ouder zijn.",
+      priceLoading: "Prijs wordt berekend...",
+      priceUnavailable: "We konden de prijs met kinderen nu niet laten zien. Het totaal zie je op de volgende stap.",
       personsLegend: "Met hoeveel personen?",
       personsFewer: "Eén persoon minder",
       personsMore: "Eén persoon meer",
@@ -69,18 +90,18 @@
       legendBooked: "Already booked",
       legendChosen: "Your selection",
       hintStart: "Click your arrival day, then your departure day.",
-      hintEnd: function (arrival, min) { return "Arrival on " + arrival + ". Now choose your departure day - minimum " + min + " nights."; },
+      hintEnd: function (arrival, min) { return "Arrival on " + arrival + ". Now choose your departure day - minimum " + min + " days."; },
       reset: "Start over",
       chosenLabel: "Your period",
-      nightsLabel: function (n) { return n + (n === 1 ? " night" : " nights"); },
+      daysLabel: function (n) { return n + (n === 1 ? " day" : " days"); },
       continueBtn: "Continue to request",
       defaultBooked: "Booked",
       availableAria: function (date) { return date + ", available"; },
       totalLabel: function (totaal) { return "Total €" + totaal + " per person"; },
-      groupTotalLabel: function (total, n, pp) { return "Total €" + total + " for " + n + " people (€" + pp + " per person)"; },
+      groupTotalLabel: function (total, n, pp) { return "Total €" + pp + " per person (€" + total + " for " + n + " people)"; },
       bookedTitle: function (what, from, to) { return what + ": " + from + " to " + to; },
       bookedSr: function (what) { return " " + what + ", not available"; },
-      warnMinNights: function (min) { return "A stay is at least " + min + " nights. Choose a later departure day."; },
+      warnMinDays: function (min) { return "A stay is at least " + min + " days. Choose a later departure day."; },
       warnOverlap: "That period includes a week that's already booked. Choose a period before or after.",
       legendUncertain: "Ice uncertain",
       uncertainNote: "You can book the dashed days as normal, but in December the ice is least certain.",
@@ -97,6 +118,26 @@
       pricierAria: function (amount) { return "higher-priced night, surcharge " + amount + " per person"; },
       pricierLine: function (amount, n) { return "Includes " + amount + " per person surcharge for " + n + (n === 1 ? " higher-priced night" : " higher-priced nights"); },
       bookPayBtn: "Book and pay",
+      optionsLegend: "What do you want to arrange yourself?",
+      flightSelf: "I'll arrange my own flight",
+      flightSelfHint: "Otherwise the return flight is included in the price",
+      lineFlight: "Own flight",
+      childFlightSelfNote: "If you arrange your own flight, the lower price for children and babies no longer applies: there is no flight part left to reduce.",
+      adultsLabel: "Adults",
+      adultsAge: "12 years and older",
+      childrenLabel: "Children",
+      childrenAge: "2 to 11 years",
+      babiesLabel: "Babies",
+      babiesAge: "0 and 1 years",
+      fewerOf: function (naam) { return "One fewer: " + naam; },
+      moreOf: function (naam) { return "One more: " + naam; },
+      perPersonPrice: function (bedrag) { return "€" + bedrag + " per person"; },
+      categoryLine: function (naam, n, prijs) { return naam + " (" + n + "): " + prijs; },
+      groupTotalMixed: function (totaal, n) { return "Total €" + totaal + " for " + n + " people"; },
+      childNote: "Children and babies pay a lower price for the flight part of the package. The rest of the trip costs the same for everyone. Age counts on the day of arrival.",
+      ageRuleNote: "At least one traveller must be 21 or older.",
+      priceLoading: "Calculating price...",
+      priceUnavailable: "We could not show the price with children right now. You will see the total in the next step.",
       personsLegend: "How many people?",
       personsFewer: "One person fewer",
       personsMore: "One person more",
@@ -120,18 +161,18 @@
       legendBooked: "Redan bokad",
       legendChosen: "Ditt val",
       hintStart: "Klicka på din ankomstdag och sedan på din avresedag.",
-      hintEnd: function (ankomst, min) { return "Ankomst " + ankomst + ". Välj nu din avresedag - minst " + min + " nätter."; },
+      hintEnd: function (ankomst, min) { return "Ankomst " + ankomst + ". Välj nu din avresedag - minst " + min + " dagar."; },
       reset: "Välj igen",
       chosenLabel: "Din period",
-      nightsLabel: function (n) { return n + (n === 1 ? " natt" : " nätter"); },
+      daysLabel: function (n) { return n + (n === 1 ? " dag" : " dagar"); },
       continueBtn: "Gå vidare till förfrågan",
       defaultBooked: "Bokad",
       availableAria: function (datum) { return datum + ", tillgänglig"; },
       totalLabel: function (total) { return "Totalt €" + total + " per person"; },
-      groupTotalLabel: function (total, n, pp) { return "Totalt €" + total + " för " + n + " personer (€" + pp + " per person)"; },
+      groupTotalLabel: function (total, n, pp) { return "Totalt €" + pp + " per person (€" + total + " för " + n + " personer)"; },
       bookedTitle: function (vad, fran, till) { return vad + ": " + fran + " till " + till; },
       bookedSr: function (vad) { return " " + vad + ", inte tillgänglig"; },
-      warnMinNights: function (min) { return "En vistelse är minst " + min + " nätter. Välj en senare avresedag."; },
+      warnMinDays: function (min) { return "En vistelse är minst " + min + " dagar. Välj en senare avresedag."; },
       warnOverlap: "Den perioden omfattar en vecka som redan är bokad. Välj en period före eller efter.",
       legendUncertain: "Isen osäker",
       uncertainNote: "Dagarna med streck går att boka som vanligt, men i december är isen som mest osäker.",
@@ -148,6 +189,26 @@
       pricierAria: function (belopp) { return "dyrare natt, tillägg " + belopp + " per person"; },
       pricierLine: function (belopp, n) { return "Inklusive " + belopp + " per person i tillägg för " + n + (n === 1 ? " dyrare natt" : " dyrare nätter"); },
       bookPayBtn: "Boka och betala",
+      optionsLegend: "Vad vill du ordna själv?",
+      flightSelf: "Jag ordnar flyget själv",
+      flightSelfHint: "Annars ingår tur- och returflyget i priset",
+      lineFlight: "Eget flyg",
+      childFlightSelfNote: "Ordnar du flyget själv gäller inte längre det lägre priset för barn och bebisar: då finns ingen flygdel kvar att sänka.",
+      adultsLabel: "Vuxna",
+      adultsAge: "12 år och äldre",
+      childrenLabel: "Barn",
+      childrenAge: "2 till 11 år",
+      babiesLabel: "Bebisar",
+      babiesAge: "0 och 1 år",
+      fewerOf: function (naam) { return "Färre: " + naam; },
+      moreOf: function (naam) { return "Fler: " + naam; },
+      perPersonPrice: function (bedrag) { return "€" + bedrag + " per person"; },
+      categoryLine: function (naam, n, prijs) { return naam + " (" + n + "): " + prijs; },
+      groupTotalMixed: function (totaal, n) { return "Totalt €" + totaal + " för " + n + " personer"; },
+      childNote: "Barn och bebisar betalar ett lägre pris för flygdelen av paketet. Resten av resan kostar lika mycket för alla. Åldern räknas på ankomstdagen.",
+      ageRuleNote: "Minst en resenär måste vara 21 år eller äldre.",
+      priceLoading: "Priset beräknas...",
+      priceUnavailable: "Vi kunde inte visa priset med barn just nu. Totalen ser du i nästa steg.",
       personsLegend: "Hur många personer?",
       personsFewer: "En person färre",
       personsMore: "En person fler",
@@ -171,18 +232,18 @@
       legendBooked: "Bereits belegt",
       legendChosen: "Deine Auswahl",
       hintStart: "Klicke deinen Ankunftstag an, danach deinen Abreisetag.",
-      hintEnd: function (ankunft, min) { return "Ankunft am " + ankunft + ". Wähle jetzt deinen Abreisetag - mindestens " + min + " Nächte."; },
+      hintEnd: function (ankunft, min) { return "Ankunft am " + ankunft + ". Wähle jetzt deinen Abreisetag - mindestens " + min + " Tage."; },
       reset: "Neu wählen",
       chosenLabel: "Dein Zeitraum",
-      nightsLabel: function (n) { return n + (n === 1 ? " Nacht" : " Nächte"); },
+      daysLabel: function (n) { return n + (n === 1 ? " Tag" : " Tage"); },
       continueBtn: "Weiter zur Anfrage",
       defaultBooked: "Belegt",
       availableAria: function (datum) { return datum + ", verfügbar"; },
       totalLabel: function (gesamt) { return "Gesamt €" + gesamt + " pro Person"; },
-      groupTotalLabel: function (gesamt, n, pp) { return "Gesamt €" + gesamt + " für " + n + " Personen (€" + pp + " pro Person)"; },
+      groupTotalLabel: function (gesamt, n, pp) { return "Gesamt €" + pp + " pro Person (€" + gesamt + " für " + n + " Personen)"; },
       bookedTitle: function (was, von, bis) { return was + ": " + von + " bis " + bis; },
       bookedSr: function (was) { return " " + was + ", nicht verfügbar"; },
-      warnMinNights: function (min) { return "Ein Aufenthalt dauert mindestens " + min + " Nächte. Wähle einen späteren Abreisetag."; },
+      warnMinDays: function (min) { return "Ein Aufenthalt dauert mindestens " + min + " Tage. Wähle einen späteren Abreisetag."; },
       warnOverlap: "In diesem Zeitraum liegt eine Woche, die bereits belegt ist. Wähle einen Zeitraum davor oder danach.",
       legendUncertain: "Eis unsicher",
       uncertainNote: "Die gestrichelten Tage kannst du ganz normal buchen, aber im Dezember ist das Eis am unsichersten.",
@@ -199,6 +260,26 @@
       pricierAria: function (betrag) { return "teurere Nacht, Aufschlag " + betrag + " pro Person"; },
       pricierLine: function (betrag, n) { return "Inklusive " + betrag + " pro Person Aufschlag für " + n + (n === 1 ? " teurere Nacht" : " teurere Nächte"); },
       bookPayBtn: "Buchen und bezahlen",
+      optionsLegend: "Was möchtest du selbst organisieren?",
+      flightSelf: "Ich buche meinen Flug selbst",
+      flightSelfHint: "Sonst ist der Hin- und Rückflug im Preis enthalten",
+      lineFlight: "Flug selbst gebucht",
+      childFlightSelfNote: "Wenn du deinen Flug selbst buchst, entfällt der niedrigere Preis für Kinder und Babys: Es gibt dann keinen Flugteil mehr, der günstiger sein könnte.",
+      adultsLabel: "Erwachsene",
+      adultsAge: "ab 12 Jahren",
+      childrenLabel: "Kinder",
+      childrenAge: "2 bis 11 Jahre",
+      babiesLabel: "Babys",
+      babiesAge: "0 und 1 Jahr",
+      fewerOf: function (naam) { return "Weniger: " + naam; },
+      moreOf: function (naam) { return "Mehr: " + naam; },
+      perPersonPrice: function (bedrag) { return "€" + bedrag + " pro Person"; },
+      categoryLine: function (naam, n, prijs) { return naam + " (" + n + "): " + prijs; },
+      groupTotalMixed: function (totaal, n) { return "Gesamt €" + totaal + " für " + n + " Personen"; },
+      childNote: "Kinder und Babys zahlen für den Flugteil des Pakets weniger. Der Rest der Reise kostet für alle gleich viel. Das Alter zählt am Anreisetag.",
+      ageRuleNote: "Mindestens eine reisende Person muss 21 Jahre oder älter sein.",
+      priceLoading: "Preis wird berechnet...",
+      priceUnavailable: "Den Preis mit Kindern können wir gerade nicht anzeigen. Den Gesamtpreis siehst du im nächsten Schritt.",
       personsLegend: "Mit wie vielen Personen?",
       personsFewer: "Eine Person weniger",
       personsMore: "Eine Person mehr"
@@ -214,18 +295,18 @@
       legendBooked: "Allerede booket",
       legendChosen: "Ditt valg",
       hintStart: "Klikk på ankomstdagen din, og deretter avreisedagen.",
-      hintEnd: function (ankomst, min) { return "Ankomst " + ankomst + ". Velg nå avreisedagen din - minst " + min + " netter."; },
+      hintEnd: function (ankomst, min) { return "Ankomst " + ankomst + ". Velg nå avreisedagen din - minst " + min + " dager."; },
       reset: "Velg på nytt",
       chosenLabel: "Din periode",
-      nightsLabel: function (n) { return n + (n === 1 ? " natt" : " netter"); },
+      daysLabel: function (n) { return n + (n === 1 ? " dag" : " dager"); },
       continueBtn: "Gå videre til forespørsel",
       defaultBooked: "Booket",
       availableAria: function (dato) { return dato + ", tilgjengelig"; },
       totalLabel: function (total) { return "Totalt €" + total + " per person"; },
-      groupTotalLabel: function (total, n, pp) { return "Totalt €" + total + " for " + n + " personer (€" + pp + " per person)"; },
+      groupTotalLabel: function (total, n, pp) { return "Totalt €" + pp + " per person (€" + total + " for " + n + " personer)"; },
       bookedTitle: function (hva, fra, til) { return hva + ": " + fra + " til " + til; },
       bookedSr: function (hva) { return " " + hva + ", ikke tilgjengelig"; },
-      warnMinNights: function (min) { return "Et opphold varer minst " + min + " netter. Velg en senere avreisedag."; },
+      warnMinDays: function (min) { return "Et opphold varer minst " + min + " dager. Velg en senere avreisedag."; },
       warnOverlap: "I den perioden ligger det en uke som allerede er booket. Velg en periode før eller etter.",
       legendUncertain: "Isen usikker",
       uncertainNote: "Dagene med strek kan du bestille som vanlig, men i desember er isen mest usikker.",
@@ -242,6 +323,26 @@
       pricierAria: function (belop) { return "dyrere natt, tillegg " + belop + " per person"; },
       pricierLine: function (belop, n) { return "Inkludert " + belop + " per person i tillegg for " + n + (n === 1 ? " dyrere natt" : " dyrere netter"); },
       bookPayBtn: "Book og betal",
+      optionsLegend: "Hva vil du ordne selv?",
+      flightSelf: "Jeg ordner flyet selv",
+      flightSelfHint: "Ellers er tur-retur-flyet inkludert i prisen",
+      lineFlight: "Eget fly",
+      childFlightSelfNote: "Ordner du flyet selv, gjelder ikke lenger den lavere prisen for barn og babyer: da er det ingen flydel igjen å redusere.",
+      adultsLabel: "Voksne",
+      adultsAge: "12 år og eldre",
+      childrenLabel: "Barn",
+      childrenAge: "2 til 11 år",
+      babiesLabel: "Babyer",
+      babiesAge: "0 og 1 år",
+      fewerOf: function (naam) { return "Færre: " + naam; },
+      moreOf: function (naam) { return "Flere: " + naam; },
+      perPersonPrice: function (bedrag) { return "€" + bedrag + " per person"; },
+      categoryLine: function (naam, n, prijs) { return naam + " (" + n + "): " + prijs; },
+      groupTotalMixed: function (totaal, n) { return "Totalt €" + totaal + " for " + n + " personer"; },
+      childNote: "Barn og babyer betaler en lavere pris for flydelen av pakken. Resten av reisen koster det samme for alle. Alderen regnes på ankomstdagen.",
+      ageRuleNote: "Minst én reisende må være 21 år eller eldre.",
+      priceLoading: "Prisen beregnes...",
+      priceUnavailable: "Vi kunne ikke vise prisen med barn akkurat nå. Totalen ser du i neste steg.",
       personsLegend: "Hvor mange personer?",
       personsFewer: "Én person færre",
       personsMore: "Én person flere"
@@ -257,18 +358,18 @@
       legendBooked: "Jo varattu",
       legendChosen: "Valintasi",
       hintStart: "Valitse ensin saapumispäivä ja sitten lähtöpäivä.",
-      hintEnd: function (saapuminen, min) { return "Saapuminen " + saapuminen + ". Valitse nyt lähtöpäivä - vähintään " + min + " yötä."; },
+      hintEnd: function (saapuminen, min) { return "Saapuminen " + saapuminen + ". Valitse nyt lähtöpäivä - vähintään " + min + " päivää."; },
       reset: "Valitse uudelleen",
       chosenLabel: "Valittu ajanjakso",
-      nightsLabel: function (n) { return n + (n === 1 ? " yö" : " yötä"); },
+      daysLabel: function (n) { return n + (n === 1 ? " päivä" : " päivää"); },
       continueBtn: "Jatka varauspyyntöön",
       defaultBooked: "Varattu",
       availableAria: function (pvm) { return pvm + ", vapaa"; },
       totalLabel: function (yhteensa) { return "Yhteensä €" + yhteensa + " / henkilö"; },
-      groupTotalLabel: function (yhteensa, n, pp) { return "Yhteensä €" + yhteensa + ", " + n + " henkilöä (€" + pp + " / henkilö)"; },
+      groupTotalLabel: function (yhteensa, n, pp) { return "Yhteensä €" + pp + " / henkilö (€" + yhteensa + ", " + n + " henkilöä)"; },
       bookedTitle: function (mika, alkaen, saakka) { return mika + ": " + alkaen + " – " + saakka; },
       bookedSr: function (mika) { return " " + mika + ", ei vapaa"; },
-      warnMinNights: function (min) { return "Vähimmäisoleskelu on " + min + " yötä. Valitse myöhäisempi lähtöpäivä."; },
+      warnMinDays: function (min) { return "Vähimmäisoleskelu on " + min + " päivää. Valitse myöhäisempi lähtöpäivä."; },
       warnOverlap: "Kyseiselle ajanjaksolle osuu jo varattu viikko. Valitse ajanjakso ennen tai jälkeen.",
       legendUncertain: "Jää epävarma",
       uncertainNote: "Katkoviivalla merkityt päivät voi varata normaalisti, mutta joulukuussa jää on epävarmimmillaan.",
@@ -285,6 +386,26 @@
       pricierAria: function (summa) { return "kalliimpi yö, lisämaksu " + summa + " / henkilö"; },
       pricierLine: function (summa, n) { return "Sisältää " + summa + " / henkilö lisämaksua " + n + " kalliimmasta yöstä"; },
       bookPayBtn: "Varaa ja maksa",
+      optionsLegend: "Mitä haluat järjestää itse?",
+      flightSelf: "Järjestän lentoni itse",
+      flightSelfHint: "Muuten meno-paluulento sisältyy hintaan",
+      lineFlight: "Oma lento",
+      childFlightSelfNote: "Jos järjestät lentosi itse, lasten ja vauvojen alempi hinta ei enää päde: silloin ei ole lentoosuutta, jota voisi alentaa.",
+      adultsLabel: "Aikuiset",
+      adultsAge: "12-vuotiaat ja vanhemmat",
+      childrenLabel: "Lapset",
+      childrenAge: "2-11-vuotiaat",
+      babiesLabel: "Vauvat",
+      babiesAge: "0-1-vuotiaat",
+      fewerOf: function (naam) { return "Vähemmän: " + naam; },
+      moreOf: function (naam) { return "Lisää: " + naam; },
+      perPersonPrice: function (bedrag) { return "€" + bedrag + " / henkilö"; },
+      categoryLine: function (naam, n, prijs) { return naam + " (" + n + "): " + prijs; },
+      groupTotalMixed: function (totaal, n) { return "Yhteensä €" + totaal + ", " + n + " henkilöä"; },
+      childNote: "Lapset ja vauvat maksavat paketin lentoosuudesta alemman hinnan. Muu matka maksaa kaikille saman. Ikä lasketaan saapumispäivänä.",
+      ageRuleNote: "Vähintään yhden matkustajan on oltava 21-vuotias tai vanhempi.",
+      priceLoading: "Hintaa lasketaan...",
+      priceUnavailable: "Lasten kanssa hintaa ei voitu nyt näyttää. Kokonaishinnan näet seuraavassa vaiheessa.",
       personsLegend: "Kuinka monta henkilöä?",
       personsFewer: "Yksi henkilö vähemmän",
       personsMore: "Yksi henkilö enemmän"
@@ -296,6 +417,14 @@
   Object.keys(I18N.nl).forEach(function (sleutel) {
     if (!(sleutel in T)) T[sleutel] = I18N.nl[sleutel];
   });
+
+  /* Dates and amounts on screen follow the page language: "1.990" / "1,990"
+     / "1 990", "2 februari" / "2. Februar" / "2. helmikuuta". Display only:
+     amounts sent to the booking and payment pages stay plain numbers. */
+  var LOCALE = { nl: "nl-NL", en: "en-GB", de: "de-DE", sv: "sv-SE", no: "nb-NO", fi: "fi-FI" }[LANG] || "nl-NL";
+  function getal(n, opties) {
+    try { return n.toLocaleString(LOCALE, opties); } catch (fout) { return n.toLocaleString("nl-NL", opties); }
+  }
 
   /* ------------------------------------------------------------------
      Elfsight widgets (reviews, Instagram) get their height reserved in CSS
@@ -483,41 +612,87 @@
     syncHeader();
   }
 
-  function closeNav() {
+  /* returnFocus: after closing with Esc or the close button, keyboard focus
+     goes back to the menu button (the open menu covered it). */
+  function closeNav(returnFocus) {
     if (!nav || !toggle) return;
+    var wasOpen = nav.classList.contains("is-open");
     nav.classList.remove("is-open");
     toggle.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
     closeLangSwitch();
     syncHeader();
+    if (wasOpen && returnFocus === true) toggle.focus();
+  }
+
+  // Focusable items of the open menu, in tab order (skips the hidden
+  // language list while it is folded in).
+  function navFocusables() {
+    return Array.prototype.filter.call(
+      nav.querySelectorAll("a[href], button:not([disabled])"),
+      function (el) {
+        return el.getClientRects().length > 0 && window.getComputedStyle(el).visibility === "visible";
+      }
+    );
   }
 
   if (toggle && nav) {
     toggle.addEventListener("click", function () {
       var isOpen = nav.classList.contains("is-open");
       if (isOpen) {
-        closeNav();
+        closeNav(true);
       } else {
         nav.classList.add("is-open");
         toggle.setAttribute("aria-expanded", "true");
         document.body.style.overflow = "hidden";
         syncHeader();
+        // The open menu covers the page and the menu button: move focus
+        // into it, so keyboard and screen reader users start there.
+        var first = closeBtn || navFocusables()[0];
+        if (first) first.focus();
       }
     });
 
-    if (closeBtn) closeBtn.addEventListener("click", closeNav);
+    if (closeBtn) closeBtn.addEventListener("click", function () { closeNav(true); });
 
     nav.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", closeNav);
+      link.addEventListener("click", function () { closeNav(); });
     });
 
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") closeNav();
+      if (event.key !== "Escape" || !nav.classList.contains("is-open")) return;
+      // An open language list closes first (see below); Esc again closes the menu.
+      if (langSwitch && langSwitch.classList.contains("is-open")) return;
+      closeNav(true);
     });
 
-    window.matchMedia("(min-width: 72rem)").addEventListener("change", function (e) {
-      if (e.matches) closeNav();
+    // Keep Tab inside the open menu: the page behind it is covered, so focus
+    // must not wander off onto links that cannot be seen.
+    nav.addEventListener("keydown", function (event) {
+      if (event.key !== "Tab" || !nav.classList.contains("is-open")) return;
+      var items = navFocusables();
+      if (!items.length) return;
+      var first = items[0];
+      var last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     });
+
+    var wideScreen = window.matchMedia("(min-width: 72rem)");
+    var onWideScreen = function (e) {
+      if (e.matches) closeNav();
+    };
+    // Safari before 14 only knows addListener on a media query list.
+    if (wideScreen.addEventListener) {
+      wideScreen.addEventListener("change", onWideScreen);
+    } else if (wideScreen.addListener) {
+      wideScreen.addListener(onWideScreen);
+    }
 
     // Bij terugkeer vanuit de bfcache (bv. via de terug-knop) herstelt de
     // browser de pagina precies zoals hij was toen je wegnavigeerde, zonder
@@ -554,7 +729,17 @@
     });
 
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") closeLangSwitch();
+      if (event.key !== "Escape" || !langSwitch.classList.contains("is-open")) return;
+      // Focus on one of the (now hidden) languages goes back to the button.
+      var focusInside = langSwitch.contains(document.activeElement);
+      closeLangSwitch();
+      if (focusInside) langToggle.focus();
+    });
+
+    // Tabbing out of the language list folds it in again. Only when focus
+    // really lands elsewhere; a click on a language keeps it open.
+    langSwitch.addEventListener("focusout", function (event) {
+      if (event.relatedTarget && !langSwitch.contains(event.relatedTarget)) closeLangSwitch();
     });
   }
 
@@ -809,13 +994,18 @@
         loadSlide((next + 1) % slides.length);
 
         slides[current].classList.remove("is-active");
-        dots[current].classList.remove("is-active");
-        dots[current].removeAttribute("aria-current");
+        // A missing dot (fewer dots than photos) must not stop the slideshow.
+        if (dots[current]) {
+          dots[current].classList.remove("is-active");
+          dots[current].removeAttribute("aria-current");
+        }
 
         current = next;
         slides[current].classList.add("is-active");
-        dots[current].classList.add("is-active");
-        dots[current].setAttribute("aria-current", "true");
+        if (dots[current]) {
+          dots[current].classList.add("is-active");
+          dots[current].setAttribute("aria-current", "true");
+        }
 
         startTimer();
       };
@@ -922,13 +1112,20 @@
     if (isNaN(datum.getTime())) return null;
     // Vangt 31 februari en dergelijke: die rolt stilletjes door naar de maand erna.
     if (datum.getMonth() !== +d[1] - 1 || datum.getDate() !== +d[2]) return null;
+    // new Date() reads the years 0-99 as 1900-1999; such a year is a typo here.
+    if (datum.getFullYear() !== +d[0]) return null;
     return datum;
   }
   function alsTekst(datum) {
     function twee(n) { return (n < 10 ? "0" : "") + n; }
     return datum.getFullYear() + "-" + twee(datum.getMonth() + 1) + "-" + twee(datum.getDate());
   }
+  var datumFormaat = null;
+  try {
+    datumFormaat = new Intl.DateTimeFormat(LOCALE, { day: "numeric", month: "long", year: "numeric" });
+  } catch (fout) { /* old browser: the plain form below */ }
   function schrijfDatum(datum) {
+    if (datumFormaat) return datumFormaat.format(datum);
     return datum.getDate() + " " + MAANDEN[datum.getMonth()] + " " + datum.getFullYear();
   }
   function dagenTussen(van, tot) {
@@ -992,7 +1189,8 @@
          reis: "lulea",                          // ?reis= for uitchecken.html
          van: "2027-01-10", tot: "2027-01-14",   // optional starting period
          personen: "3", begeleidingDagen: "2",   // optional
-         onWijzig: function (keuze) { ... }      // { van, tot, personen, begeleidingDagen }
+         vlucht: "zelf",                         // optional: own flight ticked
+         onWijzig: function (keuze) { ... }      // { van, tot, personen, begeleidingDagen, vlucht }
        }) */
   window.NovakseReiskalender = {
     start: function (box, pad, opties) {
@@ -1009,6 +1207,7 @@
   var begeleidingTeller = 0;
   var personenTeller = 0;
   var duurTeller = 0;
+  var vluchtTeller = 0;
 
   function bouwKalender(box, data, opties) {
     if (!data.seizoenStart || !data.seizoenEind) return;
@@ -1017,8 +1216,8 @@
     var opBoekpagina = Boolean(opties);
     var adres = new URLSearchParams(window.location.search);
     var vooraf = opBoekpagina
-      ? { van: opties.van, tot: opties.tot, personen: opties.personen, begeleiding: opties.begeleidingDagen }
-      : { van: adres.get("van"), tot: adres.get("tot"), personen: adres.get("personen"), begeleiding: adres.get("begeleiding") };
+      ? { van: opties.van, tot: opties.tot, personen: opties.personen, kinderen: opties.kinderen, baby: opties.baby, begeleiding: opties.begeleidingDagen, vlucht: opties.vlucht }
+      : { van: adres.get("van"), tot: adres.get("tot"), personen: adres.get("personen"), kinderen: adres.get("kinderen"), baby: adres.get("baby"), begeleiding: adres.get("begeleiding"), vlucht: adres.get("vlucht") };
 
     var seizoenVan = alsDatum(data.seizoenStart);
     var seizoenTot = alsDatum(data.seizoenEind);
@@ -1040,7 +1239,28 @@
     function binnenPersonen(n) {
       return Math.min(personenMax, Math.max(personenMin, n));
     }
-    var personen = binnenPersonen(2);
+    var personen = binnenPersonen(2); // everyone together: adults, children and babies
+    /* Children (2 to 11) and babies (0 and 1) are counted inside "personen".
+       Everyone else is an adult (12 and older), and at least one adult is
+       always there. Only the flight part of the package costs less for a
+       child or a baby; the server (api/_kinderprijs.js) knows how much and
+       sends the price per person back. The amount itself never reaches this
+       file. */
+    var kinderen = 0;
+    var baby = 0;
+    function volwassenen() { return personen - kinderen - baby; }
+    // Sets the three counts when they fit (at least 1 adult, personenMin to
+    // personenMax in total). Returns true when something changed.
+    function zetAantallen(v, k, b) {
+      if (v < 1 || k < 0 || b < 0) return false;
+      var totaal = v + k + b;
+      if (totaal < personenMin || totaal > personenMax) return false;
+      if (v === volwassenen() && k === kinderen && b === baby) return false;
+      kinderen = k;
+      baby = b;
+      personen = totaal;
+      return true;
+    }
 
     /* Optional ("betaalPersonen" in the price file, e.g. wellness): the group
        sizes that can book and pay online. For any other size there is no
@@ -1058,10 +1278,32 @@
        euros per person per night relative to 2 persons, keyed by group size.
        Negative is a discount; a missing size counts as 0. The server
        (api/create-payment.js) uses exactly the same rule. */
+    // The size passed in is adults plus children: babies (0-1) do not count
+    // towards the group size here (api/_reis-prijs.js does the same).
     function groepsKortingPerNacht(aantal) {
       var lijst = data.groepsKorting && data.groepsKorting.perPersoonPerNacht;
       var waarde = lijst ? lijst[String(aantal)] : 0;
       return typeof waarde === "number" && isFinite(waarde) ? waarde : 0;
+    }
+
+    /* Optional ("opties.vluchtZelf" in the price file, same as in
+       data/falun-prijzen.json): when paying online the visitor can tick "I'll
+       arrange my own flight". That fixed amount per person then comes off,
+       after the group price per night, and children and babies pay the adult
+       price (the server's answer in haalKinderPrijzen says so). Only a
+       positive number counts; otherwise there is no checkbox and the flight
+       stays in the price as always. api/_reis-prijs.js applies exactly the
+       same rule, so the amount on screen is the amount charged. */
+    var vluchtBedrag = (function () {
+      var waarde = data.opties && data.opties.vluchtZelf;
+      return typeof waarde === "number" && isFinite(waarde) && waarde > 0 ? Math.round(waarde) : 0;
+    })();
+    var metVluchtKeuze = afrekenen && vluchtBedrag > 0;
+    // A link or the booking page may bring it along ticked: only vlucht=zelf counts.
+    var vluchtZelf = metVluchtKeuze && vooraf.vlucht === "zelf";
+    // The amount per person that comes off now; 0 without the tick.
+    function vluchtAftrek() {
+      return metVluchtKeuze && vluchtZelf ? vluchtBedrag : 0;
     }
 
     /* Optional: days with uncertain ice ("ijsOnzeker" in the price file, e.g.
@@ -1104,7 +1346,7 @@
       return som;
     }
     function centenTekst(c) {
-      return "€" + (c / 100).toLocaleString("nl-NL", {
+      return "€" + getal(c / 100, {
         minimumFractionDigits: c % 100 ? 2 : 0,
         maximumFractionDigits: 2
       });
@@ -1204,6 +1446,15 @@
     })();
     // A head count from the trip finder presets the persons stepper.
     if (afrekenen && reizigersUitAdres > 0) personen = binnenPersonen(reizigersUitAdres);
+    // Children and babies from the address (digits only), never more than
+    // leaves one adult.
+    function aantalUitAdres(waarde) {
+      return /^\d{1,3}$/.test(String(waarde === null || waarde === undefined ? "" : waarde)) ? parseInt(waarde, 10) : 0;
+    }
+    if (afrekenen) {
+      kinderen = Math.min(aantalUitAdres(vooraf.kinderen), personen - 1);
+      baby = Math.min(aantalUitAdres(vooraf.baby), personen - 1 - kinderen);
+    }
 
     /* What the visitor pays when paying online, in whole euros: the price
        per person (as shown today, plus the group price per night) times the
@@ -1212,7 +1463,7 @@
       if (!magBetalen(personen)) return { perPersoon: 0, totaal: 0 };
       var basis = heleEuros(prijsPerPersoon(aankomst, nachten));
       if (!basis) return { perPersoon: 0, totaal: 0 };
-      var perPersoon = basis + groepsKortingPerNacht(personen) * nachten;
+      var perPersoon = basis + groepsKortingPerNacht(personen - baby) * nachten - vluchtAftrek();
       if (!(perPersoon > 0)) return { perPersoon: 0, totaal: 0 };
       return {
         perPersoon: perPersoon,
@@ -1220,11 +1471,62 @@
       };
     }
 
+    /* Prices for children and babies. The amount of the flight is a server
+       secret, so the browser asks /api/reis-prijs for the price per person of
+       every category (and the group total when there are children or
+       babies). The adult price above stays calculated here as before. The
+       answers are kept per choice, so changing nothing asks nothing. */
+    var kinderPrijzen = {};
+    function kinderSleutel() {
+      return [data.reis, alsTekst(keuzeVan), alsTekst(keuzeTot), personen, kinderen, baby, gekozenBegeleiding(),
+        vluchtAftrek() ? "zelf" : ""].join("|");
+    }
+    // The stored answer for the choice on screen: { status, data } or null.
+    function kinderAntwoord() {
+      if (!afrekenen || !keuzeVan || !keuzeTot) return null;
+      return kinderPrijzen[kinderSleutel()] || null;
+    }
+    function haalKinderPrijzen() {
+      if (!afrekenen || !data.reis || !keuzeVan || !keuzeTot || !magBetalen(personen)) return;
+      var nachten = dagenTussen(keuzeVan, keuzeTot);
+      if (!betaalBedragen(keuzeVan, nachten).totaal) return;
+      var sleutel = kinderSleutel();
+      if (kinderPrijzen[sleutel]) return;
+      kinderPrijzen[sleutel] = { status: "bezig" };
+
+      var vraag = new URLSearchParams({
+        reis: data.reis,
+        van: alsTekst(keuzeVan),
+        tot: alsTekst(keuzeTot),
+        personen: String(personen),
+        kinderen: String(kinderen),
+        baby: String(baby)
+      });
+      if (gekozenBegeleiding()) vraag.set("begeleiding", String(gekozenBegeleiding()));
+      if (vluchtAftrek()) vraag.set("vlucht", "zelf");
+
+      fetch("/api/reis-prijs?" + vraag.toString())
+        .then(function (antwoord) {
+          return antwoord.json().then(function (uit) { return { ok: antwoord.ok, data: uit || {} }; });
+        })
+        .then(function (resultaat) {
+          var uit = resultaat.data;
+          var geldig = resultaat.ok && typeof uit.bedrag === "number" && isFinite(uit.bedrag) && uit.bedrag > 0 &&
+            typeof uit.perKind === "number" && isFinite(uit.perKind) && typeof uit.perBaby === "number" && isFinite(uit.perBaby);
+          kinderPrijzen[sleutel] = geldig ? { status: "klaar", data: uit } : { status: "fout" };
+        })
+        ["catch"](function () { kinderPrijzen[sleutel] = { status: "fout" }; })
+        .then(function () {
+          // Only redraw when the answer is for the choice that is on screen now.
+          if (keuzeVan && keuzeTot && sleutel === kinderSleutel()) { tekenPersonen(); tekenBalk(); }
+        });
+    }
+
     /* De prijzen gelden per persoon. Kwam het aantal reizigers uit de
        reiszoeker mee, dan staat het totaal voor de hele groep erbij, net als
        in het aanvraagformulier. */
     function prijsTekst(perPersoon) {
-      function bedrag(n) { return n.toLocaleString("nl-NL"); }
+      function bedrag(n) { return getal(n); }
       // Guiding is a group amount; it is added to the group total and only
       // the per-person figure shown next to it is rounded.
       var begeleid = gekozenBegeleiding();
@@ -1235,7 +1537,7 @@
       if (groepsgrootte > 1) {
         return T.groupTotalLabel(bedrag(groep), groepsgrootte, bedrag(Math.round(groep / groepsgrootte)));
       }
-      return T.totalLabel(groep);
+      return T.totalLabel(bedrag(groep));
     }
 
     // Trip days: arrival and departure day both count (3 nights is 4 days).
@@ -1377,7 +1679,7 @@
       var nachten = dagen - 1;
       var basis = heleEuros(prijsPerPersoon(keuzeVan, nachten));
       if (!basis) return 0;
-      var perPersoon = afrekenen ? basis + groepsKortingPerNacht(personen) * nachten : basis;
+      var perPersoon = afrekenen ? basis + groepsKortingPerNacht(personen - baby) * nachten - vluchtAftrek() : basis;
       return perPersoon > 0 ? perPersoon : 0;
     }
     function tekenDuren() {
@@ -1388,7 +1690,7 @@
       Array.prototype.forEach.call(duurBox.querySelectorAll(".calendar__duration"), function (knop) {
         var dagen = parseInt(knop.getAttribute("data-dagen"), 10);
         var prijs = duurPrijs(dagen);
-        var prijsTekst = prijs ? "€" + prijs.toLocaleString("nl-NL") : "";
+        var prijsTekst = prijs ? "€" + getal(prijs) : "";
         knop.querySelector(".calendar__duration-price").textContent = prijsTekst ? prijsTekst + " p.p." : "";
         knop.setAttribute("aria-label", T.durationAria(dagen, prijsTekst));
         knop.disabled = !duurKan(dagen);
@@ -1400,59 +1702,166 @@
       if (duurHint) duurHint.hidden = Boolean(keuzeTot);
     }
 
-    /* Persons stepper (only when paying online): minus, a number field and
-       plus, the same control as in the Falun calendar and on boeken.html.
-       It is built once, so keyboard focus stays on the button being used;
-       tekenPersonen() only updates the value and the buttons. */
-    var personenVeld = null;
-    var personenMinder = null;
-    var personenMeer = null;
+    /* Persons (only when paying online): one stepper per category, each
+       with minus, a number field and plus, the same control as in the Falun
+       calendar and on boeken.html. Adults are 12 and older, children 2 to
+       11, babies 0 and 1 (the age on the day of arrival). Every row shows
+       its own price per person once a period is chosen. It is built once,
+       so keyboard focus stays on the button being used; tekenPersonen()
+       only updates the values, the buttons and the prices. */
+    var personenRijen = [];
     if (afrekenen) {
       var personenId = "calendarPersons" + (++personenTeller);
       var personenBox = document.createElement("div");
       personenBox.className = "falun-cal__block calendar__persons";
+      var soorten = [
+        { sleutel: "volw", naam: T.adultsLabel, leeftijd: T.adultsAge, id: personenId },
+        { sleutel: "kind", naam: T.childrenLabel, leeftijd: T.childrenAge, id: personenId + "-kind" },
+        { sleutel: "baby", naam: T.babiesLabel, leeftijd: T.babiesAge, id: personenId + "-baby" }
+      ];
       personenBox.innerHTML =
-        '<label class="falun-cal__legend" for="' + personenId + '">' + T.personsLegend + '</label>' +
-        '<div class="booking__persons">' +
-          '<button type="button" class="booking__step-btn" data-personen-stap="-1" aria-label="' + T.personsFewer + '" aria-controls="' + personenId + '">−</button>' +
-          '<input type="number" id="' + personenId + '" min="' + personenMin + '" max="' + personenMax + '" step="1" inputmode="numeric" value="' + personen + '" />' +
-          '<button type="button" class="booking__step-btn" data-personen-stap="1" aria-label="' + T.personsMore + '" aria-controls="' + personenId + '">+</button>' +
-        '</div>';
+        '<p class="falun-cal__legend calendar__persons-legend" id="' + personenId + '-legend">' + T.personsLegend + '</p>' +
+        '<div class="calendar__persons-rows" role="group" aria-labelledby="' + personenId + '-legend">' +
+          soorten.map(function (soort) {
+            var meerMinder = { min: T.fewerOf(soort.naam), plus: T.moreOf(soort.naam) };
+            return '<div class="calendar__person-row" data-soort="' + soort.sleutel + '">' +
+              '<div class="calendar__person-text">' +
+                '<label class="calendar__person-name" for="' + soort.id + '">' + soort.naam + '</label>' +
+                '<span class="calendar__person-age" id="' + soort.id + '-info">' + soort.leeftijd + '</span>' +
+                '<span class="calendar__person-price" aria-live="polite"></span>' +
+              '</div>' +
+              '<div class="booking__persons">' +
+                '<button type="button" class="booking__step-btn" data-personen-stap="-1" aria-label="' + meerMinder.min + '" aria-controls="' + soort.id + '">−</button>' +
+                '<input type="number" id="' + soort.id + '" min="' + (soort.sleutel === "volw" ? Math.max(1, personenMin) : 0) + '" max="' + personenMax + '" step="1" inputmode="numeric" value="0" aria-describedby="' + soort.id + '-info" />' +
+                '<button type="button" class="booking__step-btn" data-personen-stap="1" aria-label="' + meerMinder.plus + '" aria-controls="' + soort.id + '">+</button>' +
+              '</div>' +
+            '</div>';
+          }).join("") +
+        '</div>' +
+        '<p class="falun-cal__note falun-cal__note--inline">' + T.childNote + ' ' + T.ageRuleNote + '</p>';
       box.appendChild(personenBox);
-      personenVeld = personenBox.querySelector("input");
-      personenMinder = personenBox.querySelector('[data-personen-stap="-1"]');
-      personenMeer = personenBox.querySelector('[data-personen-stap="1"]');
 
-      [personenMinder, personenMeer].forEach(function (knop) {
+      personenRijen = soorten.map(function (soort) {
+        var rij = personenBox.querySelector('[data-soort="' + soort.sleutel + '"]');
+        return {
+          sleutel: soort.sleutel,
+          veld: rij.querySelector("input"),
+          minder: rij.querySelector('[data-personen-stap="-1"]'),
+          meer: rij.querySelector('[data-personen-stap="1"]'),
+          prijs: rij.querySelector(".calendar__person-price")
+        };
+      });
+    }
+    function aantalVan(sleutel) {
+      return sleutel === "volw" ? volwassenen() : sleutel === "kind" ? kinderen : baby;
+    }
+    // The other two categories together, and the lowest and highest count
+    // this category may have so that the group stays within range.
+    function andereAantallen(sleutel) {
+      return personen - aantalVan(sleutel);
+    }
+    function ondergrens(sleutel) {
+      return Math.max(sleutel === "volw" ? 1 : 0, personenMin - andereAantallen(sleutel));
+    }
+    function bovengrens(sleutel) {
+      return personenMax - andereAantallen(sleutel);
+    }
+    // Moves one category to a new count (clamped); true when something changed.
+    function zetSoort(sleutel, waarde) {
+      var nieuw = Math.min(bovengrens(sleutel), Math.max(ondergrens(sleutel), waarde));
+      var v = volwassenen(), k = kinderen, b = baby;
+      if (sleutel === "volw") v = nieuw; else if (sleutel === "kind") k = nieuw; else b = nieuw;
+      return zetAantallen(v, k, b);
+    }
+    personenRijen.forEach(function (rij) {
+      [rij.minder, rij.meer].forEach(function (knop) {
         knop.addEventListener("click", function () {
-          var nieuw = binnenPersonen(personen + parseInt(knop.getAttribute("data-personen-stap"), 10));
-          if (nieuw === personen) return;
-          personen = nieuw;
+          var stap = parseInt(knop.getAttribute("data-personen-stap"), 10);
+          /* A trip that can only be paid online for a fixed group size
+             (betaalPersonen, wellness: 2 people): at that size a plus swaps
+             one person for another category instead of growing the group, so
+             "1 adult and 1 child" is one click away. A group of another size
+             is still possible (it becomes a request), by going past it. */
+          var wissel = null;
+          if (stap > 0 && betaalKeuze && betaalMin === betaalMax && personen === betaalMax) {
+            if (rij.sleutel !== "volw" && volwassenen() > 1) wissel = [volwassenen() - 1, kinderen + (rij.sleutel === "kind" ? 1 : 0), baby + (rij.sleutel === "baby" ? 1 : 0)];
+            if (rij.sleutel === "volw" && kinderen + baby > 0) wissel = [volwassenen() + 1, kinderen > 0 ? kinderen - 1 : kinderen, kinderen > 0 ? baby : baby - 1];
+          }
+          if (wissel ? !zetAantallen(wissel[0], wissel[1], wissel[2]) : !zetSoort(rij.sleutel, aantalVan(rij.sleutel) + stap)) return;
           toonBalk();
           // At the end of the range this button switches off; keep focus
           // in the stepper on the other button.
-          if (knop.disabled) (knop === personenMinder ? personenMeer : personenMinder).focus();
+          if (knop.disabled) (knop === rij.minder ? rij.meer : rij.minder).focus();
         });
       });
       // Typing works too; an empty or invalid field is ignored until the
       // visitor leaves it, then the last valid number shows again.
-      personenVeld.addEventListener("input", function () {
-        var uit = parseInt(personenVeld.value, 10);
+      rij.veld.addEventListener("input", function () {
+        var uit = parseInt(rij.veld.value, 10);
         if (isNaN(uit)) return;
-        var nieuw = binnenPersonen(uit);
-        if (nieuw === personen) return;
-        personen = nieuw;
-        toonBalk();
+        if (zetSoort(rij.sleutel, uit)) toonBalk();
       });
-      personenVeld.addEventListener("change", function () {
-        personenVeld.value = personen;
+      rij.veld.addEventListener("change", function () {
+        rij.veld.value = aantalVan(rij.sleutel);
       });
+    });
+    /* The price per person of a category, as text, once the period is
+       chosen: adults from the calendar's own calculation, children and
+       babies from the server's answer. Empty while unknown. */
+    function categoriePrijsTekst(sleutel) {
+      if (!keuzeVan || !keuzeTot || !magBetalen(personen)) return "";
+      var basis = betaalBedragen(keuzeVan, dagenTussen(keuzeVan, keuzeTot));
+      if (!basis.totaal) return "";
+      if (sleutel === "volw") return T.perPersonPrice(getal(basis.perPersoon));
+      var antwoord = kinderAntwoord();
+      if (!antwoord || antwoord.status !== "klaar") return "";
+      return T.perPersonPrice(getal(sleutel === "kind" ? antwoord.data.perKind : antwoord.data.perBaby));
     }
     function tekenPersonen() {
-      if (!personenVeld) return;
-      if (parseInt(personenVeld.value, 10) !== personen) personenVeld.value = personen;
-      personenMinder.disabled = personen <= personenMin;
-      personenMeer.disabled = personen >= personenMax;
+      personenRijen.forEach(function (rij) {
+        var n = aantalVan(rij.sleutel);
+        if (parseInt(rij.veld.value, 10) !== n) rij.veld.value = n;
+        rij.minder.disabled = n <= ondergrens(rij.sleutel);
+        rij.meer.disabled = n >= bovengrens(rij.sleutel);
+        rij.prijs.textContent = categoriePrijsTekst(rij.sleutel);
+      });
+    }
+
+    /* Own flight (only when paying online and the price file has
+       opties.vluchtZelf): one checkbox row with the same markup and classes
+       as the options in the Falun calendar (js/falun-kalender.js), so the
+       booking styles apply. Built once; tekenVlucht() only updates it, so
+       keyboard focus stays on the checkbox. */
+    var vluchtBox = null;
+    var vluchtVeld = null;
+    if (metVluchtKeuze) {
+      var vluchtId = "calendarFlight" + (++vluchtTeller);
+      vluchtBox = document.createElement("div");
+      vluchtBox.className = "falun-cal__block calendar__flight";
+      vluchtBox.innerHTML =
+        '<p class="falun-cal__legend" id="' + vluchtId + '">' + T.optionsLegend + '</p>' +
+        '<div class="booking__extras" role="group" aria-labelledby="' + vluchtId + '">' +
+          '<label class="extra">' +
+            '<input type="checkbox" class="extra__check" data-optie="vlucht"' + (vluchtZelf ? ' checked' : '') + ' />' +
+            '<span class="extra__name">' + T.flightSelf +
+              '<span class="extra__hint">' + T.flightSelfHint + '</span>' +
+            '</span>' +
+            '<span class="extra__price">- ' + euroTekst(vluchtBedrag) + '</span>' +
+          '</label>' +
+        '</div>';
+      box.appendChild(vluchtBox);
+      vluchtVeld = vluchtBox.querySelector("input");
+      vluchtVeld.addEventListener("change", function () {
+        vluchtZelf = vluchtVeld.checked;
+        toonBalk();
+      });
+    }
+    // A group size that cannot pay online (betaalPersonen) has no price for
+    // the tick to change, so the row is hidden then.
+    function tekenVlucht() {
+      if (!vluchtBox) return;
+      vluchtBox.hidden = !magBetalen(personen);
+      if (vluchtVeld.checked !== vluchtZelf) vluchtVeld.checked = vluchtZelf;
     }
 
     // Guiding stepper (only when the price file offers guiding).
@@ -1467,7 +1876,7 @@
 
     box.appendChild(balk);
 
-    function euroTekst(n) { return "€" + n.toLocaleString("nl-NL"); }
+    function euroTekst(n) { return "€" + getal(n); }
 
     /* The guiding block. It is only rebuilt when its state changes (no
        period yet, period outside the window, stepper); otherwise the
@@ -1537,7 +1946,10 @@
         van: klaar ? alsTekst(keuzeVan) : null,
         tot: klaar ? alsTekst(keuzeTot) : null,
         personen: afrekenen ? personen : null,
-        begeleidingDagen: klaar ? gekozenBegeleiding() : 0
+        kinderen: afrekenen ? kinderen : 0,
+        baby: afrekenen ? baby : 0,
+        begeleidingDagen: klaar ? gekozenBegeleiding() : 0,
+        vlucht: vluchtAftrek() ? "zelf" : ""
       });
     }
 
@@ -1547,8 +1959,10 @@
       if (begeleiding && keuzeVan && keuzeTot) {
         begeleidingDagen = gekozenBegeleiding();
       }
+      haalKinderPrijzen();
       tekenPersonen();
       tekenDuren();
+      tekenVlucht();
       tekenBegeleiding();
       tekenBalk();
       koppelReset();
@@ -1566,7 +1980,10 @@
       params.set("tot", alsTekst(keuzeTot));
       if (afrekenen && betaalBedragen(keuzeVan, nachten).totaal > 0) {
         params.set("personen", String(personen));
+        if (kinderen) params.set("kinderen", String(kinderen));
+        if (baby) params.set("baby", String(baby));
         if (gekozenBegeleiding()) params.set("begeleiding", String(gekozenBegeleiding()));
+        if (vluchtAftrek()) params.set("vlucht", "zelf");
         return '<a class="btn btn--dark calendar__pay" href="' + mapVoorKalender() + 'uitchecken.html?' +
           params.toString().replace(/&/g, "&amp;") + '">' + T.bookPayBtn + '</a>';
       }
@@ -1576,6 +1993,8 @@
       // request when someone picks another period here.
       var aantal = afrekenen ? personen : reizigersUitAdres;
       if (aantal) params.set("personen", String(aantal));
+      if (afrekenen && kinderen) params.set("kinderen", String(kinderen));
+      if (afrekenen && baby) params.set("baby", String(baby));
       if (gekozenBegeleiding()) params.set("begeleiding", String(gekozenBegeleiding()));
       return '<a class="btn btn--dark" href="boeken.html?' +
         params.toString().replace(/&/g, "&amp;") + '">' + T.continueBtn + '</a>';
@@ -1589,13 +2008,15 @@
       }
       if (!keuzeTot) {
         balk.className = "calendar__bar is-busy";
-        balk.innerHTML = '<p class="calendar__hint">' + T.hintEnd(schrijfDatum(keuzeVan), minNachten) + '</p>' +
+        balk.innerHTML = '<p class="calendar__hint">' + T.hintEnd(schrijfDatum(keuzeVan), minNachten + 1) + '</p>' +
           '<button type="button" class="calendar__reset">' + T.reset + '</button>';
         return;
       }
       var nachten = dagenTussen(keuzeVan, keuzeTot);
       var totaal = heleEuros(prijsPerPersoon(keuzeVan, nachten));
       var prijsRegel = "";
+      var categorieRegels = ""; // one line per category when there are children or babies
+      var vluchtRegel = ""; // own flight ticked: the amount per person that came off
       // A group size that cannot pay online (betaalPersonen): say why the
       // request button shows instead of the total.
       var betaalNotitie = afrekenen && !magBetalen(personen)
@@ -1605,11 +2026,40 @@
         // Paying online: per person and total for the chosen group, the
         // same amounts the payment page charges.
         var bedragen = betaalBedragen(keuzeVan, nachten);
-        if (bedragen.totaal) {
+        if (bedragen.totaal && vluchtAftrek()) {
+          vluchtRegel = '<span class="calendar__chosen-nights">' + T.lineFlight + ': - ' + T.perPersonPrice(getal(vluchtAftrek())) + '</span>';
+          // Same note as the Falun calendar: with an own flight there is no
+          // lower price for children and babies.
+          if (kinderen + baby > 0) {
+            vluchtRegel += '<span class="calendar__chosen-nights calendar__chosen-note">' + T.childFlightSelfNote + '</span>';
+          }
+        }
+        if (bedragen.totaal && kinderen + baby > 0) {
+          // With children or babies the total comes from the server, which
+          // knows their price. Until it answers (or when it cannot) there is
+          // no total to show, only a short text; the payment page still
+          // shows the exact amount.
+          var antwoord = kinderAntwoord();
+          if (antwoord && antwoord.status === "klaar") {
+            var uitKind = antwoord.data;
+            prijsRegel = T.groupTotalMixed(getal(uitKind.bedrag), personen);
+            categorieRegels = [[T.adultsLabel, volwassenen(), uitKind.perPersoon]];
+            if (kinderen) categorieRegels.push([T.childrenLabel, kinderen, uitKind.perKind]);
+            if (baby) categorieRegels.push([T.babiesLabel, baby, uitKind.perBaby]);
+            categorieRegels = categorieRegels.map(function (regel) {
+              return '<span class="calendar__chosen-nights">' + T.categoryLine(regel[0], regel[1], T.perPersonPrice(getal(regel[2]))) + '</span>';
+            }).join("");
+          } else {
+            prijsRegel = antwoord && antwoord.status === "fout" ? "" : T.priceLoading;
+            if (antwoord && antwoord.status === "fout") {
+              categorieRegels = '<span class="calendar__chosen-nights calendar__chosen-note">' + T.priceUnavailable + '</span>';
+            }
+          }
+        } else if (bedragen.totaal) {
           prijsRegel = personen > 1
-            ? T.groupTotalLabel(bedragen.totaal.toLocaleString("nl-NL"), personen,
-                Math.round(bedragen.totaal / personen).toLocaleString("nl-NL"))
-            : T.totalLabel(bedragen.totaal.toLocaleString("nl-NL"));
+            ? T.groupTotalLabel(getal(bedragen.totaal), personen,
+                getal(Math.round(bedragen.totaal / personen)))
+            : T.totalLabel(getal(bedragen.totaal));
         }
       } else if (totaal) {
         prijsRegel = prijsTekst(totaal);
@@ -1623,8 +2073,10 @@
         '<div class="calendar__chosen">' +
           '<span class="calendar__chosen-label">' + T.chosenLabel + '</span>' +
           '<span class="calendar__chosen-dates">' + schrijfDatum(keuzeVan) + ' – ' + schrijfDatum(keuzeTot) + '</span>' +
-          '<span class="calendar__chosen-nights">' + T.nightsLabel(nachten) + '</span>' +
+          '<span class="calendar__chosen-nights">' + T.daysLabel(nachten + 1) + '</span>' +
           (prijsRegel ? '<span class="calendar__chosen-price">' + prijsRegel + '</span>' : '') +
+          categorieRegels +
+          vluchtRegel +
           toeslagRegel +
           betaalNotitie +
         '</div>' +
@@ -1720,7 +2172,12 @@
           uit.title = T.bookedTitle(blok.wat, schrijfDatum(blok.van), schrijfDatum(blok.tot));
           var uitleg = document.createElement("span");
           uitleg.className = "sr-only";
-          uitleg.textContent = T.bookedSr(blok.wat);
+          // A label that already says "not available" is not followed by the
+          // same words again ("Niet beschikbaar, niet beschikbaar").
+          var srZin = T.bookedSr("").replace(/^[\s,]+/, "").toLowerCase();
+          uitleg.textContent = srZin && blok.wat.toLowerCase().indexOf(srZin) !== -1
+            ? " " + blok.wat
+            : T.bookedSr(blok.wat);
           uit.appendChild(uitleg);
         }
         return uit;
@@ -1768,7 +2225,7 @@
         keuzeVan = datum;
       } else if (dagenTussen(keuzeVan, datum) < minNachten) {
         balk.className = "calendar__bar is-warn";
-        balk.innerHTML = '<p class="calendar__hint">' + T.warnMinNights(minNachten) + '</p>' +
+        balk.innerHTML = '<p class="calendar__hint">' + T.warnMinDays(minNachten + 1) + '</p>' +
           '<button type="button" class="calendar__reset">' + T.reset + '</button>';
         koppelReset();
         return;
@@ -1941,22 +2398,36 @@
 
     // Ring volgt snel, het stipje duidelijk trager — daardoor loopt het er
     // zichtbaar achteraan tijdens beweging en komt het bij stilstand weer samen.
-    (function follow() {
+    // The loop only runs while the ring or the dot still has to catch up
+    // with the mouse; once both have arrived it stops until the next
+    // mousemove, instead of drawing every frame while nothing moves.
+    var following = false;
+    var follow = function () {
       ringX += (mouseX - ringX) * 0.32;
       ringY += (mouseY - ringY) * 0.32;
       dotX += (mouseX - dotX) * 0.055;
       dotY += (mouseY - dotY) * 0.055;
       ring.style.transform = "translate3d(" + ringX + "px," + ringY + "px,0)";
       dot.style.transform = "translate3d(" + dotX + "px," + dotY + "px,0)";
+      if (Math.abs(mouseX - dotX) + Math.abs(mouseY - dotY) > 0.1) {
+        window.requestAnimationFrame(follow);
+      } else {
+        following = false;
+      }
+    };
+    document.addEventListener("mousemove", function () {
+      if (following) return;
+      following = true;
       window.requestAnimationFrame(follow);
-    })();
+    }, { passive: true });
 
-    // Ring wordt groter boven klikbare dingen
-    document.querySelectorAll("a, button, summary, [role='button'], input, select, textarea")
-      .forEach(function (el) {
-        el.addEventListener("mouseenter", function () { ring.classList.add("is-active"); });
-        el.addEventListener("mouseleave", function () { ring.classList.remove("is-active"); });
-      });
+    // Ring wordt groter boven klikbare dingen. One listener on the document,
+    // so controls that are built later (calendar days, steppers) count too.
+    var CLICKABLE = "a, button, summary, [role='button'], input, select, textarea";
+    document.addEventListener("mouseover", function (event) {
+      var target = event.target;
+      ring.classList.toggle("is-active", Boolean(target && target.closest && target.closest(CLICKABLE)));
+    }, { passive: true });
   }
 
   /* ------------------------------------------------------------------

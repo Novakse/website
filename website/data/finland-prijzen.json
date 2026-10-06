@@ -33,6 +33,11 @@
   "//afrekenen": "Op true kan de bezoeker deze reis meteen online betalen via Stripe, het volledige bedrag voor de hele groep. De server rekent het bedrag zelf uit met dit bestand (api/_reis-prijs.js), net als de kalender. Op false blijft het een aanvraag.",
   "afrekenen": true,
 
+  "//opties": "Wat het vinkje \"Ik regel mijn vlucht zelf\" in de kalender met de prijs doet, zelfde opbouw als in data/falun-prijzen.json. vluchtZelf is het vaste bedrag in hele euro's dat per persoon van de prijs af gaat (na de groepskorting), in beide prijsperiodes hetzelfde. Met dit vinkje betalen kinderen en baby's dezelfde prijs als een volwassene. Haal het blokje weg om het vinkje niet te tonen.",
+  "opties": {
+    "vluchtZelf": 325
+  },
+
   "//periodes": "De prijsperiodes van het verblijf. tot is de eerste dag die er niet meer bij hoort. De aankomstdag bepaalt welk tarief er voor het hele verblijf geldt. Staat een aankomstdag in geen enkele periode, dan verschijnt er geen prijs en blijft het bij een aanvraag.",
   "periodes": [
     { "van": "2026-12-26", "tot": "2027-01-07", "tarief": "hoog" },

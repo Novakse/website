@@ -163,9 +163,10 @@ summary:focus-visible,
    De opacity wordt per woord door JavaScript gezet. Zonder JavaScript blijft
    alles gewoon volledig zichtbaar.
    ========================================================================== */
+/* No will-change here: it gave every word its own compositor layer (twice
+   the layers on a page), while repainting a word's opacity is cheap. */
 .rw {
   display: inline-block;
-  will-change: opacity;
 }
 
 /* ==========================================================================
@@ -290,6 +291,32 @@ summary:focus-visible,
 }
 .link-inline:hover, .link-inline:focus-visible { text-decoration-thickness: 2px; }
 
+/* Touch screens: small stand-alone links get an invisible hit area of at
+   least 44px high (WCAG 2.5.5), so nothing moves and the look stays the
+   same. Links inside running text are left alone. */
+@media (pointer: coarse) {
+  .link-arrow,
+  .article-back,
+  .crumbs a,
+  a.contact__value,
+  .opener__rating,
+  .trip-search__step-btn { position: relative; }
+  .link-arrow::before,
+  .article-back::after,
+  .crumbs a::after,
+  a.contact__value::after,
+  .opener__rating::after,
+  .trip-search__step-btn::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 2.75rem;
+    transform: translateY(-50%);
+  }
+  .trip-search__step-btn::after { left: 50%; width: 2.75rem; transform: translate(-50%, -50%); }
+}
+
 /* ==========================================================================
    Header
    ========================================================================== */
@@ -396,7 +423,16 @@ body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header_
 .logo-word-img--dark { display: none; }
 
 /* Twee lijnen van ongelijke lengte, geïnspireerd op de geveegde ijsbaanlijn */
-.nav-toggle { display: inline-flex; flex-direction: column; align-items: flex-end; gap: 5px; padding: 0.5rem; }
+.nav-toggle { position: relative; display: inline-flex; flex-direction: column; align-items: flex-end; gap: 5px; padding: 0.5rem; }
+/* The two lines make a small button (about 39 x 25px); this invisible area
+   makes it a 44px touch target without changing the bar's height. */
+.nav-toggle::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 2.75rem; height: 2.75rem;
+  transform: translate(-50%, -50%);
+}
 .nav-toggle span { display: block; height: 2px; background: #fff; border-radius: 2px; }
 .nav-toggle span:nth-child(1) { width: 23px; }
 .nav-toggle span:nth-child(2) { width: 15px; }
@@ -439,14 +475,18 @@ body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header_
   inset: 0;
   z-index: -1;
   opacity: 0;
-  background-color: rgba(15, 18, 20, 0.16);
+  /* Denser than the bar's glass (0.16 / 0.45): the open menu covers the
+     whole screen, and below the bar there can be white sections behind the
+     white text (or a dark photo behind the dark text). These values keep the
+     menu text at WCAG AA contrast over any background. */
+  background-color: rgba(15, 18, 20, 0.62);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   transition: background-color 0.35s ease;
 }
 .main-nav.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); visibility: visible; }
 .main-nav.is-open::before { opacity: 1; }
-.site-header.site-header--on-light .main-nav::before { background-color: rgba(255, 255, 255, 0.45); }
+.site-header.site-header--on-light .main-nav::before { background-color: rgba(255, 255, 255, 0.86); }
 /* Op witte pagina's (geen donkere hero) is de balk meteen "on-light" en
    krijgt het uitgeklapte menu deze lichte glazen achtergrond. Zonder deze
    regel blijft de menutekst hardcoded wit (zie .main-nav hierboven), wat
@@ -1173,9 +1213,17 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 .no-elfsight .insta-follow [class^="elfsight-app-"],
 .no-elfsight .insta-follow [data-elfsight-deferred] { min-height: 0; }
 .reviews__link { display: inline-block; margin-top: 1.6rem; color: var(--warm-deep); }
+/* The language homepages (de/en/fi/no/sv) still use the earlier layout of
+   this band: a photo next to the text, without the reviews widget. Its rules
+   went out with the NL redesign, which left that photo unstyled at full
+   size (over 800px tall on a laptop). */
+.reviews__grid { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; text-align: left; }
+.reviews__media img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 1rem; }
+.reviews__grid .reviews__text { max-width: 46ch; }
 
 @media (min-width: 56rem) {
   .reviews { padding-block: 5rem; }
+  .reviews__grid { grid-template-columns: 0.9fr 1.1fr; gap: 3rem; }
 }
 
 /* ==========================================================================
@@ -1869,7 +1917,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
   align-items: center;
   justify-content: center;
   flex: none;
-  width: 2.5rem; height: 2.5rem;
+  width: 2.75rem; height: 2.75rem;
   border: 1px solid var(--border);
   border-radius: 50%;
   background: var(--paper);
@@ -2123,6 +2171,8 @@ button.calendar__cell.is-vertrekoptie { box-shadow: inset 0 0 0 2px var(--ink); 
   margin-bottom: 0.8rem;
 }
 .falun-cal__period { margin-top: 0.4rem; font-size: 0.88rem; color: var(--ink-soft); }
+/* Group total in brackets, right under the price per person. */
+.falun-cal__group-total { margin-top: 0.2rem; font-size: 0.88rem; color: var(--ink-soft); text-align: right; }
 .falun-cal__book { margin-top: 1.25rem; justify-content: center; }
 .falun-cal__hint { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
 .falun-cal__note {
@@ -2136,7 +2186,26 @@ button.calendar__cell.is-vertrekoptie { box-shadow: inset 0 0 0 2px var(--ink); 
    shared trip calendar, between the months and the bar with the chosen
    period. */
 .calendar__guiding,
-.calendar__persons { margin-top: 1.75rem; }
+.calendar__persons,
+.calendar__flight { margin-top: 1.75rem; }
+/* Own-flight checkbox (opties.vluchtZelf): the .extra row from the booking
+   form, right under its legend like the persons rows. */
+.calendar__flight .booking__extras { margin-top: 0; }
+
+/* One row per category (adults, children, babies): name, age and, once a
+   period is chosen, the price per person; the stepper sits on the right. */
+.calendar__persons-rows { display: grid; gap: 0.9rem; flex: 1 1 100%; }
+.calendar__person-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+.calendar__person-text { display: grid; gap: 0.1rem; min-width: 0; }
+.calendar__person-name { font-weight: 600; color: var(--ink); }
+.calendar__person-age { font-size: 0.85rem; color: var(--ink-soft); }
+.calendar__person-price { font-size: 0.85rem; font-weight: 500; color: var(--ink); min-height: 1.2em; }
 
 /* Dagen waarop het ijs nog onzeker is: gewoon te boeken, maar met een
    streepje eronder zodat het opvalt. */
@@ -2232,7 +2301,7 @@ button.calendar__cell.is-duurder.is-gekozen::after { background: var(--warm); }
 
 .booking__persons { display: flex; align-items: center; gap: 0.6rem; }
 .booking__step-btn {
-  width: 2.6rem; height: 2.6rem;
+  width: 2.75rem; height: 2.75rem;
   border: 1px solid var(--border);
   border-radius: 50%;
   font-size: 1.2rem;
@@ -2695,6 +2764,10 @@ button.calendar__cell {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+/* Optional shape variants so a day row doesn't read as identical cards;
+   cards stay top-aligned, the text simply follows each photo. */
+.day-card__media--square { aspect-ratio: 1 / 1; }
+.day-card__media--tall { aspect-ratio: 4 / 5; }
 .day-card__label {
   display: block;
   margin-top: 1rem;
@@ -2911,6 +2984,7 @@ button.calendar__cell {
 /* Uitlegdiagrammen (schema's met tekst): niet croppen, natuurlijke verhouding
    met rustige kader eromheen zodat labels leesbaar blijven. */
 .article-figure--diagram img {
+  height: auto;
   aspect-ratio: auto;
   object-fit: contain;
   background: var(--paper-soft);

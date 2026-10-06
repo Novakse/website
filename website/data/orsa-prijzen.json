@@ -31,6 +31,11 @@
   "//afrekenen": "Op true kan de bezoeker deze reis meteen online betalen via Stripe, het volledige bedrag voor de hele groep. De server rekent het bedrag zelf uit met dit bestand (api/_reis-prijs.js), net als de kalender. Op false blijft het een aanvraag.",
   "afrekenen": true,
 
+  "//opties": "Wat het vinkje \"Ik regel mijn vlucht zelf\" in de kalender met de prijs doet, zelfde opbouw als in data/falun-prijzen.json. vluchtZelf is het vaste bedrag in hele euro's dat per persoon van de prijs af gaat (na de groepskorting; begeleiding blijft hetzelfde). Met dit vinkje betalen kinderen en baby's dezelfde prijs als een volwassene. Haal het blokje weg om het vinkje niet te tonen.",
+  "opties": {
+    "vluchtZelf": 230
+  },
+
   "//periodes": "Orsa heeft een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
   "periodes": [
     { "van": "2026-12-19", "tot": "2027-03-14", "tarief": "standaard" }

@@ -20,9 +20,9 @@
    (belafspraak.html). The texts for this are in the data block.
 
    Links into this page may carry the choice: ?reis=lulea&van=2027-01-10&
-   tot=2027-01-14&personen=3&begeleiding=2, or ?reis=wellness&dagen=5. The
-   address follows what the visitor picks, so a refresh or the back button
-   shows the same choice.
+   tot=2027-01-14&personen=3&begeleiding=2 (and &vlucht=zelf for an own
+   flight), or ?reis=wellness&dagen=5. The address follows what the visitor
+   picks, so a refresh or the back button shows the same choice.
 
    The destinations and their price files are in <script id="boekingsdata">
    in boeken.html.
@@ -86,6 +86,13 @@
   var LANG = (document.documentElement.lang || "nl").slice(0, 2).toLowerCase();
   var T = I18N[LANG] || I18N.nl;
 
+  /* Amounts on screen follow the page language, as in main.js: "1.395" /
+     "1,395" / "1 395". Display only: links keep plain numbers. */
+  var LOCALE = { nl: "nl-NL", en: "en-GB", de: "de-DE", sv: "sv-SE", no: "nb-NO", fi: "fi-FI" }[LANG] || "nl-NL";
+  function getal(n, opties) {
+    try { return n.toLocaleString(LOCALE, opties); } catch (fout) { return n.toLocaleString("nl-NL", opties); }
+  }
+
   var bron = document.getElementById("boekingsdata");
   var keuzeBox = document.getElementById("reisKeuze");
   var periodeBlok = document.getElementById("periodeBlok");
@@ -111,9 +118,9 @@
     return src.replace(/js\/boeken\.js$/, "");
   }
 
-  // Amounts in the same format as the calendars in every language: "€1.395".
+  // Amounts in the same format as the calendars: "€1.395", "€1,395", "€1 395".
   function euro(bedrag) {
-    return "€" + Math.round(bedrag).toLocaleString("nl-NL");
+    return "€" + getal(Math.round(bedrag));
   }
 
   function escapeHtml(tekst) {
@@ -171,9 +178,14 @@
     van: params.get("van"),
     tot: params.get("tot"),
     personen: params.get("personen"),
+    // Children (2-11) and babies (0-1) are part of personen.
+    kinderen: params.get("kinderen"),
+    baby: params.get("baby"),
     begeleiding: params.get("begeleiding"),
     // Trip length in days, only used by a trip on request (wellness).
-    dagen: params.get("dagen")
+    dagen: params.get("dagen"),
+    // Own flight ticked in the calendar (vlucht=zelf, nothing else counts).
+    vlucht: params.get("vlucht") === "zelf" ? "zelf" : null
   };
   var reisSleutel = "";
   var reis = null;
@@ -182,7 +194,7 @@
     if (!window.history || !window.history.replaceState) return;
     var nieuw = new URLSearchParams();
     if (reisSleutel) nieuw.set("reis", reisSleutel);
-    ["van", "tot", "personen", "begeleiding", "dagen"].forEach(function (sleutel) {
+    ["van", "tot", "personen", "kinderen", "baby", "begeleiding", "dagen", "vlucht"].forEach(function (sleutel) {
       var waarde = keuze[sleutel];
       if (waarde !== null && waarde !== undefined && waarde !== "" && waarde !== 0) nieuw.set(sleutel, String(waarde));
     });
@@ -263,7 +275,10 @@
         van: keuze.van,
         tot: keuze.tot,
         personen: keuze.personen,
+        kinderen: keuze.kinderen,
+        baby: keuze.baby,
         begeleidingDagen: keuze.begeleiding,
+        vlucht: keuze.vlucht,
         onWijzig: function (info) {
           laatsteKeuze[sleutel] = info;
           // Another trip may be open by now; its address stays as it is.
@@ -280,8 +295,11 @@
     keuze.van = info.van;
     keuze.tot = info.tot;
     if (info.personen) keuze.personen = info.personen;
+    keuze.kinderen = info.kinderen || null;
+    keuze.baby = info.baby || null;
     keuze.begeleiding = info.begeleidingDagen || null;
     keuze.dagen = info.dagen || null;
+    keuze.vlucht = info.vlucht === "zelf" ? "zelf" : null;
   }
 
   /* A trip without a fixed price, all from the data block. With
@@ -350,12 +368,12 @@
     }
     function prijsPerPersoon(bedrag) {
       return tk.prijsPerPersoon
-        ? vul(tk.prijsPerPersoon, { bedrag: Math.round(bedrag).toLocaleString("nl-NL") })
+        ? vul(tk.prijsPerPersoon, { bedrag: getal(Math.round(bedrag)) })
         : euro(bedrag);
     }
     function leesbareDatum(datum) {
       try {
-        return datum.toLocaleDateString(document.documentElement.lang || "nl", { day: "numeric", month: "long", year: "numeric" });
+        return datum.toLocaleDateString(LOCALE, { day: "numeric", month: "long", year: "numeric" });
       } catch (fout) {
         return alsTekst(datum);
       }
@@ -476,6 +494,7 @@
         : null;
       keuze.personen = personen;
       keuze.begeleiding = null;
+      keuze.vlucht = null;
       laatsteKeuze[sleutel] = { van: keuze.van, tot: keuze.tot, personen: personen, dagen: keuze.dagen, begeleidingDagen: null };
       if (reisSleutel === sleutel) schrijfAdres();
     }
@@ -547,6 +566,7 @@
         keuze.tot = null;
         keuze.begeleiding = null;
         keuze.dagen = null;
+        keuze.vlucht = null;
       }
     }
     schrijfAdres();
