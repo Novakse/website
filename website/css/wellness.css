@@ -1702,6 +1702,10 @@
   font-size: 0.95rem;
 }
 .page-wellness .lx-price .lx-link { color: var(--lx-on-dark); }
+/* The shared outline button from the other trip pages ("Liever eerst een
+   vraag stellen"), on this dark section in the light text colour */
+.page-wellness .lx-price .btn--outline-dark { border-color: var(--lx-on-dark); color: var(--lx-on-dark); }
+.page-wellness .lx-price .btn--outline-dark:hover { background: var(--lx-on-dark); color: var(--lx-night); }
 
 @media (min-width: 64rem) {
   .page-wellness .lx-price__grid {
@@ -1717,7 +1721,7 @@
 }
 
 /* Booking row: "Kies je data" and the calendar card (styled in
-   css/wellness-kalender.css). The request buttons follow it on phones and
+   css/wellness-kalender.css). The action buttons follow it on phones and
    tablets; from 64rem the booking row spans both columns and the buttons
    stand under the price details, beside the photo, as before. The negative
    margin keeps the buttons 2.25rem from what is above them (grid gap 3.5rem). */

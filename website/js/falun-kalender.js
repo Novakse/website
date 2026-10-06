@@ -20,9 +20,9 @@
      basisprijs van de gekozen duur (langer dan in de tabel staat: de langste
        duur uit de tabel + extraDagPerPersoon voor elke dag extra)
      + de toeslag van elke nacht die je boekt (kan ook negatief zijn)
-     - 250 als je de vlucht zelf regelt
+     - opties.vluchtZelf als je de vlucht zelf regelt
      + de huurauto voor het echte aantal dagen (autoPerDagEUR), min het deel
-       dat al in de basisprijs zit (autoInBasisprijsDagen)
+       dat al in de basisprijs zit (de auto voor de duur uit de tabel)
      - het eigen deel van de huurauto als je je vervoer zelf regelt
      + begeleiding, alleen als de hele reis binnen het begeleidingsvenster valt
        (staat uit zolang begeleiding.prijsPerDag null is)
@@ -581,21 +581,33 @@
      api/_falun-prijs.js. */
   var minDagen = typeof data.minimumDagen === "number" && data.minimumDagen > 1 ? data.minimumDagen : 4;
 
-  /* Base price per person for a trip of this many days. A length listed in
-     basisprijs uses that amount; a longer one takes the longest listed length
-     below it plus extraDagPerPersoon for every extra day. Must stay identical
-     to basisprijsVoor() in api/_falun-prijs.js: that one is charged. */
-  function basisprijsVoor(dagen) {
+  /* The length listed in basisprijs that the price for this many days starts
+     from: the length itself when it is listed, otherwise the longest listed
+     length below it. 0 when there is none. Must stay identical to
+     basisDuurVoor() in api/_falun-prijs.js. */
+  function basisDuurVoor(dagen) {
     var tabel = data.basisprijs || {};
-    if (typeof tabel[String(dagen)] === "number") return tabel[String(dagen)];
+    if (typeof tabel[String(dagen)] === "number") return dagen;
     var langste = 0;
     Object.keys(tabel).forEach(function (sleutel) {
       var n = parseInt(sleutel, 10);
       if (n <= dagen && n > langste && typeof tabel[sleutel] === "number") langste = n;
     });
+    return langste;
+  }
+
+  /* Base price per person for a trip of this many days. A length listed in
+     basisprijs uses that amount; a longer one takes the longest listed length
+     below it plus extraDagPerPersoon for every extra day. Must stay identical
+     to basisprijsVoor() in api/_falun-prijs.js: that one is charged. */
+  function basisprijsVoor(dagen) {
+    var duur = basisDuurVoor(dagen);
+    var prijs = (data.basisprijs || {})[String(duur)];
+    if (!duur || typeof prijs !== "number") return null;
+    if (duur === dagen) return prijs;
     var extra = data.extraDagPerPersoon;
-    if (!langste || typeof extra !== "number") return null;
-    return tabel[String(langste)] + (dagen - langste) * extra;
+    if (typeof extra !== "number") return null;
+    return prijs + (dagen - duur) * extra;
   }
 
   /* De huisjesprijzen komen van Falun Strandby en staan in Zweedse kronen per
@@ -622,7 +634,6 @@
     return n / Math.ceil(n / huisjeMax);
   }
   var autoPerDag = typeof data.autoPerDagEUR === "number" ? data.autoPerDagEUR : 0;
-  var autoInBasisDagen = typeof data.autoInBasisprijsDagen === "number" ? data.autoInBasisprijsDagen : 0;
   var doorgeven = typeof data.kortingDoorgeven === "number" ? data.kortingDoorgeven : 1;
 
   /* Wordt het duurder dan de basisprijs, dan telt dat helemaal mee. Wordt het
@@ -652,11 +663,15 @@
     var basis = auto / basisPersonen;
     return basis + demp(auto / perHuisje(personen) - basis);
   }
-  /* The car share that basisprijs already contains (autoInBasisprijsDagen
-     days at basisPersonen). It is taken out and the car for the real trip
-     length is added, so the car never counts twice. Same as
-     api/_falun-prijs.js. */
-  var autoInBasis = autoPerDag * autoInBasisDagen / basisPersonen;
+  /* The car share that basisprijs already contains: every listed price holds
+     the car for exactly its own length (4 days: 4 car days), at
+     basisPersonen. A longer trip starts from the longest listed length, so
+     only that many car days are in its base. The share is taken out and the
+     car for the real trip length is added, so the car never counts twice.
+     Same as api/_falun-prijs.js. */
+  function autoInBasis(dagen) {
+    return autoPerDag * basisDuurVoor(dagen) / basisPersonen;
+  }
   var opties = data.opties || {};
   var vluchtBedrag = Math.abs(opties.vluchtZelf || 0);
   var groterAuto = opties.groterAuto || null;
@@ -822,7 +837,7 @@
     for (var i = 0; i < nachtenVan(dagen); i++) {
       totaal += nachtToeslag(plusDagen(datum, i), personen);
     }
-    totaal += autoDeel(personen, dagen) - autoInBasis;
+    totaal += autoDeel(personen, dagen) - autoInBasis(dagen);
     return totaal;
   }
 

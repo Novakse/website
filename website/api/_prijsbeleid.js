@@ -51,8 +51,9 @@ module.exports = {
   // Per trip: the airline (key in "luchthavens") and the flight amount in whole
   // euros per person, including hold luggage. The amounts apply to the 2-person
   // base prices and are treated as a per-person amount.
-  // Falun: the same amount as "opties.vluchtZelf" (the deduction when a
-  // traveller books their own flight). Change both together.
+  // Falun: the public own-flight deduction ("opties.vluchtZelf" in
+  // data/falun-prijzen.json) is deliberately lower than this internal
+  // amount. The two are set separately and do not have to match.
   reizen: {
     finland: { luchthaven: "Helsinki", vluchtPerPersoon: 350 },
     weissensee: { luchthaven: "Salzburg", vluchtPerPersoon: 300 },

@@ -60,22 +60,34 @@ function minimumDagen(data) {
   return typeof data.minimumDagen === "number" && data.minimumDagen > 1 ? data.minimumDagen : 4;
 }
 
+/* The length listed in basisprijs that the price for this many days starts
+   from: the length itself when it is listed, otherwise the longest listed
+   length below it. 0 when there is none. Must stay identical to
+   basisDuurVoor() in js/falun-kalender.js. */
+function basisDuurVoor(data, dagen) {
+  var tabel = data.basisprijs || {};
+  if (typeof tabel[String(dagen)] === "number") return dagen;
+  var langste = 0;
+  Object.keys(tabel).forEach(function (sleutel) {
+    var n = parseInt(sleutel, 10);
+    if (n <= dagen && n > langste && typeof tabel[sleutel] === "number") langste = n;
+  });
+  return langste;
+}
+
 /* Base price per person for a trip of this many days. A length listed in
    basisprijs uses that amount; a longer one takes the longest listed length
    below it plus extraDagPerPersoon for every extra day. Returns null when
    no price can be given. Must stay identical to basisprijsVoor() in
    js/falun-kalender.js, or the screen and Stripe disagree. */
 function basisprijsVoor(data, dagen) {
-  var tabel = data.basisprijs || {};
-  if (typeof tabel[String(dagen)] === "number") return tabel[String(dagen)];
-  var langste = 0;
-  Object.keys(tabel).forEach(function (sleutel) {
-    var n = parseInt(sleutel, 10);
-    if (n <= dagen && n > langste && typeof tabel[sleutel] === "number") langste = n;
-  });
+  var duur = basisDuurVoor(data, dagen);
+  var prijs = (data.basisprijs || {})[String(duur)];
+  if (!duur || typeof prijs !== "number") return null;
+  if (duur === dagen) return prijs;
   var extra = data.extraDagPerPersoon;
-  if (!langste || typeof extra !== "number") return null;
-  return tabel[String(langste)] + (dagen - langste) * extra;
+  if (typeof extra !== "number") return null;
+  return prijs + (dagen - duur) * extra;
 }
 
 /* Geeft het bedrag in hele euro's terug, of een tekst waarom het niet kan. */
@@ -108,7 +120,6 @@ function berekenFalun(keuze) {
   var keuze2 = data.personen || { min: 1, max: 4 };
   var basisPersonen = data.basisPersonen || 2;
   var autoPerDag = typeof data.autoPerDagEUR === "number" ? data.autoPerDagEUR : 0;
-  var autoInBasisDagen = typeof data.autoInBasisprijsDagen === "number" ? data.autoInBasisprijsDagen : 0;
   var doorgeven = typeof data.kortingDoorgeven === "number" ? data.kortingDoorgeven : 1;
   var huisjeMax = data.huisjeMaxPersonen || 0;
 
@@ -146,10 +157,13 @@ function berekenFalun(keuze) {
     var b = auto / basisPersonen;
     return b + demp(auto / perHuisje(n) - b);
   }
-  // The car share that basisprijs already contains (autoInBasisprijsDagen
-  // days at basisPersonen). It is taken out and the car for the real trip
-  // length is added, so the car never counts twice.
-  var autoInBasis = autoPerDag * autoInBasisDagen / basisPersonen;
+  // The car share that basisprijs already contains: every listed price holds
+  // the car for exactly its own length (4 days: 4 car days), at
+  // basisPersonen. A longer trip starts from the longest listed length, so
+  // only that many car days are in its base. The share is taken out and the
+  // car for the real trip length is added, so the car never counts twice.
+  // Same as js/falun-kalender.js.
+  var autoInBasis = autoPerDag * basisDuurVoor(data, dagen) / basisPersonen;
 
   var totaal = basis;
 

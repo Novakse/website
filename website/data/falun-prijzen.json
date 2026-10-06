@@ -8,23 +8,21 @@
   "//minimumDagen": "De kortste reis die iemand kan kiezen, in dagen. Een maximum is er niet: iedere vertrekdag vanaf minimumDagen na aankomst kan, zolang het verblijf binnen het seizoen past en er geen bezette nacht in zit. 4 dagen telt 3 nachten.",
   "minimumDagen": 4,
 
-  "//basisprijs": "Bedrag per persoon per reisduur, in hele euro's. Dit is de prijs inclusief vlucht, huurauto en verblijf, gerekend met een gewone nacht van huisjeBasisSEK.",
+  "//basisprijs": "Bedrag per persoon per reisduur, in hele euro's, voor basisPersonen. Dit is de prijs inclusief vlucht, huurauto en verblijf, gerekend met een gewone nacht van huisjeBasisSEK. Met z'n tweeën kost een reis van 4 dagen met gewone nachten dus precies 995 en een reis van 5 dagen precies 1095. In elke prijs hier zit de huurauto voor precies die reisduur: in de prijs voor 4 dagen 4 dagen auto, in die voor 5 dagen 5 dagen auto.",
   "basisprijs": {
     "4": 995,
     "5": 1095
   },
 
-  "//extraDagPerPersoon": "Voor een reisduur zonder eigen bedrag in basisprijs hierboven: het bedrag van de langste duur daaronder, plus dit bedrag per persoon voor elke dag extra. Met 5 dagen voor 1095 en 100 per extra dag is 6 dagen 1195, 9 dagen 1495 en 15 dagen 2095. Daarbovenop telt, net als bij 4 en 5 dagen, per nacht het verschil met een gewone huisjesnacht mee (zie hieronder), en de huurauto per dag (autoPerDagEUR). In dit bedrag zit dus geen auto.",
+  "//extraDagPerPersoon": "Voor een reisduur zonder eigen bedrag in basisprijs hierboven: het bedrag van de langste duur daaronder, plus dit bedrag per persoon voor elke dag extra. Met 5 dagen voor 1095 en 100 per extra dag is 6 dagen 1195, 9 dagen 1495 en 15 dagen 2095. Daarbovenop telt, net als bij 4 en 5 dagen, per nacht het verschil met een gewone huisjesnacht mee (zie hieronder), en de huurauto voor elke dag extra (autoPerDagEUR). In dit bedrag zit dus geen auto.",
   "extraDagPerPersoon": 100,
 
   "//personen": "Voor hoeveel personen kan iemand boeken (max). Een huisje met huurauto gaat tot huisjeMaxPersonen personen. Bij een grotere groep rekent de prijs met meer huisjes en auto's, met de groep verdeeld over zo weinig mogelijk huisjes: 6 personen is 2 huisjes van 3, 8 personen is 2 huisjes van 4. De basisprijs hierboven geldt voor basisPersonen; bij een ander aantal verandert het huisjesdeel en het autodeel mee. Wordt het duurder (alleen reizen), dan wordt dat volledig doorberekend. Wordt het goedkoper (3 personen of meer), dan wordt daarvan kortingDoorgeven doorgegeven: 0.5 is de helft, 1 is alles, 0 is niets.",
   "personen": { "min": 1, "max": 20, "standaard": 2 },
   "huisjeMaxPersonen": 4,
   "basisPersonen": 2,
-  "//autoPerDagEUR": "Wat de huurauto per dag kost, in euro's, voor de hele auto. Een auto wordt gedeeld door de mensen in een huisje. De auto telt mee voor het aantal dagen van de reis: 4 dagen is 160, 5 dagen is 200, 9 dagen is 360. Regelt iemand zijn vervoer zelf, dan gaat zijn deel van de auto voor de hele reis eraf.",
+  "//autoPerDagEUR": "Wat de huurauto per dag kost, in euro's, voor de hele auto. Een auto wordt gedeeld door de mensen in een huisje. De auto telt mee voor het aantal dagen van de reis: 4 dagen is 160, 5 dagen is 200, 9 dagen is 360. In elke prijs in basisprijs zit de auto al voor precies die reisduur, gerekend met basisPersonen; de prijs rekent dat deel eruit en telt de auto voor de echte reisduur en het echte aantal personen weer op, zodat de auto nooit dubbel meetelt. Regelt iemand zijn vervoer zelf, dan gaat zijn deel van de auto voor de hele reis eraf.",
   "autoPerDagEUR": 40,
-  "//autoInBasisprijsDagen": "Voor hoeveel dagen de huurauto al in de basisprijs hierboven zit, gerekend met basisPersonen. Nu 5 dagen: in 995 en 1095 zit 5 x 40 = 200 euro auto, 100 per persoon. De prijs rekent dat deel eruit en telt de auto voor de echte reisduur weer op, zodat een reis van 5 dagen precies hetzelfde kost als voorheen en de auto nooit dubbel meetelt.",
-  "autoInBasisprijsDagen": 5,
   "kortingDoorgeven": 0.5,
 
   "//huisjes": "De huisjesprijzen komen van de boekingssite van Falun Strandby en staan in Zweedse kronen per huisje per nacht - precies zoals daar getoond, zodat je ze zo kunt overnemen. huisjeBasisSEK is de gewone nacht die al in de basisprijs zit; alleen nachten die daarvan afwijken zet je hieronder. Het verschil wordt gedeeld door personenPerHuisje en omgerekend met wisselkoersSEK (kronen per euro).",
@@ -43,7 +41,7 @@
 
   "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf gaat per persoon van de prijs af. Voor de huurauto wordt het bedrag uitgerekend uit autoPerDagEUR hierboven, want dat hangt af van hoeveel mensen er meegaan en hoeveel dagen de reis duurt. Begeleiding staat aan: 100 euro per dag voor 1 persoon, plus 50 euro per dag voor elke extra persoon (2 personen 150, 4 personen 250 per dag), verdeeld over de deelnemers. De bezoeker kiest zelf voor hoeveel dagen (0 tot en met de hele reis). Het kan alleen als de hele reis binnen van/tot van het blokje begeleiding valt.",
   "opties": {
-    "vluchtZelf": 250,
+    "vluchtZelf": 230,
     "//groterAuto": "Een ruimere huurauto, bijvoorbeeld voor meer bagage of meer mensen. Het bedrag is per persoon. Zolang prijs null is, staat de optie er wel in het aanvraagformulier maar telt hij niet mee in de prijs: Joey stuurt er dan een voorstel voor. Haal het hele blokje weg om de optie niet te tonen. NOG INVULLEN: wat kost een grotere auto?",
     "groterAuto": {
       "prijs": null
