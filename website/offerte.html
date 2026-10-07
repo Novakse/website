@@ -48,7 +48,7 @@
         <p class="oq-doc__note">Dit gaat straks naar Joey. Klik op een regel om je antwoord aan te passen. Je zit nergens aan vast: je krijgt eerst een persoonlijk voorstel terug.</p>
         <dl class="oq-doc__lines" id="oqLines"></dl>
         <div class="oq-doc__sum" id="oqSum" hidden>
-          <span>Gekozen extra's, per persoon</span>
+          <span>Gekozen extra's</span>
           <strong id="oqSumValue">-</strong>
         </div>
       </div>
@@ -98,6 +98,12 @@
        Bij "extras" staan de activiteiten per bestemming, onderaan bij de
        bestemming zelf. Prijzen zijn per persoon, in hele euro's. Heeft een
        bestemming geen extra's, dan slaat de pagina die stap vanzelf over.
+       "extrasUit": a destination with this key (for example "falun") loads
+       its extras from data/activiteiten.json, the same list and prices as
+       the checkout page. Change those prices there, not here. An extra may
+       carry an "eenheid" (for example "per scooter"); without it the price
+       counts as "per persoon". Amounts with different units are never
+       added together.
        ========================================================================== -->
   <script type="application/json" id="offertedata">
 {
@@ -111,12 +117,7 @@
       "stad": { "naam": "Stockholm", "vliegveld": "Stockholm Arlanda" },
       "foto": "orsa-zwart-ijs-baan",
       "alt": "Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer",
-      "extras": [
-        { "naam": "Skipas", "prijs": 65, "toelichting": "per persoon, exclusief materiaal - huur regel je zelf" },
-        { "naam": "Sneeuwscooter rijden", "prijs": 100, "toelichting": "per persoon" },
-        { "naam": "Langlaufen", "prijs": 25, "toelichting": "per persoon, zonder materiaal" },
-        { "naam": "Hondensleeën", "prijs": 70, "toelichting": "per persoon, per 20 minuten" }
-      ]
+      "extras": []
     },
     {
       "sleutel": "falun",
@@ -127,12 +128,8 @@
       "stad": { "naam": "Stockholm", "vliegveld": "Stockholm Arlanda" },
       "foto": "falun-meer",
       "alt": "Schaatsers op een bevroren meer bij Falun",
-      "extras": [
-        { "naam": "Skipas", "prijs": 65, "toelichting": "per persoon, exclusief materiaal - huur regel je zelf" },
-        { "naam": "Sneeuwscooter rijden", "prijs": 100, "toelichting": "per persoon" },
-        { "naam": "Langlaufen", "prijs": 25, "toelichting": "per persoon, zonder materiaal" },
-        { "naam": "Hondensleeën", "prijs": 70, "toelichting": "per persoon, per 20 minuten" }
-      ]
+      "extrasUit": "falun",
+      "extras": []
     },
     {
       "sleutel": "finland",
@@ -189,19 +186,19 @@
       "label": "Aantal personen",
       "soort": "reizigers",
       "vraag": "Met hoeveel personen kom je?",
-      "onder": "Tel iedereen mee die meegaat, ook de kinderen. Kom je met meer dan 12 personen, kies dan de knop onder de teller.",
-      "max": 12,
+      "onder": "Tel iedereen mee die meegaat, ook de kinderen. Kom je met meer dan 20 personen, kies dan de knop onder de teller.",
+      "max": 20,
       "//groepen": "Elke groep krijgt een eigen regel met een min- en plusknop. \"min\" is het kleinste aantal, \"korting\" komt als label naast de naam.",
       "groepen": [
-        { "sleutel": "volwassenen", "naam": "Volwassenen", "toelichting": "Vanaf 13 jaar", "min": 1, "enkel": "volwassene", "meervoud": "volwassenen" },
-        { "sleutel": "kind6tot12", "naam": "Kinderen 6 t/m 12 jaar", "korting": "€100 korting per kind", "min": 0, "enkel": "kind 6-12 jaar", "meervoud": "kinderen 6-12 jaar" },
-        { "sleutel": "kind0tot5", "naam": "Kinderen 0 t/m 5 jaar", "korting": "€200 korting per kind", "min": 0, "enkel": "kind 0-5 jaar", "meervoud": "kinderen 0-5 jaar" }
+        { "sleutel": "volwassenen", "naam": "Volwassenen", "toelichting": "Vanaf 12 jaar", "min": 1, "enkel": "volwassene", "meervoud": "volwassenen" },
+        { "sleutel": "kinderen", "naam": "Kinderen 2 t/m 11 jaar", "korting": "Lagere prijs voor het vliegdeel", "min": 0, "enkel": "kind 2-11 jaar", "meervoud": "kinderen 2-11 jaar" },
+        { "sleutel": "baby", "naam": "Baby's 0 en 1 jaar", "korting": "Lagere prijs voor het vliegdeel", "min": 0, "enkel": "baby 0-1 jaar", "meervoud": "baby's 0-1 jaar" }
       ],
       "eenheid": "persoon",
       "eenheidMeervoud": "personen",
       "kortEenheid": "pers.",
-      "meerLabel": "Meer dan 12 personen",
-      "maxTekst": "Meer dan 12 personen past niet op deze teller. Kies dan de knop hieronder.",
+      "meerLabel": "Meer dan 20 personen",
+      "maxTekst": "Meer dan 20 personen past niet op deze teller. Kies dan de knop hieronder.",
       "//perVierTekst": "Komt alleen in beeld bij bestemmingen met \"perVierPersonen\": true hierboven.",
       "perVierTekst": "Een huisje en een huurauto zijn voor vier personen. Kom je met meer, dan komt er een huisje en een auto bij en gaat de prijs per vier personen weer een stap omhoog."
     },
@@ -287,7 +284,7 @@
       "label": "Extra activiteiten",
       "soort": "extras",
       "vraag": "Waar heb je naast het schaatsen zin in?",
-      "onder": "Optioneel, en je kunt meerdere dingen kiezen. Alle bedragen zijn per persoon; we regelen het ter plaatse voor je. Of een activiteit doorgaat, hangt af van het weer en de omstandigheden.",
+      "onder": "Optioneel, en je kunt meerdere dingen kiezen. We regelen het ter plaatse voor je. Of een activiteit doorgaat, hangt af van het weer en de omstandigheden.",
       "leegLabel": "Liever alleen schaatsen",
       "overslaan": true
     },
@@ -325,6 +322,7 @@
 }
   </script>
 
+  <script src="js/activiteiten-prijs.js"></script>
   <script src="js/offerte.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>

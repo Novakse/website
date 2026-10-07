@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Offerteaanvraag — één vraag per scherm (offerte.html)
+   Offerteaanvraag - één vraag per scherm (offerte.html)
 
    De inhoud van alle stappen staat in het JSON-blok in de pagina zelf; dit
    script rendert steeds één stap, houdt de antwoorden bij en laat het
@@ -25,9 +25,12 @@
   var STAPPEN = data.stappen || [];
   // Bumped to v2 when the travelers counter, departure date and extra city
   // step arrived: answers saved under the old key (months, experience,
-  // insurance) no longer fit and are dropped on load.
-  var BEWAARSLEUTEL = "novakse-offerte-v2";
-  var OUDE_SLEUTELS = ["novakse-offerte"];
+  // insurance) no longer fit and are dropped on load. Bumped to v3 when the
+  // age groups (12+, 2-11, 0-1) and the extras from data/activiteiten.json
+  // replaced the old groups and extras.
+  var BEWAARSLEUTEL = "novakse-offerte-v3";
+  var OUDE_SLEUTELS = ["novakse-offerte", "novakse-offerte-v2"];
+  var ACT = window.NovakseActiviteiten || null;
   var EMAIL_PATROON = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   var chipsBox = document.getElementById("oqChips");
@@ -136,6 +139,61 @@
 
   function datumKort(datum) {
     return datum.getDate() + " " + MAANDEN_KORT[datum.getMonth()] + " " + datum.getFullYear();
+  }
+
+  /* --- Extras from data/activiteiten.json ---------------------------------
+     A destination with "extrasUit" takes its activities from the catalogue
+     the checkout page uses (through js/activiteiten-prijs.js), so names and
+     prices here cannot drift from what is charged there. Each activity shows
+     its standaard tariff with its own unit. Until the file has loaded, or
+     when loading fails, that destination has no extras and the step is left
+     out of the route: no price is ever guessed. */
+  function extrasUitCatalogus(cat, reis) {
+    var uit = [];
+    ACT.activiteiten(cat, reis).forEach(function (act) {
+      var tarief = ACT.standaardTarief(act);
+      var prijs = tarief ? ACT.centen(tarief) / 100 : 0;
+      var eenheid = tarief ? ACT.eenheidTekst(tarief.eenheid) : "";
+      if (!(prijs > 0) || !eenheid || !act.naam) return; // free or incomplete: nothing to show
+      var tariefNaam = typeof tarief.naam === "string" && tarief.naam ? tarief.naam + ", " : "";
+      uit.push({
+        naam: act.naam,
+        prijs: prijs,
+        eenheid: eenheid,
+        toelichting: tariefNaam + eenheid + (act.detail ? " - " + act.detail : "")
+      });
+    });
+    return uit;
+  }
+
+  function laadExtras() {
+    var reizen = BESTEMMINGEN.filter(function (plek) { return plek.extrasUit; });
+    if (!reizen.length || !ACT || !window.fetch) return null;
+    return window.fetch("data/activiteiten.json")
+      .then(function (respons) { return respons.ok ? respons.json() : null; })
+      .then(function (cat) {
+        if (!cat) return;
+        reizen.forEach(function (plek) { plek.extras = extrasUitCatalogus(cat, plek.extrasUit); });
+      })
+      .catch(function () { /* no extras: the step stays out of the route */ });
+  }
+
+  // Chosen extras added up per unit, in list order. "€60 per persoon per
+  // dag" and "€185 per scooter" stay separate amounts: a price per day or
+  // per scooter cannot be added to a price per person.
+  function bedragenPerEenheid(lijst, namen) {
+    var volgorde = [];
+    var som = {};
+    lijst.forEach(function (extra) {
+      if (namen.indexOf(extra.naam) === -1) return;
+      var eenheid = extra.eenheid || "per persoon";
+      if (!Object.prototype.hasOwnProperty.call(som, eenheid)) {
+        som[eenheid] = 0;
+        volgorde.push(eenheid);
+      }
+      som[eenheid] += Number(extra.prijs) || 0;
+    });
+    return volgorde.map(function (eenheid) { return euro(som[eenheid]) + " " + eenheid; });
   }
 
   function bestemmingVan(sleutel) {
@@ -261,9 +319,10 @@
     });
   }
 
-  function extrasTotaal() {
+  // The chosen extras as amounts per unit, for example ["€60 per persoon per dag"].
+  function extrasBedragen() {
     var keuze = antwoorden.extras;
-    return keuze && keuze.prijs ? keuze.prijs : 0;
+    return keuze && Array.isArray(keuze.bedragen) ? keuze.bedragen : [];
   }
 
   function verversDocument() {
@@ -307,9 +366,15 @@
       docRegels.appendChild(regel);
     });
 
-    var totaal = extrasTotaal();
-    docSom.hidden = totaal <= 0;
-    docSomBedrag.textContent = totaal > 0 ? euro(totaal) : "-";
+    // One line per unit, right-aligned under each other.
+    var bedragen = extrasBedragen();
+    docSom.hidden = !bedragen.length;
+    docSomBedrag.textContent = bedragen.length ? "" : "-";
+    docSomBedrag.style.textAlign = "right";
+    bedragen.forEach(function (regel, i) {
+      if (i) docSomBedrag.appendChild(document.createElement("br"));
+      docSomBedrag.appendChild(document.createTextNode(regel));
+    });
 
     // Voortgang: hoe ver je in de route bent.
     var lijst = route();
@@ -955,7 +1020,11 @@
     blok.appendChild(kop(stap, nummer, totaal));
 
     var bewaard = antwoorden[stap.sleutel];
-    var gekozen = bewaard && bewaard.namen ? bewaard.namen.slice() : [];
+    // Only names that are still on the list count; a renamed or removed
+    // extra drops out instead of lingering in the request.
+    var gekozen = (bewaard && bewaard.namen ? bewaard.namen : []).filter(function (naam) {
+      return lijst.some(function (extra) { return extra.naam === naam; });
+    });
 
     var rooster = maak("div", "oq-options");
     var knoppen = [];
@@ -993,19 +1062,14 @@
     var tussenstand = maak("p", "oq-hint");
     blok.appendChild(tussenstand);
 
-    function prijsVan(namen) {
-      return lijst.reduce(function (som, extra) {
-        return som + (namen.indexOf(extra.naam) !== -1 ? (extra.prijs || 0) : 0);
-      }, 0);
-    }
-
     function werkExtrasBij() {
-      var prijs = prijsVan(gekozen);
+      var bedragen = bedragenPerEenheid(lijst, gekozen);
+      var prijsTekst = bedragen.join(" + ");
       tussenstand.textContent = gekozen.length
-        ? gekozen.length + (gekozen.length === 1 ? " activiteit gekozen - " : " activiteiten gekozen - ") + euro(prijs) + " per persoon"
+        ? gekozen.length + (gekozen.length === 1 ? " activiteit gekozen - " : " activiteiten gekozen - ") + prijsTekst
         : "Nog niets gekozen.";
       antwoorden[stap.sleutel] = gekozen.length
-        ? { namen: gekozen.slice(), waarde: gekozen.join(", "), onder: euro(prijs) + " per persoon", kort: gekozen.length + "×", prijs: prijs }
+        ? { namen: gekozen.slice(), waarde: gekozen.join(", "), onder: prijsTekst, kort: gekozen.length + "×", bedragen: bedragen }
         : null;
       if (!antwoorden[stap.sleutel]) delete antwoorden[stap.sleutel];
       bewaar();
@@ -1339,6 +1403,7 @@
 
   /* --- Opstarten ----------------------------------------------------------- */
   haalOp();
+  var extrasGeladen = laadExtras();
 
   var params = new URLSearchParams(window.location.search);
   var start = params.get("stap") || "start";
@@ -1365,6 +1430,16 @@
   if (beginPlek && beginPlek.foto) zetAchtergrond(beginPlek.foto, beginPlek.alt);
   else achtergrond.classList.add("is-ready");
 
-  huidig = null;
-  ga(stapVan(start).sleutel, 1);
+  function begin() {
+    huidig = null;
+    ga(stapVan(start).sleutel, 1);
+  }
+
+  // A reload on the extras step waits for the catalogue; until it is there
+  // that step is not in the route yet. Every other step starts right away.
+  var startOpExtras = STAPPEN.some(function (stap) { return stap.sleutel === start && stap.soort === "extras"; });
+  if (extrasGeladen && startOpExtras) extrasGeladen.then(begin);
+  else begin();
+  // Once the extras are in, the step count and progress bar include them.
+  if (extrasGeladen) extrasGeladen.then(function () { if (huidig) verversDocument(); });
 })();
