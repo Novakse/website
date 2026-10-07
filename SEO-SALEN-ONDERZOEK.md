@@ -862,7 +862,7 @@ Het plan volgt de data: skireizen worden nu gekozen, de zoekpiek komt in decembe
 12. **Na betalen**: binnen welke termijn neemt Joey contact op?
 13. **"De baan wordt dagelijks gecontroleerd en geveegd"**: klopt dit, en past het naast "Novakse is niet verantwoordelijk op het ijs"?
 14. **Lunch**: wat zit erin, zijn dieetwensen mogelijk?
-15. **Vanaf-prijs**: € 125 (4+ volwassenen, halve dag) of € 155 (1 volwassene)?
+15. **Vanaf-prijs**: € 125 (4+ volwassenen, halve dag) of € 155 (1 volwassene)? Besluit Joey (2026-10-07): € 125.
 16. **Foto's**: waar is `geveegde-baan-luchtfoto` gemaakt (staat ook bij een Weissensee-artikel)? Zijn `joey-kampvuur` of `joey-op-het-ijs` geschikt (helder, plek niet herkenbaar)?
 17. **Search Console**: toegang zodat indexatie en vertoningen gemeten kunnen worden.
 18. **Tripadvisor/GetYourGuide**: wil Joey daar staan (commissie, voorwaarden)?
