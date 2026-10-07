@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/:lang(en|de|sv|no|fi)/index.html", "destination": "/:lang/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
