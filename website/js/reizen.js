@@ -430,7 +430,7 @@
   // window.innerHeight.
   var probe = document.createElement("div");
   probe.setAttribute("aria-hidden", "true");
-  probe.style.cssText = "position:fixed;top:0;left:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none;";
+  probe.style.cssText = "position:fixed;top:0;left:0;width:0;height:100vh;height:100svh;height:calc(var(--svh, 1svh) * 100);visibility:hidden;pointer-events:none;";
   document.body.appendChild(probe);
 
   function screenHeight() {

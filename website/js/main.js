@@ -2,6 +2,44 @@
   "use strict";
 
   /* ------------------------------------------------------------------
+     Stable screen height (touch devices only).
+     When a phone browser slides its toolbar in or out, some browsers
+     (app browsers that resize the page area) change the viewport height
+     itself, and then even svh changes with it. The hero sections are
+     sized from the viewport height, so every section below them jumped
+     by the toolbar height at each change of scroll direction. Here the
+     height is measured once (small viewport, toolbar shown) and exposed
+     as --svh (1% of that height, used in styles.css). Only a real change
+     of the layout width or the orientation measures it again; a height
+     change alone (the toolbar) is ignored. On desktop nothing is set and
+     --svh falls back to 1svh.
+     ------------------------------------------------------------------ */
+  var stableVhPx = 0;
+  (function () {
+    var coarse = window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    if (!coarse || !document.body) return;
+    var root = document.documentElement;
+    var probe = document.createElement("div");
+    probe.setAttribute("aria-hidden", "true");
+    probe.style.cssText = "position:fixed;top:0;left:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none;";
+    document.body.appendChild(probe);
+    var lastWidth = 0;
+    var lastPortrait = null;
+    function measure() {
+      var width = root.clientWidth;
+      var portrait = window.matchMedia("(orientation: portrait)").matches;
+      if (stableVhPx && width === lastWidth && portrait === lastPortrait) return;
+      lastWidth = width;
+      lastPortrait = portrait;
+      stableVhPx = probe.offsetHeight || window.innerHeight;
+      root.style.setProperty("--svh", (stableVhPx / 100) + "px");
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    window.addEventListener("orientationchange", measure);
+  })();
+
+  /* ------------------------------------------------------------------
      Vertalingen voor teksten die door JS worden gegenereerd (kalender,
      diavoorstelling). De rest van de pagina staat al vertaald in de HTML;
      dit zijn alleen de stukjes die main.js zelf op het scherm zet.
@@ -519,7 +557,7 @@
 
     var syncSnap = function () {
       var rect = snapSection.getBoundingClientRect();
-      var vh = window.innerHeight;
+      var vh = stableVhPx || window.innerHeight;
 
       // Terug naar wit gebeurt pas als de sectie volledig buiten beeld is —
       // boven- of onderlangs. Zo zie je die omslag nooit gebeuren.
@@ -778,7 +816,7 @@
   // which made these effects jump on the resize event. The root element's
   // clientHeight stays the same while the address bar moves.
   function stableViewportHeight() {
-    return document.documentElement.clientHeight || window.innerHeight;
+    return stableVhPx || document.documentElement.clientHeight || window.innerHeight;
   }
 
   document.querySelectorAll("[data-reveal-words]").forEach(function (el) {

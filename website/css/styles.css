@@ -650,11 +650,14 @@ body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header_
    ========================================================================== */
 .opener {
   position: relative;
-  /* Hero heights use svh (small viewport height): it stays fixed while the
-     mobile address/toolbar slides in and out, so the photo does not resize
-     while scrolling. The vh line is only a fallback for old browsers. */
+  /* Hero heights use --svh, a stable "1% of the screen height" that main.js
+     sets on touch devices (see the stable screen height block there). Some
+     phone browsers resize the whole page area when their toolbar slides in or
+     out, and then even svh changes with it: every section below the hero would
+     jump by the toolbar height. Without JS or on desktop --svh falls back to
+     1svh. The vh line is only a fallback for old browsers. */
   min-height: 100vh;
-  min-height: 100svh;
+  min-height: calc(var(--svh, 1svh) * 100);
   display: flex;
   flex-direction: column;
   color: #fff;
@@ -832,7 +835,7 @@ html:not(.js) .opener__controls { display: none; }
   color: #fff;
   overflow: hidden;
   min-height: 78vh;
-  min-height: 78svh;
+  min-height: calc(var(--svh, 1svh) * 78);
 }
 .layered__bg {
   position: absolute; inset: 0;
@@ -1360,7 +1363,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
   display: flex;
   align-items: flex-end;
   min-height: min(62vh, 34rem);
-  min-height: min(62svh, 34rem);
+  min-height: min(calc(var(--svh, 1svh) * 62), 34rem);
   padding-block: 8rem 3rem;
   color: #fff;
   overflow: hidden;
@@ -1524,7 +1527,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 /* --------------------------------------------------------------------------
    Reispagina: kruimelpad, feitenbalk, gesplitst fotoblok en "volgt nog"-blok
    -------------------------------------------------------------------------- */
-.page-hero--tall { min-height: min(76vh, 42rem); min-height: min(76svh, 42rem); }
+.page-hero--tall { min-height: min(76vh, 42rem); min-height: min(calc(var(--svh, 1svh) * 76), 42rem); }
 
 .crumbs {
   font-size: 0.82rem;
@@ -3692,7 +3695,7 @@ button.plan__cell.is-gekozen {
    Reuses the trip-page components above; only what they lack is here.
    ========================================================================== */
 /* Full-bleed photo band with the section title at the bottom. */
-.layered--band { display: flex; align-items: flex-end; min-height: min(68vh, 36rem); min-height: min(68svh, 36rem); }
+.layered--band { display: flex; align-items: flex-end; min-height: min(68vh, 36rem); min-height: min(calc(var(--svh, 1svh) * 68), 36rem); }
 .layered--band .layered__inner { padding-block: 7rem 2.75rem; }
 .layered--band .layered__title { margin-top: 0.9rem; max-width: 18ch; font-size: clamp(2rem, 5vw, 3.6rem); }
 .layered--band .layered__bg { object-position: 50% 55%; }
@@ -4387,7 +4390,7 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
   .page-hero--tall:has(+ .factbar--route) {
     align-items: stretch;
     min-height: clamp(23rem, 100vh - 20rem, 34rem);
-    min-height: clamp(23rem, 100svh - 20rem, 34rem);
+    min-height: clamp(23rem, calc(var(--svh, 1svh) * 100 - 20rem), 34rem);
     padding-block: 4.9rem 0.75rem;
   }
   .page-hero--tall:has(+ .factbar--route) .page-hero__inner {
