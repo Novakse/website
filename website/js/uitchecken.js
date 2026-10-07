@@ -98,11 +98,14 @@
   }
 
   /* Trips booked through their own price calendar (van/tot/personen). The key
-     is the value of ?reis=; the page is where the visitor came from. */
+     is the value of ?reis=; the page is where the visitor came from.
+     zonderEigenVlucht: package only, no "I'll arrange my own flight" (no
+     opties.vluchtZelf in its price file). An old link with vlucht=zelf is
+     ignored, so the page shows the package price the server charges. */
   var KALENDER_REIZEN = {
     lulea: { naam: "Luleå", pagina: "lulea.html" },
     orsa: { naam: "Orsa", pagina: "orsa.html", begeleiding: true },
-    weissensee: { naam: "Weissensee", pagina: "weissensee.html" },
+    weissensee: { naam: "Weissensee", pagina: "weissensee.html", zonderEigenVlucht: true },
     finland: { naam: "Finland", pagina: "finland.html" },
     wellness: { naam: "Wellness & schaatsen", pagina: "wellness.html" }
   };
@@ -122,7 +125,7 @@
       baby: params.get("baby") || "",
       begeleiding: reisInfo.begeleiding ? params.get("begeleiding") || "" : "",
       // Own flight from the calendar checkbox; only "zelf" counts.
-      vlucht: params.get("vlucht") === "zelf" ? "zelf" : ""
+      vlucht: !reisInfo.zonderEigenVlucht && params.get("vlucht") === "zelf" ? "zelf" : ""
     };
   }
 

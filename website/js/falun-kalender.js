@@ -5,8 +5,7 @@
    aan. De reisduur volgt uit die twee dagen. Iedere vertrekdag vanaf
    minimumDagen (data/falun-prijzen.json, nu 4 dagen) na aankomst is te
    kiezen; een maximum is er niet, alleen het seizoen en de bezette weken.
-   De prijs verschilt per datum, omdat de huisjes niet het hele seizoen
-   hetzelfde kosten. Daarnaast kan de bezoeker drie dingen aanvinken die het
+   De prijs verschilt per datum. Daarnaast kan de bezoeker drie dingen aanvinken die het
    bedrag veranderen: de vlucht zelf regelen, de huurauto zelf regelen en
    begeleiding op het ijs erbij nemen.
 
@@ -19,10 +18,12 @@
 
      basisprijs van de gekozen duur (langer dan in de tabel staat: de langste
        duur uit de tabel + extraDagPerPersoon voor elke dag extra)
-     + de toeslag van elke nacht die je boekt (kan ook negatief zijn)
+     + de toeslag van elke nacht die je boekt (groepsToeslag; kan ook
+       negatief zijn)
      - opties.vluchtZelf als je de vlucht zelf regelt
-     + de huurauto voor het echte aantal dagen (autoPerDagEUR), min het deel
-       dat al in de basisprijs zit (de auto voor de duur uit de tabel)
+     + de huurauto voor het echte aantal dagen (autoPerDag in groepsToeslag),
+       min het deel dat al in de basisprijs zit (de auto voor de duur uit de
+       tabel)
      - het eigen deel van de huurauto als je je vervoer zelf regelt
      + begeleiding, alleen als de hele reis binnen het begeleidingsvenster valt
        (staat uit zolang begeleiding.prijsPerDag null is)
@@ -610,58 +611,36 @@
     return prijs + (dagen - duur) * extra;
   }
 
-  /* De huisjesprijzen komen van Falun Strandby en staan in Zweedse kronen per
-     huisje per nacht, precies zoals hun boekingssite ze toont. De basisnacht
-     zit al in de pakketprijs; alleen het verschil met die basis telt mee, en
-     dat wordt gedeeld door het aantal personen in een huisje en omgerekend
-     naar euro's. */
-  var huisjes = data.huisjePerNachtSEK || {};
-  var basisSEK = typeof data.huisjeBasisSEK === "number" ? data.huisjeBasisSEK : 0;
-  var koers = data.wisselkoersSEK || 1;
+  /* Wat per aantal personen bij de prijs op of af gaat, in euro's per
+     persoon. Het staat per groepsgrootte in groepsToeslag (data/falun-prijzen
+     .json): de toeslag per nacht, die van nachten op een bepaalde datum en de
+     huurauto per dag. Hier wordt alleen opgeteld.
+     Geen regel voor dit aantal personen: dan is er geen prijs. */
+  var groepsToeslag = data.groepsToeslag || {};
+  function groepRij(n) {
+    var rij = groepsToeslag[String(n)];
+    return rij && typeof rij.nacht === "number" && typeof rij.autoPerDag === "number" ? rij : null;
+  }
 
   var personenKeuze = data.personen || { min: 1, max: 4, standaard: 2 };
   var personenMin = personenKeuze.min || 1;
   var personenMax = personenKeuze.max || 4;
   var basisPersonen = data.basisPersonen || 2;
-  var huisjeMax = data.huisjeMaxPersonen || 0;
 
-  /* A cabin (and its rental car) holds at most huisjeMax people. A bigger
-     group is spread over as few cabins as possible, so the cabin and car
-     share is calculated per cabin: 6 people = 2 cabins of 3. Same logic as
-     api/_falun-prijs.js. */
-  function perHuisje(n) {
-    if (!huisjeMax || n <= huisjeMax) return n;
-    return n / Math.ceil(n / huisjeMax);
-  }
-  var autoPerDag = typeof data.autoPerDagEUR === "number" ? data.autoPerDagEUR : 0;
-  var doorgeven = typeof data.kortingDoorgeven === "number" ? data.kortingDoorgeven : 1;
-
-  /* Wordt het duurder dan de basisprijs, dan telt dat helemaal mee. Wordt het
-     goedkoper doordat er meer mensen in het huisje slapen, dan wordt maar een
-     deel van dat voordeel doorgegeven - de rest blijft marge. */
-  function demp(verschil) {
-    return verschil > 0 ? verschil : verschil * doorgeven;
-  }
-
-  /* Het huisje kost per nacht een bedrag in kronen; dat wordt gedeeld door de
-     mensen die erin slapen. Het verschil met de basisnacht bij basisPersonen
-     is wat er bij de prijs op of af gaat. */
+  /* De toeslag van een nacht: de eigen toeslag van die datum als die er is,
+     anders die van een gewone nacht. */
   function nachtToeslag(datum, personen) {
-    if (!basisSEK) return 0;
-    var sek = huisjes[alsTekst(datum)];
-    if (typeof sek !== "number") sek = basisSEK;
-    var werkelijk = sek / koers / perHuisje(personen);
-    var basis = basisSEK / koers / basisPersonen;
-    return demp(werkelijk - basis);
+    var rij = groepRij(personen);
+    if (!rij) return 0;
+    var perDatum = rij.nachtDatum && rij.nachtDatum[alsTekst(datum)];
+    return typeof perDatum === "number" ? perDatum : rij.nacht;
   }
 
   /* Wat de huurauto deze reiziger kost. Dat is ook wat eraf gaat als hij hem
      zelf regelt, zodat die twee niet uit elkaar kunnen lopen. */
   function autoDeel(personen, dagen) {
-    var auto = autoPerDag * dagen;
-    if (!auto) return 0;
-    var basis = auto / basisPersonen;
-    return basis + demp(auto / perHuisje(personen) - basis);
+    var rij = groepRij(personen);
+    return rij ? rij.autoPerDag * dagen : 0;
   }
   /* The car share that basisprijs already contains: every listed price holds
      the car for exactly its own length (4 days: 4 car days), at
@@ -670,7 +649,7 @@
      car for the real trip length is added, so the car never counts twice.
      Same as api/_falun-prijs.js. */
   function autoInBasis(dagen) {
-    return autoPerDag * basisDuurVoor(dagen) / basisPersonen;
+    return autoDeel(basisPersonen, basisDuurVoor(dagen));
   }
   var opties = data.opties || {};
   var vluchtBedrag = Math.abs(opties.vluchtZelf || 0);
@@ -853,6 +832,8 @@
      staat serverside in api/_falun-prijs.js; die is leidend. */
   function totaalPrijs() {
     if (!periodeKlaar()) return null;
+    // No surcharge row for this group size: there is no price to show.
+    if (!groepRij(personen) || !groepRij(basisPersonen)) return null;
     var totaal = verblijfPrijs(aankomst, duur);
     if (totaal === null) return null;
     if (vluchtZelf) totaal -= vluchtBedrag;

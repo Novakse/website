@@ -12,7 +12,8 @@
    (aankomstdag, aantal dagen, de vinkjes) en nooit een bedrag.
 
    De prijzen komen uit data/falun-prijzen.json, hetzelfde bestand dat de
-   kalender in de browser leest.
+   kalender in de browser leest. Dat bestand bevat alleen klantprijzen (de
+   toeslag per groepsgrootte in euro's per persoon).
    ========================================================================== */
 var fs = require("fs");
 var path = require("path");
@@ -113,15 +114,9 @@ function berekenFalun(keuze) {
   if (plusDagen(aankomst, nachten) > seizoenTot) return { fout: "Dat verblijf past niet binnen het seizoen." };
 
   var bezet = data.bezet || [];
-  var huisjes = data.huisjePerNachtSEK || {};
-  var basisSEK = typeof data.huisjeBasisSEK === "number" ? data.huisjeBasisSEK : 0;
-  var koers = data.wisselkoersSEK || 1;
 
   var keuze2 = data.personen || { min: 1, max: 4 };
   var basisPersonen = data.basisPersonen || 2;
-  var autoPerDag = typeof data.autoPerDagEUR === "number" ? data.autoPerDagEUR : 0;
-  var doorgeven = typeof data.kortingDoorgeven === "number" ? data.kortingDoorgeven : 1;
-  var huisjeMax = data.huisjeMaxPersonen || 0;
 
   // Digits only ("3", not "3abc"); without a head count basisPersonen counts.
   var leegPersonen = keuze.personen === undefined || keuze.personen === null || keuze.personen === "";
@@ -136,26 +131,21 @@ function berekenFalun(keuze) {
   var aantallen = kinderprijs.leesAantallen(keuze, personen);
   if (aantallen.fout) return { fout: aantallen.fout };
 
-  // Zelfde rekenwijze als in js/falun-kalender.js. Een besparing doordat er
-  // meer mensen in het huisje slapen, wordt maar deels doorgegeven.
-  function demp(verschil) {
-    return verschil > 0 ? verschil : verschil * doorgeven;
+  // Customer surcharges per group size (euros per person), same as
+  // groepRij() in js/falun-kalender.js. No row for this group size or for
+  // basisPersonen: no price.
+  var groepsToeslag = data.groepsToeslag || {};
+  function groepRij(n) {
+    var rij = groepsToeslag[String(n)];
+    return rij && typeof rij.nacht === "number" && typeof rij.autoPerDag === "number" ? rij : null;
   }
-  // A cabin (and its rental car) holds at most huisjeMax people; a bigger
-  // group is spread over as few cabins as possible (6 people = 2 cabins of 3).
-  // Same as perHuisje() in js/falun-kalender.js.
-  function perHuisje(n) {
-    if (!huisjeMax || n <= huisjeMax) return n;
-    return n / Math.ceil(n / huisjeMax);
-  }
-  // Rental car share per person for a trip of this many days. The car costs
-  // autoPerDag per day and is shared by the people in one cabin. Same as
-  // autoDeel() in js/falun-kalender.js.
+  var rij = groepRij(personen);
+  if (!rij || !groepRij(basisPersonen)) return { fout: "Ongeldig aantal personen." };
+  // Rental car share per person for a trip of this many days, for this group
+  // size. Same as autoDeel() in js/falun-kalender.js.
   function autoDeel(n, aantalDagen) {
-    var auto = autoPerDag * aantalDagen;
-    if (!auto) return 0;
-    var b = auto / basisPersonen;
-    return b + demp(auto / perHuisje(n) - b);
+    var r = groepRij(n);
+    return r ? r.autoPerDag * aantalDagen : 0;
   }
   // The car share that basisprijs already contains: every listed price holds
   // the car for exactly its own length (4 days: 4 car days), at
@@ -163,7 +153,7 @@ function berekenFalun(keuze) {
   // only that many car days are in its base. The share is taken out and the
   // car for the real trip length is added, so the car never counts twice.
   // Same as js/falun-kalender.js.
-  var autoInBasis = autoPerDag * basisDuurVoor(data, dagen) / basisPersonen;
+  var autoInBasis = autoDeel(basisPersonen, basisDuurVoor(data, dagen));
 
   var totaal = basis;
 
@@ -174,11 +164,9 @@ function berekenFalun(keuze) {
       var tot = alsDatum(bezet[b2].tot);
       if (van && tot && nacht >= van && nacht < tot) return { fout: "Die periode is niet meer vrij." };
     }
-    if (basisSEK) {
-      var sek = huisjes[alsTekst(nacht)];
-      if (typeof sek !== "number") sek = basisSEK;
-      totaal += demp(sek / koers / perHuisje(personen) - basisSEK / koers / basisPersonen);
-    }
+    // The night's own surcharge when its date has one, else a normal night.
+    var perDatum = rij.nachtDatum && rij.nachtDatum[alsTekst(nacht)];
+    totaal += typeof perDatum === "number" ? perDatum : rij.nacht;
   }
 
   totaal += autoDeel(personen, dagen) - autoInBasis;

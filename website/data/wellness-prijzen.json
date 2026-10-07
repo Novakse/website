@@ -1,5 +1,5 @@
 {
-  "//": "Prijzen en data voor de kalender op wellness.html (Wellness & schaatsen). Het werkt precies zoals data/orsa-prijzen.json (zelfde kalender in js/main.js); de server rekent met hetzelfde bestand (api/_reis-prijs.js). Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan. Zet hier nooit inkoopprijzen in: dit bestand is voor iedereen op de site op te vragen.",
+  "//": "Prijzen en data voor de kalender op wellness.html (Wellness & schaatsen). Het werkt precies zoals data/orsa-prijzen.json (zelfde kalender in js/main.js); de server rekent met hetzelfde bestand (api/_reis-prijs.js). Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan. Zet hier alleen klantprijzen neer: dit bestand is voor iedereen op de site op te vragen.",
 
   "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken: 19 december tot en met 14 maart, zelfde als de andere reizen.",
   "seizoenStart": "2026-12-19",

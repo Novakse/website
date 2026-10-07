@@ -1368,9 +1368,8 @@
       return waarde ? String(waarde) : "";
     }
 
-    /* In welke periode van de leverancier de aankomstdag valt. De aankomstdag
-       bepaalt het tarief voor het hele verblijf, net als in hun eigen
-       prijslijst. Valt hij buiten alle periodes, dan komt er geen prijs in
+    /* In welke prijsperiode de aankomstdag valt. De aankomstdag bepaalt het
+       tarief voor het hele verblijf. Valt hij buiten alle periodes, dan komt er geen prijs in
        beeld en blijft het bij een aanvraag. */
     function tariefOp(datum) {
       var lijst = data.periodes || [];

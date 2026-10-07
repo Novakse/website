@@ -8,38 +8,47 @@
   "//minimumDagen": "De kortste reis die iemand kan kiezen, in dagen. Een maximum is er niet: iedere vertrekdag vanaf minimumDagen na aankomst kan, zolang het verblijf binnen het seizoen past en er geen bezette nacht in zit. 4 dagen telt 3 nachten.",
   "minimumDagen": 4,
 
-  "//basisprijs": "Bedrag per persoon per reisduur, in hele euro's, voor basisPersonen. Dit is de prijs inclusief vlucht, huurauto en verblijf, gerekend met een gewone nacht van huisjeBasisSEK. Met z'n tweeën kost een reis van 4 dagen met gewone nachten dus precies 995 en een reis van 5 dagen precies 1095. In elke prijs hier zit de huurauto voor precies die reisduur: in de prijs voor 4 dagen 4 dagen auto, in die voor 5 dagen 5 dagen auto.",
+  "//basisprijs": "Bedrag per persoon per reisduur, in hele euro's, voor basisPersonen. Dit is de prijs inclusief vlucht, huurauto en verblijf. Met z'n tweeën kost een reis van 4 dagen met gewone nachten dus precies 995 en een reis van 5 dagen precies 1095. In elke prijs hier zit de huurauto voor precies die reisduur.",
   "basisprijs": {
     "4": 995,
     "5": 1095
   },
 
-  "//extraDagPerPersoon": "Voor een reisduur zonder eigen bedrag in basisprijs hierboven: het bedrag van de langste duur daaronder, plus dit bedrag per persoon voor elke dag extra. Met 5 dagen voor 1095 en 100 per extra dag is 6 dagen 1195, 9 dagen 1495 en 15 dagen 2095. Daarbovenop telt, net als bij 4 en 5 dagen, per nacht het verschil met een gewone huisjesnacht mee (zie hieronder), en de huurauto voor elke dag extra (autoPerDagEUR). In dit bedrag zit dus geen auto.",
+  "//extraDagPerPersoon": "Voor een reisduur zonder eigen bedrag in basisprijs hierboven: het bedrag van de langste duur daaronder, plus dit bedrag per persoon voor elke dag extra. Daarbovenop telt, net als bij 4 en 5 dagen, per nacht de toeslag uit groepsToeslag hieronder mee en per extra dag de autoPerDag uit groepsToeslag. Het totaal in de kalender is dus hoger dan alleen basisprijs plus dit bedrag.",
   "extraDagPerPersoon": 100,
 
-  "//personen": "Voor hoeveel personen kan iemand boeken (max). Een huisje met huurauto gaat tot huisjeMaxPersonen personen. Bij een grotere groep rekent de prijs met meer huisjes en auto's, met de groep verdeeld over zo weinig mogelijk huisjes: 6 personen is 2 huisjes van 3, 8 personen is 2 huisjes van 4. De basisprijs hierboven geldt voor basisPersonen; bij een ander aantal verandert het huisjesdeel en het autodeel mee. Wordt het duurder (alleen reizen), dan wordt dat volledig doorberekend. Wordt het goedkoper (3 personen of meer), dan wordt daarvan kortingDoorgeven doorgegeven: 0.5 is de helft, 1 is alles, 0 is niets.",
+  "//personen": "Voor hoeveel personen kan iemand boeken (max). De prijs per persoon voor een ander aantal dan basisPersonen komt uit groepsToeslag hieronder; daar staat voor elk aantal van 1 tot en met het maximum een regel.",
   "personen": { "min": 1, "max": 20, "standaard": 2 },
-  "huisjeMaxPersonen": 4,
   "basisPersonen": 2,
-  "//autoPerDagEUR": "Wat de huurauto per dag kost, in euro's, voor de hele auto. Een auto wordt gedeeld door de mensen in een huisje. De auto telt mee voor het aantal dagen van de reis: 4 dagen is 160, 5 dagen is 200, 9 dagen is 360. In elke prijs in basisprijs zit de auto al voor precies die reisduur, gerekend met basisPersonen; de prijs rekent dat deel eruit en telt de auto voor de echte reisduur en het echte aantal personen weer op, zodat de auto nooit dubbel meetelt. Regelt iemand zijn vervoer zelf, dan gaat zijn deel van de auto voor de hele reis eraf.",
-  "autoPerDagEUR": 40,
-  "kortingDoorgeven": 0.5,
 
-  "//huisjes": "De huisjesprijzen komen van de boekingssite van Falun Strandby en staan in Zweedse kronen per huisje per nacht - precies zoals daar getoond, zodat je ze zo kunt overnemen. huisjeBasisSEK is de gewone nacht die al in de basisprijs zit; alleen nachten die daarvan afwijken zet je hieronder. Het verschil wordt gedeeld door personenPerHuisje en omgerekend met wisselkoersSEK (kronen per euro).",
-  "huisjeBasisSEK": 1298,
-  "personenPerHuisje": 2,
-  "wisselkoersSEK": 11.3,
-
-  "//huisjePerNachtSEK": "Alleen de nachten die afwijken van de 1298 hierboven. 9 januari is 1498 en 14 februari is 9086, omdat daar het WK begint. De goedkope decembernachten van Strandby (700 en 850) vallen voor het seizoen, dus die staan hier niet.",
-  "huisjePerNachtSEK": {
-    "2027-01-09": 1498,
-    "2027-02-14": 9086
+  "//groepsToeslag": "Per aantal personen: wat er per persoon bij komt (plus) of af gaat (min) ten opzichte van de prijs voor basisPersonen, in euro's. nacht geldt voor elke nacht die je boekt, nachtDatum voor nachten op een bepaalde datum die daarvan afwijken, autoPerDag voor de huurauto per dag (bij basisPersonen zit die al in de basisprijs; een eigen vervoer haalt dit bedrag voor de hele reis eraf). Dit blok wordt gemaakt door scripts/build-falun-prices.js; pas het niet met de hand aan.",
+  "groepsToeslag": {
+    "1": { "nacht": 57.43362831858407, "nachtDatum": { "2027-01-09": 75.13274336283185, "2027-02-14": 746.6371681415928 }, "autoPerDag": 40 },
+    "2": { "nacht": 0, "nachtDatum": { "2027-01-09": 8.849557522123888, "2027-02-14": 344.6017699115044 }, "autoPerDag": 20 },
+    "3": { "nacht": -9.572271386430678, "nachtDatum": { "2027-01-09": -6.622418879056049, "2027-02-14": 210.5899705014749 }, "autoPerDag": 16.666666666666668 },
+    "4": { "nacht": -14.358407079646017, "nachtDatum": { "2027-01-09": -12.146017699115045, "2027-02-14": 143.58407079646014 }, "autoPerDag": 15 },
+    "5": { "nacht": -5.743362831858406, "nachtDatum": { "2027-01-09": -2.203539823008853, "2027-02-14": 264.1946902654867 }, "autoPerDag": 18 },
+    "6": { "nacht": -9.572271386430678, "nachtDatum": { "2027-01-09": -6.622418879056049, "2027-02-14": 210.5899705014749 }, "autoPerDag": 16.666666666666668 },
+    "7": { "nacht": -12.307206068268016, "nachtDatum": { "2027-01-09": -9.778761061946906, "2027-02-14": 172.30088495575217 }, "autoPerDag": 15.714285714285715 },
+    "8": { "nacht": -14.358407079646017, "nachtDatum": { "2027-01-09": -12.146017699115045, "2027-02-14": 143.58407079646014 }, "autoPerDag": 15 },
+    "9": { "nacht": -9.572271386430678, "nachtDatum": { "2027-01-09": -6.622418879056049, "2027-02-14": 210.5899705014749 }, "autoPerDag": 16.666666666666668 },
+    "10": { "nacht": -11.486725663716815, "nachtDatum": { "2027-01-09": -8.831858407079647, "2027-02-14": 183.78761061946898 }, "autoPerDag": 16 },
+    "11": { "nacht": -13.053097345132743, "nachtDatum": { "2027-01-09": -10.639581657280772, "2027-02-14": 161.85840707964599 }, "autoPerDag": 15.454545454545455 },
+    "12": { "nacht": -14.358407079646017, "nachtDatum": { "2027-01-09": -12.146017699115045, "2027-02-14": 143.58407079646014 }, "autoPerDag": 15 },
+    "13": { "nacht": -11.044928522804629, "nachtDatum": { "2027-01-09": -8.32198774676651, "2027-02-14": 189.9727705922396 }, "autoPerDag": 16.153846153846153 },
+    "14": { "nacht": -12.307206068268016, "nachtDatum": { "2027-01-09": -9.778761061946906, "2027-02-14": 172.30088495575217 }, "autoPerDag": 15.714285714285715 },
+    "15": { "nacht": -13.40117994100295, "nachtDatum": { "2027-01-09": -11.041297935103245, "2027-02-14": 156.9852507374631 }, "autoPerDag": 15.333333333333332 },
+    "16": { "nacht": -14.358407079646017, "nachtDatum": { "2027-01-09": -12.146017699115045, "2027-02-14": 143.58407079646014 }, "autoPerDag": 15 },
+    "17": { "nacht": -11.824570536179074, "nachtDatum": { "2027-01-09": -9.221759500260283, "2027-02-14": 179.0577824049974 }, "autoPerDag": 15.882352941176471 },
+    "18": { "nacht": -12.763028515240904, "nachtDatum": { "2027-01-09": -10.304818092428714, "2027-02-14": 165.91937069813173 }, "autoPerDag": 15.555555555555555 },
+    "19": { "nacht": -13.602701443875175, "nachtDatum": { "2027-01-09": -11.273870517000468, "2027-02-14": 154.16394969725195 }, "autoPerDag": 15.263157894736842 },
+    "20": { "nacht": -14.358407079646017, "nachtDatum": { "2027-01-09": -12.146017699115045, "2027-02-14": 143.58407079646014 }, "autoPerDag": 15 }
   },
 
   "//ijsOnzeker": "Periode waarin het ijs nog onzeker is. Die dagen blijven gewoon te boeken, maar krijgen een streepje in de kalender en een regel uitleg eronder. Laat leeg (null) om de waarschuwing weg te halen.",
   "ijsOnzeker": {"van": "2026-12-19", "tot": "2027-01-01"},
 
-  "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf gaat per persoon van de prijs af. Voor de huurauto wordt het bedrag uitgerekend uit autoPerDagEUR hierboven, want dat hangt af van hoeveel mensen er meegaan en hoeveel dagen de reis duurt. Begeleiding staat aan: 100 euro per dag voor 1 persoon, plus 50 euro per dag voor elke extra persoon (2 personen 150, 4 personen 250 per dag), verdeeld over de deelnemers. De bezoeker kiest zelf voor hoeveel dagen (0 tot en met de hele reis). Het kan alleen als de hele reis binnen van/tot van het blokje begeleiding valt.",
+  "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf gaat per persoon van de prijs af. Voor de huurauto wordt het bedrag uitgerekend uit autoPerDag in groepsToeslag hierboven, want dat hangt af van hoeveel mensen er meegaan en hoeveel dagen de reis duurt. Begeleiding staat aan: 100 euro per dag voor 1 persoon, plus 50 euro per dag voor elke extra persoon (2 personen 150, 4 personen 250 per dag), verdeeld over de deelnemers. De bezoeker kiest zelf voor hoeveel dagen (0 tot en met de hele reis). Het kan alleen als de hele reis binnen van/tot van het blokje begeleiding valt.",
   "opties": {
     "vluchtZelf": 230,
     "//groterAuto": "Een ruimere huurauto, bijvoorbeeld voor meer bagage of meer mensen. Het bedrag is per persoon. Zolang prijs null is, staat de optie er wel in het aanvraagformulier maar telt hij niet mee in de prijs: Joey stuurt er dan een voorstel voor. Haal het hele blokje weg om de optie niet te tonen. NOG INVULLEN: wat kost een grotere auto?",
@@ -73,7 +82,7 @@
     }
   },
 
-  "//bezet": "Periodes waarin Falun Strandby geen gewone aankomst toelaat. In februari en begin maart verhuren ze alleen weekpakketten vanaf 25.000 SEK omdat er een groot evenement in Falun is, dus daar valt niets normaals te boeken. Wil je die weken toch open zetten, haal dan de tweede regel hieronder weg. Het label (wat) staat per taal, zodat de Engelse en andere versies geen Nederlands tonen; een losse regel mag ook, die verschijnt dan in alle talen.",
+  "//bezet": "Periodes waarin geen gewone aankomst mogelijk is. In februari en begin maart is er een groot evenement in Falun, dus daar valt niets normaals te boeken. Wil je die weken toch open zetten, haal dan de tweede regel hieronder weg. Het label (wat) staat per taal, zodat de Engelse en andere versies geen Nederlands tonen; een losse regel mag ook, die verschijnt dan in alle talen.",
   "bezet": [
     {"van": "2027-01-07", "tot": "2027-01-09", "wat": {"nl": "Geen aankomst mogelijk", "en": "No arrival possible", "de": "Keine Anreise möglich", "sv": "Ingen ankomst möjlig", "no": "Ingen ankomst mulig", "fi": "Saapuminen ei mahdollista"}},
     {"van": "2027-02-14", "tot": "2027-03-08", "wat": {"nl": "Niet beschikbaar", "en": "Not available", "de": "Nicht verfügbar", "sv": "Inte tillgänglig", "no": "Ikke tilgjengelig", "fi": "Ei saatavilla"}}
