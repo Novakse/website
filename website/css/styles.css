@@ -380,6 +380,41 @@ summary:focus-visible,
 .site-header.site-header--on-light { color: var(--ink); }
 .site-header.site-header--on-light .nav-toggle span { background: var(--ink); }
 
+/* Telefoon en tablet (aanraking): geen glas, maar een effen balk.
+   Het glas liet de foto's en secties die eronder wegscrolden meekleuren
+   (blauw van het ijs, grijs bij de overgang tussen donker en licht) en
+   bij het terugveren bovenaan scheen de witte paginarand erdoorheen. Nu is
+   de balk transparant zolang de openingsfoto eronder zit, en daarna effen in
+   de kleur van de sectie direct onder de balk (zie main.js, syncHeader), dus
+   de wissel valt samen met de sectiegrens en is niet te zien. De kleurwissel
+   is bewust zonder overgang: een cross-fade tussen donker en licht gaat
+   altijd even langs grijs. Alleen opacity en kleur, geen blur.
+   Bureaubladen met muis houden het glas hierboven. */
+.site-header { --header-bar-dark: var(--ink); --header-bar-light: var(--paper); }
+@media (hover: none) and (pointer: coarse) {
+  .site-header { transition: none; }
+  .site-header::after {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-color: var(--header-bar-dark);
+    transition: none;
+  }
+  .site-header.site-header--scrolled.site-header--on-light::after {
+    background-color: var(--header-bar-light);
+  }
+  .site-header.site-header--scrolled.site-header--over-hero::after { opacity: 0; }
+  .site-header.site-header--scrolled.site-header--over-hero { box-shadow: none; }
+  .site-header.site-header--scrolled.site-header--on-light {
+    box-shadow: 0 1px 0 rgba(20, 24, 26, 0.08);
+  }
+}
+/* Pagina's met een donkere openingsfoto: de rand van het canvas (het stuk dat
+   zichtbaar wordt als je bovenaan of onderaan voorbij het einde trekt) is
+   donker in plaats van wit. Anders ligt dat witte stuk achter de doorzichtige
+   balk en lijkt de balk even grijs te flitsen. De body houdt zijn eigen
+   achtergrond, dus de pagina zelf verandert niet. */
+html:has(.opener, .page-hero) { background-color: var(--ink); }
+
 .site-header__row {
   position: relative;
   z-index: 1;

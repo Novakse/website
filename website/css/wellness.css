@@ -427,6 +427,21 @@
 .page-wellness .site-header--scrolled:not(.site-header--on-light)::after {
   background-color: rgba(14, 21, 25, 0.6);
 }
+/* touch: solid bar in the colours of this page (see styles.css, header block) */
+.page-wellness .site-header { --header-bar-dark: var(--lx-night); --header-bar-light: var(--lx-linen); }
+@media (hover: none) and (pointer: coarse) {
+  .page-wellness .site-header.site-header--scrolled::after,
+  .page-wellness .site-header--scrolled:not(.site-header--on-light)::after {
+    background-color: var(--header-bar-dark);
+  }
+  .page-wellness .site-header.site-header--scrolled.site-header--on-light::after {
+    background-color: var(--header-bar-light);
+  }
+  .page-wellness .site-header.site-header--scrolled.site-header--over-hero::after { opacity: 0; }
+}
+/* canvas edge (overscroll at top/bottom) is night, not white */
+html:has(.page-wellness) { background-color: var(--lx-night, #0e1519); }
+
 .page-wellness .header-cta { background: var(--lx-amber); color: var(--lx-night); }
 
 /* --------------------------------------------------------------------------

@@ -610,8 +610,37 @@
     return rect.top < band && rect.bottom > 0;
   }
 
+  /* Op aanraakschermen is de balk effen (zie styles.css, blok "Telefoon en
+     tablet"). Dan telt niet wat er ergens in de balk zit, maar wat er direct
+     ONDER de onderrand van de balk ligt: de balk neemt de kleur van die
+     sectie over, zodat de wissel precies op de sectiegrens valt en niet te
+     zien is. Met een muis blijft de oude regel (alles wat de balk raakt). */
+  var touchBar = window.matchMedia
+    ? window.matchMedia("(hover: none) and (pointer: coarse)")
+    : { matches: false };
+
+  var dockEl = document.querySelector(".trip-search-dock--float > .wrap");
+
+  // photoOnly: tel het stuk van de openingsfoto waar het zoekpaneel overheen
+  // hangt (homepage) niet mee. Dat stuk is wit; een doorzichtige balk met wit
+  // logo zou erover heen komen te staan. De balk wordt daar dus alvast effen
+  // donker (de sectie eronder is donker), nog voordat de foto helemaal weg is.
+  function coversBarEdge(el, photoOnly) {
+    var band = header.offsetHeight;
+    var rect = el.getBoundingClientRect();
+    // Trekt iOS de pagina bovenaan omlaag (terugveren), dan schuift de
+    // openingsfoto onder de balk vandaan; hij telt dan nog steeds mee.
+    var pulledDown = el === heroEl && window.scrollY <= 0;
+    var bottom = rect.bottom;
+    if (photoOnly && dockEl) bottom = Math.min(bottom, dockEl.getBoundingClientRect().top);
+    return (rect.top <= band || pulledDown) && bottom > band;
+  }
+
   function syncHeader() {
     if (!header) return;
+
+    var onTouch = touchBar.matches;
+    var touches = onTouch ? coversBarEdge : overlapsHeaderBand;
 
     header.classList.toggle("site-header--scrolled", window.scrollY > 4);
 
@@ -620,18 +649,21 @@
       header.classList.toggle("site-header--logo-shown", markPassed);
     }
 
-    header.classList.toggle("site-header--over-hero", !!heroEl && overlapsHeaderBand(heroEl));
+    header.classList.toggle(
+      "site-header--over-hero",
+      !!heroEl && (onTouch ? coversBarEdge(heroEl, true) : overlapsHeaderBand(heroEl))
+    );
 
     var onDark = darkZoneEls.some(function (el) {
       if (el.classList.contains("why")) {
         // De "why"-sectie is pas echt donker zodra hij is omgeslagen naar
         // groen (is-snapped, zie syncSnap hierboven). Zolang dat zo is
-        // en de balk er nog overheen staat, blijft de balk donker — ook
+        // en de balk er nog overheen staat, blijft de balk donker - ook
         // verderop in een lange sectie, waar maar een klein stukje nog in
         // de balk-band valt.
-        return el.classList.contains("is-snapped") && overlapsHeaderBand(el);
+        return el.classList.contains("is-snapped") && touches(el);
       }
-      return overlapsHeaderBand(el);
+      return touches(el);
     });
     header.classList.toggle("site-header--on-light", !onDark);
   }
