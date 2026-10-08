@@ -34,13 +34,11 @@
     /* Verfijning reizen-overzicht: voorkomt wees-woorden in koppen en lopende tekst. */
     .page-hero__title,
     .intro__lead,
-    .trip-map__title,
     .why__title,
     .closing .h-section {
       text-wrap: balance;
     }
     .page-hero__lede,
-    .trip-map__text,
     .why__text,
     .why__reason p,
     .closing__text {
@@ -70,18 +68,12 @@
     }
     .page-hero__inner { min-width: 0; }
 
-    /* Heading above the trip map ("Onze schaatsreizen"). It now follows the
-       swept line under the search bar directly, so it gets a bit more room. */
-    .trips-head { background: var(--paper); padding-block: 1.5rem 0.25rem; }
+    /* The heading above the trip map (.trips-head) and the trip text styles
+       live in css/reizen.css, shared with the homepage. */
 
     /* The introduction sits below the trips; the trip map already ends with
        generous bottom padding, so the intro needs little extra on top. */
     .trip-map + .intro { padding-top: 1rem; }
-    .trips-head .h-section { margin-top: 0; text-wrap: balance; }
-    .trips-head .lede-text { text-wrap: pretty; }
-
-    /* A trip's text is a few short paragraphs. */
-    .trip-map__text p + p { margin-top: 0.5em; }
 
     /* How it works: the short tagline under the heading, and a little less
        room between the paragraphs than between heading and text. */

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Reizen overview - trip map carousel (reizen.html only)
+   Reizen overview - trip map carousel (reizen.html and the homepage)
 
    All trips sit side by side in one scroll-snap row (see css/reizen.css), so
    they can always be swiped or scrolled. This script keeps the parts in sync:
@@ -17,6 +17,9 @@
      load opens that trip with the line in view below the header; once a new
      trip settles, the hash follows with replaceState (no scroll jump and no
      extra history entries).
+   - data-trip-map-lazy on the map (the homepage, where it sits far below
+     the first screen): on load the first trips' photos are not fetched
+     ahead of time; they load lazily as usual until the row is used.
    Without this script the row still swipes and the stops are plain anchor
    links to the panels.
    ========================================================================== */
@@ -188,7 +191,7 @@
     setDisabled(nextBtn, at >= count - 1, prevBtn);
   }
 
-  function setCurrent(index, smoothStrip) {
+  function setCurrent(index, smoothStrip, skipWarmUp) {
     if (index === current) return;
     current = index;
     stops.forEach(function (stop, i) {
@@ -212,6 +215,7 @@
     if (countNow) countNow.textContent = String(index + 1);
     syncButtons();
     revealStop(index, smoothStrip !== false);
+    if (skipWarmUp) return;
     warmUp(index);
     warmUp(index + 1);
     warmUp(index - 1);
@@ -643,7 +647,7 @@
 
   if (countTotal) countTotal.textContent = String(count);
   root.classList.add("is-ready");
-  setCurrent(start, false);
+  setCurrent(start, false, fromHash < 0 && root.hasAttribute("data-trip-map-lazy"));
   committed = start;
   if (countLive) {
     // Fill the live region first and only then make it live, so the page

@@ -1,7 +1,9 @@
 /* ==========================================================================
-   Reizen overview - "trip map" (reizen.html only)
+   Reizen overview - "trip map" (reizen.html and the homepage, index.html)
    Loads after styles.css and theme-groen.css. All selectors are scoped to
-   trip-map__* so nothing leaks into other pages.
+   trip-map__* (plus .trips-head, the heading above the map) so nothing
+   leaks into other parts of a page. Both pages use the same markup; keep
+   them equal.
 
    One swept ice-rink line (the same path as .baanlijn, stretched) with a stop
    per trip, and below it one horizontal row with every trip side by side.
@@ -14,6 +16,11 @@
      buttons and the "1 / 7" counter stay in sync, as a carousel.
    - Phones: stops and current trip fit one screen (see "Phones" below).
    ========================================================================== */
+
+/* Heading and short intro above the trip map ("Onze schaatsreizen"). */
+.trips-head { background: var(--paper); padding-block: 1.5rem 0.25rem; }
+.trips-head .h-section { margin-top: 0; text-wrap: balance; }
+.trips-head .lede-text { text-wrap: pretty; }
 
 .trip-map {
   --ice: #e7eef1;          /* swept-lane tint and photo placeholder */
@@ -371,6 +378,7 @@
   font-size: 1.65rem;
   line-height: 1.05;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 /* Same lettering as the intro paragraph above the map (.lede-text): body
    size and line height at every width, in the soft ink colour. */
@@ -380,7 +388,10 @@
   font-size: 1rem;
   line-height: 1.55;
   color: var(--ink-soft);
+  text-wrap: pretty;
 }
+/* A trip's text is a few short paragraphs. */
+.trip-map__text p + p { margin-top: 0.5em; }
 
 .trip-map__facts {
   margin: 0.8rem 0 0;
