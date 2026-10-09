@@ -318,40 +318,36 @@
   aspect-ratio: 16 / 10;
   border-radius: 1.25rem;
 }
-/* "Fly & drive" label: a small paper tag in the lower corner of the main
-   photo that the smaller photos leave free (left on odd trips, right on the
-   mirrored even ones), so it sits on open ice or sky, not on the collage or
-   on faces. The text wraps to "Inclusief / fly & drive" under the icon so it
-   fits the free third of the photo at every width. */
+/* "Fly & drive" label: a slim paper pill on one line in the top corner of
+   the main photo, on the side away from the side photo (top-left on odd
+   trips, top-right on the mirrored even ones), clear of the smaller photos
+   that overlap the lower edge. Compact on small screens to cover less of
+   the photo. */
 .trip-map__incl {
-  grid-column: 1 / 5;
+  grid-column: 1 / -1;
   grid-row: 1;
-  align-self: end;
+  align-self: start;
   justify-self: start;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.2rem;
-  width: min-content;
-  max-width: calc(100% - 1.25rem);
-  margin: 0.6rem;
-  padding: 0.4rem 0.6rem 0.45rem;
-  border-radius: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  max-width: calc(100% - 1rem);
+  margin: 0.5rem;
+  padding: 0.2rem 0.55rem 0.2rem 0.45rem;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   color: var(--ink);
-  font-size: 0.74rem;
+  font-size: 0.68rem;
   font-weight: 600;
   line-height: 1.2;
+  white-space: nowrap;
 }
-.trip-map__panel:nth-child(even) .trip-map__incl {
-  grid-column: 9 / -1;
-  justify-self: end;
-}
+.trip-map__panel:nth-child(even) .trip-map__incl { justify-self: end; }
 .trip-map__incl svg {
   flex: none;
-  width: 2.8rem;
-  height: 1.2rem;
+  width: 2rem;
+  height: 0.86rem;
   fill: none;
   stroke: var(--warm-deep);
   stroke-width: 1.8;
@@ -359,7 +355,13 @@
   stroke-linejoin: round;
 }
 @media (min-width: 48rem) {
-  .trip-map__incl { margin: 0.85rem; font-size: 0.78rem; }
+  .trip-map__incl {
+    gap: 0.4rem;
+    margin: 0.9rem;
+    padding: 0.3rem 0.7rem 0.3rem 0.55rem;
+    font-size: 0.78rem;
+  }
+  .trip-map__incl svg { width: 2.3rem; height: 1rem; }
 }
 .trip-map__photo--side,
 .trip-map__photo--below {
