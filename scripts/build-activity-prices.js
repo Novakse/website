@@ -23,6 +23,11 @@
    example per age group; may be empty when the activity is free) and
    optionally "huur" (rental lines shown under that activity).
 
+   Other top-level keys (except "_opmerking") must be aliases such as
+   "groepsreis-orsa": { "gelijkAan": "falun" }: they use that trip's list and
+   prices, hold no lines of their own and are never written here, only
+   checked.
+
    A purchase record with "offered": false is kept in the private file for
    reference but is not sold: it must not appear on the site, and it is
    never written to the public JSON.
@@ -128,6 +133,15 @@ function isText(value) {
 // Checks of the public file on its own. Returns a list of problems.
 function checkPublic(catalogue) {
   var problems = [];
+  // Aliases: only { "gelijkAan": <one of TRIPS> }, nothing else.
+  Object.keys(catalogue).forEach(function (key) {
+    if (key.charAt(0) === "_" || TRIPS.indexOf(key) !== -1) return;
+    var alias = catalogue[key];
+    var fields = alias && typeof alias === "object" && !Array.isArray(alias) ? Object.keys(alias) : [];
+    if (!ID_PATTERN.test(key) || fields.length !== 1 || fields[0] !== "gelijkAan" || TRIPS.indexOf(alias.gelijkAan) === -1) {
+      problems.push(key + ": unknown trip; an alias holds only \"gelijkAan\": one of " + TRIPS.join(", "));
+    }
+  });
   TRIPS.forEach(function (trip) {
     var section = catalogue[trip];
     if (!section || !Array.isArray(section.activiteiten) || !section.activiteiten.length) {

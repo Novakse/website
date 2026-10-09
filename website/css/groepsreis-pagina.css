@@ -1,0 +1,519 @@
+/* ==========================================================================
+   Group trip pages: groepsreis-orsa.html and groepsreis-falun.html
+   Loads after styles.css and theme-groen.css. Everything is scoped to
+   body.gr-page, so no other page changes. The booking widget that fills
+   [data-groepsreis-widget] has its own stylesheet (css/groepsreis.css).
+
+   What makes these pages different from the package trips (orsa.html,
+   falun.html):
+   - a warm "Groepsreis, begeleid" label (sentence case, filled pill);
+   - the place name as a large lockup in the hero, with the fixed dates;
+   - the four days as date stamps on a swept ice lane;
+   - one colour per place, so Orsa and Falun cannot be mixed up:
+     Orsa = deep lake blue, Falun = Falu red (the red of the mine buildings).
+     Both pass WCAG AA on white and with white text (7.5:1 and 8.5:1).
+   Motion: transform and opacity only, switched off for reduced motion.
+   ========================================================================== */
+
+.gr-page {
+  --gr-ice: #e7eef1;        /* same lane tint as the photo mosaic */
+  --gr-ice-soft: #f2f6f7;   /* booking section background */
+  --gr-line: #dfe6e9;
+}
+.gr-page--orsa,
+.gr-sib--orsa { --gr-place: #2b5a70; }
+.gr-page--falun,
+.gr-sib--falun { --gr-place: #8a2c20; }
+
+/* --------------------------------------------------------------------------
+   Label "Groepsreis, begeleid" (and the outlined "Pakketreis, zelfstandig")
+   -------------------------------------------------------------------------- */
+.gr-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: var(--warm);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.84rem;
+  line-height: 1.2;
+}
+.gr-label::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+.gr-label--outline {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+.gr-label--small { font-size: 0.76rem; padding: 0.3rem 0.7rem 0.3rem 0.6rem; }
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+.gr-hero::after {
+  background: linear-gradient(180deg, rgba(20, 24, 26, 0.48) 0%, rgba(20, 24, 26, 0.14) 36%, rgba(20, 24, 26, 0.8) 100%);
+}
+.gr-hero .page-hero__inner { padding-bottom: 3rem; }
+.gr-hero__title {
+  margin-top: 1rem;
+  font-family: var(--display);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+.gr-hero__kicker {
+  display: block;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.gr-hero__place {
+  display: block;
+  margin-top: 0.08em;
+  font-size: clamp(3.6rem, 15vw, 8.25rem);
+  font-weight: 700;
+}
+.gr-hero__date {
+  margin-top: 1rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+  line-height: 1.25;
+  max-width: 30ch;
+}
+.gr-hero .page-hero__lede { margin-top: 0.75rem; }
+
+/* Phones: the menu covers navigation, so the breadcrumb goes (as on the
+   other trip pages) and the hero starts a little higher. */
+@media (max-width: 47.99rem) {
+  .gr-hero { padding-top: 6rem; }
+  .gr-hero .crumbs { display: none; }
+  .gr-hero .page-hero__lede { font-size: 0.98rem; line-height: 1.5; }
+}
+@media (min-width: 48rem) {
+  .gr-hero .page-hero__inner { padding-bottom: 4.5rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Price panel, overlapping the bottom of the hero
+   -------------------------------------------------------------------------- */
+.gr-price { position: relative; z-index: 2; }
+.gr-price__panel {
+  position: relative;
+  margin-top: -2.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "amount" "facts" "cta";
+  gap: 1.1rem;
+  padding: 1.4rem 1.25rem 1.6rem;
+  background: var(--paper);
+  border-radius: 1.25rem;
+  box-shadow: 0 18px 40px -18px rgba(24, 52, 74, 0.35), 0 2px 6px rgba(24, 52, 74, 0.08);
+  overflow: hidden;
+}
+/* The swept lane along the bottom edge, from ice to the warm accent. */
+.gr-price__panel::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #7fa9bd 0%, #a9c6d3 60%, var(--warm) 100%);
+}
+.gr-price__amount {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.6rem;
+  grid-area: amount;
+}
+.gr-price__value {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 9vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.gr-price__unit { color: var(--ink-soft); font-weight: 500; }
+.gr-price__facts {
+  grid-area: facts;
+  margin: 0;
+  display: grid;
+  border-top: 1px solid var(--border);
+}
+.gr-price__facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+.gr-price__facts dt { font-size: 0.88rem; color: var(--ink-soft); }
+.gr-price__facts dd { margin: 0; font-weight: 600; font-size: 0.93rem; text-align: right; }
+.gr-price__cta { grid-area: cta; justify-content: center; }
+
+@media (min-width: 48rem) {
+  .gr-price__panel {
+    margin-top: -3.5rem;
+    padding: 1.75rem 2rem 2rem;
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    grid-template-areas: "amount facts" "cta facts";
+    column-gap: 2.5rem;
+    align-items: start;
+  }
+  .gr-price__amount { flex-direction: column; gap: 0.4rem; }
+  .gr-price__cta { align-self: end; justify-self: start; }
+  /* Facts as a 2x2 block, so the full date stays on one line. */
+  .gr-price__facts { grid-template-columns: 1fr 1fr; column-gap: 2rem; border-top: 0; align-self: center; }
+  .gr-price__facts > div { flex-direction: column; justify-content: flex-start; gap: 0.15rem; padding-block: 0.7rem; }
+  .gr-price__facts dd { text-align: left; }
+}
+@media (min-width: 72rem) {
+  .gr-price__panel { grid-template-columns: minmax(0, 16rem) minmax(0, 1fr); column-gap: 3rem; }
+  .gr-price__facts { column-gap: 3rem; }
+  .gr-price__facts dd { font-size: 1rem; }
+}
+
+/* --------------------------------------------------------------------------
+   What is included
+   -------------------------------------------------------------------------- */
+.gr-incl { background: var(--paper); padding-block: 4.5rem 4rem; }
+.gr-incl__grid { display: grid; gap: 2.5rem; }
+.gr-incl__media { position: relative; margin: 0; padding-bottom: 3rem; }
+.gr-incl__main img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 1.25rem;
+  background: var(--gr-ice);
+}
+.gr-incl__inset {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0;
+  width: 40%;
+}
+.gr-incl__inset img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 1rem;
+  border: 5px solid var(--paper);
+  background: var(--gr-ice);
+  transform: rotate(3deg);
+}
+.gr-incl__lede { margin-top: 1rem; color: var(--ink-soft); max-width: 46ch; }
+.gr-incl__groups { margin-top: 2rem; display: grid; gap: 1.9rem; }
+.gr-incl__group-title,
+.gr-incl__not-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.08rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+.gr-incl__group .included__list,
+.gr-incl__not .included__list { margin-top: 0.9rem; }
+.gr-incl__not { margin-top: 2.75rem; }
+
+@media (min-width: 60rem) {
+  .gr-incl { padding-block: 5.5rem 5rem; }
+  .gr-incl__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4.5rem; align-items: start; }
+  .gr-incl__media { position: sticky; top: 6rem; }
+  .gr-incl__inset { right: -1.5rem; }
+}
+
+/* --------------------------------------------------------------------------
+   The four days: date stamps on a swept ice lane
+   -------------------------------------------------------------------------- */
+.gr-days {
+  --stamp: 4.6rem;
+  --lane-w: 22px;
+  background: var(--paper);
+  padding-block: 4.5rem 5rem;
+}
+.gr-days__grid { display: grid; gap: 2.5rem; }
+.gr-days__intro { margin-top: 1rem; color: var(--ink-soft); max-width: 54ch; }
+
+.gr-days__route { position: relative; margin-top: 2.25rem; }
+.gr-days__lane {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  line-height: 0;
+}
+.gr-days__lane svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.gr-days__lane path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.gr-days__lane-ice { stroke: var(--gr-ice); stroke-width: var(--lane-w); }
+.gr-days__lane-line { stroke: var(--warm-deep); stroke-width: 2; }
+/* Phones: the lane runs down along the stamps. */
+.gr-days__lane {
+  top: calc(var(--stamp) / 2);
+  bottom: calc(var(--stamp) / 2);
+  left: calc(var(--stamp) / 2 - var(--lane-w) / 2);
+  width: var(--lane-w);
+}
+.gr-days__lane--across { display: none; }
+
+.gr-days__list { position: relative; z-index: 1; margin: 0; padding: 0; list-style: none; display: grid; gap: 1.6rem; }
+.gr-day {
+  display: grid;
+  grid-template-columns: var(--stamp) minmax(0, 1fr);
+  column-gap: 1.15rem;
+  align-items: center;
+}
+.gr-day__num { display: block; font-size: 0.85rem; color: var(--ink-soft); }
+.gr-day__kind {
+  display: block;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.22rem;
+  line-height: 1.2;
+}
+
+.gr-stamp {
+  position: relative;
+  width: var(--stamp);
+  height: var(--stamp);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--gr-place);
+  border: 2px dashed var(--gr-place);
+  font-family: var(--display);
+  line-height: 1;
+  transform: rotate(var(--r, -6deg));
+}
+.gr-stamp::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.5;
+}
+.gr-stamp__wd,
+.gr-stamp__mo { font-size: 0.72rem; font-weight: 600; }
+.gr-stamp__num { font-size: calc(var(--stamp) * 0.36); font-weight: 700; margin-block: 0.06em; }
+/* A full day is a filled stamp, a travel day an outlined one. */
+.gr-day--full .gr-stamp {
+  background: var(--gr-place);
+  color: #fff;
+  border-style: solid;
+}
+.gr-day--full .gr-stamp::after { border-color: rgba(255, 255, 255, 0.8); opacity: 1; }
+
+.gr-days__media { margin: 0; }
+.gr-days__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: var(--gr-focus, 50% 50%);
+  border-radius: 1.25rem;
+  background: var(--gr-ice);
+}
+
+.gr-days__notes {
+  margin-top: 2.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+  display: grid;
+  gap: 1.5rem;
+}
+.gr-days__note h3 { font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
+.gr-days__note p { margin-top: 0.35rem; font-size: 0.93rem; color: var(--ink-soft); max-width: 46ch; }
+
+@media (min-width: 48rem) {
+  .gr-days__notes { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+}
+
+/* Wide screens: the four stamps in a row, the lane runs across. */
+@media (min-width: 60rem) {
+  .gr-days { --stamp: 5.6rem; --lane-w: 26px; padding-block: 5.5rem 6rem; }
+  .gr-days__grid { grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); gap: 4rem; align-items: start; }
+  .gr-days__media { position: sticky; top: 6rem; }
+  .gr-days__media img { aspect-ratio: 4 / 5; }
+  /* A landscape photo stays landscape: a portrait crop would blow it up. */
+  .gr-days__media--land img { aspect-ratio: 4 / 3; }
+  .gr-days__route { margin-top: 2.75rem; }
+  .gr-days__lane--down { display: none; }
+  .gr-days__lane--across {
+    display: block;
+    top: calc(var(--stamp) / 2 - var(--lane-w) / 2);
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: var(--lane-w);
+  }
+  .gr-days__list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 1rem; }
+  .gr-day { grid-template-columns: 1fr; row-gap: 0.9rem; align-items: start; justify-items: start; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* One orchestrated moment: the stamps are pressed one after another. */
+  .js .gr-days__list.reveal { transform: none; }
+  .js .gr-days__list .gr-stamp {
+    opacity: 0;
+    transform: rotate(var(--r, -6deg)) scale(1.35);
+    transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.3, 1.5, 0.5, 1);
+    transition-delay: calc(0.15s + var(--i, 0) * 0.2s);
+  }
+  .js .gr-days__list.is-visible .gr-stamp { opacity: 1; transform: rotate(var(--r, -6deg)) scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   Booking: visible summary (works without JS) next to the widget mount
+   -------------------------------------------------------------------------- */
+.gr-book { background: var(--gr-ice-soft); padding-block: 4.5rem 5rem; }
+.gr-book__lede { margin-top: 1rem; color: var(--ink-soft); max-width: 52ch; }
+.gr-book__grid { margin-top: 2rem; display: grid; gap: 2rem; }
+/* Without the widget script the mount stays empty and takes no space. */
+.gr-book [data-groepsreis-widget]:empty { display: none; }
+
+.gr-book__summary {
+  max-width: 36rem;
+  padding: 1.5rem 1.35rem;
+  background: var(--paper);
+  border: 1px solid var(--gr-line);
+  border-radius: 1.25rem;
+}
+.gr-book__trip { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.8rem; }
+.gr-book__place {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--gr-place);
+}
+.gr-book__facts { margin: 1.25rem 0 0; display: grid; border-top: 1px solid var(--border); }
+.gr-book__facts > div {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-block: 0.7rem;
+  border-bottom: 1px solid var(--border);
+}
+.gr-book__facts dt { font-size: 0.88rem; color: var(--ink-soft); }
+.gr-book__facts dd { margin: 0; font-weight: 600; }
+.gr-book__exception {
+  margin-top: 1.25rem;
+  font-size: 0.93rem;
+  color: var(--ink-soft);
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--warm);
+}
+.gr-book__actions {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.4rem;
+}
+.gr-book__actions .link-arrow { color: var(--warm-deep); }
+
+@media (min-width: 60rem) {
+  .gr-book { padding-block: 5.5rem 6rem; }
+  /* Two columns only while both the summary and a filled widget are shown;
+     the widget script may hide the summary, the widget then gets the width. */
+  .gr-book__grid:has([data-groepsreis-widget]:not(:empty)):has([data-groepsreis-fallback]:not([hidden])) {
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Short band: the package trip for people who prefer their own pace
+   -------------------------------------------------------------------------- */
+.gr-alt { background: var(--paper-soft); padding-block: 3rem; }
+.gr-alt__inner { display: grid; gap: 1.5rem; align-items: center; }
+.gr-alt__media { margin: 0; }
+.gr-alt__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 1rem;
+  background: var(--gr-ice);
+}
+.gr-alt__title {
+  margin-top: 0.9rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  line-height: 1.15;
+}
+.gr-alt__text { margin-top: 0.6rem; color: var(--ink-soft); max-width: 46ch; }
+.gr-alt__actions { margin-top: 1.3rem; }
+
+@media (min-width: 48rem) {
+  .gr-alt__inner { grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); gap: 2.5rem; }
+  .gr-alt__media img { aspect-ratio: 4 / 3; }
+}
+
+/* --------------------------------------------------------------------------
+   Both group trips side by side, so Orsa and Falun are never mixed up
+   -------------------------------------------------------------------------- */
+.gr-sibs { background: var(--paper); padding-block: 4rem 4.5rem; }
+.gr-sibs__lede { margin-top: 0.8rem; color: var(--ink-soft); max-width: 54ch; }
+.gr-sibs__list { margin-top: 1.75rem; display: grid; gap: 1rem; }
+.gr-sib {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 0.45rem;
+  padding: 1.25rem 1.25rem 1.3rem 1.6rem;
+  border-radius: 1rem;
+  background: var(--paper-soft);
+}
+.gr-sib::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  bottom: 1rem;
+  width: 5px;
+  border-radius: 0 5px 5px 0;
+  background: var(--gr-place);
+}
+.gr-sib--current { background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--gr-place); }
+.gr-sib__place {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.05;
+  color: var(--gr-place);
+}
+.gr-sib__date { font-weight: 600; }
+.gr-sib__status { font-size: 0.88rem; color: var(--ink-soft); }
+.gr-sib__link {
+  font-weight: 600;
+  font-size: 0.93rem;
+  color: var(--warm-deep);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+/* The whole row is the click target; the link text stays descriptive. */
+.gr-sib__link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.gr-sib__link:focus-visible { outline: none; }
+.gr-sib:has(.gr-sib__link:focus-visible) { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+@media (hover: hover) {
+  .gr-sib--link { transition: transform 0.2s ease; }
+  .gr-sib--link:hover { transform: translateY(-2px); }
+  .gr-sib--link:hover .gr-sib__link { text-decoration-thickness: 2px; }
+}
+
+@media (min-width: 48rem) {
+  .gr-sibs__list { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+}

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/theme-groen.css" />
   <link rel="stylesheet" href="css/reizen.css" />
+  <link rel="stylesheet" href="css/groepsreizen-sectie.css" />
   <link rel="canonical" href="https://www.novakse.com/reizen.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
@@ -100,7 +101,7 @@
         "name": "Hoeveel schaatsbestemmingen biedt Novakse aan?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Novakse biedt zeven bestemmingen aan: Orsa en Falun in Zweden, Luleå in Zweeds Lapland, Punkaharju in Finland, de Weissensee in Oostenrijk, de wellness- en schaatsreis in Zweden en de dagtocht vanuit Sälen in Zweden. Alle reizen zijn standaard zelfstandig, zonder begeleiding op het ijs. Bij Orsa en Falun kun je begeleiding op het ijs bijboeken. Bij de dagtocht vanuit Sälen gaan we samen het ijs op, maar Novakse is niet verantwoordelijk op het ijs. Begeleide groepsreizen worden nog gepland."
+          "text": "Novakse biedt zeven bestemmingen aan: Orsa en Falun in Zweden, Luleå in Zweeds Lapland, Punkaharju in Finland, de Weissensee in Oostenrijk, de wellness- en schaatsreis in Zweden en de dagtocht vanuit Sälen in Zweden. Alle reizen zijn standaard zelfstandig, zonder begeleiding op het ijs. Bij Orsa en Falun kun je begeleiding op het ijs bijboeken. Bij de dagtocht vanuit Sälen gaan we samen het ijs op, maar Novakse is niet verantwoordelijk op het ijs. Daarnaast zijn er begeleide groepsreizen naar Orsa en Falun, op een vaste datum."
         }
       },
       {
@@ -233,6 +234,46 @@
       </div>
     </div>
 
+    <!-- 2b. Guided group trips: two fixed-date trips, each with its own
+         page, shown above the package trips (the trip map below). Styles in
+         css/groepsreizen-sectie.css. -->
+    <section class="group-trips" id="groepsreizen" aria-labelledby="groepsreizen-title">
+      <div class="wrap">
+        <div class="group-trips__head">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Groepsreizen</span>
+          <h2 class="h-section" id="groepsreizen-title">Samen schaatsen op een vaste datum</h2>
+          <div class="group-trips__notes">
+            <p class="group-trips__lede">Bij een groepsreis reis je op een vaste datum, met begeleiding. Je meldt je aan per 2 personen.</p>
+            <p class="group-trips__lede">Liever in je eigen tempo en op je eigen datums? Kies dan hieronder een pakketreis. Je datums kies je zelf in de kalender.</p>
+          </div>
+        </div>
+
+        <div class="group-trips__list">
+          <article class="group-trip group-trip--orsa reveal" aria-labelledby="groepsreis-orsa-title">
+            <picture class="group-trip__media"><source type="image/avif" srcset="images/orsa-group-silhouettes-black-ice-480.avif 480w, images/orsa-group-silhouettes-black-ice-800.avif 800w, images/orsa-group-silhouettes-black-ice-1200.avif 1200w, images/orsa-group-silhouettes-black-ice.avif 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="images/orsa-group-silhouettes-black-ice-480.webp 480w, images/orsa-group-silhouettes-black-ice-800.webp 800w, images/orsa-group-silhouettes-black-ice-1200.webp 1200w, images/orsa-group-silhouettes-black-ice.webp 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><img src="images/orsa-group-silhouettes-black-ice-800.jpg" alt="Vijf schaatsers staan als silhouet in tegenlicht op glad donker ijs, met lange schaduwen en bomen op de oever" width="1600" height="1200" loading="lazy" decoding="async" srcset="images/orsa-group-silhouettes-black-ice-480.jpg 480w, images/orsa-group-silhouettes-black-ice-800.jpg 800w, images/orsa-group-silhouettes-black-ice-1200.jpg 1200w, images/orsa-group-silhouettes-black-ice.jpg 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /></picture>
+            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Groepsreis, begeleid</p>
+            <h3 class="group-trip__title" id="groepsreis-orsa-title">Groepsreis Orsa</h3>
+            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-01-28">do 28</time> t/m <time datetime="2027-01-31">zo 31 januari 2027</time></span></p>
+            <p class="group-trip__price"><span class="group-trip__amount">€1.295</span> per persoon</p>
+            <p class="group-trip__terms">4 dagen, aanmelden per 2 personen</p>
+            <p class="group-trip__incl"><strong>Inbegrepen:</strong> vlucht, accommodatie, auto, gids en begeleiding en 3 dagen schaatsen.</p>
+            <a class="btn btn--dark group-trip__cta" href="groepsreis-orsa.html">Bekijk en boek<span class="sr-only"> de groepsreis naar Orsa</span></a>
+          </article>
+
+          <article class="group-trip group-trip--falun reveal" aria-labelledby="groepsreis-falun-title">
+            <picture class="group-trip__media"><source type="image/avif" srcset="images/falun-group-break-sun-480.avif 480w, images/falun-group-break-sun-800.avif 800w, images/falun-group-break-sun.avif 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><source type="image/webp" srcset="images/falun-group-break-sun-480.webp 480w, images/falun-group-break-sun-800.webp 800w, images/falun-group-break-sun.webp 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><img src="images/falun-group-break-sun-800.jpg" alt="Vier mensen zitten naast elkaar op schopsleeën in de zon op het ijs, met dennenbomen en blauwe lucht achter hen" width="1086" height="724" loading="lazy" decoding="async" srcset="images/falun-group-break-sun-480.jpg 480w, images/falun-group-break-sun-800.jpg 800w, images/falun-group-break-sun.jpg 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /></picture>
+            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Groepsreis, begeleid</p>
+            <h3 class="group-trip__title" id="groepsreis-falun-title">Groepsreis Falun</h3>
+            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-02-04">do 4</time> t/m <time datetime="2027-02-07">zo 7 februari 2027</time></span></p>
+            <p class="group-trip__price"><span class="group-trip__amount">€1.295</span> per persoon</p>
+            <p class="group-trip__terms">4 dagen, aanmelden per 2 personen</p>
+            <p class="group-trip__incl"><strong>Inbegrepen:</strong> vlucht, accommodatie, auto, gids en begeleiding en 3 dagen schaatsen.</p>
+            <a class="btn btn--dark group-trip__cta" href="groepsreis-falun.html">Bekijk en boek<span class="sr-only"> de groepsreis naar Falun</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <div class="baanlijn baanlijn--on-light" aria-hidden="true">
       <svg viewBox="0 0 400 40" preserveAspectRatio="none">
         <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
@@ -243,6 +284,7 @@
          map section. -->
     <div class="trips-head">
       <div class="wrap">
+        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Pakketreizen</span>
         <h2 class="h-section">Onze schaatsreizen</h2>
         <p class="lede-text">Van Zweedse meren tussen de besneeuwde bossen tot het indrukwekkende ijs van de Botnische Golf en de Weissensee tussen de bergen. Iedere bestemming heeft zijn eigen sfeer en mogelijkheden.</p>
       </div>
@@ -568,7 +610,7 @@
             <p>De meeste reizen zijn zelfstandig. Er is geen vast programma en je gaat zonder begeleiding het ijs op.</p>
             <p>Bij Orsa en Falun kun je begeleiding op het ijs bijboeken.</p>
             <p>Bij de dagtocht vanuit Sälen gaan we gezamenlijk het ijs op. Novakse is daarbij niet verantwoordelijk voor de veiligheid op het ijs.</p>
-            <p>Begeleide groepsreizen zijn momenteel nog in voorbereiding.</p>
+            <p>Er zijn ook <a class="link-inline" href="#groepsreizen">begeleide groepsreizen</a> naar Orsa en Falun, op een vaste datum.</p>
           </div>
           <div class="why__reason reveal">
             <h3>Het weer bepaalt het ijs</h3>
@@ -607,7 +649,7 @@
         <div class="faq__list">
           <details class="faq__item">
             <summary>Hoeveel schaatsbestemmingen biedt Novakse aan?</summary>
-            <p>Novakse biedt zeven bestemmingen aan: Orsa en Falun in Zweden, Luleå in Zweeds Lapland, Punkaharju in Finland, de Weissensee in Oostenrijk, de wellness- en schaatsreis in Zweden en de dagtocht vanuit Sälen in Zweden. Alle reizen zijn standaard zelfstandig, zonder begeleiding op het ijs. Bij Orsa en Falun kun je begeleiding op het ijs bijboeken. Bij de dagtocht vanuit Sälen gaan we samen het ijs op, maar Novakse is niet verantwoordelijk op het ijs. Begeleide groepsreizen worden nog gepland.</p>
+            <p>Novakse biedt zeven bestemmingen aan: Orsa en Falun in Zweden, Luleå in Zweeds Lapland, Punkaharju in Finland, de Weissensee in Oostenrijk, de wellness- en schaatsreis in Zweden en de dagtocht vanuit Sälen in Zweden. Alle reizen zijn standaard zelfstandig, zonder begeleiding op het ijs. Bij Orsa en Falun kun je begeleiding op het ijs bijboeken. Bij de dagtocht vanuit Sälen gaan we samen het ijs op, maar Novakse is niet verantwoordelijk op het ijs. Daarnaast zijn er begeleide groepsreizen naar Orsa en Falun, op een vaste datum.</p>
           </details>
           <details class="faq__item">
             <summary>Hoe zit het met betalen?</summary>

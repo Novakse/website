@@ -1,0 +1,35 @@
+{
+  "_opmerking": "Dates are for 2027. maxPersonen mirrors MAX_REIZIGERS in api/create-payment.js.",
+
+  "groepsreis-orsa": {
+    "naam": "Groepsreis Orsa",
+    "plaats": "Orsa",
+    "van": "2027-01-28",
+    "tot": "2027-01-31",
+    "dagen": 4,
+    "volleDagen": 2,
+    "schaatsdagen": 3,
+    "prijsPerPersoon": 1295,
+    "stap": 2,
+    "minPersonen": 2,
+    "maxPersonen": 20,
+    "activiteitenDagen": 4,
+    "gidsen": "Joey en Vera"
+  },
+
+  "groepsreis-falun": {
+    "naam": "Groepsreis Falun",
+    "plaats": "Falun",
+    "van": "2027-02-04",
+    "tot": "2027-02-07",
+    "dagen": 4,
+    "volleDagen": 2,
+    "schaatsdagen": 3,
+    "prijsPerPersoon": 1295,
+    "stap": 2,
+    "minPersonen": 2,
+    "maxPersonen": 20,
+    "activiteitenDagen": 4,
+    "gidsen": "Joey en Vera"
+  }
+}

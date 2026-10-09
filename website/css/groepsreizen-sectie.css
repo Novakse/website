@@ -1,0 +1,223 @@
+/* ==========================================================================
+   Reizen overview - guided group trips (#groepsreizen, reizen.html only)
+   Loads after css/reizen.css. Two fixed-date group trips, shown above the
+   package trips on the trip map. All selectors are scoped to .group-trips /
+   .group-trip (plus one spacing rule for the "Pakketreizen" label above the
+   trip map heading), so nothing leaks into the rest of the page.
+
+   Both trips show the same facts in the same order, so they are easy to
+   compare. Their photos differ in shape and placement:
+   - Orsa: a 4:3 photo inside the content column (5:4 from 48rem).
+   - Falun: a wide photo that runs on to the right screen edge on phones;
+     from 48rem it sits lower in its column, by exactly the difference in
+     photo height, so both texts start on one line.
+   Everything is readable without hover; motion is opacity/transform only
+   (the shared .reveal and .btn styles).
+   ========================================================================== */
+
+.group-trips {
+  --gt-ice: #e7eef1;       /* same tint as the swept lane on the trip map */
+  background: var(--paper);
+  padding-block: 2.25rem 1.25rem;
+}
+
+/* Heading and the short explanation: group trip versus package trip. */
+.group-trips__head .h-section {
+  margin-top: 0.75rem;
+  text-wrap: balance;
+}
+.group-trips__notes { margin-top: 0.9rem; }
+.group-trips__lede {
+  max-width: 52ch;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+.group-trips__lede + .group-trips__lede { margin-top: 0.5rem; }
+
+.group-trips__list {
+  display: grid;
+  gap: 3rem;
+  margin-top: 1.75rem;
+}
+
+.group-trip { min-width: 0; }
+
+/* Photo */
+.group-trip__media {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: 1.25rem;
+  background: var(--gt-ice);
+}
+.group-trip__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.group-trip--orsa .group-trip__media img { object-position: 44% 60%; }
+.group-trip--falun .group-trip__media img { object-position: 50% 52%; }
+
+/* Phones: the Falun photo is wider and runs on to the screen edge, like the
+   trip row below it. html has overflow-x: clip, so this never scrolls. */
+.group-trip--falun .group-trip__media {
+  aspect-ratio: 16 / 9;
+  margin-right: calc(-1 * var(--pad));
+  border-radius: 1.25rem 0 0 1.25rem;
+}
+
+/* Label on the lower edge of the photo, cut out with a paper outline like
+   the smaller photos on the trip map (no shadow). */
+.group-trip__tag {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin: -1.05rem 0 0 1rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: var(--warm-deep);
+  outline: 0.3rem solid var(--paper);
+  color: var(--paper);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.group-trip__tag .dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.group-trip__title {
+  margin-top: 0.8rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.65rem;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* The fixed date: the main difference with a package trip, so it gets its
+   own swept-lane tint. */
+.group-trip__date {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: var(--gt-ice);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.3;
+}
+.group-trip__date svg {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: var(--warm-deep);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.group-trip__price {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+.group-trip__amount {
+  margin-right: 0.2rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.group-trip__terms {
+  margin-top: 0.2rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.group-trip__incl {
+  margin-top: 0.75rem;
+  max-width: 46ch;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+.group-trip__incl strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.group-trip__cta { margin-top: 1.25rem; }
+
+/* The heading above the trip map gets a "Pakketreizen" label, so the two
+   kinds of trips are named the same way. */
+.trips-head .eyebrow + .h-section { margin-top: 0.75rem; }
+
+/* --------------------------------------------------------------------------
+   Two columns from 48rem
+   -------------------------------------------------------------------------- */
+@media (min-width: 48rem) {
+  .group-trips { padding-block: 3rem 1rem; }
+  .group-trips__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: clamp(2rem, 5vw, 4.5rem);
+    margin-top: 2.25rem;
+  }
+
+  .group-trip__media { border-radius: 1.5rem; }
+  .group-trip--orsa .group-trip__media { aspect-ratio: 5 / 4; }
+  .group-trip--falun .group-trip__media {
+    aspect-ratio: 16 / 9;
+    margin-right: 0;
+    border-radius: 1.5rem;
+  }
+  /* Falun starts lower: the space above it is the height difference of the
+     two photos (4/5 - 9/16 = 19/80 of the column width), so the labels,
+     titles and dates of both trips line up. */
+  .group-trip--falun::before {
+    content: "";
+    display: block;
+    aspect-ratio: 80 / 19;
+  }
+
+  .group-trip__tag { margin-left: 1.25rem; }
+  .group-trip__title { font-size: 1.95rem; }
+}
+
+@media (min-width: 64rem) {
+  .group-trips { padding-block: 3.75rem 1.5rem; }
+  /* Heading left, explanation right. */
+  .group-trips__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 4.5rem;
+    align-items: end;
+  }
+  .group-trips__head .eyebrow { grid-column: 1; grid-row: 1; justify-self: start; }
+  .group-trips__head .h-section { grid-column: 1; grid-row: 2; }
+  .group-trips__notes { grid-column: 2; grid-row: 1 / 3; margin-top: 0; }
+  .group-trips__list { margin-top: 2.75rem; }
+  .group-trip__title { font-size: 2.3rem; }
+}

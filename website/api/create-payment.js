@@ -58,9 +58,25 @@ function berekenReis(keuze) {
   return module.berekenReis(keuze);
 }
 
-/* Optional activities at checkout (Falun and Wellness only). Priced with
-   js/activiteiten-prijs.js and data/activiteiten.json, the same code and file
-   uitchecken.html uses, so the page and Stripe always agree. Both are loaded
+/* Group trips with fixed dates (?reis=groepsreis-orsa / groepsreis-falun),
+   priced by api/_groepsreis.js with js/groepsreis-prijs.js and
+   data/groepsreizen.json, the same code and file the page uses. Loaded on
+   first use, like the trip module above. Every "groepsreis-..." key takes
+   this route, so such a booking can never fall through to the generic flow
+   that charges the browser amount. */
+function isGroepsreis(reisSleutel) {
+  return reisSleutel.indexOf("groepsreis-") === 0;
+}
+function prijsGroepsreis(keuze) {
+  var module;
+  try { module = require("./_groepsreis.js"); } catch (fout) { return { ok: false, fout: "De prijzen zijn niet beschikbaar.", status: 500 }; }
+  return module.prijsGroepsreis(keuze);
+}
+
+/* Optional activities at checkout (Falun, Wellness and the group trips
+   only). Priced with js/activiteiten-prijs.js and data/activiteiten.json,
+   the same code and file uitchecken.html uses, so the page and Stripe always
+   agree. Both are loaded
    only when a booking sends activities, so a problem there can never break a
    payment without them. */
 function activiteitenCatalogus() {
@@ -192,8 +208,10 @@ function geboortedatum(waarde) {
    birth must give exactly that split (age on the outbound day), so a date of
    birth can never silently change the price: a mismatch is refused and the
    visitor corrects the head count in the calendar. At least one traveller,
-   and the main driver, must be 21 or older. */
-function leesReisgegevens(gegevens, verwachtAantal, metAuto, leeftijdsControle) {
+   and the main driver, must be 21 or older.
+   groepsreis (true for a group trip): adults only and no calendar, so the
+   age message says that instead; there is no own transport to record. */
+function leesReisgegevens(gegevens, verwachtAantal, metAuto, leeftijdsControle, groepsreis) {
   var ontbreekt = { fout: "Vul eerst de reisgegevens volledig in." };
   if (!gegevens || typeof gegevens !== "object") return ontbreekt;
 
@@ -229,6 +247,10 @@ function leesReisgegevens(gegevens, verwachtAantal, metAuto, leeftijdsControle) 
   if (leeftijdsControle) {
     if (telling.volwassene !== leeftijdsControle.volwassenen || telling.kind !== leeftijdsControle.kinderen ||
         telling.baby !== leeftijdsControle.baby) {
+      if (groepsreis) {
+        return { fout: "Deze groepsreis is alleen voor volwassenen: iedere reiziger moet op de dag van aankomst " +
+          "12 jaar of ouder zijn. Controleer de geboortedata." };
+      }
       return { fout: "De geboortedata passen niet bij het aantal volwassenen, kinderen en baby's in je boeking. " +
         "De leeftijd telt op de dag van aankomst: volwassene vanaf 12 jaar, kind van 2 t/m 11 jaar, baby van 0 en 1 jaar. " +
         "Pas het aantal aan in de kalender of controleer de geboortedatum." };
@@ -258,7 +280,7 @@ function leesReisgegevens(gegevens, verwachtAantal, metAuto, leeftijdsControle) 
     // Optional confirmations: recorded, but they do not block payment.
     metadata.creditcard_bevestigd = gegevens.creditcard === true ? "ja" : "nee";
     metadata.rijbewijs_bevestigd = gegevens.rijbewijs === true ? "ja" : "nee";
-  } else {
+  } else if (!groepsreis) {
     metadata.huurauto = "eigen vervoer";
   }
 
@@ -295,12 +317,15 @@ module.exports = async function handler(req, res) {
   var metadata; // trip details; always set once the travel details are added
   var serverBerekend = false; // true when the amount comes from a price file
   var terugQuery = ""; // query string for the cancel URL
+  var terugPagina = "/uitchecken.html"; // page for the cancel URL
   var reisSleutel = String(body.reis || "").toLowerCase();
-  var activiteiten = null; // chosen activities (Falun and Wellness only)
+  var groepsreis = isGroepsreis(reisSleutel);
+  var activiteiten = null; // chosen activities (Falun, Wellness and the group trips only)
   var leeftijdsControle = null; // outbound day and head count split, set for calendar bookings
 
-  // Activities can only be added to a Falun or Wellness calendar booking.
-  var metActiviteiten = (body.reis === "Falun" && body.aankomst) || (reisSleutel === "wellness" && body.van);
+  // Activities can only be added to a Falun or Wellness calendar booking or
+  // a group trip (which uses Falun's list, see data/activiteiten.json).
+  var metActiviteiten = (body.reis === "Falun" && body.aankomst) || (reisSleutel === "wellness" && body.van) || groepsreis;
   if (!metActiviteiten && heeftActiviteiten(body.activiteiten)) {
     res.status(400).json({ error: "Bij deze reis zijn geen activiteiten te boeken." });
     return;
@@ -360,6 +385,66 @@ module.exports = async function handler(req, res) {
       vlucht: body.vlucht === "zelf" ? "zelf" : "",
       auto: body.auto === "zelf" ? "zelf" : "",
       begeleiding: falun.begeleidingDagen > 0 ? String(falun.begeleidingDagen) : "",
+      act: activiteiten ? activiteiten.query : ""
+    });
+  } else if (groepsreis) {
+    // Group trip with fixed dates: only the trip and the head count come from
+    // the browser; the amount is calculated here and the browser amount is
+    // ignored. Raw head count: only whole numbers are accepted.
+    var groep;
+    try {
+      groep = prijsGroepsreis({
+        reis: reisSleutel,
+        personen: typeof body.personen === "number" ? body.personen : String(body.personen || "")
+      });
+    } catch (fout) {
+      groep = { ok: false, fout: "De prijs kon niet worden berekend.", status: 500 };
+    }
+    if (!groep || !groep.ok) {
+      res.status((groep && groep.status) || 400).json({ error: (groep && groep.fout) || "De prijs kon niet worden berekend." });
+      return;
+    }
+
+    var groepReis = groep.reis;
+    var groepPrijs = groep.uitkomst;
+    bedrag = groepPrijs.totaalCenten;
+    serverBerekend = true;
+    omschrijving = groep.omschrijving.slice(0, 255);
+    productNaam = omschrijving;
+
+    // Activities per person per day count over activiteitenDagen (the whole
+    // trip, as with Falun). The alias in data/activiteiten.json gives Falun's
+    // list and prices.
+    activiteiten = berekenActiviteiten(groepPrijs.reis, body.activiteiten,
+      { personen: groepPrijs.personen, dagen: groepReis.activiteitenDagen });
+    if (activiteiten && activiteiten.fout) {
+      res.status(activiteiten.status).json({ error: activiteiten.fout });
+      return;
+    }
+
+    // Metadata and the cancel link use what the calculation validated.
+    // The number of travellers in the travel details is capped at
+    // MAX_REIZIGERS (20): raise that too before maxPersonen goes above it.
+    metadata = {
+      reis: groepReis.naam,
+      reistype: "groepsreis",
+      van: kort(groepReis.van),
+      tot: kort(groepReis.tot),
+      dagen: kort(groepReis.dagen),
+      personen: kort(groepPrijs.personen),
+      per_persoon_eur: kort(groepPrijs.perPersoonEur),
+      totaal_eur: kort(groepPrijs.totaalEur)
+    };
+    // Adults only (12 and older on the arrival day), no child price.
+    leeftijdsControle = {
+      datum: groepReis.van,
+      volwassenen: groepPrijs.personen,
+      kinderen: 0,
+      baby: 0
+    };
+    terugPagina = "/" + groepPrijs.reis + ".html"; // whitelisted key
+    terugQuery = queryString({
+      personen: String(groepPrijs.personen),
       act: activiteiten ? activiteiten.query : ""
     });
   } else if (REIS_NAMEN.hasOwnProperty(reisSleutel) && body.van) {
@@ -472,14 +557,15 @@ module.exports = async function handler(req, res) {
 
   // Travel details: a calendar booking must name exactly the booked head
   // count; a payment link from Joey carries no head count. Falun with own
-  // transport has no rental car.
-  // metadata.personen is the server-validated head count (Falun and the
-  // calendar trips alike).
+  // transport has no rental car; a group trip has no car choice and asks no
+  // main driver.
+  // metadata.personen is the server-validated head count (Falun, the
+  // calendar trips and the group trips alike).
   var verwachtAantal = metadata && metadata.personen ? parseInt(metadata.personen, 10) || 0 : 0;
-  var metAuto = !(body.reis === "Falun" && body.aankomst && body.auto === "zelf");
+  var metAuto = !groepsreis && !(body.reis === "Falun" && body.aankomst && body.auto === "zelf");
   var reisgegevens;
   try {
-    reisgegevens = leesReisgegevens(body.reisgegevens, verwachtAantal, metAuto, leeftijdsControle);
+    reisgegevens = leesReisgegevens(body.reisgegevens, verwachtAantal, metAuto, leeftijdsControle, groepsreis);
   } catch (fout) {
     reisgegevens = { fout: "De reisgegevens konden niet worden gecontroleerd." };
   }
@@ -514,7 +600,7 @@ module.exports = async function handler(req, res) {
       }
     ],
     success_url: basis + "/betaling-verwerkt.html",
-    cancel_url: basis + "/uitchecken.html" + (terugQuery ? "?" + terugQuery : ""),
+    cancel_url: basis + terugPagina + (terugQuery ? "?" + terugQuery : ""),
     customer_email: reisgegevens.email
   };
 

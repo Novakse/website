@@ -20,15 +20,21 @@
       Ook hier staat geen bedrag in de link: dat komt van /api/reis-prijs, en
       /api/create-payment rekent het bij het betalen opnieuw uit.
 
+   4. Via the booking widget of a group trip with fixed dates (js/groepsreis.js),
+      for example uitchecken.html?reis=groepsreis-orsa&personen=4. The price
+      comes from /api/groepsreis-prijs (js/groepsreis-prijs.js with
+      data/groepsreizen.json) and /api/create-payment calculates it again.
+      Adults only (12 and older on the arrival day), no rental car choice.
+
    Before paying, every trip goes through the "Reisgegevens" step
    (js/reisgegevens.js): travellers for the flight, contact details, the main
    driver of the rental car and the required confirmations. Only once that
    form is valid does the payment form appear, and the details are sent along
    to /api/create-payment, which checks them again.
 
-   Falun and Wellness & schaatsen also get the optional block "Activiteiten
-   bijboeken" (see startActiviteiten below); those activities are paid in the
-   same checkout.
+   Falun, Wellness & schaatsen and the group trips also get the optional block
+   "Activiteiten bijboeken" (see startActiviteiten below); those activities
+   are paid in the same checkout.
 
    Bij het doorgaan wordt er een Stripe Checkout-sessie aangemaakt via
    /api/create-payment en stuurt de browser door naar de betaalomgeving.
@@ -129,6 +135,16 @@
     };
   }
 
+  /* Group trips with fixed dates (?reis=groepsreis-orsa&personen=4). Every
+     "groepsreis-..." key takes this route, as in api/create-payment.js, so an
+     unknown or incomplete link gets the group trip message and never the
+     payment-link flow. The server checks the head count; van (the arrival
+     day) comes from its answer. */
+  var groepKeuze = null;
+  if (!falunKeuze && !reisKeuze && reisSleutel.indexOf("groepsreis-") === 0) {
+    groepKeuze = { reis: reisSleutel, personen: 0, van: "" };
+  }
+
   function euro(cent) {
     return "€" + (cent / 100).toLocaleString("nl-NL", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
@@ -181,6 +197,71 @@
     toonNiets();
   }
 
+  /* A group trip link that cannot be paid: incomplete, an odd head count,
+     an unknown trip, or no price from the server. Back to the group trips
+     on reizen.html; for a head count that cannot book online also contact.
+     detail: the server's own message, if any; geenLink: true when the link
+     itself is incomplete (nothing was asked from the server). */
+  var GROEPSREIS_CONTACT_CODES = ["teWeinig", "oneven", "teVeel"];
+  function toonGroepsreisFout(detail, code, geenLink) {
+    geenBedrag.textContent = "";
+
+    var tekst = document.createElement("p");
+    tekst.className = "booking__note";
+    tekst.textContent = (detail
+      ? detail.replace(/[.\s]+$/, "") + ". "
+      : (geenLink ? "Deze link naar een groepsreis is niet compleet. " : "We konden de prijs van deze groepsreis nu niet ophalen. ")) +
+      "Kies je groepsreis en het aantal personen opnieuw, of neem contact op via " + MAIL + ".";
+    tekst.style.marginBottom = "1.25rem"; // room between the text and the buttons
+    geenBedrag.appendChild(tekst);
+
+    var knoppen = document.createElement("div");
+    knoppen.style.display = "flex";
+    knoppen.style.flexWrap = "wrap";
+    knoppen.style.gap = "0.75rem";
+    var terug = document.createElement("a");
+    terug.className = "btn btn--outline-dark";
+    terug.href = "reizen.html#groepsreizen";
+    terug.textContent = "Terug naar de groepsreizen";
+    knoppen.appendChild(terug);
+    if (GROEPSREIS_CONTACT_CODES.indexOf(code) !== -1) {
+      var contact = document.createElement("a");
+      contact.className = "btn btn--dark";
+      contact.href = "contact.html";
+      contact.textContent = "Neem contact op";
+      knoppen.appendChild(contact);
+    }
+    geenBedrag.appendChild(knoppen);
+
+    var intro = document.querySelector(".booking__intro");
+    if (intro) intro.hidden = true;
+    toonNiets();
+  }
+
+  /* The number of days activities count over for a group trip
+     (activiteitenDagen in data/groepsreizen.json), read with the same module
+     the server uses (js/groepsreis-prijs.js, loaded here only for a group
+     trip). 0 when anything is missing: the optional activities block then
+     stays away and the trip itself can still be paid. */
+  function groepsreisActiviteitenDagen(sleutel) {
+    var module = window.NovakseGroepsreis
+      ? Promise.resolve(window.NovakseGroepsreis)
+      : new Promise(function (resolve) {
+          var el = document.createElement("script");
+          el.src = "js/groepsreis-prijs.js";
+          el.onload = function () { resolve(window.NovakseGroepsreis || null); };
+          el.onerror = function () { resolve(null); };
+          document.head.appendChild(el);
+        });
+    var data = fetch("data/groepsreizen.json")
+      .then(function (respons) { return respons.ok ? respons.json() : null; })
+      .catch(function () { return null; });
+    return Promise.all([module, data]).then(function (delen) {
+      var reisData = delen[0] && delen[1] ? delen[0].reis(delen[1], sleutel) : null;
+      return reisData && reisData.activiteitenDagen >= 1 ? reisData.activiteitenDagen : 0;
+    }).catch(function () { return 0; });
+  }
+
   // Summary lines above the total, in the same style as the Falun calendar.
   function toonReisRegels(regels) {
     var lijst = document.createElement("dl");
@@ -228,7 +309,9 @@
   var activiteiten = null;
 
   // Only these trips offer activities, so only they load the catalogue.
-  var actSoort = falunKeuze ? "falun" : (reisKeuze && reisKeuze.reis === "wellness" ? "wellness" : "");
+  // A group trip uses its own key ("groepsreis-orsa"), an alias of Falun's
+  // list in data/activiteiten.json.
+  var actSoort = falunKeuze ? "falun" : (reisKeuze && reisKeuze.reis === "wellness" ? "wellness" : (groepKeuze ? groepKeuze.reis : ""));
   var actCatalogus = actKlaar && actSoort
     ? fetch("data/activiteiten.json")
         .then(function (respons) { return respons.ok ? respons.json() : null; })
@@ -474,8 +557,8 @@
     return actBereken(nieuw) ? kopieKeuze(nieuw) : {};
   }
 
-  /* Called once the trip price is known. soort: "falun" or "wellness";
-     ctx: { personen, dagen } of the trip; reisTekst: Falun's description,
+  /* Called once the trip price is known. soort: "falun", "wellness" or a
+     group trip key; ctx: { personen, dagen } of the trip; reisTekst: Falun's description,
      shown above the block because the total now carries the label "Totaal". */
   function startActiviteiten(soort, ctx, reisTekst) {
     if (!actCatalogus || soort !== actSoort) return;
@@ -705,6 +788,75 @@
           toonReisFout(info, (fout && fout.detail) || "");
         });
     }
+  } else if (groepKeuze) {
+    reisNaamEl.textContent = "Groepsreis";
+    omschrijvingEl.textContent = "Totaal";
+    bedragEl.textContent = "...";
+    // The travel details need the arrival day, which comes with the price:
+    // the form appears together with the price (see below).
+    gegevensForm.hidden = true;
+
+    var groepIntro = document.querySelector(".booking__intro");
+    if (groepIntro) {
+      groepIntro.textContent = "Dit is de groepsreis die je hebt gekozen. Iedere reiziger is op de dag van aankomst 12 jaar of ouder. " +
+        "Vul eerst de reisgegevens in, daarna kies je hoe je wilt betalen.";
+    }
+
+    // Digits only (the server checks the rest: even, 2 to 20, the trip).
+    var groepPersonenTekst = params.get("personen") || "";
+    var groepPersonen = /^\d{1,3}$/.test(groepPersonenTekst) ? parseInt(groepPersonenTekst, 10) : 0;
+    if (!(groepPersonen >= 1)) {
+      toonGroepsreisFout("", "", true);
+      return;
+    }
+
+    fetch("/api/groepsreis-prijs?" + new URLSearchParams({ reis: groepKeuze.reis, personen: String(groepPersonen) }).toString())
+      .then(function (respons) {
+        return respons.json().catch(function () { return {}; }).then(function (data) {
+          return { ok: respons.ok, data: data || {} };
+        });
+      })
+      .then(function (resultaat) {
+        var data = resultaat.data;
+        function getal(waarde) { return typeof waarde === "number" && isFinite(waarde) && waarde > 0; }
+        // Every value that is shown must be there, so the page never shows
+        // NaN, undefined or an empty line.
+        var geldig = resultaat.ok && data.ok === true && data.reis === groepKeuze.reis &&
+          data.personen === groepPersonen && getal(data.totaalCenten) && getal(data.perPersoonEur) &&
+          getal(data.dagen) && typeof data.naam === "string" && data.naam.trim() !== "" &&
+          datumTekst(data.van) !== "" && datumTekst(data.tot) !== "";
+        if (!geldig) {
+          var fout = new Error("quote");
+          fout.detail = typeof data.fout === "string" ? data.fout : "";
+          fout.code = typeof data.code === "string" ? data.code : "";
+          throw fout;
+        }
+        bedragCent = Math.round(data.totaalCenten);
+        groepKeuze.personen = groepPersonen;
+        groepKeuze.van = data.van;
+
+        reisNaamEl.textContent = data.naam;
+        toonReisRegels([
+          ["Reis", data.naam],
+          ["Aankomst", datumTekst(data.van)],
+          ["Vertrek", datumTekst(data.tot)],
+          ["Dagen", String(data.dagen)],
+          ["Personen", String(groepPersonen)],
+          ["Per persoon", euro(Math.round(data.perPersoonEur * 100))]
+        ]);
+        bedragEl.textContent = euro(bedragCent);
+
+        startReisgegevens();
+        gegevensForm.hidden = false;
+
+        // Optional activities (Falun's list), counted over activiteitenDagen.
+        groepsreisActiviteitenDagen(groepKeuze.reis).then(function (dagen) {
+          if (dagen >= 1) startActiviteiten(groepKeuze.reis, { personen: groepPersonen, dagen: dagen }, "");
+        });
+      })
+      .catch(function (fout) {
+        toonGroepsreisFout((fout && fout.detail) || "", (fout && fout.code) || "", false);
+      });
   } else {
     if (!bedragCent || bedragCent < 100) {
       toonNiets();
@@ -750,22 +902,42 @@
   // The arrival day: ages count on this day (children 2-11, babies 0-1).
   var uitreisdatum = falunKeuze ? falunKeuze.aankomst : (reisKeuze ? reisKeuze.van : "");
 
-  var reisgegevensStap = window.NovakseReisgegevens.init({
-    form: gegevensForm,
-    personen: bekendePersonen,
-    kinderen: parseInt(bekendeKeuze.kinderen, 10) || 0,
-    baby: parseInt(bekendeKeuze.baby, 10) || 0,
-    uitreisdatum: uitreisdatum || "",
-    // Falun can be booked with own transport and/or an own flight; the other
-    // calendar trips with an own flight.
-    metAuto: !(falunKeuze && falunKeuze.auto === "zelf"),
-    eigenVlucht: !!((falunKeuze && falunKeuze.vlucht === "zelf") || (reisKeuze && reisKeuze.vlucht === "zelf")),
-    onKlaar: function (gegevens) {
-      reisgegevens = gegevens;
-      foutEl.hidden = true;
-      toonStap(3);
-    }
-  });
+  function naReisgegevens(gegevens) {
+    reisgegevens = gegevens;
+    foutEl.hidden = true;
+    toonStap(3);
+  }
+
+  /* The details step. A group trip starts it once its price, and with it
+     the arrival day, is known (see the groepKeuze branch above): adults
+     only, no rental car. Every other trip starts it right away. */
+  var reisgegevensStap = null;
+  function startReisgegevens() {
+    if (reisgegevensStap) return;
+    reisgegevensStap = window.NovakseReisgegevens.init(groepKeuze ? {
+      form: gegevensForm,
+      personen: groepKeuze.personen,
+      kinderen: 0,
+      baby: 0,
+      uitreisdatum: groepKeuze.van,
+      metAuto: false,
+      eigenVlucht: false,
+      alleenVolwassenen: true,
+      onKlaar: naReisgegevens
+    } : {
+      form: gegevensForm,
+      personen: bekendePersonen,
+      kinderen: parseInt(bekendeKeuze.kinderen, 10) || 0,
+      baby: parseInt(bekendeKeuze.baby, 10) || 0,
+      uitreisdatum: uitreisdatum || "",
+      // Falun can be booked with own transport and/or an own flight; the other
+      // calendar trips with an own flight.
+      metAuto: !(falunKeuze && falunKeuze.auto === "zelf"),
+      eigenVlucht: !!((falunKeuze && falunKeuze.vlucht === "zelf") || (reisKeuze && reisKeuze.vlucht === "zelf")),
+      onKlaar: naReisgegevens
+    });
+  }
+  if (!groepKeuze) startReisgegevens();
 
   stapGegevensEl.classList.add("is-current");
 
@@ -788,7 +960,7 @@
     // Payment is only possible with valid travel details.
     if (!reisgegevens) {
       toonStap(2);
-      reisgegevensStap.gegevens();
+      if (reisgegevensStap) reisgegevensStap.gegevens();
       return;
     }
 
@@ -827,6 +999,13 @@
         vlucht: reisKeuze.vlucht,
         methode: methode
       };
+    } else if (groepKeuze) {
+      // Only the trip and the head count: the server sets the amount.
+      lading = {
+        reis: groepKeuze.reis,
+        personen: groepKeuze.personen,
+        methode: methode
+      };
     }
     lading.reisgegevens = reisgegevens;
 
@@ -837,7 +1016,7 @@
     if (activiteiten && activiteiten.aan && activiteiten.uitkomst) {
       lading.activiteiten = geldendeKeuze();
       lading.verwachtCenten = Math.round(bedragCent + (Math.round(activiteiten.uitkomst.totaalCenten) || 0));
-    } else if ((falunKeuze || reisKeuze) && bedragCent > 0) {
+    } else if ((falunKeuze || reisKeuze || groepKeuze) && bedragCent > 0) {
       // A calendar booking always sends the total on screen, so the server
       // refuses (409) when its own calculation differs.
       lading.verwachtCenten = Math.round(bedragCent);

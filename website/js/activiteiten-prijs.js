@@ -1,5 +1,6 @@
 /* ==========================================================================
-   Optional activities at checkout (Falun and Wellness): price calculation.
+   Optional activities at checkout (Falun, Wellness and the group trips):
+   price calculation.
 
    The single source of truth for what the extra activities cost. The same
    file runs in two places:
@@ -12,6 +13,9 @@
    what is charged.
 
    Layout of the data: <reis>.activiteiten is one flat list of activities.
+   A trip may instead be an alias, <reis>: { "gelijkAan": "falun" }: it then
+   uses that trip's activities and prices (the group trips use Falun's). Only
+   one step: the target must have its own list.
    Each activity has
      tarieven  the price lines of the activity itself (for example one per
                age group). One tariff without a name uses the activity's
@@ -34,7 +38,8 @@
    that share a limit may together not exceed the highest max() among them.
    A ski package counts for skis, boots and helmet at once.
 
-   API (cat = parsed data/activiteiten.json, reis = "falun" | "wellness")
+   API (cat = parsed data/activiteiten.json, reis = "falun" | "wellness" |
+   "groepsreis-orsa" | "groepsreis-falun")
      activiteiten(cat, reis) -> the activities of that trip ([] if unknown)
      lijnen(cat, reis)       -> flat list of all price lines (copies), in
                                 page order (per activity: tariffs, then
@@ -82,7 +87,7 @@
 })(function () {
   "use strict";
 
-  var REIZEN = ["falun", "wellness"];
+  var REIZEN = ["falun", "wellness", "groepsreis-orsa", "groepsreis-falun"];
   var MAX_SLEUTELS = 40; // most activity ids one choice may name
   var ID_PATROON = /^[a-z0-9-]{1,40}$/;
   var EENHEID_TEKST = {
@@ -95,17 +100,30 @@
     return Object.prototype.hasOwnProperty.call(object, sleutel);
   }
 
-  // "falun" / "wellness" (any case), otherwise "".
+  // A key from REIZEN (any case), otherwise "".
   function reisSleutel(reis) {
     var sleutel = String(reis === undefined || reis === null ? "" : reis).toLowerCase();
     return REIZEN.indexOf(sleutel) === -1 ? "" : sleutel;
   }
 
-  function activiteiten(cat, reis) {
-    var sleutel = reisSleutel(reis);
-    if (!sleutel || !cat || typeof cat !== "object" || !heeft(cat, sleutel)) return [];
+  // The part of the catalogue with the trip's own list. An alias
+  // ({ gelijkAan: "falun" }) resolves to its target, one step only, and only
+  // to a whitelisted trip that is not an alias itself; anything else is null.
+  function deelVan(cat, sleutel) {
+    if (!sleutel || !cat || typeof cat !== "object" || !heeft(cat, sleutel)) return null;
     var deel = cat[sleutel];
-    if (!deel || !Array.isArray(deel.activiteiten)) return [];
+    if (deel && typeof deel === "object" && heeft(deel, "gelijkAan")) {
+      var doel = reisSleutel(deel.gelijkAan);
+      if (!doel || doel === sleutel || !heeft(cat, doel)) return null;
+      deel = cat[doel];
+      if (deel && typeof deel === "object" && heeft(deel, "gelijkAan")) return null;
+    }
+    return deel && typeof deel === "object" && Array.isArray(deel.activiteiten) ? deel : null;
+  }
+
+  function activiteiten(cat, reis) {
+    var deel = deelVan(cat, reisSleutel(reis));
+    if (!deel) return [];
     return deel.activiteiten.filter(function (act) {
       return act && typeof act === "object" && typeof act.id === "string";
     });

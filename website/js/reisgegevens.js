@@ -21,6 +21,8 @@
        kinderen: 1,         // of personen: children 2-11 (optional)
        baby: 0,             // of personen: babies 0-1 (optional)
        uitreisdatum: "2027-01-10", // arrival day; ages count on this day
+       alleenVolwassenen: false, // true for a group trip: adults only, so
+                            // the age message does not mention the calendar
        onKlaar: function (gegevens) {} // called after a valid submit
      });
      stap.gegevens()        // validated data, or null (shows the errors)
@@ -298,6 +300,11 @@
     function foutMelding(input) {
       var v = input.validity;
       if (input.getAttribute("data-geboekt-als") && input.value && !leeftijdKlopt(input)) {
+        // Same rule as the server (api/create-payment.js) for a group trip.
+        if (opties.alleenVolwassenen) {
+          return "Deze groepsreis is alleen voor volwassenen: iedere reiziger moet op de dag van aankomst" +
+            (uitreisTekst ? " (" + uitreisTekst + ")" : "") + " 12 jaar of ouder zijn. Controleer de geboortedatum.";
+        }
         var soort = CATEGORIE_TEKST[input.getAttribute("data-geboekt-als")];
         return "Je boekte een " + soort.naam + " (" + soort.leeftijd + " op de dag van aankomst" +
           (uitreisTekst ? ", " + uitreisTekst : "") + "). Deze geboortedatum past daar niet bij. " +
