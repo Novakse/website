@@ -318,32 +318,40 @@
   aspect-ratio: 16 / 10;
   border-radius: 1.25rem;
 }
-/* "Fly & drive" label: a small paper pill in the top-left corner of the main
-   photo, away from the smaller photos that overlap its lower edge. */
+/* "Fly & drive" label: a small paper tag in the lower corner of the main
+   photo that the smaller photos leave free (left on odd trips, right on the
+   mirrored even ones), so it sits on open ice or sky, not on the collage or
+   on faces. The text wraps to "Inclusief / fly & drive" under the icon so it
+   fits the free third of the photo at every width. */
 .trip-map__incl {
-  grid-column: 1 / -1;
+  grid-column: 1 / 5;
   grid-row: 1;
-  align-self: start;
+  align-self: end;
   justify-self: start;
   z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  max-width: calc(100% - 1.5rem);
-  margin: 0.75rem;
-  padding: 0.3rem 0.7rem 0.3rem 0.55rem;
-  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  width: min-content;
+  max-width: calc(100% - 1.25rem);
+  margin: 0.6rem;
+  padding: 0.4rem 0.6rem 0.45rem;
+  border-radius: 0.7rem;
   background: rgba(255, 255, 255, 0.92);
   color: var(--ink);
   font-size: 0.74rem;
   font-weight: 600;
   line-height: 1.2;
-  white-space: nowrap;
+}
+.trip-map__panel:nth-child(even) .trip-map__incl {
+  grid-column: 9 / -1;
+  justify-self: end;
 }
 .trip-map__incl svg {
   flex: none;
-  width: 2rem;
-  height: 0.8rem;
+  width: 2.8rem;
+  height: 1.2rem;
   fill: none;
   stroke: var(--warm-deep);
   stroke-width: 1.8;
@@ -351,7 +359,7 @@
   stroke-linejoin: round;
 }
 @media (min-width: 48rem) {
-  .trip-map__incl { margin: 0.9rem; font-size: 0.78rem; }
+  .trip-map__incl { margin: 0.85rem; font-size: 0.78rem; }
 }
 .trip-map__photo--side,
 .trip-map__photo--below {
