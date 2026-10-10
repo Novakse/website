@@ -6,7 +6,7 @@
    - A stop on the line scrolls the row to its trip; swiping or scrolling the
      row marks the trip that snapped in as current (aria-current).
    - Left/Right arrows move between the stops (Home/End to the first/last).
-   - Previous/next buttons and a "1 / 7" counter; the buttons are disabled
+   - Previous/next buttons and a "1 / 8" counter; the buttons are disabled
      at either end. Phones hide both; the hidden live text stays.
    - Tab only visits the links of the current trip; anything else that gets
      focus inside a trip that is off screen brings that trip into the row.
