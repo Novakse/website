@@ -13,7 +13,7 @@
      that is what shows there are more trips.
    - Without JavaScript the stops are plain anchor links to the panels.
    - With JavaScript (js/reizen.js) the stops, the row, the previous/next
-     buttons and the "1 / 7" counter stay in sync, as a carousel.
+     buttons and the "1 / 8" counter stay in sync, as a carousel.
    - Phones: stops and current trip fit one screen (see "Phones" below).
    ========================================================================== */
 
@@ -44,7 +44,7 @@
 
 /* --------------------------------------------------------------------------
    The line with the stops
-   Mobile first: a horizontal swipe strip. From 64rem all seven stops fit
+   Mobile first: a horizontal swipe strip. From 64rem all eight stops fit
    next to each other and the strip becomes a static line.
    -------------------------------------------------------------------------- */
 .trip-map__rail {
@@ -95,11 +95,11 @@
 .trip-map__lane { stroke: var(--ice); stroke-width: 18; }
 .trip-map__stroke { stroke: var(--warm-deep); stroke-width: 2; }
 
-/* Seven equal columns without gaps, so every stop centre sits at a known
+/* Eight equal columns without gaps, so every stop centre sits at a known
    point of the path. */
 .trip-map__stops {
   display: grid;
-  grid-template-columns: repeat(7, var(--stop-w));
+  grid-template-columns: repeat(8, var(--stop-w));
 }
 .trip-map__item {
   display: flex;
@@ -109,13 +109,14 @@
 /* Height of the path at each stop centre, as a share of the line band.
    Measured on "M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" in a
    viewBox from y=8 to y=32. */
-.trip-map__item:nth-child(1) { --y: 0.357; }
-.trip-map__item:nth-child(2) { --y: 0.339; }
-.trip-map__item:nth-child(3) { --y: 0.539; }
-.trip-map__item:nth-child(4) { --y: 0.652; }
-.trip-map__item:nth-child(5) { --y: 0.4375; }
-.trip-map__item:nth-child(6) { --y: 0.316; }
-.trip-map__item:nth-child(7) { --y: 0.418; }
+.trip-map__item:nth-child(1) { --y: 0.370; }
+.trip-map__item:nth-child(2) { --y: 0.319; }
+.trip-map__item:nth-child(3) { --y: 0.470; }
+.trip-map__item:nth-child(4) { --y: 0.633; }
+.trip-map__item:nth-child(5) { --y: 0.606; }
+.trip-map__item:nth-child(6) { --y: 0.323; }
+.trip-map__item:nth-child(7) { --y: 0.348; }
+.trip-map__item:nth-child(8) { --y: 0.409; }
 
 .trip-map__stop {
   position: relative;
@@ -194,7 +195,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Previous / next and the "1 / 7" counter
+   Previous / next and the "1 / 8" counter
    Only with JavaScript. The .js class (set in the page head) keeps their
    space from the start, so the row does not jump when reizen.js runs.
    Phones keep only the hidden live text (see "Phones" below).
@@ -292,7 +293,8 @@
 /* Photo composition: one main photo with the smaller ones overlapping its
    lower edge (cut out with a paper-coloured outline, no shadow). A portrait
    photo hangs furthest below, a landscape one sits a little higher next to
-   it. Every other trip is mirrored. */
+   it. Every other trip is mirrored: the odd ones, so the group trips (first)
+   are mirrored and Orsa (second) keeps its original, unmirrored layout. */
 .trip-map__media {
   --hang: 1.35rem;         /* how far the smaller photos hang below the main */
   display: grid;
@@ -319,8 +321,8 @@
   border-radius: 1.25rem;
 }
 /* "Fly & drive" label: a slim paper pill on one line in the top corner of
-   the main photo, on the side away from the side photo (top-left on odd
-   trips, top-right on the mirrored even ones), clear of the smaller photos
+   the main photo, on the side away from the side photo (top-left on even
+   trips, top-right on the mirrored odd ones), clear of the smaller photos
    that overlap the lower edge. Compact on small screens to cover less of
    the photo. */
 .trip-map__incl {
@@ -343,7 +345,7 @@
   line-height: 1.2;
   white-space: nowrap;
 }
-.trip-map__panel:nth-child(even) .trip-map__incl { justify-self: end; }
+.trip-map__panel:nth-child(odd) .trip-map__incl { justify-self: end; }
 .trip-map__incl svg {
   flex: none;
   width: 2rem;
@@ -383,11 +385,11 @@
   aspect-ratio: 3 / 2;
   border-radius: 0.8rem;
 }
-.trip-map__panel:nth-child(even) .trip-map__photo--side {
+.trip-map__panel:nth-child(odd) .trip-map__photo--side {
   grid-column: 1 / 5;
   margin: 0 0 0 0.8rem;
 }
-.trip-map__panel:nth-child(even) .trip-map__photo--below {
+.trip-map__panel:nth-child(odd) .trip-map__photo--below {
   grid-column: 5 / 9;
   margin: 0 0.25rem calc(var(--hang) * 0.55) 0.75rem;
 }
@@ -395,7 +397,7 @@
 /* Two photos only (Weissensee has no third one): the one smaller photo is a
    little larger, so the pair still feels balanced. */
 .trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--side { grid-column: 8 / -1; }
-.trip-map__panel:nth-child(even) .trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--side { grid-column: 1 / 6; }
+.trip-map__panel:nth-child(odd) .trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--side { grid-column: 1 / 6; }
 
 /* Crops for photos whose subject is not in the middle. */
 #weissensee .trip-map__photo--main img { object-position: 50% 30%; }
@@ -474,7 +476,7 @@
    to its "Bekijk deze reis" button fit on one screen (the small viewport,
    browser bars shown). Type and spacing stay exactly as above; the room
    comes from:
-   - no previous/next buttons and no visible "1 / 7" counter (swiping and
+   - no previous/next buttons and no visible "1 / 8" counter (swiping and
      the stops still work; the hidden live text still names the trip);
    then js/reizen.js, each step only when the one before is not enough:
    1. clamping a long text to the whole lines that fit (at least two), with
@@ -614,7 +616,7 @@
     mask-image: none;
   }
   .trip-map__track { width: auto; }
-  .trip-map__stops { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .trip-map__stops { grid-template-columns: repeat(8, minmax(0, 1fr)); }
   .trip-map__stop { padding-inline: 0.4rem; }
   .trip-map__name { font-size: 1.08rem; }
 
