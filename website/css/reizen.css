@@ -525,6 +525,26 @@
      below the 67px header (the section has 1.25rem above the line). */
   .trip-map { scroll-margin-top: calc(4.1875rem + 0.5rem - 1.25rem); }
 
+  /* One trip per screen: each trip is the full content width and snaps
+     to the centre of the screen. The gap is twice the side padding, so the
+     neighbouring trips stay just out of view (no peek), and a swipe always
+     stops on the very next trip (scroll-snap-stop in the base rules). The
+     first trip still sits at scrollLeft 0, so js/reizen.js lines trips up
+     exactly as before. */
+  .trip-map {
+    --gap: calc(2 * var(--pad));
+    --panel-w: 100%;       /* in the row, 100% is the page content */
+  }
+  .trip-map__panels {
+    scroll-padding-inline: var(--row-inset);
+    overscroll-behavior-x: contain;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  /* No spacer after the last trip: the row padding already centres it. */
+  .trip-map__panels::after { display: none; }
+  .trip-map__panel { scroll-snap-align: center; }
+
   /* Only the hidden live text stays; the controls then take no height. */
   .js .trip-map__nav,
   .js .trip-map__count > [aria-hidden="true"] { display: none; }
