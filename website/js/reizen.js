@@ -400,20 +400,57 @@
     jumpToMap();
   });
 
-  /* --- Phones: the page snaps to the map only while it is near ------------
-     css/reizen.css makes the page a snap container (scroll-snap-type on
-     html, the map snaps to its start) only under html.trip-map-near. That
-     class is on while the map is within one screen above or below the
-     viewport. A page-wide snap container changes how the page decelerates
-     after every swipe (iOS stops it much sooner), so with it always on the
-     whole site felt slow and sticky, not just the trips section. The CSS
-     keeps the phone and reduced-motion conditions; this only tracks where
-     the map is. Without IntersectionObserver the page never snaps. */
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (entries) {
-      var near = entries[entries.length - 1].isIntersecting;
-      document.documentElement.classList.toggle("trip-map-near", near);
-    }, { rootMargin: "100% 0px 100% 0px" }).observe(root);
+  /* --- Phones: the map settles into place after a swipe -------------------
+     Once the page comes to rest with the top of the map within a quarter
+     screen of its place (the line MAP_GAP below the header: the section's
+     scroll-margin-top in css/reizen.css), the page scrolls the last bit so
+     the map lines up. Everywhere else the page is left alone. CSS scroll
+     snap on the page is not used for this: a snap container changes how
+     the page decelerates after every swipe, and switching it on or off
+     while the page is still moving (as a class toggled near the map did)
+     cuts the swipe short, so the page stuttered before and after the map
+     as well. Only after the page has stopped and no finger is down, so a
+     pause mid-swipe is never pulled. Phones only, off for reduced motion
+     (the trips' own row is unaffected: it scrolls sideways). */
+  var SETTLE_RANGE = 0.25;   // share of the screen height the map may be off
+  var settleTick = 0;
+  var settleSmooth = false;
+  var fingerDown = false;
+  var settleMedia = window.matchMedia
+    ? window.matchMedia("(max-width: 47.99rem)")
+    : { matches: false };
+
+  function settleMap() {
+    settleTick = 0;
+    if (fingerDown || settleSmooth || !settleMedia.matches || reducedMotion.matches) return;
+    var scrollMargin = parseFloat(window.getComputedStyle(root).scrollMarginTop) || 0;
+    var y = root.getBoundingClientRect().top + (window.pageYOffset || 0) - scrollMargin;
+    var off = y - (window.pageYOffset || 0);
+    var range = SETTLE_RANGE * (window.innerHeight || 0);
+    if (Math.abs(off) < 1 || Math.abs(off) > range) return;
+    settleSmooth = true;
+    window.scrollTo({ top: Math.round(y), behavior: "smooth" });
+    // The smooth scroll fires scroll events of its own; ignore those.
+    setTimeout(function () { settleSmooth = false; }, 700);
+  }
+  function queueSettle() {
+    clearTimeout(settleTick);
+    settleTick = setTimeout(settleMap, 120);
+  }
+  function fingerUp() { fingerDown = false; queueSettle(); }
+  window.addEventListener("touchstart", function () { fingerDown = true; }, { passive: true });
+  if (typeof window.onscrollend !== "undefined") {
+    // scrollend fires once the page has stopped and the finger is up.
+    window.addEventListener("scrollend", settleMap);
+    window.addEventListener("touchend", function () { fingerDown = false; }, { passive: true });
+    window.addEventListener("touchcancel", function () { fingerDown = false; }, { passive: true });
+  } else {
+    // No scrollend (Safari before 26): the page has stopped when no scroll
+    // event has come for a while. A finger held still sends none either,
+    // so lifting it checks again.
+    window.addEventListener("scroll", queueSettle, { passive: true });
+    window.addEventListener("touchend", fingerUp, { passive: true });
+    window.addEventListener("touchcancel", fingerUp, { passive: true });
   }
 
   /* --- Phones: one screen ------------------------------------------------
