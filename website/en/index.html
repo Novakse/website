@@ -13,6 +13,8 @@
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="../fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" as="image" href="../images/hero-video-novakse-poster-mobile.jpg" media="(max-aspect-ratio: 4/5)" fetchpriority="high" />
+  <link rel="preload" as="image" href="../images/hero-video-novakse-poster.jpg" media="not all and (max-aspect-ratio: 4/5)" fetchpriority="high" />
   <link rel="stylesheet" href="../css/fonts.css" />
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/theme-groen.css" />
@@ -164,7 +166,7 @@
   <header class="site-header">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="#top" aria-label="Novakse Reizen - back to top">
-        <img class="logo-mark" src="../images/logo-mark.png" alt="" width="401" height="600" />
+        <img class="logo-mark" src="../images/logo-mark.webp" alt="" width="401" height="600" />
       </a>
 
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
@@ -202,14 +204,14 @@
   <main id="main">
     <!-- 1. Opener -->
     <section class="opener" id="top">
-      <video class="opener__video" autoplay muted loop playsinline preload="none"
-             poster="../images/hero-video-novakse-poster.jpg" aria-hidden="true"
-             data-src-wide="../images/hero-video-novakse.mp4"
-             data-src-tall="../images/hero-video-novakse-mobile.mp4"
+      <video class="opener__video" autoplay muted loop playsinline preload="none" aria-hidden="true"
+             data-src-wide="../images/hero-video-novakse-light.mp4"
+             data-src-tall="../images/hero-video-novakse-mobile-light.mp4"
              data-poster-wide="../images/hero-video-novakse-poster.jpg"
              data-poster-tall="../images/hero-video-novakse-poster-mobile.jpg"></video>
+      <script>/* Show the right hero poster at first paint, before main.js runs (same rule as main.js). */(function(v){if(!v)return;var d=v.dataset;v.poster=matchMedia("(max-aspect-ratio: 4/5)").matches?d.posterTall:d.posterWide;})(document.querySelector(".opener__video"));</script>
       <div class="opener__inner">
-        <img class="opener__mark" src="../images/logo-mark.png" alt="" width="401" height="600" fetchpriority="high" />
+        <img class="opener__mark" src="../images/logo-mark.webp" alt="" width="401" height="600" fetchpriority="high" />
         <h1 class="opener__title">Skating trips on natural ice</h1>
         <p class="opener__lede">Independent skating trips on natural ice in Sweden, Finland and Austria, personally arranged by Joey.</p>
         <div class="opener__actions">
@@ -656,7 +658,7 @@
     <div class="wrap footer__grid">
       <div>
         <a class="footer__logo" href="#top" aria-label="Novakse Reizen - back to top">
-          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.png" alt="" width="401" height="600" />
+          <img class="logo-mark logo-mark--lg" src="../images/logo-mark.webp" alt="" width="401" height="600" />
           <img class="logo-word-img logo-word-img--lg logo-word-img--light" src="../images/logo-word-light.png" alt="Novakse Reizen" width="1099" height="184" />
         <img class="logo-word-img logo-word-img--lg logo-word-img--dark" src="../images/logo-word-dark.png" alt="" aria-hidden="true" width="1099" height="184" />
         </a>
@@ -687,8 +689,8 @@
     </div>
   </footer>
 
-  <script src="../js/main.js"></script>
-  <script src="../js/aanvraag.js"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/aanvraag.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
