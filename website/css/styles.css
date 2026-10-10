@@ -699,6 +699,12 @@ body:has(.opener__mark) .site-header:not(.site-header--logo-shown) .site-header_
 .opener__bg.is-active { opacity: 1; }
 .opener__video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; background: #14181a; transition: opacity 0.26s ease; }
 .opener__video--loop-fade { opacity: 0; }
+/* Without JS the video has no poster attribute (an inline script picks the
+   right one), so show the matching poster as a background instead. */
+html:not(.js) .opener__video { background: #14181a url("../images/hero-video-novakse-poster.jpg") center / cover no-repeat; }
+@media (max-aspect-ratio: 4/5) {
+  html:not(.js) .opener__video { background-image: url("../images/hero-video-novakse-poster-mobile.jpg"); }
+}
 .opener::after {
   content: "";
   position: absolute; inset: 0;
