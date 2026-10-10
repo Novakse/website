@@ -1,6 +1,6 @@
 /* ==========================================================================
    Reizen overview - guided group trips (#groepsreizen, reizen.html only)
-   Loads after css/reizen.css. Two fixed-date group trips, shown above the
+   Loads after css/reizen.css. Two fixed-date group trips, shown below the
    package trips on the trip map. All selectors are scoped to .group-trips /
    .group-trip (plus one spacing rule for the "Pakketreizen" label above the
    trip map heading), so nothing leaks into the rest of the page.
