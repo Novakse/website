@@ -506,6 +506,13 @@
           observers.forEach(function (observer) { observer.disconnect(); });
           window.clearTimeout(pauseTimer);
           window.removeEventListener("scroll", waitForPause);
+          /* Reviews widget: the deferral above already decides when it boots,
+             so drop Elfsight's own lazy mode. Otherwise Elfsight waits for yet
+             another interaction plus its 1 s delay, and the reviews show up
+             late once the visitor reaches them. */
+          if (widget.closest && widget.closest(".reviews__widget")) {
+            widget.removeAttribute("data-elfsight-app-lazy");
+          }
           placeholder.parentNode.replaceChild(widget, placeholder);
         };
         var waitForPause = function () {
