@@ -401,6 +401,14 @@
             </svg>
             <ul class="trip-map__stops" aria-label="Kies een reis">
               <li class="trip-map__item">
+                <a class="trip-map__stop" id="tab-groepsreis" href="#groepsreis">
+                  <span class="trip-map__marker" aria-hidden="true"></span>
+                  <span class="trip-map__name">Groepsreizen</span>
+                  <span class="trip-map__country">Orsa &amp; Falun</span>
+                  <span class="trip-map__price">€1.295 p.p.</span>
+                </a>
+              </li>
+              <li class="trip-map__item">
                 <a class="trip-map__stop" id="tab-orsa" href="#orsa">
                   <span class="trip-map__marker" aria-hidden="true"></span>
                   <span class="trip-map__name">Orsa</span>
@@ -464,7 +472,7 @@
              JavaScript (js/reizen.js); phones keep only the hidden live
              text (css/reizen.css). -->
         <div class="trip-map__controls">
-          <p class="trip-map__count"><span aria-hidden="true"><span class="trip-map__count-now">1</span> / <span class="trip-map__count-total">7</span></span><span class="trip-map__count-live sr-only"></span></p>
+          <p class="trip-map__count"><span aria-hidden="true"><span class="trip-map__count-now">1</span> / <span class="trip-map__count-total">8</span></span><span class="trip-map__count-live sr-only"></span></p>
           <button type="button" class="trip-map__nav" data-trip-prev aria-label="Vorige reis" aria-controls="tripPanels" disabled>
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
           </button>
@@ -475,6 +483,36 @@
       </div>
 
         <div class="trip-map__panels" id="tripPanels">
+          <!-- Guided group trips (Orsa and Falun) as one combined first trip;
+               content equals the group trip pages and the groepsreizen
+               section on reizen.html. Photos: groepsreis Orsa. -->
+          <article class="trip-map__panel" id="groepsreis" aria-labelledby="groepsreis-title">
+            <div class="trip-map__media">
+              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/orsa-group-silhouettes-black-ice-480.avif 480w, images/orsa-group-silhouettes-black-ice-800.avif 800w, images/orsa-group-silhouettes-black-ice-1200.avif 1200w, images/orsa-group-silhouettes-black-ice.avif 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/orsa-group-silhouettes-black-ice-480.webp 480w, images/orsa-group-silhouettes-black-ice-800.webp 800w, images/orsa-group-silhouettes-black-ice-1200.webp 1200w, images/orsa-group-silhouettes-black-ice.webp 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/orsa-group-silhouettes-black-ice.jpg" alt="Vijf schaatsers staan als silhouet in tegenlicht op glad donker ijs, met lange schaduwen en bomen op de oever" width="1600" height="1200" loading="lazy" srcset="images/orsa-group-silhouettes-black-ice-480.jpg 480w, images/orsa-group-silhouettes-black-ice-800.jpg 800w, images/orsa-group-silhouettes-black-ice-1200.jpg 1200w, images/orsa-group-silhouettes-black-ice.jpg 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
+              <p class="trip-map__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
+              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/orsa-fika-shelter-480.avif 480w, images/orsa-fika-shelter-800.avif 800w, images/orsa-fika-shelter-1200.avif 1200w, images/orsa-fika-shelter.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/orsa-fika-shelter-480.webp 480w, images/orsa-fika-shelter-800.webp 800w, images/orsa-fika-shelter-1200.webp 1200w, images/orsa-fika-shelter.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/orsa-fika-shelter.jpg" alt="Een groep mensen in sportkleding pauzeert in de zon bij een open houten schuilhut, met een bevroren meer op de achtergrond" width="1600" height="1200" loading="lazy" srcset="images/orsa-fika-shelter-480.jpg 480w, images/orsa-fika-shelter-800.jpg 800w, images/orsa-fika-shelter-1200.jpg 1200w, images/orsa-fika-shelter.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
+              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/orsa-two-skaters-golden-hour-480.avif 480w, images/orsa-two-skaters-golden-hour-800.avif 800w, images/orsa-two-skaters-golden-hour.avif 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/orsa-two-skaters-golden-hour-480.webp 480w, images/orsa-two-skaters-golden-hour-800.webp 800w, images/orsa-two-skaters-golden-hour.webp 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/orsa-two-skaters-golden-hour.jpg" alt="Twee schaatsers van achteren op een geveegde baan met een dun laagje sneeuw, richting de laagstaande zon" width="1080" height="1350" loading="lazy" srcset="images/orsa-two-skaters-golden-hour-480.jpg 480w, images/orsa-two-skaters-golden-hour-800.jpg 800w, images/orsa-two-skaters-golden-hour.jpg 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
+            </div>
+            <div class="trip-map__body">
+              <span class="trip-map__region">Orsa &amp; Falun, Zweden</span>
+              <h3 class="trip-map__title" id="groepsreis-title">Groepsreizen</h3>
+              <div class="trip-map__text">
+                <p>Bij een groepsreis reis je op een vaste datum, met begeleiding. Je meldt je aan per 2 personen.</p>
+                <p><strong>Inbegrepen:</strong> vlucht, accommodatie, auto, gids en begeleiding en 3 dagen schaatsen.</p>
+              </div>
+              <dl class="trip-map__facts">
+                <div><dt>Soort reis</dt><dd>Groepsreis, begeleid</dd></div>
+                <div><dt>Groepsreis Orsa</dt><dd><time datetime="2027-01-28">do 28</time> t/m <time datetime="2027-01-31">zo 31 januari 2027</time></dd></div>
+                <div><dt>Groepsreis Falun</dt><dd><time datetime="2027-02-04">do 4</time> t/m <time datetime="2027-02-07">zo 7 februari 2027</time></dd></div>
+                <div><dt>Prijs</dt><dd>€1.295 per persoon, 4 dagen</dd></div>
+              </dl>
+              <div class="trip-map__actions">
+                <a class="btn btn--dark" href="groepsreis-orsa.html">Groepsreis Orsa<span class="sr-only"> bekijken en boeken</span></a>
+                <a class="link-arrow" href="groepsreis-falun.html">Groepsreis Falun<span class="sr-only"> bekijken en boeken</span></a>
+              </div>
+            </div>
+          </article>
+
           <article class="trip-map__panel" id="orsa" aria-labelledby="orsa-title">
             <div class="trip-map__media">
               <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/orsa-zwart-ijs-baan-480.avif 480w, images/orsa-zwart-ijs-baan-800.avif 800w, images/orsa-zwart-ijs-baan.avif 1000w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/orsa-zwart-ijs-baan-480.webp 480w, images/orsa-zwart-ijs-baan-800.webp 800w, images/orsa-zwart-ijs-baan.webp 1000w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/orsa-zwart-ijs-baan.jpg" alt="Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer" loading="lazy" srcset="images/orsa-zwart-ijs-baan-480.jpg 480w, images/orsa-zwart-ijs-baan-800.jpg 800w, images/orsa-zwart-ijs-baan.jpg 1000w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
