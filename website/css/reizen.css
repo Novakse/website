@@ -572,9 +572,13 @@
    past it settles it at the top (the line 8px below the header, via the
    scroll-margin-top above), like one page; the rest of the page scrolls
    freely (proximity, not mandatory). Only .trip-map snaps in the page
-   scroller: the trips snap inside their own row. Off for reduced motion. */
+   scroller: the trips snap inside their own row. Off for reduced motion.
+   The page is a snap container only while the map is within one screen
+   (html.trip-map-near, set by js/reizen.js): a snap container changes how
+   the page decelerates after a swipe (iOS stops it noticeably sooner), so
+   with it on the whole page the entire site felt slow and sticky. */
 @media (max-width: 47.99rem) and (prefers-reduced-motion: no-preference) {
-  html { scroll-snap-type: y proximity; }
+  html.trip-map-near { scroll-snap-type: y proximity; }
   .trip-map { scroll-snap-align: start; }
 }
 @media (min-width: 48rem) {

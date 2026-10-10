@@ -400,6 +400,22 @@
     jumpToMap();
   });
 
+  /* --- Phones: the page snaps to the map only while it is near ------------
+     css/reizen.css makes the page a snap container (scroll-snap-type on
+     html, the map snaps to its start) only under html.trip-map-near. That
+     class is on while the map is within one screen above or below the
+     viewport. A page-wide snap container changes how the page decelerates
+     after every swipe (iOS stops it much sooner), so with it always on the
+     whole site felt slow and sticky, not just the trips section. The CSS
+     keeps the phone and reduced-motion conditions; this only tracks where
+     the map is. Without IntersectionObserver the page never snaps. */
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      var near = entries[entries.length - 1].isIntersecting;
+      document.documentElement.classList.toggle("trip-map-near", near);
+    }, { rootMargin: "100% 0px 100% 0px" }).observe(root);
+  }
+
   /* --- Phones: one screen ------------------------------------------------
      Below 48rem the stops and every trip, down to its "Bekijk deze reis"
      button, fit on one screen with the line MAP_GAP below the header (where
