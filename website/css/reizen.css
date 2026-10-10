@@ -568,19 +568,14 @@
     max-height: calc(0.75 * max(7.5rem, var(--photo-h, 0px)) + var(--hang));
   }
 }
-/* Phones: the trip map is a soft anchor while scrolling the page. Scrolling
-   past it settles it at the top (the line 8px below the header, via the
-   scroll-margin-top above), like one page; the rest of the page scrolls
-   freely (proximity, not mandatory). Only .trip-map snaps in the page
-   scroller: the trips snap inside their own row. Off for reduced motion.
-   The page is a snap container only while the map is within one screen
-   (html.trip-map-near, set by js/reizen.js): a snap container changes how
-   the page decelerates after a swipe (iOS stops it noticeably sooner), so
-   with it on the whole page the entire site felt slow and sticky. */
-@media (max-width: 47.99rem) and (prefers-reduced-motion: no-preference) {
-  html.trip-map-near { scroll-snap-type: y proximity; }
-  .trip-map { scroll-snap-align: start; }
-}
+/* Phones: the trip map is a soft anchor while scrolling the page. When a
+   swipe comes to rest with the map's top within a quarter screen of its
+   place (the line 8px below the header, the scroll-margin-top above),
+   js/reizen.js scrolls it the last bit into place. The page is never a snap
+   container (no scroll-snap-type on html): one changes how the page
+   decelerates after every swipe, and turning it on or off while the page is
+   still moving cuts the swipe short, so it stuttered before and after the
+   map too. Only the trips snap, inside their own row. */
 @media (min-width: 48rem) {
   .trip-map__more { display: none; }
 }
