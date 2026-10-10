@@ -495,6 +495,9 @@
     Array.prototype.forEach.call(
       document.querySelectorAll('[class^="elfsight-app-"][data-elfsight-app-lazy]'),
       function (widget) {
+        /* Check this before the widget leaves the page: closest() finds no
+           ancestors on a detached element. */
+        var isReviews = !!(widget.closest && widget.closest(".reviews__widget"));
         var placeholder = document.createElement("div");
         placeholder.setAttribute("data-elfsight-deferred", "");
         widget.parentNode.replaceChild(placeholder, widget);
@@ -510,7 +513,7 @@
              so drop Elfsight's own lazy mode. Otherwise Elfsight waits for yet
              another interaction plus its 1 s delay, and the reviews show up
              late once the visitor reaches them. */
-          if (widget.closest && widget.closest(".reviews__widget")) {
+          if (isReviews) {
             widget.removeAttribute("data-elfsight-app-lazy");
           }
           placeholder.parentNode.replaceChild(widget, placeholder);
@@ -533,6 +536,23 @@
           waitForPause();
         });
         watch("0px", restore);
+
+        /* Reviews widget: do not wait for the visitor to scroll near it.
+           Put it back once the page has loaded and the main thread is idle,
+           so Elfsight starts fetching the reviews right away and they are
+           ready by the time the visitor gets there. The reserved height sits
+           on .reviews__widget, so nothing shifts. */
+        if (isReviews) {
+          var restoreWhenIdle = function () {
+            if ("requestIdleCallback" in window) {
+              window.requestIdleCallback(restore, { timeout: 1500 });
+            } else {
+              window.setTimeout(restore, 200);
+            }
+          };
+          if (document.readyState === "complete") restoreWhenIdle();
+          else window.addEventListener("load", restoreWhenIdle, { once: true });
+        }
       }
     );
   }
