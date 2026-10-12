@@ -360,63 +360,21 @@
       </div>
     </div>
 
-    <!-- 2. Jouw schaatsreis + zo werkt een aanvraag -->
-    <section class="layered">
-      <picture><source type="image/avif" srcset="images/avondschaatsen-480.avif 480w, images/avondschaatsen-800.avif 800w, images/avondschaatsen.avif 933w" sizes="100vw" /><source type="image/webp" srcset="images/avondschaatsen-480.webp 480w, images/avondschaatsen-800.webp 800w, images/avondschaatsen.webp 933w" sizes="100vw" /><img class="layered__bg" src="images/avondschaatsen.jpg" alt="Twee schaatsers in de avondschemering op natuurijs" loading="lazy" srcset="images/avondschaatsen-480.jpg 480w, images/avondschaatsen-800.jpg 800w, images/avondschaatsen.jpg 933w" sizes="100vw" /></picture>
-      <div class="wrap layered__inner">
-        <h2 class="layered__title reveal">Jouw schaatsreis</h2>
-        <ul class="facts stagger">
-          <li><span class="plus">+</span><b>Verblijf</b></li>
-          <li><span class="plus">+</span>Vervoer ter plaatse</li>
-          <li><span class="plus">+</span>Paklijst en advies vooraf</li>
-        </ul>
+    <!-- 2a. Heading for the trips, kept outside the trip map section. The
+         short intro sits below the trips (.trip-map__outro), same pattern
+         as reizen.html. -->
+    <div class="trips-head">
+      <div class="wrap">
+        <h2 class="h-section">Onze schaatsreizen</h2>
       </div>
-      <div class="wrap stepbar stagger">
-        <div class="stepbar__item stepbar__item--intro">
-          <p class="stepbar__intro">Vul het formulier in en Joey neemt persoonlijk contact met je op.</p>
-        </div>
-        <div class="stepbar__item">
-          <span class="stepbar__num">01</span>
-          <div class="stepbar__label">Stap</div>
-          <div class="stepbar__title">Je vraagt aan</div>
-        </div>
-        <div class="stepbar__item">
-          <span class="stepbar__num">02</span>
-          <div class="stepbar__label">Stap</div>
-          <div class="stepbar__title">Persoonlijk contact</div>
-        </div>
-        <div class="stepbar__item">
-          <span class="stepbar__num">03</span>
-          <div class="stepbar__label">Stap</div>
-          <div class="stepbar__title">Samen bepalen</div>
-        </div>
-        <div class="stepbar__item">
-          <span class="stepbar__num">04</span>
-          <div class="stepbar__label">Stap</div>
-          <div class="stepbar__title">Bevestiging</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="baanlijn baanlijn--on-dark" aria-hidden="true">
-      <svg viewBox="0 0 400 40" preserveAspectRatio="none">
-        <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#dd9752" stroke-width="2" />
-      </svg>
     </div>
 
-    <!-- 3. Reizen: the same trip map as reizen.html ("de baankaart"): one
+    <!-- 2. Reizen: the same trip map as reizen.html ("de baankaart"): one
          swept ice-rink line with a stop per trip and one scroll-snap row with
          every trip side by side. Markup, css/reizen.css and js/reizen.js are
          shared with reizen.html; keep trips, prices and links equal to that
          page. data-trip-map-lazy: the first trips' photos stay lazy until
          the row is used (the map is far below the first screen here). -->
-    <div class="trips-head">
-      <div class="wrap">
-        <h2 class="h-section">Onze schaatsreizen</h2>
-        <p class="lede-text">Van Zweedse meren tussen de besneeuwde bossen tot het indrukwekkende ijs van de Botnische Golf en de Weissensee tussen de bergen. Iedere bestemming heeft zijn eigen sfeer en mogelijkheden.</p>
-      </div>
-    </div>
-
     <section class="trip-map" id="reizen" data-trip-map data-trip-map-lazy>
       <div class="wrap">
         <div class="trip-map__rail">
@@ -734,12 +692,18 @@
           </article>
         </div>
 
+        <!-- Short intro to the destinations, below the trips and their
+             buttons (same pattern as reizen.html). -->
+        <div class="wrap trip-map__outro">
+          <p class="lede-text">Van Zweedse meren tussen de besneeuwde bossen tot het indrukwekkende ijs van de Botnische Golf en de Weissensee tussen de bergen. Iedere bestemming heeft zijn eigen sfeer en mogelijkheden.</p>
+        </div>
+
       <div class="wrap">
         <p class="trips__more"><a class="link-arrow" href="schaatsreizen-zweden.html">Alles over schaatsen in Zweden</a></p>
       </div>
     </section>
 
-    <!-- 4. Waarom Novakse -->
+    <!-- 3. Waarom Novakse -->
     <section class="why">
       <div class="wrap">
         <div class="why__split">
@@ -770,7 +734,7 @@
       </div>
     </section>
 
-    <!-- 5. Group trips (still being planned) or own group -->
+    <!-- 4. Group trips (still being planned) or own group -->
     <section class="choice" id="groepsvorm">
       <a class="choice__panel" href="contact.html">
         <picture><source type="image/avif" srcset="images/duo-zonsondergang-480.avif 480w, images/duo-zonsondergang-800.avif 800w, images/duo-zonsondergang.avif 900w" sizes="(min-width: 56rem) 50vw, 100vw" /><source type="image/webp" srcset="images/duo-zonsondergang-480.webp 480w, images/duo-zonsondergang-800.webp 800w, images/duo-zonsondergang.webp 900w" sizes="(min-width: 56rem) 50vw, 100vw" /><img src="images/duo-zonsondergang.jpg" alt="Twee schaatsers samen op het ijs bij zonsondergang" loading="lazy" srcset="images/duo-zonsondergang-480.jpg 480w, images/duo-zonsondergang-800.jpg 800w, images/duo-zonsondergang.jpg 900w" sizes="(min-width: 56rem) 50vw, 100vw" /></picture>
@@ -792,7 +756,7 @@
       </a>
     </section>
 
-    <!-- 6. Persoonlijk verhaal -->
+    <!-- 5. Persoonlijk verhaal -->
     <section class="story" id="verhaal">
       <div class="wrap story__grid">
         <figure class="story__collage wall wall--home reveal" data-wall>
@@ -873,7 +837,7 @@
       </div>
     </section>
 
-    <!-- 7. Ervaringen -->
+    <!-- 6. Ervaringen -->
     <section class="reviews" id="reviews">
       <div class="wrap">
         <div class="reviews__intro reveal">
@@ -889,7 +853,7 @@
       </div>
     </section>
 
-    <!-- 8. Veelgestelde vragen -->
+    <!-- 7. Veelgestelde vragen -->
     <section class="faq" id="faq">
       <div class="wrap faq__inner">
         <span class="eyebrow eyebrow--deep"><span class="dot"></span>Veelgestelde vragen</span>
@@ -934,7 +898,7 @@
       </svg>
     </div>
 
-    <!-- 9. Reisaanvraag -->
+    <!-- 8. Reisaanvraag -->
     <section class="request" id="aanvraag">
       <div class="wrap request__grid">
         <div class="request__body reveal">
