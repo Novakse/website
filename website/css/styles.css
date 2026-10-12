@@ -3178,7 +3178,7 @@ button.calendar__cell {
   border: 1px solid var(--border);
   border-radius: 1.25rem;
   background: var(--paper);
-  padding: 0.75rem 1.25rem 0.95rem;
+  padding: 0.6rem 1.25rem 0.75rem;
 }
 
 .trip-search__title {
@@ -3193,9 +3193,9 @@ button.calendar__cell {
 /* The submit button is the last item of this grid, so it can sit on the
    same row as the fields on wider screens. */
 .trip-search__fields {
-  margin-top: 0.35rem;
+  margin-top: 0.15rem;
   display: grid;
-  gap: 0.2rem;
+  gap: 0.1rem;
 }
 
 .trip-search__field { min-width: 0; }
@@ -3303,7 +3303,7 @@ select.trip-search__input {
 .trip-search__count::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
 .trip-search__submit {
-  margin-top: 0.45rem;
+  margin-top: 0.3rem;
   width: 100%;
   min-height: 2.75rem;
   display: flex;
@@ -3328,6 +3328,17 @@ select.trip-search__input {
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* Small screens: the fields are stacked, so the rows sit a little closer
+   together. Only rules that also apply on wider screens are here; the
+   panel padding, the grid gap and the button margin above are already
+   overridden from 52rem. The trigger for the dates is styled further down
+   (block "het periodeveld"), so its padding is set there. */
+@media (max-width: 51.99rem) {
+  .trip-search__title { line-height: 1.15; }
+  .trip-search__input { padding-block: 0.25rem; }
+  .trip-search__count { padding-block: 0.25rem; line-height: 1.3; }
 }
 
 /* From here the fields sit two by two: destination and dates on top,
@@ -3393,7 +3404,7 @@ select.trip-search__input {
   box-shadow: 0 1.5rem 2.5rem -1.5rem rgba(20, 24, 26, 0.45);
 }
 .trip-search-dock--float + .layered .layered__inner {
-  padding-top: 11rem;
+  padding-top: 9rem;
 }
 /* From 52rem the panel is low enough to sit about half over the video. The
    overlap here is smaller than --opener-dock, which only leaves the hero
@@ -3436,6 +3447,13 @@ select.trip-search__input {
 .trip-search__trigger:hover { border-bottom-color: var(--warm-deep); }
 .trip-search__field--when.has-value .trip-search__trigger { color: var(--ink); }
 .trip-search__value { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 51.99rem) {
+  .trip-search__trigger { padding-block: 0.25rem; }
+  /* The rows sit close together here, so the invisible 44px tap area of
+     the - and + buttons (see "Touch screens" at the top) would reach the
+     bottom edge of this field. Keep this field on top of it. */
+  .trip-search__field--when { z-index: 1; }
+}
 
 /* De kalender zelf. Op smalle schermen klapt hij open in de balk; vanaf 52rem
    hangt hij als paneel onder het veld. */
