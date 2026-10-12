@@ -38,6 +38,9 @@ html { -webkit-text-size-adjust: 100%; }
    the photos scaling and jumping while scrolling. `clip` (not `hidden`) adds
    no scroll container, so position: sticky keeps working. */
 html, body { overflow-x: clip; }
+/* Stops the browser's pull-to-refresh / vertical overscroll bounce, so
+   pulling down on mobile doesn't leave a blank gap above the page. */
+html, body { overscroll-behavior-y: none; }
 /* Smooth in-page scrolling is switched on by main.js at the first pointer or
    key press, so the browser's own scroll restoration (reload, back button)
    and the #fragment jump during page load stay instant instead of gliding. */
