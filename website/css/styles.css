@@ -3433,7 +3433,7 @@ select.trip-search__input {
 }
 .trip-search-dock--float + .layered .layered__inner,
 .trip-search-dock--float + .trips-head {
-  padding-top: 11rem;
+  padding-top: 13rem;
 }
 /* From 52rem the panel is low enough to sit about half over the video. The
    overlap here is smaller than --opener-dock, which only leaves the hero
