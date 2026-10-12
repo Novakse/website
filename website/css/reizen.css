@@ -22,6 +22,14 @@
 .trips-head .h-section { margin-top: 0; text-wrap: balance; }
 .trips-head .lede-text { text-wrap: pretty; }
 
+/* Reizen pages only: the short intro sits below the row of trips, under the
+   trip buttons. The section's own bottom padding stays below it. */
+.trip-map__outro { margin-top: 1.5rem; }
+.trip-map__outro .lede-text { margin-top: 0; text-wrap: pretty; }
+@media (min-width: 48rem) {
+  .trip-map__outro { margin-top: 2rem; }
+}
+
 .trip-map {
   --ice: #e7eef1;          /* swept-lane tint and photo placeholder */
   --line-h: 2.75rem;       /* height of the line band above the labels */
@@ -44,8 +52,8 @@
 
 /* --------------------------------------------------------------------------
    The line with the stops
-   Mobile first: a horizontal swipe strip. From 64rem all eight stops fit
-   next to each other and the strip becomes a static line.
+   Mobile first: a horizontal swipe strip. From 64rem all stops fit next to
+   each other and the strip becomes a static line.
    -------------------------------------------------------------------------- */
 .trip-map__rail {
   --fade-start: 0px;
@@ -95,11 +103,13 @@
 .trip-map__lane { stroke: var(--ice); stroke-width: 18; }
 .trip-map__stroke { stroke: var(--warm-deep); stroke-width: 2; }
 
-/* Eight equal columns without gaps, so every stop centre sits at a known
-   point of the path. */
+/* One equal column per stop, without gaps, so every stop centre sits at a
+   known point of the path. The columns are implicit (one per item), so the
+   number of trips on a page needs no setting, with or without JavaScript. */
 .trip-map__stops {
   display: grid;
-  grid-template-columns: repeat(8, var(--stop-w));
+  grid-auto-flow: column;
+  grid-auto-columns: var(--stop-w);
 }
 .trip-map__item {
   display: flex;
@@ -108,15 +118,43 @@
 
 /* Height of the path at each stop centre, as a share of the line band.
    Measured on "M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" in a
-   viewBox from y=8 to y=32. */
-.trip-map__item:nth-child(1) { --y: 0.370; }
-.trip-map__item:nth-child(2) { --y: 0.319; }
-.trip-map__item:nth-child(3) { --y: 0.470; }
-.trip-map__item:nth-child(4) { --y: 0.633; }
-.trip-map__item:nth-child(5) { --y: 0.606; }
-.trip-map__item:nth-child(6) { --y: 0.323; }
-.trip-map__item:nth-child(7) { --y: 0.348; }
-.trip-map__item:nth-child(8) { --y: 0.409; }
+   viewBox from y=8 to y=32, at x = (i - 0.5) * 400 / count for stop i.
+   :nth-child(i):nth-last-child(count - i + 1) picks stop i of a list with
+   exactly that many stops. Another number of trips needs its own set. */
+
+/* Eight stops (x = 25, 75, 125, 175, 225, 275, 325 and 375). */
+.trip-map__item:nth-child(1):nth-last-child(8) { --y: 0.370; }
+.trip-map__item:nth-child(2):nth-last-child(7) { --y: 0.319; }
+.trip-map__item:nth-child(3):nth-last-child(6) { --y: 0.470; }
+.trip-map__item:nth-child(4):nth-last-child(5) { --y: 0.633; }
+.trip-map__item:nth-child(5):nth-last-child(4) { --y: 0.606; }
+.trip-map__item:nth-child(6):nth-last-child(3) { --y: 0.323; }
+.trip-map__item:nth-child(7):nth-last-child(2) { --y: 0.348; }
+.trip-map__item:nth-child(8):nth-last-child(1) { --y: 0.409; }
+
+/* Seven stops (x = 28.6, 85.7, 142.9, 200, 257.1, 314.3 and 371.4). */
+.trip-map__item:nth-child(1):nth-last-child(7) { --y: 0.357; }
+.trip-map__item:nth-child(2):nth-last-child(6) { --y: 0.339; }
+.trip-map__item:nth-child(3):nth-last-child(5) { --y: 0.539; }
+.trip-map__item:nth-child(4):nth-last-child(4) { --y: 0.652; }
+.trip-map__item:nth-child(5):nth-last-child(3) { --y: 0.4375; }
+.trip-map__item:nth-child(6):nth-last-child(2) { --y: 0.316; }
+.trip-map__item:nth-child(7):nth-last-child(1) { --y: 0.418; }
+
+/* Six stops (x = 33.3, 100, 166.7, 233.3, 300 and 366.7). */
+.trip-map__item:nth-child(1):nth-last-child(6) { --y: 0.342; }
+.trip-map__item:nth-child(2):nth-last-child(5) { --y: 0.379; }
+.trip-map__item:nth-child(3):nth-last-child(4) { --y: 0.615; }
+.trip-map__item:nth-child(4):nth-last-child(3) { --y: 0.574; }
+.trip-map__item:nth-child(5):nth-last-child(2) { --y: 0.288; }
+.trip-map__item:nth-child(6):nth-last-child(1) { --y: 0.426; }
+
+/* Five stops (x = 40, 120, 200, 280 and 360). */
+.trip-map__item:nth-child(1):nth-last-child(5) { --y: 0.326; }
+.trip-map__item:nth-child(2):nth-last-child(4) { --y: 0.451; }
+.trip-map__item:nth-child(3):nth-last-child(3) { --y: 0.652; }
+.trip-map__item:nth-child(4):nth-last-child(2) { --y: 0.305; }
+.trip-map__item:nth-child(5):nth-last-child(1) { --y: 0.429; }
 
 .trip-map__stop {
   position: relative;
@@ -280,6 +318,10 @@
 .js .trip-map__panels { margin-top: 0.6rem; }
 
 .trip-map__panel {
+  /* Containing block for anything absolutely positioned inside a trip (the
+     visually hidden .sr-only texts in the group trip buttons), so it stays
+     inside the scrolling row instead of widening the page. */
+  position: relative;
   flex: 0 0 var(--panel-w);
   min-width: 0;
   scroll-snap-align: start;
@@ -293,8 +335,9 @@
 /* Photo composition: one main photo with the smaller ones overlapping its
    lower edge (cut out with a paper-coloured outline, no shadow). A portrait
    photo hangs furthest below, a landscape one sits a little higher next to
-   it. Every other trip is mirrored: the odd ones, so the group trips (first)
-   are mirrored and Orsa (second) keeps its original, unmirrored layout. */
+   it. Every other trip is mirrored: the odd ones, so Punkaharju (first)
+   shows the cabin photo on the left and Orsa (second) keeps its original,
+   unmirrored layout. */
 .trip-map__media {
   --hang: 1.35rem;         /* how far the smaller photos hang below the main */
   display: grid;
@@ -333,14 +376,14 @@
   z-index: 2;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.25rem;
   max-width: calc(100% - 1rem);
-  margin: 0.5rem;
-  padding: 0.2rem 0.55rem 0.2rem 0.45rem;
+  margin: 0.45rem;
+  padding: 0.16rem 0.48rem 0.16rem 0.4rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   color: var(--ink);
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
@@ -348,8 +391,8 @@
 .trip-map__panel:nth-child(odd) .trip-map__incl { justify-self: end; }
 .trip-map__incl svg {
   flex: none;
-  width: 2rem;
-  height: 0.86rem;
+  width: 1.8rem;
+  height: 0.72rem;
   fill: none;
   stroke: var(--warm-deep);
   stroke-width: 1.8;
@@ -644,7 +687,7 @@
     mask-image: none;
   }
   .trip-map__track { width: auto; }
-  .trip-map__stops { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .trip-map__stops { grid-auto-columns: minmax(0, 1fr); }
   .trip-map__stop { padding-inline: 0.4rem; }
   .trip-map__name { font-size: 1.08rem; }
 

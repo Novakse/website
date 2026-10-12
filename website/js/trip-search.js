@@ -3,7 +3,7 @@
 
    Dit is bewust geen zoekmachine: Novakse heeft geen live beschikbaarheid.
    De balk verzamelt drie keuzes en brengt de bezoeker naar de pagina van de
-   bestemming, op het blok waar hij verder boekt. De keuzes gaan mee in het
+   bestemming, bovenaan die pagina. De keuzes gaan mee in het
    webadres (reis, van, tot, personen), zodat de kalender daar al goed staat.
 
    Zonder JavaScript blijft het een gewoon GET-formulier met een keuzelijst,
@@ -78,8 +78,10 @@
 
     var labelId = "tsWhenLabel";
     var valueId = "tsWhenValue";
+    // The label is visually hidden: the calendar icon and the button text
+    // show what the field is; screen readers still hear "Wanneer".
     field.innerHTML =
-      '<span class="trip-search__label" id="' + labelId + '">Wanneer</span>' +
+      '<span class="sr-only" id="' + labelId + '">Wanneer</span>' +
       '<div class="trip-search__control">' +
         '<svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
           '<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/>' +
@@ -452,9 +454,9 @@
     }
 
     /* --- Versturen --------------------------------------------------------
-       De bezoeker gaat naar de pagina van de bestemming, op het blok waar hij
-       verder boekt. Welke pagina en welk blok dat is, staat per bestemming in
-       data-target op de keuzelijst. Staat daar niets (of is er niets gekozen),
+       De bezoeker gaat naar de pagina van de bestemming en komt bovenaan uit.
+       Welke pagina dat is, staat per bestemming in data-target op de
+       keuzelijst. Staat daar niets (of is er niets gekozen),
        dan blijft het formulier zijn eigen action volgen: boeken.html.
        --------------------------------------------------------------------- */
     form.addEventListener("submit", function (event) {
@@ -477,6 +479,11 @@
         hash = target.slice(hashAt);
         target = target.slice(0, hashAt);
       }
+      // A chosen destination opens at the top of its page, not on the
+      // calendar further down: its anchor is dropped. The choices still go
+      // along in the query string, so that calendar is filled in already.
+      // Only "Alle bestemmingen" (no destination) keeps its anchor to the list.
+      if (destination.value) hash = "";
       window.location.href = target + "?" + query.toString() + hash;
     });
   }
