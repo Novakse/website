@@ -1,0 +1,262 @@
+/* ==========================================================================
+   Orsa - page styles (orsa.html in all languages)
+   Loads after styles.css and theme-groen.css. All selectors are scoped to
+   .lodge--orsa so nothing leaks into other pages (except the lightbox
+   dialog, see "Lightbox" below).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   The cabins, inside and out (#huisjes): seven photos of the cabins at
+   First Camp Orsa-Dalarna, as one compact mosaic without captions (the alt
+   texts carry the description).
+
+   Builds on the .lodge block in styles.css (Finland), which lays out four
+   large photos. Here the photos fill named grid areas with fixed row
+   heights, so the whole set stays short and every tile gets its own shape:
+     phones and tablets, 3 slightly unequal columns, 3 bands of 2 rows:
+       out out ter      big + tall
+       liv kit kit      tall + big (mirrored)
+       bt  bt  bd       big + two small stacked
+       bt  bt  ba
+     desktop, 6 unequal columns, 2 rows (row 1 taller than row 2):
+       out out ter liv kit kit
+       out out bd  bt  bt  ba
+   The areas place the photos, so the HTML order does not matter.
+
+   The source photos are only about 630px wide; the largest tile stays well
+   below that. The sizes attributes in the HTML follow these tile widths.
+   No shadow: the photos sit flat on the pale background, like the rest of
+   the page.
+   -------------------------------------------------------------------------- */
+.lodge--orsa { padding-block: 3rem 3.25rem; }
+
+.lodge--orsa .lodge__grid {
+  margin-top: 1.5rem;
+  grid-template-columns: 1.08fr 1fr 0.92fr;
+  grid-template-rows:
+    repeat(2, clamp(4.75rem, 23vw, 7.5rem))
+    repeat(2, clamp(4.5rem, 21vw, 6.75rem))
+    repeat(2, clamp(4.25rem, 19vw, 6.25rem));
+  grid-template-areas:
+    "out out ter"
+    "out out ter"
+    "liv kit kit"
+    "liv kit kit"
+    "bt  bt  bd"
+    "bt  bt  ba";
+  gap: 0.5rem;
+}
+
+.lodge--orsa .lodge__item {
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 0.625rem;
+}
+.lodge--orsa .lodge__item picture { height: 100%; }
+.lodge--orsa .lodge__item img {
+  height: 100%; /* the width/height attributes only reserve space; the area sets the shape */
+  aspect-ratio: auto;
+  object-position: var(--lodge-focus, 50% 50%);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* ".lodge__grid >" outweighs the Finland nth-child rules in styles.css. */
+.lodge--orsa .lodge__grid > .lodge__item--outside { grid-area: out; }
+.lodge--orsa .lodge__grid > .lodge__item--terrace { grid-area: ter; --lodge-focus: 25% 50%; }
+.lodge--orsa .lodge__grid > .lodge__item--living { grid-area: liv; --lodge-focus: 62% 50%; }
+.lodge--orsa .lodge__grid > .lodge__item--kitchen { grid-area: kit; }
+.lodge--orsa .lodge__grid > .lodge__item--bed-double { grid-area: bd; --lodge-focus: 62% 50%; }
+.lodge--orsa .lodge__grid > .lodge__item--bed-twin { grid-area: bt; }
+.lodge--orsa .lodge__grid > .lodge__item--bath { grid-area: ba; --lodge-focus: 35% 50%; }
+
+@media (min-width: 60rem) {
+  .lodge--orsa { padding-block: 4rem 4.5rem; }
+
+  .lodge--orsa .lodge__grid {
+    margin-top: 2rem;
+    grid-template-columns: 1.25fr 1.25fr 1fr 1.1fr 0.85fr 1.2fr;
+    grid-template-rows: clamp(10rem, 15vw, 13rem) clamp(8rem, 11.5vw, 10rem);
+    grid-template-areas:
+      "out out ter liv kit kit"
+      "out out bd  bt  bt  ba";
+    gap: 0.625rem;
+  }
+
+  .lodge--orsa .lodge__item { border-radius: 0.75rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Lightbox (js/orsa-lightbox.js): each photo of the mosaic sits in a button
+   that opens it larger in a <dialog>. The button fills its tile exactly, so
+   the mosaic looks the same as before. The hint stays quiet: a zoom cursor,
+   a slow zoom of the photo with a small icon on hover, and the focus ring.
+   The dialog lives in the top layer (outside .lodge--orsa) and only exists
+   on the Orsa pages, so its .lightbox classes are not scoped.
+   -------------------------------------------------------------------------- */
+.lodge--orsa .lightbox-trigger {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  isolation: isolate; /* keeps the zoomed photo inside the rounded corners */
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+}
+.lodge--orsa .lightbox-trigger img {
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.lodge--orsa .lightbox-trigger__hint {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(5, 13, 8, 0.55);
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+.lodge--orsa .lightbox-trigger__hint svg { width: 1rem; height: 1rem; }
+@media (hover: hover) {
+  .lodge--orsa .lightbox-trigger:hover img { transform: scale(1.03); }
+  .lodge--orsa .lightbox-trigger:hover .lightbox-trigger__hint { opacity: 1; transform: none; }
+}
+.lodge--orsa .lightbox-trigger:focus-visible .lightbox-trigger__hint { opacity: 1; transform: none; }
+
+/* Focus ring: the tile clips its photo, so a ring outside the button would
+   be cut off. With :has() the ring goes on the tile itself; otherwise it is
+   drawn just inside the button. */
+.lodge--orsa .lightbox-trigger:focus-visible { outline-offset: -3px; }
+@supports selector(:has(*)) {
+  .lodge--orsa .lodge__item:has(> .lightbox-trigger:focus-visible) {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+  .lodge--orsa .lightbox-trigger:focus-visible { outline: none; }
+}
+
+/* Page behind the open dialog does not scroll; the gutter keeps the page
+   from shifting sideways where the scrollbar takes up space. */
+html.lightbox-open { overflow: hidden; scrollbar-gutter: stable; }
+
+/* The dialog: full screen, dark green-black like the page's dark sections.
+   Phones: close button top right, photo in the middle, previous/next below
+   it within thumb reach. From 48rem: previous/next on either side.
+   The photo is shown at most at its own size (about 630px), never larger. */
+.lightbox {
+  --focus-ring: var(--warm);
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(5, 13, 8, 0.97);
+  color: #fff;
+  overscroll-behavior: contain;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+/* Only when open: a display value here would also show the closed dialog. */
+.lightbox[open] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "bar  bar"
+    "stage stage"
+    "prev next";
+}
+.lightbox.is-open { opacity: 1; }
+.lightbox::backdrop { background: transparent; }
+.lightbox:focus { outline: none; }
+
+.lightbox__bar {
+  grid-area: bar;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.75rem 0.5rem 1.25rem;
+}
+.lightbox__count {
+  font-family: var(--display);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.lightbox__stage {
+  grid-area: stage;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  padding-inline: 0.75rem;
+}
+.lightbox__stage picture { display: contents; }
+.lightbox__img {
+  display: block;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0.5rem;
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.lightbox__img.is-loading {
+  opacity: 0;
+  transform: translateX(calc(var(--lightbox-step, 0) * 1.5rem));
+}
+
+.lightbox__btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.lightbox__btn:active { transform: scale(0.94); }
+@media (hover: hover) {
+  .lightbox__btn:hover { background: rgba(255, 255, 255, 0.16); }
+}
+.lightbox__btn--prev { grid-area: prev; justify-self: end; margin: 1rem 0.5rem 1.5rem; }
+.lightbox__btn--next { grid-area: next; justify-self: start; margin: 1rem 0.5rem 1.5rem; }
+
+@media (min-width: 48rem) {
+  .lightbox[open] {
+    grid-template-columns: 6rem minmax(0, 1fr) 6rem;
+    grid-template-rows: 4.5rem minmax(0, 1fr) 4.5rem;
+    grid-template-areas:
+      "bar  bar   bar"
+      "prev stage next"
+      ".    .     .";
+  }
+  .lightbox__bar { padding: 1rem 1.25rem 0.5rem 1.75rem; }
+  .lightbox__stage { padding-inline: 0; }
+  .lightbox__btn--prev,
+  .lightbox__btn--next { justify-self: center; align-self: center; margin: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lodge--orsa .lightbox-trigger:hover img,
+  .lightbox__img.is-loading { transform: none; }
+}
