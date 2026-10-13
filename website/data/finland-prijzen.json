@@ -38,6 +38,12 @@
     "vluchtZelf": 325
   },
 
+  "//materiaalHuur": "Vinkje \"Materiaal huren\" (Noorse schaatsen, langlaufski's, sneeuwschoenen, fatbike bij Harjun Portti). Vaste klantprijs per persoon voor de hele reis, zonder opslag op de inkoopprijs (besluit Joey 2026-10-13): 1 dag €28, 2 dagen €48, 3 dagen €68, elke dag erbij +€10 per persoon. Baby's (0-1) tellen niet mee. Haal dit blokje weg om het vinkje niet te tonen.",
+  "materiaalHuur": {
+    "prijsPerPersoon": { "1": 28, "2": 48, "3": 68 },
+    "extraDagPerPersoon": 10
+  },
+
   "//periodes": "De prijsperiodes van het verblijf. tot is de eerste dag die er niet meer bij hoort. De aankomstdag bepaalt welk tarief er voor het hele verblijf geldt. Staat een aankomstdag in geen enkele periode, dan verschijnt er geen prijs en blijft het bij een aanvraag.",
   "periodes": [
     { "van": "2026-12-26", "tot": "2027-01-07", "tarief": "hoog" },

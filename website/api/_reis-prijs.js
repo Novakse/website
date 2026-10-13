@@ -18,11 +18,13 @@
                kinderen: int,       // of which children 2-11 (optional, default 0)
                baby: int,           // of which babies 0-1 (optional, default 0)
                begeleiding: int,    // guiding days, Orsa only (optional)
-               vlucht: "zelf" }     // own flight (optional; any other value: flight included)
+               vlucht: "zelf",      // own flight (optional; any other value: flight included)
+               materiaal: "ja" }    // gear rental, Finland only (optional; any other value: no gear)
      returns { bedrag, perPersoon, perKind, perBaby, nachten, dagen,
                personen, volwassenen, kinderen, baby,
                begeleidingDagen, begeleidingBedrag,
-               eigenVlucht, vluchtAftrek, omschrijving }
+               eigenVlucht, vluchtAftrek,
+               materiaalGehuurd, materiaalBedrag, omschrijving }
      or      { fout: "Dutch message" }
    bedrag is the whole group in whole euros: the price per person of every
    category times its head count, plus the guiding amount (a group amount).
@@ -100,6 +102,27 @@ function vluchtZelfBedrag(data) {
   var waarde = data && data.opties && data.opties.vluchtZelf;
   if (typeof waarde !== "number" || !isFinite(waarde) || waarde <= 0) return 0;
   return Math.round(waarde);
+}
+
+/* Gear rental per person for the whole trip (data.materiaalHuur in the price
+   file, Finland): a fixed amount up to the table's longest listed day count,
+   then extraDagPerPersoon for every day above it. Same lookup as
+   basisPrijsPerPersoon, mirrored from materiaalPerPersoon() in js/main.js. 0
+   when the trip has no such table or for a day count the table has nothing
+   for. */
+function materiaalPerPersoon(data, dagen) {
+  var materiaal = data && data.materiaalHuur;
+  var tabel = materiaal && materiaal.prijsPerPersoon;
+  if (!tabel || !dagen) return 0;
+  if (typeof tabel[String(dagen)] === "number") return tabel[String(dagen)];
+  var langste = 0;
+  Object.keys(tabel).forEach(function (sleutel) {
+    var n = parseInt(sleutel, 10);
+    if (n > langste && typeof tabel[sleutel] === "number") langste = n;
+  });
+  if (!langste || dagen < langste) return 0;
+  var extra = materiaal.extraDagPerPersoon || 0;
+  return tabel[String(langste)] + (dagen - langste) * extra;
 }
 
 function berekenReis(keuze) {
@@ -283,12 +306,24 @@ function berekenReis(keuze) {
       begeleidingDagen;
   }
 
+  // main.js materiaalGroep(): gear rental (Finland) ticked in the
+  // calendar, a table amount per person (babies excluded) for the trip's
+  // whole length in days, added on top of the group total.
+  var materiaalGehuurd = keuze.materiaal === "ja";
+  var materiaalBedrag = 0;
+  if (materiaalGehuurd) {
+    if (!(data.materiaalHuur && data.materiaalHuur.prijsPerPersoon)) {
+      return { fout: "Bij deze reis kun je geen materiaal huren." };
+    }
+    materiaalBedrag = materiaalPerPersoon(data, dagen) * Math.max(0, personen - aantallen.baby);
+  }
+
   // Only the flight part is lower for children and babies; the group
   // discount, surcharges and guiding above stay as they are. With an own
   // flight there is no flight in the package, so nothing is left to discount
   // and everyone pays the adult price (same as api/_falun-prijs.js).
   var prijzen = kinderprijs.prijzenPerCategorie(keuze.reis, perPersoon, { zonderVlucht: eigenVlucht });
-  var bedrag = kinderprijs.groepsPrijs(aantallen, prijzen) + begeleidingBedrag;
+  var bedrag = kinderprijs.groepsPrijs(aantallen, prijzen) + begeleidingBedrag + materiaalBedrag;
 
   var omschrijving = (reis.product || "Schaatsreis " + reis.naam) + ", " + schrijfDatum(van) + " tot " + schrijfDatum(tot) +
     " (" + dagen + (dagen === 1 ? " dag" : " dagen") + "), " + personen + (personen === 1 ? " persoon" : " personen") +
@@ -301,6 +336,9 @@ function berekenReis(keuze) {
     omschrijving += ", met " + begeleidingDagen + (begeleidingDagen === 1 ? " dag" : " dagen") +
       " begeleiding (" + euro(begeleidingBedrag) + ")";
   }
+  if (materiaalGehuurd) {
+    omschrijving += ", materiaal gehuurd (" + euro(materiaalBedrag) + ")";
+  }
 
   return {
     bedrag: bedrag,
@@ -309,6 +347,8 @@ function berekenReis(keuze) {
     perBaby: prijzen.baby,
     nachten: nachten,
     dagen: dagen,
+    materiaalGehuurd: materiaalGehuurd,
+    materiaalBedrag: materiaalBedrag,
     personen: personen,
     volwassenen: aantallen.volwassenen,
     kinderen: aantallen.kinderen,

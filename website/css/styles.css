@@ -2316,10 +2316,13 @@ button.calendar__cell.is-vertrekoptie { box-shadow: inset 0 0 0 2px var(--ink); 
    period. */
 .calendar__guiding,
 .calendar__persons,
-.calendar__flight { margin-top: 1.75rem; }
-/* Own-flight checkbox (opties.vluchtZelf): the .extra row from the booking
-   form, right under its legend like the persons rows. */
-.calendar__flight .booking__extras { margin-top: 0; }
+.calendar__flight,
+.calendar__gear { margin-top: 1.75rem; }
+/* Own-flight checkbox (opties.vluchtZelf) and gear rental checkbox
+   (materiaalHuur): the .extra row from the booking form, right under its
+   legend like the persons rows. */
+.calendar__flight .booking__extras,
+.calendar__gear .booking__extras { margin-top: 0; }
 
 /* One row per category (adults, children, babies): name, age and, once a
    period is chosen, the price per person; the stepper sits on the right. */

@@ -244,7 +244,9 @@
     // Trip length in days, only used by a trip on request (wellness).
     dagen: params.get("dagen"),
     // Own flight ticked in the calendar (vlucht=zelf, nothing else counts).
-    vlucht: params.get("vlucht") === "zelf" ? "zelf" : null
+    vlucht: params.get("vlucht") === "zelf" ? "zelf" : null,
+    // Gear rental ticked in the calendar (Finland; materiaal=ja, nothing else counts).
+    materiaal: params.get("materiaal") === "ja" ? "ja" : null
   };
   var reisSleutel = "";
   var reis = null;
@@ -253,7 +255,7 @@
     if (!window.history || !window.history.replaceState) return;
     var nieuw = new URLSearchParams();
     if (reisSleutel) nieuw.set("reis", reisSleutel);
-    ["van", "tot", "personen", "kinderen", "baby", "begeleiding", "dagen", "vlucht"].forEach(function (sleutel) {
+    ["van", "tot", "personen", "kinderen", "baby", "begeleiding", "dagen", "vlucht", "materiaal"].forEach(function (sleutel) {
       var waarde = keuze[sleutel];
       if (waarde !== null && waarde !== undefined && waarde !== "" && waarde !== 0) nieuw.set(sleutel, String(waarde));
     });
@@ -338,6 +340,7 @@
         baby: keuze.baby,
         begeleidingDagen: keuze.begeleiding,
         vlucht: keuze.vlucht,
+        materiaal: keuze.materiaal,
         onWijzig: function (info) {
           laatsteKeuze[sleutel] = info;
           // Another trip may be open by now; its address stays as it is.
@@ -360,6 +363,7 @@
     keuze.begeleiding = info.begeleidingDagen || null;
     keuze.dagen = info.dagen || null;
     keuze.vlucht = info.vlucht === "zelf" ? "zelf" : null;
+    keuze.materiaal = info.materiaal === "ja" ? "ja" : null;
   }
 
   /* A trip without a fixed price, all from the data block. With
@@ -522,6 +526,7 @@
       keuze.personen = personen;
       keuze.begeleiding = null;
       keuze.vlucht = null;
+      keuze.materiaal = null;
       laatsteKeuze[sleutel] = { van: keuze.van, tot: keuze.tot, personen: personen, dagen: keuze.dagen, begeleidingDagen: null };
       if (reisSleutel === sleutel) schrijfAdres();
     }
@@ -644,6 +649,7 @@
         keuze.begeleiding = null;
         keuze.dagen = null;
         keuze.vlucht = null;
+        keuze.materiaal = null;
       }
     }
     schrijfAdres();

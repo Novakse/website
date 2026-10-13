@@ -89,6 +89,11 @@
       flightSelf: "Ik regel mijn vlucht zelf",
       flightSelfHint: "De heen- en terugvlucht zit anders bij de prijs in",
       lineFlight: "Vlucht zelf geregeld",
+      // Gear rental (Finland): same markup as the own-flight row above.
+      gearRental: "Materiaal huren",
+      gearRentalHint: "Noorse schaatsen, langlaufski's, sneeuwschoenen en een fatbike, per persoon voor de hele reis. Gebruik van de loipes is dan gratis; toegang tot de schaatsbaan zit al bij de reissom in.",
+      lineGear: "Materiaal gehuurd",
+      gearLegend: "Materiaal nodig?",
       childFlightSelfNote: "Regel je je vlucht zelf, dan vervalt de lagere prijs voor kinderen en baby's: er is dan geen vliegdeel meer om te verlagen.",
       adultsLabel: "Volwassenen",
       adultsAge: "12 jaar en ouder",
@@ -160,6 +165,10 @@
       flightSelf: "I'll arrange my own flight",
       flightSelfHint: "Otherwise the return flight is included in the price",
       lineFlight: "Own flight",
+      gearRental: "Rent equipment",
+      gearRentalHint: "Nordic skates, cross-country skis, snowshoes and a fatbike, per person for the whole trip. Use of the trails is then free; access to the skating rink is already included in the trip price.",
+      lineGear: "Equipment rented",
+      gearLegend: "Need gear?",
       childFlightSelfNote: "If you arrange your own flight, the lower price for children and babies no longer applies: there is no flight part left to reduce.",
       adultsLabel: "Adults",
       adultsAge: "12 years and older",
@@ -231,6 +240,10 @@
       flightSelf: "Jag ordnar flyget själv",
       flightSelfHint: "Annars ingår tur- och returflyget i priset",
       lineFlight: "Eget flyg",
+      gearRental: "Hyr utrustning",
+      gearRentalHint: "Nordiska skridskor, längdskidor, snöskor och en fatbike, per person för hela resan. Längdskidspåren är då gratis att använda; tillträde till skridskobanan ingår redan i priset.",
+      lineGear: "Utrustning hyrd",
+      gearLegend: "Behöver du utrustning?",
       childFlightSelfNote: "Ordnar du flyget själv gäller inte längre det lägre priset för barn och bebisar: då finns ingen flygdel kvar att sänka.",
       adultsLabel: "Vuxna",
       adultsAge: "12 år och äldre",
@@ -302,6 +315,10 @@
       flightSelf: "Ich buche meinen Flug selbst",
       flightSelfHint: "Sonst ist der Hin- und Rückflug im Preis enthalten",
       lineFlight: "Flug selbst gebucht",
+      gearRental: "Ausrüstung mieten",
+      gearRentalHint: "Nordic-Schlittschuhe, Langlaufski, Schneeschuhe und ein Fatbike, pro Person für die ganze Reise. Die Loipen sind dann kostenlos; der Zugang zur Eisbahn ist bereits im Reisepreis enthalten.",
+      lineGear: "Ausrüstung gemietet",
+      gearLegend: "Brauchst du Ausrüstung?",
       childFlightSelfNote: "Wenn du deinen Flug selbst buchst, entfällt der niedrigere Preis für Kinder und Babys: Es gibt dann keinen Flugteil mehr, der günstiger sein könnte.",
       adultsLabel: "Erwachsene",
       adultsAge: "ab 12 Jahren",
@@ -365,6 +382,10 @@
       flightSelf: "Jeg ordner flyet selv",
       flightSelfHint: "Ellers er tur-retur-flyet inkludert i prisen",
       lineFlight: "Eget fly",
+      gearRental: "Lei utstyr",
+      gearRentalHint: "Nordiske skøyter, langrennski, truger og en fatbike, per person for hele turen. Langrennsløypene er da gratis å bruke; adgang til skøytebanen er allerede inkludert i reiseprisen.",
+      lineGear: "Utstyr leid",
+      gearLegend: "Trenger du utstyr?",
       childFlightSelfNote: "Ordner du flyet selv, gjelder ikke lenger den lavere prisen for barn og babyer: da er det ingen flydel igjen å redusere.",
       adultsLabel: "Voksne",
       adultsAge: "12 år og eldre",
@@ -428,6 +449,10 @@
       flightSelf: "Järjestän lentoni itse",
       flightSelfHint: "Muuten meno-paluulento sisältyy hintaan",
       lineFlight: "Oma lento",
+      gearRental: "Vuokraa varusteet",
+      gearRentalHint: "Retkiluistimet, murtomaasukset, lumikengät ja fatbike, henkilöä kohden koko matkalle. Hiihtolatujen käyttö on silloin ilmaista; pääsy luistelurataan sisältyy jo matkan hintaan.",
+      lineGear: "Varusteet vuokrattu",
+      gearLegend: "Tarvitsetko varusteita?",
       childFlightSelfNote: "Jos järjestät lentosi itse, lasten ja vauvojen alempi hinta ei enää päde: silloin ei ole lentoosuutta, jota voisi alentaa.",
       adultsLabel: "Aikuiset",
       adultsAge: "12-vuotiaat ja vanhemmat",
@@ -1305,6 +1330,7 @@
   var personenTeller = 0;
   var duurTeller = 0;
   var vluchtTeller = 0;
+  var materiaalTeller = 0;
 
   function bouwKalender(box, data, opties) {
     if (!data.seizoenStart || !data.seizoenEind) return;
@@ -1313,8 +1339,8 @@
     var opBoekpagina = Boolean(opties);
     var adres = new URLSearchParams(window.location.search);
     var vooraf = opBoekpagina
-      ? { van: opties.van, tot: opties.tot, personen: opties.personen, kinderen: opties.kinderen, baby: opties.baby, begeleiding: opties.begeleidingDagen, vlucht: opties.vlucht }
-      : { van: adres.get("van"), tot: adres.get("tot"), personen: adres.get("personen"), kinderen: adres.get("kinderen"), baby: adres.get("baby"), begeleiding: adres.get("begeleiding"), vlucht: adres.get("vlucht") };
+      ? { van: opties.van, tot: opties.tot, personen: opties.personen, kinderen: opties.kinderen, baby: opties.baby, begeleiding: opties.begeleidingDagen, vlucht: opties.vlucht, materiaal: opties.materiaal }
+      : { van: adres.get("van"), tot: adres.get("tot"), personen: adres.get("personen"), kinderen: adres.get("kinderen"), baby: adres.get("baby"), begeleiding: adres.get("begeleiding"), vlucht: adres.get("vlucht"), materiaal: adres.get("materiaal") };
 
     var seizoenVan = alsDatum(data.seizoenStart);
     var seizoenTot = alsDatum(data.seizoenEind);
@@ -1401,6 +1427,35 @@
     // The amount per person that comes off now; 0 without the tick.
     function vluchtAftrek() {
       return metVluchtKeuze && vluchtZelf ? vluchtBedrag : 0;
+    }
+
+    /* Optional ("materiaalHuur" in the price file, Finland): tick to rent
+       equipment (Nordic skates, cross-country skis, snowshoes, fatbike). A
+       table per person for the whole trip, same shape as prijsPerPersoon: a
+       fixed amount up to the table's longest listed day count, then
+       extraDagPerPersoon for every day above it. Babies (0-1) do not rent
+       gear. api/_reis-prijs.js applies exactly the same rule. */
+    var materiaal = (data.materiaalHuur && data.materiaalHuur.prijsPerPersoon) ? data.materiaalHuur : null;
+    var metMateriaalKeuze = afrekenen && !!materiaal;
+    // A link or the booking page may bring it along ticked: only materiaal=ja counts.
+    var materiaalGekozen = metMateriaalKeuze && vooraf.materiaal === "ja";
+    function materiaalPerPersoon(dagen) {
+      if (!materiaal || !dagen) return 0;
+      var tabel = materiaal.prijsPerPersoon;
+      if (typeof tabel[String(dagen)] === "number") return tabel[String(dagen)];
+      var langste = 0;
+      Object.keys(tabel).forEach(function (sleutel) {
+        var n = parseInt(sleutel, 10);
+        if (n > langste && typeof tabel[sleutel] === "number") langste = n;
+      });
+      if (!langste || dagen < langste) return 0;
+      var extra = materiaal.extraDagPerPersoon || 0;
+      return tabel[String(langste)] + (dagen - langste) * extra;
+    }
+    // The group amount that comes on top now; 0 without the tick.
+    function materiaalGroep(dagen, aantal, babys) {
+      if (!metMateriaalKeuze || !materiaalGekozen || !dagen) return 0;
+      return materiaalPerPersoon(dagen) * Math.max(0, aantal - (babys || 0));
     }
 
     /* Optional: days with uncertain ice ("ijsOnzeker" in the price file, e.g.
@@ -1566,7 +1621,8 @@
       if (!(perPersoon > 0)) return { perPersoon: 0, totaal: 0 };
       return {
         perPersoon: perPersoon,
-        totaal: perPersoon * personen + begeleidingGroep(gekozenBegeleiding(), personen)
+        totaal: perPersoon * personen + begeleidingGroep(gekozenBegeleiding(), personen) +
+          materiaalGroep(nachten + 1, personen, baby)
       };
     }
 
@@ -1963,6 +2019,42 @@
       if (vluchtVeld.checked !== vluchtZelf) vluchtVeld.checked = vluchtZelf;
     }
 
+    /* Gear rental (only when paying online and the price file has
+       materiaalHuur): same markup as the own-flight row above. The price per
+       person depends on the trip length, so it only shows once a period is
+       chosen; built once, tekenMateriaal() updates the price text. */
+    var materiaalBox = null;
+    var materiaalVeld = null;
+    if (metMateriaalKeuze) {
+      var materiaalId = "calendarGear" + (++materiaalTeller);
+      materiaalBox = document.createElement("div");
+      materiaalBox.className = "falun-cal__block calendar__gear";
+      materiaalBox.innerHTML =
+        '<p class="falun-cal__legend" id="' + materiaalId + '">' + T.gearLegend + '</p>' +
+        '<div class="booking__extras" role="group" aria-labelledby="' + materiaalId + '">' +
+          '<label class="extra">' +
+            '<input type="checkbox" class="extra__check" data-optie="materiaal"' + (materiaalGekozen ? ' checked' : '') + ' />' +
+            '<span class="extra__name">' + T.gearRental +
+              '<span class="extra__hint">' + T.gearRentalHint + '</span>' +
+            '</span>' +
+            '<span class="extra__price"></span>' +
+          '</label>' +
+        '</div>';
+      box.appendChild(materiaalBox);
+      materiaalVeld = materiaalBox.querySelector("input");
+      materiaalVeld.addEventListener("change", function () {
+        materiaalGekozen = materiaalVeld.checked;
+        toonBalk();
+      });
+    }
+    function tekenMateriaal() {
+      if (!materiaalBox) return;
+      materiaalBox.hidden = !magBetalen(personen) || !keuzeVan || !keuzeTot;
+      if (materiaalVeld.checked !== materiaalGekozen) materiaalVeld.checked = materiaalGekozen;
+      var perPersoon = keuzeVan && keuzeTot ? materiaalPerPersoon(reisDagen()) : 0;
+      materiaalBox.querySelector(".extra__price").textContent = perPersoon ? "+ " + euroTekst(perPersoon) : "";
+    }
+
     // Guiding stepper (only when the price file offers guiding).
     var begeleidingBox = null;
     var begeleidingStaat = "";
@@ -2049,6 +2141,7 @@
         baby: afrekenen ? baby : 0,
         begeleidingDagen: klaar ? gekozenBegeleiding() : 0,
         vlucht: vluchtAftrek() ? "zelf" : "",
+        materiaal: metMateriaalKeuze && materiaalGekozen ? "ja" : "",
         // The "Book and pay" link is on screen (same test as knopHtml). False
         // for a complete period without a price to pay online, e.g. a group
         // size outside betaalPersonen (wellness: only 2 people).
@@ -2066,6 +2159,7 @@
       tekenPersonen();
       tekenDuren();
       tekenVlucht();
+      tekenMateriaal();
       tekenBegeleiding();
       tekenBalk();
       koppelReset();
@@ -2087,6 +2181,7 @@
         if (baby) params.set("baby", String(baby));
         if (gekozenBegeleiding()) params.set("begeleiding", String(gekozenBegeleiding()));
         if (vluchtAftrek()) params.set("vlucht", "zelf");
+        if (metMateriaalKeuze && materiaalGekozen) params.set("materiaal", "ja");
         return '<a class="btn btn--dark calendar__pay" href="' + mapVoorKalender() + 'uitchecken.html?' +
           params.toString().replace(/&/g, "&amp;") + '">' + T.bookPayBtn + '</a>';
       }
@@ -2120,6 +2215,7 @@
       var prijsRegel = "";
       var categorieRegels = ""; // one line per category when there are children or babies
       var vluchtRegel = ""; // own flight ticked: the amount per person that came off
+      var materiaalRegel = ""; // gear rental ticked: the group amount that came on top
       // A group size that cannot pay online (betaalPersonen): say why the
       // request button shows instead of the total.
       var betaalNotitie = afrekenen && !magBetalen(personen)
@@ -2136,6 +2232,10 @@
           if (kinderen + baby > 0) {
             vluchtRegel += '<span class="calendar__chosen-nights calendar__chosen-note">' + T.childFlightSelfNote + '</span>';
           }
+        }
+        if (bedragen.totaal && materiaalGroep(nachten + 1, personen, baby)) {
+          materiaalRegel = '<span class="calendar__chosen-nights">' + T.lineGear + ': + ' +
+            euroTekst(materiaalGroep(nachten + 1, personen, baby)) + '</span>';
         }
         if (bedragen.totaal && kinderen + baby > 0) {
           // With children or babies the total comes from the server, which
@@ -2180,6 +2280,7 @@
           (prijsRegel ? '<span class="calendar__chosen-price">' + prijsRegel + '</span>' : '') +
           categorieRegels +
           vluchtRegel +
+          materiaalRegel +
           toeslagRegel +
           betaalNotitie +
         '</div>' +

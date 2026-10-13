@@ -463,7 +463,9 @@ module.exports = async function handler(req, res) {
       baby: typeof body.baby === "number" ? body.baby : String(body.baby || ""),
       begeleiding: typeof body.begeleiding === "number" ? body.begeleiding : String(body.begeleiding || ""),
       // Own flight: only "zelf" counts, as in the Falun flow above.
-      vlucht: body.vlucht === "zelf" ? "zelf" : ""
+      vlucht: body.vlucht === "zelf" ? "zelf" : "",
+      // Gear rental (Finland): only "ja" counts.
+      materiaal: body.materiaal === "ja" ? "ja" : ""
     };
 
     var reisPrijs;
@@ -498,6 +500,7 @@ module.exports = async function handler(req, res) {
     var reisOpties = [];
     if (reisPrijs.eigenVlucht) reisOpties.push("eigen vlucht");
     if (reisPrijs.begeleidingDagen > 0) reisOpties.push("begeleiding " + reisPrijs.begeleidingDagen + " dagen");
+    if (reisPrijs.materiaalGehuurd) reisOpties.push("materiaal gehuurd");
     metadata = {
       reis: naam,
       van: kort(alleenDatum(body.van)),
@@ -511,6 +514,7 @@ module.exports = async function handler(req, res) {
       per_persoon_eur: kort(reisPrijs.perPersoon),
       per_kind_eur: reisPrijs.kinderen > 0 ? kort(reisPrijs.perKind) : undefined,
       per_baby_eur: reisPrijs.baby > 0 ? kort(reisPrijs.perBaby) : undefined,
+      materiaal_eur: reisPrijs.materiaalGehuurd ? kort(reisPrijs.materiaalBedrag) : undefined,
       totaal_eur: kort(reisPrijs.bedrag)
     };
     leeftijdsControle = {
@@ -528,6 +532,7 @@ module.exports = async function handler(req, res) {
       baby: reisPrijs.baby > 0 ? String(reisPrijs.baby) : "",
       begeleiding: reisPrijs.begeleidingDagen > 0 ? String(reisPrijs.begeleidingDagen) : "",
       vlucht: reisPrijs.eigenVlucht ? "zelf" : "",
+      materiaal: reisPrijs.materiaalGehuurd ? "ja" : "",
       act: activiteiten ? activiteiten.query : ""
     });
   } else {

@@ -9,7 +9,8 @@
    GET  /api/reis-prijs?reis=orsa&van=2027-01-12&tot=2027-01-16&personen=2&begeleiding=2
         (optional: kinderen=1 for children 2-11, baby=1 for babies 0-1; personen is
         the total of all ages. The answer holds perPersoon, perKind and perBaby.
-        Optional vlucht=zelf: the visitor arranges their own flight.)
+        Optional vlucht=zelf: the visitor arranges their own flight.
+        Optional materiaal=ja: gear rental, Finland only.)
    POST /api/reis-prijs with the same fields as a JSON body. */
 
 var berekenReis = require("./_reis-prijs.js").berekenReis;
@@ -63,7 +64,8 @@ module.exports = function handler(req, res) {
     kinderen: bron.kinderen,
     baby: bron.baby,
     begeleiding: bron.begeleiding,
-    vlucht: bron.vlucht
+    vlucht: bron.vlucht,
+    materiaal: bron.materiaal
   };
 
   var uitkomst = berekenReis(keuze);

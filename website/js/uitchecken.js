@@ -16,7 +16,8 @@
    3. Via de kalender op de pagina van Luleå, Orsa, de Weissensee, Finland of
       Wellness & schaatsen, bijvoorbeeld
       uitchecken.html?reis=lulea&van=2027-01-10&tot=2027-01-14&personen=2
-      (met &vlucht=zelf als de bezoeker zijn vlucht zelf regelt).
+      (met &vlucht=zelf als de bezoeker zijn vlucht zelf regelt, en bij
+      Finland &materiaal=ja voor gehuurd schaatsmateriaal).
       Ook hier staat geen bedrag in de link: dat komt van /api/reis-prijs, en
       /api/create-payment rekent het bij het betalen opnieuw uit.
 
@@ -112,7 +113,7 @@
     lulea: { naam: "Luleå", pagina: "lulea.html" },
     orsa: { naam: "Orsa", pagina: "orsa.html", begeleiding: true },
     weissensee: { naam: "Weissensee", pagina: "weissensee.html", zonderEigenVlucht: true },
-    finland: { naam: "Finland", pagina: "finland.html" },
+    finland: { naam: "Finland", pagina: "finland.html", materiaal: true },
     wellness: { naam: "Wellness & schaatsen", pagina: "wellness.html" }
   };
 
@@ -131,7 +132,9 @@
       baby: params.get("baby") || "",
       begeleiding: reisInfo.begeleiding ? params.get("begeleiding") || "" : "",
       // Own flight from the calendar checkbox; only "zelf" counts.
-      vlucht: !reisInfo.zonderEigenVlucht && params.get("vlucht") === "zelf" ? "zelf" : ""
+      vlucht: !reisInfo.zonderEigenVlucht && params.get("vlucht") === "zelf" ? "zelf" : "",
+      // Gear rental from the calendar checkbox (Finland); only "ja" counts.
+      materiaal: reisInfo.materiaal && params.get("materiaal") === "ja" ? "ja" : ""
     };
   }
 
@@ -716,6 +719,7 @@
       if (reisKeuze.baby) vraag.set("baby", reisKeuze.baby);
       if (begeleidingDagen > 0) vraag.set("begeleiding", String(begeleidingDagen));
       if (reisKeuze.vlucht) vraag.set("vlucht", "zelf");
+      if (reisKeuze.materiaal) vraag.set("materiaal", "ja");
 
       fetch("/api/reis-prijs?" + vraag.toString())
         .then(function (respons) {
@@ -763,6 +767,13 @@
             var vluchtAftrek = typeof data.vluchtAftrek === "number" && isFinite(data.vluchtAftrek) && data.vluchtAftrek > 0
               ? "- " + euro(Math.round(data.vluchtAftrek * 100)) + " p.p." : "Ja";
             regels.push(["Vlucht zelf geregeld", vluchtAftrek]);
+          }
+          // Gear rental (Finland), as the server confirmed it, with the
+          // group amount that came on top.
+          if (data.materiaalGehuurd === true) {
+            var materiaalBedrag = typeof data.materiaalBedrag === "number" && isFinite(data.materiaalBedrag) && data.materiaalBedrag > 0
+              ? " (" + euro(Math.round(data.materiaalBedrag * 100)) + ")" : "";
+            regels.push(["Materiaal gehuurd", "Ja" + materiaalBedrag]);
           }
           if (typeof data.perPersoon === "number" && isFinite(data.perPersoon) && data.perPersoon > 0) {
             var metKinderen = kinderenKeuze.kinderen + kinderenKeuze.baby > 0;
@@ -997,6 +1008,7 @@
         baby: reisKeuze.baby,
         begeleiding: reisKeuze.begeleiding,
         vlucht: reisKeuze.vlucht,
+        materiaal: reisKeuze.materiaal,
         methode: methode
       };
     } else if (groepKeuze) {
