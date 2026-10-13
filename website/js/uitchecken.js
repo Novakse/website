@@ -29,9 +29,10 @@
 
    Before paying, every trip goes through the "Reisgegevens" step
    (js/reisgegevens.js): travellers for the flight, contact details, the main
-   driver of the rental car and the required confirmations. Only once that
-   form is valid does the payment form appear, and the details are sent along
-   to /api/create-payment, which checks them again.
+   driver of the rental car and the required confirmations. Once that form is
+   valid, the same click sends the details straight to /api/create-payment,
+   which checks them again, and on to Stripe. There is only ever one payment
+   method (creditcard via Stripe), so there is no separate step to choose one.
 
    Falun, Wellness & schaatsen and the group trips also get the optional block
    "Activiteiten bijboeken" (see startActiviteiten below); those activities
@@ -45,7 +46,6 @@
 
   var MAIL = "schaatsennovakse@outlook.com";
 
-  var form = document.getElementById("betaalformulier");
   var inhoud = document.getElementById("checkoutInhoud");
   var geenBedrag = document.getElementById("geenBedrag");
   var reisNaamEl = document.getElementById("reisNaam");
@@ -55,7 +55,7 @@
   var knop = document.getElementById("betaalKnop");
   var gegevensForm = document.getElementById("reisgegevensFormulier");
   var stappen = document.getElementById("checkoutStappen");
-  if (!form || !gegevensForm) return;
+  if (!gegevensForm || !knop) return;
 
   var params = new URLSearchParams(window.location.search);
   var reis = params.get("reis") || "Novakse reis";
@@ -686,7 +686,7 @@
     // bezoeker zijn reis zelf in de kalender samengesteld.
     var introEl = document.querySelector(".booking__intro");
     if (introEl) {
-      introEl.textContent = "Dit is de reis die je in de kalender hebt samengesteld. Vul eerst de reisgegevens in, daarna kies je hoe je wilt betalen.";
+      introEl.textContent = "Dit is de reis die je in de kalender hebt samengesteld. Vul de reisgegevens in en ga daarna direct door naar betalen.";
     }
 
     if (!falunGeldig) {
@@ -731,7 +731,7 @@
 
     var introTekst = document.querySelector(".booking__intro");
     if (introTekst) {
-      introTekst.textContent = "Dit is de reis die je in de kalender hebt samengesteld. Vul eerst de reisgegevens in, daarna kies je hoe je wilt betalen.";
+      introTekst.textContent = "Dit is de reis die je in de kalender hebt samengesteld. Vul de reisgegevens in en ga daarna direct door naar betalen.";
     }
 
     var personenTekst = alsAantalTekst(reisKeuze.personen);
@@ -849,7 +849,7 @@
     var groepIntro = document.querySelector(".booking__intro");
     if (groepIntro) {
       groepIntro.textContent = "Dit is de groepsreis die je hebt gekozen. Iedere reiziger is op de dag van aankomst 12 jaar of ouder. " +
-        "Vul eerst de reisgegevens in, daarna kies je hoe je wilt betalen.";
+        "Vul de reisgegevens in en ga daarna direct door naar betalen.";
     }
 
     // Digits only (the server checks the rest: even, 2 to 20, the trip).
@@ -918,33 +918,9 @@
     bedragEl.textContent = euro(bedragCent);
   }
 
-  /* ---- Step 2 (Reisgegevens) and step 3 (Betalen) ------------------- */
+  /* ---- Step 2 (Reisgegevens), then straight to Stripe ---------------- */
   var stapGegevensEl = document.getElementById("stapGegevens");
-  var stapBetalenEl = document.getElementById("stapBetalen");
   var reisgegevens = null; // set once the details form is valid
-
-  function toonStap(nummer) {
-    var betalen = nummer === 3;
-    gegevensForm.hidden = betalen;
-    form.hidden = !betalen;
-    stapGegevensEl.classList.toggle("is-done", betalen);
-    stapGegevensEl.classList.toggle("is-current", !betalen);
-    stapBetalenEl.classList.toggle("is-current", betalen);
-    if (betalen) {
-      stapGegevensEl.removeAttribute("aria-current");
-      stapBetalenEl.setAttribute("aria-current", "step");
-    } else {
-      stapBetalenEl.removeAttribute("aria-current");
-      stapGegevensEl.setAttribute("aria-current", "step");
-    }
-    // Move focus to the new step's heading so keyboard and screen reader
-    // users land at the start of it.
-    var kop = document.getElementById(betalen ? "betalenKop" : "reisgegevensKop");
-    if (kop) {
-      kop.focus({ preventScroll: true });
-      kop.scrollIntoView({ block: "start", behavior: "smooth" });
-    }
-  }
 
   // Head count from the booking; a payment link from Joey has none.
   var bekendePersonen = parseInt((falunKeuze || reisKeuze || {}).personen, 10) || 0;
@@ -955,7 +931,7 @@
   function naReisgegevens(gegevens) {
     reisgegevens = gegevens;
     foutEl.hidden = true;
-    toonStap(3);
+    gaNaarBetalen();
   }
 
   /* The details step. A group trip starts it once its price, and with it
@@ -991,10 +967,6 @@
 
   stapGegevensEl.classList.add("is-current");
 
-  document.getElementById("terugNaarGegevens").addEventListener("click", function () {
-    toonStap(2);
-  });
-
   /* Back from Stripe with the browser's back button: the page may come out
      of the back/forward cache with the button still on "Bezig...". */
   window.addEventListener("pageshow", function (event) {
@@ -1003,27 +975,17 @@
     knop.textContent = "Doorgaan naar betalen";
   });
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
+  function gaNaarBetalen() {
     if (knop.disabled) return; // already on its way to Stripe
-
-    // Payment is only possible with valid travel details.
-    if (!reisgegevens) {
-      toonStap(2);
-      if (reisgegevensStap) reisgegevensStap.gegevens();
-      return;
-    }
 
     foutEl.hidden = true;
     knop.disabled = true;
     knop.textContent = "Bezig...";
 
-    var gekozen = form.querySelector('input[name="methode"]:checked');
-    var methode = gekozen ? gekozen.value : "creditcard";
-
     /* Bij Falun gaan de keuzes mee in plaats van een bedrag: de server rekent
-       het daar opnieuw uit. */
-    var lading = { bedrag: bedragCent, omschrijving: reis, methode: methode };
+       het daar opnieuw uit. Er is maar één betaalmethode (creditcard via
+       Stripe), dus die gaat niet meer apart mee. */
+    var lading = { bedrag: bedragCent, omschrijving: reis };
     if (falunKeuze) {
       lading = {
         reis: falunKeuze.reis,
@@ -1034,8 +996,7 @@
         baby: falunKeuze.baby,
         vlucht: falunKeuze.vlucht,
         auto: falunKeuze.auto,
-        begeleiding: falunKeuze.begeleiding,
-        methode: methode
+        begeleiding: falunKeuze.begeleiding
       };
     } else if (reisKeuze) {
       lading = {
@@ -1047,18 +1008,20 @@
         baby: reisKeuze.baby,
         begeleiding: reisKeuze.begeleiding,
         vlucht: reisKeuze.vlucht,
-        materiaal: reisKeuze.materiaal,
-        methode: methode
+        materiaal: reisKeuze.materiaal
       };
     } else if (groepKeuze) {
       // Only the trip and the head count: the server sets the amount.
       lading = {
         reis: groepKeuze.reis,
-        personen: groepKeuze.personen,
-        methode: methode
+        personen: groepKeuze.personen
       };
     }
     lading.reisgegevens = reisgegevens;
+
+    /* Open the tab now, still inside the click, so the browser treats it as
+       user-initiated. It gets its real address once the server responds. */
+    var betaalVenster = window.open("", "_blank");
 
     /* Chosen activities go along as ids and quantities; the server prices
        them again. verwachtCenten is the total on screen, so the server can
@@ -1097,9 +1060,17 @@
         if (!resultaat.ok || !data.checkoutUrl) {
           throw new Error(melding || "Er ging iets mis.");
         }
-        window.location.href = data.checkoutUrl;
+        if (betaalVenster && !betaalVenster.closed) {
+          betaalVenster.location.href = data.checkoutUrl;
+        } else {
+          // Popup blocked: fall back to the same tab.
+          window.location.href = data.checkoutUrl;
+        }
+        knop.disabled = false;
+        knop.textContent = "Doorgaan naar betalen";
       })
       .catch(function (fout) {
+        if (betaalVenster && !betaalVenster.closed) betaalVenster.close();
         foutEl.hidden = false;
         if (fout && fout.conflict) {
           foutEl.textContent = fout.message ||
@@ -1114,5 +1085,5 @@
         knop.disabled = false;
         knop.textContent = "Doorgaan naar betalen";
       });
-  });
+  }
 })();

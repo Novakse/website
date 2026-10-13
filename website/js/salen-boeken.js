@@ -437,6 +437,10 @@
     el.submit.disabled = true;
     el.submit.textContent = "Bezig met doorsturen...";
 
+    /* Open the tab now, still inside the click, so the browser treats it as
+       user-initiated. It gets its real address once the server responds. */
+    var betaalVenster = window.open("", "_blank");
+
     fetch(CHECKOUT_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -451,9 +455,17 @@
         if (!result.ok || !result.data.url) {
           throw new Error(result.data.error || "Er ging iets mis bij het afrekenen");
         }
-        window.location.href = result.data.url;
+        if (betaalVenster && !betaalVenster.closed) {
+          betaalVenster.location.href = result.data.url;
+        } else {
+          // Popup blocked: fall back to the same tab.
+          window.location.href = result.data.url;
+        }
+        submitting = false;
+        render();
       })
       .catch(function (err) {
+        if (betaalVenster && !betaalVenster.closed) betaalVenster.close();
         submitting = false;
         var reason = err && err.message && err.message !== "Failed to fetch"
           ? err.message.replace(/\.$/, "")

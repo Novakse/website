@@ -67,12 +67,11 @@
 
       <p class="booking__trip" id="reisNaam">Novakse reis</p>
       <h1 class="booking__title" id="checkoutTitel">Je betaling afronden</h1>
-      <p class="booking__intro">Joey heeft dit betaalverzoek voor je klaargezet. Vul eerst de reisgegevens in, daarna kies je hoe je wilt betalen.</p>
+      <p class="booking__intro">Joey heeft dit betaalverzoek voor je klaargezet. Vul de reisgegevens in en ga daarna direct door naar betalen.</p>
 
       <ol class="checkout-steps" id="checkoutStappen" aria-label="Stappen van je boeking">
         <li class="checkout-steps__item is-done"><span class="checkout-steps__num" aria-hidden="true">1</span> Boeken<span class="sr-only"> (klaar)</span></li>
         <li class="checkout-steps__item" id="stapGegevens" aria-current="step"><span class="checkout-steps__num" aria-hidden="true">2</span> Reisgegevens</li>
-        <li class="checkout-steps__item" id="stapBetalen"><span class="checkout-steps__num" aria-hidden="true">3</span> Betalen</li>
       </ol>
 
       <div id="checkoutInhoud">
@@ -168,27 +167,10 @@
             </div>
           </fieldset>
 
-          <button type="submit" class="btn btn--dark booking__send">Verder naar betalen</button>
-          <p class="booking__error" id="gegevensFout" role="alert" hidden></p>
-        </form>
-
-        <form class="booking" id="betaalformulier" novalidate hidden>
-          <h2 class="checkout-kop" id="betalenKop" tabindex="-1">Betalen</h2>
-          <p class="booking__note checkout-kop__note"><button type="button" class="checkout-terug" id="terugNaarGegevens">Reisgegevens wijzigen</button></p>
-
-          <fieldset class="booking__block">
-            <legend class="booking__legend">Hoe wil je betalen?</legend>
-            <div class="booking__extras">
-              <label class="extra">
-                <input type="radio" name="methode" class="extra__check" value="creditcard" checked />
-                <span class="extra__name">Creditcard<span class="extra__hint">Ook bankkaarten en andere betaalmethoden via Stripe</span></span>
-              </label>
-            </div>
-          </fieldset>
-
           <button type="submit" class="btn btn--dark booking__send" id="betaalKnop">Doorgaan naar betalen</button>
+          <p class="booking__error" id="gegevensFout" role="alert" hidden></p>
           <p class="booking__error" id="betaalFout" role="alert" hidden></p>
-          <p class="booking__note">Je wordt doorgestuurd naar de beveiligde betaalomgeving van Stripe.</p>
+          <p class="booking__note">Je wordt doorgestuurd naar de beveiligde betaalomgeving van Stripe (creditcard).</p>
         </form>
       </div>
 
