@@ -1,6 +1,9 @@
 ## Frontend workflow
 
 - Werk zelfstandig op de gevraagde pagina of sectie. Maak alle redelijke aannames zelf en stel alleen vragen als je er echt niet uitkomt.
+- Controleer vóór wijzigingen de relevante pagina's en taalversies in `website/` (zie SITEMAP.md). Navigatie en footer staan los in elk HTML-bestand — er is geen gedeeld sjabloon — dus bij een wijziging aan navigatie, footer of andere gedeelde structuur controleer je welke taalbestanden (`de/`, `en/`, `fi/`, `no/`, `sv/`) ook bijgewerkt moeten worden.
+- Verzin geen ontbrekende vertalingen of content; benoem ze kort als ze relevant zijn voor de taak.
+- Mappen die beginnen met `_backup-` in `website/` zijn geen actieve website-versies; gebruik ze niet als referentie voor de huidige structuur.
 - Begin direct met implementeren zodra de opdracht duidelijk is; wacht niet op tussentijdse bevestiging tenzij een keuze onomkeerbaar is.
 - Start zoveel mogelijk agents parallel zodat onafhankelijke onderdelen tegelijk ontwikkeld worden.
 - Gebruik de `frontend-design` skill voor grotere frontendwijzigingen of wanneer de richting niet duidelijk is.
@@ -21,6 +24,7 @@
   - relevante bestanden in `reference_images/`
   - relevante bestanden in `brand_assets/`
 - Gebruik de docs als leidraad; lees ze niet allemaal opnieuw als dezelfde context al bekend is.
+- Start de lokale server met `node website/dev-server.js`. Er is geen `package.json`, dus `npm run dev` werkt niet.
 
 ## Visuele richting
 
@@ -59,19 +63,3 @@
   - **Wat jij moet doen**: concrete acties voor de klant (bijvoorbeeld controleren, goedkeuren, committen of publiceren).
 - Eén korte regel per punt. Geen uitleg of achtergrond tenzij daarom gevraagd wordt.
 - Laat geen blok weg. Zet "Niets" onder een leeg blok.
-
-## Claude-modelrouting en delegatie
-
-1. Never do the work yourself.
-2. Always dispatch a sub-agent.
-3. Don't always use Fable.
-4. Use Opus 5.5 for easier tasks.
-5. # Model routing
-6. - Fable 5.1: architecture, hard bugs, review
-7. - Opus 5.5: edits, tests, docs, refactors
-8. - Haiku 4.5: lookups and summaries
-9. - Pass `model` on every Agent call
-10. # Delegation
-11. - One sub-agent per task, plan first
-12. - Run independent sub-agents in parallel
-13. - Read the report, never the files
