@@ -88,11 +88,10 @@
 }
 .gr-hero .page-hero__lede { margin-top: 0.75rem; }
 
-/* Phones: the menu covers navigation, so the breadcrumb goes (as on the
-   other trip pages) and the hero starts a little higher. */
+/* Breadcrumb hidden everywhere (as on the other trip pages). */
+.gr-hero .crumbs { display: none; }
 @media (max-width: 47.99rem) {
   .gr-hero { padding-top: 6rem; }
-  .gr-hero .crumbs { display: none; }
   .gr-hero .page-hero__lede { font-size: 0.98rem; line-height: 1.5; }
 }
 @media (min-width: 48rem) {

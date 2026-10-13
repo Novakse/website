@@ -516,14 +516,7 @@ html:has(.page-wellness) { background-color: var(--lx-night, #0e1519); }
 .page-wellness .lx-hero__text > :nth-child(5) { animation-delay: 0.36s; }
 
 .page-wellness .lx-crumbs {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.35rem 0.55rem;
-  margin-bottom: 1.75rem;
-  font-size: 0.76rem;
-  letter-spacing: 0.02em;
-  color: var(--lx-on-dark-soft);
+  display: none;
 }
 .page-wellness .lx-crumbs a { color: var(--lx-on-dark-soft); padding-block: 0.3rem; }
 .page-wellness .lx-crumbs a:hover { color: var(--lx-on-dark); }
