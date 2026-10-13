@@ -8,12 +8,12 @@
   "packages": {
     "half": {
       "label": "Halve dag",
-      "adultRates": { "1": 155, "2": 145, "3": 135, "4": 125 },
+      "adultRates": { "1": 170, "2": 120, "3": 99, "4": 90 },
       "child": 49
     },
     "full": {
       "label": "Hele dag",
-      "adultRates": { "1": 199, "2": 185, "3": 170, "4": 155 },
+      "adultRates": { "1": 199, "2": 149, "3": 124, "4": 99 },
       "child": 75
     }
   },
