@@ -311,6 +311,25 @@
 }
 .gr-day--full .gr-stamp::after { border-color: rgba(255, 255, 255, 0.8); opacity: 1; }
 
+.gr-days__extra {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+.gr-stamp--extra {
+  flex-shrink: 0;
+  width: calc(var(--stamp) * 0.7);
+  height: calc(var(--stamp) * 0.7);
+  border-style: dotted;
+  color: var(--ink-soft);
+  transform: rotate(-4deg);
+}
+.gr-days__extra-text { margin: 0; font-size: 0.93rem; color: var(--ink-soft); max-width: 42ch; }
+.gr-days__extra-text strong { color: var(--ink); font-weight: 600; }
+
 .gr-days__media { margin: 0; }
 .gr-days__media img {
   width: 100%;
