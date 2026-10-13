@@ -3194,11 +3194,13 @@ button.calendar__cell {
 }
 
 /* The submit button is the last item of this grid, so it can sit on the
-   same row as the fields on wider screens. */
+   same row as the fields on wider screens. On phones the fields stack in a
+   single column, so this gap is the only breathing room between
+   destination, date and travellers. */
 .trip-search__fields {
   margin-top: 0.15rem;
   display: grid;
-  gap: 0.1rem;
+  gap: 1.1rem;
 }
 
 .trip-search__field { min-width: 0; }
@@ -3333,15 +3335,21 @@ select.trip-search__input {
   stroke-linejoin: round;
 }
 
-/* Small screens: the fields are stacked, so the rows sit a little closer
-   together. Only rules that also apply on wider screens are here; the
-   panel padding, the grid gap and the button margin above are already
-   overridden from 52rem. The trigger for the dates is styled further down
-   (block "het periodeveld"), so its padding is set there. */
+/* Small screens: the title is dropped (the field labels and icons already
+   say what the panel does) and the submit bar is a little slimmer. Only
+   rules that also apply on wider screens are here; the panel padding and
+   the button margin above are already overridden from 52rem. The trigger
+   for the dates is styled further down (block "het periodeveld"), so its
+   padding is set there. */
 @media (max-width: 51.99rem) {
-  .trip-search__title { line-height: 1.15; }
+  .trip-search__title { display: none; }
   .trip-search__input { padding-block: 0.25rem; }
   .trip-search__count { padding-block: 0.25rem; line-height: 1.3; }
+  .trip-search__submit {
+    min-height: 2.3rem;
+    padding-inline: 1rem;
+    font-size: 0.9rem;
+  }
 }
 
 /* From here the fields sit two by two: destination and dates on top,
@@ -3410,7 +3418,7 @@ select.trip-search__input {
   padding-top: 9rem;
 }
 .trip-search-dock--float + .trips-head {
-  padding-top: 11.5rem;
+  padding-top: 10rem;
 }
 /* From 52rem the panel is low enough to sit about half over the video. The
    overlap here is smaller than --opener-dock, which only leaves the hero
