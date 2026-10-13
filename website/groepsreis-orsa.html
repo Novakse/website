@@ -33,6 +33,7 @@
   <link rel="preload" href="css/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/styles.css" /></noscript>
   <link rel="preload" href="css/theme-groen.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/theme-groen.css" /></noscript>
   <link rel="preload" href="css/groepsreis-pagina.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/groepsreis-pagina.css" /></noscript>
+  <link rel="preload" href="css/orsa.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/orsa.css" /></noscript>
   <link rel="preload" href="/css/groepsreis.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="/css/groepsreis.css" /></noscript>
   <link rel="canonical" href="https://www.novakse.com/groepsreis-orsa.html" />
   <meta property="og:type" content="website" />
@@ -72,7 +73,7 @@
       "price": "1295",
       "priceCurrency": "EUR",
       "url": "https://www.novakse.com/groepsreis-orsa.html#boeken",
-      "description": "Prijs per persoon voor 4 dagen, van donderdag 28 t/m zondag 31 januari 2027. Boeken kan per 2 personen."
+      "description": "Prijs per persoon voor 4 dagen, van donderdag 28 t/m zondag 31 januari 2027. Boeken kan vanaf 2 personen."
     }
   }
   </script>
@@ -210,6 +211,42 @@
       </div>
     </section>
 
+    <!-- 3b. The cabins, inside and out: photos of First Camp Orsa-Dalarna,
+         layout in css/orsa.css ("The cabins, inside and out"),
+         click to enlarge: js/orsa-lightbox.js -->
+    <section class="lodge lodge--orsa" id="huisjes" aria-labelledby="huisjes-title">
+      <div class="wrap">
+        <div class="lodge__head reveal">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>First Camp Orsa-Dalarna</span>
+          <h2 class="h-section" id="huisjes-title">De huisjes, binnen en buiten</h2>
+        </div>
+
+        <div class="lodge__grid" data-lightbox data-label-open="Vergroot foto" data-label-close="Sluiten" data-label-prev="Vorige foto" data-label-next="Volgende foto" data-label-count="Foto {n} van {total}">
+          <figure class="lodge__item lodge__item--outside reveal">
+            <picture><source type="image/avif" srcset="images/orsa-cabin-exterior-480.avif 480w, images/orsa-cabin-exterior.avif 633w" sizes="(min-width: 80rem) 28rem, (min-width: 60rem) 34vw, 61vw" /><source type="image/webp" srcset="images/orsa-cabin-exterior-480.webp 480w, images/orsa-cabin-exterior.webp 633w" sizes="(min-width: 80rem) 28rem, (min-width: 60rem) 34vw, 61vw" /><img src="images/orsa-cabin-exterior.jpg" alt="Houten huisje met een terras en een berk, aan het meer in de zomer" width="633" height="422" loading="lazy" decoding="async" srcset="images/orsa-cabin-exterior-480.jpg 480w, images/orsa-cabin-exterior.jpg 633w" sizes="(min-width: 80rem) 28rem, (min-width: 60rem) 34vw, 61vw" /></picture>
+          </figure>
+          <figure class="lodge__item lodge__item--terrace reveal">
+            <picture><source type="image/avif" srcset="images/orsa-cabin-terrace-lake-480.avif 480w, images/orsa-cabin-terrace-lake.avif 633w" sizes="(min-width: 80rem) 11rem, (min-width: 60rem) 14vw, 27vw" /><source type="image/webp" srcset="images/orsa-cabin-terrace-lake-480.webp 480w, images/orsa-cabin-terrace-lake.webp 633w" sizes="(min-width: 80rem) 11rem, (min-width: 60rem) 14vw, 27vw" /><img src="images/orsa-cabin-terrace-lake.jpg" alt="Terras met witte tuinstoelen en een tafel, met uitzicht over het meer" width="633" height="422" loading="lazy" decoding="async" srcset="images/orsa-cabin-terrace-lake-480.jpg 480w, images/orsa-cabin-terrace-lake.jpg 633w" sizes="(min-width: 80rem) 11rem, (min-width: 60rem) 14vw, 27vw" /></picture>
+          </figure>
+          <figure class="lodge__item lodge__item--living reveal">
+            <picture><source type="image/avif" srcset="images/orsa-cabin-living-room-480.avif 480w, images/orsa-cabin-living-room.avif 633w" sizes="(min-width: 80rem) 12rem, (min-width: 60rem) 15vw, 31vw" /><source type="image/webp" srcset="images/orsa-cabin-living-room-480.webp 480w, images/orsa-cabin-living-room.webp 633w" sizes="(min-width: 80rem) 12rem, (min-width: 60rem) 15vw, 31vw" /><img src="images/orsa-cabin-living-room.jpg" alt="Woonkamer met bank, eettafel en glazen deuren met uitzicht op het meer" width="633" height="422" loading="lazy" decoding="async" srcset="images/orsa-cabin-living-room-480.jpg 480w, images/orsa-cabin-living-room.jpg 633w" sizes="(min-width: 80rem) 12rem, (min-width: 60rem) 15vw, 31vw" /></picture>
+          </figure>
+          <figure class="lodge__item lodge__item--kitchen reveal">
+            <picture><source type="image/avif" srcset="images/orsa-cabin-kitchen-480.avif 480w, images/orsa-cabin-kitchen.avif 632w" sizes="(min-width: 80rem) 23rem, (min-width: 60rem) 29vw, 56vw" /><source type="image/webp" srcset="images/orsa-cabin-kitchen-480.webp 480w, images/orsa-cabin-kitchen.webp 632w" sizes="(min-width: 80rem) 23rem, (min-width: 60rem) 29vw, 56vw" /><img src="images/orsa-cabin-kitchen.jpg" alt="Keuken met kookplaat, oven en spoelbak, met een doorkijk naar de badkamer" width="632" height="422" loading="lazy" decoding="async" srcset="images/orsa-cabin-kitchen-480.jpg 480w, images/orsa-cabin-kitchen.jpg 632w" sizes="(min-width: 80rem) 23rem, (min-width: 60rem) 29vw, 56vw" /></picture>
+          </figure>
+          <figure class="lodge__item lodge__item--bed-double reveal">
+            <picture><source type="image/avif" srcset="images/orsa-cabin-bedroom-double-480.avif 480w, images/orsa-cabin-bedroom-double.avif 633w" sizes="(min-width: 80rem) 11rem, (min-width: 60rem) 14vw, 27vw" /><source type="image/webp" srcset="images/orsa-cabin-bedroom-double-480.webp 480w, images/orsa-cabin-bedroom-double.webp 633w" sizes="(min-width: 80rem) 11rem, (min-width: 60rem) 14vw, 27vw" /><img src="images/orsa-cabin-bedroom-double.jpg" alt="Slaapkamer met tweepersoonsbed en leeslampjes, met houten kasten boven het bed" width="633" height="422" loading="lazy" decoding="async" srcset="images/orsa-cabin-bedroom-double-480.jpg 480w, images/orsa-cabin-bedroom-double.jpg 633w" sizes="(min-width: 80rem) 11rem, (min-width: 60rem) 14vw, 27vw" /></picture>
+          </figure>
+          <figure class="lodge__item lodge__item--bed-twin reveal">
+            <picture><source type="image/avif" srcset="images/orsa-cabin-bedroom-twin-480.avif 480w, images/orsa-cabin-bedroom-twin.avif 633w" sizes="(min-width: 80rem) 22rem, (min-width: 60rem) 28vw, 61vw" /><source type="image/webp" srcset="images/orsa-cabin-bedroom-twin-480.webp 480w, images/orsa-cabin-bedroom-twin.webp 633w" sizes="(min-width: 80rem) 22rem, (min-width: 60rem) 28vw, 61vw" /><img src="images/orsa-cabin-bedroom-twin.jpg" alt="Slaapkamer met twee eenpersoonsbedden aan weerszijden van het raam" width="633" height="422" loading="lazy" decoding="async" srcset="images/orsa-cabin-bedroom-twin-480.jpg 480w, images/orsa-cabin-bedroom-twin.jpg 633w" sizes="(min-width: 80rem) 22rem, (min-width: 60rem) 28vw, 61vw" /></picture>
+          </figure>
+          <figure class="lodge__item lodge__item--bath reveal">
+            <picture><source type="image/avif" srcset="images/orsa-cabin-bathroom-480.avif 480w, images/orsa-cabin-bathroom.avif 633w" sizes="(min-width: 80rem) 13rem, (min-width: 60rem) 17vw, 27vw" /><source type="image/webp" srcset="images/orsa-cabin-bathroom-480.webp 480w, images/orsa-cabin-bathroom.webp 633w" sizes="(min-width: 80rem) 13rem, (min-width: 60rem) 17vw, 27vw" /><img src="images/orsa-cabin-bathroom.jpg" alt="Badkamer met wastafel, toilet en douchecabine" width="633" height="422" loading="lazy" decoding="async" srcset="images/orsa-cabin-bathroom-480.jpg 480w, images/orsa-cabin-bathroom.jpg 633w" sizes="(min-width: 80rem) 13rem, (min-width: 60rem) 17vw, 27vw" /></picture>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <div class="baanlijn baanlijn--on-light" aria-hidden="true">
       <svg viewBox="0 0 400 40" preserveAspectRatio="none">
         <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
@@ -287,7 +324,7 @@
       <div class="wrap">
         <span class="eyebrow eyebrow--deep"><span class="dot"></span>Boeken</span>
         <h2 class="h-section" id="boeken-title">Boek de groepsreis Orsa</h2>
-        <p class="gr-book__lede">Je boekt per 2 personen, voor de vaste data van deze reis.</p>
+        <p class="gr-book__lede">Je boekt voor de vaste data van deze reis, je gaat niet alleen.</p>
 
         <div class="gr-book__grid">
           <div class="gr-book__summary" data-groepsreis-fallback>
@@ -295,9 +332,10 @@
             <dl class="gr-book__facts">
               <div><dt>Data</dt><dd><time datetime="2027-01-28">Donderdag 28</time> t/m <time datetime="2027-01-31">zondag 31 januari 2027</time></dd></div>
               <div><dt>Prijs</dt><dd>&euro;1.295 per persoon</dd></div>
-              <div><dt>Boeken</dt><dd>Boeken kan per 2 personen</dd></div>
+              <div><dt>Boeken</dt><dd>Boeken kan vanaf 2 personen</dd></div>
+              <div><dt>Dagen</dt><dd>Andere dagen kan in overleg, het vervoer plannen we dan anders</dd></div>
             </dl>
-            <p class="gr-book__exception">Ga je alleen, of past boeken per 2 personen niet bij jouw situatie? Neem dan eerst contact op.</p>
+            <p class="gr-book__exception">Ga je alleen? Neem dan eerst contact op.</p>
             <div class="gr-book__actions">
               <a class="btn btn--dark" href="contact.html">Neem contact op</a>
               <a class="link-arrow" href="belafspraak.html">Plan een belafspraak</a>
@@ -396,6 +434,7 @@
   </footer>
 
   <script defer src="js/main.js"></script>
+  <script defer src="js/orsa-lightbox.js"></script>
   <script src="/js/groepsreis.js" defer></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>

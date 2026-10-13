@@ -10,13 +10,13 @@
 
    What it shows:
    - the fixed dates (periodeTekst) and the number of days;
-   - a persons stepper in steps of "stap" (2, 4, ... 20), with the price per
+   - a persons stepper from minPersonen to maxPersonen, with the price per
      person and the total live from js/groepsreis-prijs.js, the same module
      and the same data/groepsreizen.json the server charges with;
    - "Boeken en betalen" to uitchecken.html?reis=<key>&personen=<n>;
-   - "Met 1 persoon of een oneven aantal? Neem contact op.": a panel with
-     links to belafspraak.html, WhatsApp and e-mail, prefilled with one line
-     (trip, dates, head count), and to contact.html.
+   - "Met 1 persoon? Neem contact op.": a panel with links to
+     belafspraak.html, WhatsApp and e-mail, prefilled with one line (trip,
+     dates, head count), and to contact.html.
 
    The price module is loaded from js/groepsreis-prijs.js when the page did
    not include it itself. Paths are resolved from this script's own address,
@@ -124,7 +124,7 @@
     var voorbij = !proef.ok && proef.code === "voorbij";
     if (!proef.ok && !voorbij) return false;
 
-    // Head counts that cannot book online (1, 3, 5 ... below the maximum).
+    // Head counts that cannot book online (just 1: you cannot go alone).
     var anders = [];
     for (var n = 1; n < reis.maxPersonen; n++) {
       if (keuzes.indexOf(n) === -1) anders.push(n);
@@ -143,6 +143,7 @@
     kop.appendChild(maak("p", "grw__date", periode));
     kop.appendChild(baanlijn());
     kop.appendChild(maak("p", "grw__meta", reis.dagen + " dagen, " + G.euro(reis.prijsPerPersoon) + " per persoon"));
+    kop.appendChild(maak("p", "grw__hint", "Andere dagen kan in overleg, het vervoer plannen we dan anders."));
     widget.appendChild(kop);
 
     var stepper = null;
@@ -166,7 +167,7 @@
       var label = maak("p", "grw__label", "Aantal personen");
       label.id = id + "-label";
       var hint = maak("p", "grw__hint",
-        "Boeken kan per " + reis.stap + " personen, van " + keuzes[0] + " tot en met " + keuzes[keuzes.length - 1] + ".");
+        "Boeken kan van " + keuzes[0] + " tot en met " + keuzes[keuzes.length - 1] + " personen. Je gaat niet alleen.");
       hint.id = id + "-hint";
       tekst.appendChild(label);
       tekst.appendChild(hint);
@@ -175,14 +176,14 @@
       var knoppen = maak("div", "grw__stepper");
       var min = maak("button", "grw__step");
       min.type = "button";
-      min.setAttribute("aria-label", reis.stap + " personen minder");
+      min.setAttribute("aria-label", "1 persoon minder");
       min.setAttribute("aria-describedby", id + "-hint");
       min.innerHTML = '<span aria-hidden="true">&minus;</span>';
       var waarde = maak("span", "grw__count");
       waarde.id = id + "-aantal";
       var plus = maak("button", "grw__step");
       plus.type = "button";
-      plus.setAttribute("aria-label", reis.stap + " personen meer");
+      plus.setAttribute("aria-label", "1 persoon meer");
       plus.setAttribute("aria-describedby", id + "-hint");
       plus.innerHTML = '<span aria-hidden="true">+</span>';
       knoppen.appendChild(min);
@@ -223,11 +224,11 @@
       stepper = { min: min, plus: plus, waarde: waarde, pp: ppEl, totaal: totaalEl, totaalVoor: totaalVoor, boek: boek };
     }
 
-    /* ---- 1 person or an odd number: contact ---------------------------- */
+    /* ---- 1 person: contact ---------------------------------------------- */
     var contact = null;
     if (!voorbij && anders.length) {
       var ander = maak("div", "grw__other");
-      var toggle = maak("button", "grw__toggle", "Met 1 persoon of een oneven aantal? Neem contact op.");
+      var toggle = maak("button", "grw__toggle", "Met 1 persoon? Neem contact op.");
       toggle.type = "button";
       toggle.setAttribute("aria-expanded", "false");
       toggle.setAttribute("aria-controls", id + "-contact");
@@ -237,7 +238,7 @@
       paneel.id = id + "-contact";
       paneel.hidden = true;
       paneel.appendChild(maak("p", "grw__contact-intro",
-        "Online boeken kan per " + reis.stap + " personen. Ga je met 1 persoon of een oneven aantal? Neem dan contact op."));
+        "Online boeken kan niet alleen. Ga je met 1 persoon? Neem dan contact op."));
 
       var veld = maak("div", "grw__field");
       var selectId = id + "-anders";

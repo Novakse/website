@@ -14,10 +14,10 @@
    prices or margins in here or in the JSON: both are public.
 
    Rules: one fixed price per person for the whole trip (whole euros), fixed
-   dates, no extra days, adults only (no child price). Online booking goes per
-   "stap" persons (2, 4, 6 ...) from minPersonen up to maxPersonen; 1 person
-   or an odd number cannot book online (contact). A trip can no longer be
-   booked from its arrival day on.
+   dates, no extra days, adults only (no child price). Online booking goes
+   from minPersonen up to maxPersonen, in steps of "stap" persons; 1 person
+   cannot book online (contact), since you cannot go alone. A trip can no
+   longer be booked from its arrival day on.
 
    API (data = parsed data/groepsreizen.json)
      REIZEN                       -> ["groepsreis-orsa", "groepsreis-falun"]
