@@ -1,7 +1,8 @@
 /* ==========================================================================
    Activiteiten bijboeken (uitchecken.html)
 
-   Optional block inside "Te betalen" for Falun and Wellness & schaatsen.
+   Optional block inside "Te betalen" for Falun, Orsa, Wellness & schaatsen
+   and the group trips.
    Built by js/uitchecken.js; loads after styles.css and theme-groen.css and
    only uses their tokens. Calm rows instead of cards: name and detail on the
    left, price per unit and a stepper on the right (under the name on a
@@ -10,7 +11,6 @@
 
 /* Several of these elements get a display value below; keep [hidden] working. */
 .activiteiten[hidden],
-.activiteiten__paneel[hidden],
 .activiteiten__overzicht[hidden],
 .act-regel__samen[hidden] { display: none; }
 
@@ -32,65 +32,63 @@
 
 .activiteiten__legend {
   padding: 0;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.4rem;
   font-family: var(--display);
   font-weight: 600;
   font-size: 1rem;
 }
 
-/* The checkbox that opens the options: the same .extra row as the
-   confirmations further down the page, with the count underneath. */
-.activiteiten__keuze {
-  grid-template-columns: auto 1fr;
-  min-height: 3.25rem;
-  background: var(--paper);
-}
-.activiteiten__keuze .extra__name { min-width: 0; }
-.activiteiten__telling[hidden] { display: none; }
-.activiteiten__telling { font-size: 0.82rem; }
-.activiteiten__telling.is-gekozen { color: var(--warm-deep); font-weight: 600; }
-
-.activiteiten__paneel {
-  margin-top: 0.6rem;
-  padding: 1.1rem 1rem 0.4rem;
-  border-radius: 0.9rem;
-  background: var(--paper-soft);
-  animation: act-open 0.22s ease both;
-}
 @keyframes act-open {
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: none; }
 }
-.activiteiten__uitleg { font-size: 0.86rem; color: var(--ink-soft); max-width: 52ch; }
+.activiteiten__uitleg { margin: 0 0 0.6rem; font-size: 0.84rem; color: var(--ink-soft); max-width: 52ch; }
 
-/* ---- The list: one plain item per activity, one under another --------- */
+/* ---- The list: every activity right away, one under another -----------
+   Each starts as its own compact checkbox (a smaller .extra row); ticking
+   it reveals .act-item__inhoud, that activity's own age tariffs and
+   rentals. No master switch above the list any more. */
 .act-lijst { list-style: none; margin: 0; padding: 0; }
-.act-item { padding: 0.9rem 0; }
+.act-item { padding: 0.55rem 0; }
 .act-item + .act-item { border-top: 1px solid var(--border); }
-.act-item__naam {
+.act-item__vinkje {
+  width: 100%;
+  grid-template-columns: auto 1fr auto;
+  min-height: 0;
+  padding: 0.55rem 0.75rem;
+}
+.act-item__vinkje .extra__name {
+  min-width: 0;
   font-family: var(--display);
   font-weight: 600;
-  font-size: 1.02rem;
+  font-size: 0.96rem;
   line-height: 1.3;
   overflow-wrap: anywhere;
 }
-.act-item__detail { margin-top: 0.15rem; font-size: 0.84rem; line-height: 1.4; color: var(--ink-soft); }
-.act-item__regels { list-style: none; margin: 0.4rem 0 0; padding: 0; }
-.act-item__gratis { margin: 0.45rem 0 0; font-size: 0.84rem; line-height: 1.4; color: var(--status-green); font-weight: 500; }
-.act-item__aantal { margin: 0.45rem 0 0; font-size: 0.84rem; font-weight: 600; color: var(--warm-deep); }
+.act-item__vinkje .extra__hint { font-family: var(--sans); font-weight: 400; font-size: 0.8rem; }
+.act-item__vinkje .extra__price { font-size: 0.84rem; }
+.act-item__inhoud[hidden] { display: none; }
+.act-item__inhoud:not([hidden]) {
+  margin-top: 0.5rem;
+  padding-left: 0.1rem;
+  animation: act-open 0.22s ease both;
+}
+.act-item__regels { list-style: none; margin: 0.2rem 0 0; padding: 0; }
+.act-item__gratis { margin: 0.35rem 0 0; font-size: 0.82rem; line-height: 1.4; color: var(--status-green); font-weight: 500; }
+.act-item__aantal { margin: 0.35rem 0 0; font-size: 0.82rem; font-weight: 600; color: var(--warm-deep); }
 .act-item__aantal[hidden], .act-item__huur[hidden] { display: none; }
 
 /* "Spullen huren": a text button under the activity row. */
 .act-item__huurknop {
   display: inline-flex;
   align-items: center;
-  min-height: 2.75rem;
-  margin-top: 0.35rem;
+  min-height: 2.5rem;
+  margin-top: 0.2rem;
   padding: 0 0.2rem;
   border: none;
   background: none;
   font: inherit;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--warm-deep);
   text-decoration: underline;
@@ -99,9 +97,9 @@
 }
 .act-item__huurknop:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 0.25rem; }
 .act-item__huur {
-  margin-top: 0.4rem;
-  padding: 0.2rem 0.9rem;
-  border-radius: 0.9rem;
+  margin-top: 0.3rem;
+  padding: 0.1rem 0.75rem;
+  border-radius: 0.75rem;
   background: var(--paper-soft);
 }
 .act-item__huur .act-regel:first-child { border-top: none; }
@@ -115,8 +113,8 @@
     "tekst tekst"
     "prijs stepper";
   align-items: center;
-  gap: 0.45rem 1rem;
-  padding: 0.85rem 0;
+  gap: 0.3rem 1rem;
+  padding: 0.6rem 0;
 }
 .act-regel + .act-regel { border-top: 1px solid var(--border); }
 .act-regel__tekst { grid-area: tekst; min-width: 0; }
@@ -185,7 +183,6 @@
 
 /* ---- Wider screens: one row per line, price right-aligned -------------- */
 @media (min-width: 40rem) {
-  .activiteiten__paneel { padding: 1.4rem 1.5rem 0.6rem; }
   .act-regel {
     grid-template-columns: minmax(0, 1fr) auto auto;
     grid-template-areas: "tekst prijs stepper";
@@ -195,7 +192,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .activiteiten__paneel,
+  .act-item__inhoud:not([hidden]),
   .act-item__huur:not([hidden]) { animation: none; }
   .act-stepper__knop { transition: none; }
 }

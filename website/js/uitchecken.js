@@ -294,27 +294,25 @@
      tariff for that (ACT.aanvullen) and the server checks it (bereken).
      The catalogue is data/activiteiten.json; all prices and caps come from
      js/activiteiten-prijs.js (window.NovakseActiviteiten), which the server
-     uses as well. The block only appears once the trip price is known.
-     The checkbox ("Ik wil huurspullen of activiteiten bijboeken") is the
-     outer switch. Unticked, nothing is added to the total or sent; the
-     choices made so far come back when it is ticked again. The choice is
-     kept in ?act= (e.g. act=husky-lunchtocht:2), so a reload keeps it. ---- */
+     uses as well. The block only appears once the trip price is known, and
+     shows every activity right away, each as its own checkbox (see
+     tekenLijst/wijzigActAan): nothing has its own master switch any more, an
+     unticked activity simply adds nothing. The choice is kept in ?act=
+     (e.g. act=husky-lunchtocht:2), so a reload keeps it. ---- */
   var ACT = window.NovakseActiviteiten;
   var actBlok = document.getElementById("activiteitenBlok");
-  var actAan = document.getElementById("activiteitenAan");
-  var actPaneel = document.getElementById("activiteitenPaneel");
   var actLijst = document.getElementById("activiteitenLijst");
-  var actTelling = document.getElementById("activiteitenTelling");
   var actOverzicht = document.getElementById("activiteitenOverzicht");
-  var actKlaar = Boolean(ACT && actBlok && actAan && actPaneel && actLijst && actTelling && actOverzicht);
+  var actKlaar = Boolean(ACT && actBlok && actLijst && actOverzicht);
 
   // Filled once the block is shown; null means: no activities on this page.
   var activiteiten = null;
 
   // Only these trips offer activities, so only they load the catalogue.
   // A group trip uses its own key ("groepsreis-orsa"), an alias of Falun's
-  // list in data/activiteiten.json.
-  var actSoort = falunKeuze ? "falun" : (reisKeuze && reisKeuze.reis === "wellness" ? "wellness" : (groepKeuze ? groepKeuze.reis : ""));
+  // list in data/activiteiten.json. Orsa has its own list, priced by hand
+  // (see activiteiten.json's _opmerking) rather than Falun's.
+  var actSoort = falunKeuze ? "falun" : (reisKeuze && (reisKeuze.reis === "wellness" || reisKeuze.reis === "orsa") ? reisKeuze.reis : (groepKeuze ? groepKeuze.reis : ""));
   var actCatalogus = actKlaar && actSoort
     ? fetch("data/activiteiten.json")
         .then(function (respons) { return respons.ok ? respons.json() : null; })
@@ -400,60 +398,113 @@
     tekenActiviteiten();
   }
 
-  // The list: one item per activity, in the order of the JSON.
+  // The lowest price of an activity's own lines (its tariffs, or its rentals
+  // when it has none, i.e. a free activity), for the "vanaf €…" hint on its
+  // checkbox. "" when there is nothing priced (should not happen).
+  function vanafPrijs(act) {
+    var lijnen = ((act.tarieven && act.tarieven.length) ? act.tarieven : (act.huur || []))
+      .map(function (regel) { return activiteiten.regels[regel.id]; }).filter(Boolean);
+    if (!lijnen.length) return "";
+    var laagste = Math.min.apply(null, lijnen.map(ACT.centen));
+    return "vanaf " + ACT.euro(laagste);
+  }
+
+  // One activity's own choices: its tariffs, the "gratis" note and the
+  // rental button/panel. Hidden until the activity's own checkbox is ticked.
+  function actInhoud(act) {
+    var inhoud = maak("div", "act-item__inhoud");
+    inhoud.hidden = true;
+
+    var eigen = (act.tarieven || []).map(function (t) { return activiteiten.regels[t.id]; }).filter(Boolean);
+    if (eigen.length) {
+      var lijstEigen = maak("ul", "act-item__regels");
+      eigen.forEach(function (lijn) {
+        // A single unnamed tariff has no line name of its own: the activity's
+        // name above it is enough.
+        var metNaam = eigen.length > 1 || lijn.naam !== act.naam;
+        lijstEigen.appendChild(regelRij(lijn, metNaam));
+      });
+      inhoud.appendChild(lijstEigen);
+    } else {
+      // Free activity: the rentals below it set the number of persons.
+      var aantal = maak("p", "act-item__aantal");
+      aantal.hidden = true;
+      inhoud.appendChild(aantal);
+      activiteiten.aantalEls[act.id] = aantal;
+    }
+    if (act.gratis) inhoud.appendChild(maak("p", "act-item__gratis", act.gratis));
+
+    var huur = (act.huur || []).map(function (h) { return activiteiten.regels[h.id]; }).filter(Boolean);
+    if (huur.length) {
+      var paneelId = "huur-" + act.id;
+      var knop = maak("button", "act-item__huurknop", "Spullen huren");
+      knop.type = "button";
+      knop.setAttribute("aria-controls", paneelId);
+      knop.setAttribute("aria-expanded", "false");
+      var paneel = maak("div", "act-item__huur");
+      paneel.id = paneelId;
+      paneel.hidden = true;
+      var lijstHuur = maak("ul", "act-item__regels");
+      huur.forEach(function (lijn) { lijstHuur.appendChild(regelRij(lijn, true)); });
+      paneel.appendChild(lijstHuur);
+      knop.addEventListener("click", function () { toggleHuur(act.id); });
+      inhoud.appendChild(knop);
+      inhoud.appendChild(paneel);
+      activiteiten.huur[act.id] = { knop: knop, paneel: paneel };
+    }
+    return inhoud;
+  }
+
+  // The list: one item per activity, in the order of the JSON. Each starts
+  // as a single checkbox (name, detail, "vanaf €…"); ticking it reveals that
+  // activity's own choices (age tariffs, rentals) below it.
   function tekenLijst() {
     actLijst.textContent = "";
     activiteiten.acts.forEach(function (act) {
       var item = maak("li", "act-item");
-      var kop = maak("div", "act-item__kop");
-      kop.appendChild(maak("p", "act-item__naam", act.naam));
-      if (act.detail) kop.appendChild(maak("p", "act-item__detail", act.detail));
-      item.appendChild(kop);
 
-      var eigen = (act.tarieven || []).map(function (t) { return activiteiten.regels[t.id]; }).filter(Boolean);
-      if (eigen.length) {
-        var lijstEigen = maak("ul", "act-item__regels");
-        eigen.forEach(function (lijn) {
-          // A single unnamed tariff has no line name of its own: the activity's
-          // name above it is enough.
-          var metNaam = eigen.length > 1 || lijn.naam !== act.naam;
-          lijstEigen.appendChild(regelRij(lijn, metNaam));
-        });
-        item.appendChild(lijstEigen);
-      } else {
-        // Free activity: the rentals below it set the number of persons.
-        var aantal = maak("p", "act-item__aantal");
-        aantal.hidden = true;
-        item.appendChild(aantal);
-        activiteiten.aantalEls[act.id] = aantal;
-      }
-      if (act.gratis) item.appendChild(maak("p", "act-item__gratis", act.gratis));
+      var vinkje = maak("label", "extra act-item__vinkje");
+      var check = maak("input");
+      check.type = "checkbox";
+      check.className = "extra__check";
+      var naam = maak("span", "extra__name", act.naam);
+      if (act.detail) naam.appendChild(maak("span", "extra__hint", act.detail));
+      vinkje.appendChild(check);
+      vinkje.appendChild(naam);
+      var prijs = vanafPrijs(act);
+      if (prijs) vinkje.appendChild(maak("span", "extra__price", prijs));
+      check.addEventListener("change", function () { wijzigActAan(act.id, check.checked); });
+      item.appendChild(vinkje);
+      activiteiten.vinkjes[act.id] = { checkbox: check, inhoud: null };
 
-      var huur = (act.huur || []).map(function (h) { return activiteiten.regels[h.id]; }).filter(Boolean);
-      if (huur.length) {
-        var paneelId = "huur-" + act.id;
-        var knop = maak("button", "act-item__huurknop", "Spullen huren");
-        knop.type = "button";
-        knop.setAttribute("aria-controls", paneelId);
-        knop.setAttribute("aria-expanded", "false");
-        var paneel = maak("div", "act-item__huur");
-        paneel.id = paneelId;
-        paneel.hidden = true;
-        var lijstHuur = maak("ul", "act-item__regels");
-        huur.forEach(function (lijn) { lijstHuur.appendChild(regelRij(lijn, true)); });
-        paneel.appendChild(lijstHuur);
-        knop.addEventListener("click", function () { toggleHuur(act.id); });
-        item.appendChild(knop);
-        item.appendChild(paneel);
-        activiteiten.huur[act.id] = { knop: knop, paneel: paneel };
-      }
+      var inhoud = actInhoud(act);
+      activiteiten.vinkjes[act.id].inhoud = inhoud;
+      item.appendChild(inhoud);
+
       actLijst.appendChild(item);
     });
   }
 
-  // The choice that counts: nothing while the checkbox is unticked.
+  // Ticking an activity's own checkbox off clears every line it chose (so
+  // nothing stays charged while hidden) and closes its rental panel; ticking
+  // it on just reveals its choices, still all at 0 until the visitor picks a
+  // quantity.
+  function wijzigActAan(id, aan) {
+    activiteiten.actAan[id] = aan;
+    if (!aan) {
+      var act = activiteiten.acts.filter(function (a) { return a.id === id; })[0];
+      var nieuw = kopieKeuze(activiteiten.keuze);
+      (act ? (act.tarieven || []).concat(act.huur || []) : []).forEach(function (lijn) { delete nieuw[lijn.id]; });
+      activiteiten.keuze = actBereken(nieuw) ? nieuw : {};
+      activiteiten.open[id] = false;
+    }
+    tekenActiviteiten();
+  }
+
+  // The choice that counts: every line at a quantity above 0 (an unticked
+  // activity has none, see wijzigActAan).
   function geldendeKeuze() {
-    return activiteiten.aan ? kopieKeuze(activiteiten.keuze) : {};
+    return kopieKeuze(activiteiten.keuze);
   }
 
   // Keep the choice in the address, so a reload shows the same choice.
@@ -473,13 +524,15 @@
     if (!actBereken(activiteiten.keuze)) { // should not happen: every change is checked first
       activiteiten.keuze = {};
     }
-    // Unticked, the steppers keep their numbers but nothing is charged.
     var uitkomst = actBereken(geldendeKeuze()) || { regels: [], totaalCenten: 0 };
     activiteiten.uitkomst = uitkomst;
 
-    actAan.checked = activiteiten.aan;
-    actAan.setAttribute("aria-expanded", activiteiten.aan ? "true" : "false");
-    actPaneel.hidden = !activiteiten.aan;
+    Object.keys(activiteiten.vinkjes).forEach(function (id) {
+      var vinkje = activiteiten.vinkjes[id];
+      var aan = Boolean(activiteiten.actAan[id]);
+      if (vinkje.checkbox.checked !== aan) vinkje.checkbox.checked = aan;
+      vinkje.inhoud.hidden = !aan;
+    });
 
     Object.keys(activiteiten.velden).forEach(function (id) {
       var veld = activiteiten.velden[id];
@@ -529,11 +582,6 @@
     }
     actOverzicht.hidden = actCent <= 0;
 
-    // The count under the checkbox; empty (and so no description) when unticked.
-    actTelling.textContent = !activiteiten.aan ? "" : gekozen.length ? gekozen.length + " gekozen" : "Nog niets gekozen";
-    actTelling.hidden = !activiteiten.aan;
-    actTelling.classList.toggle("is-gekozen", gekozen.length > 0);
-
     omschrijvingEl.textContent = "Totaal";
     bedragEl.textContent = euro(bedragCent + actCent);
     bewaarInAdres();
@@ -577,18 +625,20 @@
         if (!acts.length) return;
 
         activiteiten = {
-          cat: cat, soort: soort, ctx: ctx, acts: acts, regels: {}, velden: {}, huur: {},
-          aantalEls: {}, open: {}, aan: false, keuze: {}, uitkomst: null
+          cat: cat, soort: soort, ctx: ctx, acts: acts, regels: {}, velden: {}, huur: {}, vinkjes: {},
+          aantalEls: {}, open: {}, actAan: {}, keuze: {}, uitkomst: null
         };
         (ACT.lijnen(cat, soort) || []).forEach(function (lijn) { activiteiten.regels[lijn.id] = lijn; });
         if (!actBereken({})) throw new Error("catalogus");
         tekenLijst();
         activiteiten.keuze = keuzeUitAdres();
-        // A choice from ?act= ticks the checkbox and opens its rentals.
-        activiteiten.aan = Object.keys(activiteiten.keuze).length > 0;
+        // A choice from ?act= opens its rentals and its own card (actAan),
+        // so the choice is visible.
         acts.forEach(function (act) {
           var gehuurd = (act.huur || []).some(function (h) { return activiteiten.keuze[h.id] > 0; });
           if (gehuurd) activiteiten.open[act.id] = true;
+          var gekozenAct = (act.tarieven || []).concat(act.huur || []).some(function (l) { return activiteiten.keuze[l.id] > 0; });
+          if (gekozenAct) activiteiten.actAan[act.id] = true;
         });
 
         if (reisTekst) {
@@ -603,9 +653,6 @@
         // can still be paid exactly as before.
         activiteiten = null;
         actBlok.hidden = true;
-        actAan.checked = false;
-        actAan.setAttribute("aria-expanded", "false");
-        actPaneel.hidden = true;
         actLijst.textContent = "";
         actOverzicht.hidden = true;
         if (reisRegel) reisRegel.parentNode.removeChild(reisRegel);
@@ -613,14 +660,6 @@
         omschrijvingEl.textContent = labelVoor;
         bedragEl.textContent = euro(bedragCent);
       }
-    });
-  }
-
-  if (actKlaar) {
-    actAan.addEventListener("change", function () {
-      if (!activiteiten) return;
-      activiteiten.aan = actAan.checked;
-      tekenActiviteiten();
     });
   }
 
@@ -788,8 +827,8 @@
           toonReisRegels(regels);
 
           bedragEl.textContent = euro(bedragCent);
-          if (reisKeuze.reis === "wellness") {
-            startActiviteiten("wellness", {
+          if (reisKeuze.reis === "wellness" || reisKeuze.reis === "orsa") {
+            startActiviteiten(reisKeuze.reis, {
               personen: personenAantal,
               dagen: typeof data.dagen === "number" && isFinite(data.dagen) ? data.dagen : 0
             }, "");
@@ -1023,9 +1062,9 @@
 
     /* Chosen activities go along as ids and quantities; the server prices
        them again. verwachtCenten is the total on screen, so the server can
-       refuse (409) when its own total differs. With the checkbox unticked
+       refuse (409) when its own total differs. With no activity ticked
        neither is sent: the request is the same as a trip without the block. */
-    if (activiteiten && activiteiten.aan && activiteiten.uitkomst) {
+    if (activiteiten && activiteiten.uitkomst && activiteiten.uitkomst.totaalCenten > 0) {
       lading.activiteiten = geldendeKeuze();
       lading.verwachtCenten = Math.round(bedragCent + (Math.round(activiteiten.uitkomst.totaalCenten) || 0));
     } else if ((falunKeuze || reisKeuze || groepKeuze) && bedragCent > 0) {

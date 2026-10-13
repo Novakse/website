@@ -1,5 +1,5 @@
 {
-  "_opmerking": "Activiteiten en huurspullen die een klant bij het afrekenen kan bijboeken, voor Falun en voor Wellness & schaatsen. Dit bestand is openbaar: zet hier alleen klantprijzen neer. eur is de prijs voor de klant per eenheid, in hele euro's. Pas eur niet met de hand aan: die wordt geschreven door scripts/build-activity-prices.js. Teksten mag je hier wel aanpassen. activiteiten staan op de betaalpagina in deze volgorde, een na een. tarieven zijn de prijzen van de activiteit zelf (bijvoorbeeld per leeftijd); een activiteit met een tarief zonder naam gebruikt de naam van de activiteit; een activiteit zonder tarieven is gratis. huur zijn de spullen die achter de knop Spullen huren staan. Huur telt alleen mee als de activiteit zelf evenveel personen heeft; de standaard-tarief gaat dan vanzelf mee omhoog. limiet: regels met dezelfde limiet delen samen een maximum per persoon per dag; een ski-pakket telt mee voor ski's, schoenen en helm. Gratis tekst staat onder gratis, niet als regel. Plaats- en aanbiedernamen staan hier bewust niet in. Rekenen gebeurt in js/activiteiten-prijs.js, zowel op de betaalpagina als in api/create-payment.js. groepsreis-orsa en groepsreis-falun hebben geen eigen lijst: met gelijkAan gebruiken ze precies de activiteiten en prijzen van falun.",
+  "_opmerking": "Activiteiten en huurspullen die een klant bij het afrekenen kan bijboeken, voor Falun, Orsa en voor Wellness & schaatsen. Dit bestand is openbaar: zet hier alleen klantprijzen neer. eur is de prijs voor de klant per eenheid, in hele euro's. Teksten mag je hier wel aanpassen. activiteiten staan op de betaalpagina in deze volgorde, een na een. tarieven zijn de prijzen van de activiteit zelf (bijvoorbeeld per leeftijd); een activiteit met een tarief zonder naam gebruikt de naam van de activiteit; een activiteit zonder tarieven is gratis. huur zijn de spullen die achter de knop Spullen huren staan. Huur telt alleen mee als de activiteit zelf evenveel personen heeft; de standaard-tarief gaat dan vanzelf mee omhoog. limiet: regels met dezelfde limiet delen samen een maximum per persoon per dag; een ski-pakket telt mee voor ski's, schoenen en helm. Gratis tekst staat onder gratis, niet als regel. Plaats- en aanbiedernamen staan hier bewust niet in. Rekenen gebeurt in js/activiteiten-prijs.js, zowel op de betaalpagina als in api/create-payment.js. groepsreis-orsa en groepsreis-falun hebben geen eigen lijst: met gelijkAan gebruiken ze precies de activiteiten en prijzen van falun. Falun en wellness: eur wordt geschreven door scripts/build-activity-prices.js (inkoop + 15%, ook op huur), pas het dan niet met de hand aan. Orsa is de uitzondering: dat zijn de eigen, openbare dagprijzen van Orsa Grönklitt zelf (orsagronklitt.se, screenshots 2026-10-13 in brand_assets/Andere organisaties foto's en prijzen/Orsa/), geen inkoopprijs van een leverancier. Joey's prijsregel voor Orsa (2026-10-13): op tarieven (de activiteit of dagpas zelf) 15% marge, op huur (materiaal) geen marge, kostprijs doorberekend. Dat is anders dan Falun/wellness (overal 15%, ook op huur), dus orsa.eur is met de hand gezet (SEK / 11,2, naar boven afgerond op hele euro's; tarieven keer 1,15 en dan afgerond, huur zonder marge) en blijft buiten scripts/build-activity-prices.js (zie MANUAL_TRIPS daar).",
 
   "falun": {
     "activiteiten": [
@@ -149,6 +149,89 @@
         "detail": "ca. 1 uur, zelf rijden, AM-rijbewijs vereist, max 2 personen per scooter",
         "tarieven": [
           { "id": "sneeuwscooter", "eenheid": "scooter", "eur": 185 }
+        ]
+      }
+    ]
+  },
+
+  "orsa": {
+    "activiteiten": [
+      {
+        "id": "alpine",
+        "naam": "Alpineskiën bij Orsa Grönklitt",
+        "detail": "dagpas voor het skigebied",
+        "tarieven": [
+          { "id": "orsa-alpine-jeugd", "naam": "Liftpas 7 t/m 17 jaar", "eenheid": "persoonDag", "eur": 46, "limiet": "orsa-alpine" },
+          { "id": "orsa-alpine-volw", "naam": "Liftpas 18 t/m 64 jaar", "eenheid": "persoonDag", "eur": 64, "limiet": "orsa-alpine", "standaard": true },
+          { "id": "orsa-alpine-senior", "naam": "Liftpas 65 jaar en ouder", "eenheid": "persoonDag", "eur": 53, "limiet": "orsa-alpine" }
+        ],
+        "huur": [
+          { "id": "orsa-alpine-huur-beginner", "naam": "Alpineski's Beginner / Basic", "detail": "met schoenen", "eenheid": "persoonDag", "eur": 35, "limiet": "orsa-alpine-huur" },
+          { "id": "orsa-alpine-huur-gevorderd", "naam": "Alpineski's Gevorderd", "detail": "met schoenen", "eenheid": "persoonDag", "eur": 46, "limiet": "orsa-alpine-huur" },
+          { "id": "orsa-alpine-huur-advanced", "naam": "Alpineski's Advanced / Expert", "detail": "met schoenen", "eenheid": "persoonDag", "eur": 60, "limiet": "orsa-alpine-huur" },
+          { "id": "orsa-snowboard-huur", "naam": "Snowboard", "detail": "met schoenen", "eenheid": "persoonDag", "eur": 46, "limiet": "orsa-alpine-huur" },
+          { "id": "orsa-alpine-huur-helm", "naam": "Helm", "eenheid": "persoonDag", "eur": 6, "limiet": "orsa-alpine-helm" }
+        ]
+      },
+      {
+        "id": "langlauf",
+        "naam": "Langlaufen bij Orsa Grönklitt",
+        "detail": "dagpas voor het langlaufgebied",
+        "tarieven": [
+          { "id": "orsa-langlauf-jeugd", "naam": "Baantoegang 7 t/m 17 jaar", "eenheid": "persoonDag", "eur": 11, "limiet": "orsa-langlauf" },
+          { "id": "orsa-langlauf-volw", "naam": "Baantoegang 18 t/m 64 jaar", "eenheid": "persoonDag", "eur": 25, "limiet": "orsa-langlauf", "standaard": true },
+          { "id": "orsa-langlauf-senior", "naam": "Baantoegang 65 jaar en ouder", "eenheid": "persoonDag", "eur": 20, "limiet": "orsa-langlauf" }
+        ],
+        "huur": [
+          { "id": "orsa-langlauf-huur-beginner", "naam": "Langlaufski's Beginner / Basic", "detail": "waxvrij, met schoenen", "eenheid": "persoonDag", "eur": 27, "limiet": "orsa-langlauf-huur" },
+          { "id": "orsa-langlauf-huur-gevorderd", "naam": "Langlaufski's Gevorderd (Skin)", "detail": "waxvrij, met schoenen", "eenheid": "persoonDag", "eur": 40, "limiet": "orsa-langlauf-huur" },
+          { "id": "orsa-langlauf-huur-performance", "naam": "Langlaufski's Performance", "detail": "klassiek of skate, met schoenen", "eenheid": "persoonDag", "eur": 48, "limiet": "orsa-langlauf-huur" }
+        ]
+      },
+      {
+        "id": "hondenslee-25",
+        "naam": "Hondenslee, 2,5 km",
+        "detail": "met een team Siberische huskies door het bos bij Orsa Grönklitt",
+        "gratis": "0 t/m 2 jaar: gratis.",
+        "tarieven": [
+          { "id": "orsa-hondenslee25-kind", "naam": "3 t/m 12 jaar", "eenheid": "persoon", "eur": 34, "limiet": "orsa-hondenslee-25" },
+          { "id": "orsa-hondenslee25-volw", "naam": "13 jaar en ouder", "eenheid": "persoon", "eur": 44, "limiet": "orsa-hondenslee-25", "standaard": true }
+        ]
+      },
+      {
+        "id": "hondenslee-5",
+        "naam": "Hondenslee, 5 km",
+        "detail": "met een team Siberische huskies door het bos bij Orsa Grönklitt",
+        "gratis": "0 t/m 2 jaar: gratis.",
+        "tarieven": [
+          { "id": "orsa-hondenslee5-kind", "naam": "3 t/m 12 jaar", "eenheid": "persoon", "eur": 54, "limiet": "orsa-hondenslee-5" },
+          { "id": "orsa-hondenslee5-volw", "naam": "13 jaar en ouder", "eenheid": "persoon", "eur": 75, "limiet": "orsa-hondenslee-5", "standaard": true }
+        ]
+      },
+      {
+        "id": "paardenslee",
+        "naam": "Paardenslee",
+        "detail": "slee-tocht door het winterlandschap bij Orsa Grönklitt, ca. 2 uur",
+        "gratis": "0 t/m 2 jaar: gratis.",
+        "tarieven": [
+          { "id": "orsa-paardenslee-kind", "naam": "3 t/m 12 jaar", "eenheid": "persoon", "eur": 36, "limiet": "orsa-paardenslee" },
+          { "id": "orsa-paardenslee-volw", "naam": "13 jaar en ouder", "eenheid": "persoon", "eur": 47, "limiet": "orsa-paardenslee", "standaard": true }
+        ]
+      },
+      {
+        "id": "sneeuwscooter-rijder",
+        "naam": "Sneeuwscootersafari, zelf rijden",
+        "detail": "met gids door de omgeving van Orsa Grönklitt, 18 jaar en ouder",
+        "tarieven": [
+          { "id": "orsa-sneeuwscooter-rijder", "eenheid": "scooter", "eur": 103 }
+        ]
+      },
+      {
+        "id": "sneeuwscooter-passagier",
+        "naam": "Sneeuwscootersafari, als passagier",
+        "detail": "voor wie liever niet zelf rijdt, alle leeftijden",
+        "tarieven": [
+          { "id": "orsa-sneeuwscooter-passagier", "eenheid": "persoon", "eur": 34 }
         ]
       }
     ]

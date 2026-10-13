@@ -38,8 +38,8 @@
    that share a limit may together not exceed the highest max() among them.
    A ski package counts for skis, boots and helmet at once.
 
-   API (cat = parsed data/activiteiten.json, reis = "falun" | "wellness" |
-   "groepsreis-orsa" | "groepsreis-falun")
+   API (cat = parsed data/activiteiten.json, reis = "falun" | "orsa" |
+   "wellness" | "groepsreis-orsa" | "groepsreis-falun")
      activiteiten(cat, reis) -> the activities of that trip ([] if unknown)
      lijnen(cat, reis)       -> flat list of all price lines (copies), in
                                 page order (per activity: tariffs, then
@@ -87,7 +87,7 @@
 })(function () {
   "use strict";
 
-  var REIZEN = ["falun", "wellness", "groepsreis-orsa", "groepsreis-falun"];
+  var REIZEN = ["falun", "orsa", "wellness", "groepsreis-orsa", "groepsreis-falun"];
   var MAX_SLEUTELS = 40; // most activity ids one choice may name
   var ID_PATROON = /^[a-z0-9-]{1,40}$/;
   var EENHEID_TEKST = {

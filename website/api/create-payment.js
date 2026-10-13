@@ -73,7 +73,7 @@ function prijsGroepsreis(keuze) {
   return module.prijsGroepsreis(keuze);
 }
 
-/* Optional activities at checkout (Falun, Wellness and the group trips
+/* Optional activities at checkout (Falun, Orsa, Wellness and the group trips
    only). Priced with js/activiteiten-prijs.js and data/activiteiten.json,
    the same code and file uitchecken.html uses, so the page and Stripe always
    agree. Both are loaded
@@ -320,12 +320,13 @@ module.exports = async function handler(req, res) {
   var terugPagina = "/uitchecken.html"; // page for the cancel URL
   var reisSleutel = String(body.reis || "").toLowerCase();
   var groepsreis = isGroepsreis(reisSleutel);
-  var activiteiten = null; // chosen activities (Falun, Wellness and the group trips only)
+  var activiteiten = null; // chosen activities (Falun, Orsa, Wellness and the group trips only)
   var leeftijdsControle = null; // outbound day and head count split, set for calendar bookings
 
-  // Activities can only be added to a Falun or Wellness calendar booking or
-  // a group trip (which uses Falun's list, see data/activiteiten.json).
-  var metActiviteiten = (body.reis === "Falun" && body.aankomst) || (reisSleutel === "wellness" && body.van) || groepsreis;
+  // Activities can only be added to a Falun, Orsa or Wellness calendar
+  // booking or a group trip (which uses Falun's list, see data/activiteiten.json).
+  var metActiviteiten = (body.reis === "Falun" && body.aankomst) ||
+    ((reisSleutel === "wellness" || reisSleutel === "orsa") && body.van) || groepsreis;
   if (!metActiviteiten && heeftActiviteiten(body.activiteiten)) {
     res.status(400).json({ error: "Bij deze reis zijn geen activiteiten te boeken." });
     return;
@@ -487,8 +488,8 @@ module.exports = async function handler(req, res) {
     // <trip>", or the trip's own product name such as "Wellness & schaatsen").
     productNaam = omschrijving || (REIS_PRODUCTEN[reisSleutel] || ("Schaatsreis " + naam));
 
-    if (reisSleutel === "wellness") {
-      activiteiten = berekenActiviteiten("wellness", body.activiteiten, { personen: reisPrijs.personen, dagen: reisPrijs.dagen });
+    if (reisSleutel === "wellness" || reisSleutel === "orsa") {
+      activiteiten = berekenActiviteiten(reisSleutel, body.activiteiten, { personen: reisPrijs.personen, dagen: reisPrijs.dagen });
       if (activiteiten && activiteiten.fout) {
         res.status(activiteiten.status).json({ error: activiteiten.fout });
         return;

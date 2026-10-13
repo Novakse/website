@@ -54,6 +54,15 @@ var REPO = path.resolve(__dirname, "..");
 var PUBLIC_FILE = path.join(REPO, "website", "data", "activiteiten.json");
 var PRIVATE_RELATIVE = path.join("brand_assets", "purchase-prices", "activities.json");
 var TRIPS = ["falun", "wellness"];
+// Trips priced by hand instead of through the private purchase file: eur is
+// not purchaseEur + markupPercent, so this script never writes or checks it
+// against a purchase price. It still gets the same structural checks as
+// TRIPS (valid ids, eur a whole euro above 0, known eenheid, limiet, naam
+// rules) so a typo still gets caught. Orsa: a split markup on top of Orsa
+// Grönklitt's own public day prices (2026-10-13) — 15% on tarieven, 0% on
+// huur — which this script's single markupPercent cannot express; see the
+// _opmerking in website/data/activiteiten.json.
+var MANUAL_TRIPS = ["orsa"];
 // Fields that must never appear on a line in the public file.
 var FORBIDDEN_FIELDS = ["sek", "purchaseEur", "purchase", "inkoop", "inkoopEur", "markup", "markupPercent", "opslag", "offered", "source", "label"];
 // Fields of the old layout (groups with sections); they must be gone.
@@ -135,14 +144,14 @@ function checkPublic(catalogue) {
   var problems = [];
   // Aliases: only { "gelijkAan": <one of TRIPS> }, nothing else.
   Object.keys(catalogue).forEach(function (key) {
-    if (key.charAt(0) === "_" || TRIPS.indexOf(key) !== -1) return;
+    if (key.charAt(0) === "_" || TRIPS.indexOf(key) !== -1 || MANUAL_TRIPS.indexOf(key) !== -1) return;
     var alias = catalogue[key];
     var fields = alias && typeof alias === "object" && !Array.isArray(alias) ? Object.keys(alias) : [];
     if (!ID_PATTERN.test(key) || fields.length !== 1 || fields[0] !== "gelijkAan" || TRIPS.indexOf(alias.gelijkAan) === -1) {
       problems.push(key + ": unknown trip; an alias holds only \"gelijkAan\": one of " + TRIPS.join(", "));
     }
   });
-  TRIPS.forEach(function (trip) {
+  TRIPS.concat(MANUAL_TRIPS).forEach(function (trip) {
     var section = catalogue[trip];
     if (!section || !Array.isArray(section.activiteiten) || !section.activiteiten.length) {
       problems.push(trip + ": no activiteiten");

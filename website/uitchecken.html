@@ -79,23 +79,15 @@
         <section class="booking__block" aria-labelledby="teBetalenKop">
           <h2 class="booking__legend" id="teBetalenKop">Te betalen</h2>
 
-          <!-- Optional activities, only for Falun and Wellness & schaatsen.
-               js/uitchecken.js shows this block once the trip price is known
-               and fills the list from data/activiteiten.json. The checkbox
-               opens the list; unticked, nothing extra is booked or sent. -->
+          <!-- Optional activities, only for Falun, Orsa, Wellness & schaatsen
+               and the group trips. js/uitchecken.js shows this block once the
+               trip price is known and fills the list from
+               data/activiteiten.json: every activity directly, each its own
+               checkbox (see tekenLijst/wijzigActAan), no master switch. -->
           <fieldset class="activiteiten" id="activiteitenBlok" hidden>
             <legend class="activiteiten__legend">Activiteiten bijboeken (optioneel)</legend>
-            <label class="extra activiteiten__keuze">
-              <input type="checkbox" class="extra__check" id="activiteitenAan" aria-controls="activiteitenPaneel" aria-expanded="false" aria-describedby="activiteitenTelling" />
-              <span class="extra__name">
-                Ik wil huurspullen of activiteiten bijboeken
-                <span class="extra__hint activiteiten__telling" id="activiteitenTelling" hidden>Nog niets gekozen</span>
-              </span>
-            </label>
-            <div class="activiteiten__paneel" id="activiteitenPaneel" hidden>
-              <p class="activiteiten__uitleg">Wat je hier kiest, betaal je in dezelfde betaling als je reis.</p>
-              <ul class="act-lijst" id="activiteitenLijst"></ul>
-            </div>
+            <p class="activiteiten__uitleg">Wat je hier kiest, betaal je in dezelfde betaling als je reis.</p>
+            <ul class="act-lijst" id="activiteitenLijst"></ul>
           </fieldset>
 
           <dl class="booking__lines activiteiten__overzicht" id="activiteitenOverzicht" hidden></dl>
