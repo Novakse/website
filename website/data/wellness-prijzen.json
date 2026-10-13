@@ -16,11 +16,16 @@
   "//extraNacht": "Blijft iemand langer dan 7 dagen, dan telt elke dag daarboven dit bedrag per persoon mee: het verschil tussen twee opeenvolgende prijzen hierboven (200). Dus 8 dagen 2195, 9 dagen 2395, 10 dagen 2595.",
   "extraNachtPerPersoon": { "standaard": 200 },
 
-  "//personen": "Voor hoeveel personen iemand de kalender kan invullen.",
+  "//personen": "Voor hoeveel personen iemand de kalender kan invullen. Elk aantal in dit bereik kan ook meteen online boeken en betalen, niet alleen 2 personen.",
   "personen": { "min": 1, "max": 20 },
 
-  "//betaalPersonen": "Met hoeveel personen iemand meteen online kan boeken en betalen. De prijzen hierboven gelden voor 2 personen. Kiest iemand een ander aantal, dan toont de kalender geen totaal maar de knop naar de aanvraag (boeken.html), en de server weigert de betaling.",
-  "betaalPersonen": { "min": 2, "max": 2 },
+  "//basisPersonen": "De prijzen hierboven (prijsPerPersoon) gelden voor dit aantal personen.",
+  "basisPersonen": 2,
+
+  "//groepsKorting": "Wat er per persoon per nacht bij komt als de groep niet uit basisPersonen bestaat. Nu alleen een toeslag voor 1 persoon (alleen reizend), 167 euro per nacht; dit is een eerste schatting zodat 1 persoon meteen kan boeken, nog geen definitieve prijs. Bij 3 of meer personen verandert de prijs per persoon nog niet.",
+  "groepsKorting": {
+    "perPersoonPerNacht": { "1": 167 }
+  },
 
   "//duurKnoppen": "Na het kiezen van de aankomstdag verschijnen knoppen voor deze reisduren (in dagen) met hun prijs per persoon. Een knop zet de vertrekdag. Langer blijven kan ook: dan klikt de bezoeker zelf op de vertrekdag. Haal de regel weg om de knoppen niet te tonen.",
   "duurKnoppen": [4, 5, 6, 7],
