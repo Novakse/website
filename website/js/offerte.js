@@ -246,6 +246,9 @@
       if (stap.soort === "stad") {
         if (!plek || !plek.stad) return;
       }
+      if (stap.alleenBijBestemming) {
+        if (!plek || stap.alleenBijBestemming.indexOf(plek.sleutel) === -1) return;
+      }
       if (stap.nietAls) {
         var ander = antwoorden[stap.nietAls.stap];
         if (ander && ander.waarde === stap.nietAls.waarde) return;

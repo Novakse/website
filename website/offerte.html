@@ -118,6 +118,10 @@
          "opties"   bij soort "keuze": elke regel {"naam": "...", "toelichting": "..."}
          "overslaan" op true: de bezoeker mag deze stap overslaan
          "verplicht" true: the request is only sent once this step has an answer
+         "alleenBijBestemming" array met bestemmingssleutels: stap komt alleen
+           in de route bij die bestemmingen, andere bestemmingen slaan hem over
+         "nietAls" {"stap": "...", "waarde": "..."}: stap vervalt als die
+           andere stap dat antwoord heeft
 
        Bij "extras" staan de activiteiten per bestemming, onderaan bij de
        bestemming zelf. Prijzen zijn per persoon, in hele euro's. Heeft een
@@ -275,6 +279,20 @@
       "opties": [
         { "naam": "Ja, ik heb eigen langlaufschaatsen" },
         { "naam": "Nee, ik wil advies over huren of kopen" },
+        { "naam": "Ik weet het nog niet" }
+      ]
+    },
+    {
+      "sleutel": "begeleiding",
+      "label": "Begeleiding op het ijs",
+      "soort": "keuze",
+      "vraag": "Wil je begeleiding en een gids op het ijs, of ga je liever zelfstandig?",
+      "onder": "Bij deze bestemming kun je een gids op het ijs bijboeken. Zonder gids schaats je zelfstandig: dan beoordeel je zelf of het ijs veilig is.",
+      "//alleenBijBestemming": "Deze stap komt alleen in de route bij de bestemmingen hieronder; andere bestemmingen slaan hem vanzelf over.",
+      "alleenBijBestemming": ["orsa", "falun"],
+      "opties": [
+        { "naam": "Met begeleiding en gids op het ijs" },
+        { "naam": "Zonder begeleiding, ik schaats zelfstandig" },
         { "naam": "Ik weet het nog niet" }
       ]
     },
