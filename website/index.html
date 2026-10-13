@@ -302,7 +302,7 @@
     <div class="trip-search-dock trip-search-dock--float">
       <div class="wrap">
         <form class="trip-search" action="boeken.html" method="get"
-              data-season-start="2026-12-19" data-season-end="2027-03-14">
+              data-season-start="2026-12-18" data-season-end="2027-03-15">
           <p class="trip-search__title">Stel je schaatsreis samen</p>
 
           <div class="trip-search__fields">
@@ -380,6 +380,16 @@
         <div class="trip-map__rail">
           <div class="trip-map__track">
             <svg class="trip-map__line" viewBox="0 8 400 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="tripMapGradient" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#002845" />
+                  <stop offset="25%" stop-color="#6bbbd0" />
+                  <stop offset="37.5%" stop-color="#f3ecd8" />
+                  <stop offset="50%" stop-color="#fff3bd" />
+                  <stop offset="75%" stop-color="#ffcc77" />
+                  <stop offset="100%" stop-color="#ff761a" />
+                </linearGradient>
+              </defs>
               <path class="trip-map__lane" d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
               <path class="trip-map__stroke" d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
             </svg>

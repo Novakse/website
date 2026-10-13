@@ -1,9 +1,9 @@
 {
   "//": "Prijzen en data voor de Weissensee-kalender. Alle zes de taalversies van weissensee.html en de aanvraagpagina lezen dit bestand, dus je werkt het een keer bij. Het werkt precies zoals data/finland-prijzen.json (zelfde kalender in js/main.js). Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan.",
 
-  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 19 december tot en met 14 maart (zelfde als Falun en Luleå). Zet je hier andere datums, pas dan ook de zin over het seizoen op weissensee.html aan (zes talen).",
-  "seizoenStart": "2026-12-19",
-  "seizoenEind": "2027-03-14",
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 18 december tot en met 15 maart (zelfde als Falun en Luleå). Zet je hier andere datums, pas dan ook de zin over het seizoen op weissensee.html aan (zes talen).",
+  "seizoenStart": "2026-12-18",
+  "seizoenEind": "2027-03-15",
 
   "//minimumNachten": "Kortste verblijf dat iemand kan kiezen: 3 nachten is 4 dagen. Een maximum is er niet.",
   "minimumNachten": 3,
@@ -35,13 +35,19 @@
 
   "//periodes": "De Weissensee heeft een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
   "periodes": [
-    { "van": "2026-12-19", "tot": "2027-03-14", "tarief": "standaard" }
+    { "van": "2026-12-18", "tot": "2027-03-15", "tarief": "standaard" }
   ],
 
-  "//bezet": "Periodes die niet te kiezen zijn. Op weissensee.html staat dat Novakse de reis buiten de Alternatieve Elfstedentocht plant; die loopt in 2027 van 19 tot en met 28 januari, dus die dagen staan dicht (tot is de eerste dag die weer vrij is). De tweede regel (27 feb - 13 mrt) staat dicht omdat Booking.com voor Draxl-Hof geen prijzen liet zien voor de laatste weken van het seizoen: zonder prijs niet boekbaar. Zodra Joey nieuwe prijzen voor die periode heeft, kan die regel eruit (of vervangen worden door toeslagen hieronder). Wil je een periode toch openzetten, haal de regel dan weg. Een extra periode zet je zo dicht: {\"van\": \"2027-02-01\", \"tot\": \"2027-02-05\", \"wat\": \"Niet beschikbaar\"}. Achter elke regel een komma, behalve achter de laatste.",
+  "//bezet": "Periodes die niet te kiezen zijn. Op weissensee.html staat dat Novakse de reis buiten de Alternatieve Elfstedentocht plant; die loopt in 2027 van 19 tot en met 28 januari, dus die dagen staan dicht (tot is de eerste dag die weer vrij is). De tweede regel (27 feb - 14 mrt) staat dicht omdat Booking.com voor Draxl-Hof geen prijzen liet zien voor de laatste weken van het seizoen: zonder prijs niet boekbaar. Zodra Joey nieuwe prijzen voor die periode heeft, kan die regel eruit (of vervangen worden door toeslagen hieronder). Wil je een periode toch openzetten, haal de regel dan weg. Een extra periode zet je zo dicht: {\"van\": \"2027-02-01\", \"tot\": \"2027-02-05\", \"wat\": \"Niet beschikbaar\"}. Achter elke regel een komma, behalve achter de laatste.",
   "bezet": [
     { "van": "2027-01-19", "tot": "2027-01-29", "wat": { "nl": "Alternatieve Elfstedentocht", "en": "Alternatieve Elfstedentocht", "de": "Alternative Elfstedentocht", "sv": "Alternativa Elfstedentocht", "no": "Alternatieve Elfstedentocht", "fi": "Alternatieve Elfstedentocht" } },
-    { "van": "2027-02-27", "tot": "2027-03-14", "wat": { "nl": "Niet beschikbaar", "en": "Not available", "de": "Nicht verfügbar", "sv": "Inte tillgänglig", "no": "Ikke tilgjengelig", "fi": "Ei saatavilla" } }
+    { "van": "2027-02-27", "tot": "2027-03-15", "wat": { "nl": "Niet beschikbaar", "en": "Not available", "de": "Nicht verfügbar", "sv": "Inte tillgänglig", "no": "Ikke tilgjengelig", "fi": "Ei saatavilla" } }
+  ],
+
+  "//ijsOnzeker": "Periode(s) waarin het ijs nog onzeker is: begin en einde van het seizoen (zelfde als Falun/Orsa/Luleå). Die dagen blijven gewoon te kiezen, maar krijgen een streepje in de kalender en een regel uitleg. tot is de eerste dag die er niet meer bij hoort. Haal het blokje weg om de waarschuwing niet te tonen.",
+  "ijsOnzeker": [
+    { "van": "2026-12-18", "tot": "2027-01-01" },
+    { "van": "2027-03-08", "tot": "2027-03-16" }
   ],
 
   "//toeslagen": "Alleen de nachten die er echt uitspringen, niet elke afwijking. bedrag is de toeslag per persoon per nacht bovenop de prijs hierboven. Bron: screenshots van Draxl-Hof op Booking.com (brand_assets/.../Weissensee/, 25-09-2026), prijzen per nacht voor 2 personen. De meeste nachten liggen tussen €151 en €196: dat is de normale bandbreedte en krijgt bewust geen toeslag (anders staat er bij bijna elke nacht een stipje). Basis = €170, het gangbare bedrag in die bandbreedte. Alleen nachten vanaf ongeveer €210 (duidelijk duurder: kerstvakantie, begin en midden januari, een paar dagen in februari) staan hieronder. Een nacht is de datum waarop hij begint; wie van 1 tot 4 februari blijft, slaapt de nachten van 1, 2 en 3 februari. Vertrekdag telt niet. Totaal p.p. altijd naar boven afgerond. 27 februari t/m 13 maart staat in bezet hierboven dicht: daar waren geen Booking.com-prijzen voor.",

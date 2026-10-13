@@ -233,10 +233,26 @@
           </li>
         </ol>
         <svg class="salen-route__line salen-route__line--wide" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path d="M0,30 C130,6 270,54 400,30 C530,6 670,54 800,30 C930,6 1070,54 1200,30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+          <defs>
+            <linearGradient id="salenRouteGradWide" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#7fa9bd" />
+              <stop offset="50%" stop-color="#9fbac9" />
+              <stop offset="65%" stop-color="#ffe9b0" />
+              <stop offset="100%" stop-color="#dd9752" />
+            </linearGradient>
+          </defs>
+          <path d="M0,30 C130,6 270,54 400,30 C530,6 670,54 800,30 C930,6 1070,54 1200,30" fill="none" stroke="url(#salenRouteGradWide)" stroke-width="3" stroke-linecap="round" />
         </svg>
         <svg class="salen-route__line salen-route__line--tall" viewBox="0 0 40 300" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path d="M20,4 C12,60 28,100 20,150 C12,200 28,240 20,296" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+          <defs>
+            <linearGradient id="salenRouteGradTall" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7fa9bd" />
+              <stop offset="50%" stop-color="#9fbac9" />
+              <stop offset="65%" stop-color="#ffe9b0" />
+              <stop offset="100%" stop-color="#dd9752" />
+            </linearGradient>
+          </defs>
+          <path d="M20,4 C12,60 28,100 20,150 C12,200 28,240 20,296" fill="none" stroke="url(#salenRouteGradTall)" stroke-width="3" stroke-linecap="round" />
         </svg>
         <div class="salen-route__cover" aria-hidden="true"></div>
       </div>

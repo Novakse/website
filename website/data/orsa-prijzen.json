@@ -1,9 +1,9 @@
 {
   "//": "Prijzen en data voor de Orsa-kalender. Alle zes de taalversies van orsa.html en de aanvraagpagina lezen dit bestand, dus je werkt het een keer bij. Het werkt precies zoals data/lulea-prijzen.json (zelfde kalender in js/main.js), met daarbij begeleiding op het ijs en de streepjes voor onzeker ijs. Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan.",
 
-  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 19 december tot en met 14 maart (zelfde als Falun en Luleå).",
-  "seizoenStart": "2026-12-19",
-  "seizoenEind": "2027-03-14",
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 18 december tot en met 15 maart (zelfde als Falun en Luleå).",
+  "seizoenStart": "2026-12-18",
+  "seizoenEind": "2027-03-15",
 
   "//minimumNachten": "Kortste verblijf dat iemand kan kiezen: 3 nachten is 4 dagen. Een maximum is er niet.",
   "minimumNachten": 3,
@@ -38,11 +38,14 @@
 
   "//periodes": "Orsa heeft een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
   "periodes": [
-    { "van": "2026-12-19", "tot": "2027-03-14", "tarief": "standaard" }
+    { "van": "2026-12-18", "tot": "2027-03-15", "tarief": "standaard" }
   ],
 
-  "//ijsOnzeker": "Periode waarin het ijs nog onzeker is (zelfde als Falun). Die dagen blijven gewoon te kiezen, maar krijgen een streepje in de kalender en een regel uitleg. tot is de eerste dag die er niet meer bij hoort. Haal het blokje weg om de waarschuwing niet te tonen.",
-  "ijsOnzeker": { "van": "2026-12-19", "tot": "2027-01-01" },
+  "//ijsOnzeker": "Periode(s) waarin het ijs nog onzeker is: begin en einde van het seizoen (zelfde als Falun). Die dagen blijven gewoon te kiezen, maar krijgen een streepje in de kalender en een regel uitleg. tot is de eerste dag die er niet meer bij hoort. Haal het blokje weg om de waarschuwing niet te tonen.",
+  "ijsOnzeker": [
+    { "van": "2026-12-18", "tot": "2027-01-01" },
+    { "van": "2027-03-08", "tot": "2027-03-16" }
+  ],
 
   "//begeleiding": "Begeleiding op het ijs, bij te boeken. Per dag kost het prijsPerDag voor 1 persoon, plus prijsPerDagExtraPersoon voor elke persoon meer: 100 + 50 x (personen - 1), voor de hele groep. De bezoeker kiest zelf voor hoeveel dagen (0 tot en met de hele reis). Het kan alleen als de hele reis binnen van/tot valt (tot is de laatste vertrekdag, zelfde als Falun: 10 januari tot en met 20 februari). Haal van en tot weg om begeleiding het hele seizoen aan te bieden; haal het hele blokje weg om begeleiding niet te tonen.",
   "begeleiding": {

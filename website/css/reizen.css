@@ -101,7 +101,7 @@
   vector-effect: non-scaling-stroke;
 }
 .trip-map__lane { stroke: var(--ice); stroke-width: 18; }
-.trip-map__stroke { stroke: var(--warm-deep); stroke-width: 2; }
+.trip-map__stroke { stroke: url(#tripMapGradient); stroke-width: 2; }
 
 /* One equal column per stop, without gaps, so every stop centre sits at a
    known point of the path. The columns are implicit (one per item), so the
@@ -122,15 +122,18 @@
    :nth-child(i):nth-last-child(count - i + 1) picks stop i of a list with
    exactly that many stops. Another number of trips needs its own set. */
 
-/* Eight stops (x = 25, 75, 125, 175, 225, 275, 325 and 375). */
-.trip-map__item:nth-child(1):nth-last-child(8) { --y: 0.370; }
-.trip-map__item:nth-child(2):nth-last-child(7) { --y: 0.319; }
-.trip-map__item:nth-child(3):nth-last-child(6) { --y: 0.470; }
-.trip-map__item:nth-child(4):nth-last-child(5) { --y: 0.633; }
-.trip-map__item:nth-child(5):nth-last-child(4) { --y: 0.606; }
-.trip-map__item:nth-child(6):nth-last-child(3) { --y: 0.323; }
-.trip-map__item:nth-child(7):nth-last-child(2) { --y: 0.348; }
-.trip-map__item:nth-child(8):nth-last-child(1) { --y: 0.409; }
+/* Eight stops (x = 25, 75, 125, 175, 225, 275, 325 and 375). Each stop also
+   gets --stop-color: its own point on the same five-colour logo gradient as
+   .trip-map__stroke (see the <linearGradient> in the markup), so the current
+   marker and name pick up the line's colour at their own position. */
+.trip-map__item:nth-child(1):nth-last-child(8) { --y: 0.370; --stop-color: #002845; }
+.trip-map__item:nth-child(2):nth-last-child(7) { --y: 0.319; --stop-color: #3d7c94; }
+.trip-map__item:nth-child(3):nth-last-child(6) { --y: 0.470; --stop-color: #92c9d2; }
+.trip-map__item:nth-child(4):nth-last-child(5) { --y: 0.633; --stop-color: #f8efcd; }
+.trip-map__item:nth-child(5):nth-last-child(4) { --y: 0.606; --stop-color: #ffe8a9; }
+.trip-map__item:nth-child(6):nth-last-child(3) { --y: 0.323; --stop-color: #ffd281; }
+.trip-map__item:nth-child(7):nth-last-child(2) { --y: 0.348; --stop-color: #ffa74f; }
+.trip-map__item:nth-child(8):nth-last-child(1) { --y: 0.409; --stop-color: #ff761a; }
 
 /* Seven stops (x = 28.6, 85.7, 142.9, 200, 257.1, 314.3 and 371.4). */
 .trip-map__item:nth-child(1):nth-last-child(7) { --y: 0.357; }
@@ -215,18 +218,18 @@
 /* Current stop: a filled warm marker with a ring, warm name with underline.
    Colour is never the only cue (size and underline change too). */
 .trip-map__stop[aria-current="true"] .trip-map__marker {
-  background: var(--warm-deep);
-  border-color: var(--warm-deep);
+  background: var(--stop-color, var(--warm-deep));
+  border-color: var(--stop-color, var(--warm-deep));
   transform: scale(1.45);
-  box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.5px var(--warm-deep);
+  box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.5px var(--stop-color, var(--warm-deep));
 }
 .trip-map__stop[aria-current="true"] .trip-map__name {
-  color: var(--warm-deep);
+  color: var(--stop-color, var(--warm-deep));
   text-decoration-color: currentColor;
 }
 
 @media (hover: hover) {
-  .trip-map__stop:hover .trip-map__marker { border-color: var(--warm-deep); transform: scale(1.2); }
+  .trip-map__stop:hover .trip-map__marker { border-color: var(--stop-color, var(--warm-deep)); transform: scale(1.2); }
   .trip-map__stop[aria-current="true"]:hover .trip-map__marker { transform: scale(1.45); }
   .trip-map__stop:hover .trip-map__name { text-decoration-color: var(--border); }
   .trip-map__stop[aria-current="true"]:hover .trip-map__name { text-decoration-color: currentColor; }

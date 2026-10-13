@@ -1,9 +1,9 @@
 {
   "//": "Prijzen en data voor de Finland-kalender (Punkaharju). Alle zes de taalversies en de aanvraagpagina lezen dit bestand, dus je werkt het een keer bij. Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan.",
 
-  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Zet je seizoenEind later, pas dan ook de tekst over het seizoen op finland.html aan.",
-  "seizoenStart": "2026-12-27",
-  "seizoenEind": "2027-03-07",
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Aangepast 2026-10-13 naar de eigen periodes van Harjun Portti (TO NET rates winter 2027): tarieven lopen van 26 december t/m 21 maart als aankomstdag (zie periodes hieronder), seizoenEind is dus de laatst mogelijke vertrekdag bij 3 nachten na een aankomst op 21 maart.",
+  "seizoenStart": "2026-12-26",
+  "seizoenEind": "2027-03-24",
 
   "//minimumNachten": "Kortste verblijf dat iemand kan kiezen.",
   "minimumNachten": 3,

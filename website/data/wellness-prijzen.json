@@ -1,9 +1,9 @@
 {
   "//": "Prijzen en data voor de kalender op wellness.html (Wellness & schaatsen). Het werkt precies zoals data/orsa-prijzen.json (zelfde kalender in js/main.js); de server rekent met hetzelfde bestand (api/_reis-prijs.js). Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan. Zet hier alleen klantprijzen neer: dit bestand is voor iedereen op de site op te vragen.",
 
-  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken: 19 december tot en met 14 maart, zelfde als de andere reizen.",
-  "seizoenStart": "2026-12-19",
-  "seizoenEind": "2027-03-14",
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken: 18 december tot en met 15 maart, zelfde als de andere reizen.",
+  "seizoenStart": "2026-12-18",
+  "seizoenEind": "2027-03-15",
 
   "//minimumNachten": "Kortste verblijf dat iemand kan kiezen: 3 nachten is 4 dagen. Een maximum is er niet.",
   "minimumNachten": 3,
@@ -40,7 +40,13 @@
 
   "//periodes": "Een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
   "periodes": [
-    { "van": "2026-12-19", "tot": "2027-03-14", "tarief": "standaard" }
+    { "van": "2026-12-18", "tot": "2027-03-15", "tarief": "standaard" }
+  ],
+
+  "//ijsOnzeker": "Periode(s) waarin het ijs nog onzeker is: begin en einde van het seizoen (zelfde als Falun/Orsa/Luleå). Die dagen blijven gewoon te kiezen, maar krijgen een streepje in de kalender en een regel uitleg. tot is de eerste dag die er niet meer bij hoort. Haal het blokje weg om de waarschuwing niet te tonen.",
+  "ijsOnzeker": [
+    { "van": "2026-12-18", "tot": "2027-01-01" },
+    { "van": "2027-03-08", "tot": "2027-03-16" }
   ],
 
   "//bezet": "Periodes die niet te kiezen zijn. Zo zet je er een dicht: {\"van\": \"2027-01-16\", \"tot\": \"2027-01-23\", \"wat\": \"Niet beschikbaar\"}. tot is de eerste dag die weer vrij is. Achter elke regel een komma, behalve achter de laatste. Er staat nu niets dicht.",

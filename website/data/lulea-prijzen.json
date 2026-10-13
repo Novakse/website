@@ -1,9 +1,9 @@
 {
   "//": "Prijzen en data voor de Luleå-kalender. Alle zes de taalversies van lulea.html en de aanvraagpagina lezen dit bestand, dus je werkt het een keer bij. Het werkt precies zoals data/finland-prijzen.json (zelfde kalender in js/main.js). Gaat er iets mis in dit bestand, dan verdwijnt alleen de prijs uit de kalender; de kalender zelf en de gewone tekst blijven gewoon staan.",
 
-  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 19 december tot en met 14 maart (zelfde als Falun).",
-  "seizoenStart": "2026-12-19",
-  "seizoenEind": "2027-03-14",
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 18 december tot en met 15 maart (zelfde als Falun).",
+  "seizoenStart": "2026-12-18",
+  "seizoenEind": "2027-03-15",
 
   "//minimumNachten": "Kortste verblijf dat iemand kan kiezen: 3 nachten is 4 dagen. Een maximum is er niet.",
   "minimumNachten": 3,
@@ -38,7 +38,13 @@
 
   "//periodes": "Luleå heeft een prijs voor het hele seizoen. tot is de eerste dag die er niet meer bij hoort. Wil je later een duurdere periode toevoegen, doe het dan zoals in data/finland-prijzen.json.",
   "periodes": [
-    { "van": "2026-12-19", "tot": "2027-03-14", "tarief": "standaard" }
+    { "van": "2026-12-18", "tot": "2027-03-15", "tarief": "standaard" }
+  ],
+
+  "//ijsOnzeker": "Periode(s) waarin het ijs nog onzeker is: begin en einde van het seizoen (zelfde als Falun/Orsa). Die dagen blijven gewoon te kiezen, maar krijgen een streepje in de kalender en een regel uitleg. tot is de eerste dag die er niet meer bij hoort. Haal het blokje weg om de waarschuwing niet te tonen.",
+  "ijsOnzeker": [
+    { "van": "2026-12-18", "tot": "2027-01-01" },
+    { "van": "2027-03-08", "tot": "2027-03-16" }
   ],
 
   "//bezet": "Periodes die niet te kiezen zijn, bijvoorbeeld de dagen van de Grand Prix. Zo zet je er een dicht: {\"van\": \"2027-01-16\", \"tot\": \"2027-01-23\", \"wat\": \"Niet beschikbaar\"}. Achter elke regel een komma, behalve achter de laatste. Het label mag ook een blokje per taal zijn, zoals in data/finland-prijzen.json. Er staat nu niets dicht.",

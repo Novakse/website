@@ -70,7 +70,7 @@
       warnMinDays: function (min) { return "Een verblijf duurt minimaal " + min + " dagen. Kies een latere vertrekdag."; },
       warnOverlap: "In die periode zit een week die al bezet is. Kies een periode ervoor of erna.",
       legendUncertain: "IJs onzeker",
-      uncertainNote: "De dagen met een streepje kun je gewoon boeken, maar in december is het ijs nog het onzekerst.",
+      uncertainNote: "De dagen met een streepje kun je gewoon boeken, maar aan het begin en einde van het seizoen is het ijs nog het onzekerst.",
       guidingLegend: "Wil je begeleiding op het ijs?",
       guidingNone: "Geen",
       guidingFewer: "Eén dag begeleiding minder",
@@ -142,7 +142,7 @@
       warnMinDays: function (min) { return "A stay is at least " + min + " days. Choose a later departure day."; },
       warnOverlap: "That period includes a week that's already booked. Choose a period before or after.",
       legendUncertain: "Ice uncertain",
-      uncertainNote: "You can book the dashed days as normal, but in December the ice is least certain.",
+      uncertainNote: "You can book the dashed days as normal, but the ice is least certain at the start and end of the season.",
       guidingLegend: "Do you want guiding on the ice?",
       guidingNone: "None",
       guidingFewer: "One day less guiding",
@@ -213,7 +213,7 @@
       warnMinDays: function (min) { return "En vistelse är minst " + min + " dagar. Välj en senare avresedag."; },
       warnOverlap: "Den perioden omfattar en vecka som redan är bokad. Välj en period före eller efter.",
       legendUncertain: "Isen osäker",
-      uncertainNote: "Dagarna med streck går att boka som vanligt, men i december är isen som mest osäker.",
+      uncertainNote: "Dagarna med streck går att boka som vanligt, men isen är som mest osäker i början och slutet av säsongen.",
       guidingLegend: "Vill du ha guidning på isen?",
       guidingNone: "Ingen",
       guidingFewer: "En dag mindre guidning",
@@ -284,7 +284,7 @@
       warnMinDays: function (min) { return "Ein Aufenthalt dauert mindestens " + min + " Tage. Wähle einen späteren Abreisetag."; },
       warnOverlap: "In diesem Zeitraum liegt eine Woche, die bereits belegt ist. Wähle einen Zeitraum davor oder danach.",
       legendUncertain: "Eis unsicher",
-      uncertainNote: "Die gestrichelten Tage kannst du ganz normal buchen, aber im Dezember ist das Eis am unsichersten.",
+      uncertainNote: "Die gestrichelten Tage kannst du ganz normal buchen, aber am Anfang und Ende der Saison ist das Eis am unsichersten.",
       guidingLegend: "Möchtest du Begleitung auf dem Eis?",
       guidingNone: "Keine",
       guidingFewer: "Einen Tag weniger Begleitung",
@@ -347,7 +347,7 @@
       warnMinDays: function (min) { return "Et opphold varer minst " + min + " dager. Velg en senere avreisedag."; },
       warnOverlap: "I den perioden ligger det en uke som allerede er booket. Velg en periode før eller etter.",
       legendUncertain: "Isen usikker",
-      uncertainNote: "Dagene med strek kan du bestille som vanlig, men i desember er isen mest usikker.",
+      uncertainNote: "Dagene med strek kan du bestille som vanlig, men isen er mest usikker i starten og slutten av sesongen.",
       guidingLegend: "Vil du ha veiledning på isen?",
       guidingNone: "Ingen",
       guidingFewer: "Én dag mindre veiledning",
@@ -410,7 +410,7 @@
       warnMinDays: function (min) { return "Vähimmäisoleskelu on " + min + " päivää. Valitse myöhäisempi lähtöpäivä."; },
       warnOverlap: "Kyseiselle ajanjaksolle osuu jo varattu viikko. Valitse ajanjakso ennen tai jälkeen.",
       legendUncertain: "Jää epävarma",
-      uncertainNote: "Katkoviivalla merkityt päivät voi varata normaalisti, mutta joulukuussa jää on epävarmimmillaan.",
+      uncertainNote: "Katkoviivalla merkityt päivät voi varata normaalisti, mutta jää on epävarmimmillaan kauden alussa ja lopussa.",
       guidingLegend: "Haluatko opastusta jäällä?",
       guidingNone: "Ei",
       guidingFewer: "Yksi opastuspäivä vähemmän",
@@ -1405,11 +1405,14 @@
 
     /* Optional: days with uncertain ice ("ijsOnzeker" in the price file, e.g.
        Orsa). They stay bookable but get a dashed line, a legend chip and a
-       note. tot is the first day that no longer counts. */
-    var onzeker = (data.ijsOnzeker && alsDatum(data.ijsOnzeker.van) && alsDatum(data.ijsOnzeker.tot))
-      ? { van: alsDatum(data.ijsOnzeker.van), tot: alsDatum(data.ijsOnzeker.tot) } : null;
+       note. tot is the first day that no longer counts. Can be one period
+       ({van, tot}) or several (an array), e.g. begin and end of season. */
+    var onzekerPeriodes = (Array.isArray(data.ijsOnzeker) ? data.ijsOnzeker : (data.ijsOnzeker ? [data.ijsOnzeker] : []))
+      .map(function (p) { return p && alsDatum(p.van) && alsDatum(p.tot) ? { van: alsDatum(p.van), tot: alsDatum(p.tot) } : null; })
+      .filter(Boolean);
+    var onzeker = onzekerPeriodes.length > 0;
     function onzekerOp(datum) {
-      return Boolean(onzeker) && datum >= onzeker.van && datum < onzeker.tot;
+      return onzekerPeriodes.some(function (p) { return datum >= p.van && datum < p.tot; });
     }
 
     /* Optional: nights that cost more ("toeslagen" in the price file, e.g.

@@ -1,9 +1,9 @@
 {
   "//": "Prijzen en data voor de Falun-kalender. Alle zes de taalversies lezen dit bestand, dus je werkt het een keer bij. Zolang seizoenStart of seizoenEind leeg is, verschijnt de kalender niet en blijft de gewone tekst op de pagina staan.",
 
-  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 19 december tot en met 14 maart.",
-  "seizoenStart": "2026-12-19",
-  "seizoenEind": "2027-03-14",
+  "//seizoen": "Tussen welke datums kan iemand een aankomstdag kiezen. De laatste dag is de laatste dag dat iemand nog kan vertrekken. Dit is het schaatsseizoen dat voor alle bestemmingen geldt: 18 december tot en met 15 maart.",
+  "seizoenStart": "2026-12-18",
+  "seizoenEind": "2027-03-15",
 
   "//minimumDagen": "De kortste reis die iemand kan kiezen, in dagen. Een maximum is er niet: iedere vertrekdag vanaf minimumDagen na aankomst kan, zolang het verblijf binnen het seizoen past en er geen bezette nacht in zit. 4 dagen telt 3 nachten.",
   "minimumDagen": 4,
@@ -45,8 +45,11 @@
     "20": { "nacht": -14.358407079646017, "nachtDatum": { "2027-01-09": -12.146017699115045, "2027-02-14": 143.58407079646014 }, "autoPerDag": 15 }
   },
 
-  "//ijsOnzeker": "Periode waarin het ijs nog onzeker is. Die dagen blijven gewoon te boeken, maar krijgen een streepje in de kalender en een regel uitleg eronder. Laat leeg (null) om de waarschuwing weg te halen.",
-  "ijsOnzeker": {"van": "2026-12-19", "tot": "2027-01-01"},
+  "//ijsOnzeker": "Periode(s) waarin het ijs nog onzeker is: begin en einde van het seizoen. Die dagen blijven gewoon te boeken, maar krijgen een streepje in de kalender en een regel uitleg eronder. tot is de eerste dag die er niet meer bij hoort. Laat leeg (null) om de waarschuwing weg te halen.",
+  "ijsOnzeker": [
+    { "van": "2026-12-18", "tot": "2027-01-01" },
+    { "van": "2027-03-08", "tot": "2027-03-16" }
+  ],
 
   "//opties": "Wat de vinkjes met het bedrag doen. vluchtZelf gaat per persoon van de prijs af. Voor de huurauto wordt het bedrag uitgerekend uit autoPerDag in groepsToeslag hierboven, want dat hangt af van hoeveel mensen er meegaan en hoeveel dagen de reis duurt. Begeleiding staat aan: 100 euro per dag voor 1 persoon, plus 50 euro per dag voor elke extra persoon (2 personen 150, 4 personen 250 per dag), verdeeld over de deelnemers. De bezoeker kiest zelf voor hoeveel dagen (0 tot en met de hele reis). Het kan alleen als de hele reis binnen van/tot van het blokje begeleiding valt.",
   "opties": {

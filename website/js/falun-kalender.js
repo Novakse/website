@@ -70,7 +70,7 @@
       legendBooked: "Al bezet",
       legendChosen: "Jouw keuze",
       legendUncertain: "IJs onzeker",
-      uncertainNote: "De dagen met een streepje kun je gewoon boeken, maar in december is het ijs nog het onzekerst.",
+      uncertainNote: "De dagen met een streepje kun je gewoon boeken, maar aan het begin en einde van het seizoen is het ijs nog het onzekerst.",
       searchKeptDay: "Je aankomstdag hebben we overgenomen. Kies hieronder nog hoe lang je blijft.",
       searchDayGone: "Je gekozen aankomstdag kan niet. Kies hieronder een andere dag.",
       optionsLegend: "Wat wil je zelf regelen?",
@@ -145,7 +145,7 @@
       legendBooked: "Booked",
       legendChosen: "Your choice",
       legendUncertain: "Ice uncertain",
-      uncertainNote: "You can book the dashed days as normal, but in December the ice is least certain.",
+      uncertainNote: "You can book the dashed days as normal, but the ice is least certain at the start and end of the season.",
       searchKeptDay: "We kept your arrival day. Choose how long you are staying below.",
       searchDayGone: "Your chosen arrival day is not available. Pick another day below.",
       optionsLegend: "What do you want to arrange yourself?",
@@ -220,7 +220,7 @@
       legendBooked: "Belegt",
       legendChosen: "Deine Wahl",
       legendUncertain: "Eis unsicher",
-      uncertainNote: "Die gestrichelten Tage kannst du ganz normal buchen, aber im Dezember ist das Eis am unsichersten.",
+      uncertainNote: "Die gestrichelten Tage kannst du ganz normal buchen, aber am Anfang und Ende der Saison ist das Eis am unsichersten.",
       searchKeptDay: "Deinen Anreisetag haben wir übernommen. Wähle unten noch, wie lange du bleibst.",
       searchDayGone: "Dein gewählter Anreisetag ist nicht möglich. Wähle unten einen anderen Tag.",
       optionsLegend: "Was möchtest du selbst organisieren?",
@@ -295,7 +295,7 @@
       legendBooked: "Bokad",
       legendChosen: "Ditt val",
       legendUncertain: "Isen osäker",
-      uncertainNote: "Dagarna med streck går att boka som vanligt, men i december är isen som mest osäker.",
+      uncertainNote: "Dagarna med streck går att boka som vanligt, men isen är som mest osäker i början och slutet av säsongen.",
       searchKeptDay: "Vi har behållit din ankomstdag. Välj nedan hur länge du stannar.",
       searchDayGone: "Din valda ankomstdag går inte. Välj en annan dag nedan.",
       optionsLegend: "Vad vill du ordna själv?",
@@ -370,7 +370,7 @@
       legendBooked: "Opptatt",
       legendChosen: "Ditt valg",
       legendUncertain: "Isen usikker",
-      uncertainNote: "Dagene med strek kan du bestille som vanlig, men i desember er isen mest usikker.",
+      uncertainNote: "Dagene med strek kan du bestille som vanlig, men isen er mest usikker i starten og slutten av sesongen.",
       searchKeptDay: "Vi har beholdt ankomstdagen din. Velg nedenfor hvor lenge du blir.",
       searchDayGone: "Ankomstdagen du valgte går ikke. Velg en annen dag nedenfor.",
       optionsLegend: "Hva vil du ordne selv?",
@@ -445,7 +445,7 @@
       legendBooked: "Varattu",
       legendChosen: "Valintasi",
       legendUncertain: "Jää epävarma",
-      uncertainNote: "Katkoviivalla merkityt päivät voi varata normaalisti, mutta joulukuussa jää on epävarmimmillaan.",
+      uncertainNote: "Katkoviivalla merkityt päivät voi varata normaalisti, mutta jää on epävarmimmillaan kauden alussa ja lopussa.",
       searchKeptDay: "Säilytimme saapumispäiväsi. Valitse alta, kuinka kauan viivyt.",
       searchDayGone: "Valitsemasi saapumispäivä ei onnistu. Valitse alta toinen päivä.",
       optionsLegend: "Mitä haluat järjestää itse?",
@@ -676,14 +676,17 @@
     return blok.van && blok.tot && blok.tot > blok.van;
   });
 
-  /* Periode waarin het ijs nog onzeker is. Die dagen blijven gewoon te boeken;
-     ze krijgen alleen een streepje en een regel uitleg onder de kalender. */
-  var onzeker = data.ijsOnzeker && alsDatum(data.ijsOnzeker.van) && alsDatum(data.ijsOnzeker.tot)
-    ? { van: alsDatum(data.ijsOnzeker.van), tot: alsDatum(data.ijsOnzeker.tot) }
-    : null;
+  /* Periode(s) waarin het ijs nog onzeker is. Die dagen blijven gewoon te boeken;
+     ze krijgen alleen een streepje en een regel uitleg onder de kalender.
+     ijsOnzeker kan een enkele periode zijn ({van, tot}) of een lijst ervan,
+     bijvoorbeeld begin en einde van het seizoen apart. */
+  var onzekerPeriodes = (Array.isArray(data.ijsOnzeker) ? data.ijsOnzeker : (data.ijsOnzeker ? [data.ijsOnzeker] : []))
+    .map(function (p) { return p && alsDatum(p.van) && alsDatum(p.tot) ? { van: alsDatum(p.van), tot: alsDatum(p.tot) } : null; })
+    .filter(Boolean);
+  var onzeker = onzekerPeriodes.length > 0;
 
   function onzekerOp(datum) {
-    return !!onzeker && datum >= onzeker.van && datum < onzeker.tot;
+    return onzekerPeriodes.some(function (p) { return datum >= p.van && datum < p.tot; });
   }
 
   /* Trip length in days. It follows from the arrival and departure day the
