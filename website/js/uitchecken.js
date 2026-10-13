@@ -1019,7 +1019,7 @@
     knop.textContent = "Bezig...";
 
     var gekozen = form.querySelector('input[name="methode"]:checked');
-    var methode = gekozen ? gekozen.value : "ideal";
+    var methode = gekozen ? gekozen.value : "creditcard";
 
     /* Bij Falun gaan de keuzes mee in plaats van een bedrag: de server rekent
        het daar opnieuw uit. */
