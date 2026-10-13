@@ -4639,7 +4639,12 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
   .factroute__stop--price .factroute__label { font-size: 0.64rem; line-height: 1.15; }
   .factroute__stop--price .factroute__value { font-size: 1rem; line-height: 1.15; }
   #data-en-prijs,
-  #prijzen { scroll-margin-top: 0.75rem; } /* finland.html calls its booking section #prijzen */
+  #prijzen { scroll-margin-top: 0.75rem; } /* .pending pages (falun, orsa, lulea) and finland.html, which calls its booking section #prijzen */
+  /* weissensee.html and finland.html use .prices instead of .pending, with
+     0.5rem more top padding (see .prices above): 0.5rem less scroll-margin
+     keeps the heading landing in the same spot under the header. */
+  .prices#data-en-prijs,
+  .prices#prijzen { scroll-margin-top: 0.25rem; }
 }
 @media (min-width: 48rem) {
   .factroute__stop--price { margin: -0.6rem 0; padding: 0.6rem 1rem; min-height: 0; }
