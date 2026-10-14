@@ -1066,6 +1066,24 @@
     } else if (reducedMotion.addListener) {
       reducedMotion.addListener(applyVideoMotion);
     }
+
+    /* The opening video must always be on screen. Browsers sometimes stop it
+       or refuse to start it on their own: Safari after the back button or a
+       background tab, an iPhone in Low Power Mode until the visitor touches
+       the page. Try again at each of those moments. A stopped video never
+       stays hidden by the loop fade: then the still frame or poster shows. */
+    heroVideo.addEventListener("pause", function () {
+      heroVideo.classList.remove("opener__video--loop-fade");
+    });
+    window.addEventListener("pageshow", applyVideoMotion);
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) applyVideoMotion();
+    });
+    ["touchend", "click", "keydown"].forEach(function (type) {
+      document.addEventListener(type, function () {
+        if (heroVideo.paused && !reducedMotion.matches) applyVideoMotion();
+      }, { passive: true });
+    });
   }
 
   /* ------------------------------------------------------------------
