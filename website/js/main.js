@@ -1084,6 +1084,21 @@
         if (heroVideo.paused && !reducedMotion.matches) applyVideoMotion();
       }, { passive: true });
     });
+
+    /* A load or decode error (for example a damaged copy in the browser
+       cache): fetch the video once more under a fresh address. Until then,
+       and if that fails too, the poster under the video stays visible. */
+    var heroRetried = false;
+    var retryHeroVideo = function () {
+      var bron = heroVideo.currentSrc || heroVideo.src;
+      if (heroRetried || !bron) return;
+      heroRetried = true;
+      heroVideo.src = bron + (bron.indexOf("?") === -1 ? "?" : "&") + "r=" + Date.now();
+      heroVideo.load();
+      applyVideoMotion();
+    };
+    heroVideo.addEventListener("error", retryHeroVideo);
+    if (heroVideo.error) retryHeroVideo();
   }
 
   /* ------------------------------------------------------------------
