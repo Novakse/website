@@ -258,6 +258,7 @@ module.exports = async function handler(req, res) {
   var basis = basisUrl(req);
   var sessieData = {
     mode: "payment",
+    payment_method_types: ["card"],
     locale: "nl",
     customer_email: email,
     line_items: regels,

@@ -595,6 +595,7 @@ module.exports = async function handler(req, res) {
 
   var sessieData = {
     mode: "payment",
+    payment_method_types: ["card"],
     line_items: [
       {
         quantity: 1,
