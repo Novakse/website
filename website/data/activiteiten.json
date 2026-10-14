@@ -40,6 +40,14 @@
         ]
       },
       {
+        "id": "sneeuwscooter",
+        "naam": "Sneeuwscootertocht met gids",
+        "detail": "ca. 1 uur, zelf rijden, AM-rijbewijs vereist, max 2 personen per scooter",
+        "tarieven": [
+          { "id": "sneeuwscooter", "eenheid": "scooter", "eur": 185 }
+        ]
+      },
+      {
         "id": "husky-kennismaking",
         "naam": "Kennismakingstour met husky's",
         "detail": "kort, als passagier bij de gids",
@@ -69,14 +77,6 @@
         "detail": "dagtocht, 3-4 honden per span, met wildernislunch",
         "tarieven": [
           { "id": "husky-eigen-span", "eenheid": "persoon", "eur": 308 }
-        ]
-      },
-      {
-        "id": "sneeuwscooter",
-        "naam": "Sneeuwscootertocht met gids",
-        "detail": "ca. 1 uur, zelf rijden, AM-rijbewijs vereist, max 2 personen per scooter",
-        "tarieven": [
-          { "id": "sneeuwscooter", "eenheid": "scooter", "eur": 185 }
         ]
       }
     ]
@@ -112,6 +112,14 @@
         ]
       },
       {
+        "id": "sneeuwscooter",
+        "naam": "Sneeuwscootertocht met gids",
+        "detail": "ca. 1 uur, zelf rijden, AM-rijbewijs vereist, max 2 personen per scooter",
+        "tarieven": [
+          { "id": "sneeuwscooter", "eenheid": "scooter", "eur": 185 }
+        ]
+      },
+      {
         "id": "husky-kennismaking",
         "naam": "Kennismakingstour met husky's",
         "detail": "kort, als passagier bij de gids",
@@ -141,14 +149,6 @@
         "detail": "dagtocht, 3-4 honden per span, met wildernislunch",
         "tarieven": [
           { "id": "husky-eigen-span", "eenheid": "persoon", "eur": 308 }
-        ]
-      },
-      {
-        "id": "sneeuwscooter",
-        "naam": "Sneeuwscootertocht met gids",
-        "detail": "ca. 1 uur, zelf rijden, AM-rijbewijs vereist, max 2 personen per scooter",
-        "tarieven": [
-          { "id": "sneeuwscooter", "eenheid": "scooter", "eur": 185 }
         ]
       }
     ]
@@ -189,6 +189,22 @@
         ]
       },
       {
+        "id": "sneeuwscooter-rijder",
+        "naam": "Sneeuwscootersafari, zelf rijden",
+        "detail": "met gids door de omgeving van Orsa Grönklitt, 18 jaar en ouder",
+        "tarieven": [
+          { "id": "orsa-sneeuwscooter-rijder", "eenheid": "scooter", "eur": 103 }
+        ]
+      },
+      {
+        "id": "sneeuwscooter-passagier",
+        "naam": "Sneeuwscootersafari, als passagier",
+        "detail": "voor wie liever niet zelf rijdt, alle leeftijden",
+        "tarieven": [
+          { "id": "orsa-sneeuwscooter-passagier", "eenheid": "persoon", "eur": 34 }
+        ]
+      },
+      {
         "id": "hondenslee-25",
         "naam": "Hondenslee, 2,5 km",
         "detail": "met een team Siberische huskies door het bos bij Orsa Grönklitt",
@@ -216,22 +232,6 @@
         "tarieven": [
           { "id": "orsa-paardenslee-kind", "naam": "3 t/m 12 jaar", "eenheid": "persoon", "eur": 36, "limiet": "orsa-paardenslee" },
           { "id": "orsa-paardenslee-volw", "naam": "13 jaar en ouder", "eenheid": "persoon", "eur": 47, "limiet": "orsa-paardenslee", "standaard": true }
-        ]
-      },
-      {
-        "id": "sneeuwscooter-rijder",
-        "naam": "Sneeuwscootersafari, zelf rijden",
-        "detail": "met gids door de omgeving van Orsa Grönklitt, 18 jaar en ouder",
-        "tarieven": [
-          { "id": "orsa-sneeuwscooter-rijder", "eenheid": "scooter", "eur": 103 }
-        ]
-      },
-      {
-        "id": "sneeuwscooter-passagier",
-        "naam": "Sneeuwscootersafari, als passagier",
-        "detail": "voor wie liever niet zelf rijdt, alle leeftijden",
-        "tarieven": [
-          { "id": "orsa-sneeuwscooter-passagier", "eenheid": "persoon", "eur": 34 }
         ]
       }
     ]
