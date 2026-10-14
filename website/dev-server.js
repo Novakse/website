@@ -60,7 +60,7 @@ function serveStatic(req, res, pathname) {
         var withHtml = filePath + ".html";
         fs.stat(withHtml, function (err2, stats2) {
           if (!err2 && stats2.isFile()) {
-            sendFile(res, withHtml);
+            sendFile(req, res, withHtml);
           } else {
             send404(res);
           }
@@ -71,21 +71,42 @@ function serveStatic(req, res, pathname) {
       return;
     }
     if (stats.isDirectory()) {
-      sendFile(res, path.join(filePath, "index.html"));
+      sendFile(req, res, path.join(filePath, "index.html"));
       return;
     }
-    sendFile(res, filePath);
+    sendFile(req, res, filePath);
   });
 }
 
-function sendFile(res, filePath) {
+function sendFile(req, res, filePath) {
   fs.readFile(filePath, function (err, data) {
     if (err) {
       send404(res);
       return;
     }
     var type = MIME[path.extname(filePath).toLowerCase()] || "application/octet-stream";
-    res.writeHead(200, { "Content-Type": type });
+    var size = data.length;
+    // Safari only plays video when the server answers byte-range requests
+    // with 206, as Vercel does live. Supports "bytes=a-b", "bytes=a-" and "bytes=-n".
+    var range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || "");
+    if (range && (range[1] || range[2])) {
+      var start = range[1] ? parseInt(range[1], 10) : Math.max(0, size - parseInt(range[2], 10));
+      var end = range[1] && range[2] ? Math.min(parseInt(range[2], 10), size - 1) : size - 1;
+      if (start >= size || start > end) {
+        res.writeHead(416, { "Content-Range": "bytes */" + size });
+        res.end();
+        return;
+      }
+      res.writeHead(206, {
+        "Content-Type": type,
+        "Accept-Ranges": "bytes",
+        "Content-Range": "bytes " + start + "-" + end + "/" + size,
+        "Content-Length": end - start + 1
+      });
+      res.end(data.subarray(start, end + 1));
+      return;
+    }
+    res.writeHead(200, { "Content-Type": type, "Accept-Ranges": "bytes", "Content-Length": size });
     res.end(data);
   });
 }
