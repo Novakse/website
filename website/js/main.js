@@ -89,6 +89,9 @@
       flightSelf: "Ik regel mijn vlucht zelf",
       flightSelfHint: "De heen- en terugvlucht zit anders bij de prijs in",
       lineFlight: "Vlucht zelf geregeld",
+      carSelf: "Ik regel mijn vervoer naar de accommodatie zelf",
+      carSelfHint: "De huurauto zit anders bij de prijs in",
+      lineCar: "Vervoer zelf geregeld",
       // Gear rental (Finland): same markup as the own-flight row above.
       gearRental: "Materiaal huren",
       gearRentalHint: "Noorse schaatsen, langlaufski's, sneeuwschoenen en een fatbike, per persoon voor de hele reis. Gebruik van de loipes is dan gratis; toegang tot de schaatsbaan zit al bij de reissom in.",
@@ -165,6 +168,9 @@
       flightSelf: "I'll arrange my own flight",
       flightSelfHint: "Otherwise the return flight is included in the price",
       lineFlight: "Own flight",
+      carSelf: "I'll arrange my own transport to the accommodation",
+      carSelfHint: "Otherwise the rental car is included in the price",
+      lineCar: "Own transport",
       gearRental: "Rent equipment",
       gearRentalHint: "Nordic skates, cross-country skis, snowshoes and a fatbike, per person for the whole trip. Use of the trails is then free; access to the skating rink is already included in the trip price.",
       lineGear: "Equipment rented",
@@ -240,6 +246,9 @@
       flightSelf: "Jag ordnar flyget själv",
       flightSelfHint: "Annars ingår tur- och returflyget i priset",
       lineFlight: "Eget flyg",
+      carSelf: "Jag ordnar transporten till boendet själv",
+      carSelfHint: "Annars ingår hyrbilen i priset",
+      lineCar: "Egen transport",
       gearRental: "Hyr utrustning",
       gearRentalHint: "Nordiska skridskor, längdskidor, snöskor och en fatbike, per person för hela resan. Längdskidspåren är då gratis att använda; tillträde till skridskobanan ingår redan i priset.",
       lineGear: "Utrustning hyrd",
@@ -315,6 +324,9 @@
       flightSelf: "Ich buche meinen Flug selbst",
       flightSelfHint: "Sonst ist der Hin- und Rückflug im Preis enthalten",
       lineFlight: "Flug selbst gebucht",
+      carSelf: "Ich organisiere meine Anreise zur Unterkunft selbst",
+      carSelfHint: "Sonst ist der Mietwagen im Preis enthalten",
+      lineCar: "Anreise selbst organisiert",
       gearRental: "Ausrüstung mieten",
       gearRentalHint: "Nordic-Schlittschuhe, Langlaufski, Schneeschuhe und ein Fatbike, pro Person für die ganze Reise. Die Loipen sind dann kostenlos; der Zugang zur Eisbahn ist bereits im Reisepreis enthalten.",
       lineGear: "Ausrüstung gemietet",
@@ -382,6 +394,9 @@
       flightSelf: "Jeg ordner flyet selv",
       flightSelfHint: "Ellers er tur-retur-flyet inkludert i prisen",
       lineFlight: "Eget fly",
+      carSelf: "Jeg ordner transporten til overnattingsstedet selv",
+      carSelfHint: "Ellers er leiebilen inkludert i prisen",
+      lineCar: "Egen transport",
       gearRental: "Lei utstyr",
       gearRentalHint: "Nordiske skøyter, langrennski, truger og en fatbike, per person for hele turen. Langrennsløypene er da gratis å bruke; adgang til skøytebanen er allerede inkludert i reiseprisen.",
       lineGear: "Utstyr leid",
@@ -449,6 +464,9 @@
       flightSelf: "Järjestän lentoni itse",
       flightSelfHint: "Muuten meno-paluulento sisältyy hintaan",
       lineFlight: "Oma lento",
+      carSelf: "Järjestän kuljetuksen majoitukseen itse",
+      carSelfHint: "Muuten vuokra-auto sisältyy hintaan",
+      lineCar: "Oma kuljetus",
       gearRental: "Vuokraa varusteet",
       gearRentalHint: "Retkiluistimet, murtomaasukset, lumikengät ja fatbike, henkilöä kohden koko matkalle. Hiihtolatujen käyttö on silloin ilmaista; pääsy luistelurataan sisältyy jo matkan hintaan.",
       lineGear: "Varusteet vuokrattu",
@@ -1339,8 +1357,8 @@
     var opBoekpagina = Boolean(opties);
     var adres = new URLSearchParams(window.location.search);
     var vooraf = opBoekpagina
-      ? { van: opties.van, tot: opties.tot, personen: opties.personen, kinderen: opties.kinderen, baby: opties.baby, begeleiding: opties.begeleidingDagen, vlucht: opties.vlucht, materiaal: opties.materiaal }
-      : { van: adres.get("van"), tot: adres.get("tot"), personen: adres.get("personen"), kinderen: adres.get("kinderen"), baby: adres.get("baby"), begeleiding: adres.get("begeleiding"), vlucht: adres.get("vlucht"), materiaal: adres.get("materiaal") };
+      ? { van: opties.van, tot: opties.tot, personen: opties.personen, kinderen: opties.kinderen, baby: opties.baby, begeleiding: opties.begeleidingDagen, vlucht: opties.vlucht, auto: opties.auto, materiaal: opties.materiaal }
+      : { van: adres.get("van"), tot: adres.get("tot"), personen: adres.get("personen"), kinderen: adres.get("kinderen"), baby: adres.get("baby"), begeleiding: adres.get("begeleiding"), vlucht: adres.get("vlucht"), auto: adres.get("auto"), materiaal: adres.get("materiaal") };
 
     var seizoenVan = alsDatum(data.seizoenStart);
     var seizoenTot = alsDatum(data.seizoenEind);
@@ -1427,6 +1445,27 @@
     // The amount per person that comes off now; 0 without the tick.
     function vluchtAftrek() {
       return metVluchtKeuze && vluchtZelf ? vluchtBedrag : 0;
+    }
+
+    /* Optional ("opties.autoZelf" in the price file): when paying online the
+       visitor can also tick "I'll arrange my own transport". Unlike the
+       flight, that amount is for ONE rental car for the whole group per day,
+       not per person: it is divided by the head count, so 2 people each get
+       half off per day and 3 people each get a third, same as the car
+       sharing in js/falun-kalender.js. Only a positive number counts;
+       otherwise there is no checkbox. api/_reis-prijs.js applies exactly the
+       same rule, so the amount on screen is the amount charged. */
+    var autoBedragPerDag = (function () {
+      var waarde = data.opties && data.opties.autoZelf;
+      return typeof waarde === "number" && isFinite(waarde) && waarde > 0 ? Math.round(waarde) : 0;
+    })();
+    var metAutoKeuze = afrekenen && autoBedragPerDag > 0;
+    // A link or the booking page may bring it along ticked: only auto=zelf counts.
+    var autoZelf = metAutoKeuze && vooraf.auto === "zelf";
+    // The amount per person that comes off now for a trip of this many days;
+    // 0 without the tick.
+    function autoAftrek(dagen) {
+      return metAutoKeuze && autoZelf && dagen > 0 ? (autoBedragPerDag * dagen) / Math.max(1, personen) : 0;
     }
 
     /* Optional ("materiaalHuur" in the price file, Finland): tick to rent
@@ -1617,7 +1656,10 @@
       if (!magBetalen(personen)) return { perPersoon: 0, totaal: 0 };
       var basis = heleEuros(prijsPerPersoon(aankomst, nachten));
       if (!basis) return { perPersoon: 0, totaal: 0 };
-      var perPersoon = basis + groepsKortingPerNacht(personen - baby) * nachten - vluchtAftrek();
+      // Dividing the car by the head count can leave a fraction of a euro;
+      // rounded here too, same as api/_reis-prijs.js, so the browser and the
+      // server always land on the same whole-euro price.
+      var perPersoon = Math.round(basis + groepsKortingPerNacht(personen - baby) * nachten - vluchtAftrek() - autoAftrek(nachten + 1));
       if (!(perPersoon > 0)) return { perPersoon: 0, totaal: 0 };
       return {
         perPersoon: perPersoon,
@@ -1634,7 +1676,7 @@
     var kinderPrijzen = {};
     function kinderSleutel() {
       return [data.reis, alsTekst(keuzeVan), alsTekst(keuzeTot), personen, kinderen, baby, gekozenBegeleiding(),
-        vluchtAftrek() ? "zelf" : ""].join("|");
+        vluchtAftrek() ? "zelf" : "", autoZelf ? "zelf" : ""].join("|");
     }
     // The stored answer for the choice on screen: { status, data } or null.
     function kinderAntwoord() {
@@ -1659,6 +1701,7 @@
       });
       if (gekozenBegeleiding()) vraag.set("begeleiding", String(gekozenBegeleiding()));
       if (vluchtAftrek()) vraag.set("vlucht", "zelf");
+      if (autoAftrek(nachten + 1)) vraag.set("auto", "zelf");
 
       fetch("/api/reis-prijs?" + vraag.toString())
         .then(function (antwoord) {
@@ -1834,7 +1877,9 @@
       var nachten = dagen - 1;
       var basis = heleEuros(prijsPerPersoon(keuzeVan, nachten));
       if (!basis) return 0;
-      var perPersoon = afrekenen ? basis + groepsKortingPerNacht(personen - baby) * nachten - vluchtAftrek() : basis;
+      var perPersoon = afrekenen
+        ? Math.round(basis + groepsKortingPerNacht(personen - baby) * nachten - vluchtAftrek() - autoAftrek(dagen))
+        : basis;
       return perPersoon > 0 ? perPersoon : 0;
     }
     function tekenDuren() {
@@ -1982,41 +2027,75 @@
       });
     }
 
-    /* Own flight (only when paying online and the price file has
-       opties.vluchtZelf): one checkbox row with the same markup and classes
-       as the options in the Falun calendar (js/falun-kalender.js), so the
-       booking styles apply. Built once; tekenVlucht() only updates it, so
-       keyboard focus stays on the checkbox. */
+    /* Self-arrange options (only when paying online): own flight
+       (opties.vluchtZelf) and own transport (opties.autoZelf), in one
+       shared panel with one legend, same markup and classes as the options
+       in the Falun calendar (js/falun-kalender.js), so the booking styles
+       apply. Built once; tekenVlucht() only updates it, so keyboard focus
+       stays on a checkbox. */
     var vluchtBox = null;
     var vluchtVeld = null;
-    if (metVluchtKeuze) {
-      var vluchtId = "calendarFlight" + (++vluchtTeller);
+    var autoVeld = null;
+    var autoPrijsVeld = null;
+    if (metVluchtKeuze || metAutoKeuze) {
+      var vluchtId = "calendarOptions" + (++vluchtTeller);
       vluchtBox = document.createElement("div");
       vluchtBox.className = "falun-cal__block calendar__flight";
-      vluchtBox.innerHTML =
-        '<p class="falun-cal__legend" id="' + vluchtId + '">' + T.optionsLegend + '</p>' +
-        '<div class="booking__extras" role="group" aria-labelledby="' + vluchtId + '">' +
+      var optieRegels = "";
+      if (metVluchtKeuze) {
+        optieRegels +=
           '<label class="extra">' +
             '<input type="checkbox" class="extra__check" data-optie="vlucht"' + (vluchtZelf ? ' checked' : '') + ' />' +
             '<span class="extra__name">' + T.flightSelf +
               '<span class="extra__hint">' + T.flightSelfHint + '</span>' +
             '</span>' +
             '<span class="extra__price">- ' + euroTekst(vluchtBedrag) + '</span>' +
-          '</label>' +
-        '</div>';
+          '</label>';
+      }
+      if (metAutoKeuze) {
+        optieRegels +=
+          '<label class="extra">' +
+            '<input type="checkbox" class="extra__check" data-optie="auto"' + (autoZelf ? ' checked' : '') + ' />' +
+            '<span class="extra__name">' + T.carSelf +
+              '<span class="extra__hint">' + T.carSelfHint + '</span>' +
+            '</span>' +
+            '<span class="extra__price"></span>' +
+          '</label>';
+      }
+      vluchtBox.innerHTML =
+        '<p class="falun-cal__legend" id="' + vluchtId + '">' + T.optionsLegend + '</p>' +
+        '<div class="booking__extras" role="group" aria-labelledby="' + vluchtId + '">' + optieRegels + '</div>';
       box.appendChild(vluchtBox);
-      vluchtVeld = vluchtBox.querySelector("input");
-      vluchtVeld.addEventListener("change", function () {
-        vluchtZelf = vluchtVeld.checked;
-        toonBalk();
-      });
+      if (metVluchtKeuze) {
+        vluchtVeld = vluchtBox.querySelector('[data-optie="vlucht"]');
+        vluchtVeld.addEventListener("change", function () {
+          vluchtZelf = vluchtVeld.checked;
+          toonBalk();
+        });
+      }
+      if (metAutoKeuze) {
+        autoVeld = vluchtBox.querySelector('[data-optie="auto"]');
+        autoPrijsVeld = autoVeld.closest(".extra").querySelector(".extra__price");
+        autoVeld.addEventListener("change", function () {
+          autoZelf = autoVeld.checked;
+          toonBalk();
+        });
+      }
     }
     // A group size that cannot pay online (betaalPersonen) has no price for
-    // the tick to change, so the row is hidden then.
+    // the tick to change, so the row is hidden then. The car's price per
+    // person depends on the trip length (and the head count), so it only
+    // shows once a period is chosen.
     function tekenVlucht() {
       if (!vluchtBox) return;
-      vluchtBox.hidden = !magBetalen(personen);
-      if (vluchtVeld.checked !== vluchtZelf) vluchtVeld.checked = vluchtZelf;
+      var verborgen = !magBetalen(personen);
+      vluchtBox.hidden = verborgen;
+      if (vluchtVeld && vluchtVeld.checked !== vluchtZelf) vluchtVeld.checked = vluchtZelf;
+      if (autoVeld) {
+        if (autoVeld.checked !== autoZelf) autoVeld.checked = autoZelf;
+        var bedrag = !verborgen && keuzeVan && keuzeTot ? (autoBedragPerDag * reisDagen()) / Math.max(1, personen) : 0;
+        autoPrijsVeld.textContent = bedrag ? "- " + euroTekst(Math.round(bedrag)) : "";
+      }
     }
 
     /* Gear rental (only when paying online and the price file has
@@ -2141,6 +2220,7 @@
         baby: afrekenen ? baby : 0,
         begeleidingDagen: klaar ? gekozenBegeleiding() : 0,
         vlucht: vluchtAftrek() ? "zelf" : "",
+        auto: autoZelf ? "zelf" : "",
         materiaal: metMateriaalKeuze && materiaalGekozen ? "ja" : "",
         // The "Book and pay" link is on screen (same test as knopHtml). False
         // for a complete period without a price to pay online, e.g. a group
@@ -2181,6 +2261,7 @@
         if (baby) params.set("baby", String(baby));
         if (gekozenBegeleiding()) params.set("begeleiding", String(gekozenBegeleiding()));
         if (vluchtAftrek()) params.set("vlucht", "zelf");
+        if (autoAftrek(nachten + 1)) params.set("auto", "zelf");
         if (metMateriaalKeuze && materiaalGekozen) params.set("materiaal", "ja");
         return '<a class="btn btn--dark calendar__pay" href="' + mapVoorKalender() + 'uitchecken.html?' +
           params.toString().replace(/&/g, "&amp;") + '">' + T.bookPayBtn + '</a>';
@@ -2215,6 +2296,7 @@
       var prijsRegel = "";
       var categorieRegels = ""; // one line per category when there are children or babies
       var vluchtRegel = ""; // own flight ticked: the amount per person that came off
+      var autoRegel = ""; // own transport ticked: the amount per person that came off
       var materiaalRegel = ""; // gear rental ticked: the group amount that came on top
       // A group size that cannot pay online (betaalPersonen): say why the
       // request button shows instead of the total.
@@ -2232,6 +2314,10 @@
           if (kinderen + baby > 0) {
             vluchtRegel += '<span class="calendar__chosen-nights calendar__chosen-note">' + T.childFlightSelfNote + '</span>';
           }
+        }
+        if (bedragen.totaal && autoAftrek(nachten + 1)) {
+          autoRegel = '<span class="calendar__chosen-nights">' + T.lineCar + ': - ' +
+            T.perPersonPrice(getal(Math.round(autoAftrek(nachten + 1)))) + '</span>';
         }
         if (bedragen.totaal && materiaalGroep(nachten + 1, personen, baby)) {
           materiaalRegel = '<span class="calendar__chosen-nights">' + T.lineGear + ': + ' +
@@ -2280,6 +2366,7 @@
           (prijsRegel ? '<span class="calendar__chosen-price">' + prijsRegel + '</span>' : '') +
           categorieRegels +
           vluchtRegel +
+          autoRegel +
           materiaalRegel +
           toeslagRegel +
           betaalNotitie +

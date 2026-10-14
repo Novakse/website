@@ -19,11 +19,12 @@
                baby: int,           // of which babies 0-1 (optional, default 0)
                begeleiding: int,    // guiding days, Orsa only (optional)
                vlucht: "zelf",      // own flight (optional; any other value: flight included)
+               auto: "zelf",        // own transport (optional; any other value: car included)
                materiaal: "ja" }    // gear rental, Finland only (optional; any other value: no gear)
      returns { bedrag, perPersoon, perKind, perBaby, nachten, dagen,
                personen, volwassenen, kinderen, baby,
                begeleidingDagen, begeleidingBedrag,
-               eigenVlucht, vluchtAftrek,
+               eigenVlucht, vluchtAftrek, eigenAuto, autoAftrek,
                materiaalGehuurd, materiaalBedrag, omschrijving }
      or      { fout: "Dutch message" }
    bedrag is the whole group in whole euros: the price per person of every
@@ -32,7 +33,10 @@
    reduced flight part (api/_kinderprijs.js, api/_prijsbeleid.js); with an
    own flight they equal the adult price. A group of only adults gives
    exactly the amount it always did. eigenVlucht tells whether the own-flight
-   amount (vluchtAftrek, per person) came off.
+   amount (vluchtAftrek, per person) came off. eigenAuto tells whether the
+   own-transport amount (autoAftrek, per person) came off: that amount is
+   one rental car's price per day for the WHOLE group, divided by the head
+   count, not a fixed amount per person like the flight.
    ========================================================================== */
 var fs = require("fs");
 var path = require("path");
@@ -100,6 +104,17 @@ function alsGetal(waarde) {
    positive number. Same check as vluchtBedrag in js/main.js. */
 function vluchtZelfBedrag(data) {
   var waarde = data && data.opties && data.opties.vluchtZelf;
+  if (typeof waarde !== "number" || !isFinite(waarde) || waarde <= 0) return 0;
+  return Math.round(waarde);
+}
+
+/* The own-transport amount per day for the WHOLE group (opties.autoZelf in
+   the price file), or 0 when the trip does not offer it or the value is not
+   a positive number. Unlike the flight this is for one rental car, shared by
+   the group: js/main.js divides it by the head count, same as the car
+   sharing in js/falun-kalender.js. */
+function autoZelfBedragPerDag(data) {
+  var waarde = data && data.opties && data.opties.autoZelf;
   if (typeof waarde !== "number" || !isFinite(waarde) || waarde <= 0) return 0;
   return Math.round(waarde);
 }
@@ -280,7 +295,20 @@ function berekenReis(keuze) {
   if (eigenVlucht && !vluchtBedrag) return { fout: "Bij deze reis kun je de vlucht niet zelf regelen." };
   var vluchtAftrek = eigenVlucht ? vluchtBedrag : 0;
 
-  var perPersoon = heleEuros + korting * nachten - vluchtAftrek;
+  // main.js autoAftrek(): "I'll arrange my own transport" (opties.autoZelf)
+  // takes one rental car's amount per day off, divided over the whole group
+  // (not per person like the flight), so the total discount stays the same
+  // regardless of the head count.
+  var eigenAuto = keuze.auto === "zelf";
+  var autoBedragPerDag = autoZelfBedragPerDag(data);
+  if (eigenAuto && !autoBedragPerDag) return { fout: "Bij deze reis kun je het vervoer niet zelf regelen." };
+  var autoAftrek = eigenAuto ? (autoBedragPerDag * dagen) / personen : 0;
+
+  // Dividing the car by the head count can leave a fraction of a euro
+  // (3 people: 35 / 3 = 11.67); rounded to a whole euro here, same as the
+  // final perPersoon in api/_falun-prijs.js, so every price on screen and at
+  // checkout stays a whole number as before autoAftrek existed.
+  var perPersoon = Math.round(heleEuros + korting * nachten - vluchtAftrek - autoAftrek);
   if (!(perPersoon > 0)) return { fout: "Ongeldig bedrag." };
 
   // main.js begeleidingKan() / begeleidingGroep(): guiding (Orsa) is a group
@@ -329,6 +357,7 @@ function berekenReis(keuze) {
     " (" + dagen + (dagen === 1 ? " dag" : " dagen") + "), " + personen + (personen === 1 ? " persoon" : " personen") +
     kinderprijs.omschrijvingDeel(aantallen) +
     (eigenVlucht ? ", eigen vlucht" : "") +
+    (eigenAuto ? ", eigen vervoer" : "") +
     ", " + (aantallen.kinderen + aantallen.baby > 0 ? "volwassene " : "") + euro(perPersoon) + " p.p.";
   if (aantallen.kinderen > 0) omschrijving += ", kind " + euro(prijzen.kind) + " p.p.";
   if (aantallen.baby > 0) omschrijving += ", baby " + euro(prijzen.baby) + " p.p.";
@@ -357,6 +386,8 @@ function berekenReis(keuze) {
     begeleidingBedrag: begeleidingBedrag,
     eigenVlucht: eigenVlucht,
     vluchtAftrek: vluchtAftrek,
+    eigenAuto: eigenAuto,
+    autoAftrek: autoAftrek,
     omschrijving: omschrijving
   };
 }

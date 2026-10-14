@@ -245,6 +245,8 @@
     dagen: params.get("dagen"),
     // Own flight ticked in the calendar (vlucht=zelf, nothing else counts).
     vlucht: params.get("vlucht") === "zelf" ? "zelf" : null,
+    // Own transport ticked in the calendar (auto=zelf, nothing else counts).
+    auto: params.get("auto") === "zelf" ? "zelf" : null,
     // Gear rental ticked in the calendar (Finland; materiaal=ja, nothing else counts).
     materiaal: params.get("materiaal") === "ja" ? "ja" : null
   };
@@ -255,7 +257,7 @@
     if (!window.history || !window.history.replaceState) return;
     var nieuw = new URLSearchParams();
     if (reisSleutel) nieuw.set("reis", reisSleutel);
-    ["van", "tot", "personen", "kinderen", "baby", "begeleiding", "dagen", "vlucht", "materiaal"].forEach(function (sleutel) {
+    ["van", "tot", "personen", "kinderen", "baby", "begeleiding", "dagen", "vlucht", "auto", "materiaal"].forEach(function (sleutel) {
       var waarde = keuze[sleutel];
       if (waarde !== null && waarde !== undefined && waarde !== "" && waarde !== 0) nieuw.set(sleutel, String(waarde));
     });
@@ -340,6 +342,7 @@
         baby: keuze.baby,
         begeleidingDagen: keuze.begeleiding,
         vlucht: keuze.vlucht,
+        auto: keuze.auto,
         materiaal: keuze.materiaal,
         onWijzig: function (info) {
           laatsteKeuze[sleutel] = info;
@@ -363,6 +366,7 @@
     keuze.begeleiding = info.begeleidingDagen || null;
     keuze.dagen = info.dagen || null;
     keuze.vlucht = info.vlucht === "zelf" ? "zelf" : null;
+    keuze.auto = info.auto === "zelf" ? "zelf" : null;
     keuze.materiaal = info.materiaal === "ja" ? "ja" : null;
   }
 
@@ -526,6 +530,7 @@
       keuze.personen = personen;
       keuze.begeleiding = null;
       keuze.vlucht = null;
+      keuze.auto = null;
       keuze.materiaal = null;
       laatsteKeuze[sleutel] = { van: keuze.van, tot: keuze.tot, personen: personen, dagen: keuze.dagen, begeleidingDagen: null };
       if (reisSleutel === sleutel) schrijfAdres();
@@ -649,6 +654,7 @@
         keuze.begeleiding = null;
         keuze.dagen = null;
         keuze.vlucht = null;
+        keuze.auto = null;
         keuze.materiaal = null;
       }
     }

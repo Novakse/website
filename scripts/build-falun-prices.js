@@ -47,6 +47,13 @@ var REPO = path.resolve(__dirname, "..");
 var PUBLIC_FILE = path.join(REPO, "website", "data", "falun-prijzen.json");
 var PRIVATE_RELATIVE = path.join("brand_assets", "purchase-prices", "falun-costs.json");
 var BLOCK_KEY = "groepsToeslag";
+// The rental car (for the whole group, shared the same way as the other
+// calendar trips in api/_reis-prijs.js) never costs the customer less than
+// this per day in total, even if the private cost file holds a lower
+// carPerDayEUR. Business decision, 2026-10-14; same floor for Orsa, Wellness
+// and Finland (data/<reis>-prijzen.json opties.autoZelf), Luleå has its own
+// higher floor (40) there.
+var MIN_CAR_PER_DAY_EUR = 35;
 // Key in the private file with extra words that must never be public.
 var TERMS_KEY = "forbiddenPublicTerms";
 
@@ -106,7 +113,7 @@ function buildRows(costs, personenMax) {
   var cabinMax = costs.cabinMaxPersons || 0;
   var rate = costs.exchangeRateSEK || 1;
   var baseSEK = isNumber(costs.cabinBaseSEK) ? costs.cabinBaseSEK : 0;
-  var carPerDay = isNumber(costs.carPerDayEUR) ? costs.carPerDayEUR : 0;
+  var carPerDay = isNumber(costs.carPerDayEUR) ? Math.max(costs.carPerDayEUR, MIN_CAR_PER_DAY_EUR) : 0;
   var passOn = isNumber(costs.passOnShare) ? costs.passOnShare : 1;
   var nights = costs.cabinPerNightSEK || {};
 

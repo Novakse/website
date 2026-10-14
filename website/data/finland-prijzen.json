@@ -33,9 +33,10 @@
   "//afrekenen": "Op true kan de bezoeker deze reis meteen online betalen via Stripe, het volledige bedrag voor de hele groep. De server rekent het bedrag zelf uit met dit bestand (api/_reis-prijs.js), net als de kalender. Op false blijft het een aanvraag.",
   "afrekenen": true,
 
-  "//opties": "Wat het vinkje \"Ik regel mijn vlucht zelf\" in de kalender met de prijs doet, zelfde opbouw als in data/falun-prijzen.json. vluchtZelf is het vaste bedrag in hele euro's dat per persoon van de prijs af gaat (na de groepskorting), in beide prijsperiodes hetzelfde. Met dit vinkje betalen kinderen en baby's dezelfde prijs als een volwassene. Haal het blokje weg om het vinkje niet te tonen.",
+  "//opties": "Twee losse vinkjes in de kalender: \"Ik regel mijn vlucht zelf\" (vluchtZelf, vast bedrag per persoon, na de groepskorting, in beide prijsperiodes hetzelfde; met dit vinkje betalen kinderen en baby's dezelfde prijs als een volwassene) en \"Ik regel mijn vervoer naar de accommodatie zelf\" (autoZelf, het bedrag voor één huurauto per dag voor de HELE groep, gedeeld door het aantal personen, zoals bij Falun). Haal een blokje weg om dat vinkje niet te tonen.",
   "opties": {
-    "vluchtZelf": 300
+    "vluchtZelf": 300,
+    "autoZelf": 35
   },
 
   "//materiaalHuur": "Vinkje \"Materiaal huren\" (Noorse schaatsen, langlaufski's, sneeuwschoenen, fatbike bij Harjun Portti). Vaste klantprijs per persoon voor de hele reis, zonder opslag op de inkoopprijs (besluit Joey 2026-10-13): 1 dag €28, 2 dagen €48, 3 dagen €68, elke dag erbij +€10 per persoon. Baby's (0-1) tellen niet mee. Haal dit blokje weg om het vinkje niet te tonen.",

@@ -112,7 +112,7 @@
   var KALENDER_REIZEN = {
     lulea: { naam: "Luleå", pagina: "lulea.html" },
     orsa: { naam: "Orsa", pagina: "orsa.html", begeleiding: true },
-    weissensee: { naam: "Weissensee", pagina: "weissensee.html", zonderEigenVlucht: true },
+    weissensee: { naam: "Weissensee", pagina: "weissensee.html", zonderEigenVlucht: true, zonderEigenAuto: true },
     finland: { naam: "Finland", pagina: "finland.html", materiaal: true },
     wellness: { naam: "Wellness & schaatsen", pagina: "wellness.html" }
   };
@@ -133,6 +133,8 @@
       begeleiding: reisInfo.begeleiding ? params.get("begeleiding") || "" : "",
       // Own flight from the calendar checkbox; only "zelf" counts.
       vlucht: !reisInfo.zonderEigenVlucht && params.get("vlucht") === "zelf" ? "zelf" : "",
+      // Own transport from the calendar checkbox; only "zelf" counts.
+      auto: !reisInfo.zonderEigenAuto && params.get("auto") === "zelf" ? "zelf" : "",
       // Gear rental from the calendar checkbox (Finland); only "ja" counts.
       materiaal: reisInfo.materiaal && params.get("materiaal") === "ja" ? "ja" : ""
     };
@@ -758,6 +760,7 @@
       if (reisKeuze.baby) vraag.set("baby", reisKeuze.baby);
       if (begeleidingDagen > 0) vraag.set("begeleiding", String(begeleidingDagen));
       if (reisKeuze.vlucht) vraag.set("vlucht", "zelf");
+      if (reisKeuze.auto) vraag.set("auto", "zelf");
       if (reisKeuze.materiaal) vraag.set("materiaal", "ja");
 
       fetch("/api/reis-prijs?" + vraag.toString())
@@ -806,6 +809,13 @@
             var vluchtAftrek = typeof data.vluchtAftrek === "number" && isFinite(data.vluchtAftrek) && data.vluchtAftrek > 0
               ? "- " + euro(Math.round(data.vluchtAftrek * 100)) + " p.p." : "Ja";
             regels.push(["Vlucht zelf geregeld", vluchtAftrek]);
+          }
+          // Own transport, as the server confirmed it, with the amount per
+          // person that came off (one car's price per day, shared by the group).
+          if (data.eigenAuto === true) {
+            var autoAftrek = typeof data.autoAftrek === "number" && isFinite(data.autoAftrek) && data.autoAftrek > 0
+              ? "- " + euro(Math.round(data.autoAftrek * 100)) + " p.p." : "Ja";
+            regels.push(["Vervoer zelf geregeld", autoAftrek]);
           }
           // Gear rental (Finland), as the server confirmed it, with the
           // group amount that came on top.
@@ -956,9 +966,9 @@
       kinderen: parseInt(bekendeKeuze.kinderen, 10) || 0,
       baby: parseInt(bekendeKeuze.baby, 10) || 0,
       uitreisdatum: uitreisdatum || "",
-      // Falun can be booked with own transport and/or an own flight; the other
-      // calendar trips with an own flight.
-      metAuto: !(falunKeuze && falunKeuze.auto === "zelf"),
+      // Falun and the other calendar trips can all be booked with own
+      // transport and/or an own flight.
+      metAuto: !((falunKeuze && falunKeuze.auto === "zelf") || (reisKeuze && reisKeuze.auto === "zelf")),
       eigenVlucht: !!((falunKeuze && falunKeuze.vlucht === "zelf") || (reisKeuze && reisKeuze.vlucht === "zelf")),
       onKlaar: naReisgegevens
     });
@@ -1008,6 +1018,7 @@
         baby: reisKeuze.baby,
         begeleiding: reisKeuze.begeleiding,
         vlucht: reisKeuze.vlucht,
+        auto: reisKeuze.auto,
         materiaal: reisKeuze.materiaal
       };
     } else if (groepKeuze) {

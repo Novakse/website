@@ -10,6 +10,7 @@
         (optional: kinderen=1 for children 2-11, baby=1 for babies 0-1; personen is
         the total of all ages. The answer holds perPersoon, perKind and perBaby.
         Optional vlucht=zelf: the visitor arranges their own flight.
+        Optional auto=zelf: the visitor arranges their own transport.
         Optional materiaal=ja: gear rental, Finland only.)
    POST /api/reis-prijs with the same fields as a JSON body. */
 
@@ -65,6 +66,7 @@ module.exports = function handler(req, res) {
     baby: bron.baby,
     begeleiding: bron.begeleiding,
     vlucht: bron.vlucht,
+    auto: bron.auto,
     materiaal: bron.materiaal
   };
 

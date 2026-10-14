@@ -465,6 +465,8 @@ module.exports = async function handler(req, res) {
       begeleiding: typeof body.begeleiding === "number" ? body.begeleiding : String(body.begeleiding || ""),
       // Own flight: only "zelf" counts, as in the Falun flow above.
       vlucht: body.vlucht === "zelf" ? "zelf" : "",
+      // Own transport: only "zelf" counts, as in the Falun flow above.
+      auto: body.auto === "zelf" ? "zelf" : "",
       // Gear rental (Finland): only "ja" counts.
       materiaal: body.materiaal === "ja" ? "ja" : ""
     };
@@ -500,6 +502,7 @@ module.exports = async function handler(req, res) {
     // always match what is charged.
     var reisOpties = [];
     if (reisPrijs.eigenVlucht) reisOpties.push("eigen vlucht");
+    if (reisPrijs.eigenAuto) reisOpties.push("eigen vervoer");
     if (reisPrijs.begeleidingDagen > 0) reisOpties.push("begeleiding " + reisPrijs.begeleidingDagen + " dagen");
     if (reisPrijs.materiaalGehuurd) reisOpties.push("materiaal gehuurd");
     metadata = {
@@ -533,6 +536,7 @@ module.exports = async function handler(req, res) {
       baby: reisPrijs.baby > 0 ? String(reisPrijs.baby) : "",
       begeleiding: reisPrijs.begeleidingDagen > 0 ? String(reisPrijs.begeleidingDagen) : "",
       vlucht: reisPrijs.eigenVlucht ? "zelf" : "",
+      auto: reisPrijs.eigenAuto ? "zelf" : "",
       materiaal: reisPrijs.materiaalGehuurd ? "ja" : "",
       act: activiteiten ? activiteiten.query : ""
     });
@@ -562,13 +566,14 @@ module.exports = async function handler(req, res) {
   }
 
   // Travel details: a calendar booking must name exactly the booked head
-  // count; a payment link from Joey carries no head count. Falun with own
-  // transport has no rental car; a group trip has no car choice and asks no
-  // main driver.
+  // count; a payment link from Joey carries no head count. Falun and the
+  // other calendar trips with own transport have no rental car; a group
+  // trip has no car choice and asks no main driver.
   // metadata.personen is the server-validated head count (Falun, the
   // calendar trips and the group trips alike).
   var verwachtAantal = metadata && metadata.personen ? parseInt(metadata.personen, 10) || 0 : 0;
-  var metAuto = !groepsreis && !(body.reis === "Falun" && body.aankomst && body.auto === "zelf");
+  var metAuto = !groepsreis && !(body.reis === "Falun" && body.aankomst && body.auto === "zelf") &&
+    !(reisPrijs && reisPrijs.eigenAuto);
   var reisgegevens;
   try {
     reisgegevens = leesReisgegevens(body.reisgegevens, verwachtAantal, metAuto, leeftijdsControle, groepsreis);
