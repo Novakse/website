@@ -40,6 +40,11 @@
     .h-section {
       text-wrap: balance;
     }
+    /* A tall (4n+3) card that ends the grid would leave an empty gap next to it: keep it normal height. */
+    @media (min-width: 64rem) {
+      .blog-grid > .blog-card:nth-child(4n+3):last-child { grid-row: auto; }
+      .blog-grid > .blog-card:nth-child(4n+3):last-child .blog-card__media img { aspect-ratio: 4 / 3; height: auto; }
+    }
     .page-hero__lede,
     .intro__lead,
     .blog-empty__text,
@@ -595,6 +600,21 @@
           "@type": "Person",
           "name": "Joey Novak"
         }
+      },
+      {
+        "@type": "BlogPosting",
+        "@id": "https://www.novakse.com/blog/begeleid-of-zelfstandig-schaatsreis.html#article",
+        "headline": "Begeleid, zelfstandig of in een groep: welke schaatsreis past bij jou?",
+        "description": "Zelfstandig schaatsen, een gids op het ijs bijboeken of mee met een begeleide groepsreis? Zo verschillen de vormen en zo kies je wat bij je past.",
+        "url": "https://www.novakse.com/blog/begeleid-of-zelfstandig-schaatsreis.html",
+        "image": "https://www.novakse.com/images/groep-rust-ijs.jpg",
+        "datePublished": "2026-10-17",
+        "dateModified": "2026-10-17",
+        "articleSection": "Planning",
+        "author": {
+          "@type": "Person",
+          "name": "Joey Novak"
+        }
       }
     ]
   }
@@ -1050,6 +1070,17 @@
               <h2 class="blog-card__title">Sälen met kinderen: activiteiten voor het hele gezin</h2>
               <p class="blog-card__excerpt">Op vakantie in Sälen met kinderen? Zwemmen in Experium, hondensleeën, Vargy in Stöten en schaatsen op natuurijs: ideeën voor een afwisselende week.</p>
               <span class="blog-card__meta">Bestemmingen &middot; 5 min. leestijd</span>
+            </div>
+          </a>
+          <a class="blog-card reveal" href="blog/begeleid-of-zelfstandig-schaatsreis.html">
+            <div class="blog-card__media">
+              <picture><source type="image/avif" srcset="images/groep-rust-ijs-480.avif 480w, images/groep-rust-ijs-800.avif 800w, images/groep-rust-ijs-1200.avif 1200w" sizes="(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw" /><source type="image/webp" srcset="images/groep-rust-ijs-480.webp 480w, images/groep-rust-ijs-800.webp 800w, images/groep-rust-ijs-1200.webp 1200w" sizes="(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw" /><img src="images/groep-rust-ijs-800.jpg" alt="Vier schaatsers met helm op een besneeuwd, bevroren meer bij laagstaande zon" loading="lazy" srcset="images/groep-rust-ijs-480.jpg 480w, images/groep-rust-ijs-800.jpg 800w, images/groep-rust-ijs-1200.jpg 1200w" sizes="(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw" /></picture>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__cat">Planning</span>
+              <h2 class="blog-card__title">Begeleid, zelfstandig of in een groep: welke schaatsreis past bij jou?</h2>
+              <p class="blog-card__excerpt">Zelfstandig schaatsen, een gids op het ijs bijboeken of mee met een begeleide groepsreis? Zo verschillen de vormen en zo kies je wat bij je past.</p>
+              <span class="blog-card__meta">Planning &middot; 9 min. leestijd</span>
             </div>
           </a>
           <!-- blog-grid:end -->
