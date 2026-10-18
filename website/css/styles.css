@@ -3416,7 +3416,22 @@ select.trip-search__input {
   padding-top: 9rem;
 }
 .trip-search-dock--float + .trips-head {
-  padding-top: 11.25rem;
+  padding-top: 10.5rem;
+}
+/* Phones: the floating card hangs low enough to cover "Onze schaatsreizen"
+   anyway (confirmed on 2026-10-13, --dock-overlap 5rem vs a ~15rem card).
+   Hide it on purpose instead of leaving a half-covered heading, so the
+   layout only has to clear the card for the ice-rink line below it. Kept
+   for screen readers; reizen.html's own heading is unaffected. */
+@media (max-width: 51.99rem) {
+  .trip-search-dock--float + .trips-head .h-section {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 }
 /* From 52rem the panel is low enough to sit about half over the video. The
    overlap here is smaller than --opener-dock, which only leaves the hero
