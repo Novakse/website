@@ -28,7 +28,9 @@
   // insurance) no longer fit and are dropped on load. Bumped to v3 when the
   // age groups (12+, 2-11, 0-1) and the extras from data/activiteiten.json
   // replaced the old groups and extras.
-  var BEWAARSLEUTEL = "novakse-offerte-v3";
+  // A second request page (offerte-tocht.html) sets its own "bewaarsleutel"
+  // in its JSON, so its answers never mix with those of offerte.html.
+  var BEWAARSLEUTEL = data.bewaarsleutel || "novakse-offerte-v3";
   var OUDE_SLEUTELS = ["novakse-offerte", "novakse-offerte-v2"];
   var ACT = window.NovakseActiviteiten || null;
   var EMAIL_PATROON = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -738,6 +740,8 @@
     }
 
     function uitsplitsing() {
+      // With a single group the breakdown repeats the total.
+      if (groepen.length < 2) return "";
       return groepen.filter(function (groep) { return aantallen[groep.sleutel] > 0; })
         .map(function (groep) {
           var n = aantallen[groep.sleutel];
@@ -1292,7 +1296,7 @@
       regels.push(stap.label + ": " + antwoord.waarde + (antwoord.onder ? " (" + antwoord.onder + ")" : ""));
     });
     regels.push("");
-    regels.push("Verstuurd via de offertepagina op novakse.com.");
+    regels.push(T.verstuurdVia || "Verstuurd via de offertepagina op novakse.com.");
     return regels.join("\n");
   }
 
