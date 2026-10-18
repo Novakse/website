@@ -2854,6 +2854,7 @@ button.calendar__cell {
 .days__head-wrap { margin-bottom: 2.5rem; }
 .days__scroll {
   display: flex;
+  align-items: flex-start;
   gap: 1.25rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -4315,6 +4316,176 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 
 @media (prefers-reduced-motion: reduce) {
   .js .photo-mosaic .reveal { transform: none; transition: none; }
+}
+
+/* ==========================================================================
+   Winter activities "Naast het schaatsen" (falun, orsa, wellness)
+   Photos of the activities you can add at checkout, each with a short
+   caption: name, duration and one line of detail. Pure CSS, no JavaScript.
+
+   Layout: one tidy row. Every photo has the same size, so tops, bottoms and
+   captions line up. Under the photos runs a straight swept ice lane (pale
+   band + thin line) from the first photo to the last, with a small marker
+   where each caption starts.
+
+   Markup (see falun.html for a full example):
+     section.winter-acts                        (or div.winter-acts inside
+                                                another section, see wellness)
+       div.wrap.winter-acts__head.reveal        eyebrow + h2.h-section + p
+       div.winter-acts__scroller                role=region, tabindex=0,
+                                                aria-labelledby = the heading
+         div.winter-acts__track
+           ul.winter-acts__list.reveal
+             li.winter-acts__item
+               div.winter-acts__photo > picture
+               div.winter-acts__caption         h3 __name, p __time, p __text
+
+   Phones and tablets: one horizontal strip with scroll-snap; the strip is
+   focusable (tabindex) so arrow keys scroll it.
+   From 64rem: no scrolling, equal columns across the width of .wrap.
+   ========================================================================== */
+.winter-acts {
+  --wa-w: min(62vw, 16rem);              /* item width in the phone strip */
+  --wa-ratio: 1 / 1;                     /* one shape for every photo */
+  --wa-lane: 2.25rem;                    /* room for the line under the photos */
+  --wa-ice: #e7eef1;                     /* same lane tint as .photo-mosaic */
+  --wa-ice-w: 10px;
+  --wa-line: var(--warm-deep);
+  --wa-gap: 0.85rem;
+  --wa-radius: 0.5rem;
+  background: var(--paper);
+  padding-block: 4.5rem;
+}
+
+.winter-acts__intro {
+  margin-top: 1rem;
+  max-width: 40rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.winter-acts__scroller {
+  margin-top: 1.75rem;
+  padding-block: 0.5rem;    /* keeps the focus ring clear of the photos */
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--pad);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.winter-acts__scroller:focus-visible { outline-offset: -3px; }
+
+/* The track carries the page gutter, so the photos keep the page margin. */
+.winter-acts__track {
+  width: max-content;
+  min-width: 100%;
+  padding-inline: var(--pad);
+}
+
+.winter-acts__list {
+  display: flex;
+  gap: var(--wa-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.winter-acts__item {
+  flex: none;
+  width: var(--wa-w);
+  scroll-snap-align: start;
+}
+
+.winter-acts__photo picture { display: block; }
+.winter-acts__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--wa-ratio);
+  object-fit: cover;
+  border-radius: var(--wa-radius);
+  background: var(--wa-ice); /* calm placeholder while a lazy photo loads */
+}
+
+/* The lane: every caption draws its own piece and reaches into the gap to
+   the next item, so together they form one straight line under the row. */
+.winter-acts__caption {
+  position: relative;
+  padding-top: var(--wa-lane);
+}
+.winter-acts__caption::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--wa-lane) / 2 - var(--wa-ice-w) / 2);
+  left: 0;
+  right: calc(-1 * var(--wa-gap));
+  height: var(--wa-ice-w);
+  background: linear-gradient(var(--wa-line), var(--wa-line)) center / 100% 2px no-repeat, var(--wa-ice);
+}
+.winter-acts__item:last-child .winter-acts__caption::before { right: 0; }
+/* Marker where each caption starts. */
+.winter-acts__caption::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--wa-lane) / 2 - 5px);
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--wa-line);
+}
+
+.winter-acts__name {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  hyphens: auto;
+}
+.winter-acts__time {
+  margin-top: 0.25rem;
+  font-family: var(--display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--warm-deep);
+}
+.winter-acts__text {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+/* Focal points of the photos used here (square crops). */
+img[src*="activity-husky-sled-forest"] { object-position: 50% 75%; }
+img[src*="activity-snowmobiles-row"] { object-position: 42% 50%; }
+img[src*="activity-alpine-piste-sun"] { object-position: 50% 85%; }
+img[src*="activity-cross-country-start"] { object-position: 50% 60%; }
+img[src*="activity-northern-lights-lake"] { object-position: 45% 50%; }
+
+@media (min-width: 64rem) {
+  .winter-acts {
+    --wa-lane: 2.75rem;
+    --wa-gap: 1.25rem;
+    padding-block: 5.5rem;
+  }
+  .winter-acts__scroller { margin-top: 2.25rem; padding-block: 0.75rem; overflow: visible; scroll-snap-type: none; }
+  /* Gutter = the side margin of .wrap, so the row matches the content width. */
+  .winter-acts__track {
+    width: auto;
+    padding-inline: max(var(--pad), (100% - var(--wrap)) / 2 + var(--pad));
+  }
+  .winter-acts__item { flex: 1 1 0%; width: auto; min-width: 0; }
+  .winter-acts__text { font-size: 0.875rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .winter-acts .reveal { transform: none; transition: none; }
 }
 
 /* ==========================================================================
