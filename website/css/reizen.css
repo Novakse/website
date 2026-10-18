@@ -36,8 +36,9 @@
   --stop-w: 7.75rem;       /* width of one stop in the swipe strip */
   --gap: 0.75rem;          /* space between two trips in the row */
   /* Width of one trip. In the row, 100% is the width of the page content.
-     Phones: the next trip peeks in about 2.25rem. */
-  --panel-w: calc(100% + var(--pad) - 3rem);
+     Phones: the next trip peeks in about 2.75rem (3.5rem minus the gap),
+     enough to show its photo: that is the cue that the row swipes. */
+  --panel-w: calc(100% + var(--pad) - 3.5rem);
   /* Distance from the screen edge to the page content, the same as .wrap.
      Used in padding and scroll-padding, where 100% is the full width. */
   --row-inset: max(var(--pad), calc((100% - var(--wrap)) / 2 + var(--pad)));
@@ -45,7 +46,7 @@
      (100% - inset - trip width, a hair more). Anchor jumps and focus
      scrolling align "nearest"; this makes them line a trip up at the start
      instead of stopping halfway and snapping to the trip before it. */
-  --snap-end: calc(3rem - 2px);
+  --snap-end: calc(3.5rem - 2px);
   background: var(--paper);
   padding-block: 1.25rem 5rem;
 }
@@ -571,25 +572,10 @@
      below the 67px header (the section has 1.25rem above the line). */
   .trip-map { scroll-margin-top: calc(4.1875rem + 0.5rem - 1.25rem); }
 
-  /* One trip per screen: each trip is the full content width and snaps
-     to the centre of the screen. The gap is twice the side padding, so the
-     neighbouring trips stay just out of view (no peek), and a swipe always
-     stops on the very next trip (scroll-snap-stop in the base rules). The
-     first trip still sits at scrollLeft 0, so js/reizen.js lines trips up
-     exactly as before. */
-  .trip-map {
-    --gap: calc(2 * var(--pad));
-    --panel-w: 100%;       /* in the row, 100% is the page content */
-  }
-  .trip-map__panels {
-    scroll-padding-inline: var(--row-inset);
-    overscroll-behavior-x: contain;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  /* No spacer after the last trip: the row padding already centres it. */
-  .trip-map__panels::after { display: none; }
-  .trip-map__panel { scroll-snap-align: center; }
+  /* The row uses the base rules: one trip lined up with the page content
+     and the next one peeking in on the right (--panel-w), so it is clear
+     the row swipes. A swipe always stops on the very next trip
+     (scroll-snap-stop). */
 
   /* Only the hidden live text stays; the controls then take no height. */
   .js .trip-map__nav,
