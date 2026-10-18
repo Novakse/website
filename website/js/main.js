@@ -712,18 +712,13 @@
     var onTouch = touchBar.matches;
     var touches = onTouch ? coversBarEdge : overlapsHeaderBand;
 
-    header.classList.toggle("site-header--scrolled", window.scrollY > 4);
-
-    if (openerMark) {
-      var markPassed = openerMark.getBoundingClientRect().bottom <= header.offsetHeight;
-      header.classList.toggle("site-header--logo-shown", markPassed);
-    }
-
-    header.classList.toggle(
-      "site-header--over-hero",
-      !!heroEl && (onTouch ? coversBarEdge(heroEl, true) : overlapsHeaderBand(heroEl))
-    );
-
+    // Eerst alles meten, daarna pas schrijven. Een classList-wijziging maakt
+    // de layout ongeldig; meet je daarna verder, dan dwingt dat de browser
+    // tot een tussentijdse herberekening (forced reflow) terwijl scrollen
+    // juist soepel moet blijven.
+    var scrolled = window.scrollY > 4;
+    var markPassed = openerMark ? openerMark.getBoundingClientRect().bottom <= header.offsetHeight : null;
+    var overHero = !!heroEl && (onTouch ? coversBarEdge(heroEl, true) : overlapsHeaderBand(heroEl));
     var onDark = darkZoneEls.some(function (el) {
       if (el.classList.contains("why")) {
         // De "why"-sectie is pas echt donker zodra hij is omgeslagen naar
@@ -735,6 +730,10 @@
       }
       return touches(el);
     });
+
+    header.classList.toggle("site-header--scrolled", scrolled);
+    if (markPassed !== null) header.classList.toggle("site-header--logo-shown", markPassed);
+    header.classList.toggle("site-header--over-hero", overHero);
     header.classList.toggle("site-header--on-light", !onDark);
   }
 

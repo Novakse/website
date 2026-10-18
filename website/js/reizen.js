@@ -194,6 +194,11 @@
   function setCurrent(index, smoothStrip, skipWarmUp) {
     if (index === current) return;
     current = index;
+    // revealStop meet de positie van de stop (getBoundingClientRect) voordat
+    // de schrijfacties hieronder de aria- en disabled-status bijwerken; geen
+    // van die schrijfacties verandert de layout, maar ze zouden de meting wel
+    // een gedwongen tussentijdse herberekening opleveren als ze eerst gebeurden.
+    revealStop(index, smoothStrip !== false);
     stops.forEach(function (stop, i) {
       var on = i === index;
       if (on) stop.setAttribute("aria-current", "true");
@@ -214,7 +219,6 @@
     });
     if (countNow) countNow.textContent = String(index + 1);
     syncButtons();
-    revealStop(index, smoothStrip !== false);
     if (skipWarmUp) return;
     warmUp(index);
     warmUp(index + 1);
