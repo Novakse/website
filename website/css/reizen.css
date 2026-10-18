@@ -319,7 +319,7 @@
   content: "";
   flex: 0 0 calc(100% - var(--panel-w) - var(--gap));
 }
-.js .trip-map__panels { margin-top: 1.1rem; }
+.js .trip-map__panels { margin-top: 0.6rem; }
 
 .trip-map__panel {
   /* Containing block for anything absolutely positioned inside a trip (the
@@ -627,7 +627,7 @@
     padding-block: 1.75rem 5.5rem;
   }
   .trip-map__panels { margin-top: 1.75rem; }
-  .js .trip-map__panels { margin-top: 1.4rem; }
+  .js .trip-map__panels { margin-top: 0.75rem; }
   .trip-map__panel { scroll-margin-top: 17.75rem; }
   .trip-map__media { --hang: 2.25rem; }
   .trip-map__photo--main { border-radius: 1.5rem; }
@@ -682,7 +682,7 @@
 
   .js .trip-map__controls { margin-top: 0.25rem; }
   .trip-map__panels { margin-top: 2rem; }
-  .js .trip-map__panels { margin-top: 1.5rem; }
+  .js .trip-map__panels { margin-top: 0.75rem; }
   .trip-map__panel {
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
