@@ -65,7 +65,9 @@
   var pendingTimer = 0;
   var names = [];
 
-  /* --- ARIA: a carousel with one group ("dia") per trip ------------------ */
+  /* --- ARIA: a carousel with one slide ("dia") per trip ------------------ */
+  // Panels are <article>s and keep their own role: role="group" is not
+  // allowed on <article> (ARIA in HTML), aria-roledescription works on it.
   root.setAttribute("aria-roledescription", "carousel");
   if (!root.hasAttribute("aria-label") && !root.hasAttribute("aria-labelledby")) {
     root.setAttribute("aria-label", list.getAttribute("aria-label") || "Kies een reis");
@@ -74,7 +76,6 @@
     var title = panel.querySelector(".trip-map__title");
     var nameEl = title || stops[i].querySelector(".trip-map__name") || stops[i];
     names[i] = nameEl.textContent.replace(/\s+/g, " ").trim();
-    panel.setAttribute("role", "group");
     panel.setAttribute("aria-roledescription", "dia");
     panel.removeAttribute("aria-labelledby");
     panel.setAttribute("aria-label", label(i));
