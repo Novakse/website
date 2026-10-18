@@ -1177,6 +1177,33 @@ html:has(.page-wellness) { background-color: var(--lx-night, #0e1519); }
   }
 }
 
+/* Activities to add at checkout: the shared "Winter activities" strip
+   (css/styles.css), dressed in this page's type and linen tones. */
+.page-wellness .winter-acts--inline {
+  --wa-line: var(--lx-amber-deep);
+  --wa-radius: 0.4rem;
+  background: transparent;
+  padding-block: 4rem 0;
+}
+.page-wellness .winter-acts--inline .lx-label { margin-top: 0; }
+.page-wellness .winter-acts__name {
+  font-family: var(--lx-serif);
+  font-weight: 500;
+  font-size: 1.55rem;
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+  color: var(--lx-ink);
+}
+.page-wellness .winter-acts__time {
+  margin-top: 0.4rem;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lx-amber-deep);
+}
+.page-wellness .winter-acts__text { color: var(--lx-ink-soft); }
+
 /* --------------------------------------------------------------------------
    10. Included (ledger)
    -------------------------------------------------------------------------- */

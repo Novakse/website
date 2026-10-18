@@ -4324,9 +4324,8 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
    caption: name, duration and one line of detail. Pure CSS, no JavaScript.
 
    Layout: one tidy row. Every photo has the same size, so tops, bottoms and
-   captions line up. Under the photos runs a straight swept ice lane (pale
-   band + thin line) from the first photo to the last, with a small marker
-   where each caption starts.
+   captions line up. Under the photos runs the site's swept rink line
+   (same path and stroke as .baanlijn), from screen edge to screen edge.
 
    Markup (see falun.html for a full example):
      section.winter-acts                        (or div.winter-acts inside
@@ -4335,6 +4334,7 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
        div.winter-acts__scroller                role=region, tabindex=0,
                                                 aria-labelledby = the heading
          div.winter-acts__track
+           div.winter-acts__lane                aria-hidden SVG, = .baanlijn
            ul.winter-acts__list.reveal
              li.winter-acts__item
                div.winter-acts__photo > picture
@@ -4343,13 +4343,14 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
    Phones and tablets: one horizontal strip with scroll-snap; the strip is
    focusable (tabindex) so arrow keys scroll it.
    From 64rem: no scrolling, equal columns across the width of .wrap.
+   --wa-n must match the number of items: it places the line under the
+   photos on wide screens.
    ========================================================================== */
 .winter-acts {
   --wa-w: min(62vw, 16rem);              /* item width in the phone strip */
   --wa-ratio: 1 / 1;                     /* one shape for every photo */
-  --wa-lane: 2.25rem;                    /* room for the line under the photos */
-  --wa-ice: #e7eef1;                     /* same lane tint as .photo-mosaic */
-  --wa-ice-w: 10px;
+  --wa-n: 5;                             /* number of activities in the row */
+  --wa-lane: clamp(2.5rem, 6vw, 4rem);   /* same height as .baanlijn */
   --wa-line: var(--warm-deep);
   --wa-gap: 0.85rem;
   --wa-radius: 0.5rem;
@@ -4377,12 +4378,27 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 }
 .winter-acts__scroller:focus-visible { outline-offset: -3px; }
 
-/* The track carries the page gutter, so the photos keep the page margin. */
+/* The track carries the page gutter as padding, so the line runs to the
+   screen edges while the photos keep the page margin. */
 .winter-acts__track {
+  position: relative;
   width: max-content;
   min-width: 100%;
   padding-inline: var(--pad);
 }
+
+/* The line sits right under the photos: they are squares, so their height
+   is the item width. */
+.winter-acts__lane {
+  position: absolute;
+  inset-inline: 0;
+  top: var(--wa-w);
+  height: var(--wa-lane);
+  line-height: 0;
+  pointer-events: none;
+}
+.winter-acts__lane svg { display: block; width: 100%; height: 100%; }
+.winter-acts__lane path { stroke: var(--wa-line); }
 
 .winter-acts__list {
   display: flex;
@@ -4406,36 +4422,10 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
   aspect-ratio: var(--wa-ratio);
   object-fit: cover;
   border-radius: var(--wa-radius);
-  background: var(--wa-ice); /* calm placeholder while a lazy photo loads */
+  background: var(--paper-soft); /* calm placeholder while a lazy photo loads */
 }
 
-/* The lane: every caption draws its own piece and reaches into the gap to
-   the next item, so together they form one straight line under the row. */
-.winter-acts__caption {
-  position: relative;
-  padding-top: var(--wa-lane);
-}
-.winter-acts__caption::before {
-  content: "";
-  position: absolute;
-  top: calc(var(--wa-lane) / 2 - var(--wa-ice-w) / 2);
-  left: 0;
-  right: calc(-1 * var(--wa-gap));
-  height: var(--wa-ice-w);
-  background: linear-gradient(var(--wa-line), var(--wa-line)) center / 100% 2px no-repeat, var(--wa-ice);
-}
-.winter-acts__item:last-child .winter-acts__caption::before { right: 0; }
-/* Marker where each caption starts. */
-.winter-acts__caption::after {
-  content: "";
-  position: absolute;
-  top: calc(var(--wa-lane) / 2 - 5px);
-  left: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--wa-line);
-}
+.winter-acts__caption { padding-top: var(--wa-lane); }
 
 .winter-acts__name {
   font-family: var(--display);
@@ -4470,7 +4460,6 @@ img[src*="activity-northern-lights-lake"] { object-position: 45% 50%; }
 
 @media (min-width: 64rem) {
   .winter-acts {
-    --wa-lane: 2.75rem;
     --wa-gap: 1.25rem;
     padding-block: 5.5rem;
   }
@@ -4479,6 +4468,13 @@ img[src*="activity-northern-lights-lake"] { object-position: 45% 50%; }
   .winter-acts__track {
     width: auto;
     padding-inline: max(var(--pad), (100% - var(--wrap)) / 2 + var(--pad));
+    container-type: inline-size;   /* 100cqw = the width of the row */
+  }
+  /* Photo height = column width = (row - gaps) / number of items. The 100vw
+     line is a fallback for browsers without container units. */
+  .winter-acts__lane {
+    top: calc((min(100vw, var(--wrap)) - 2 * var(--pad) - (var(--wa-n) - 1) * var(--wa-gap)) / var(--wa-n));
+    top: calc((100cqw - (var(--wa-n) - 1) * var(--wa-gap)) / var(--wa-n));
   }
   .winter-acts__item { flex: 1 1 0%; width: auto; min-width: 0; }
   .winter-acts__text { font-size: 0.875rem; }
