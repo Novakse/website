@@ -862,8 +862,9 @@
         <!-- Google reviews, typed over from the Novakse Google Business Profile
              (the same six as the Review schema in the <head>; only reviews whose
              full text is readable on Google). Each one links to Google Maps.
-             Adding one: copy an <li> in the list, and add it to the schema
-             as well. Photo: replace the letter span with
+             Order: natural-ice trip reviews first, the ones with photos at the
+             front. Adding one: copy an <li> in the list, and add it to the
+             schema as well. Photo: replace the letter span with
              <img class="review__avatar" src="images/reviews/name.webp" alt=""
              width="80" height="80" loading="lazy" decoding="async" />. -->
         <div class="reviews__wall reveal">
@@ -880,6 +881,32 @@
             </figcaption>
           </figure>
           <ul class="reviews__list" aria-label="Meer Google-reviews">
+            <li class="reviews__item">
+              <figure class="review">
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>De natuurijsreis was kort maar krachtig, gevuld met adembenemende landschappen. Absoluut een aanrader voor iedereen die van de winter houd</p></blockquote>
+                <figcaption class="review__by">
+                  <span class="review__avatar" aria-hidden="true">H</span>
+                  <span>
+                    <span class="review__name">Homme Jan De groot</span>
+                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="reviews__item">
+              <figure class="review">
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Kennis, kunde en de passie spat van het ijs als je samen met Novakse op pad gaat. Zeker op natuurijs</p></blockquote>
+                <figcaption class="review__by">
+                  <span class="review__avatar" aria-hidden="true">I</span>
+                  <span>
+                    <span class="review__name">Ian van Zutphen</span>
+                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
             <li class="reviews__item">
               <figure class="review">
                 <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
@@ -906,19 +933,6 @@
                 </figcaption>
               </figure>
             </li>
-            <li class="reviews__item">
-              <figure class="review">
-                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
-                <blockquote class="review__quote"><p>Kennis, kunde en de passie spat van het ijs als je samen met Novakse op pad gaat. Zeker op natuurijs</p></blockquote>
-                <figcaption class="review__by">
-                  <span class="review__avatar" aria-hidden="true">I</span>
-                  <span>
-                    <span class="review__name">Ian van Zutphen</span>
-                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
             <li class="reviews__item reviews__item--short">
               <figure class="review">
                 <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
@@ -927,19 +941,6 @@
                   <span class="review__avatar" aria-hidden="true">R</span>
                   <span>
                     <span class="review__name">Ruben Marinus</span>
-                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="reviews__item">
-              <figure class="review">
-                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
-                <blockquote class="review__quote"><p>De natuurijsreis was kort maar krachtig, gevuld met adembenemende landschappen. Absoluut een aanrader voor iedereen die van de winter houd</p></blockquote>
-                <figcaption class="review__by">
-                  <span class="review__avatar" aria-hidden="true">H</span>
-                  <span>
-                    <span class="review__name">Homme Jan De groot</span>
                     <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
                   </span>
                 </figcaption>

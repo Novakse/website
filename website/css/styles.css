@@ -1427,6 +1427,24 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
   background: var(--paper);
   border-radius: 1rem;
 }
+/* Photos the reviewer added on Google, at the top of the card. One photo
+   fills the width; two or three sit side by side as squares. */
+.review__photos {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 0.35rem;
+  margin: -0.5rem -0.5rem 1rem;
+}
+.review__photos img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 0.6rem;
+  background: var(--paper-soft);
+}
+.review__photos img:only-child { aspect-ratio: 4 / 3; }
 .review__quote { margin: 0.85rem 0 0; }
 .review__quote p { font-size: 1rem; line-height: 1.6; text-wrap: pretty; }
 .reviews__item--short .review__quote p {
