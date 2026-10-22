@@ -1436,6 +1436,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
   gap: 0.35rem;
   margin: -0.5rem -0.5rem 1rem;
 }
+.review__photos picture { display: block; min-width: 0; }
 .review__photos img {
   width: 100%;
   height: auto;
@@ -1444,7 +1445,8 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
   border-radius: 0.6rem;
   background: var(--paper-soft);
 }
-.review__photos img:only-child { aspect-ratio: 4 / 3; }
+.review__photos > :only-child img,
+.review__photos > img:only-child { aspect-ratio: 4 / 3; }
 .review__quote { margin: 0.85rem 0 0; }
 .review__quote p { font-size: 1rem; line-height: 1.6; text-wrap: pretty; }
 .reviews__item--short .review__quote p {
@@ -1518,9 +1520,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
     gap: 1.25rem;
     margin-top: 2.75rem;
   }
-  /* The lead fills the height of the columns beside it; its content sits
-     in the middle, so any spare room is split above and below. */
-  .review--lead { grid-column: 1 / span 5; align-self: stretch; justify-content: center; padding: 2.2rem 2.2rem 1.2rem; }
+  .review--lead { grid-column: 1 / span 5; align-self: start; height: auto; padding: 2.2rem 2.2rem 1.2rem; }
   .review--lead .review__quote p { font-size: clamp(1.6rem, 0.1rem + 2.2vw, 2rem); line-height: 1.25; }
   .review__line { margin-top: 1.75rem; height: 2rem; }
   .reviews__list {
@@ -1534,6 +1534,12 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
     overflow: visible;
   }
   .reviews__item:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+/* The columns beside the lead are taller, so the lead stays in view while
+   the visitor scrolls past them. Only on screens tall enough to show it
+   whole under the header. */
+@media (min-width: 72rem) and (min-height: 46rem) {
+  .review--lead { position: sticky; top: 6rem; }
 }
 
 /* The lazy Elfsight Instagram feed on the about pages
