@@ -1447,6 +1447,13 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 }
 .review__photos > :only-child img,
 .review__photos > img:only-child { aspect-ratio: 4 / 3; }
+/* Three photos: one large, two small stacked beside it (as on Google). */
+.review__photos--trio {
+  grid-auto-flow: row;
+  grid-template-columns: 2fr 1fr;
+}
+.review__photos--trio > :first-child { grid-row: span 2; }
+.review__photos--trio > :first-child img { aspect-ratio: auto; height: 100%; }
 .review__quote { margin: 0.85rem 0 0; }
 .review__quote p { font-size: 1rem; line-height: 1.6; text-wrap: pretty; }
 .reviews__item--short .review__quote p {
@@ -1521,7 +1528,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
     margin-top: 2.75rem;
   }
   .review--lead { grid-column: 1 / span 5; align-self: start; height: auto; padding: 2.2rem 2.2rem 1.2rem; }
-  .review--lead .review__quote p { font-size: clamp(1.6rem, 0.1rem + 2.2vw, 2rem); line-height: 1.25; }
+  .review--lead .review__quote p { font-size: clamp(1.4rem, 0.1rem + 1.8vw, 1.75rem); line-height: 1.25; }
   .review__line { margin-top: 1.75rem; height: 2rem; }
   .reviews__list {
     grid-column: 6 / span 7;
@@ -1537,8 +1544,8 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 }
 /* The columns beside the lead are taller, so the lead stays in view while
    the visitor scrolls past them. Only on screens tall enough to show it
-   whole under the header. */
-@media (min-width: 72rem) and (min-height: 46rem) {
+   whole under the header (it is about 48rem tall with its photos). */
+@media (min-width: 72rem) and (min-height: 60rem) {
   .review--lead { position: sticky; top: 6rem; }
 }
 
