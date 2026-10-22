@@ -867,121 +867,124 @@
           </p>
         </div>
         <!-- Google reviews, typed over from the Novakse Google Business Profile
-             (the same ones as the Review schema in the <head>; only reviews whose
-             full text is readable on Google). Each one links to Google Maps.
-             Photos are the reviewer's own photos on Google, cut from Joey's
-             screenshots in brand_assets/reviews/.
-             Order: natural-ice trip reviews first, the ones with photos at the
-             front. Adding one: copy an <li> in the list, and add it to the
-             schema as well. Photo: replace the letter span with
-             <img class="review__avatar" src="images/reviews/name.webp" alt=""
-             width="80" height="80" loading="lazy" decoding="async" />. -->
-        <div class="reviews__wall reveal">
-          <figure class="review review--lead">
-            <div class="review__photos review__photos--trio">
-              <picture><source type="image/avif" srcset="images/reviews/wendy-huijsmans-schaatsers-op-ijs.avif" /><source type="image/webp" srcset="images/reviews/wendy-huijsmans-schaatsers-op-ijs.webp" /><img src="images/reviews/wendy-huijsmans-schaatsers-op-ijs.jpg" alt="Schaatsers met rugzakken op het natuurijs, foto van Wendy Huijsmans" width="290" height="290" loading="lazy" decoding="async" /></picture>
-              <picture><source type="image/avif" srcset="images/reviews/wendy-huijsmans-avondlicht.avif" /><source type="image/webp" srcset="images/reviews/wendy-huijsmans-avondlicht.webp" /><img src="images/reviews/wendy-huijsmans-avondlicht.jpg" alt="Schaatser op het meer in het avondlicht, foto van Wendy Huijsmans" width="290" height="290" loading="lazy" decoding="async" /></picture>
-              <picture><source type="image/avif" srcset="images/reviews/wendy-huijsmans-uitzicht-meer.avif" /><source type="image/webp" srcset="images/reviews/wendy-huijsmans-uitzicht-meer.webp" /><img src="images/reviews/wendy-huijsmans-uitzicht-meer.jpg" alt="Uitzicht op het meer vanuit een schuilhut, foto van Wendy Huijsmans" width="290" height="290" loading="lazy" decoding="async" /></picture>
-            </div>
-            <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
-            <blockquote class="review__quote"><p>Wat hebben wij een fantastische week beleefd aan het Orsameer. De schaatskoorts en het enthousiasme van Joey en Vera werken aanstekelijk. Een aanrader voor wie een winterse week in Zweden wil ervaren!</p></blockquote>
-            <svg class="review__line" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" /></svg>
-            <figcaption class="review__by">
-              <span class="review__avatar" aria-hidden="true">W</span>
-              <span>
-                <span class="review__name">Wendy Huijsmans</span>
-                <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2025<span class="sr-only">, bekijk op Google Maps</span></a>
-              </span>
-            </figcaption>
-          </figure>
-          <ul class="reviews__list" aria-label="Meer Google-reviews">
+             and laid out like the former Elfsight widget: equal cards in one
+             row. The Review schema in the <head> has the same reviews. Photos
+             are the reviewers' own photos on Google, cut from Joey's
+             screenshots in brand_assets/reviews/. Long texts get "Lees meer"
+             and the row gets previous/next buttons from js/reviews.js.
+             Adding one: copy an <li>, and add it to the schema as well. -->
+        <div class="reviews__carousel reveal">
+          <ul class="reviews__list" id="reviewsList" aria-label="Google-reviews">
             <li class="reviews__item">
               <figure class="review">
-                <div class="review__photos">
-                  <picture><source type="image/avif" srcset="images/reviews/sander-de-iongh-zon-op-ijs.avif" /><source type="image/webp" srcset="images/reviews/sander-de-iongh-zon-op-ijs.webp" /><img src="images/reviews/sander-de-iongh-zon-op-ijs.jpg" alt="Schaatsers op natuurijs met een laaghangende zon, foto van sander de iongh" width="290" height="290" loading="lazy" decoding="async" /></picture>
-                  <picture><source type="image/avif" srcset="images/reviews/sander-de-iongh-berijpt.avif" /><source type="image/webp" srcset="images/reviews/sander-de-iongh-berijpt.webp" /><img src="images/reviews/sander-de-iongh-berijpt.jpg" alt="Selfie van sander de iongh met skibril en berijpt gezichtsmasker" width="290" height="290" loading="lazy" decoding="async" /></picture>
-                </div>
-                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
-                <blockquote class="review__quote"><p>Fantastische week gehad met Novakse! Kleinschalig, goed georganiseerd en goed afgestemd op het gezelschap! Topweek</p></blockquote>
                 <figcaption class="review__by">
-                  <span class="review__avatar" aria-hidden="true">S</span>
-                  <span>
+                  <span class="review__avatar" style="--avatar: #8e24aa" aria-hidden="true">W</span>
+                  <span class="review__who">
+                    <span class="review__name">Wendy Huijsmans</span>
+                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2025<span class="sr-only">, bekijk op Google Maps</span></a>
+                  </span>
+                </figcaption>
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Wat hebben wij een fantastische week beleefd aan het Orsameer. De schaatskoorts en het enthousiasme van Joey en Vera werken aanstekelijk. Een aanrader voor wie een winterse week in Zweden wil ervaren!</p></blockquote>
+                <div class="review__photos">
+                  <picture><source type="image/avif" srcset="images/reviews/wendy-huijsmans-schaatsers-op-ijs.avif" /><source type="image/webp" srcset="images/reviews/wendy-huijsmans-schaatsers-op-ijs.webp" /><img src="images/reviews/wendy-huijsmans-schaatsers-op-ijs.jpg" alt="Schaatsers met rugzakken op het natuurijs, foto van Wendy Huijsmans" width="392" height="292" loading="lazy" decoding="async" /></picture>
+                  <picture><source type="image/avif" srcset="images/reviews/wendy-huijsmans-avondlicht.avif" /><source type="image/webp" srcset="images/reviews/wendy-huijsmans-avondlicht.webp" /><img src="images/reviews/wendy-huijsmans-avondlicht.jpg" alt="Schaatser op het meer in het avondlicht, foto van Wendy Huijsmans" width="392" height="291" loading="lazy" decoding="async" /></picture>
+                  <picture><source type="image/avif" srcset="images/reviews/wendy-huijsmans-uitzicht-meer.avif" /><source type="image/webp" srcset="images/reviews/wendy-huijsmans-uitzicht-meer.webp" /><img src="images/reviews/wendy-huijsmans-uitzicht-meer.jpg" alt="Uitzicht op het meer vanuit een schuilhut, foto van Wendy Huijsmans" width="392" height="292" loading="lazy" decoding="async" /></picture>
+                </div>
+              </figure>
+            </li>
+            <li class="reviews__item">
+              <figure class="review">
+                <figcaption class="review__by">
+                  <span class="review__avatar" style="--avatar: #4527a0" aria-hidden="true">S</span>
+                  <span class="review__who">
                     <span class="review__name">sander de iongh</span>
                     <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2025<span class="sr-only">, bekijk op Google Maps</span></a>
                   </span>
                 </figcaption>
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Fantastische week gehad met Novakse! Kleinschalig, goed georganiseerd en goed afgestemd op het gezelschap! Topweek</p></blockquote>
+                <div class="review__photos">
+                  <picture><source type="image/avif" srcset="images/reviews/sander-de-iongh-berijpt.avif" /><source type="image/webp" srcset="images/reviews/sander-de-iongh-berijpt.webp" /><img src="images/reviews/sander-de-iongh-berijpt.jpg" alt="Selfie van sander de iongh met skibril en berijpt gezichtsmasker" width="392" height="595" loading="lazy" decoding="async" /></picture>
+                  <picture><source type="image/avif" srcset="images/reviews/sander-de-iongh-noorderlicht.avif" /><source type="image/webp" srcset="images/reviews/sander-de-iongh-noorderlicht.webp" /><img src="images/reviews/sander-de-iongh-noorderlicht.jpg" alt="Noorderlicht boven besneeuwde bomen, foto van sander de iongh" width="392" height="292" loading="lazy" decoding="async" /></picture>
+                  <picture><source type="image/avif" srcset="images/reviews/sander-de-iongh-zon-op-ijs.avif" /><source type="image/webp" srcset="images/reviews/sander-de-iongh-zon-op-ijs.webp" /><img src="images/reviews/sander-de-iongh-zon-op-ijs.jpg" alt="Schaatsers op natuurijs met een laaghangende zon, foto van sander de iongh" width="392" height="291" loading="lazy" decoding="async" /></picture>
+                </div>
               </figure>
             </li>
             <li class="reviews__item">
               <figure class="review">
-                <div class="review__photos">
-                  <picture><source type="image/avif" srcset="images/reviews/martine-verkouter-steiger.avif" /><source type="image/webp" srcset="images/reviews/martine-verkouter-steiger.webp" /><img src="images/reviews/martine-verkouter-steiger.jpg" alt="Schaatsers zitten in de zon op een steiger aan het ijs, foto van Martine Verkouter" width="290" height="290" loading="lazy" decoding="async" /></picture>
-                  <picture><source type="image/avif" srcset="images/reviews/martine-verkouter-maaltijd.avif" /><source type="image/webp" srcset="images/reviews/martine-verkouter-maaltijd.webp" /><img src="images/reviews/martine-verkouter-maaltijd.jpg" alt="Gedekte tafel met een gezamenlijke maaltijd, foto van Martine Verkouter" width="290" height="290" loading="lazy" decoding="async" /></picture>
-                </div>
-                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
-                <blockquote class="review__quote"><p>Echt een fantastische week gehad, met Joey en Vera, in Zweden. Zij hebben onze reis heel goed verzorgd en super goed aangepast toen het weer wat te warm werd om te schaatsen. Wij zijn door hen verwend met heerlijke maaltijden op een top locatie recht aan het meer.</p></blockquote>
                 <figcaption class="review__by">
-                  <span class="review__avatar" aria-hidden="true">M</span>
-                  <span>
+                  <span class="review__avatar" style="--avatar: #e64a19" aria-hidden="true">M</span>
+                  <span class="review__who">
                     <span class="review__name">Martine Verkouter</span>
                     <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2025<span class="sr-only">, bekijk op Google Maps</span></a>
                   </span>
                 </figcaption>
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Echt een fantastische week gehad, met Joey en Vera, in Zweden. Zij hebben onze reis heel goed verzorgd en super goed aangepast toen het weer wat te warm werd om te schaatsen. Wij zijn door hen verwend met heerlijke maaltijden op een top locatie recht aan het meer.</p></blockquote>
+                <div class="review__photos">
+                  <picture><source type="image/avif" srcset="images/reviews/martine-verkouter-steiger.avif" /><source type="image/webp" srcset="images/reviews/martine-verkouter-steiger.webp" /><img src="images/reviews/martine-verkouter-steiger.jpg" alt="Schaatsers zitten in de zon op een steiger aan het ijs, foto van Martine Verkouter" width="392" height="291" loading="lazy" decoding="async" /></picture>
+                  <picture><source type="image/avif" srcset="images/reviews/martine-verkouter-langlauf.avif" /><source type="image/webp" srcset="images/reviews/martine-verkouter-langlauf.webp" /><img src="images/reviews/martine-verkouter-langlauf.jpg" alt="Langlaufer op een besneeuwde loipe tussen de bomen, foto van Martine Verkouter" width="392" height="292" loading="lazy" decoding="async" /></picture>
+                  <picture><source type="image/avif" srcset="images/reviews/martine-verkouter-kampvuur.avif" /><source type="image/webp" srcset="images/reviews/martine-verkouter-kampvuur.webp" /><img src="images/reviews/martine-verkouter-kampvuur.jpg" alt="Groep rond een kampvuur in de zon, foto van Martine Verkouter" width="392" height="291" loading="lazy" decoding="async" /></picture>
+                  <picture><source type="image/avif" srcset="images/reviews/martine-verkouter-maaltijd.avif" /><source type="image/webp" srcset="images/reviews/martine-verkouter-maaltijd.webp" /><img src="images/reviews/martine-verkouter-maaltijd.jpg" alt="Gedekte tafel met een gezamenlijke maaltijd, foto van Martine Verkouter" width="392" height="292" loading="lazy" decoding="async" /></picture>
+                </div>
               </figure>
             </li>
             <li class="reviews__item">
               <figure class="review">
-                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
-                <blockquote class="review__quote"><p>De natuurijsreis was kort maar krachtig, gevuld met adembenemende landschappen. Absoluut een aanrader voor iedereen die van de winter houd</p></blockquote>
                 <figcaption class="review__by">
-                  <span class="review__avatar" aria-hidden="true">H</span>
-                  <span>
+                  <span class="review__avatar" style="--avatar: #00796b" aria-hidden="true">H</span>
+                  <span class="review__who">
                     <span class="review__name">Homme Jan De groot</span>
                     <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
                   </span>
                 </figcaption>
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>De natuurijsreis was kort maar krachtig, gevuld met adembenemende landschappen. Absoluut een aanrader voor iedereen die van de winter houd</p></blockquote>
               </figure>
             </li>
             <li class="reviews__item">
               <figure class="review">
-                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
-                <blockquote class="review__quote"><p>Kennis, kunde en de passie spat van het ijs als je samen met Novakse op pad gaat. Zeker op natuurijs</p></blockquote>
                 <figcaption class="review__by">
-                  <span class="review__avatar" aria-hidden="true">I</span>
-                  <span>
+                  <span class="review__avatar" style="--avatar: #1565c0" aria-hidden="true">I</span>
+                  <span class="review__who">
                     <span class="review__name">Ian van Zutphen</span>
                     <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
                   </span>
                 </figcaption>
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Kennis, kunde en de passie spat van het ijs als je samen met Novakse op pad gaat. Zeker op natuurijs</p></blockquote>
               </figure>
             </li>
-            <li class="reviews__item reviews__item--short">
+            <li class="reviews__item">
               <figure class="review">
-                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
-                <blockquote class="review__quote"><p>Top georganiseerde schaatsvakantie in Zweden!</p></blockquote>
                 <figcaption class="review__by">
-                  <span class="review__avatar" aria-hidden="true">M</span>
-                  <span>
+                  <span class="review__avatar" style="--avatar: #6d4c41" aria-hidden="true">M</span>
+                  <span class="review__who">
                     <span class="review__name">Martin Damsma</span>
                     <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2025<span class="sr-only">, bekijk op Google Maps</span></a>
                   </span>
                 </figcaption>
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Top georganiseerde schaatsvakantie in Zweden!</p></blockquote>
               </figure>
             </li>
-            <li class="reviews__item reviews__item--short">
+            <li class="reviews__item">
               <figure class="review">
-                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
-                <blockquote class="review__quote"><p>Vakman op gebied van schaatsen!</p></blockquote>
                 <figcaption class="review__by">
-                  <span class="review__avatar" aria-hidden="true">R</span>
-                  <span>
+                  <span class="review__avatar" style="--avatar: #2e7d32" aria-hidden="true">R</span>
+                  <span class="review__who">
                     <span class="review__name">Ruben Marinus</span>
                     <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
                   </span>
                 </figcaption>
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Vakman op gebied van schaatsen!</p></blockquote>
               </figure>
             </li>
           </ul>
+          <button class="reviews__nav reviews__nav--prev" type="button" aria-controls="reviewsList" aria-label="Vorige reviews" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+          <button class="reviews__nav reviews__nav--next" type="button" aria-controls="reviewsList" aria-label="Volgende reviews" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
         </div>
         <a class="link-arrow reviews__link" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Bekijk alle reviews op Google</a>
       </div>
@@ -1188,6 +1191,7 @@
   <script defer src="js/trip-search.js?v=2"></script>
   <script defer src="js/aanvraag.js"></script>
   <script defer src="js/reizen.js?v=6"></script>
+  <script defer src="js/reviews.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
