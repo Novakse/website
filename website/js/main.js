@@ -508,7 +508,7 @@
   }
 
   /* ------------------------------------------------------------------
-     Elfsight widgets (reviews, Instagram) get their height reserved in CSS
+     Elfsight widgets (the Instagram feed) get their height reserved in CSS
      so the page does not jump when they load. If the Elfsight script cannot
      load (blocked by an ad blocker, offline), that reserve would stay empty:
      .no-elfsight drops it again. Error events do not bubble, so listen in
@@ -522,10 +522,10 @@
   }, true);
 
   /* Elfsight's lazy mode (data-elfsight-app-lazy) boots a widget on the
-     visitor's first scroll or touch, wherever the widget is. On the homepage
-     that meant about a second of Elfsight script (long tasks of 170-480 ms
-     on a phone) right when the visitor starts scrolling down from the top,
-     so the page stuttered. Instead the widget is taken out of the page until
+     visitor's first scroll or touch, wherever the widget is. That meant
+     about a second of Elfsight script (long tasks of 170-480 ms on a phone)
+     right when the visitor starts scrolling down from the top, so the page
+     stuttered. Instead the widget is taken out of the page until
      it comes within 3 screens of the viewport (far enough ahead for Elfsight
      to finish, including its own 1 s delay, before the widget scrolls in),
      and is then put back at the first pause in scrolling, so that work does
@@ -538,9 +538,6 @@
     Array.prototype.forEach.call(
       document.querySelectorAll('[class^="elfsight-app-"][data-elfsight-app-lazy]'),
       function (widget) {
-        /* Check this before the widget leaves the page: closest() finds no
-           ancestors on a detached element. */
-        var isReviews = !!(widget.closest && widget.closest(".reviews__widget"));
         var placeholder = document.createElement("div");
         placeholder.setAttribute("data-elfsight-deferred", "");
         widget.parentNode.replaceChild(placeholder, widget);
@@ -552,13 +549,6 @@
           observers.forEach(function (observer) { observer.disconnect(); });
           window.clearTimeout(pauseTimer);
           window.removeEventListener("scroll", waitForPause);
-          /* Reviews widget: the deferral above already decides when it boots,
-             so drop Elfsight's own lazy mode. Otherwise Elfsight waits for yet
-             another interaction plus its 1 s delay, and the reviews show up
-             late once the visitor reaches them. */
-          if (isReviews) {
-            widget.removeAttribute("data-elfsight-app-lazy");
-          }
           placeholder.parentNode.replaceChild(widget, placeholder);
         };
         var waitForPause = function () {
@@ -579,23 +569,6 @@
           waitForPause();
         });
         watch("0px", restore);
-
-        /* Reviews widget: do not wait for the visitor to scroll near it.
-           Put it back once the page has loaded and the main thread is idle,
-           so Elfsight starts fetching the reviews right away and they are
-           ready by the time the visitor gets there. The reserved height sits
-           on .reviews__widget, so nothing shifts. */
-        if (isReviews) {
-          var restoreWhenIdle = function () {
-            if ("requestIdleCallback" in window) {
-              window.requestIdleCallback(restore, { timeout: 1500 });
-            } else {
-              window.setTimeout(restore, 200);
-            }
-          };
-          if (document.readyState === "complete") restoreWhenIdle();
-          else window.addEventListener("load", restoreWhenIdle, { once: true });
-        }
       }
     );
   }

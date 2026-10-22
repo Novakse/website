@@ -37,10 +37,6 @@
   <link rel="preload" href="css/styles.css?v=2" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/styles.css?v=2" /></noscript>
   <link rel="preload" href="css/theme-groen.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/theme-groen.css" /></noscript>
   <link rel="preload" href="css/reizen.css?v=8" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/reizen.css?v=8" /></noscript>
-  <!-- Reviews widget (Elfsight): resolve its hosts early, cheap DNS-only hints -->
-  <link rel="dns-prefetch" href="https://core.service.elfsight.com" />
-  <link rel="dns-prefetch" href="https://universe-static.elfsightcdn.com" />
-  <link rel="dns-prefetch" href="https://lh3.googleusercontent.com" />
   <link rel="canonical" href="https://www.novakse.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
@@ -856,10 +852,100 @@
           <span class="eyebrow eyebrow--deep"><span class="dot"></span>Ervaringen</span>
           <h2 class="reviews__title">Wat eerdere reizigers ervan vonden</h2>
           <p class="reviews__text">Echte reacties van eerdere deelnemers, rechtstreeks van onze Google-pagina.</p>
+          <p class="reviews__score">
+            <span class="sr-only">5,0 van de 5 sterren op basis van 22 Google-reviews</span>
+            <span class="reviews__score-num" aria-hidden="true">5,0</span>
+            <span class="stars" aria-hidden="true"></span>
+            <span class="reviews__score-count" aria-hidden="true">22 Google-reviews</span>
+          </p>
         </div>
-        <div class="reviews__widget reveal">
-          <!-- Elfsight Google Reviews, gekoppeld aan het Google Bedrijfsprofiel van Novakse -->
-          <div class="elfsight-app-6d68c2a6-bfcd-4296-8b49-cc8d067d6ff3" data-elfsight-app-lazy></div>
+        <!-- Google reviews, typed over from the Novakse Google Business Profile
+             (the same six as the Review schema in the <head>; only reviews whose
+             full text is readable on Google). Each one links to Google Maps.
+             Adding one: copy an <li> in the list, and add it to the schema
+             as well. Photo: replace the letter span with
+             <img class="review__avatar" src="images/reviews/name.webp" alt=""
+             width="80" height="80" loading="lazy" decoding="async" />. -->
+        <div class="reviews__wall reveal">
+          <figure class="review review--lead">
+            <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+            <blockquote class="review__quote"><p>Wat hebben wij een fantastische week beleefd aan het Orsameer. De schaatskoorts en het enthousiasme van Joey en Vera werken aanstekelijk. Een aanrader voor wie een winterse week in Zweden wil ervaren!</p></blockquote>
+            <svg class="review__line" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" /></svg>
+            <figcaption class="review__by">
+              <span class="review__avatar" aria-hidden="true">W</span>
+              <span>
+                <span class="review__name">Wendy Huijsmans</span>
+                <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2025<span class="sr-only">, bekijk op Google Maps</span></a>
+              </span>
+            </figcaption>
+          </figure>
+          <ul class="reviews__list" aria-label="Meer Google-reviews">
+            <li class="reviews__item">
+              <figure class="review">
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Fantastische week gehad met Novakse! Kleinschalig, goed georganiseerd en goed afgestemd op het gezelschap! Topweek</p></blockquote>
+                <figcaption class="review__by">
+                  <span class="review__avatar" aria-hidden="true">S</span>
+                  <span>
+                    <span class="review__name">sander de iongh</span>
+                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2025<span class="sr-only">, bekijk op Google Maps</span></a>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="reviews__item reviews__item--short">
+              <figure class="review">
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Top georganiseerde schaatsvakantie in Zweden!</p></blockquote>
+                <figcaption class="review__by">
+                  <span class="review__avatar" aria-hidden="true">M</span>
+                  <span>
+                    <span class="review__name">Martin Damsma</span>
+                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2025<span class="sr-only">, bekijk op Google Maps</span></a>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="reviews__item">
+              <figure class="review">
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Kennis, kunde en de passie spat van het ijs als je samen met Novakse op pad gaat. Zeker op natuurijs</p></blockquote>
+                <figcaption class="review__by">
+                  <span class="review__avatar" aria-hidden="true">I</span>
+                  <span>
+                    <span class="review__name">Ian van Zutphen</span>
+                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="reviews__item reviews__item--short">
+              <figure class="review">
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>Vakman op gebied van schaatsen!</p></blockquote>
+                <figcaption class="review__by">
+                  <span class="review__avatar" aria-hidden="true">R</span>
+                  <span>
+                    <span class="review__name">Ruben Marinus</span>
+                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+            <li class="reviews__item">
+              <figure class="review">
+                <span class="stars" role="img" aria-label="5 van de 5 sterren"></span>
+                <blockquote class="review__quote"><p>De natuurijsreis was kort maar krachtig, gevuld met adembenemende landschappen. Absoluut een aanrader voor iedereen die van de winter houd</p></blockquote>
+                <figcaption class="review__by">
+                  <span class="review__avatar" aria-hidden="true">H</span>
+                  <span>
+                    <span class="review__name">Homme Jan De groot</span>
+                    <a class="review__source" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Google-review uit 2024<span class="sr-only">, bekijk op Google Maps</span></a>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+          </ul>
         </div>
         <a class="link-arrow reviews__link" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Bekijk alle reviews op Google</a>
       </div>
@@ -1066,7 +1152,6 @@
   <script defer src="js/trip-search.js?v=2"></script>
   <script defer src="js/aanvraag.js"></script>
   <script defer src="js/reizen.js?v=6"></script>
-  <script src="https://elfsightcdn.com/platform.js" async onerror="document.documentElement.classList.add('no-elfsight')"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
