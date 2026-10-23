@@ -867,14 +867,15 @@
           </p>
         </div>
         <!-- Google reviews, typed over from the Novakse Google Business Profile
-             and laid out like the former Elfsight widget: equal cards in one
-             row. The Review schema in the <head> has the same reviews. Photos
-             are the reviewers' own photos on Google, cut from Joey's
-             screenshots in brand_assets/reviews/. Long texts get "Lees meer"
-             and the row gets previous/next buttons from js/reviews.js.
-             Adding one: copy an <li>, and add it to the schema as well. -->
-        <div class="reviews__carousel reveal">
-          <ul class="reviews__list" id="reviewsList" aria-label="Google-reviews">
+             in cards like the former Elfsight widget: first row the reviews
+             with photos, second row the ones without. The Review schema in the
+             <head> has the same reviews. Photos are the reviewers' own photos
+             on Google, cut from Joey's screenshots in brand_assets/reviews/.
+             Long texts get "Lees meer" from js/reviews.js.
+             Adding one: copy an <li> into the right row, and add it to the
+             schema as well. -->
+        <div class="reviews__groups reveal">
+          <ul class="reviews__list reviews__list--photos" aria-label="Google-reviews met foto's">
             <li class="reviews__item">
               <figure class="review">
                 <figcaption class="review__by">
@@ -930,6 +931,8 @@
                 </div>
               </figure>
             </li>
+          </ul>
+          <ul class="reviews__list reviews__list--text" aria-label="Meer Google-reviews">
             <li class="reviews__item">
               <figure class="review">
                 <figcaption class="review__by">
@@ -983,8 +986,6 @@
               </figure>
             </li>
           </ul>
-          <button class="reviews__nav reviews__nav--prev" type="button" aria-controls="reviewsList" aria-label="Vorige reviews" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
-          <button class="reviews__nav reviews__nav--next" type="button" aria-controls="reviewsList" aria-label="Volgende reviews" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
         </div>
         <a class="link-arrow reviews__link" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener">Bekijk alle reviews op Google</a>
       </div>

@@ -1366,9 +1366,10 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 .reviews__text { margin-top: 0.8rem; color: var(--ink-soft); }
 
 /* Google reviews, typed over into the page (index.html) instead of the
-   Elfsight widget and laid out like it: equal cards in one row that
-   scrolls sideways. Each card: reviewer, stars, the text (long ones cut to
-   four lines with "Lees meer", see js/reviews.js) and their photos. */
+   Elfsight widget, in cards like it: reviewer, stars, the text (long ones
+   cut to four lines with "Lees meer", see js/reviews.js) and their photos.
+   Two orderly rows: the reviews with photos, then the ones without. Each
+   row is one height. On a phone or tablet each row swipes sideways. */
 .stars {
   display: inline-block;
   flex-shrink: 0;
@@ -1400,7 +1401,7 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 }
 .reviews__score-num { font-family: var(--display); font-weight: 700; color: var(--ink); }
 
-.reviews__carousel { position: relative; margin-top: 2rem; text-align: left; }
+.reviews__groups { margin-top: 2rem; text-align: left; }
 .reviews__list {
   display: flex;
   gap: 1rem;
@@ -1491,13 +1492,16 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
   color: var(--warm-deep);
 }
 .review__more:hover { text-decoration: underline; text-underline-offset: 0.2em; }
-/* A text that fits keeps the empty line, so the photos line up. */
-.review__more[hidden] { display: block; visibility: hidden; }
+.review__more[hidden] { display: none; }
 
-/* The reviewer's photos from Google, in a block under the text:
-   one photo fills it, two sit side by side, three = one tall on the left
-   and two stacked, four = two by two (more are not shown). */
+/* The reviewer's photos from Google, in a block at the top of the card
+   (order: the figcaption has to stay the first element in the HTML), so
+   the photos in a row always line up: one photo fills it, two sit side by
+   side, three = one tall on the left and two stacked, four = two by two
+   (more are not shown). */
 .review__photos {
+  order: -1;
+  margin-bottom: 0.25rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -1518,35 +1522,22 @@ img[src*="falun-skaters-swept-track-sunset"] { object-position: 65% 0%; }
 .review__photos > :first-child:nth-last-child(3) { grid-row: 1 / -1; }
 .review__photos > :nth-child(n + 5) { display: none; }
 
-/* Previous / next buttons, only with a mouse; on touch screens you swipe. */
-.reviews__nav { display: none; }
+/* Laptop: everything in view, no scrolling. Photo reviews three across;
+   the others two across, four from 72rem. */
 @media (min-width: 56rem) {
-  .reviews__list { margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0; }
-  .reviews__item { flex-basis: calc((100% - 2rem) / 3); }
+  .reviews__list {
+    display: grid;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .reviews__list + .reviews__list { margin-top: 1.25rem; }
+  .reviews__list--photos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .reviews__list--text { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 72rem) {
-  .reviews__item { flex-basis: calc((100% - 3rem) / 4); }
-}
-@media (min-width: 56rem) and (hover: hover) {
-  .reviews__nav {
-    position: absolute;
-    top: calc(50% - 1.875rem);
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    background: var(--paper);
-    color: var(--ink);
-    transition: opacity 0.2s, transform 0.18s;
-  }
-  .reviews__nav:hover { transform: scale(1.06); }
-  .reviews__nav--prev { left: -1.4rem; }
-  .reviews__nav--next { right: -1.4rem; }
-  .reviews__nav:disabled { opacity: 0; pointer-events: none; }
-  .reviews__nav[hidden] { display: none; }
+  .reviews__list--text { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 /* The lazy Elfsight Instagram feed on the about pages
