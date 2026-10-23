@@ -2,7 +2,7 @@
 
 - Werk zelfstandig op de gevraagde pagina of sectie. Maak alle redelijke aannames zelf en stel alleen vragen als je er echt niet uitkomt.
 - Begin direct met implementeren zodra de opdracht duidelijk is; wacht niet op tussentijdse bevestiging tenzij een keuze onomkeerbaar is.
-- Start zoveel mogelijk agents parallel zodat onafhankelijke onderdelen tegelijk ontwikkeld worden.
+- Start alleen agents parallel als taken écht onafhankelijk zijn en op losse bestanden of secties werken. Gebruik één agent bij kleine wijzigingen, taken binnen één bestand en nauw samenhangende implementaties.
 - Gebruik de `frontend-design` skill voor grotere frontendwijzigingen of wanneer de richting niet duidelijk is.
 - Gebruik Claude Design alleen als extra visuele ondersteuning voor richting, compositie, typografie en sfeer. Het helpt met ontwerp, niet met de volledige implementatie.
 - Claude Design mag inspiratie geven en conceptuele richting bieden, maar Claude Code is verantwoordelijk voor de daadwerkelijke implementatie, structuur en functionaliteit.
@@ -18,6 +18,7 @@
   - `DESIGN-DIRECTION.md`
   - `SITEMAP.md`
   - `website_content/CONTENT-INVENTORY.md`
+  - `MOTION-GUIDELINES.md` (animatie-tokens, scroll-choreografie, toegankelijkheid)
   - relevante bestanden in `reference_images/`
   - relevante bestanden in `brand_assets/`
 - Gebruik de docs als leidraad; lees ze niet allemaal opnieuw als dezelfde context al bekend is.
@@ -36,7 +37,7 @@
 - Bouw mobile-first en volledig responsive.
 - Houd de website snel, licht en toegankelijk.
 - Gebruik semantische HTML, duidelijke structuur, toetsenbordbediening en goede kleurcontrast.
-- Gebruik subtiele beweging met `transform` en `opacity`. Vermijd `transition-all` en zware parallax-effecten.
+- Gebruik subtiele beweging met `transform` en `opacity`. Vermijd `transition-all` en zware parallax-effecten. Zie `MOTION-GUIDELINES.md` voor de exacte tokens, scroll-regels en reduced-motion-vereisten als GSAP/ScrollTrigger wordt gebruikt.
 - Laat alle belangrijke informatie ook zonder hover begrijpelijk zijn.
 - Gebruik alleen bestaande, echte content. Verzin geen prijzen, reisdata, diensten, voorwaarden, claims of teksten.
 - Als iets ontbreekt of onduidelijk is, maak een kleine technische keuze die de inhoud of bedrijfsinformatie niet verandert. Noteer die kort.
