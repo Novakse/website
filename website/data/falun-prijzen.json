@@ -58,10 +58,10 @@
     "groterAuto": {
       "prijs": null
     },
-    "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en fika's. De bezoeker kiest zelf voor hoeveel dagen hij begeleiding wil; dat hoeft niet de hele reis te zijn. Per dag kost begeleiding prijsPerDag voor 1 persoon, plus per extra persoon een bedrag uit opbouwPerPersoon dat steeds kleiner wordt: 2e persoon +75, 3e +65, 4e +55, 5e +45, 6e en elke volgende +40 (laatste waarde van de lijst blijft gelden als vloer). Dus 175 + 75 + 65 + 55 + 45 + 40 + 40... Dat dagbedrag geldt voor de hele groep en wordt over de deelnemers verdeeld (perPersoon false). Kan alleen als de hele reis binnen van/tot valt. Zet prijsPerDag op null om begeleiding helemaal weg te laten.",
+    "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en fika's. De bezoeker kiest zelf voor hoeveel dagen hij begeleiding wil; dat hoeft niet de hele reis te zijn. Per dag kost begeleiding prijsPerDag voor 1 persoon, plus per extra persoon een bedrag uit opbouwPerPersoon: 2e, 3e en 4e persoon elk +50, 5e en elke volgende +40 (laatste waarde van de lijst blijft gelden als vloer). Dus 175 + 50 + 50 + 50 + 40 + 40... Dat dagbedrag geldt voor de hele groep en wordt over de deelnemers verdeeld (perPersoon false). Kan alleen als de hele reis binnen van/tot valt. Zet prijsPerDag op null om begeleiding helemaal weg te laten.",
     "begeleiding": {
       "prijsPerDag": 175,
-      "opbouwPerPersoon": [75, 65, 55, 45, 40],
+      "opbouwPerPersoon": [50, 50, 50, 40],
       "perPersoon": false,
       "van": "2027-01-10",
       "tot": "2027-02-20",
