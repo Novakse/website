@@ -312,8 +312,10 @@ function berekenReis(keuze) {
   if (!(perPersoon > 0)) return { fout: "Ongeldig bedrag." };
 
   // main.js begeleidingKan() / begeleidingGroep(): guiding (Orsa) is a group
-  // amount per day, (prijsPerDag + prijsPerDagExtraPersoon * (personen - 1)),
-  // and only possible when the whole trip lies inside its van/tot window.
+  // amount per day, prijsPerDag for 1 person plus, per extra person, an
+  // amount from opbouwPerPersoon (tapers off; its last value keeps applying
+  // after the list ends), and only possible when the whole trip lies inside
+  // its van/tot window.
   var begeleiding = (data.begeleiding && typeof data.begeleiding.prijsPerDag === "number")
     ? data.begeleiding : null;
   var begeleidingDagen = 0;
@@ -330,8 +332,12 @@ function berekenReis(keuze) {
       return { fout: "Begeleiding kan niet in die periode." };
     }
     if (begeleidingDagen > dagen) return { fout: "Zoveel dagen begeleiding passen niet in de reis." };
-    begeleidingBedrag = (begeleiding.prijsPerDag + (begeleiding.prijsPerDagExtraPersoon || 0) * (personen - 1)) *
-      begeleidingDagen;
+    var begOpbouw = Array.isArray(begeleiding.opbouwPerPersoon) ? begeleiding.opbouwPerPersoon : [];
+    var begPerDag = begeleiding.prijsPerDag;
+    for (var i = 1; i < personen; i++) {
+      begPerDag += begOpbouw.length ? begOpbouw[Math.min(i - 1, begOpbouw.length - 1)] : 0;
+    }
+    begeleidingBedrag = begPerDag * begeleidingDagen;
   }
 
   // main.js materiaalGroep(): gear rental (Finland) ticked in the

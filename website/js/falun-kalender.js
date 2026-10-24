@@ -84,7 +84,7 @@
       guidingFewer: "Eén dag begeleiding minder",
       guidingMore: "Eén dag begeleiding meer",
       guidingDays: function (n) { return n + (n === 1 ? " dag" : " dagen"); },
-      guidingExplain: function (bedrag, extra) { return "Joey schaatst mee, met een kampvuur onderweg, lunch en fika\u0027s. " + bedrag + " per dag voor 1 persoon, + " + extra + " per dag voor elke extra persoon, dus hoe meer jullie zijn, hoe minder het per persoon kost."; },
+      guidingExplain: function (bedrag, extra) { return "Joey schaatst mee, met een kampvuur onderweg, lunch en fika\u0027s. " + bedrag + " per dag voor 1 persoon, + " + extra + " per dag voor de 2e persoon en daarna een steeds kleiner bedrag per extra persoon, dus hoe meer jullie zijn, hoe minder het per persoon kost."; },
       guidingHint: "Joey schaatst mee, met een kampvuur onderweg, lunch en fika's",
       guidingWindow: function (van, tot) { return "Alleen mogelijk van " + van + " tot en met " + tot; },
       guidingOutside: function (van, tot) { return "Niet mogelijk in de periode die je gekozen hebt. Begeleiding kan van " + van + " tot en met " + tot + "."; },
@@ -159,7 +159,7 @@
       guidingFewer: "One day less guiding",
       guidingMore: "One day more guiding",
       guidingDays: function (n) { return n + (n === 1 ? " day" : " days"); },
-      guidingExplain: function (bedrag, extra) { return "Joey skates along, with a campfire on the way, lunch and fika breaks. " + bedrag + " per day for 1 person, + " + extra + " per day for each additional person, so the more of you there are, the less it costs each."; },
+      guidingExplain: function (bedrag, extra) { return "Joey skates along, with a campfire on the way, lunch and fika breaks. " + bedrag + " per day for 1 person, + " + extra + " per day for the 2nd person, and a smaller amount for every extra person after that, so the more of you there are, the less it costs each."; },
       guidingHint: "Joey skates along, with a campfire on the way, lunch and fika breaks",
       guidingWindow: function (van, tot) { return "Only available from " + van + " to " + tot; },
       guidingOutside: function (van, tot) { return "Not available in the period you selected. Guiding runs from " + van + " to " + tot + "."; },
@@ -234,7 +234,7 @@
       guidingFewer: "Einen Tag weniger Begleitung",
       guidingMore: "Einen Tag mehr Begleitung",
       guidingDays: function (n) { return n + (n === 1 ? " Tag" : " Tage"); },
-      guidingExplain: function (bedrag, extra) { return "Joey läuft mit, mit Lagerfeuer unterwegs, Mittagessen und Fika-Pausen. " + bedrag + " pro Tag für 1 Person, + " + extra + " pro Tag für jede weitere Person - je mehr ihr seid, desto weniger kostet es pro Person."; },
+      guidingExplain: function (bedrag, extra) { return "Joey läuft mit, mit Lagerfeuer unterwegs, Mittagessen und Fika-Pausen. " + bedrag + " pro Tag für 1 Person, + " + extra + " pro Tag für die 2. Person, danach ein immer kleinerer Betrag pro weitere Person - je mehr ihr seid, desto weniger kostet es pro Person."; },
       guidingHint: "Joey läuft mit, mit Lagerfeuer unterwegs, Mittagessen und Fika-Pausen",
       guidingWindow: function (van, tot) { return "Nur möglich von " + van + " bis " + tot; },
       guidingOutside: function (van, tot) { return "Im gewählten Zeitraum nicht möglich. Begleitung gibt es von " + van + " bis " + tot + "."; },
@@ -309,7 +309,7 @@
       guidingFewer: "En dag mindre guidning",
       guidingMore: "En dag mer guidning",
       guidingDays: function (n) { return n + (n === 1 ? " dag" : " dagar"); },
-      guidingExplain: function (bedrag, extra) { return "Joey åker med, med lägereld på vägen, lunch och fika. " + bedrag + " per dag för 1 person, + " + extra + " per dag för varje extra person, så ju fler ni är, desto mindre kostar det per person."; },
+      guidingExplain: function (bedrag, extra) { return "Joey åker med, med lägereld på vägen, lunch och fika. " + bedrag + " per dag för 1 person, + " + extra + " per dag för den 2:a personen, och därefter ett allt mindre belopp per extra person, så ju fler ni är, desto mindre kostar det per person."; },
       guidingHint: "Joey åker med, med lägereld på vägen, lunch och fika",
       guidingWindow: function (van, tot) { return "Endast möjligt från " + van + " till " + tot; },
       guidingOutside: function (van, tot) { return "Inte möjligt under perioden du valt. Guidning finns från " + van + " till " + tot + "."; },
@@ -384,7 +384,7 @@
       guidingFewer: "Én dag mindre guiding",
       guidingMore: "Én dag mer guiding",
       guidingDays: function (n) { return n + (n === 1 ? " dag" : " dager"); },
-      guidingExplain: function (bedrag, extra) { return "Joey blir med, med bål underveis, lunsj og fika. " + bedrag + " per dag for 1 person, + " + extra + " per dag for hver ekstra person, så jo flere dere er, desto mindre koster det per person."; },
+      guidingExplain: function (bedrag, extra) { return "Joey blir med, med bål underveis, lunsj og fika. " + bedrag + " per dag for 1 person, + " + extra + " per dag for den 2. personen, og deretter et stadig mindre beløp per ekstra person, så jo flere dere er, desto mindre koster det per person."; },
       guidingHint: "Joey blir med, med bål underveis, lunsj og fika",
       guidingWindow: function (van, tot) { return "Bare mulig fra " + van + " til " + tot; },
       guidingOutside: function (van, tot) { return "Ikke mulig i perioden du har valgt. Veiledning finnes fra " + van + " til " + tot + "."; },
@@ -459,7 +459,7 @@
       guidingFewer: "Yksi opastuspäivä vähemmän",
       guidingMore: "Yksi opastuspäivä enemmän",
       guidingDays: function (n) { return n + (n === 1 ? " päivä" : " päivää"); },
-      guidingExplain: function (bedrag, extra) { return "Joey luistelee mukana, nuotio matkan varrella, lounas ja fika-tauot. " + bedrag + " päivässä 1 hengelle, + " + extra + " päivässä jokaisesta lisähenkilöstä, eli mitä useampi teitä on, sitä vähemmän se maksaa per henkilö."; },
+      guidingExplain: function (bedrag, extra) { return "Joey luistelee mukana, nuotio matkan varrella, lounas ja fika-tauot. " + bedrag + " päivässä 1 hengelle, + " + extra + " päivässä 2. hengestä, ja sen jälkeen pienenevä summa joka seuraavasta hengestä, eli mitä useampi teitä on, sitä vähemmän se maksaa per henkilö."; },
       guidingHint: "Joey luistelee mukana, nuotio matkan varrella, lounas ja fika-tauot",
       guidingWindow: function (van, tot) { return "Mahdollista vain " + van + " - " + tot; },
       guidingOutside: function (van, tot) { return "Ei mahdollista valitsemanasi ajankohtana. Opastusta on saatavilla " + van + " - " + tot + "."; },
@@ -659,7 +659,7 @@
   var begeleidingVan = begeleiding && begeleiding.van ? alsDatum(begeleiding.van) : null;
   var begeleidingTot = begeleiding && begeleiding.tot ? alsDatum(begeleiding.tot) : null;
   var begeleidingPerDag = begeleiding && typeof begeleiding.prijsPerDag === "number" ? begeleiding.prijsPerDag : null;
-  var begeleidingExtraPersoon = begeleiding && typeof begeleiding.prijsPerDagExtraPersoon === "number" ? begeleiding.prijsPerDagExtraPersoon : 0;
+  var begeleidingOpbouw = begeleiding && Array.isArray(begeleiding.opbouwPerPersoon) ? begeleiding.opbouwPerPersoon : [];
   var begeleidingPerPersoon = !begeleiding || begeleiding.perPersoon !== false;
 
   /* The label of a booked period may be one line or a block per language
@@ -752,17 +752,24 @@
 
   /* Begeleiding kost een bedrag per reisdag. Rekent Joey per groep in plaats
      van per persoon, dan wordt dat bedrag over de deelnemers verdeeld. Het
-     dagbedrag hangt af van de groep: prijsPerDag voor 1 persoon, plus
-     prijsPerDagExtraPersoon voor elke persoon meer. Zelfde als
+     dagbedrag hangt af van de groep: prijsPerDag voor 1 persoon, plus per
+     extra persoon een bedrag uit opbouwPerPersoon (de lijst loopt af; de
+     laatste waarde blijft gelden voor elke persoon daarna). Zelfde als
      api/_falun-prijs.js.
 
      Dit bedrag wordt bewust niet afgerond: bij drie personen loopt een vooraf
      afgerond deelbedrag uit de pas met de server, en dan staat er een euro
      meer of minder op het scherm dan er afgeschreven wordt. */
+  function begeleidingPerDagVoorGroep(personen) {
+    var bedrag = begeleidingPerDag;
+    for (var i = 1; i < personen; i++) {
+      bedrag += begeleidingOpbouw.length ? begeleidingOpbouw[Math.min(i - 1, begeleidingOpbouw.length - 1)] : 0;
+    }
+    return bedrag;
+  }
   function begeleidingKostenRuw(dagenBegeleid, personen) {
     if (begeleidingPerDag === null || !dagenBegeleid) return 0;
-    var perDag = begeleidingPerDag + begeleidingExtraPersoon * (personen - 1);
-    var totaal = perDag * dagenBegeleid;
+    var totaal = begeleidingPerDagVoorGroep(personen) * dagenBegeleid;
     return begeleidingPerPersoon ? totaal : totaal / personen;
   }
 
@@ -1294,7 +1301,7 @@
         "</span>" +
         '<button type="button" class="booking__step-btn" data-begeleiding-stap="1" aria-label="' + T.guidingMore + '">+</button>' +
       "</div>" +
-      '<p class="falun-cal__note falun-cal__note--inline">' + T.guidingExplain(euro(begeleidingPerDag), euro(begeleidingExtraPersoon)) + "</p>";
+      '<p class="falun-cal__note falun-cal__note--inline">' + T.guidingExplain(euro(begeleidingPerDag), euro(begeleidingOpbouw[0] || 0)) + "</p>";
 
     var minder = begeleidingBox.querySelector('[data-begeleiding-stap="-1"]');
     var meer = begeleidingBox.querySelector('[data-begeleiding-stap="1"]');

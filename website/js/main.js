@@ -76,7 +76,7 @@
       guidingFewer: "Eén dag begeleiding minder",
       guidingMore: "Eén dag begeleiding meer",
       guidingDays: function (n) { return n + (n === 1 ? " dag" : " dagen"); },
-      guidingPrice: function (bedrag, extra) { return bedrag + " per dag voor 1 persoon, + " + extra + " per dag voor elke extra persoon, dus hoe meer jullie zijn, hoe minder het per persoon kost."; },
+      guidingPrice: function (bedrag, extra) { return bedrag + " per dag voor 1 persoon, + " + extra + " per dag voor de 2e persoon en daarna een steeds kleiner bedrag per extra persoon, dus hoe meer jullie zijn, hoe minder het per persoon kost."; },
       guidingWindow: function (van, tot) { return "Begeleiding kan van " + van + " tot en met " + tot + ". Kies eerst je periode."; },
       guidingOutside: function (van, tot) { return "Niet mogelijk in de periode die je gekozen hebt. Begeleiding kan van " + van + " tot en met " + tot + "."; },
       legendPricier: "Duurdere nacht",
@@ -156,7 +156,7 @@
       guidingFewer: "One day less guiding",
       guidingMore: "One day more guiding",
       guidingDays: function (n) { return n + (n === 1 ? " day" : " days"); },
-      guidingPrice: function (amount, extra) { return amount + " per day for 1 person, + " + extra + " per day for each additional person, so the more of you there are, the less it costs each."; },
+      guidingPrice: function (amount, extra) { return amount + " per day for 1 person, + " + extra + " per day for the 2nd person, and a smaller amount for every extra person after that, so the more of you there are, the less it costs each."; },
       guidingWindow: function (from, to) { return "Guiding is available from " + from + " to " + to + ". Choose your period first."; },
       guidingOutside: function (from, to) { return "Not available in the period you selected. Guiding runs from " + from + " to " + to + "."; },
       legendPricier: "Higher-priced night",
@@ -234,7 +234,7 @@
       guidingFewer: "En dag mindre guidning",
       guidingMore: "En dag mer guidning",
       guidingDays: function (n) { return n + (n === 1 ? " dag" : " dagar"); },
-      guidingPrice: function (belopp, extra) { return belopp + " per dag för 1 person, + " + extra + " per dag för varje extra person, så ju fler ni är, desto mindre kostar det per person."; },
+      guidingPrice: function (belopp, extra) { return belopp + " per dag för 1 person, + " + extra + " per dag för den 2:a personen, och därefter ett allt mindre belopp per extra person, så ju fler ni är, desto mindre kostar det per person."; },
       guidingWindow: function (fran, till) { return "Guidning finns från " + fran + " till " + till + ". Välj först din period."; },
       guidingOutside: function (fran, till) { return "Inte möjligt under perioden du valt. Guidning finns från " + fran + " till " + till + "."; },
       legendPricier: "Dyrare natt",
@@ -312,7 +312,7 @@
       guidingFewer: "Einen Tag weniger Begleitung",
       guidingMore: "Einen Tag mehr Begleitung",
       guidingDays: function (n) { return n + (n === 1 ? " Tag" : " Tage"); },
-      guidingPrice: function (betrag, extra) { return betrag + " pro Tag für 1 Person, + " + extra + " pro Tag für jede weitere Person - je mehr ihr seid, desto weniger kostet es pro Person."; },
+      guidingPrice: function (betrag, extra) { return betrag + " pro Tag für 1 Person, + " + extra + " pro Tag für die 2. Person, danach ein immer kleinerer Betrag pro weitere Person - je mehr ihr seid, desto weniger kostet es pro Person."; },
       guidingWindow: function (von, bis) { return "Begleitung gibt es von " + von + " bis " + bis + ". Wähle zuerst deinen Zeitraum."; },
       guidingOutside: function (von, bis) { return "Im gewählten Zeitraum nicht möglich. Begleitung gibt es von " + von + " bis " + bis + "."; },
       legendPricier: "Teurere Nacht",
@@ -382,7 +382,7 @@
       guidingFewer: "Én dag mindre veiledning",
       guidingMore: "Én dag mer veiledning",
       guidingDays: function (n) { return n + (n === 1 ? " dag" : " dager"); },
-      guidingPrice: function (belop, extra) { return belop + " per dag for 1 person, + " + extra + " per dag for hver ekstra person, så jo flere dere er, desto mindre koster det per person."; },
+      guidingPrice: function (belop, extra) { return belop + " per dag for 1 person, + " + extra + " per dag for den 2. personen, og deretter et stadig mindre beløp per ekstra person, så jo flere dere er, desto mindre koster det per person."; },
       guidingWindow: function (fra, til) { return "Veiledning finnes fra " + fra + " til " + til + ". Velg først perioden din."; },
       guidingOutside: function (fra, til) { return "Ikke mulig i perioden du har valgt. Veiledning finnes fra " + fra + " til " + til + "."; },
       legendPricier: "Dyrere natt",
@@ -452,7 +452,7 @@
       guidingFewer: "Yksi opastuspäivä vähemmän",
       guidingMore: "Yksi opastuspäivä enemmän",
       guidingDays: function (n) { return n + (n === 1 ? " päivä" : " päivää"); },
-      guidingPrice: function (summa, lisa) { return summa + " päivässä 1 hengelle, + " + lisa + " päivässä jokaisesta lisähenkilöstä, eli mitä useampi teitä on, sitä vähemmän se maksaa per henkilö."; },
+      guidingPrice: function (summa, lisa) { return summa + " päivässä 1 hengelle, + " + lisa + " päivässä 2. hengestä, ja sen jälkeen pienenevä summa joka seuraavasta hengestä, eli mitä useampi teitä on, sitä vähemmän se maksaa per henkilö."; },
       guidingWindow: function (alkaen, saakka) { return "Opastusta on saatavilla " + alkaen + " - " + saakka + ". Valitse ensin ajanjakso."; },
       guidingOutside: function (alkaen, saakka) { return "Ei mahdollista valitsemanasi ajankohtana. Opastusta on saatavilla " + alkaen + " - " + saakka + "."; },
       legendPricier: "Kalliimpi yö",
@@ -1552,8 +1552,9 @@
     }
 
     /* Optional: guiding on the ice ("begeleiding" in the price file, e.g.
-       Orsa). Per day it costs prijsPerDag for 1 person plus
-       prijsPerDagExtraPersoon for every extra person, for the whole group.
+       Orsa). Per day it costs prijsPerDag for 1 person plus, per extra
+       person, an amount from opbouwPerPersoon (the list tapers off; its last
+       value keeps applying to every person after it), for the whole group.
        The visitor picks 0 up to the number of trip days with a stepper. With
        van/tot in the file it is only possible when the whole trip falls in
        that window (tot = last departure day, as in the Falun calendar). */
@@ -1761,10 +1762,19 @@
     }
 
     // Guiding for the whole group, in whole euros: per day prijsPerDag for
-    // 1 person plus prijsPerDagExtraPersoon for every extra person.
+    // 1 person plus, per extra person, an amount from opbouwPerPersoon
+    // (tapers off; its last value keeps applying after the list ends).
+    function begeleidingPerDagVoorGroep(aantal) {
+      var opbouw = Array.isArray(begeleiding.opbouwPerPersoon) ? begeleiding.opbouwPerPersoon : [];
+      var bedrag = begeleiding.prijsPerDag;
+      for (var i = 1; i < aantal; i++) {
+        bedrag += opbouw.length ? opbouw[Math.min(i - 1, opbouw.length - 1)] : 0;
+      }
+      return bedrag;
+    }
     function begeleidingGroep(dagen, aantal) {
       if (!begeleiding || !dagen || aantal < 1) return 0;
-      return (begeleiding.prijsPerDag + (begeleiding.prijsPerDagExtraPersoon || 0) * (aantal - 1)) * dagen;
+      return begeleidingPerDagVoorGroep(aantal) * dagen;
     }
 
     // Head count for the guiding price: the stepper's, the trip finder's, or
@@ -2180,7 +2190,7 @@
             : '') +
           (notitie ? '<p class="falun-cal__note falun-cal__note--inline">' + notitie + '</p>' : '') +
           '<p class="falun-cal__note falun-cal__note--inline">' +
-            T.guidingPrice(euroTekst(begeleiding.prijsPerDag), euroTekst(begeleiding.prijsPerDagExtraPersoon || 0)) + '</p>';
+            T.guidingPrice(euroTekst(begeleiding.prijsPerDag), euroTekst((begeleiding.opbouwPerPersoon || [])[0] || 0)) + '</p>';
 
         if (staat === "stepper") {
           var minder = begeleidingBox.querySelector('[data-begeleiding-stap="-1"]');

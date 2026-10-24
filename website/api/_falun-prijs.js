@@ -196,11 +196,15 @@ function berekenFalun(keuze) {
     }
     // Zelfde rekenwijze als in js/falun-kalender.js: per reisdag, en gedeeld
     // over de groep als het niet per persoon gerekend wordt. Het dagbedrag
-    // hangt af van de groep: prijsPerDag voor 1 persoon, plus
-    // prijsPerDagExtraPersoon voor elke persoon meer.
+    // hangt af van de groep: prijsPerDag voor 1 persoon, plus per extra
+    // persoon een bedrag uit opbouwPerPersoon (de lijst loopt af; de laatste
+    // waarde blijft gelden voor elke persoon daarna).
     if (begDagen > dagen) return { fout: "Zoveel dagen begeleiding passen niet in de reis." };
-    var begExtra = typeof beg.prijsPerDagExtraPersoon === "number" ? beg.prijsPerDagExtraPersoon : 0;
-    var begPerDag = beg.prijsPerDag + begExtra * (personen - 1);
+    var begOpbouw = Array.isArray(beg.opbouwPerPersoon) ? beg.opbouwPerPersoon : [];
+    var begPerDag = beg.prijsPerDag;
+    for (var i = 1; i < personen; i++) {
+      begPerDag += begOpbouw.length ? begOpbouw[Math.min(i - 1, begOpbouw.length - 1)] : 0;
+    }
     var begTotaal = begPerDag * begDagen;
     totaal += beg.perPersoon === false ? begTotaal / personen : begTotaal;
     omschrijving += ", met " + begDagen + (begDagen === 1 ? " dag" : " dagen") + " begeleiding";

@@ -48,10 +48,10 @@
     { "van": "2027-03-08", "tot": "2027-03-16" }
   ],
 
-  "//begeleiding": "Begeleiding op het ijs, bij te boeken. Per dag kost het prijsPerDag voor 1 persoon, plus prijsPerDagExtraPersoon voor elke persoon meer: 100 + 50 x (personen - 1), voor de hele groep. De bezoeker kiest zelf voor hoeveel dagen (0 tot en met de hele reis). Het kan alleen als de hele reis binnen van/tot valt (tot is de laatste vertrekdag, zelfde als Falun: 10 januari tot en met 20 februari). Haal van en tot weg om begeleiding het hele seizoen aan te bieden; haal het hele blokje weg om begeleiding niet te tonen.",
+  "//begeleiding": "Begeleiding op het ijs, bij te boeken. Per dag kost het prijsPerDag voor 1 persoon, plus per extra persoon een bedrag uit opbouwPerPersoon dat steeds kleiner wordt: 2e persoon +75, 3e +65, 4e +55, 5e +45, 6e en elke volgende +40 (laatste waarde van de lijst blijft gelden als vloer), voor de hele groep. Dus 175 + 75 + 65 + 55 + 45 + 40 + 40... De bezoeker kiest zelf voor hoeveel dagen (0 tot en met de hele reis). Het kan alleen als de hele reis binnen van/tot valt (tot is de laatste vertrekdag, zelfde als Falun: 10 januari tot en met 20 februari). Haal van en tot weg om begeleiding het hele seizoen aan te bieden; haal het hele blokje weg om begeleiding niet te tonen.",
   "begeleiding": {
-    "prijsPerDag": 100,
-    "prijsPerDagExtraPersoon": 50,
+    "prijsPerDag": 175,
+    "opbouwPerPersoon": [75, 65, 55, 45, 40],
     "van": "2027-01-10",
     "tot": "2027-02-20"
   },
