@@ -183,6 +183,17 @@ function berekenFalun(keuze) {
     totaal -= autoDeel(personen, dagen);
     omschrijving += ", eigen vervoer";
   }
+  // Volledige verzekering voor de huurauto: vast bedrag per dag voor de hele
+  // groep (niet per persoon), gedeeld door het aantal personen. Alleen
+  // mogelijk met de huurauto erbij, dus niet samen met een eigen vervoer.
+  // Zelfde rekenwijze als verzekeringKostenRuw() in js/falun-kalender.js.
+  var verzekeringPerDag = opties.autoVerzekering && typeof opties.autoVerzekering.prijsPerDag === "number"
+    ? opties.autoVerzekering.prijsPerDag : null;
+  if (keuze.verzekering === "ja" && keuze.auto !== "zelf") {
+    if (verzekeringPerDag === null) return { fout: "Verzekering huurauto is nog niet te boeken." };
+    totaal += (verzekeringPerDag * dagen) / personen;
+    omschrijving += ", verzekering huurauto";
+  }
   var leegBegeleiding = keuze.begeleiding === undefined || keuze.begeleiding === null || keuze.begeleiding === "";
   if (!leegBegeleiding && !/^\d+$/.test(String(keuze.begeleiding))) return { fout: "Ongeldig aantal dagen begeleiding." };
   var begDagen = leegBegeleiding ? 0 : parseInt(keuze.begeleiding, 10);

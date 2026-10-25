@@ -5,9 +5,10 @@
    aan. De reisduur volgt uit die twee dagen. Iedere vertrekdag vanaf
    minimumDagen (data/falun-prijzen.json, nu 4 dagen) na aankomst is te
    kiezen; een maximum is er niet, alleen het seizoen en de bezette weken.
-   De prijs verschilt per datum. Daarnaast kan de bezoeker drie dingen aanvinken die het
-   bedrag veranderen: de vlucht zelf regelen, de huurauto zelf regelen en
-   begeleiding op het ijs erbij nemen.
+   De prijs verschilt per datum. Daarnaast kan de bezoeker dingen aanvinken die het
+   bedrag veranderen: de vlucht zelf regelen, de huurauto zelf regelen, de
+   volledige verzekering voor de huurauto erbij nemen en begeleiding op het
+   ijs erbij nemen.
 
    ALLES WAT JOEY BIJWERKT, STAAT IN data/falun-prijzen.json, niet in dit
    bestand. Daar staan het seizoen, de basisprijzen, de toeslag per nacht en
@@ -25,6 +26,8 @@
        min het deel dat al in de basisprijs zit (de auto voor de duur uit de
        tabel)
      - het eigen deel van de huurauto als je je vervoer zelf regelt
+     + de volledige verzekering voor de huurauto (opties.autoVerzekering),
+       alleen als je geen eigen vervoer regelt
      + begeleiding, alleen als de hele reis binnen het begeleidingsvenster valt
        (staat uit zolang begeleiding.prijsPerDag null is)
 
@@ -78,6 +81,8 @@
       flightSelfHint: "De heen- en terugvlucht zit anders bij de prijs in",
       carSelf: "Ik regel mijn eigen vervoer",
       carSelfHint: "De huurauto zit anders bij de prijs in. Zonder huurauto heb je ter plaatse de hele reis geen vervoer via ons.",
+      insurance: "Volledige verzekering voor de huurauto",
+      insuranceHint: "Dekt schade en diefstal aan de huurauto voor de hele huurperiode, voor de hele groep samen",
       guiding: "Begeleiding op het ijs",
       guidingLegend: "Wil je begeleiding op het ijs?",
       guidingNone: "Geen",
@@ -99,6 +104,7 @@
       linePersons: "Personen",
       lineFlight: "Vlucht zelf geregeld",
       lineCar: "Vervoer zelf geregeld",
+      lineInsurance: "Verzekering huurauto",
       lineGuiding: "Begeleiding op het ijs",
       total: "Totaal per persoon",
       totalFor: function (n) { return "Totaal voor " + n + (n === 1 ? " persoon" : " personen"); },
@@ -153,6 +159,8 @@
       flightSelfHint: "Otherwise the return flight is included in the price",
       carSelf: "I'll arrange my own transport",
       carSelfHint: "Otherwise the rental car is included in the price. Without it, you have no transport from us on location for the entire trip.",
+      insurance: "Full insurance for the rental car",
+      insuranceHint: "Covers damage and theft for the rental car for the whole rental period, for the whole group together",
       guiding: "Guiding on the ice",
       guidingLegend: "Do you want guiding on the ice?",
       guidingNone: "None",
@@ -174,6 +182,7 @@
       linePersons: "People",
       lineFlight: "Own flight",
       lineCar: "Own transport",
+      lineInsurance: "Rental car insurance",
       lineGuiding: "Guiding on the ice",
       total: "Total per person",
       totalFor: function (n) { return "Total for " + n + (n === 1 ? " person" : " people"); },
@@ -228,6 +237,8 @@
       flightSelfHint: "Sonst ist der Hin- und Rückflug im Preis enthalten",
       carSelf: "Ich organisiere meinen Transport selbst",
       carSelfHint: "Sonst ist der Mietwagen im Preis enthalten. Ohne Mietwagen hast du vor Ort während der ganzen Reise keinen Transport über uns.",
+      insurance: "Vollversicherung für den Mietwagen",
+      insuranceHint: "Deckt Schäden und Diebstahl am Mietwagen für die ganze Mietdauer, für die ganze Gruppe zusammen",
       guiding: "Begleitung auf dem Eis",
       guidingLegend: "Möchtest du Begleitung auf dem Eis?",
       guidingNone: "Keine",
@@ -249,6 +260,7 @@
       linePersons: "Personen",
       lineFlight: "Flug selbst gebucht",
       lineCar: "Transport selbst organisiert",
+      lineInsurance: "Mietwagenversicherung",
       lineGuiding: "Begleitung auf dem Eis",
       total: "Gesamt pro Person",
       totalFor: function (n) { return "Gesamt für " + n + (n === 1 ? " Person" : " Personen"); },
@@ -303,6 +315,8 @@
       flightSelfHint: "Annars ingår tur- och returflyget i priset",
       carSelf: "Jag ordnar min egen transport",
       carSelfHint: "Annars ingår hyrbilen i priset. Utan hyrbil har du ingen transport via oss på plats under hela resan.",
+      insurance: "Fullständig försäkring för hyrbilen",
+      insuranceHint: "Täcker skador och stöld på hyrbilen under hela hyrperioden, för hela gruppen tillsammans",
       guiding: "Guidning på isen",
       guidingLegend: "Vill du ha guidning på isen?",
       guidingNone: "Ingen",
@@ -324,6 +338,7 @@
       linePersons: "Personer",
       lineFlight: "Eget flyg",
       lineCar: "Egen transport",
+      lineInsurance: "Hyrbilsförsäkring",
       lineGuiding: "Guidning på isen",
       total: "Totalt per person",
       totalFor: function (n) { return "Totalt för " + n + (n === 1 ? " person" : " personer"); },
@@ -378,6 +393,8 @@
       flightSelfHint: "Ellers er tur-retur-flyet inkludert i prisen",
       carSelf: "Jeg ordner min egen transport",
       carSelfHint: "Ellers er leiebilen inkludert i prisen. Uten leiebil har du ingen transport via oss på stedet under hele reisen.",
+      insurance: "Full forsikring for leiebilen",
+      insuranceHint: "Dekker skade og tyveri på leiebilen for hele leieperioden, for hele gruppen samlet",
       guiding: "Guiding på isen",
       guidingLegend: "Vil du ha veiledning på isen?",
       guidingNone: "Ingen",
@@ -399,6 +416,7 @@
       linePersons: "Personer",
       lineFlight: "Eget fly",
       lineCar: "Egen transport",
+      lineInsurance: "Forsikring leiebil",
       lineGuiding: "Guiding på isen",
       total: "Totalt per person",
       totalFor: function (n) { return "Totalt for " + n + (n === 1 ? " person" : " personer"); },
@@ -453,6 +471,8 @@
       flightSelfHint: "Muuten meno-paluulento sisältyy hintaan",
       carSelf: "Järjestän kuljetukseni itse",
       carSelfHint: "Muuten vuokra-auto sisältyy hintaan. Ilman vuokra-autoa sinulla ei ole perillä kuljetusta meidän kauttamme koko matkan aikana.",
+      insurance: "Vuokra-auton täysvakuutus",
+      insuranceHint: "Kattaa vuokra-auton vahingot ja varkauden koko vuokra-ajalta, koko ryhmälle yhteensä",
       guiding: "Opastus jäällä",
       guidingLegend: "Haluatko opastusta jäällä?",
       guidingNone: "Ei",
@@ -474,6 +494,7 @@
       linePersons: "Henkilöä",
       lineFlight: "Oma lento",
       lineCar: "Oma kuljetus",
+      lineInsurance: "Vuokra-auton vakuutus",
       lineGuiding: "Opastus jäällä",
       total: "Yhteensä / henkilö",
       totalFor: function (n) { return "Yhteensä, " + n + (n === 1 ? " henkilö" : " henkilöä"); },
@@ -651,10 +672,24 @@
   function autoInBasis(dagen) {
     return autoDeel(basisPersonen, basisDuurVoor(dagen));
   }
+  /* De volledige verzekering voor de huurauto: een vast bedrag per dag voor
+     de hele groep (niet per persoon), gedeeld door het aantal personen.
+     dagen is de reisduur, net als bij autoDeel. Bewust niet afgerond: zie
+     begeleidingKostenRuw hieronder voor dezelfde reden. Zelfde rekenwijze als
+     api/_falun-prijs.js. */
+  function verzekeringKostenRuw(dagen, personen) {
+    if (verzekeringPerDag === null || !personen) return 0;
+    return (verzekeringPerDag * dagen) / personen;
+  }
+  function verzekeringKosten(dagen, personen) {
+    return Math.round(verzekeringKostenRuw(dagen, personen));
+  }
   var opties = data.opties || {};
   var vluchtBedrag = Math.abs(opties.vluchtZelf || 0);
   var groterAuto = opties.groterAuto || null;
   var groterAutoPrijs = groterAuto && typeof groterAuto.prijs === "number" ? groterAuto.prijs : null;
+  var autoVerzekering = opties.autoVerzekering || null;
+  var verzekeringPerDag = autoVerzekering && typeof autoVerzekering.prijsPerDag === "number" ? autoVerzekering.prijsPerDag : null;
   var begeleiding = opties.begeleiding || null;
   var begeleidingVan = begeleiding && begeleiding.van ? alsDatum(begeleiding.van) : null;
   var begeleidingTot = begeleiding && begeleiding.tot ? alsDatum(begeleiding.tot) : null;
@@ -746,6 +781,7 @@
   var aankomst = null;
   var vluchtZelf = false;
   var autoZelf = false;
+  var verzekering = false;
   var begeleidingDagen = 0;
 
   function nachtenVan(dagen) { return dagen - 1; }
@@ -859,6 +895,7 @@
     if (totaal === null) return null;
     if (vluchtZelf) totaal -= vluchtBedrag;
     if (autoZelf) totaal -= autoDeel(personen, duur);
+    if (verzekering && !autoZelf) totaal += verzekeringKostenRuw(duur, personen);
     if (begeleidingDagen && begeleidingKan(aankomst, duur)) totaal += begeleidingKostenRuw(begeleidingDagen, personen);
     return Math.round(totaal);
   }
@@ -1247,6 +1284,7 @@
   function staatAan(sleutel) {
     if (sleutel === "vlucht") return vluchtZelf;
     if (sleutel === "auto") return autoZelf;
+    if (sleutel === "verzekering") return verzekering;
     return false;
   }
 
@@ -1276,7 +1314,14 @@
       veld.addEventListener("change", function () {
         var welke = veld.getAttribute("data-optie");
         if (welke === "vlucht") vluchtZelf = veld.checked;
-        if (welke === "auto") autoZelf = veld.checked;
+        if (welke === "auto") {
+          autoZelf = veld.checked;
+          // Zonder huurauto is er niets te verzekeren: het vinkje verdwijnt
+          // en de kosten vervallen (zie optieLijst() en totaalPrijs()).
+          if (autoZelf) verzekering = false;
+          tekenOpties();
+        }
+        if (welke === "verzekering") verzekering = veld.checked;
         tekenSamenvatting();
       });
     });
@@ -1387,6 +1432,7 @@
       "<dt>" + T.linePersons + "</dt><dd>" + T.personsLabel(personen) + "</dd>";
     if (vluchtZelf) regels += "<dt>" + T.lineFlight + "</dt><dd>- " + euro(vluchtBedrag) + "</dd>";
     if (autoZelf) regels += "<dt>" + T.lineCar + "</dt><dd>- " + euro(autoDeel(personen, duur)) + "</dd>";
+    if (verzekering && !autoZelf) regels += "<dt>" + T.lineInsurance + "</dt><dd>+ " + euro(verzekeringKosten(duur, personen)) + "</dd>";
     if (begeleidingDagen && begeleidingKan(aankomst, duur)) {
       regels += "<dt>" + T.lineGuiding + " (" + T.guidingDays(begeleidingDagen) + ")</dt><dd>+ " +
         euro(begeleidingKosten(begeleidingDagen, personen)) + "</dd>";
@@ -1404,6 +1450,7 @@
     if (baby) params.set("baby", String(baby));
     if (vluchtZelf) params.set("vlucht", "zelf");
     if (autoZelf) params.set("auto", "zelf");
+    if (verzekering && !autoZelf) params.set("verzekering", "ja");
     if (begeleidingDagen && begeleidingKan(aankomst, duur)) params.set("begeleiding", String(begeleidingDagen));
 
     // The price per person comes first; for a group the total for everyone
@@ -1467,6 +1514,19 @@
       // trip; it follows the chosen trip length as soon as there is one.
       bedrag: Math.round(autoDeel(personen, duur || minDagen))
     });
+
+    // Without a rental car there is nothing to insure: left out entirely
+    // while "auto zelf" is checked (see the change listener in tekenOpties()
+    // and the "!autoZelf" check in totaalPrijs()).
+    if (verzekeringPerDag !== null && !autoZelf) {
+      lijst.push({
+        sleutel: "verzekering",
+        naam: T.insurance,
+        toelichting: T.insuranceHint,
+        teken: "+",
+        bedrag: verzekeringKosten(duur || minDagen, personen)
+      });
+    }
 
     // prijsPerDag null in data/falun-prijzen.json means guidance is switched
     // off entirely: not shown here, not in the form, not charged.

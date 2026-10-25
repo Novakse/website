@@ -74,6 +74,7 @@
       baby: params.get("baby") || "",
       vlucht: params.get("vlucht") || "",
       auto: params.get("auto") || "",
+      verzekering: params.get("verzekering") || "",
       begeleiding: params.get("begeleiding") || ""
     };
   }
@@ -1006,6 +1007,7 @@
         baby: falunKeuze.baby,
         vlucht: falunKeuze.vlucht,
         auto: falunKeuze.auto,
+        verzekering: falunKeuze.verzekering,
         begeleiding: falunKeuze.begeleiding
       };
     } else if (reisKeuze) {

@@ -380,6 +380,7 @@ module.exports = async function handler(req, res) {
     var falunOpties = [];
     if (body.vlucht === "zelf") falunOpties.push("eigen vlucht");
     if (body.auto === "zelf") falunOpties.push("eigen vervoer");
+    if (body.verzekering === "ja" && body.auto !== "zelf") falunOpties.push("verzekering huurauto");
     if (falun.begeleidingDagen > 0) falunOpties.push("begeleiding " + falun.begeleidingDagen + " dagen");
     metadata = {
       reis: "Falun",
@@ -410,6 +411,7 @@ module.exports = async function handler(req, res) {
       baby: falun.baby > 0 ? String(falun.baby) : "",
       vlucht: body.vlucht === "zelf" ? "zelf" : "",
       auto: body.auto === "zelf" ? "zelf" : "",
+      verzekering: body.verzekering === "ja" && body.auto !== "zelf" ? "ja" : "",
       begeleiding: falun.begeleidingDagen > 0 ? String(falun.begeleidingDagen) : "",
       act: activiteiten ? activiteiten.query : ""
     });
