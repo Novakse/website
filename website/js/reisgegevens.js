@@ -28,11 +28,11 @@
      });
      stap.gegevens()        // validated data, or null (shows the errors)
 
-   With several travellers (a group booking) the contact block also asks
-   which traveller is the "hoofdboeker" (main booker/contact) and that
-   person's address, so Joey always has one clear contact point and enough
-   to invoice or reach a group, next to the per-traveller details used for
-   the flight.
+   The first traveller is always the "hoofdboeker" (main booker/contact), so
+   their block also asks for contact e-mail, phone and address, next to the
+   per-traveller details used for the flight. This gives Joey one clear
+   contact point without asking the same person to fill in their own name
+   twice.
 
    Ages. With a head count and an arrival day the travellers are listed as
    adults (12 and older) first, then children (2-11), then babies (0-1), as
@@ -95,10 +95,17 @@
       noteTrip: "Met deze gegevens boekt Joey je reis. Velden met een * zijn verplicht.",
       noteFlight: "Met deze gegevens boekt Joey je vlucht. Velden met een * zijn verplicht.",
       traveller: function (i) { return "Reiziger " + i; },
+      mainBooker: "Hoofdboeker",
       firstNames: "Voornaam of voornamen (zoals in paspoort)",
       lastName: "Achternaam (zoals in paspoort)",
       birthDate: "Geboortedatum",
       nationality: "Nationaliteit",
+      email: "E-mailadres",
+      telefoon: "Telefoonnummer",
+      straat: "Straat en huisnummer",
+      postcode: "Postcode",
+      plaats: "Plaats",
+      land: "Land",
       chooseTraveller: "Kies een reiziger",
       travellerCanDrive: "Extra huurauto bestuurder",
       driverFee: "+ €13",
@@ -115,7 +122,6 @@
       errDriverAge: function (min) { return "De hoofdbestuurder moet " + min + " jaar of ouder zijn op de dag van aankomst. Kies een andere reiziger."; },
       errTerms: "Ga akkoord met de algemene voorwaarden om verder te gaan.",
       errDriver: "Kies wie de hoofdbestuurder is.",
-      errMainBooker: "Kies wie de hoofdboeker is.",
       errBirthMissing: "Vul de geboortedatum in.",
       errRequired: "Vul dit veld in.",
       errEmail: "Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl.",
@@ -143,10 +149,17 @@
       noteTrip: "Joey uses these details to book your trip. Fields marked * are required.",
       noteFlight: "Joey uses these details to book your flight. Fields marked * are required.",
       traveller: function (i) { return "Traveller " + i; },
+      mainBooker: "Main booker",
       firstNames: "First name or names (as in passport)",
       lastName: "Last name (as in passport)",
       birthDate: "Date of birth",
       nationality: "Nationality",
+      email: "Email address",
+      telefoon: "Phone number",
+      straat: "Street and house number",
+      postcode: "Postcode",
+      plaats: "City",
+      land: "Country",
       chooseTraveller: "Choose a traveller",
       travellerCanDrive: "Extra rental car driver",
       driverFee: "+ €13",
@@ -163,7 +176,6 @@
       errDriverAge: function (min) { return "The main driver must be " + min + " or older on the day of arrival. Choose another traveller."; },
       errTerms: "Agree to the terms and conditions to continue.",
       errDriver: "Choose who the main driver is.",
-      errMainBooker: "Choose who the main booker is.",
       errBirthMissing: "Fill in the date of birth.",
       errRequired: "Fill in this field.",
       errEmail: "Fill in a valid email address, for example name@example.com.",
@@ -191,10 +203,17 @@
       noteTrip: "Mit diesen Angaben bucht Joey deine Reise. Felder mit * sind Pflichtfelder.",
       noteFlight: "Mit diesen Angaben bucht Joey deinen Flug. Felder mit * sind Pflichtfelder.",
       traveller: function (i) { return "Reisende Person " + i; },
+      mainBooker: "Hauptansprechperson",
       firstNames: "Vorname oder Vornamen (wie im Reisepass)",
       lastName: "Nachname (wie im Reisepass)",
       birthDate: "Geburtsdatum",
       nationality: "Staatsangehörigkeit",
+      email: "E-Mail-Adresse",
+      telefoon: "Telefonnummer",
+      straat: "Straße und Hausnummer",
+      postcode: "Postleitzahl",
+      plaats: "Ort",
+      land: "Land",
       chooseTraveller: "Wähle eine reisende Person",
       travellerCanDrive: "Zusätzlicher Mietwagenfahrer",
       driverFee: "+ 13 €",
@@ -211,7 +230,6 @@
       errDriverAge: function (min) { return "Der Hauptfahrer muss am Anreisetag " + min + " Jahre oder älter sein. Wähle eine andere reisende Person."; },
       errTerms: "Stimme den Allgemeinen Geschäftsbedingungen zu, um fortzufahren.",
       errDriver: "Wähle, wer der Hauptfahrer ist.",
-      errMainBooker: "Wähle, wer die Hauptansprechperson ist.",
       errBirthMissing: "Gib das Geburtsdatum ein.",
       errRequired: "Fülle dieses Feld aus.",
       errEmail: "Gib eine gültige E-Mail-Adresse ein, zum Beispiel name@beispiel.de.",
@@ -239,10 +257,17 @@
       noteTrip: "Med de här uppgifterna bokar Joey din resa. Fält med * är obligatoriska.",
       noteFlight: "Med de här uppgifterna bokar Joey ditt flyg. Fält med * är obligatoriska.",
       traveller: function (i) { return "Resenär " + i; },
+      mainBooker: "Huvudkontakt",
       firstNames: "Förnamn (som i passet)",
       lastName: "Efternamn (som i passet)",
       birthDate: "Födelsedatum",
       nationality: "Nationalitet",
+      email: "E-postadress",
+      telefoon: "Telefonnummer",
+      straat: "Gatuadress",
+      postcode: "Postnummer",
+      plaats: "Ort",
+      land: "Land",
       chooseTraveller: "Välj en resenär",
       travellerCanDrive: "Extra hyrbilsförare",
       driverFee: "+ 13 €",
@@ -259,7 +284,6 @@
       errDriverAge: function (min) { return "Huvudföraren måste vara " + min + " år eller äldre på ankomstdagen. Välj en annan resenär."; },
       errTerms: "Godkänn de allmänna villkoren för att gå vidare.",
       errDriver: "Välj vem som är huvudförare.",
-      errMainBooker: "Välj vem som är huvudkontakten.",
       errBirthMissing: "Fyll i födelsedatumet.",
       errRequired: "Fyll i det här fältet.",
       errEmail: "Fyll i en giltig e-postadress, till exempel namn@exempel.se.",
@@ -287,10 +311,17 @@
       noteTrip: "Med disse opplysningene bestiller Joey turen din. Felt med * er obligatoriske.",
       noteFlight: "Med disse opplysningene bestiller Joey flyet ditt. Felt med * er obligatoriske.",
       traveller: function (i) { return "Reisende " + i; },
+      mainBooker: "Hovedkontakt",
       firstNames: "Fornavn (som i passet)",
       lastName: "Etternavn (som i passet)",
       birthDate: "Fødselsdato",
       nationality: "Nasjonalitet",
+      email: "E-postadresse",
+      telefoon: "Telefonnummer",
+      straat: "Gateadresse",
+      postcode: "Postnummer",
+      plaats: "By",
+      land: "Land",
       chooseTraveller: "Velg en reisende",
       travellerCanDrive: "Ekstra leiebilsjåfør",
       driverFee: "+ 13 €",
@@ -307,7 +338,6 @@
       errDriverAge: function (min) { return "Hovedføreren må være " + min + " år eller eldre på ankomstdagen. Velg en annen reisende."; },
       errTerms: "Godta de generelle vilkårene for å gå videre.",
       errDriver: "Velg hvem som er hovedfører.",
-      errMainBooker: "Velg hvem som er hovedkontakten.",
       errBirthMissing: "Fyll inn fødselsdatoen.",
       errRequired: "Fyll inn dette feltet.",
       errEmail: "Fyll inn en gyldig e-postadresse, for eksempel navn@eksempel.no.",
@@ -335,10 +365,17 @@
       noteTrip: "Näillä tiedoilla Joey varaa matkasi. Tähdellä * merkityt kentät ovat pakollisia.",
       noteFlight: "Näillä tiedoilla Joey varaa lentosi. Tähdellä * merkityt kentät ovat pakollisia.",
       traveller: function (i) { return "Matkustaja " + i; },
+      mainBooker: "Yhteyshenkilö",
       firstNames: "Etunimi tai etunimet (kuten passissa)",
       lastName: "Sukunimi (kuten passissa)",
       birthDate: "Syntymäaika",
       nationality: "Kansalaisuus",
+      email: "Sähköpostiosoite",
+      telefoon: "Puhelinnumero",
+      straat: "Katuosoite",
+      postcode: "Postinumero",
+      plaats: "Kaupunki",
+      land: "Maa",
       chooseTraveller: "Valitse matkustaja",
       travellerCanDrive: "Ylimääräinen vuokra-auton kuljettaja",
       driverFee: "+ 13 €",
@@ -355,7 +392,6 @@
       errDriverAge: function (min) { return "Pääkuljettajan on oltava saapumispäivänä vähintään " + min + "-vuotias. Valitse toinen matkustaja."; },
       errTerms: "Hyväksy yleiset ehdot jatkaaksesi.",
       errDriver: "Valitse, kuka on pääkuljettaja.",
-      errMainBooker: "Valitse, kuka on yhteyshenkilö.",
       errBirthMissing: "Anna syntymäaika.",
       errRequired: "Täytä tämä kenttä.",
       errEmail: "Anna kelvollinen sähköpostiosoite, esimerkiksi nimi@esimerkki.fi.",
@@ -468,7 +504,6 @@
     var aantalInput = form.querySelector("#aantalReizigers");
     var autoBlok = form.querySelector("#autoBlok");
     var bestuurderSelect = form.querySelector("#hoofdbestuurder");
-    var hoofdboekerSelect = form.querySelector("#hoofdboeker");
     var uitleg = form.querySelector("#reizigersUitleg");
     var foutSamenvatting = form.querySelector("#gegevensFout");
     var opgeslagen = leesOpslag();
@@ -554,7 +589,7 @@
         blok.className = "checkout-reiziger";
         var legend = document.createElement("legend");
         legend.className = "booking__legend booking__legend--klein";
-        legend.textContent = T.traveller(i);
+        legend.textContent = i === 1 ? T.mainBooker : T.traveller(i);
         if (metLeeftijden && aantalKinderen + aantalBaby > 0) {
           var soort = CATEGORIE_TEKST[geboektAls(i)];
           legend.textContent += " (" + soort.naam + ", " + soort.leeftijd + ")";
@@ -563,12 +598,25 @@
 
         var grid = document.createElement("div");
         grid.className = "form-grid";
-        [
+        var veldLijst = [
           { id: "reiziger" + i + "Voornamen", label: T.firstNames, autocomplete: i === 1 ? "given-name" : "off", maxLength: 100 },
           { id: "reiziger" + i + "Achternaam", label: T.lastName, autocomplete: i === 1 ? "family-name" : "off", maxLength: 100 },
           { id: "reiziger" + i + "Geboortedatum", label: T.birthDate, type: "date", autocomplete: i === 1 ? "bday" : "off", max: vandaag },
           { id: "reiziger" + i + "Nationaliteit", label: T.nationality, autocomplete: "off", maxLength: 60 }
-        ].forEach(function (veldOpties) {
+        ];
+        // The first traveller is the hoofdboeker, so Joey's contact point
+        // and address are collected here, next to their own name.
+        if (i === 1) {
+          veldLijst.push(
+            { id: "contactEmail", label: T.email, type: "email", autocomplete: "email" },
+            { id: "contactTelefoon", label: T.telefoon, type: "tel", autocomplete: "tel" },
+            { id: "contactStraat", label: T.straat, autocomplete: "street-address" },
+            { id: "contactPostcode", label: T.postcode, autocomplete: "postal-code" },
+            { id: "contactPlaats", label: T.plaats, autocomplete: "address-level2" },
+            { id: "contactLand", label: T.land, autocomplete: "country-name" }
+          );
+        }
+        veldLijst.forEach(function (veldOpties) {
           var veld = maakVeld(veldOpties);
           var input = veld.querySelector("input");
           if (waarden[veldOpties.id]) input.value = waarden[veldOpties.id];
@@ -594,8 +642,7 @@
       return naam || T.traveller(i);
     }
 
-    // The main driver and main booker lists follow the traveller names as
-    // they are typed. A single traveller is always both.
+    // The main driver list follows the traveller names as they are typed.
     function vulKeuzeLijst(select, opgeslagenWaarde) {
       var gekozen = select.value || opgeslagenWaarde || "";
       select.textContent = "";
@@ -613,7 +660,6 @@
       if (parseInt(gekozen, 10) <= aantal()) select.value = gekozen;
     }
     function vulBestuurders() {
-      vulKeuzeLijst(hoofdboekerSelect, opgeslagen.hoofdboeker);
       if (metAuto) vulKeuzeLijst(bestuurderSelect, opgeslagen.bestuurder);
     }
 
@@ -622,14 +668,7 @@
       schrijfOpslag({
         aantal: vastAantal ? "" : aantalInput.value,
         velden: waarden,
-        email: form.querySelector("#contactEmail").value,
-        telefoon: form.querySelector("#contactTelefoon").value,
-        straat: form.querySelector("#contactStraat").value,
-        postcode: form.querySelector("#contactPostcode").value,
-        plaats: form.querySelector("#contactPlaats").value,
-        land: form.querySelector("#contactLand").value,
-        bestuurder: metAuto ? bestuurderSelect.value : "",
-        hoofdboeker: hoofdboekerSelect.value
+        bestuurder: metAuto ? bestuurderSelect.value : ""
       });
     }
 
@@ -664,7 +703,7 @@
       }
       // Only the general terms checkbox is required.
       if (input.type === "checkbox") return T.errTerms;
-      if (input.tagName === "SELECT") return input.id === "hoofdboeker" ? T.errMainBooker : T.errDriver;
+      if (input.tagName === "SELECT") return T.errDriver;
       if (v.valueMissing || !input.value.trim()) {
         if (input.type === "date") return T.errBirthMissing;
         return T.errRequired;
@@ -764,7 +803,7 @@
           plaats: form.querySelector("#contactPlaats").value.trim(),
           land: form.querySelector("#contactLand").value.trim()
         },
-        hoofdboeker: parseInt(hoofdboekerSelect.value, 10),
+        hoofdboeker: 1,
         huurauto: metAuto,
         hoofdbestuurder: metAuto ? parseInt(bestuurderSelect.value, 10) : null,
         voorwaarden: form.querySelector("#akkoordVoorwaarden").checked,
@@ -773,14 +812,8 @@
       };
     }
 
-    // Restore contact details; the confirmations are always ticked afresh.
-    if (opgeslagen.email) form.querySelector("#contactEmail").value = opgeslagen.email;
-    if (opgeslagen.telefoon) form.querySelector("#contactTelefoon").value = opgeslagen.telefoon;
-    if (opgeslagen.straat) form.querySelector("#contactStraat").value = opgeslagen.straat;
-    if (opgeslagen.postcode) form.querySelector("#contactPostcode").value = opgeslagen.postcode;
-    if (opgeslagen.plaats) form.querySelector("#contactPlaats").value = opgeslagen.plaats;
-    if (opgeslagen.land) form.querySelector("#contactLand").value = opgeslagen.land;
-
+    // Contact details are now part of the hoofdboeker's traveller fields, so
+    // renderReizigers() restores them from `waarden` like any other field.
     renderReizigers();
 
     if (!vastAantal) {
