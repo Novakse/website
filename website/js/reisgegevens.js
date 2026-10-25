@@ -463,13 +463,11 @@
     return veld;
   }
 
-  // Optional checkbox per traveller: do they also drive the rental car?
-  // Not required, so it never blocks payment; independent of who is the
-  // main driver (#hoofdbestuurder). One rental car seats up to 4, so a
-  // group of 5 or more needs a second car and so a second free driver;
-  // gratisAantal is 2 for those groups, 1 otherwise. Every traveller
-  // beyond that free count shows the extra driver fee.
-  function maakBestuurderVeld(i, gratisAantal) {
+  // Optional checkbox for a traveller who is not the main driver: do they
+  // also drive the rental car? Not required, so it never blocks payment.
+  // The main driver (#hoofdbestuurder) already drives by definition, so
+  // they never get this checkbox; see berekenBestuurderStatus().
+  function maakBestuurderVeld(i, metPrijs) {
     var wrap = document.createElement("div");
     wrap.className = "booking__extras";
     var check = document.createElement("div");
@@ -486,7 +484,7 @@
     span.textContent = T.travellerCanDrive;
     label.appendChild(input);
     label.appendChild(span);
-    if (i > gratisAantal) {
+    if (metPrijs) {
       var prijs = document.createElement("span");
       prijs.className = "extra__price";
       prijs.textContent = T.driverFee;
@@ -571,6 +569,24 @@
       return Math.min(getal, MAX_REIZIGERS);
     }
 
+    // Who drives for free: the chosen main driver (#hoofdbestuurder) always
+    // does, since picking up the car is already their job. One rental car
+    // seats up to 4, so a group of 5 or more needs a second car and so a
+    // second free driver; until a main driver is chosen, or for that extra
+    // free seat, the lowest-numbered remaining travellers fill it. Every
+    // other traveller's checkbox shows the extra driver fee.
+    function berekenBestuurderStatus() {
+      var totaal = aantal();
+      var gratis = totaal > 4 ? 2 : 1;
+      var hoofd = metAuto ? parseInt(bestuurderSelect.value, 10) : NaN;
+      var vrij = {};
+      if (hoofd >= 1 && hoofd <= totaal) vrij[hoofd] = true;
+      for (var n = 1; n <= totaal && Object.keys(vrij).length < gratis; n++) {
+        if (!vrij[n]) vrij[n] = true;
+      }
+      return { hoofd: hoofd, vrij: vrij };
+    }
+
     // Values typed so far, keyed by field id, so re-rendering keeps them.
     var waarden = opgeslagen.velden || {};
 
@@ -583,7 +599,7 @@
       lijst.textContent = "";
 
       var totaalReizigers = aantal();
-      var gratisBestuurders = totaalReizigers > 4 ? 2 : 1;
+      var bestuurderStatus = berekenBestuurderStatus();
       for (var i = 1; i <= totaalReizigers; i++) {
         var blok = document.createElement("fieldset");
         blok.className = "checkout-reiziger";
@@ -624,8 +640,8 @@
           grid.appendChild(veld);
         });
         blok.appendChild(grid);
-        if (metAuto) {
-          var bestuurderVeld = maakBestuurderVeld(i, gratisBestuurders);
+        if (metAuto && i !== bestuurderStatus.hoofd) {
+          var bestuurderVeld = maakBestuurderVeld(i, !bestuurderStatus.vrij[i]);
           var bestuurderInput = bestuurderVeld.querySelector("input");
           if (waarden[bestuurderInput.id]) bestuurderInput.checked = true;
           blok.appendChild(bestuurderVeld);
@@ -846,6 +862,9 @@
     // Once a field has shown an error, clear it as soon as it is fixed.
     form.addEventListener("change", function (event) {
       var doel = event.target;
+      // Choosing a different main driver moves the free "extra driver"
+      // checkbox to that traveller, so the list is redrawn.
+      if (doel === bestuurderSelect) renderReizigers();
       if (doel.getAttribute("aria-invalid") === "true" && isGeldig(doel)) toonVeldFout(doel, "");
       // A date of birth that does not give the booked category (or a driver
       // who is too young) is reported straight away, not only on submit.
