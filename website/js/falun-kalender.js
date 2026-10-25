@@ -672,14 +672,19 @@
   function autoInBasis(dagen) {
     return autoDeel(basisPersonen, basisDuurVoor(dagen));
   }
-  /* De volledige verzekering voor de huurauto: een vast bedrag per dag voor
-     de hele groep (niet per persoon), gedeeld door het aantal personen.
-     dagen is de reisduur, net als bij autoDeel. Bewust niet afgerond: zie
-     begeleidingKostenRuw hieronder voor dezelfde reden. Zelfde rekenwijze als
-     api/_falun-prijs.js. */
+  /* De volledige verzekering voor de huurauto: een vast bedrag per dag per
+     huurauto, niet per persoon. Een huisje en zijn huurauto zijn voor
+     maximaal maxPersonenPerAuto personen, dus een grotere groep heeft
+     meerdere huurauto's (en betaalt de verzekering per auto). Totaal gedeeld
+     door het aantal personen. dagen is de reisduur, net als bij autoDeel.
+     Bewust niet afgerond: zie begeleidingKostenRuw hieronder voor dezelfde
+     reden. Zelfde rekenwijze als api/_falun-prijs.js. */
+  function aantalAutos(personen) {
+    return maxPersonenPerAuto ? Math.ceil(personen / maxPersonenPerAuto) : 1;
+  }
   function verzekeringKostenRuw(dagen, personen) {
     if (verzekeringPerDag === null || !personen) return 0;
-    return (verzekeringPerDag * dagen) / personen;
+    return (verzekeringPerDag * aantalAutos(personen) * dagen) / personen;
   }
   function verzekeringKosten(dagen, personen) {
     return Math.round(verzekeringKostenRuw(dagen, personen));
@@ -690,6 +695,8 @@
   var groterAutoPrijs = groterAuto && typeof groterAuto.prijs === "number" ? groterAuto.prijs : null;
   var autoVerzekering = opties.autoVerzekering || null;
   var verzekeringPerDag = autoVerzekering && typeof autoVerzekering.prijsPerDag === "number" ? autoVerzekering.prijsPerDag : null;
+  var maxPersonenPerAuto = autoVerzekering && typeof autoVerzekering.maxPersonenPerAuto === "number" && autoVerzekering.maxPersonenPerAuto > 0
+    ? autoVerzekering.maxPersonenPerAuto : null;
   var begeleiding = opties.begeleiding || null;
   var begeleidingVan = begeleiding && begeleiding.van ? alsDatum(begeleiding.van) : null;
   var begeleidingTot = begeleiding && begeleiding.tot ? alsDatum(begeleiding.tot) : null;

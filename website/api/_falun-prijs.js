@@ -183,15 +183,21 @@ function berekenFalun(keuze) {
     totaal -= autoDeel(personen, dagen);
     omschrijving += ", eigen vervoer";
   }
-  // Volledige verzekering voor de huurauto: vast bedrag per dag voor de hele
-  // groep (niet per persoon), gedeeld door het aantal personen. Alleen
-  // mogelijk met de huurauto erbij, dus niet samen met een eigen vervoer.
-  // Zelfde rekenwijze als verzekeringKostenRuw() in js/falun-kalender.js.
+  // Volledige verzekering voor de huurauto: vast bedrag per dag per huurauto,
+  // niet per persoon. Een huisje en zijn huurauto zijn voor maximaal
+  // maxPersonenPerAuto personen, dus een grotere groep heeft meerdere
+  // huurauto's (en betaalt de verzekering per auto). Totaal gedeeld door het
+  // aantal personen. Alleen mogelijk met de huurauto erbij, dus niet samen
+  // met een eigen vervoer. Zelfde rekenwijze als verzekeringKostenRuw() in
+  // js/falun-kalender.js.
   var verzekeringPerDag = opties.autoVerzekering && typeof opties.autoVerzekering.prijsPerDag === "number"
     ? opties.autoVerzekering.prijsPerDag : null;
+  var maxPersonenPerAuto = opties.autoVerzekering && typeof opties.autoVerzekering.maxPersonenPerAuto === "number" && opties.autoVerzekering.maxPersonenPerAuto > 0
+    ? opties.autoVerzekering.maxPersonenPerAuto : null;
   if (keuze.verzekering === "ja" && keuze.auto !== "zelf") {
     if (verzekeringPerDag === null) return { fout: "Verzekering huurauto is nog niet te boeken." };
-    totaal += (verzekeringPerDag * dagen) / personen;
+    var aantalAutos = maxPersonenPerAuto ? Math.ceil(personen / maxPersonenPerAuto) : 1;
+    totaal += (verzekeringPerDag * aantalAutos * dagen) / personen;
     omschrijving += ", verzekering huurauto";
   }
   var leegBegeleiding = keuze.begeleiding === undefined || keuze.begeleiding === null || keuze.begeleiding === "";

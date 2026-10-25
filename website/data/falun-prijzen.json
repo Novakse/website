@@ -58,9 +58,10 @@
     "groterAuto": {
       "prijs": null
     },
-    "//autoVerzekering": "De volledige beschermingsverzekering voor de huurauto (zie algemene-voorwaarden.html, artikel 7): prijsPerDag geldt voor de hele groep samen, niet per persoon, en wordt gedeeld door het aantal personen. dagen is de reisduur, net als bij autoPerDag hierboven. Alleen te boeken als de huurauto erbij zit (niet bij eigen vervoer). Zet prijsPerDag op null om de optie helemaal weg te laten.",
+    "//autoVerzekering": "De volledige beschermingsverzekering voor de huurauto (zie algemene-voorwaarden.html, artikel 7): prijsPerDag geldt per huurauto, niet per persoon. Een huisje en zijn huurauto zijn voor maximaal maxPersonenPerAuto personen (6 personen dus 2 huurauto's); het aantal auto's is personen gedeeld door maxPersonenPerAuto, naar boven afgerond. prijsPerDag keer dat aantal auto's wordt gedeeld door het aantal personen. dagen is de reisduur, net als bij autoPerDag hierboven. Alleen te boeken als de huurauto erbij zit (niet bij eigen vervoer). Zet prijsPerDag op null om de optie helemaal weg te laten.",
     "autoVerzekering": {
-      "prijsPerDag": 18
+      "prijsPerDag": 18,
+      "maxPersonenPerAuto": 4
     },
     "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en fika's. De bezoeker kiest zelf voor hoeveel dagen hij begeleiding wil; dat hoeft niet de hele reis te zijn. Per dag kost begeleiding prijsPerDag voor 1 persoon, plus per extra persoon een bedrag uit opbouwPerPersoon: 2e, 3e en 4e persoon elk +50, 5e en elke volgende +40 (laatste waarde van de lijst blijft gelden als vloer). Dus 175 + 50 + 50 + 50 + 40 + 40... Dat dagbedrag geldt voor de hele groep en wordt over de deelnemers verdeeld (perPersoon false). Kan alleen als de hele reis binnen van/tot valt. Zet prijsPerDag op null om begeleiding helemaal weg te laten.",
     "begeleiding": {
