@@ -44,6 +44,16 @@ function basisUrl(req) {
   return PRODUCTIE_BASIS;
 }
 
+// Language folders with their own checkout (en/uitchecken.html, ...). The
+// checkout there sends body.taal; only these exact values count. With one
+// of them the return pages are in that folder (/en/betaling-verwerkt.html)
+// and metadata.taal shows Joey the customer's language. Anything else
+// (missing, "nl", junk) is the Dutch root, exactly as before.
+var TALEN = ["en", "de", "sv", "no", "fi"];
+function taalUit(waarde) {
+  return typeof waarde === "string" && TALEN.indexOf(waarde) !== -1 ? waarde : "";
+}
+
 // Age rules for children and babies (api/_kinderprijs.js). Loaded on first
 // use, like the trip module below; a payment link from Joey never needs it.
 function kinderprijs() {
@@ -184,8 +194,9 @@ function queryString(paren) {
 
 /* Travel details from the "Reisgegevens" step (js/reisgegevens.js). Every
    trip payment must carry them: travellers for the flight, contact details
-   and the accepted terms (required); with a rental car also the main driver
-   and the optional credit card and driving licence confirmations. Returns
+   and address, who the main booker is, and the accepted terms (required);
+   with a rental car also the main driver and the optional credit card and
+   driving licence confirmations. Returns
    { metadata, email } or { fout: "Dutch message" }. The values end up in the
    Stripe metadata (max 500 characters per value, 50 keys in total). */
 var MAX_REIZIGERS = 20;
@@ -241,7 +252,7 @@ function leesReisgegevens(gegevens, verwachtAantal, metAuto, leeftijdsControle, 
       if (categorie) telling[categorie]++;
     }
     metadata["reiziger_" + (i + 1)] = voornamen + " " + achternaam + " | geb. " + geboren + " | " + nationaliteit +
-      (categorie ? " | " + categorie : "");
+      (categorie ? " | " + categorie : "") + (metAuto && r.bestuurder === true ? " | bestuurder" : "");
   }
 
   if (leeftijdsControle) {
@@ -266,8 +277,20 @@ function leesReisgegevens(gegevens, verwachtAantal, metAuto, leeftijdsControle, 
   if (!email || !EMAIL_PATROON.test(email) || !telefoon) return ontbreekt;
   if (gegevens.voorwaarden !== true) return { fout: "Ga eerst akkoord met de algemene voorwaarden." };
 
+  var adres = gegevens.adres || {};
+  var straat = tekstVeld(adres.straat, 150);
+  var postcode = tekstVeld(adres.postcode, 20);
+  var plaats = tekstVeld(adres.plaats, 80);
+  var land = tekstVeld(adres.land, 60);
+  if (!straat || !postcode || !plaats || !land) return ontbreekt;
+
+  var hoofdboeker = parseInt(gegevens.hoofdboeker, 10);
+  if (!(hoofdboeker >= 1 && hoofdboeker <= lijst.length)) return ontbreekt;
+
   metadata.contact_email = email;
   metadata.contact_telefoon = telefoon;
+  metadata.contact_adres = straat + ", " + postcode + " " + plaats + ", " + land;
+  metadata.hoofdboeker = namen[hoofdboeker - 1];
   metadata.voorwaarden_akkoord = "ja";
 
   if (metAuto) {
@@ -320,6 +343,8 @@ module.exports = async function handler(req, res) {
   var terugPagina = "/uitchecken.html"; // page for the cancel URL
   var reisSleutel = String(body.reis || "").toLowerCase();
   var groepsreis = isGroepsreis(reisSleutel);
+  var taal = taalUit(body.taal); // "" for the Dutch root
+  var taalMap = taal ? "/" + taal : ""; // folder before the return pages
   var activiteiten = null; // chosen activities (Falun, Orsa, Wellness and the group trips only)
   var leeftijdsControle = null; // outbound day and head count split, set for calendar bookings
 
@@ -588,6 +613,8 @@ module.exports = async function handler(req, res) {
   Object.keys(reisgegevens.metadata).forEach(function (sleutel) {
     metadata[sleutel] = kort(reisgegevens.metadata[sleutel], 500);
   });
+  // The customer's language, only for a checkout in a language folder.
+  if (taal) metadata.taal = taal;
   // The chosen activities as "id:aantal" (at most 4 keys, well under
   // Stripe's 50) and their total, e.g. "1.234,56".
   if (activiteiten) {
@@ -611,8 +638,8 @@ module.exports = async function handler(req, res) {
         }
       }
     ],
-    success_url: basis + "/betaling-verwerkt.html",
-    cancel_url: basis + terugPagina + (terugQuery ? "?" + terugQuery : ""),
+    success_url: basis + taalMap + "/betaling-verwerkt.html",
+    cancel_url: basis + taalMap + terugPagina + (terugQuery ? "?" + terugQuery : ""),
     customer_email: reisgegevens.email
   };
 

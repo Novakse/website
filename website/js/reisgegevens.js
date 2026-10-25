@@ -5,7 +5,8 @@
    applies to all of them. It collects what Joey needs to book the flight and
    the rental car:
      - per traveller: first name(s) and last name as in the passport, date of
-       birth and nationality
+       birth, nationality and (with a rental car) an optional tick for
+       whether they also drive
      - contact: e-mail address and phone number
      - rental car: the main driver (one of the travellers)
      - confirmations: the general terms (required), and when the trip
@@ -27,6 +28,12 @@
      });
      stap.gegevens()        // validated data, or null (shows the errors)
 
+   With several travellers (a group booking) the contact block also asks
+   which traveller is the "hoofdboeker" (main booker/contact) and that
+   person's address, so Joey always has one clear contact point and enough
+   to invoice or reach a group, next to the per-traveller details used for
+   the flight.
+
    Ages. With a head count and an arrival day the travellers are listed as
    adults (12 and older) first, then children (2-11), then babies (0-1), as
    booked in the calendar. A date of birth must give that category on the
@@ -37,6 +44,10 @@
 
    What is typed is kept in sessionStorage for this tab only, so a visitor who
    cancels at Stripe and comes back does not have to type it all again.
+
+   Texts follow the page language (<html lang>): the checkout also lives in
+   en/, de/, sv/, no/ and fi/. A text that is not translated falls back to
+   the Dutch one; Dutch is exactly as before.
    ========================================================================== */
 (function () {
   "use strict";
@@ -70,11 +81,299 @@
     if (jaren <= 11) return "kind";
     return "volwassene";
   }
-  var CATEGORIE_TEKST = {
-    volwassene: { naam: "volwassene", leeftijd: "12 jaar of ouder" },
-    kind: { naam: "kind", leeftijd: "2 t/m 11 jaar" },
-    baby: { naam: "baby", leeftijd: "0 of 1 jaar" }
+
+  var LANG = (document.documentElement.lang || "nl").slice(0, 2).toLowerCase();
+  var I18N = {
+    nl: {
+      categories: {
+        volwassene: { naam: "volwassene", leeftijd: "12 jaar of ouder" },
+        kind: { naam: "kind", leeftijd: "2 t/m 11 jaar" },
+        baby: { naam: "baby", leeftijd: "0 of 1 jaar" }
+      },
+      passportOnly: "Vul je naam precies zo in als in je paspoort.",
+      noteCar: "Met deze gegevens boekt Joey je huurauto. Velden met een * zijn verplicht.",
+      noteTrip: "Met deze gegevens boekt Joey je reis. Velden met een * zijn verplicht.",
+      noteFlight: "Met deze gegevens boekt Joey je vlucht. Velden met een * zijn verplicht.",
+      traveller: function (i) { return "Reiziger " + i; },
+      firstNames: "Voornaam of voornamen (zoals in paspoort)",
+      lastName: "Achternaam (zoals in paspoort)",
+      birthDate: "Geboortedatum",
+      nationality: "Nationaliteit",
+      chooseTraveller: "Kies een reiziger",
+      travellerCanDrive: "Kan de huurauto besturen",
+      errGroupAge: function (datum) {
+        return "Deze groepsreis is alleen voor volwassenen: iedere reiziger moet op de dag van aankomst" +
+          (datum ? " (" + datum + ")" : "") + " 12 jaar of ouder zijn. Controleer de geboortedatum.";
+      },
+      errCategory: function (soort, datum) {
+        var tekst = this.categories[soort];
+        return "Je boekte een " + tekst.naam + " (" + tekst.leeftijd + " op de dag van aankomst" +
+          (datum ? ", " + datum : "") + "). Deze geboortedatum past daar niet bij. " +
+          "Controleer de datum, of pas het aantal volwassenen, kinderen en baby's aan in de kalender.";
+      },
+      errDriverAge: function (min) { return "De hoofdbestuurder moet " + min + " jaar of ouder zijn op de dag van aankomst. Kies een andere reiziger."; },
+      errTerms: "Ga akkoord met de algemene voorwaarden om verder te gaan.",
+      errDriver: "Kies wie de hoofdbestuurder is.",
+      errMainBooker: "Kies wie de hoofdboeker is.",
+      errBirthMissing: "Vul de geboortedatum in.",
+      errRequired: "Vul dit veld in.",
+      errEmail: "Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl.",
+      errBirthPast: "Vul een geboortedatum in het verleden in.",
+      errCount: function (max) { return "Kies 1 tot en met " + max + " reizigers."; },
+      errCheck: "Controleer dit veld.",
+      errMinAge: function (min, metAuto) {
+        return "Minstens een reiziger moet " + min + " jaar of ouder zijn op de dag van aankomst" +
+          (metAuto ? " (nodig voor de huurauto)" : "") + ". Controleer de geboortedata.";
+      },
+      errSummary: function (n) {
+        return n === 1
+          ? "Er is nog 1 veld dat niet klopt of ontbreekt. Kijk het even na."
+          : "Er zijn nog " + n + " velden die niet kloppen of ontbreken. Kijk ze even na.";
+      }
+    },
+    en: {
+      categories: {
+        volwassene: { naam: "adult", leeftijd: "12 years or older" },
+        kind: { naam: "child", leeftijd: "2 to 11 years" },
+        baby: { naam: "baby", leeftijd: "0 or 1 years" }
+      },
+      passportOnly: "Fill in your name exactly as it appears in your passport.",
+      noteCar: "Joey uses these details to book your rental car. Fields marked * are required.",
+      noteTrip: "Joey uses these details to book your trip. Fields marked * are required.",
+      noteFlight: "Joey uses these details to book your flight. Fields marked * are required.",
+      traveller: function (i) { return "Traveller " + i; },
+      firstNames: "First name or names (as in passport)",
+      lastName: "Last name (as in passport)",
+      birthDate: "Date of birth",
+      nationality: "Nationality",
+      chooseTraveller: "Choose a traveller",
+      travellerCanDrive: "Can drive the rental car",
+      errGroupAge: function (datum) {
+        return "This group trip is for adults only: every traveller must be 12 or older on the day of arrival" +
+          (datum ? " (" + datum + ")" : "") + ". Check the date of birth.";
+      },
+      errCategory: function (soort, datum) {
+        var tekst = this.categories[soort];
+        return "You booked " + (soort === "volwassene" ? "an " : "a ") + tekst.naam + " (" + tekst.leeftijd + " on the day of arrival" +
+          (datum ? ", " + datum : "") + "). This date of birth does not match. " +
+          "Check the date, or change the number of adults, children and babies in the calendar.";
+      },
+      errDriverAge: function (min) { return "The main driver must be " + min + " or older on the day of arrival. Choose another traveller."; },
+      errTerms: "Agree to the terms and conditions to continue.",
+      errDriver: "Choose who the main driver is.",
+      errMainBooker: "Choose who the main booker is.",
+      errBirthMissing: "Fill in the date of birth.",
+      errRequired: "Fill in this field.",
+      errEmail: "Fill in a valid email address, for example name@example.com.",
+      errBirthPast: "Fill in a date of birth in the past.",
+      errCount: function (max) { return "Choose 1 to " + max + " travellers."; },
+      errCheck: "Check this field.",
+      errMinAge: function (min, metAuto) {
+        return "At least one traveller must be " + min + " or older on the day of arrival" +
+          (metAuto ? " (needed for the rental car)" : "") + ". Check the dates of birth.";
+      },
+      errSummary: function (n) {
+        return n === 1
+          ? "There is still 1 field that is incorrect or missing. Please check it."
+          : "There are still " + n + " fields that are incorrect or missing. Please check them.";
+      }
+    },
+    de: {
+      categories: {
+        volwassene: { naam: "Erwachsene", leeftijd: "12 Jahre oder älter" },
+        kind: { naam: "Kind", leeftijd: "2 bis 11 Jahre" },
+        baby: { naam: "Baby", leeftijd: "0 oder 1 Jahr" }
+      },
+      passportOnly: "Gib deinen Namen genau so ein wie in deinem Reisepass.",
+      noteCar: "Mit diesen Angaben bucht Joey deinen Mietwagen. Felder mit * sind Pflichtfelder.",
+      noteTrip: "Mit diesen Angaben bucht Joey deine Reise. Felder mit * sind Pflichtfelder.",
+      noteFlight: "Mit diesen Angaben bucht Joey deinen Flug. Felder mit * sind Pflichtfelder.",
+      traveller: function (i) { return "Reisende Person " + i; },
+      firstNames: "Vorname oder Vornamen (wie im Reisepass)",
+      lastName: "Nachname (wie im Reisepass)",
+      birthDate: "Geburtsdatum",
+      nationality: "Staatsangehörigkeit",
+      chooseTraveller: "Wähle eine reisende Person",
+      travellerCanDrive: "Kann den Mietwagen fahren",
+      errGroupAge: function (datum) {
+        return "Diese Gruppenreise ist nur für Erwachsene: Alle Reisenden müssen am Anreisetag" +
+          (datum ? " (" + datum + ")" : "") + " 12 Jahre oder älter sein. Prüfe das Geburtsdatum.";
+      },
+      errCategory: function (soort, datum) {
+        var tekst = this.categories[soort];
+        return "Gebucht als: " + tekst.naam + " (" + tekst.leeftijd + " am Anreisetag" +
+          (datum ? ", " + datum : "") + "). Dieses Geburtsdatum passt nicht dazu. " +
+          "Prüfe das Datum oder ändere die Anzahl der Erwachsenen, Kinder und Babys im Kalender.";
+      },
+      errDriverAge: function (min) { return "Der Hauptfahrer muss am Anreisetag " + min + " Jahre oder älter sein. Wähle eine andere reisende Person."; },
+      errTerms: "Stimme den Allgemeinen Geschäftsbedingungen zu, um fortzufahren.",
+      errDriver: "Wähle, wer der Hauptfahrer ist.",
+      errMainBooker: "Wähle, wer die Hauptansprechperson ist.",
+      errBirthMissing: "Gib das Geburtsdatum ein.",
+      errRequired: "Fülle dieses Feld aus.",
+      errEmail: "Gib eine gültige E-Mail-Adresse ein, zum Beispiel name@beispiel.de.",
+      errBirthPast: "Gib ein Geburtsdatum in der Vergangenheit ein.",
+      errCount: function (max) { return "Wähle 1 bis " + max + " Reisende."; },
+      errCheck: "Prüfe dieses Feld.",
+      errMinAge: function (min, metAuto) {
+        return "Mindestens eine reisende Person muss am Anreisetag " + min + " Jahre oder älter sein" +
+          (metAuto ? " (nötig für den Mietwagen)" : "") + ". Prüfe die Geburtsdaten.";
+      },
+      errSummary: function (n) {
+        return n === 1
+          ? "1 Feld ist noch nicht richtig ausgefüllt oder fehlt. Bitte prüfe es."
+          : n + " Felder sind noch nicht richtig ausgefüllt oder fehlen. Bitte prüfe sie.";
+      }
+    },
+    sv: {
+      categories: {
+        volwassene: { naam: "vuxen", leeftijd: "12 år eller äldre" },
+        kind: { naam: "barn", leeftijd: "2 till 11 år" },
+        baby: { naam: "bebis", leeftijd: "0 eller 1 år" }
+      },
+      passportOnly: "Fyll i ditt namn exakt som i passet.",
+      noteCar: "Med de här uppgifterna bokar Joey din hyrbil. Fält med * är obligatoriska.",
+      noteTrip: "Med de här uppgifterna bokar Joey din resa. Fält med * är obligatoriska.",
+      noteFlight: "Med de här uppgifterna bokar Joey ditt flyg. Fält med * är obligatoriska.",
+      traveller: function (i) { return "Resenär " + i; },
+      firstNames: "Förnamn (som i passet)",
+      lastName: "Efternamn (som i passet)",
+      birthDate: "Födelsedatum",
+      nationality: "Nationalitet",
+      chooseTraveller: "Välj en resenär",
+      travellerCanDrive: "Kan köra hyrbilen",
+      errGroupAge: function (datum) {
+        return "Den här gruppresan är bara för vuxna: alla resenärer måste vara 12 år eller äldre på ankomstdagen" +
+          (datum ? " (" + datum + ")" : "") + ". Kontrollera födelsedatumet.";
+      },
+      errCategory: function (soort, datum) {
+        var tekst = this.categories[soort];
+        return "Du bokade den här resenären som " + tekst.naam + " (" + tekst.leeftijd + " på ankomstdagen" +
+          (datum ? ", " + datum : "") + "). Det här födelsedatumet stämmer inte med det. " +
+          "Kontrollera datumet, eller ändra antalet vuxna, barn och bebisar i kalendern.";
+      },
+      errDriverAge: function (min) { return "Huvudföraren måste vara " + min + " år eller äldre på ankomstdagen. Välj en annan resenär."; },
+      errTerms: "Godkänn de allmänna villkoren för att gå vidare.",
+      errDriver: "Välj vem som är huvudförare.",
+      errMainBooker: "Välj vem som är huvudkontakten.",
+      errBirthMissing: "Fyll i födelsedatumet.",
+      errRequired: "Fyll i det här fältet.",
+      errEmail: "Fyll i en giltig e-postadress, till exempel namn@exempel.se.",
+      errBirthPast: "Fyll i ett födelsedatum som har passerat.",
+      errCount: function (max) { return "Välj 1 till " + max + " resenärer."; },
+      errCheck: "Kontrollera det här fältet.",
+      errMinAge: function (min, metAuto) {
+        return "Minst en resenär måste vara " + min + " år eller äldre på ankomstdagen" +
+          (metAuto ? " (krävs för hyrbilen)" : "") + ". Kontrollera födelsedatumen.";
+      },
+      errSummary: function (n) {
+        return n === 1
+          ? "Det finns fortfarande 1 fält som är fel eller saknas. Kontrollera det."
+          : "Det finns fortfarande " + n + " fält som är fel eller saknas. Kontrollera dem.";
+      }
+    },
+    no: {
+      categories: {
+        volwassene: { naam: "voksen", leeftijd: "12 år eller eldre" },
+        kind: { naam: "barn", leeftijd: "2 til 11 år" },
+        baby: { naam: "baby", leeftijd: "0 eller 1 år" }
+      },
+      passportOnly: "Fyll inn navnet ditt nøyaktig slik det står i passet.",
+      noteCar: "Med disse opplysningene bestiller Joey leiebilen din. Felt med * er obligatoriske.",
+      noteTrip: "Med disse opplysningene bestiller Joey turen din. Felt med * er obligatoriske.",
+      noteFlight: "Med disse opplysningene bestiller Joey flyet ditt. Felt med * er obligatoriske.",
+      traveller: function (i) { return "Reisende " + i; },
+      firstNames: "Fornavn (som i passet)",
+      lastName: "Etternavn (som i passet)",
+      birthDate: "Fødselsdato",
+      nationality: "Nasjonalitet",
+      chooseTraveller: "Velg en reisende",
+      travellerCanDrive: "Kan kjøre leiebilen",
+      errGroupAge: function (datum) {
+        return "Denne gruppeturen er bare for voksne: alle reisende må være 12 år eller eldre på ankomstdagen" +
+          (datum ? " (" + datum + ")" : "") + ". Kontroller fødselsdatoen.";
+      },
+      errCategory: function (soort, datum) {
+        var tekst = this.categories[soort];
+        return "Du bestilte denne reisende som " + tekst.naam + " (" + tekst.leeftijd + " på ankomstdagen" +
+          (datum ? ", " + datum : "") + "). Denne fødselsdatoen passer ikke med det. " +
+          "Kontroller datoen, eller endre antall voksne, barn og babyer i kalenderen.";
+      },
+      errDriverAge: function (min) { return "Hovedføreren må være " + min + " år eller eldre på ankomstdagen. Velg en annen reisende."; },
+      errTerms: "Godta de generelle vilkårene for å gå videre.",
+      errDriver: "Velg hvem som er hovedfører.",
+      errMainBooker: "Velg hvem som er hovedkontakten.",
+      errBirthMissing: "Fyll inn fødselsdatoen.",
+      errRequired: "Fyll inn dette feltet.",
+      errEmail: "Fyll inn en gyldig e-postadresse, for eksempel navn@eksempel.no.",
+      errBirthPast: "Fyll inn en fødselsdato som har vært.",
+      errCount: function (max) { return "Velg 1 til " + max + " reisende."; },
+      errCheck: "Kontroller dette feltet.",
+      errMinAge: function (min, metAuto) {
+        return "Minst én reisende må være " + min + " år eller eldre på ankomstdagen" +
+          (metAuto ? " (nødvendig for leiebilen)" : "") + ". Kontroller fødselsdatoene.";
+      },
+      errSummary: function (n) {
+        return n === 1
+          ? "Det er fortsatt 1 felt som er feil eller mangler. Kontroller det."
+          : "Det er fortsatt " + n + " felt som er feil eller mangler. Kontroller dem.";
+      }
+    },
+    fi: {
+      categories: {
+        volwassene: { naam: "aikuinen", leeftijd: "vähintään 12-vuotias" },
+        kind: { naam: "lapsi", leeftijd: "2-11-vuotias" },
+        baby: { naam: "vauva", leeftijd: "0-1-vuotias" }
+      },
+      passportOnly: "Kirjoita nimesi täsmälleen niin kuin se on passissasi.",
+      noteCar: "Näillä tiedoilla Joey varaa vuokra-autosi. Tähdellä * merkityt kentät ovat pakollisia.",
+      noteTrip: "Näillä tiedoilla Joey varaa matkasi. Tähdellä * merkityt kentät ovat pakollisia.",
+      noteFlight: "Näillä tiedoilla Joey varaa lentosi. Tähdellä * merkityt kentät ovat pakollisia.",
+      traveller: function (i) { return "Matkustaja " + i; },
+      firstNames: "Etunimi tai etunimet (kuten passissa)",
+      lastName: "Sukunimi (kuten passissa)",
+      birthDate: "Syntymäaika",
+      nationality: "Kansalaisuus",
+      chooseTraveller: "Valitse matkustaja",
+      travellerCanDrive: "Voi ajaa vuokra-autoa",
+      errGroupAge: function (datum) {
+        return "Tämä ryhmämatka on vain aikuisille: jokaisen matkustajan on oltava saapumispäivänä" +
+          (datum ? " (" + datum + ")" : "") + " vähintään 12-vuotias. Tarkista syntymäaika.";
+      },
+      errCategory: function (soort, datum) {
+        var tekst = this.categories[soort];
+        return "Varattu: " + tekst.naam + " (" + tekst.leeftijd + " saapumispäivänä" +
+          (datum ? ", " + datum : "") + "). Tämä syntymäaika ei sovi siihen. " +
+          "Tarkista päivämäärä tai muuta aikuisten, lasten ja vauvojen määrää kalenterissa.";
+      },
+      errDriverAge: function (min) { return "Pääkuljettajan on oltava saapumispäivänä vähintään " + min + "-vuotias. Valitse toinen matkustaja."; },
+      errTerms: "Hyväksy yleiset ehdot jatkaaksesi.",
+      errDriver: "Valitse, kuka on pääkuljettaja.",
+      errMainBooker: "Valitse, kuka on yhteyshenkilö.",
+      errBirthMissing: "Anna syntymäaika.",
+      errRequired: "Täytä tämä kenttä.",
+      errEmail: "Anna kelvollinen sähköpostiosoite, esimerkiksi nimi@esimerkki.fi.",
+      errBirthPast: "Anna menneisyydessä oleva syntymäaika.",
+      errCount: function (max) { return "Valitse 1-" + max + " matkustajaa."; },
+      errCheck: "Tarkista tämä kenttä.",
+      errMinAge: function (min, metAuto) {
+        return "Vähintään yhden matkustajan on oltava saapumispäivänä vähintään " + min + "-vuotias" +
+          (metAuto ? " (vaaditaan vuokra-autoa varten)" : "") + ". Tarkista syntymäajat.";
+      },
+      errSummary: function (n) {
+        return n === 1
+          ? "1 kenttä on vielä virheellinen tai puuttuu. Tarkista se."
+          : n + " kenttää on vielä virheellisiä tai puuttuu. Tarkista ne.";
+      }
+    }
   };
+  var T = I18N[LANG] || I18N.nl;
+  // A text that is not translated (yet) falls back to the Dutch one.
+  Object.keys(I18N.nl).forEach(function (sleutel) {
+    if (!(sleutel in T)) T[sleutel] = I18N.nl[sleutel];
+  });
+  var LOCALE = { nl: "nl-NL", en: "en-GB", de: "de-DE", sv: "sv-SE", no: "nb-NO", fi: "fi-FI" }[LANG] || "nl-NL";
+  var CATEGORIE_TEKST = T.categories;
 
   function leesOpslag() {
     try {
@@ -122,6 +421,31 @@
     return veld;
   }
 
+  // Optional checkbox per traveller: do they also drive the rental car?
+  // Not required, so it never blocks payment; independent of who is the
+  // main driver (#hoofdbestuurder).
+  function maakBestuurderVeld(i) {
+    var wrap = document.createElement("div");
+    wrap.className = "booking__extras";
+    var check = document.createElement("div");
+    check.className = "checkout-check";
+    var label = document.createElement("label");
+    label.className = "extra";
+    var input = document.createElement("input");
+    input.type = "checkbox";
+    input.className = "extra__check";
+    input.id = "reiziger" + i + "Bestuurder";
+    input.name = input.id;
+    var span = document.createElement("span");
+    span.className = "extra__name";
+    span.textContent = T.travellerCanDrive;
+    label.appendChild(input);
+    label.appendChild(span);
+    check.appendChild(label);
+    wrap.appendChild(check);
+    return wrap;
+  }
+
   function init(opties) {
     var form = opties.form;
     var lijst = form.querySelector("#reizigersLijst");
@@ -129,6 +453,7 @@
     var aantalInput = form.querySelector("#aantalReizigers");
     var autoBlok = form.querySelector("#autoBlok");
     var bestuurderSelect = form.querySelector("#hoofdbestuurder");
+    var hoofdboekerSelect = form.querySelector("#hoofdboeker");
     var uitleg = form.querySelector("#reizigersUitleg");
     var foutSamenvatting = form.querySelector("#gegevensFout");
     var opgeslagen = leesOpslag();
@@ -146,7 +471,7 @@
     var uitreisTekst = "";
     if (uitreisdatum) {
       try {
-        uitreisTekst = new Date(uitreisdatum + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+        uitreisTekst = new Date(uitreisdatum + "T12:00:00Z").toLocaleDateString(LOCALE, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
       } catch (fout) { uitreisTekst = uitreisdatum; }
     }
     // Which category traveller i (1-based) was booked as.
@@ -156,7 +481,7 @@
     }
 
     if (opties.eigenVlucht && uitleg) {
-      uitleg.textContent = "Vul je naam precies zo in als in je paspoort.";
+      uitleg.textContent = T.passportOnly;
     }
 
     /* The line under the heading says what Joey books with these details.
@@ -164,8 +489,7 @@
        page never says Joey books a flight the traveller arranges. */
     var kopNotitie = form.querySelector(".checkout-kop__note");
     if (kopNotitie && (opties.eigenVlucht || !metAuto)) {
-      var watJoeyBoekt = opties.eigenVlucht ? (metAuto ? "je huurauto" : "je reis") : "je vlucht";
-      kopNotitie.textContent = "Met deze gegevens boekt Joey " + watJoeyBoekt + ". Velden met een * zijn verplicht.";
+      kopNotitie.textContent = opties.eigenVlucht ? (metAuto ? T.noteCar : T.noteTrip) : T.noteFlight;
     }
 
     /* Without a rental car the car block and its confirmations disappear;
@@ -200,10 +524,12 @@
     // Values typed so far, keyed by field id, so re-rendering keeps them.
     var waarden = opgeslagen.velden || {};
 
+    function bewaarReizigerInput(input) {
+      waarden[input.id] = input.type === "checkbox" ? input.checked : input.value;
+    }
+
     function renderReizigers() {
-      form.querySelectorAll("#reizigersLijst input").forEach(function (input) {
-        waarden[input.id] = input.value;
-      });
+      form.querySelectorAll("#reizigersLijst input").forEach(bewaarReizigerInput);
       lijst.textContent = "";
 
       for (var i = 1; i <= aantal(); i++) {
@@ -211,7 +537,7 @@
         blok.className = "checkout-reiziger";
         var legend = document.createElement("legend");
         legend.className = "booking__legend booking__legend--klein";
-        legend.textContent = "Reiziger " + i;
+        legend.textContent = T.traveller(i);
         if (metLeeftijden && aantalKinderen + aantalBaby > 0) {
           var soort = CATEGORIE_TEKST[geboektAls(i)];
           legend.textContent += " (" + soort.naam + ", " + soort.leeftijd + ")";
@@ -221,10 +547,10 @@
         var grid = document.createElement("div");
         grid.className = "form-grid";
         [
-          { id: "reiziger" + i + "Voornamen", label: "Voornaam of voornamen (zoals in paspoort)", autocomplete: i === 1 ? "given-name" : "off", maxLength: 100 },
-          { id: "reiziger" + i + "Achternaam", label: "Achternaam (zoals in paspoort)", autocomplete: i === 1 ? "family-name" : "off", maxLength: 100 },
-          { id: "reiziger" + i + "Geboortedatum", label: "Geboortedatum", type: "date", autocomplete: i === 1 ? "bday" : "off", max: vandaag },
-          { id: "reiziger" + i + "Nationaliteit", label: "Nationaliteit", autocomplete: "off", maxLength: 60 }
+          { id: "reiziger" + i + "Voornamen", label: T.firstNames, autocomplete: i === 1 ? "given-name" : "off", maxLength: 100 },
+          { id: "reiziger" + i + "Achternaam", label: T.lastName, autocomplete: i === 1 ? "family-name" : "off", maxLength: 100 },
+          { id: "reiziger" + i + "Geboortedatum", label: T.birthDate, type: "date", autocomplete: i === 1 ? "bday" : "off", max: vandaag },
+          { id: "reiziger" + i + "Nationaliteit", label: T.nationality, autocomplete: "off", maxLength: 60 }
         ].forEach(function (veldOpties) {
           var veld = maakVeld(veldOpties);
           var input = veld.querySelector("input");
@@ -233,6 +559,12 @@
           grid.appendChild(veld);
         });
         blok.appendChild(grid);
+        if (metAuto) {
+          var bestuurderVeld = maakBestuurderVeld(i);
+          var bestuurderInput = bestuurderVeld.querySelector("input");
+          if (waarden[bestuurderInput.id]) bestuurderInput.checked = true;
+          blok.appendChild(bestuurderVeld);
+        }
         lijst.appendChild(blok);
       }
       vulBestuurders();
@@ -242,39 +574,45 @@
       var voor = form.querySelector("#reiziger" + i + "Voornamen");
       var achter = form.querySelector("#reiziger" + i + "Achternaam");
       var naam = ((voor ? voor.value : "") + " " + (achter ? achter.value : "")).trim();
-      return naam || "Reiziger " + i;
+      return naam || T.traveller(i);
     }
 
-    // The main driver list follows the traveller names as they are typed.
-    function vulBestuurders() {
-      if (!metAuto) return;
-      var gekozen = bestuurderSelect.value || opgeslagen.bestuurder || "";
-      bestuurderSelect.textContent = "";
+    // The main driver and main booker lists follow the traveller names as
+    // they are typed. A single traveller is always both.
+    function vulKeuzeLijst(select, opgeslagenWaarde) {
+      var gekozen = select.value || opgeslagenWaarde || "";
+      select.textContent = "";
       var leeg = document.createElement("option");
       leeg.value = "";
-      leeg.textContent = "Kies een reiziger";
-      bestuurderSelect.appendChild(leeg);
+      leeg.textContent = T.chooseTraveller;
+      select.appendChild(leeg);
       for (var i = 1; i <= aantal(); i++) {
         var optie = document.createElement("option");
         optie.value = String(i);
         optie.textContent = reizigerNaam(i);
-        bestuurderSelect.appendChild(optie);
+        select.appendChild(optie);
       }
-      // A single traveller is always the driver.
       if (aantal() === 1) gekozen = "1";
-      if (parseInt(gekozen, 10) <= aantal()) bestuurderSelect.value = gekozen;
+      if (parseInt(gekozen, 10) <= aantal()) select.value = gekozen;
+    }
+    function vulBestuurders() {
+      vulKeuzeLijst(hoofdboekerSelect, opgeslagen.hoofdboeker);
+      if (metAuto) vulKeuzeLijst(bestuurderSelect, opgeslagen.bestuurder);
     }
 
     function bewaar() {
-      form.querySelectorAll("#reizigersLijst input").forEach(function (input) {
-        waarden[input.id] = input.value;
-      });
+      form.querySelectorAll("#reizigersLijst input").forEach(bewaarReizigerInput);
       schrijfOpslag({
         aantal: vastAantal ? "" : aantalInput.value,
         velden: waarden,
         email: form.querySelector("#contactEmail").value,
         telefoon: form.querySelector("#contactTelefoon").value,
-        bestuurder: metAuto ? bestuurderSelect.value : ""
+        straat: form.querySelector("#contactStraat").value,
+        postcode: form.querySelector("#contactPostcode").value,
+        plaats: form.querySelector("#contactPlaats").value,
+        land: form.querySelector("#contactLand").value,
+        bestuurder: metAuto ? bestuurderSelect.value : "",
+        hoofdboeker: hoofdboekerSelect.value
       });
     }
 
@@ -301,31 +639,25 @@
       var v = input.validity;
       if (input.getAttribute("data-geboekt-als") && input.value && !leeftijdKlopt(input)) {
         // Same rule as the server (api/create-payment.js) for a group trip.
-        if (opties.alleenVolwassenen) {
-          return "Deze groepsreis is alleen voor volwassenen: iedere reiziger moet op de dag van aankomst" +
-            (uitreisTekst ? " (" + uitreisTekst + ")" : "") + " 12 jaar of ouder zijn. Controleer de geboortedatum.";
-        }
-        var soort = CATEGORIE_TEKST[input.getAttribute("data-geboekt-als")];
-        return "Je boekte een " + soort.naam + " (" + soort.leeftijd + " op de dag van aankomst" +
-          (uitreisTekst ? ", " + uitreisTekst : "") + "). Deze geboortedatum past daar niet bij. " +
-          "Controleer de datum, of pas het aantal volwassenen, kinderen en baby's aan in de kalender.";
+        if (opties.alleenVolwassenen) return T.errGroupAge(uitreisTekst);
+        return T.errCategory(input.getAttribute("data-geboekt-als"), uitreisTekst);
       }
-      if (input.tagName === "SELECT" && input.value && !bestuurderOudGenoeg()) {
-        return "De hoofdbestuurder moet " + MIN_LEEFTIJD_BESTUURDER + " jaar of ouder zijn op de dag van aankomst. Kies een andere reiziger.";
+      if (input === bestuurderSelect && input.value && !bestuurderOudGenoeg()) {
+        return T.errDriverAge(MIN_LEEFTIJD_BESTUURDER);
       }
       // Only the general terms checkbox is required.
-      if (input.type === "checkbox") return "Ga akkoord met de algemene voorwaarden om verder te gaan.";
-      if (input.tagName === "SELECT") return "Kies wie de hoofdbestuurder is.";
+      if (input.type === "checkbox") return T.errTerms;
+      if (input.tagName === "SELECT") return input.id === "hoofdboeker" ? T.errMainBooker : T.errDriver;
       if (v.valueMissing || !input.value.trim()) {
-        if (input.type === "date") return "Vul de geboortedatum in.";
-        return "Vul dit veld in.";
+        if (input.type === "date") return T.errBirthMissing;
+        return T.errRequired;
       }
       if (input.type === "email" && (v.typeMismatch || !EMAIL_PATROON.test(input.value.trim()))) {
-        return "Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl.";
+        return T.errEmail;
       }
-      if (input.type === "date") return "Vul een geboortedatum in het verleden in.";
-      if (input.id === "aantalReizigers") return "Kies 1 tot en met " + MAX_REIZIGERS + " reizigers.";
-      return "Controleer dit veld.";
+      if (input.type === "date") return T.errBirthPast;
+      if (input.id === "aantalReizigers") return T.errCount(MAX_REIZIGERS);
+      return T.errCheck;
     }
 
     function isGeldig(input) {
@@ -335,7 +667,7 @@
       if (input.type === "email" && !EMAIL_PATROON.test(input.value.trim())) return false;
       if (input.type === "date" && input.value > vandaag) return false;
       if (input.type === "date" && !leeftijdKlopt(input)) return false;
-      if (input.tagName === "SELECT" && !bestuurderOudGenoeg()) return false;
+      if (input === bestuurderSelect && !bestuurderOudGenoeg()) return false;
       return true;
     }
 
@@ -378,16 +710,13 @@
           if (geboorte && leeftijdVan(geboorte) >= MIN_LEEFTIJD_BESTUURDER) heeftOudere = true;
         }
         if (!heeftOudere) {
-          foutSamenvatting.textContent = "Minstens een reiziger moet " + MIN_LEEFTIJD_BESTUURDER +
-            " jaar of ouder zijn op de dag van aankomst" + (metAuto ? " (nodig voor de huurauto)" : "") + ". Controleer de geboortedata.";
+          foutSamenvatting.textContent = T.errMinAge(MIN_LEEFTIJD_BESTUURDER, metAuto);
           foutSamenvatting.hidden = false;
           return form.querySelector("#reiziger1Geboortedatum");
         }
       }
       if (aantalFouten) {
-        foutSamenvatting.textContent = aantalFouten === 1
-          ? "Er is nog 1 veld dat niet klopt of ontbreekt. Kijk het even na."
-          : "Er zijn nog " + aantalFouten + " velden die niet kloppen of ontbreken. Kijk ze even na.";
+        foutSamenvatting.textContent = T.errSummary(aantalFouten);
         foutSamenvatting.hidden = false;
       } else {
         foutSamenvatting.hidden = true;
@@ -399,17 +728,26 @@
     function verzamel() {
       var reizigers = [];
       for (var i = 1; i <= aantal(); i++) {
+        var bestuurderCheck = form.querySelector("#reiziger" + i + "Bestuurder");
         reizigers.push({
           voornamen: form.querySelector("#reiziger" + i + "Voornamen").value.trim(),
           achternaam: form.querySelector("#reiziger" + i + "Achternaam").value.trim(),
           geboortedatum: form.querySelector("#reiziger" + i + "Geboortedatum").value,
-          nationaliteit: form.querySelector("#reiziger" + i + "Nationaliteit").value.trim()
+          nationaliteit: form.querySelector("#reiziger" + i + "Nationaliteit").value.trim(),
+          bestuurder: metAuto && !!(bestuurderCheck && bestuurderCheck.checked)
         });
       }
       return {
         reizigers: reizigers,
         email: form.querySelector("#contactEmail").value.trim(),
         telefoon: form.querySelector("#contactTelefoon").value.trim(),
+        adres: {
+          straat: form.querySelector("#contactStraat").value.trim(),
+          postcode: form.querySelector("#contactPostcode").value.trim(),
+          plaats: form.querySelector("#contactPlaats").value.trim(),
+          land: form.querySelector("#contactLand").value.trim()
+        },
+        hoofdboeker: parseInt(hoofdboekerSelect.value, 10),
         huurauto: metAuto,
         hoofdbestuurder: metAuto ? parseInt(bestuurderSelect.value, 10) : null,
         voorwaarden: form.querySelector("#akkoordVoorwaarden").checked,
@@ -421,6 +759,10 @@
     // Restore contact details; the confirmations are always ticked afresh.
     if (opgeslagen.email) form.querySelector("#contactEmail").value = opgeslagen.email;
     if (opgeslagen.telefoon) form.querySelector("#contactTelefoon").value = opgeslagen.telefoon;
+    if (opgeslagen.straat) form.querySelector("#contactStraat").value = opgeslagen.straat;
+    if (opgeslagen.postcode) form.querySelector("#contactPostcode").value = opgeslagen.postcode;
+    if (opgeslagen.plaats) form.querySelector("#contactPlaats").value = opgeslagen.plaats;
+    if (opgeslagen.land) form.querySelector("#contactLand").value = opgeslagen.land;
 
     renderReizigers();
 
