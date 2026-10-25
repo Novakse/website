@@ -100,7 +100,8 @@
       birthDate: "Geboortedatum",
       nationality: "Nationaliteit",
       chooseTraveller: "Kies een reiziger",
-      travellerCanDrive: "Kan de huurauto besturen",
+      travellerCanDrive: "Extra huurauto bestuurder",
+      driverFee: "+ €13",
       errGroupAge: function (datum) {
         return "Deze groepsreis is alleen voor volwassenen: iedere reiziger moet op de dag van aankomst" +
           (datum ? " (" + datum + ")" : "") + " 12 jaar of ouder zijn. Controleer de geboortedatum.";
@@ -147,7 +148,8 @@
       birthDate: "Date of birth",
       nationality: "Nationality",
       chooseTraveller: "Choose a traveller",
-      travellerCanDrive: "Can drive the rental car",
+      travellerCanDrive: "Extra rental car driver",
+      driverFee: "+ €13",
       errGroupAge: function (datum) {
         return "This group trip is for adults only: every traveller must be 12 or older on the day of arrival" +
           (datum ? " (" + datum + ")" : "") + ". Check the date of birth.";
@@ -194,7 +196,8 @@
       birthDate: "Geburtsdatum",
       nationality: "Staatsangehörigkeit",
       chooseTraveller: "Wähle eine reisende Person",
-      travellerCanDrive: "Kann den Mietwagen fahren",
+      travellerCanDrive: "Zusätzlicher Mietwagenfahrer",
+      driverFee: "+ 13 €",
       errGroupAge: function (datum) {
         return "Diese Gruppenreise ist nur für Erwachsene: Alle Reisenden müssen am Anreisetag" +
           (datum ? " (" + datum + ")" : "") + " 12 Jahre oder älter sein. Prüfe das Geburtsdatum.";
@@ -241,7 +244,8 @@
       birthDate: "Födelsedatum",
       nationality: "Nationalitet",
       chooseTraveller: "Välj en resenär",
-      travellerCanDrive: "Kan köra hyrbilen",
+      travellerCanDrive: "Extra hyrbilsförare",
+      driverFee: "+ 13 €",
       errGroupAge: function (datum) {
         return "Den här gruppresan är bara för vuxna: alla resenärer måste vara 12 år eller äldre på ankomstdagen" +
           (datum ? " (" + datum + ")" : "") + ". Kontrollera födelsedatumet.";
@@ -288,7 +292,8 @@
       birthDate: "Fødselsdato",
       nationality: "Nasjonalitet",
       chooseTraveller: "Velg en reisende",
-      travellerCanDrive: "Kan kjøre leiebilen",
+      travellerCanDrive: "Ekstra leiebilsjåfør",
+      driverFee: "+ 13 €",
       errGroupAge: function (datum) {
         return "Denne gruppeturen er bare for voksne: alle reisende må være 12 år eller eldre på ankomstdagen" +
           (datum ? " (" + datum + ")" : "") + ". Kontroller fødselsdatoen.";
@@ -335,7 +340,8 @@
       birthDate: "Syntymäaika",
       nationality: "Kansalaisuus",
       chooseTraveller: "Valitse matkustaja",
-      travellerCanDrive: "Voi ajaa vuokra-autoa",
+      travellerCanDrive: "Ylimääräinen vuokra-auton kuljettaja",
+      driverFee: "+ 13 €",
       errGroupAge: function (datum) {
         return "Tämä ryhmämatka on vain aikuisille: jokaisen matkustajan on oltava saapumispäivänä" +
           (datum ? " (" + datum + ")" : "") + " vähintään 12-vuotias. Tarkista syntymäaika.";
@@ -423,8 +429,11 @@
 
   // Optional checkbox per traveller: do they also drive the rental car?
   // Not required, so it never blocks payment; independent of who is the
-  // main driver (#hoofdbestuurder).
-  function maakBestuurderVeld(i) {
+  // main driver (#hoofdbestuurder). One rental car seats up to 4, so a
+  // group of 5 or more needs a second car and so a second free driver;
+  // gratisAantal is 2 for those groups, 1 otherwise. Every traveller
+  // beyond that free count shows the extra driver fee.
+  function maakBestuurderVeld(i, gratisAantal) {
     var wrap = document.createElement("div");
     wrap.className = "booking__extras";
     var check = document.createElement("div");
@@ -441,6 +450,12 @@
     span.textContent = T.travellerCanDrive;
     label.appendChild(input);
     label.appendChild(span);
+    if (i > gratisAantal) {
+      var prijs = document.createElement("span");
+      prijs.className = "extra__price";
+      prijs.textContent = T.driverFee;
+      label.appendChild(prijs);
+    }
     check.appendChild(label);
     wrap.appendChild(check);
     return wrap;
@@ -532,7 +547,9 @@
       form.querySelectorAll("#reizigersLijst input").forEach(bewaarReizigerInput);
       lijst.textContent = "";
 
-      for (var i = 1; i <= aantal(); i++) {
+      var totaalReizigers = aantal();
+      var gratisBestuurders = totaalReizigers > 4 ? 2 : 1;
+      for (var i = 1; i <= totaalReizigers; i++) {
         var blok = document.createElement("fieldset");
         blok.className = "checkout-reiziger";
         var legend = document.createElement("legend");
@@ -560,7 +577,7 @@
         });
         blok.appendChild(grid);
         if (metAuto) {
-          var bestuurderVeld = maakBestuurderVeld(i);
+          var bestuurderVeld = maakBestuurderVeld(i, gratisBestuurders);
           var bestuurderInput = bestuurderVeld.querySelector("input");
           if (waarden[bestuurderInput.id]) bestuurderInput.checked = true;
           blok.appendChild(bestuurderVeld);
