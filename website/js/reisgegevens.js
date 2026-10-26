@@ -107,7 +107,8 @@
       plaats: "Plaats",
       land: "Land",
       chooseTraveller: "Kies een reiziger",
-      travellerCanDrive: "Extra huurauto bestuurder",
+      driverLabel: "Huurauto bestuurder",
+      extraDriverLabel: "Extra huurauto bestuurder",
       driverFee: "+ €13",
       errGroupAge: function (datum) {
         return "Deze groepsreis is alleen voor volwassenen: iedere reiziger moet op de dag van aankomst" +
@@ -161,7 +162,8 @@
       plaats: "City",
       land: "Country",
       chooseTraveller: "Choose a traveller",
-      travellerCanDrive: "Extra rental car driver",
+      driverLabel: "Rental car driver",
+      extraDriverLabel: "Extra rental car driver",
       driverFee: "+ €13",
       errGroupAge: function (datum) {
         return "This group trip is for adults only: every traveller must be 12 or older on the day of arrival" +
@@ -215,7 +217,8 @@
       plaats: "Ort",
       land: "Land",
       chooseTraveller: "Wähle eine reisende Person",
-      travellerCanDrive: "Zusätzlicher Mietwagenfahrer",
+      driverLabel: "Mietwagenfahrer",
+      extraDriverLabel: "Zusätzlicher Mietwagenfahrer",
       driverFee: "+ 13 €",
       errGroupAge: function (datum) {
         return "Diese Gruppenreise ist nur für Erwachsene: Alle Reisenden müssen am Anreisetag" +
@@ -269,7 +272,8 @@
       plaats: "Ort",
       land: "Land",
       chooseTraveller: "Välj en resenär",
-      travellerCanDrive: "Extra hyrbilsförare",
+      driverLabel: "Hyrbilsförare",
+      extraDriverLabel: "Extra hyrbilsförare",
       driverFee: "+ 13 €",
       errGroupAge: function (datum) {
         return "Den här gruppresan är bara för vuxna: alla resenärer måste vara 12 år eller äldre på ankomstdagen" +
@@ -323,7 +327,8 @@
       plaats: "By",
       land: "Land",
       chooseTraveller: "Velg en reisende",
-      travellerCanDrive: "Ekstra leiebilsjåfør",
+      driverLabel: "Leiebilsjåfør",
+      extraDriverLabel: "Ekstra leiebilsjåfør",
       driverFee: "+ 13 €",
       errGroupAge: function (datum) {
         return "Denne gruppeturen er bare for voksne: alle reisende må være 12 år eller eldre på ankomstdagen" +
@@ -377,7 +382,8 @@
       plaats: "Kaupunki",
       land: "Maa",
       chooseTraveller: "Valitse matkustaja",
-      travellerCanDrive: "Ylimääräinen vuokra-auton kuljettaja",
+      driverLabel: "Vuokra-auton kuljettaja",
+      extraDriverLabel: "Ylimääräinen vuokra-auton kuljettaja",
       driverFee: "+ 13 €",
       errGroupAge: function (datum) {
         return "Tämä ryhmämatka on vain aikuisille: jokaisen matkustajan on oltava saapumispäivänä" +
@@ -463,11 +469,13 @@
     return veld;
   }
 
-  // Optional checkbox for a traveller who is not the main driver: do they
-  // also drive the rental car? Not required, so it never blocks payment.
-  // The main driver (#hoofdbestuurder) already drives by definition, so
-  // they never get this checkbox; see berekenBestuurderStatus().
-  function maakBestuurderVeld(i, metPrijs) {
+  // Optional checkbox per traveller: do they also drive the rental car?
+  // Not required, so it never blocks payment. Every traveller can be a
+  // driver, including whoever is the main booker or main driver, so the
+  // checkbox is the same for everyone here; verversBestuurderVinkjes()
+  // relabels it once it is known which ticked boxes are free and which
+  // are an extra driver.
+  function maakBestuurderVeld(i) {
     var wrap = document.createElement("div");
     wrap.className = "booking__extras";
     var check = document.createElement("div");
@@ -481,15 +489,9 @@
     input.name = input.id;
     var span = document.createElement("span");
     span.className = "extra__name";
-    span.textContent = T.travellerCanDrive;
+    span.textContent = T.driverLabel;
     label.appendChild(input);
     label.appendChild(span);
-    if (metPrijs) {
-      var prijs = document.createElement("span");
-      prijs.className = "extra__price";
-      prijs.textContent = T.driverFee;
-      label.appendChild(prijs);
-    }
     check.appendChild(label);
     wrap.appendChild(check);
     return wrap;
@@ -569,22 +571,42 @@
       return Math.min(getal, MAX_REIZIGERS);
     }
 
-    // Who drives for free: the chosen main driver (#hoofdbestuurder) always
-    // does, since picking up the car is already their job. One rental car
-    // seats up to 4, so a group of 5 or more needs a second car and so a
-    // second free driver; until a main driver is chosen, or for that extra
-    // free seat, the lowest-numbered remaining travellers fill it. Every
-    // other traveller's checkbox shows the extra driver fee.
-    function berekenBestuurderStatus() {
+    // Any traveller can be the one who first ticks the box, so the free
+    // seats go to whichever boxes are ticked first, not to a fixed
+    // traveller. One rental car seats up to 4, so a group of 5 or more
+    // needs a second car and so a second free driver. Counted in
+    // traveller order (1..n): the first `gratis` ticked boxes stay the
+    // plain driverLabel (free), every ticked box after that becomes an
+    // extraDriverLabel with the fee. Unticked boxes always show the
+    // plain label, since nothing is decided until it is ticked.
+    function verversBestuurderVinkjes() {
+      if (!metAuto) return;
       var totaal = aantal();
       var gratis = totaal > 4 ? 2 : 1;
-      var hoofd = metAuto ? parseInt(bestuurderSelect.value, 10) : NaN;
-      var vrij = {};
-      if (hoofd >= 1 && hoofd <= totaal) vrij[hoofd] = true;
-      for (var n = 1; n <= totaal && Object.keys(vrij).length < gratis; n++) {
-        if (!vrij[n]) vrij[n] = true;
+      var geteld = 0;
+      for (var i = 1; i <= totaal; i++) {
+        var input = form.querySelector("#reiziger" + i + "Bestuurder");
+        if (!input) continue;
+        var label = input.closest(".extra");
+        var naam = label ? label.querySelector(".extra__name") : null;
+        var prijs = label ? label.querySelector(".extra__price") : null;
+        var extra = false;
+        if (input.checked) {
+          geteld++;
+          extra = geteld > gratis;
+        }
+        if (naam) naam.textContent = extra ? T.extraDriverLabel : T.driverLabel;
+        if (extra) {
+          if (!prijs && label) {
+            prijs = document.createElement("span");
+            prijs.className = "extra__price";
+            label.appendChild(prijs);
+          }
+          if (prijs) prijs.textContent = T.driverFee;
+        } else if (prijs) {
+          prijs.remove();
+        }
       }
-      return { hoofd: hoofd, vrij: vrij };
     }
 
     // Values typed so far, keyed by field id, so re-rendering keeps them.
@@ -599,7 +621,6 @@
       lijst.textContent = "";
 
       var totaalReizigers = aantal();
-      var bestuurderStatus = berekenBestuurderStatus();
       for (var i = 1; i <= totaalReizigers; i++) {
         var blok = document.createElement("fieldset");
         blok.className = "checkout-reiziger";
@@ -640,8 +661,8 @@
           grid.appendChild(veld);
         });
         blok.appendChild(grid);
-        if (metAuto && i !== bestuurderStatus.hoofd) {
-          var bestuurderVeld = maakBestuurderVeld(i, !bestuurderStatus.vrij[i]);
+        if (metAuto) {
+          var bestuurderVeld = maakBestuurderVeld(i);
           var bestuurderInput = bestuurderVeld.querySelector("input");
           if (waarden[bestuurderInput.id]) bestuurderInput.checked = true;
           blok.appendChild(bestuurderVeld);
@@ -649,6 +670,7 @@
         lijst.appendChild(blok);
       }
       vulBestuurders();
+      verversBestuurderVinkjes();
     }
 
     function reizigerNaam(i) {
@@ -862,9 +884,9 @@
     // Once a field has shown an error, clear it as soon as it is fixed.
     form.addEventListener("change", function (event) {
       var doel = event.target;
-      // Choosing a different main driver moves the free "extra driver"
-      // checkbox to that traveller, so the list is redrawn.
-      if (doel === bestuurderSelect) renderReizigers();
+      // Ticking or unticking a driver checkbox can move the free seats to
+      // or from other travellers, so every checkbox is relabelled.
+      if (/Bestuurder$/.test(doel.id) && doel.type === "checkbox") verversBestuurderVinkjes();
       if (doel.getAttribute("aria-invalid") === "true" && isGeldig(doel)) toonVeldFout(doel, "");
       // A date of birth that does not give the booked category (or a driver
       // who is too young) is reported straight away, not only on submit.
