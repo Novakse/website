@@ -571,30 +571,40 @@
       return Math.min(getal, MAX_REIZIGERS);
     }
 
-    // Any traveller can be the one who first ticks the box, so the free
-    // seats go to whichever boxes are ticked first, not to a fixed
-    // traveller. One rental car seats up to 4, so a group of 5 or more
-    // needs a second car and so a second free driver. Counted in
-    // traveller order (1..n): the first `gratis` ticked boxes stay the
-    // plain driverLabel (free), every ticked box after that becomes an
-    // extraDriverLabel with the fee. Unticked boxes always show the
-    // plain label, since nothing is decided until it is ticked.
+    // Any traveller can be the one who ticks the box first, so the free
+    // seats go to whoever ticks first, not to a fixed traveller or to
+    // whoever has the lowest traveller number. The order travellers are
+    // ticked in (not their position in the list) decides who is free:
+    // the first `gratis` to be ticked (1, or 2 once a second car is
+    // needed for 5 or more travellers) stay the plain driverLabel, every
+    // one ticked after that becomes an extraDriverLabel with the fee.
+    var bestuurderVolgorde = [];
+    function synchroniseerBestuurderVolgorde() {
+      var totaal = aantal();
+      bestuurderVolgorde = bestuurderVolgorde.filter(function (i) {
+        if (i > totaal) return false;
+        var input = form.querySelector("#reiziger" + i + "Bestuurder");
+        return Boolean(input && input.checked);
+      });
+      for (var i = 1; i <= totaal; i++) {
+        if (bestuurderVolgorde.indexOf(i) !== -1) continue;
+        var input = form.querySelector("#reiziger" + i + "Bestuurder");
+        if (input && input.checked) bestuurderVolgorde.push(i);
+      }
+    }
     function verversBestuurderVinkjes() {
       if (!metAuto) return;
+      synchroniseerBestuurderVolgorde();
       var totaal = aantal();
       var gratis = totaal > 4 ? 2 : 1;
-      var geteld = 0;
       for (var i = 1; i <= totaal; i++) {
         var input = form.querySelector("#reiziger" + i + "Bestuurder");
         if (!input) continue;
         var label = input.closest(".extra");
         var naam = label ? label.querySelector(".extra__name") : null;
         var prijs = label ? label.querySelector(".extra__price") : null;
-        var extra = false;
-        if (input.checked) {
-          geteld++;
-          extra = geteld > gratis;
-        }
+        var volgnummer = bestuurderVolgorde.indexOf(i);
+        var extra = volgnummer >= gratis;
         if (naam) naam.textContent = extra ? T.extraDriverLabel : T.driverLabel;
         if (extra) {
           if (!prijs && label) {
