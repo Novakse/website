@@ -821,17 +821,6 @@
     return Math.round(begeleidingKostenRuw(dagenBegeleid, personen));
   }
 
-  /* Voor de stepper: het bedrag voor de hele groep, niet gedeeld door het
-     aantal personen. Bij een grote groep oogt het gedeelde bedrag per persoon
-     (begeleidingKosten) heel laag; de stepper toont daarom het bedrag dat
-     Joey voor die dag(en) begeleiding echt ontvangt. De "Jouw reis"-regel
-     eronder blijft wel het per-persoon aandeel tonen, dat telt op tot
-     "Totaal per persoon". */
-  function begeleidingKostenGroep(dagenBegeleid, personen) {
-    if (begeleidingPerDag === null || !dagenBegeleid) return 0;
-    return begeleidingPerDagVoorGroep(personen) * dagenBegeleid;
-  }
-
   function bezetOp(datum) {
     for (var i = 0; i < bezet.length; i++) {
       if (datum >= bezet[i].van && datum < bezet[i].tot) return bezet[i];
@@ -1375,7 +1364,7 @@
     // focus stays on the button that was pressed.
     function zetWaarde() {
       waarde.textContent = begeleidingDagen === 0 ? T.guidingNone : T.guidingDays(begeleidingDagen);
-      prijs.textContent = begeleidingDagen === 0 ? "" : "+ " + euro(begeleidingKostenGroep(begeleidingDagen, personen));
+      prijs.textContent = begeleidingDagen === 0 ? "" : "+ " + T.perPersonPrice(getal(begeleidingKosten(begeleidingDagen, personen)));
       minder.disabled = begeleidingDagen <= 0;
       meer.disabled = begeleidingDagen >= duur;
     }
@@ -1442,7 +1431,7 @@
     if (verzekering && !autoZelf) regels += "<dt>" + T.lineInsurance + "</dt><dd>+ " + euro(verzekeringKosten(duur, personen)) + "</dd>";
     if (begeleidingDagen && begeleidingKan(aankomst, duur)) {
       regels += "<dt>" + T.lineGuiding + " (" + T.guidingDays(begeleidingDagen) + ")</dt><dd>+ " +
-        euro(begeleidingKosten(begeleidingDagen, personen)) + "</dd>";
+        T.perPersonPrice(getal(begeleidingKosten(begeleidingDagen, personen))) + "</dd>";
     }
 
     // Wat er naar de betaalpagina meegaat. Het bedrag wordt daar opnieuw
