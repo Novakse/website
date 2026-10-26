@@ -1776,6 +1776,12 @@
       if (!begeleiding || !dagen || aantal < 1) return 0;
       return begeleidingPerDagVoorGroep(aantal) * dagen;
     }
+    // Same group amount, but the share for one person: what the stepper
+    // shows, same as the other options (insurance, gear).
+    function begeleidingKosten(dagen, aantal) {
+      if (!dagen || aantal < 1) return 0;
+      return Math.round(begeleidingGroep(dagen, aantal) / aantal);
+    }
 
     // Head count for the guiding price: the stepper's, the trip finder's, or
     // else basisPersonen.
@@ -2215,7 +2221,7 @@
         begeleidingBox.querySelector(".falun-cal__stepper-value").textContent =
           dagen === 0 ? T.guidingNone : T.guidingDays(dagen);
         begeleidingBox.querySelector(".falun-cal__stepper-price").textContent =
-          dagen === 0 ? "" : "+ " + euroTekst(begeleidingGroep(dagen, reizigers()));
+          dagen === 0 ? "" : "+ " + T.perPersonPrice(getal(begeleidingKosten(dagen, reizigers())));
         begeleidingBox.querySelector('[data-begeleiding-stap="-1"]').disabled = dagen <= 0;
         begeleidingBox.querySelector('[data-begeleiding-stap="1"]').disabled = dagen >= reisDagen();
       }
