@@ -4653,8 +4653,8 @@ img[src*="finland-tour-skating-2"] { object-position: 50% 60%; }
 }
 
 /* Focal points of the photos used here (square crops). */
-img[src*="activity-husky-sled-forest"] { object-position: 50% 75%; }
-img[src*="activity-snowmobiles-row"] { object-position: 42% 50%; }
+img[src*="activity-husky-teams-forest"] { object-position: 50% 60%; }
+img[src*="activity-snowmobile-husky"] { object-position: 45% 45%; }
 img[src*="activity-alpine-piste-sun"] { object-position: 50% 85%; }
 img[src*="activity-cross-country-start"] { object-position: 50% 60%; }
 img[src*="activity-northern-lights-lake"] { object-position: 45% 50%; }
