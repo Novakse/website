@@ -678,3 +678,25 @@
 
 .page-gidsreis .gr-faq { background: var(--gr-pale); }
 .gr-faq__inner { max-width: 50rem; }
+
+/* --------------------------------------------------------------------------
+   Example programme (guided trip Finland): dark ice band with the days as rows
+   -------------------------------------------------------------------------- */
+.page-gidsreis .gr-programme { background: var(--gr-ice); color: var(--gr-on-ice); }
+.page-gidsreis .gr-programme .gr-h2 { color: var(--gr-on-ice); }
+.gr-programme__intro { max-width: 36rem; margin-top: 1.4rem; font-size: 1.0625rem; line-height: 1.7; color: var(--gr-on-ice-soft); }
+.gr-programme__list { display: grid; margin-top: 3rem; list-style: none; padding: 0; }
+.gr-programme__day { display: grid; gap: 0.4rem; padding-block: 1.5rem; border-top: 1px solid rgba(242, 247, 249, 0.2); }
+.gr-programme__day h3 { font-size: 0.95rem; font-weight: 600; color: var(--warm); }
+.gr-programme__day p { max-width: 38rem; font-size: 1.0625rem; line-height: 1.65; color: var(--gr-on-ice-soft); }
+.gr-programme__note { max-width: 40rem; margin-top: 2rem; line-height: 1.7; color: var(--gr-on-ice-soft); }
+.gr-programme__cta { margin-top: 3rem; }
+.gr-programme__incl { margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid rgba(242, 247, 249, 0.2); }
+.gr-programme__incl h3 { font-size: 0.95rem; font-weight: 600; color: var(--warm); }
+.gr-programme__incl ul { display: grid; gap: 0.7rem; margin-top: 1.1rem; max-width: 40rem; list-style: none; padding: 0; }
+.gr-programme__incl li { position: relative; padding-left: 1.4rem; line-height: 1.55; color: var(--gr-on-ice-soft); }
+.gr-programme__incl li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 0.6rem; height: 2px; background: var(--warm); }
+@media (min-width: 48rem) {
+  .gr-programme__day { grid-template-columns: 13rem 1fr; gap: 2rem; padding-block: 1.75rem; }
+  .gr-programme__incl ul { grid-template-columns: 1fr 1fr; gap: 0.8rem 2.5rem; max-width: 52rem; }
+}
