@@ -1,0 +1,680 @@
+/* ==========================================================================
+   Avontuurlijk schaatsen in Zweden (avontuurlijk-schaatsen-zweden.html)
+   The guided trip with a certified skating guide, on request.
+
+   Idea: the page reads like the landscape of the trip. Light winter sky at
+   the top with the title, the swept horizon line, then the ice. Sections
+   alternate between sky, snow white and black ice. The one big moment is
+   "Van meer naar meer": the lakes slide past sideways while you scroll.
+
+   Everything lives under .page-gidsreis. Loads AFTER styles.css and
+   theme-groen.css. Dark sections carry .factbar so main.js turns the header
+   white there. Motion: transform and opacity, plus one-off line drawing;
+   nothing moves without the .gr-motion class (set in <head> unless the
+   visitor prefers reduced motion).
+   ========================================================================== */
+
+.page-gidsreis {
+  --gr-sky-top: #b8d3e7;
+  --gr-sky: #cfe1ee;
+  --gr-haze: #dde9f1;
+  --gr-pale: #eef4f7;
+  --gr-ice: #0a2532;
+  --gr-on-ice: #f2f7f9;
+  --gr-on-ice-soft: rgba(242, 247, 249, 0.78);
+  --gr-soft: #3a4a51;
+  --gr-line: rgba(10, 37, 50, 0.16);
+  --gr-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --gr-edge: max(var(--pad), calc((100% - var(--wrap)) / 2 + var(--pad)));
+  background: #fff;
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Shared parts
+   -------------------------------------------------------------------------- */
+.gr-section { position: relative; padding-block: clamp(4.5rem, 10vw, 8.5rem); }
+
+.gr-h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 5vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--gr-ice);
+  text-wrap: balance;
+}
+
+.gr-copy { margin-top: 1.4rem; }
+.gr-copy p {
+  max-width: 36rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--gr-soft);
+}
+.gr-copy p + p { margin-top: 1rem; }
+
+/* Photo frames: the shape sits on the frame, the photo fills it. */
+.gr-photo { position: relative; margin: 0; overflow: hidden; background: var(--gr-haze); }
+.gr-photo picture,
+.gr-photo img { display: block; width: 100%; height: 100%; }
+.gr-photo img { object-fit: cover; }
+
+/* Photos settle a little when they come into view (on top of .reveal). */
+.gr-motion .gr-photo.reveal img {
+  transform: scale(1.07);
+  transition: transform 1.8s var(--gr-ease);
+}
+.gr-motion .gr-photo.reveal.is-visible img { transform: none; }
+
+/* The swept ice-track line, drawn once when it comes into view. */
+.gr-sweep {
+  display: block;
+  width: min(100%, 34rem);
+  height: 1.6rem;
+  margin-top: 0.9rem;
+  overflow: visible;
+}
+.gr-sweep path {
+  fill: none;
+  stroke: var(--warm-deep);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.gr-motion .gr-sweep path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s var(--gr-ease) 0.35s; }
+.gr-motion .is-visible .gr-sweep path { stroke-dashoffset: 0; }
+
+.gr-link {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding-block: 0.6rem;
+  font-weight: 600;
+  color: var(--warm-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+.gr-link:hover { text-decoration-thickness: 2px; }
+
+/* --------------------------------------------------------------------------
+   1. Hero: sky, horizon, ice
+   -------------------------------------------------------------------------- */
+.gr-hero {
+  --gr-photo-h: clamp(17rem, 78vw, 46rem);
+  --gr-photo-pull: 1.5rem;
+  position: relative;
+  padding-top: 6.25rem;
+  /* the sky gradient stops exactly where the photo begins, so the photo's
+     faded top meets one flat haze colour without a visible seam */
+  background:
+    linear-gradient(180deg, var(--gr-sky-top), var(--gr-sky) 55%, var(--gr-haze))
+    top / 100% calc(100% - var(--gr-photo-h) + var(--gr-photo-pull)) no-repeat
+    var(--gr-haze);
+  color: var(--gr-ice);
+  overflow: hidden;
+}
+
+.gr-hero__head { position: relative; z-index: 2; display: grid; gap: 1.6rem; container-type: inline-size; }
+
+.gr-crumbs { font-size: 0.82rem; color: var(--gr-soft); }
+.gr-crumbs a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(10, 37, 50, 0.35);
+  text-underline-offset: 0.2em;
+}
+.gr-crumbs a:hover { text-decoration-color: currentColor; }
+
+.gr-hero__title {
+  font-family: var(--display);
+  font-weight: 600;
+  /* sized to the column, so "Avontuurlijk" (about 5.2em wide) always fits */
+  font-size: clamp(2.6rem, 15vw, 7.6rem);
+  font-size: clamp(2.6rem, 18cqi, 7.6rem);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+}
+/* each line rises out of its own mask on load */
+.gr-hero__line { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+.gr-hero__line > span { display: block; }
+
+.gr-hero__aside { max-width: 30rem; }
+.gr-hero__lead {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.gr-hero__intro { margin-top: 0.85rem; font-size: 1rem; line-height: 1.65; color: var(--gr-soft); }
+.gr-hero__btn { margin-top: 1.5rem; }
+
+.gr-hero__photo {
+  position: relative;
+  z-index: 1;
+  margin: calc(var(--gr-photo-pull) * -1) 0 0;
+  height: var(--gr-photo-h);
+}
+.gr-hero__photo picture,
+.gr-hero__photo img { display: block; width: 100%; height: 100%; }
+.gr-hero__photo img { object-fit: cover; object-position: 72% 58%; }
+/* the photo's own sky melts into the page sky; its foot melts into the ice */
+.gr-hero__photo::before,
+.gr-hero__photo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.gr-hero__photo::before { top: 0; height: 24%; background: linear-gradient(180deg, var(--gr-haze) 8%, rgba(221, 233, 241, 0)); }
+.gr-hero__photo::after { bottom: 0; height: 38%; background: linear-gradient(180deg, rgba(10, 37, 50, 0), var(--gr-ice)); }
+
+.gr-hero__horizon {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 22%;
+  width: 100%;
+  height: clamp(2.5rem, 7vw, 6rem);
+  overflow: visible;
+  pointer-events: none;
+}
+.gr-hero__horizon path {
+  fill: none;
+  stroke: var(--warm);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (min-width: 60rem) {
+  .gr-hero { --gr-photo-h: min(46rem, 60vw); --gr-photo-pull: 4.5rem; padding-top: 7.5rem; }
+  .gr-hero__title { font-size: clamp(2.6rem, 9.4cqi, 7.6rem); }
+  .gr-hero__head {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    align-items: end;
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+  }
+  .gr-crumbs { grid-column: 1 / -1; }
+  .gr-hero__aside { padding-bottom: 0.6rem; }
+  .gr-hero__photo img { object-position: 50% 56%; }
+}
+
+/* load sequence: title lines rise, text follows, the photo settles and the
+   horizon line draws itself */
+@keyframes gr-rise { from { transform: translateY(104%); } to { transform: none; } }
+@keyframes gr-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes gr-settle { from { transform: scale(1.09); } to { transform: none; } }
+@keyframes gr-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+.gr-motion .gr-hero__line > span { animation: gr-rise 1.15s var(--gr-ease) both; }
+.gr-motion .gr-hero__line:nth-of-type(2) > span { animation-delay: 0.09s; }
+.gr-motion .gr-hero__line:nth-of-type(3) > span { animation-delay: 0.18s; }
+.gr-motion .gr-hero__aside > * { animation: gr-fade 0.9s var(--gr-ease) both; }
+.gr-motion .gr-hero__lead { animation-delay: 0.45s; }
+.gr-motion .gr-hero__intro { animation-delay: 0.55s; }
+.gr-motion .gr-hero__btn { animation-delay: 0.65s; }
+.gr-motion .gr-hero__photo img { animation: gr-settle 2.6s var(--gr-ease) both; }
+.gr-motion .gr-hero__horizon path { stroke-dasharray: 1; animation: gr-draw 2.2s var(--gr-ease) 0.7s both; }
+
+/* --------------------------------------------------------------------------
+   2. Key facts, on the ice
+   -------------------------------------------------------------------------- */
+.page-gidsreis .gr-facts {
+  background: var(--gr-ice);
+  color: var(--gr-on-ice);
+  padding-block: 0.75rem clamp(3.5rem, 7vw, 5rem);
+}
+.gr-facts__list { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem 1.25rem; }
+.gr-facts__item { padding-top: 0.9rem; border-top: 1px solid rgba(242, 247, 249, 0.2); }
+.gr-facts dt { margin-bottom: 0.3rem; font-size: 0.82rem; font-weight: 600; color: var(--warm); }
+.gr-facts dd {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+.gr-facts dd a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--warm);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25em;
+}
+@media (min-width: 52rem) {
+  .gr-facts__list { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+/* --------------------------------------------------------------------------
+   3. Schaatsen op natuurijs
+   -------------------------------------------------------------------------- */
+.gr-statement {
+  max-width: 31ch;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.45rem, 3.2vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--gr-ice);
+  text-wrap: pretty;
+}
+
+.gr-natural__grid { display: grid; gap: 2.75rem; margin-top: clamp(3.5rem, 8vw, 6.5rem); }
+.gr-natural__text { padding-inline: var(--pad); }
+/* the photo runs off the right edge of the screen, like the ice does */
+.gr-natural__photo { margin-left: var(--pad); aspect-ratio: 4 / 5; border-radius: 1.75rem 0 0 1.75rem; }
+
+@media (min-width: 60rem) {
+  .gr-natural__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    align-items: center;
+    column-gap: clamp(3rem, 6vw, 6rem);
+    padding-left: var(--gr-edge);
+  }
+  .gr-natural__text { padding-inline: 0; }
+  .gr-natural__photo { margin-left: 0; aspect-ratio: auto; height: min(50rem, 86vh); }
+}
+
+/* --------------------------------------------------------------------------
+   4. Van meer naar meer: a sideways journey
+   -------------------------------------------------------------------------- */
+.page-gidsreis .gr-journey {
+  background: var(--gr-ice);
+  color: var(--gr-on-ice);
+  padding-block: clamp(4.5rem, 10vw, 7rem);
+}
+.gr-journey .gr-h2 { color: var(--gr-on-ice); }
+
+/* default (phones, or reduced motion): a row you swipe or scroll sideways */
+.gr-journey__viewport {
+  margin-top: 2.25rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--pad);
+  padding-bottom: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(242, 247, 249, 0.35) transparent;
+}
+@media (hover: none) {
+  .gr-journey__viewport { scrollbar-width: none; }
+  .gr-journey__viewport::-webkit-scrollbar { display: none; }
+}
+.gr-journey__viewport:focus-visible { outline-offset: -3px; }
+
+.gr-journey__track {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  width: max-content;
+  padding-inline: var(--pad);
+}
+.gr-journey__panel { flex: none; margin: 0; scroll-snap-align: start; }
+
+.gr-journey__panel--text { width: min(78vw, 21rem); }
+.gr-journey__panel--text p {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.32;
+  letter-spacing: -0.01em;
+}
+.gr-journey__panel--end p { font-size: 1.6rem; line-height: 1.2; color: var(--warm); }
+
+.gr-journey__panel--photo { overflow: hidden; border-radius: 1.25rem; background: #163847; }
+.gr-journey__panel--photo picture,
+.gr-journey__panel--photo img { display: block; width: 100%; height: 100%; }
+.gr-journey__panel--photo img { object-fit: cover; }
+/* phones: one height for every photo, so the row keeps a calm rhythm */
+.gr-journey__panel--photo { height: 17rem; }
+.gr-journey__panel--wide { width: 82vw; }
+.gr-journey__panel--square { width: 68vw; }
+.gr-journey__panel--tall { width: 54vw; }
+
+/* the swept line under the row fills up as you travel along it */
+.gr-journey__trace { margin-top: 1.75rem; }
+.gr-journey__trace-inner { position: relative; height: 2.25rem; }
+.gr-journey__line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.gr-journey__line path { fill: none; stroke-width: 2.5; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.gr-journey__line--base path { stroke: rgba(242, 247, 249, 0.2); }
+.gr-journey__line--live path { stroke: var(--warm); }
+.gr-journey__reveal,
+.gr-journey__reveal-inner { position: absolute; inset: 0; }
+.gr-journey__reveal { overflow: hidden; transform: translateX(-100%); }
+.gr-journey__reveal-inner { transform: translateX(100%); }
+
+@media (min-width: 48rem) {
+  .gr-journey__track { gap: clamp(2rem, 4vw, 4rem); padding-inline: var(--gr-edge); }
+  .gr-journey__panel--text { width: 21rem; }
+  .gr-journey__panel--text p { font-size: 1.5rem; }
+  .gr-journey__panel--end p { font-size: 2rem; }
+  .gr-journey__panel--wide { width: auto; height: min(56vh, 32rem); aspect-ratio: 3 / 2; }
+  .gr-journey__panel--square { width: auto; height: min(46vh, 26rem); aspect-ratio: 1; align-self: flex-end; }
+  .gr-journey__panel--tall { width: auto; height: min(62vh, 36rem); aspect-ratio: 2 / 3; }
+  .gr-journey__panel--text:first-child { align-self: flex-start; }
+}
+
+/* pinned: the section is as tall as the sideways distance; the inner frame
+   sticks to the screen and the track slides along (js/gidsreis.js) */
+.gr-journey.is-pinned { padding-block: 0; }
+.gr-journey.is-pinned .gr-journey__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: 5.5rem 2rem;
+  overflow: hidden;
+}
+/* .wrap centres itself with auto margins; in a flex column that would also
+   shrink it to its content, so stretch it back to full width */
+.gr-journey.is-pinned .gr-journey__head,
+.gr-journey.is-pinned .gr-journey__trace { width: 100%; }
+.gr-journey.is-pinned .gr-journey__viewport {
+  overflow: visible;
+  scroll-snap-type: none;
+  padding-bottom: 0;
+}
+.gr-journey.is-pinned .gr-journey__track { will-change: transform; }
+
+/* --------------------------------------------------------------------------
+   5. Begeleiding en voorbereiding
+   -------------------------------------------------------------------------- */
+.page-gidsreis .gr-guide { background: var(--gr-pale); }
+.gr-guide__grid { display: grid; gap: 2.75rem; }
+.gr-guide__photo { aspect-ratio: 4 / 5; max-width: 30rem; border-radius: 1.5rem; }
+
+/* "before" and "on site": a real sequence, so a line with two stops */
+.gr-guide__steps { position: relative; display: grid; gap: 2.25rem; padding-left: 2rem; list-style: none; }
+.gr-guide__steps::before {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  top: 0.55rem;
+  bottom: 0.4rem;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--warm-deep), rgba(122, 70, 32, 0.15));
+}
+.gr-guide__step { position: relative; }
+.gr-guide__step::before {
+  content: "";
+  position: absolute;
+  left: -2rem;
+  top: 0.3rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  background: var(--gr-pale);
+  border: 2px solid var(--warm-deep);
+}
+.gr-guide__step h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+  color: var(--gr-ice);
+}
+.gr-guide__step p { margin-top: 0.5rem; max-width: 30rem; line-height: 1.7; color: var(--gr-soft); }
+
+.gr-guide__vow p {
+  max-width: 22ch;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 4.4vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--gr-ice);
+  text-wrap: balance;
+}
+
+@media (min-width: 60rem) {
+  .gr-guide__grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+    grid-template-areas:
+      "intro photo"
+      "steps photo"
+      "vow   vow";
+    column-gap: clamp(3rem, 7vw, 7rem);
+    row-gap: 3rem;
+  }
+  .gr-guide__intro { grid-area: intro; align-self: end; }
+  .gr-guide__photo { grid-area: photo; max-width: none; justify-self: stretch; }
+  .gr-guide__steps { grid-area: steps; align-self: start; }
+  .gr-guide__vow { grid-area: vow; margin-top: 1.5rem; }
+
+  /* side by side on a horizontal line */
+  .gr-guide__steps { grid-template-columns: 1fr 1fr; gap: 2.5rem; padding-left: 0; padding-top: 2.25rem; }
+  .gr-guide__steps::before {
+    left: 0.4rem;
+    right: 0;
+    top: 0.4rem;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    background: linear-gradient(90deg, var(--warm-deep), rgba(122, 70, 32, 0.12));
+  }
+  .gr-guide__step::before { left: 0; top: -2.25rem; }
+}
+
+/* --------------------------------------------------------------------------
+   6. Voor wie is deze reis?
+   -------------------------------------------------------------------------- */
+.gr-who__grid { display: grid; gap: 2.75rem; }
+/* the photo runs off the left edge, mirroring the natural-ice photo */
+.gr-who__photo { margin-right: var(--pad); aspect-ratio: 3 / 2; border-radius: 0 1.75rem 1.75rem 0; }
+.gr-who__text { padding-inline: var(--pad); }
+.gr-who__lead {
+  max-width: 30ch;
+  margin-top: 1.25rem;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 2.3vw, 1.7rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--gr-ice);
+}
+
+.gr-checks { display: grid; gap: 0.9rem; margin-block: 1.75rem 0.25rem; }
+.gr-checks li { position: relative; padding-left: 2.2rem; font-weight: 500; line-height: 1.45; color: var(--gr-ice); }
+.gr-checks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: var(--gr-ice) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.6 8.4l2.9 2.9 5.9-6.6' fill='none' stroke='%23dd9752' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 0.8rem no-repeat;
+}
+
+@media (min-width: 60rem) {
+  .gr-who__grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: clamp(3rem, 6vw, 6rem);
+    padding-right: var(--gr-edge);
+  }
+  .gr-who__photo { margin-right: 0; aspect-ratio: auto; height: min(42rem, 78vh); }
+  .gr-who__text { padding-inline: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   7. Anders dan een huttentocht of schaatssafari
+   -------------------------------------------------------------------------- */
+.page-gidsreis .gr-compare { background: var(--gr-sky); }
+.gr-compare__intro { margin-top: 1rem; font-size: 1.0625rem; color: var(--gr-soft); }
+.gr-compare__grid { display: grid; gap: 1.25rem; margin-top: 2.5rem; }
+
+.gr-compare__main {
+  padding: 2rem 1.5rem;
+  border-radius: 1.75rem;
+  background: var(--gr-ice);
+  color: var(--gr-on-ice);
+  --focus-ring: var(--warm);
+}
+.gr-compare__here { font-size: 0.85rem; font-weight: 600; color: var(--warm); }
+.gr-compare__main h3 {
+  margin: 0.45rem 0 1.4rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+.gr-compare__main ul { display: grid; gap: 0.9rem; margin-bottom: 1.9rem; }
+.gr-compare__main li { position: relative; padding-left: 1.4rem; line-height: 1.6; color: var(--gr-on-ice-soft); }
+.gr-compare__main li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.6rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--warm);
+}
+
+/* the other two: plain text on the sky, no card */
+.gr-compare__alt { padding-top: 1.5rem; border-top: 1px solid rgba(10, 37, 50, 0.22); }
+.gr-compare__alt h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  color: var(--gr-ice);
+}
+.gr-compare__alt p { max-width: 34rem; margin-top: 0.5rem; line-height: 1.65; color: var(--gr-soft); }
+
+@media (min-width: 52rem) {
+  .gr-compare__grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: clamp(2.5rem, 6vw, 5.5rem);
+    row-gap: 0;
+  }
+  .gr-compare__main { grid-row: 1 / span 2; padding: 2.75rem 2.5rem; }
+  .gr-compare__alt { align-self: start; padding-block: 1.75rem 2rem; }
+}
+
+/* --------------------------------------------------------------------------
+   8. Een schaatsreis op aanvraag
+   -------------------------------------------------------------------------- */
+.gr-ask__grid { display: grid; gap: 2.5rem; }
+.gr-ask__photo { aspect-ratio: 3 / 2; border-radius: 1.5rem; }
+.gr-ask__lead { font-weight: 600; color: var(--gr-ice); }
+.gr-ask__list { margin-top: 0.75rem; border-top: 1px solid var(--gr-line); }
+.gr-ask__list li {
+  position: relative;
+  padding: 1rem 0 1rem 2rem;
+  border-bottom: 1px solid var(--gr-line);
+  line-height: 1.5;
+}
+/* a small frozen lake instead of a bullet */
+.gr-ask__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.45rem;
+  width: 0.95rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--warm);
+}
+.gr-ask__after { max-width: 40rem; margin-top: 1.5rem; line-height: 1.7; color: var(--gr-soft); }
+
+@media (min-width: 60rem) {
+  .gr-ask__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "head    photo"
+      "options photo";
+    column-gap: clamp(3rem, 7vw, 7rem);
+    row-gap: 3rem;
+  }
+  .gr-ask__head { grid-area: head; }
+  .gr-ask__options { grid-area: options; }
+  .gr-ask__photo { grid-area: photo; align-self: center; aspect-ratio: 4 / 5; }
+}
+
+/* --------------------------------------------------------------------------
+   9. Aanvraag
+   -------------------------------------------------------------------------- */
+.page-gidsreis .gr-request {
+  position: relative;
+  background: var(--gr-ice);
+  color: var(--gr-on-ice);
+  padding-bottom: clamp(4rem, 9vw, 7rem);
+}
+.gr-request__photo { position: relative; margin: 0; height: clamp(15rem, 46vw, 32rem); }
+.gr-request__photo picture,
+.gr-request__photo img { display: block; width: 100%; height: 100%; }
+.gr-request__photo img { object-fit: cover; object-position: 50% 42%; }
+/* a dark edge at the top keeps the white header readable; the foot melts into the ice */
+.gr-request__photo::before,
+.gr-request__photo::after { content: ""; position: absolute; left: 0; right: 0; pointer-events: none; }
+.gr-request__photo::before { top: 0; height: 30%; background: linear-gradient(180deg, rgba(10, 37, 50, 0.55), rgba(10, 37, 50, 0)); }
+.gr-request__photo::after { bottom: 0; height: 42%; background: linear-gradient(180deg, rgba(10, 37, 50, 0), var(--gr-ice)); }
+
+.gr-request__grid { position: relative; z-index: 1; display: grid; gap: 2.5rem; margin-top: -3rem; }
+.gr-request .gr-h2 { color: var(--gr-on-ice); }
+.gr-request .gr-copy p { color: var(--gr-on-ice-soft); }
+.gr-request__note { margin-top: 1.25rem; font-weight: 500; color: var(--warm); }
+.gr-request__wa { margin-top: 0.9rem; }
+.gr-request__wa a { font-weight: 600; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+.gr-request__wa a:hover { text-decoration-thickness: 2px; }
+
+.gr-form {
+  padding: 1.5rem 1.25rem;
+  border-radius: 1.5rem;
+  background: #fff;
+  color: var(--ink);
+  --focus-ring: var(--warm-deep);
+}
+.gr-form .form-note { color: var(--gr-soft); }
+.gr-form .form-status--error { color: #b3261e; }
+.gr-form .form-status--success { color: var(--status-green); }
+.gr-form .form-submit { width: 100%; justify-content: center; }
+.gr-form .btn:disabled { opacity: 0.6; cursor: progress; transform: none; }
+
+@media (min-width: 40rem) {
+  .gr-form { padding: 2rem; }
+  .gr-form .form-submit { width: auto; }
+}
+@media (min-width: 60rem) {
+  .gr-request__grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+    column-gap: clamp(3rem, 6vw, 6rem);
+    margin-top: -7rem;
+  }
+  .gr-request__body { padding-top: 5.5rem; }
+  .gr-form { padding: 2.25rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Short answer and FAQ (gidsreis-schaatsen-finland.html)
+   -------------------------------------------------------------------------- */
+.gr-answer {
+  max-width: 44rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--warm);
+}
+.gr-answer__label { margin-bottom: 0.4rem; font-size: 0.82rem; font-weight: 600; color: var(--warm-deep); }
+.gr-answer p:last-child { font-size: 1.0625rem; color: var(--gr-soft); }
+
+.page-gidsreis .gr-faq { background: var(--gr-pale); }
+.gr-faq__inner { max-width: 50rem; }
