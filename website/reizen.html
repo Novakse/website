@@ -20,12 +20,10 @@
 }@media (min-width: 72rem){.nav-toggle, .main-nav__close { display: none; }.main-nav { position: static; inset: auto; opacity: 1; pointer-events: auto; visibility: visible; transform: none; flex-direction: row; align-items: center; padding: 0px; box-shadow: none; color: inherit; gap: 2rem; }.main-nav::before { content: none; }.main-nav__links { flex-direction: row; gap: 2rem; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.005em; }.main-nav__links a::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--warm); opacity: 0.85; }.lang-switch { padding-left: 0.9rem; border-left: 1px solid color-mix(in srgb, currentcolor 22%, transparent 78%); }}@media (min-width: 72rem){.lang-switch { padding-left: 0.9rem; border-left: 1px solid color-mix(in srgb, currentcolor 22%, transparent 78%); }}img[src*="orsa-group-silhouettes-black-ice"] { object-position: 50% 60%; }img[src*="orsa-two-skaters-golden-hour"] { object-position: 45% 50%; }img[src*="orsa-fika-shelter"] { object-position: 50% 70%; }@keyframes wall-drift { 
   0% { transform: translate3d(0px, 0px, 0px); }
   100% { transform: translate3d(0px, -100%, 0px); }
-}@media (prefers-reduced-motion: reduce){html, html.smooth-scroll { scroll-behavior: auto; }*, ::before, ::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }}@media (min-width: 48rem){:root { --pad: 3rem; }}:root { --green: #050d08; --green-deep: #020603; --paper-soft: #f1f3f1; --ink: #050d08; --ink-soft: #52615c; --border: #dfe3df; }.header-cta { background: var(--warm); color: var(--green); }.trips-head { background: var(--paper); padding-block: 1.5rem 0.25rem; }.trips-head .h-section { margin-top: 0px; text-wrap: balance; }.trip-map { --ice: #e7eef1; --line-h: 2.75rem; --stop-w: 7.75rem; --gap: 0.75rem; --panel-w: calc(100% + var(--pad) - 3.5rem); --row-inset: max(var(--pad), calc((100% - var(--wrap)) / 2 + var(--pad))); --snap-end: calc(3.5rem - 2px); background: var(--paper); padding-block: 1.25rem 5rem; }.trip-map__rail { --fade-start: 0px; --fade-end: 3.5rem; position: relative; margin-inline: calc(-1 * var(--pad)); padding: 0.5rem var(--pad) 0.75rem; overflow: auto hidden; overscroll-behavior-x: contain; scroll-snap-type: x; scroll-padding-inline: var(--pad); scrollbar-width: none; mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent 100%); }.trip-map__rail::-webkit-scrollbar { display: none; }.trip-map.is-ready:not(.has-more-end) .trip-map__rail { --fade-end: 0px; }@media (pointer: fine){.trip-map__rail { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }}.trip-map__track { position: relative; width: max-content; }.trip-map__line { position: absolute; top: 0px; left: 0px; width: 100%; height: var(--line-h); overflow: visible; pointer-events: none; }.trip-map__line path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }.trip-map__lane { stroke: var(--ice); stroke-width: 18; }.trip-map__stroke { stroke: url(#tripMapGradient); stroke-width: 2; }.trip-map__stops { display: grid; grid-auto-flow: column; grid-auto-columns: var(--stop-w); }.trip-map__item { display: flex; scroll-snap-align: start; }.trip-map__item:nth-child(1):nth-last-child(8) { --y: 0.370; --stop-color: #002845; }.trip-map__item:nth-child(2):nth-last-child(7) { --y: 0.319; --stop-color: #3d7c94; }.trip-map__item:nth-child(3):nth-last-child(6) { --y: 0.470; --stop-color: #92c9d2; }.trip-map__item:nth-child(4):nth-last-child(5) { --y: 0.633; --stop-color: #f8efcd; }.trip-map__item:nth-child(5):nth-last-child(4) { --y: 0.606; --stop-color: #ffe8a9; }.trip-map__item:nth-child(6):nth-last-child(3) { --y: 0.323; --stop-color: #ffd281; }.trip-map__item:nth-child(7):nth-last-child(2) { --y: 0.348; --stop-color: #ffa74f; }.trip-map__item:nth-child(8):nth-last-child(1) { --y: 0.409; --stop-color: #ff761a; }.trip-map__item:nth-child(1):nth-last-child(9) { --y: 0.381; --stop-color: #002845; }.trip-map__item:nth-child(2):nth-last-child(8) { --y: 0.309; --stop-color: #36728a; }.trip-map__item:nth-child(3):nth-last-child(7) { --y: 0.417; --stop-color: #6bbbd0; }.trip-map__item:nth-child(4):nth-last-child(6) { --y: 0.583; --stop-color: #f3ecd8; }.trip-map__item:nth-child(5):nth-last-child(5) { --y: 0.652; --stop-color: #fff3bd; }.trip-map__item:nth-child(6):nth-last-child(4) { --y: 0.519; --stop-color: #ffe09a; }.trip-map__item:nth-child(7):nth-last-child(3) { --y: 0.287; --stop-color: #ffcc77; }.trip-map__item:nth-child(8):nth-last-child(2) { --y: 0.375; --stop-color: #ffa148; }.trip-map__item:nth-child(9):nth-last-child(1) { --y: 0.400; --stop-color: #ff761a; }.trip-map__stop { position: relative; flex: 1 1 0%; display: flex; flex-direction: column; align-items: center; text-align: center; padding: calc(var(--line-h) + 0.55rem) 0.55rem 0.6rem; border-radius: 1rem; color: var(--ink); -webkit-tap-highlight-color: transparent; }.trip-map__marker { position: absolute; top: calc(var(--y, 0.5) * var(--line-h)); left: 50%; width: 0.8rem; height: 0.8rem; margin: -0.4rem 0px 0px -0.4rem; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); transition: transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1); }.trip-map__name { font-family: var(--display); font-weight: 600; font-size: 1.02rem; line-height: 1.2; letter-spacing: -0.005em; text-wrap: balance; text-decoration: underline 2px transparent; text-underline-offset: 0.3em; }.trip-map__country { margin-top: 0.15rem; font-size: 0.82rem; color: var(--ink-soft); }.trip-map__price { margin-top: 0.4rem; font-family: var(--display); font-weight: 500; font-size: 0.9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }.trip-map__stop[aria-current="true"] .trip-map__marker { background: var(--stop-color, var(--warm-deep)); border-color: var(--stop-color, var(--warm-deep)); transform: scale(1.45); box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.5px var(--stop-color, var(--warm-deep)); }.trip-map__stop[aria-current="true"] .trip-map__name { color: var(--stop-color, var(--warm-deep)); text-decoration-color: currentcolor; }.trip-map__controls { display: none; }.js .trip-map__controls { display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; margin-top: 0px; visibility: hidden; }.trip-map.is-ready .trip-map__controls { visibility: visible; }.trip-map__count { margin-right: 0.55rem; font-family: var(--display); font-size: 0.95rem; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink-soft); white-space: nowrap; }.trip-map__count-now { color: var(--ink); font-weight: 700; }.trip-map__nav { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 1.5px solid; color: var(--ink); -webkit-tap-highlight-color: transparent; transition: transform 0.18s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.18s; }.trip-map__nav svg { width: 1.15rem; height: 1.15rem; fill: none; stroke: currentcolor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }.trip-map__nav:disabled { opacity: 0.28; cursor: default; }.trip-map__nav:not(:disabled):active { transform: scale(0.93); }@media (hover: hover){.trip-map__stop:hover .trip-map__marker { border-color: var(--stop-color, var(--warm-deep)); transform: scale(1.2); }.trip-map__stop[aria-current="true"]:hover .trip-map__marker { transform: scale(1.45); }.trip-map__stop:hover .trip-map__name { text-decoration-color: var(--border); }.trip-map__stop[aria-current="true"]:hover .trip-map__name { text-decoration-color: currentcolor; }.trip-map__nav:not(:disabled):hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }}@media (hover: hover){.trip-map__nav:not(:disabled):hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }}.trip-map__panels { display: flex; align-items: flex-start; gap: var(--gap); margin-top: 1.25rem; padding: 0.35rem var(--row-inset) 0.75rem; overflow: auto hidden; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--row-inset) var(--snap-end); scrollbar-width: none; mask-image: linear-gradient(90deg, transparent calc(var(--row-inset) - var(--gap)), #000 var(--row-inset)); }.trip-map__panels::-webkit-scrollbar { display: none; }.trip-map__panels::after { content: ""; flex: 0 0 calc(100% - var(--panel-w) - var(--gap)); }.js .trip-map__panels { margin-top: 0.6rem; }.trip-map__panel { position: relative; flex: 0 0 var(--panel-w); min-width: 0px; scroll-snap-align: start; scroll-snap-stop: always; scroll-margin-top: 17.25rem; }.trip-map__media { --hang: 1.35rem; display: grid; grid-template-columns: repeat(12, minmax(0px, 1fr)); grid-template-rows: auto var(--hang); align-content: start; align-self: start; }.trip-map__photo { display: block; position: relative; overflow: hidden; background: var(--ice); }.trip-map__photo img { width: 100%; height: 100%; object-fit: cover; }.trip-map__photo--main { grid-area: 1 / 1 / auto / -1; aspect-ratio: 16 / 10; border-radius: 1.25rem; }.trip-map__incl { grid-area: 1 / 1 / auto / -1; place-self: start; z-index: 2; display: inline-flex; align-items: center; gap: 0.25rem; max-width: calc(100% - 1rem); margin: 0.45rem; padding: 0.16rem 0.48rem 0.16rem 0.4rem; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: var(--ink); font-size: 0.65rem; font-weight: 600; line-height: 1.2; white-space: nowrap; }.trip-map__panel:nth-child(2n+1) .trip-map__incl { justify-self: end; }.trip-map__incl svg { flex: 0 0 auto; width: 1.8rem; height: 0.72rem; fill: none; stroke: var(--warm-deep); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }.trip-map__photo--side, .trip-map__photo--below { z-index: 1; grid-row: 1 / 3; align-self: end; outline: 0.3rem solid var(--paper); }.trip-map__photo--side { grid-column: 9 / -1; margin-right: 0.8rem; aspect-ratio: 4 / 5; border-radius: 0.9rem; }.trip-map__photo--square { aspect-ratio: 1 / 1; }.trip-map__photo--below { grid-column: 5 / 9; margin: 0 0.75rem calc(var(--hang) * 0.55) 0.25rem; aspect-ratio: 3 / 2; border-radius: 0.8rem; }.trip-map__panel:nth-child(2n+1) .trip-map__photo--side { grid-column: 1 / 5; margin: 0px 0px 0px 0.8rem; }.trip-map__panel:nth-child(2n+1) .trip-map__photo--below { grid-column: 5 / 9; margin: 0 0.25rem calc(var(--hang) * 0.55) 0.75rem; }.trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--side { grid-column: 8 / -1; }.trip-map__panel:nth-child(2n+1) .trip-map__media:not(:has(.trip-map__photo--below)) .trip-map__photo--side { grid-column: 1 / 6; }#weissensee .trip-map__photo--main img { object-position: 50% 30%; }#falun .trip-map__photo--main img { object-position: 50% 20%; }#wellness .trip-map__photo--side img { object-position: 50% 70%; }#salen .trip-map__photo--side img { object-position: 40% 50%; }#salen .trip-map__photo--main img { transform: scale(-1.1, 1.1); transform-origin: calc(47.619%) 50%; object-position: 0% 50%; }.trip-map__body { padding-top: 0.75rem; }.trip-map__region { display: block; font-size: 0.85rem; font-weight: 600; color: var(--warm-deep); }.trip-map__title { margin-top: 0.15rem; font-family: var(--display); font-weight: 700; font-size: 1.65rem; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }.trip-map__text { margin-top: 0.5rem; max-width: 54ch; font-size: 1rem; line-height: 1.55; color: var(--ink-soft); text-wrap: pretty; }.trip-map__text p + p { margin-top: 0.5em; }.trip-map__facts { margin: 0.8rem 0px 0px; display: grid; grid-template-columns: minmax(0px, 1.2fr) minmax(0px, 1fr); column-gap: 1rem; }.trip-map__facts > div { padding-block: 0.35rem 0.4rem; border-top: 1px solid var(--border); }.trip-map__facts dt { font-size: 0.76rem; line-height: 1.35; color: var(--ink-soft); }.trip-map__facts dd { margin: 0.05rem 0px 0px; font-size: 0.84rem; line-height: 1.35; font-weight: 500; }.trip-map__more { display: flex; align-items: center; gap: 0.45rem; width: fit-content; min-height: 2.75rem; margin: -0.375rem 0px -0.75rem; padding-right: 0.375rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; color: var(--warm-deep); -webkit-tap-highlight-color: transparent; }.trip-map__more[hidden] { display: none; }.trip-map__more::after { content: ""; width: 0.4rem; height: 0.4rem; border-right: 1.5px solid; border-bottom: 1.5px solid; transform: translateY(-0.12rem) rotate(45deg); transition: transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1); }@media (max-width: 47.99rem){.trip-map { scroll-margin-top: calc(3.4375rem); }.js .trip-map__nav, .js .trip-map__count > [aria-hidden="true"] { display: none; }}.trip-map.is-ready .trip-map__panel:not(.is-current) { cursor: pointer; }@media (min-width: 48rem){.trip-map__incl { gap: 0.4rem; margin: 0.9rem; padding: 0.3rem 0.7rem 0.3rem 0.55rem; font-size: 0.78rem; }.trip-map__incl svg { width: 2.3rem; height: 1rem; }.trip-map__more { display: none; }.trip-map { --stop-w: 9rem; --gap: 1.25rem; --panel-w: 62%; --snap-end: calc(38% + 0.24 * var(--row-inset) - 2px); padding-block: 1.75rem 5.5rem; }.trip-map__panels { margin-top: 1.75rem; }.js .trip-map__panels { margin-top: 0.75rem; }.trip-map__panel { scroll-margin-top: 17.75rem; }.trip-map__media { --hang: 2.25rem; }.trip-map__photo--main { border-radius: 1.5rem; }.trip-map__photo--side { border-radius: 1rem; }.trip-map__body { padding-top: 1rem; }.trip-map__title { font-size: 2.1rem; }.trip-map__facts { display: block; margin-top: 0.9rem; border-bottom: 1px solid var(--border); }.trip-map__facts > div { display: flex; justify-content: space-between; align-items: baseline; gap: 1.25rem; padding-block: 0.45rem; }.trip-map__facts dt { flex: 0 0 auto; font-size: 0.8rem; }.trip-map__facts dd { margin: 0px; font-size: 0.86rem; line-height: 1.4; text-align: right; }}@media (min-width: 48rem){.trip-map { --stop-w: 9rem; --gap: 1.25rem; --panel-w: 62%; --snap-end: calc(38% + 0.24 * var(--row-inset) - 2px); padding-block: 1.75rem 5.5rem; }.trip-map__panels { margin-top: 1.75rem; }.js .trip-map__panels { margin-top: 0.75rem; }.trip-map__panel { scroll-margin-top: 17.75rem; }.trip-map__media { --hang: 2.25rem; }.trip-map__photo--main { border-radius: 1.5rem; }.trip-map__photo--side { border-radius: 1rem; }}@media (min-width: 64rem){.trip-map { --line-h: 3rem; --gap: 2rem; --panel-w: 74%; --snap-end: calc(26% + 0.48 * var(--row-inset) - 2px); padding-block: 2.25rem 6.5rem; }.trip-map__rail { margin-inline: 0px; padding-inline: 0px; overflow: visible; scroll-snap-type: none; mask-image: none; }.trip-map__track { width: auto; }.trip-map__stops { grid-auto-columns: minmax(0px, 1fr); }.trip-map__stop { padding-inline: 0.4rem; }.trip-map__name { font-size: 1.08rem; }.js .trip-map__controls { margin-top: 0.25rem; }.trip-map__panels { margin-top: 2rem; }.js .trip-map__panels { margin-top: 0.75rem; }.trip-map__panel { display: grid; grid-template-columns: minmax(0px, 0.95fr) minmax(0px, 1fr); grid-template-rows: auto auto auto auto 1fr; column-gap: 2.5rem; scroll-margin-top: 18.75rem; }.trip-map__body { display: contents; }.trip-map__region { grid-area: 1 / 1 / auto / -1; }.trip-map__title { grid-area: 2 / 1 / auto / -1; font-size: 2.6rem; }.trip-map__media { grid-area: 3 / 1 / -1; margin-top: 1.1rem; --hang: 2.5rem; }.trip-map__text { grid-area: 3 / 2; margin-top: 1.1rem; }.trip-map__facts { grid-area: 4 / 2; margin-top: 1.1rem; }.trip-map__photo--main { aspect-ratio: 3 / 2; }}.trips-head .eyebrow + .h-section { margin-top: 0.75rem; }.page-hero__rating { display: flex; width: fit-content; align-items: center; gap: 0.5rem; margin-top: 1.25rem; padding: 0.4rem 0.8rem; border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 999px; background: rgba(20, 24, 26, 0.32); backdrop-filter: blur(6px); font-size: 0.8125rem; line-height: 1.2; color: rgba(255, 255, 255, 0.92); }.page-hero__rating-g { display: inline-flex; }.page-hero__rating-g svg { width: 0.9375rem; height: 0.9375rem; }.page-hero__rating-stars { display: inline-flex; gap: 0.1rem; color: var(--warm); }.page-hero__rating-stars svg { width: 0.8125rem; height: 0.8125rem; fill: currentcolor; }.page-hero__rating-score { font-weight: 600; letter-spacing: 0.01em; }.page-hero__rating-text { color: rgba(255, 255, 255, 0.72); }@media (max-width: 30rem){.page-hero__rating { font-size: 0.75rem; padding: 0.35rem 0.7rem; gap: 0.4rem; margin-top: 1rem; }.page-hero__rating-stars svg { width: 0.75rem; height: 0.75rem; }.page-hero__rating-g svg { width: 0.875rem; height: 0.875rem; }}</style>
+}@media (prefers-reduced-motion: reduce){html, html.smooth-scroll { scroll-behavior: auto; }*, ::before, ::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }}@media (min-width: 48rem){:root { --pad: 3rem; }}:root { --green: #050d08; --green-deep: #020603; --paper-soft: #f1f3f1; --ink: #050d08; --ink-soft: #52615c; --border: #dfe3df; }.header-cta { background: var(--warm); color: var(--green); }.page-hero__rating { display: flex; width: fit-content; align-items: center; gap: 0.5rem; margin-top: 1.25rem; padding: 0.4rem 0.8rem; border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 999px; background: rgba(20, 24, 26, 0.32); backdrop-filter: blur(6px); font-size: 0.8125rem; line-height: 1.2; color: rgba(255, 255, 255, 0.92); }.page-hero__rating-g { display: inline-flex; }.page-hero__rating-g svg { width: 0.9375rem; height: 0.9375rem; }.page-hero__rating-stars { display: inline-flex; gap: 0.1rem; color: var(--warm); }.page-hero__rating-stars svg { width: 0.8125rem; height: 0.8125rem; fill: currentcolor; }.page-hero__rating-score { font-weight: 600; letter-spacing: 0.01em; }.page-hero__rating-text { color: rgba(255, 255, 255, 0.72); }@media (max-width: 30rem){.page-hero__rating { font-size: 0.75rem; padding: 0.35rem 0.7rem; gap: 0.4rem; margin-top: 1rem; }.page-hero__rating-stars svg { width: 0.75rem; height: 0.75rem; }.page-hero__rating-g svg { width: 0.875rem; height: 0.875rem; }}</style>
   <link rel="preload" href="css/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/fonts.css" /></noscript>
   <link rel="preload" href="css/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/styles.css" /></noscript>
   <link rel="preload" href="css/theme-groen.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/theme-groen.css" /></noscript>
-  <link rel="preload" href="css/reizen.css?v=9" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/reizen.css?v=9" /></noscript>
-  <link rel="preload" href="css/groepsreizen-sectie.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="css/groepsreizen-sectie.css" /></noscript>
   <link rel="canonical" href="https://www.novakse.com/reizen.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
@@ -43,13 +41,11 @@
   <link rel="alternate" hreflang="x-default" href="https://www.novakse.com/reizen.html" />
   <style>
     /* Verfijning reizen-overzicht: voorkomt wees-woorden in koppen en lopende tekst. */
-    .page-hero__title,
     .intro__lead,
     .why__title,
     .closing .h-section {
       text-wrap: balance;
     }
-    .page-hero__lede,
     .why__text,
     .why__reason p,
     .closing__text {
@@ -69,45 +65,962 @@
       width: fit-content;
     }
 
-    /* The page title holds one very long word ("natuurijsbestemmingen",
-       about 11.15 times the font size wide). On phones the size shrinks just
-       enough for that word to fit between the side margins; the other rules
-       make sure it can never widen the hero or the page. */
-    .page-hero__title {
-      font-size: min(clamp(2.1rem, 6vw, 4rem), calc((100vw - 2 * var(--pad)) / 11.4));
-      overflow-wrap: break-word;
-    }
-    .page-hero__inner { min-width: 0; }
-
-    /* The heading above the trip map (.trips-head) and the trip text styles
-       live in css/reizen.css, shared with the homepage. */
-
-    /* Below the trips comes the trip search, then the introduction. The trip
-       map already ends with generous bottom padding, so the search needs no
-       extra room on top and no overlap (the negative margin in styles.css is
-       for a search right under the hero photo). The search keeps about the
-       same room below it, so the intro needs little extra on top. */
-    .trip-map + .trip-search-dock {
-      /* Pulls the search up into the trip map's bottom padding (5rem, 5.5rem
-         from 48rem, 6.5rem from 64rem in css/reizen.css), so about 3rem of
-         room is left above it. Keep in step when that padding changes. */
-      margin-top: -2rem;
-      padding-block: 0 2rem;
-      background: var(--paper);
-    }
-    @media (min-width: 48rem) {
-      .trip-map + .trip-search-dock { margin-top: -2.5rem; }
-    }
-    @media (min-width: 64rem) {
-      .trip-map + .trip-search-dock { margin-top: -3.5rem; }
-    }
-    .trip-map + .intro,
-    .trip-search-dock + .intro { padding-top: 1rem; }
+    /* The trips themselves (.trip-deck) are styled in the
+       <style data-deck-css> block below. */
 
     /* How it works: the short tagline under the heading, and a little less
        room between the paragraphs than between heading and text. */
     .why__body .why__sub { margin-top: 0.9rem; }
     .why__body .why__text + .why__text { margin-top: 0.75rem; }
+  </style>
+  <style data-deck-css>
+    /* ======================================================================
+       Trip deck (reizen.html only). From the top:
+       - one glass panel with the heading, the Google rating, the hero photo
+         and the trip search (the long page title stays for screen readers
+         and search engines);
+       - every package trip is its own glass block in a grid, over a blurred
+         copy of the hero photo (images/reizen-stage-blur, made from
+         hero-baan-zonsondergang), with the short intro as the last tile;
+       - below them the group trips, as a dark glass panel of their own.
+       Without JavaScript every block shows its full text and all facts.
+       With JavaScript (js/reizen-deck.js) a block shows its first paragraph
+       and two facts; "Lees meer" or a click on the photo opens the whole
+       trip in a sheet (.trip-sheet). Motion uses GSAP, see
+       MOTION-GUIDELINES.md.
+       The homepage still uses the trip map (css/reizen.css, js/reizen.js).
+       ====================================================================== */
+    :root { --deck-photo-ratio: 16 / 11; }
+    @media (min-width: 40rem) {
+      :root { --deck-photo-ratio: 4 / 3; }
+    }
+
+    /* ---- The deck ------------------------------------------------------ */
+    .trip-deck {
+      --deck-radius: 1.75rem;
+      --photo-radius: 1.3rem;
+      --tile: rgba(229, 237, 240, 0.72);
+      position: relative;
+      isolation: isolate;
+      padding-block: 5.25rem 5rem; /* on top: room for the fixed header */
+      background: #e8edf0; /* until the backdrop photo has loaded */
+    }
+    @media (min-width: 48rem) {
+      .trip-deck { padding-block: 6rem 5.5rem; }
+    }
+    @media (min-width: 64rem) {
+      .trip-deck { padding-block: 6.5rem 6.5rem; }
+    }
+
+    /* The backdrop photo stays put (sticky, one screen high) while the
+       blocks scroll over it. The blur is baked into the image, so nothing
+       has to be blurred live. */
+    .trip-deck__stage {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      overflow: clip;
+      pointer-events: none;
+    }
+    .trip-deck__backdrop {
+      position: sticky;
+      top: 0;
+      display: block;
+      height: 100vh;
+      height: 100lvh;
+    }
+    .trip-deck__backdrop img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.1);
+    }
+    /* A light wintry veil over the photo, fading into the white page at the
+       bottom. */
+    .trip-deck__stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(255, 255, 255, 0) calc(100% - 16rem), var(--paper)),
+        rgba(255, 255, 255, 0.34);
+    }
+
+    /* ---- Top of the page: heading, rating, photo and trip search in
+       one glass panel. Phones: photo first. ---------------------------- */
+    .deck-top {
+      position: relative;
+      z-index: 5; /* the trip search's date picker opens over the blocks */
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "photo" "intro" "search";
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      border-radius: 2rem;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.56) 60%, rgba(255, 255, 255, 0.7));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 2rem 4rem -2.75rem rgba(10, 40, 64, 0.55);
+    }
+    .deck-top__intro { grid-area: intro; min-width: 0; padding: 1rem 0.85rem 0.75rem; }
+    .deck-top__title {
+      margin-top: 0.7rem;
+      padding-bottom: 0.08em; /* the mask below must not clip descenders */
+      overflow: hidden;       /* mask for the title sliding up */
+      font-family: var(--display);
+      font-size: clamp(2.1rem, 9vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+      overflow-wrap: break-word;
+    }
+    .deck-top__title > span { display: block; }
+    .deck-top__intro .page-hero__rating { margin-top: 1.25rem; }
+    .deck-top__photo {
+      grid-area: photo;
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      border-radius: 1.5rem;
+      background: #c9d3d9;
+      transform: translateZ(0);
+    }
+    /* A little taller than its frame, so it can drift while the page
+       scrolls (laptops, js/reizen-deck.js) without showing an edge. */
+    .deck-top__photo picture {
+      position: absolute;
+      inset: -8% 0 0;
+      display: block;
+    }
+    .deck-top__photo img { width: 100%; height: 100%; object-fit: cover; }
+    .deck-top .trip-search-dock {
+      grid-area: search;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+    }
+    .deck-top .trip-search-dock > .wrap { max-width: none; padding-inline: 0; }
+    .deck-top .trip-search {
+      border-color: rgba(255, 255, 255, 0.95);
+      border-radius: 1.5rem;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: inset 0 1px 0 #fff;
+    }
+    .page-hero__rating--light .page-hero__rating-text { white-space: nowrap; }
+    /* Tablets: a wide photo on top, title and rating side by side below. */
+    @media (min-width: 48rem) {
+      .deck-top { margin-bottom: 2.25rem; padding: 0.6rem; }
+      .deck-top__photo { aspect-ratio: 2 / 1; }
+      .deck-top__intro {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 0 1.5rem;
+        padding: 1.5rem 1.25rem 1rem;
+      }
+      .deck-top__intro .eyebrow { flex-basis: 100%; }
+      .deck-top__intro .page-hero__rating { margin-block: 1rem 0.35rem; }
+      .deck-top__title { font-size: clamp(2.4rem, 5.5vw, 3.25rem); }
+    }
+    /* Laptops: title and rating on the left, the photo on the right. */
+    @media (min-width: 64rem) {
+      .deck-top {
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+        grid-template-areas: "intro photo" "search search";
+      }
+      .deck-top__intro {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 2.5rem 2rem 2.5rem 2.5rem;
+      }
+      .deck-top__intro .eyebrow { flex-basis: auto; }
+      .deck-top__intro .page-hero__rating { margin-block: 1.25rem 0; }
+      .deck-top__title { font-size: clamp(2.6rem, 4.1vw, 3.5rem); }
+      .deck-top__photo { aspect-ratio: auto; min-height: 24rem; }
+    }
+
+    /* The panel comes in as soon as the page paints (no script needed): it
+       settles, the photo zooms out, the title slides up out of its mask,
+       then the rating's stars pop and the trip search follows. The photo
+       is never transparent, so it shows straight away. */
+    @media (prefers-reduced-motion: no-preference) {
+      .deck-top { animation: deck-in 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__photo img { animation: photo-settle 1.1s 0.1s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__intro .eyebrow { animation: deck-up 0.6s 0.25s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__title > span { animation: title-up 1.1s 0.3s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__intro .page-hero__rating { animation: deck-up 0.6s 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__intro .page-hero__rating-stars svg { animation: star-pop 0.6s 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__intro .page-hero__rating-stars svg:nth-child(2) { animation-delay: 0.77s; }
+      .deck-top__intro .page-hero__rating-stars svg:nth-child(3) { animation-delay: 0.84s; }
+      .deck-top__intro .page-hero__rating-stars svg:nth-child(4) { animation-delay: 0.91s; }
+      .deck-top__intro .page-hero__rating-stars svg:nth-child(5) { animation-delay: 0.98s; }
+      .deck-top .trip-search { animation: deck-up 0.6s 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+    }
+    @keyframes deck-in { from { transform: translateY(1.5rem) scale(0.985); } }
+    @keyframes photo-settle { from { transform: scale(1.15); } }
+    @keyframes deck-up { from { opacity: 0; transform: translateY(1rem); } }
+    @keyframes title-up { from { transform: translateY(105%); } }
+    @keyframes star-pop { from { opacity: 0; transform: scale(0) rotate(-40deg); } }
+
+    /* Words of the sheet's title slide up out of a mask (js/reizen-deck.js). */
+    .trip-deck__word {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: top;
+      padding-bottom: 0.1em;
+      margin-bottom: -0.1em;
+    }
+    .trip-deck__word > span { display: inline-block; }
+
+    /* The Google rating, on light glass here instead of over the photo. */
+    .page-hero__rating--light {
+      margin-top: 0;
+      border-color: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--ink);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      box-shadow: 0 0.75rem 1.5rem -1rem rgba(10, 40, 64, 0.45);
+    }
+    .page-hero__rating--light .page-hero__rating-text { color: var(--ink-soft); }
+    .page-hero__rating--light .page-hero__rating-stars svg { display: block; }
+
+    .trip-deck__list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+    }
+    .trip-deck__item { display: flex; min-width: 0; }
+    @media (min-width: 40rem) {
+      .trip-deck__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+      /* Eight trips in two columns: the intro tile spans the last row. */
+      .trip-deck__item--note { grid-column: 1 / -1; }
+    }
+    @media (min-width: 64rem) {
+      .trip-deck__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+      .trip-deck__item--note { grid-column: auto; }
+    }
+
+    /* The short intro, as the ninth tile. */
+    .deck-note {
+      position: relative;
+      flex: 1 1 auto;
+      display: flex;
+      align-items: flex-end;
+      min-width: 0;
+      padding: 1.75rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: var(--deck-radius);
+      background:
+        radial-gradient(130% 90% at 100% 0%, rgba(221, 151, 82, 0.34), rgba(221, 151, 82, 0) 62%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.38));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    .deck-note p {
+      font-family: var(--display);
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      font-weight: 500;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      text-wrap: pretty;
+    }
+
+    /* One trip block. Its colour (--accent, set per block) runs from deep
+       winter blue to the warm orange of the swept-line gradient. */
+    .deck-card {
+      --accent: var(--warm-deep);
+      position: relative;
+      display: flex;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .deck-card__shell {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      border-radius: var(--deck-radius);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.68) 55%, rgba(255, 255, 255, 0.78) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1.75rem 3.5rem -2.5rem rgba(10, 40, 64, 0.5);
+    }
+    /* Ring that briefly lights up when a link opens this trip (#lulea). */
+    .deck-card__shell::after {
+      content: "";
+      position: absolute;
+      inset: -0.35rem;
+      border: 2px solid var(--accent);
+      border-radius: calc(var(--deck-radius) + 0.35rem);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .deck-card:target .deck-card__shell::after {
+      animation: deck-target 2.6s 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+    @keyframes deck-target {
+      0% { opacity: 0; transform: scale(0.98); }
+      25% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.015); }
+    }
+
+    .deck-card__media { position: relative; }
+    .deck-card__photo,
+    .trip-sheet__photo {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      border-radius: var(--photo-radius, 1.3rem);
+      background: #dbe4e8;
+      transform: translateZ(0); /* keeps the rounded clip in Safari while a block tilts */
+    }
+    .deck-card__photo { aspect-ratio: var(--deck-photo-ratio); }
+    .deck-card__photo picture,
+    .trip-sheet__photo picture { display: block; width: 100%; height: 100%; }
+    .deck-card__photo img,
+    .trip-sheet__photo img,
+    .trip-sheet__flyer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Sälen: the photo is mirrored and zoomed in slightly. */
+    img.is-mirrored {
+      transform: scale(-1.1, 1.1);
+      transform-origin: 47.619% 50%;
+      object-position: 0% 50%;
+    }
+    .trip-deck.is-ready .deck-card__media { cursor: pointer; }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .deck-card__photo img { transition: transform 1.1s cubic-bezier(0.22, 0.61, 0.36, 1); }
+      .deck-card:hover .deck-card__photo img { transform: scale(1.06); }
+      .deck-card:hover .deck-card__photo img.is-mirrored { transform: scale(-1.16, 1.16); }
+    }
+    /* Snow over the photo until it is swept off, left to right
+       (js/reizen-deck.js). The soft left edge is the sweep. */
+    .deck-card__curtain {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -35%;
+      z-index: 1;
+      width: 135%;
+      background: linear-gradient(90deg, rgba(246, 249, 250, 0) 0%, #f6f9fa 26%, #e2eaed 100%);
+      pointer-events: none;
+    }
+
+    .deck-card__incl,
+    .deck-card__price,
+    .deck-card__zoom {
+      position: absolute;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--ink);
+    }
+    .deck-card__incl {
+      top: 0.6rem;
+      left: 0.6rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      max-width: calc(100% - 4.5rem);
+      padding: 0.3rem 0.65rem 0.3rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .deck-card__incl svg {
+      flex: 0 0 auto;
+      width: 2.1rem;
+      height: 0.9rem;
+      fill: none;
+      stroke: var(--warm-deep);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .deck-card__price {
+      left: 0.6rem;
+      bottom: 0.6rem;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      padding: 0.5rem 0.9rem 0.55rem;
+      border-radius: 999px;
+      font-family: var(--display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .deck-card__price small {
+      font-family: var(--sans);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: var(--ink-soft);
+    }
+    .deck-card__zoom {
+      top: 0.6rem;
+      right: 0.6rem;
+      display: none;
+      place-items: center;
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+    }
+    .trip-deck.is-ready .deck-card__zoom { display: grid; }
+    .deck-card__zoom svg,
+    .deck-card__more-icon svg,
+    .trip-sheet__close svg {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .deck-card__zoom svg { width: 1rem; height: 1rem; }
+    @media (hover: hover) {
+      .deck-card__photo:hover .deck-card__zoom svg { transform: scale(1.15); }
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .deck-card__incl,
+      .deck-card__price,
+      .deck-card__zoom {
+        background: rgba(255, 255, 255, 0.74);
+        -webkit-backdrop-filter: blur(12px) saturate(160%);
+        backdrop-filter: blur(12px) saturate(160%);
+      }
+    }
+
+    /* Prices roll into place like a counter (js/reizen-deck.js); the real
+       text is restored once they have landed. */
+    .odo { display: inline-flex; }
+    .odo__face { display: inline-flex; align-items: flex-start; }
+    .odo__char,
+    .odo__digit,
+    .odo__reel > span {
+      display: block;
+      height: 1em;
+      line-height: 1;
+    }
+    .odo__digit { overflow: hidden; }
+    .odo__reel { display: flex; flex-direction: column; }
+
+    .deck-card__body {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      padding: 0.95rem 0.6rem 0.4rem;
+    }
+    .deck-card__region,
+    .trip-sheet__region {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--warm-deep);
+    }
+    .deck-card__region::before,
+    .trip-sheet__region::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+    .deck-card__title {
+      margin-top: 0.3rem;
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+    .deck-card__text {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      text-wrap: pretty;
+    }
+    .deck-card__text p + p { margin-top: 0.5em; }
+    .trip-deck.is-ready .deck-card__text p + p,
+    .trip-deck.is-ready .deck-card__fact--more { display: none; }
+
+    .deck-card__more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: fit-content;
+      min-height: 2.75rem;
+      margin: 0.15rem 0 -0.45rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--warm-deep);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .deck-card__more[hidden] { display: none; }
+    .deck-card__more-icon {
+      display: grid;
+      place-items: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 1.5px solid currentColor;
+      border-radius: 50%;
+    }
+    .deck-card__more-icon svg { width: 0.7rem; height: 0.7rem; stroke-width: 2.2; }
+    @media (hover: hover) {
+      .deck-card__more:hover .deck-card__more-icon svg { transform: rotate(90deg); }
+    }
+
+    .deck-card__facts,
+    .trip-sheet__facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.4rem;
+      margin: 0.9rem 0 0;
+    }
+    .deck-card__facts > div,
+    .trip-sheet__facts > div {
+      min-width: 0;
+      padding: 0.55rem 0.75rem 0.6rem;
+      border-radius: 0.95rem;
+      background: var(--tile, rgba(229, 237, 240, 0.72));
+    }
+    .deck-card__facts dt,
+    .trip-sheet__facts dt {
+      font-size: 0.72rem;
+      line-height: 1.3;
+      color: var(--ink-soft);
+    }
+    .deck-card__facts dd,
+    .trip-sheet__facts dd {
+      margin: 0.15rem 0 0;
+      font-size: 0.85rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .deck-card__actions,
+    .trip-sheet__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1.1rem;
+    }
+    .deck-card__actions { margin-top: auto; padding-top: 1rem; }
+    .deck-card__actions .btn { padding: 0.75rem 1.2rem; font-size: 0.9rem; }
+
+    /* Light that follows the mouse over a block (added by the script). */
+    .deck-card__glare {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      overflow: hidden;
+      border-radius: inherit;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .deck-card__glare > span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 26rem;
+      height: 26rem;
+      margin: -13rem 0 0 -13rem;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(255, 255, 255, 0.38), color-mix(in srgb, var(--accent) 14%, transparent) 55%, transparent);
+    }
+    /* A glint of light that slides over a block, like sun on ice. */
+    .deck-sheen {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      overflow: hidden;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .deck-sheen > span {
+      position: absolute;
+      top: -10%;
+      bottom: -10%;
+      left: 0;
+      width: 40%;
+      background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.28) 42%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.28) 58%, rgba(255, 255, 255, 0) 100%);
+      transform: translateX(-160%);
+    }
+
+    /* ---- Group trips: a dark glass panel below the package trips -------- */
+    .deck-group {
+      --focus-ring: var(--warm);
+      position: relative;
+      margin-top: 3rem;
+      padding: 1.5rem 1rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 2rem;
+      background: linear-gradient(155deg, rgba(16, 38, 54, 0.95), rgba(5, 13, 8, 0.92));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2.5rem 5rem -3rem rgba(5, 13, 8, 0.7);
+      color: #fff;
+    }
+    .deck-group__head { padding-inline: 0.25rem; }
+    .deck-group__title {
+      margin-top: 0.75rem;
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      text-wrap: balance;
+    }
+    .deck-group__lede {
+      max-width: 42ch;
+      margin-top: 0.9rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.76);
+      text-wrap: pretty;
+    }
+    .deck-group__lede + .deck-group__lede { margin-top: 0.6rem; }
+    .deck-group__list {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 40rem) {
+      .deck-group__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (min-width: 48rem) {
+      .deck-group { padding: 2rem 1.5rem 1.5rem; }
+    }
+    @media (min-width: 64rem) {
+      .deck-group {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        gap: 2.5rem;
+        margin-top: 4rem;
+        padding: 2.25rem;
+      }
+      .deck-group__head { padding: 0.5rem 0 0; }
+      .deck-group__list { margin-top: 0; gap: 1.25rem; }
+    }
+
+    .group-ticket { display: flex; min-width: 0; }
+    .group-ticket__shell {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 1.5rem;
+      background: rgba(255, 255, 255, 0.07);
+      transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1), background-color 0.25s;
+    }
+    @media (hover: hover) {
+      .group-ticket:hover .group-ticket__shell {
+        transform: translateY(-4px);
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+    .group-ticket__media {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      border-radius: 1.1rem;
+      background: #1d2a33;
+      transform: translateZ(0);
+    }
+    .group-ticket__media picture { display: block; width: 100%; height: 100%; }
+    .group-ticket__media img { width: 100%; height: 100%; object-fit: cover; }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .group-ticket__media img { transition: transform 1.1s cubic-bezier(0.22, 0.61, 0.36, 1); }
+      .group-ticket:hover .group-ticket__media img { transform: scale(1.05); }
+    }
+    .group-ticket__tag {
+      position: absolute;
+      top: 0.6rem;
+      left: 0.6rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(5, 13, 8, 0.62);
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    .group-ticket__tag .dot {
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 50%;
+      background: var(--warm);
+    }
+    .group-ticket__body {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      padding: 1rem 0.6rem 0.5rem;
+    }
+    .group-ticket__title {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+    }
+    .group-ticket__dates {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.9rem;
+    }
+    .date-chip {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 3.3rem;
+      padding: 0.45rem 0.5rem 0.5rem;
+      border-radius: 0.95rem;
+      background: #fff;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .date-chip--end { background: var(--warm); }
+    .date-chip__wd {
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(5, 13, 8, 0.72);
+    }
+    .date-chip__day {
+      margin-top: 0.2rem;
+      font-family: var(--display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .group-ticket__to { font-size: 0.8rem; color: rgba(255, 255, 255, 0.62); }
+    .group-ticket__month {
+      margin-left: 0.25rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.88);
+    }
+    .group-ticket__stub {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.25rem 1rem;
+      margin-top: 1rem;
+      padding-top: 0.9rem;
+      border-top: 1.5px dashed rgba(255, 255, 255, 0.22);
+    }
+    .group-ticket__price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.72);
+    }
+    .group-ticket__amount {
+      font-family: var(--display);
+      font-size: 1.9rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      color: #fff;
+    }
+    .group-ticket__terms { font-size: 0.82rem; color: rgba(255, 255, 255, 0.72); }
+    .group-ticket__incl {
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.76);
+    }
+    .group-ticket__incl strong { font-weight: 600; color: #fff; }
+    .group-ticket__actions { margin-top: auto; padding-top: 1.1rem; }
+    @media (hover: hover) and (pointer: fine) {
+      .group-ticket__tag {
+        -webkit-backdrop-filter: blur(10px) saturate(150%);
+        backdrop-filter: blur(10px) saturate(150%);
+      }
+    }
+
+    /* Blocks wait for the script to bring them in. If it never runs, they
+       show up after 3 seconds anyway. */
+    @media (prefers-reduced-motion: no-preference) {
+      .js .deck-card,
+      .js .deck-note,
+      .js .deck-group {
+        opacity: 0;
+        animation: deck-failsafe 0.01s linear 3s forwards;
+      }
+      .deck-motion .deck-card,
+      .deck-motion .deck-note,
+      .deck-motion .deck-group { animation: none; }
+      .deck-still .deck-card,
+      .deck-still .deck-note,
+      .deck-still .deck-group { opacity: 1; animation: none; }
+    }
+    @keyframes deck-failsafe { to { opacity: 1; } }
+
+    /* ---- The sheet: one trip in full ---------------------------------- */
+    .trip-sheet {
+      --accent: var(--warm-deep);
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      overflow: hidden;
+      background: transparent;
+      color: var(--ink);
+    }
+    .trip-sheet::backdrop { background: transparent; }
+    .trip-sheet[open] {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .trip-sheet__scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(5, 13, 8, 0.5);
+    }
+    .trip-sheet__panel {
+      position: relative;
+      width: 100%;
+      max-height: calc(100% - 1.25rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 0.5rem 0.5rem 1.75rem;
+      border-radius: 1.75rem 1.75rem 0 0;
+      background: linear-gradient(170deg, #ffffff, #f2f6f7);
+    }
+    /* Zero-height sticky bar: the close button stays in reach while the
+       sheet scrolls. */
+    .trip-sheet__bar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      justify-content: flex-end;
+      height: 0;
+    }
+    .trip-sheet__close {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      margin: 0.6rem 0.6rem 0 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      box-shadow: 0 0.5rem 1.25rem -0.5rem rgba(5, 13, 8, 0.45);
+    }
+    .trip-sheet__close svg { width: 1.1rem; height: 1.1rem; stroke-width: 2; }
+    @media (hover: hover) {
+      .trip-sheet__close:hover svg { transform: rotate(90deg); }
+    }
+    .trip-sheet__media {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+    .trip-sheet__photo--main { grid-column: 1 / -1; aspect-ratio: var(--deck-photo-ratio); }
+    .trip-sheet__photo--thumb { aspect-ratio: 4 / 3; }
+    .trip-sheet__photo--thumb:nth-child(2):last-child { grid-column: 1 / -1; aspect-ratio: 16 / 7; }
+    .trip-sheet__body { padding: 1.25rem 0.75rem 0; }
+    .trip-sheet__title {
+      margin-top: 0.35rem;
+      font-family: var(--display);
+      font-size: clamp(1.9rem, 5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+    .trip-sheet__text {
+      max-width: 56ch;
+      margin-top: 0.85rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      text-wrap: pretty;
+    }
+    .trip-sheet__text p + p { margin-top: 0.6em; }
+    .trip-sheet__text strong { font-weight: 600; color: var(--ink); }
+    .trip-sheet__facts { margin-top: 1.25rem; gap: 0.45rem; }
+    .trip-sheet__actions { margin-top: 1.5rem; gap: 0.6rem 1.25rem; }
+
+    /* The photo that flies between block and sheet. */
+    .trip-sheet__flyer {
+      position: fixed;
+      z-index: 10;
+      overflow: hidden;
+      border-radius: 1.3rem;
+      background: #dbe4e8;
+      transform-origin: 0 0;
+      pointer-events: none;
+    }
+
+    @media (min-width: 56rem) {
+      .trip-sheet[open] { align-items: center; padding: 2rem; }
+      .trip-sheet__panel {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+        column-gap: 2.25rem;
+        width: min(70rem, 100%);
+        max-height: 100%;
+        padding: 0.6rem;
+        border-radius: 2rem;
+        box-shadow: 0 2.5rem 5rem -2rem rgba(5, 13, 8, 0.5);
+      }
+      .trip-sheet__bar { grid-column: 1 / -1; }
+      .trip-sheet__media { position: sticky; top: 0; align-self: start; }
+      .trip-sheet__body { padding: 3rem 2rem 1.75rem 0; }
+    }
+    @media (min-width: 56rem) and (hover: hover) and (pointer: fine) {
+      .trip-sheet__scrim {
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+      }
+    }
+
+    /* While the sheet is open the page behind it does not scroll. The
+       gutter keeps the page from shifting where scrollbars take room. */
+    html.sheet-open { overflow: hidden; }
+    html.sheet-open body { padding-right: var(--sheet-gutter, 0px); }
+    html.sheet-open .site-header { right: var(--sheet-gutter, 0px); }
   </style>
   <script type="application/ld+json">
   {
@@ -147,7 +1060,7 @@
 <body>
   <a class="skip-link" href="#main">Ga naar de inhoud</a>
 
-  <header class="site-header">
+  <header class="site-header site-header--on-light">
     <div class="wrap site-header__row">
       <a class="site-header__logo" href="./" aria-label="Novakse Reizen - naar de homepage">
         <img class="logo-mark" src="images/logo-mark.webp" alt="" width="401" height="600" />
@@ -187,513 +1100,491 @@
   </header>
 
   <main id="main">
-    <!-- 1. Paginakop -->
-    <section class="page-hero" id="top">
-      <picture><source type="image/avif" srcset="images/hero-baan-zonsondergang-480.avif 480w, images/hero-baan-zonsondergang-800.avif 800w, images/hero-baan-zonsondergang-1200.avif 1200w, images/hero-baan-zonsondergang-1600.avif 1600w, images/hero-baan-zonsondergang.avif 1920w" sizes="100vw" /><source type="image/webp" srcset="images/hero-baan-zonsondergang-480.webp 480w, images/hero-baan-zonsondergang-800.webp 800w, images/hero-baan-zonsondergang-1200.webp 1200w, images/hero-baan-zonsondergang-1600.webp 1600w, images/hero-baan-zonsondergang.webp 1920w" sizes="100vw" /><img class="page-hero__bg" src="images/hero-baan-zonsondergang.jpg" alt="Geveegde schaatsbaan over een bevroren meer bij zonsondergang" fetchpriority="high" srcset="images/hero-baan-zonsondergang-480.jpg 480w, images/hero-baan-zonsondergang-800.jpg 800w, images/hero-baan-zonsondergang-1200.jpg 1200w, images/hero-baan-zonsondergang-1600.jpg 1600w, images/hero-baan-zonsondergang.jpg 1920w" sizes="100vw" /></picture>
-      <div class="wrap page-hero__inner">
-        <span class="eyebrow eyebrow--light"><span class="dot"></span>Onze reizen</span>
-        <h1 class="page-hero__title">Ontdek de mooiste natuurijsbestemmingen van Scandinavië</h1>
-        <p class="page-hero__lede">Schaats op prachtige natuurijsbanen in Zweden en Finland, of ontdek de Weissensee in Oostenrijk. Bij Novakse vind je bijzondere schaatsreizen naar plekken waar natuur, rust en schaatsplezier samenkomen.</p>
-        <a class="page-hero__rating" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener"
-           aria-label="5,0 van de 5 sterren op basis van 25 Google-reviews, bekijk ze op Google Maps">
-          <span class="page-hero__rating-g" aria-hidden="true"><svg viewBox="0 0 48 48"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg></span>
-          <span class="page-hero__rating-stars" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg></span>
-          <span class="page-hero__rating-score" aria-hidden="true">5,0</span>
-          <span class="page-hero__rating-text" aria-hidden="true">25 Google-reviews</span>
-        </a>
+    <!-- 1-3. Top of the page and de reizen: one glass panel with the
+         heading, rating, photo and trip search, then every package trip as
+         its own glass block in a grid over a blurred copy of the hero
+         photo, then the group trips. Styles in the <style data-deck-css>
+         block above; "Lees meer", the sheet and the motion in
+         js/reizen-deck.js. Without JavaScript each block shows its full
+         text and facts. -->
+    <section class="trip-deck" aria-labelledby="trips-title" data-trip-deck>
+      <div class="trip-deck__stage" aria-hidden="true">
+        <picture class="trip-deck__backdrop"><source type="image/webp" srcset="images/reizen-stage-blur.webp" /><img src="images/reizen-stage-blur.jpg" alt="" width="960" height="678" decoding="async" /></picture>
       </div>
-    </section>
 
-    <!-- 3a. Heading for the trips, kept outside the trip map section. The
-         short intro sits below the trips (.trip-map__outro). -->
-    <div class="trips-head">
       <div class="wrap">
-        <span class="eyebrow eyebrow--deep"><span class="dot"></span>Pakketreizen</span>
-        <h2 class="h-section">Onze schaatsreizen</h2>
-      </div>
-    </div>
+        <!-- Top of the page: heading, Google rating, photo and the trip
+             search in one glass panel. -->
+        <div class="deck-top">
+          <div class="deck-top__intro">
+            <h1 class="sr-only">Ontdek de mooiste natuurijsbestemmingen van Scandinavië</h1>
+            <span class="eyebrow eyebrow--deep"><span class="dot"></span>Pakketreizen</span>
+            <h2 class="deck-top__title" id="trips-title"><span>Onze schaatsreizen</span></h2>
+            <a class="page-hero__rating page-hero__rating--light" href="https://www.google.com/maps/place/Novakse/@52.8762321,6.1480846,14z/data=!4m6!3m5!1s0x47c8f59f67ffe599:0xfa61fd905e907f91!8m2!3d52.8763359!4d6.1467795!16s%2Fg%2F11vls_w_np" target="_blank" rel="noopener"
+               aria-label="5,0 van de 5 sterren op basis van 25 Google-reviews, bekijk ze op Google Maps">
+               <span class="page-hero__rating-g" aria-hidden="true"><svg viewBox="0 0 48 48"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg></span>
+               <span class="page-hero__rating-stars" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4 6.2 20.4l1.1-6.4L2.6 9.4l6.5-.9z"/></svg></span>
+               <span class="page-hero__rating-score" aria-hidden="true">5,0</span>
+               <span class="page-hero__rating-text" aria-hidden="true">25 Google-reviews</span>
+               </a>
+          </div>
+          <div class="deck-top__photo">
+            <picture><source type="image/avif" srcset="images/hero-baan-zonsondergang-480.avif 480w, images/hero-baan-zonsondergang-800.avif 800w, images/hero-baan-zonsondergang-1200.avif 1200w, images/hero-baan-zonsondergang-1600.avif 1600w, images/hero-baan-zonsondergang.avif 1920w" sizes="(min-width: 80rem) 42rem, (min-width: 48rem) 55vw, calc(100vw - 2rem)" /><source type="image/webp" srcset="images/hero-baan-zonsondergang-480.webp 480w, images/hero-baan-zonsondergang-800.webp 800w, images/hero-baan-zonsondergang-1200.webp 1200w, images/hero-baan-zonsondergang-1600.webp 1600w, images/hero-baan-zonsondergang.webp 1920w" sizes="(min-width: 80rem) 42rem, (min-width: 48rem) 55vw, calc(100vw - 2rem)" /><img src="images/hero-baan-zonsondergang.jpg" alt="Geveegde schaatsbaan over een bevroren meer bij zonsondergang" fetchpriority="high" srcset="images/hero-baan-zonsondergang-480.jpg 480w, images/hero-baan-zonsondergang-800.jpg 800w, images/hero-baan-zonsondergang-1200.jpg 1200w, images/hero-baan-zonsondergang-1600.jpg 1600w, images/hero-baan-zonsondergang.jpg 1920w" sizes="(min-width: 80rem) 42rem, (min-width: 48rem) 55vw, calc(100vw - 2rem)" /></picture>
+          </div>
 
-    <!-- 3. De reizen: one swept ice-rink line with a stop per trip, and one
-         horizontal scroll-snap row with every trip side by side (the next
-         trip peeks in on the right). Without JavaScript the row still
-         swipes and the stops are plain anchor links; js/reizen.js keeps
-         line, row, buttons and counter in sync (see css/reizen.css). -->
-    <section class="trip-map" id="bestemmingen" data-trip-map>
-      <div class="wrap">
-        <div class="trip-map__rail">
-          <div class="trip-map__track">
-            <svg class="trip-map__line" viewBox="0 8 400 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-              <defs>
-                <linearGradient id="tripMapGradient" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#002845" />
-                  <stop offset="25%" stop-color="#6bbbd0" />
-                  <stop offset="37.5%" stop-color="#f3ecd8" />
-                  <stop offset="50%" stop-color="#fff3bd" />
-                  <stop offset="75%" stop-color="#ffcc77" />
-                  <stop offset="100%" stop-color="#ff761a" />
-                </linearGradient>
-              </defs>
-              <path class="trip-map__lane" d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
-              <path class="trip-map__stroke" d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
-            </svg>
-            <ul class="trip-map__stops" aria-label="Kies een reis">
-              <li class="trip-map__item">
-                <a class="trip-map__stop" id="tab-finland" href="#finland">
-                  <span class="trip-map__marker" aria-hidden="true"></span>
-                  <span class="trip-map__name">Punkaharju</span>
-                  <span class="trip-map__country">Finland</span>
-                  <span class="trip-map__price">Vanaf €895</span>
-                </a>
-              </li>
-              <li class="trip-map__item">
-                <a class="trip-map__stop" id="tab-orsa" href="#orsa">
-                  <span class="trip-map__marker" aria-hidden="true"></span>
-                  <span class="trip-map__name">Orsa</span>
-                  <span class="trip-map__country">Zweden</span>
-                  <span class="trip-map__price">Vanaf €995</span>
-                </a>
-              </li>
-              <li class="trip-map__item">
-                <a class="trip-map__stop" id="tab-falun" href="#falun">
-                  <span class="trip-map__marker" aria-hidden="true"></span>
-                  <span class="trip-map__name">Falun</span>
-                  <span class="trip-map__country">Zweden</span>
-                  <span class="trip-map__price">Vanaf €995</span>
-                </a>
-              </li>
-              <li class="trip-map__item">
-                <a class="trip-map__stop" id="tab-wellness" href="#wellness">
-                  <span class="trip-map__marker" aria-hidden="true"></span>
-                  <span class="trip-map__name">Wellness &amp; schaatsen</span>
-                  <span class="trip-map__country">Zweden</span>
-                  <span class="trip-map__price">Vanaf €1.395</span>
-                </a>
-              </li>
-              <li class="trip-map__item">
-                <a class="trip-map__stop" id="tab-gidsreis-finland" href="#gidsreis-finland">
-                  <span class="trip-map__marker" aria-hidden="true"></span>
-                  <span class="trip-map__name">Gidsreis Finland</span>
-                  <span class="trip-map__country">Helsinki</span>
-                  <span class="trip-map__price">Op aanvraag</span>
-                </a>
-              </li>
-              <li class="trip-map__item">
-                <a class="trip-map__stop" id="tab-weissensee" href="#weissensee">
-                  <span class="trip-map__marker" aria-hidden="true"></span>
-                  <span class="trip-map__name">Weissensee</span>
-                  <span class="trip-map__country">Oostenrijk</span>
-                  <span class="trip-map__price">Vanaf €1.095</span>
-                </a>
-              </li>
-              <li class="trip-map__item">
-                <a class="trip-map__stop" id="tab-lulea" href="#lulea">
-                  <span class="trip-map__marker" aria-hidden="true"></span>
-                  <span class="trip-map__name">Luleå</span>
-                  <span class="trip-map__country">Zweden</span>
-                  <span class="trip-map__price">Vanaf €1.095</span>
-                </a>
-              </li>
-              <li class="trip-map__item">
-                <a class="trip-map__stop" id="tab-salen" href="#salen">
-                  <span class="trip-map__marker" aria-hidden="true"></span>
-                  <span class="trip-map__name">Dagtocht vanuit Sälen</span>
-                  <span class="trip-map__country">Zweden</span>
-                  <span class="trip-map__price">Vanaf €90</span>
-                </a>
-              </li>
-              <li class="trip-map__item">
-                <a class="trip-map__stop" id="tab-groepsreis" href="#groepsreis">
-                  <span class="trip-map__marker" aria-hidden="true"></span>
-                  <span class="trip-map__name">Groepsreizen</span>
-                  <span class="trip-map__country">Orsa &amp; Falun</span>
-                  <span class="trip-map__price">€1.295 p.p.</span>
-                </a>
-              </li>
-            </ul>
+          <!-- Reiszoeker: geeft bestemming, datums en aantal reizigers door aan
+               boeken.html. Geen live beschikbaarheid - het is een keuzebalk. Het
+               schaatsseizoen staat in data-season-start en data-season-end. -->
+          <div class="trip-search-dock">
+            <div class="wrap">
+              <form class="trip-search" action="boeken.html" method="get"
+                    data-season-start="2026-12-18" data-season-end="2027-03-15">
+                <p class="trip-search__title">Stel je schaatsreis samen</p>
+
+                <div class="trip-search__fields">
+                  <div class="trip-search__field">
+                    <label class="sr-only" for="tsReis">Bestemming</label>
+                    <div class="trip-search__control">
+                      <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+                      <select class="trip-search__input" id="tsReis" name="reis">
+                        <option value="" data-target="reizen.html#bestemmingen">Alle bestemmingen</option>
+                        <option value="finland" data-target="finland.html#prijzen">Punkaharju, Finland</option>
+                        <option value="orsa" data-target="orsa.html#data-en-prijs">Orsa, Zweden</option>
+                        <option value="falun" data-target="falun.html#data-en-prijs">Falun, Zweden</option>
+                        <option value="wellness" data-target="wellness.html#data-en-prijs">Wellness &amp; schaatsen, Zweden</option>
+                        <option value="weissensee" data-target="weissensee.html#data-en-prijs">Weissensee, Oostenrijk</option>
+                        <option value="lulea" data-target="lulea.html#data-en-prijs">Luleå, Zweden</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Zonder JavaScript blijven dit twee gewone datumvelden; met
+                       JavaScript worden ze verborgen en komt er een kalender voor in
+                       de plaats (zie js/trip-search.js). -->
+                  <div class="trip-search__field trip-search__field--native">
+                    <label class="trip-search__label" for="tsVan">Aankomst</label>
+                    <div class="trip-search__control">
+                      <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
+                      <input class="trip-search__input" type="date" id="tsVan" name="van" />
+                    </div>
+                  </div>
+
+                  <div class="trip-search__field trip-search__field--native">
+                    <label class="trip-search__label" for="tsTot">Vertrek</label>
+                    <div class="trip-search__control">
+                      <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
+                      <input class="trip-search__input" type="date" id="tsTot" name="tot" />
+                    </div>
+                  </div>
+
+                  <div class="trip-search__field trip-search__field--persons">
+                    <span class="sr-only" id="tsPersonenLabel">Reizigers</span>
+                    <div class="trip-search__control trip-search__stepper">
+                      <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20.5c0-4 3.2-7 7.2-7s7.2 3 7.2 7"/></svg>
+                      <button type="button" class="trip-search__step-btn" data-persons="minus" aria-label="Eén reiziger minder">−</button>
+                      <input class="trip-search__count" type="number" id="tsPersonen" name="personen" value="2" min="1" max="12" inputmode="numeric" aria-labelledby="tsPersonenLabel" />
+                      <button type="button" class="trip-search__step-btn" data-persons="plus" aria-label="Eén reiziger meer">+</button>
+                    </div>
+                  </div>
+
+                  <button class="trip-search__submit" type="submit">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8L20 20"/></svg>
+                    <span>Bekijk je reis</span>
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
 
-        <!-- Previous/next trip and the position in the row. Only shown with
-             JavaScript (js/reizen.js); phones keep only the hidden live
-             text (css/reizen.css). -->
-        <div class="trip-map__controls">
-          <p class="trip-map__count"><span aria-hidden="true"><span class="trip-map__count-now">1</span> / <span class="trip-map__count-total">9</span></span><span class="trip-map__count-live sr-only"></span></p>
-          <button type="button" class="trip-map__nav" data-trip-prev aria-label="Vorige reis" aria-controls="tripPanels" disabled>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
-          </button>
-          <button type="button" class="trip-map__nav" data-trip-next aria-label="Volgende reis" aria-controls="tripPanels">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-          </button>
-        </div>
+        <ul class="trip-deck__list" id="bestemmingen" role="list">
+          <li class="trip-deck__item">
+            <article class="deck-card" id="finland" aria-labelledby="finland-title" style="--accent: #0f3d5e">
+              <div class="deck-card__shell">
+                <div class="deck-card__media">
+                  <div class="deck-card__photo">
+                    <picture><source type="image/avif" srcset="images/finland-schaatsbaan-bocht-480.avif 480w, images/finland-schaatsbaan-bocht-800.avif 800w, images/finland-schaatsbaan-bocht-1200.avif 1200w, images/finland-schaatsbaan-bocht.avif 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/finland-schaatsbaan-bocht-480.webp 480w, images/finland-schaatsbaan-bocht-800.webp 800w, images/finland-schaatsbaan-bocht-1200.webp 1200w, images/finland-schaatsbaan-bocht.webp 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img decoding="async" src="images/finland-schaatsbaan-bocht.jpg" alt="Geveegde schaatsbaan die langs de beboste oever van het Saimaameer buigt, met twee schaatsers" srcset="images/finland-schaatsbaan-bocht-480.jpg 480w, images/finland-schaatsbaan-bocht-800.jpg 800w, images/finland-schaatsbaan-bocht-1200.jpg 1200w, images/finland-schaatsbaan-bocht.jpg 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                    <span class="deck-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5"/></svg></span>
+                  </div>
+                  <p class="deck-card__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
+                  <p class="deck-card__price"><small>Vanaf</small> €895</p>
+                </div>
+                <div class="deck-card__body">
+                  <p class="deck-card__region">Punkaharju, Finland</p>
+                  <h3 class="deck-card__title" id="finland-title">Punkaharju</h3>
+                  <div class="deck-card__text">
+                    <p>Schaats door het prachtige Finse merengebied bij Punkaharju. De natuurijsbaan op het Saimaameer loopt door een indrukwekkend winterlandschap, met bossen en bevroren water om je heen.</p>
+                    <p>Je verblijft in een eigen huisje met sauna. Je gaat zelfstandig op pad en bepaalt zelf wanneer en hoe lang je het ijs op gaat.</p>
+                  </div>
+                  <button type="button" class="deck-card__more" aria-haspopup="dialog" aria-controls="tripSheet" hidden><span class="deck-card__more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span>Lees meer<span class="sr-only"> over Punkaharju</span></button>
+                  <dl class="deck-card__facts">
+                    <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
+                    <div><dt>Verblijf</dt><dd>Eigen huisje met sauna</dd></div>
+                    <div class="deck-card__fact--more"><dt>Prijs</dt><dd>Vanaf €895</dd></div>
+                  </dl>
+                  <div class="deck-card__actions">
+                    <a class="btn btn--dark" href="finland.html">Bekijk deze reis</a>
+                    <a class="link-arrow" href="finland.html#prijzen">Boek je reis</a>
+                  </div>
+                </div>
+                <template class="deck-card__gallery">
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/finland-huisjes-winter-480.avif 480w, images/finland-huisjes-winter-800.avif 800w, images/finland-huisjes-winter-1200.avif 1200w, images/finland-huisjes-winter.avif 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/finland-huisjes-winter-480.webp 480w, images/finland-huisjes-winter-800.webp 800w, images/finland-huisjes-winter-1200.webp 1200w, images/finland-huisjes-winter.webp 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/finland-huisjes-winter.jpg" alt="Houten huisjes in de sneeuw tussen de dennen bij Punkaharju" srcset="images/finland-huisjes-winter-480.jpg 480w, images/finland-huisjes-winter-800.jpg 800w, images/finland-huisjes-winter-1200.jpg 1200w, images/finland-huisjes-winter.jpg 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/finland-sauna-ice-hole-480.avif 480w, images/finland-sauna-ice-hole-800.avif 800w, images/finland-sauna-ice-hole-1200.avif 1200w, images/finland-sauna-ice-hole.avif 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/finland-sauna-ice-hole-480.webp 480w, images/finland-sauna-ice-hole-800.webp 800w, images/finland-sauna-ice-hole-1200.webp 1200w, images/finland-sauna-ice-hole.webp 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/finland-sauna-ice-hole.jpg" alt="Saunagasten bij een wak in het ijs naast de buitensauna aan het meer bij Punkaharju" width="1600" height="1066" srcset="images/finland-sauna-ice-hole-480.jpg 480w, images/finland-sauna-ice-hole-800.jpg 800w, images/finland-sauna-ice-hole-1200.jpg 1200w, images/finland-sauna-ice-hole.jpg 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                </template>
+              </div>
+            </article>
+          </li>
+          <li class="trip-deck__item">
+            <article class="deck-card" id="orsa" aria-labelledby="orsa-title" style="--accent: #2f6f8a">
+              <div class="deck-card__shell">
+                <div class="deck-card__media">
+                  <div class="deck-card__photo">
+                    <picture><source type="image/avif" srcset="images/orsa-zwart-ijs-baan-480.avif 480w, images/orsa-zwart-ijs-baan-800.avif 800w, images/orsa-zwart-ijs-baan.avif 1000w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/orsa-zwart-ijs-baan-480.webp 480w, images/orsa-zwart-ijs-baan-800.webp 800w, images/orsa-zwart-ijs-baan.webp 1000w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img decoding="async" src="images/orsa-zwart-ijs-baan.jpg" alt="Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer" srcset="images/orsa-zwart-ijs-baan-480.jpg 480w, images/orsa-zwart-ijs-baan-800.jpg 800w, images/orsa-zwart-ijs-baan.jpg 1000w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                    <span class="deck-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5"/></svg></span>
+                  </div>
+                  <p class="deck-card__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
+                  <p class="deck-card__price"><small>Vanaf</small> €995</p>
+                </div>
+                <div class="deck-card__body">
+                  <p class="deck-card__region">Orsa, Zweden</p>
+                  <h3 class="deck-card__title" id="orsa-title">Orsa</h3>
+                  <div class="deck-card__text">
+                    <p>Schaats op het prachtige Orsameer in Dalarna. Bij goede omstandigheden ligt hier een geveegde baan van ongeveer 15 kilometer.</p>
+                    <p>Je verblijft in je eigen huisje vlak bij het meer. Vlucht, verblijf en vervoer ter plaatse zijn inbegrepen.</p>
+                    <p>Je schaatst zelfstandig, maar bij deze reis kun je een gids op het ijs bijboeken.</p>
+                  </div>
+                  <button type="button" class="deck-card__more" aria-haspopup="dialog" aria-controls="tripSheet" hidden><span class="deck-card__more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span>Lees meer<span class="sr-only"> over Orsa</span></button>
+                  <dl class="deck-card__facts">
+                    <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs mogelijk</dd></div>
+                    <div><dt>Verblijf</dt><dd>Eigen huisje bij het meer</dd></div>
+                    <div class="deck-card__fact--more"><dt>Data</dt><dd>Zelf te bepalen</dd></div>
+                    <div class="deck-card__fact--more"><dt>Prijs</dt><dd>Vanaf €995</dd></div>
+                  </dl>
+                  <div class="deck-card__actions">
+                    <a class="btn btn--dark" href="orsa.html">Bekijk deze reis</a>
+                    <a class="link-arrow" href="orsa.html#data-en-prijs">Boek je reis</a>
+                  </div>
+                </div>
+                <template class="deck-card__gallery">
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/orsa-cabins-winter-480.avif 480w, images/orsa-cabins-winter-800.avif 800w, images/orsa-cabins-winter-1200.avif 1200w, images/orsa-cabins-winter.avif 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/orsa-cabins-winter-480.webp 480w, images/orsa-cabins-winter-800.webp 800w, images/orsa-cabins-winter-1200.webp 1200w, images/orsa-cabins-winter.webp 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/orsa-cabins-winter.jpg" alt="Houten huisjes in de sneeuw bij het bevroren Orsameer in Dalarna" srcset="images/orsa-cabins-winter-480.jpg 480w, images/orsa-cabins-winter-800.jpg 800w, images/orsa-cabins-winter-1200.jpg 1200w, images/orsa-cabins-winter.jpg 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/orsa-baan-mora-480.avif 480w, images/orsa-baan-mora-800.avif 800w, images/orsa-baan-mora.avif 1000w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/orsa-baan-mora-480.webp 480w, images/orsa-baan-mora-800.webp 800w, images/orsa-baan-mora.webp 1000w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/orsa-baan-mora.jpg" alt="Natuurijsbaan bij Orsa, Zweden" srcset="images/orsa-baan-mora-480.jpg 480w, images/orsa-baan-mora-800.jpg 800w, images/orsa-baan-mora.jpg 1000w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                </template>
+              </div>
+            </article>
+          </li>
+          <li class="trip-deck__item">
+            <article class="deck-card" id="falun" aria-labelledby="falun-title" style="--accent: #4b9cb3">
+              <div class="deck-card__shell">
+                <div class="deck-card__media">
+                  <div class="deck-card__photo">
+                    <picture><source type="image/avif" srcset="images/falun-skaters-swept-track-sunset-480.avif 480w, images/falun-skaters-swept-track-sunset-800.avif 800w, images/falun-skaters-swept-track-sunset-1200.avif 1200w, images/falun-skaters-swept-track-sunset.avif 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/falun-skaters-swept-track-sunset-480.webp 480w, images/falun-skaters-swept-track-sunset-800.webp 800w, images/falun-skaters-swept-track-sunset-1200.webp 1200w, images/falun-skaters-swept-track-sunset.webp 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img style="object-position: 50% 20%" decoding="async" src="images/falun-skaters-swept-track-sunset-1200.jpg" alt="Twee schaatsers op een geveegde baan bij Falun tijdens zonsondergang" srcset="images/falun-skaters-swept-track-sunset-480.jpg 480w, images/falun-skaters-swept-track-sunset-800.jpg 800w, images/falun-skaters-swept-track-sunset-1200.jpg 1200w, images/falun-skaters-swept-track-sunset.jpg 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                    <span class="deck-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5"/></svg></span>
+                  </div>
+                  <p class="deck-card__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
+                  <p class="deck-card__price"><small>Vanaf</small> €995</p>
+                </div>
+                <div class="deck-card__body">
+                  <p class="deck-card__region">Falun, Zweden</p>
+                  <h3 class="deck-card__title" id="falun-title">Falun</h3>
+                  <div class="deck-card__text">
+                    <p>Een schaatsreis naar het historische Falun, midden in het Zweedse winterlandschap.</p>
+                    <p>Je gaat met je eigen huurauto op pad en schaatst op natuurijs. Op de achtergrond zie je de karakteristieke rode gebouwen van Falun.</p>
+                    <p>Vlucht, huurauto en verblijf zijn bij de reis inbegrepen.</p>
+                    <p>Ook hier kun je een gids op het ijs bijboeken.</p>
+                  </div>
+                  <button type="button" class="deck-card__more" aria-haspopup="dialog" aria-controls="tripSheet" hidden><span class="deck-card__more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span>Lees meer<span class="sr-only"> over Falun</span></button>
+                  <dl class="deck-card__facts">
+                    <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs mogelijk</dd></div>
+                    <div><dt>Reisduur</dt><dd>Vanaf 4 dagen</dd></div>
+                    <div class="deck-card__fact--more"><dt>Verblijf</dt><dd>Eigen huisjes</dd></div>
+                    <div class="deck-card__fact--more"><dt>Data</dt><dd>Zelf te bepalen</dd></div>
+                    <div class="deck-card__fact--more"><dt>Prijs</dt><dd>Vanaf €995</dd></div>
+                  </dl>
+                  <div class="deck-card__actions">
+                    <a class="btn btn--dark" href="falun.html">Bekijk deze reis</a>
+                    <a class="link-arrow" href="falun.html#data-en-prijs">Boek je reis</a>
+                  </div>
+                </div>
+                <template class="deck-card__gallery">
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/falun-accommodatie-480.avif 480w, images/falun-accommodatie-800.avif 800w, images/falun-accommodatie.avif 900w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/falun-accommodatie-480.webp 480w, images/falun-accommodatie-800.webp 800w, images/falun-accommodatie.webp 900w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/falun-accommodatie.jpg" alt="Accommodatie bij Falun" srcset="images/falun-accommodatie-480.jpg 480w, images/falun-accommodatie-800.jpg 800w, images/falun-accommodatie.jpg 900w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/falun-skaters-sunny-lake-480.avif 480w, images/falun-skaters-sunny-lake-800.avif 800w, images/falun-skaters-sunny-lake.avif 1000w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/falun-skaters-sunny-lake-480.webp 480w, images/falun-skaters-sunny-lake-800.webp 800w, images/falun-skaters-sunny-lake.webp 1000w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/falun-skaters-sunny-lake.jpg" alt="Groepje schaatsers op het bevroren meer bij Falun onder een blauwe lucht" srcset="images/falun-skaters-sunny-lake-480.jpg 480w, images/falun-skaters-sunny-lake-800.jpg 800w, images/falun-skaters-sunny-lake.jpg 1000w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                </template>
+              </div>
+            </article>
+          </li>
+          <li class="trip-deck__item">
+            <article class="deck-card" id="wellness" aria-labelledby="wellness-title" style="--accent: #86b4ba">
+              <div class="deck-card__shell">
+                <div class="deck-card__media">
+                  <div class="deck-card__photo">
+                    <picture><source type="image/avif" srcset="images/wellness-zwembad-480.avif 480w, images/wellness-zwembad-800.avif 800w, images/wellness-zwembad-1200.avif 1200w, images/wellness-zwembad.avif 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/wellness-zwembad-480.webp 480w, images/wellness-zwembad-800.webp 800w, images/wellness-zwembad-1200.webp 1200w, images/wellness-zwembad.webp 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img loading="lazy" decoding="async" src="images/wellness-zwembad-1200.jpg" alt="Binnenzwembad met uitzicht op besneeuwde bomen" srcset="images/wellness-zwembad-480.jpg 480w, images/wellness-zwembad-800.jpg 800w, images/wellness-zwembad-1200.jpg 1200w, images/wellness-zwembad.jpg 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                    <span class="deck-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5"/></svg></span>
+                  </div>
+                  <p class="deck-card__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
+                  <p class="deck-card__price"><small>Vanaf</small> €1.395</p>
+                </div>
+                <div class="deck-card__body">
+                  <p class="deck-card__region">Zweden</p>
+                  <h3 class="deck-card__title" id="wellness-title">Wellness &amp; schaatsen</h3>
+                  <div class="deck-card__text">
+                    <p>Een wintervakantie waarin schaatsen en ontspannen centraal staan.</p>
+                    <p>Je verblijft in een comfortabel hotel met wellness, ontbijt en diner. Met je eigen huurauto rijd je naar het natuurijs, dat op ongeveer 50 minuten van je verblijf ligt.</p>
+                    <p>Overdag lekker naar buiten en het ijs op, daarna heerlijk ontspannen in de wellness. Je bepaalt zelf hoe je je dagen invult.</p>
+                  </div>
+                  <button type="button" class="deck-card__more" aria-haspopup="dialog" aria-controls="tripSheet" hidden><span class="deck-card__more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span>Lees meer<span class="sr-only"> over Wellness &amp; schaatsen</span></button>
+                  <dl class="deck-card__facts">
+                    <div><dt>Verblijf</dt><dd>Hotel met wellness, ontbijt en diner</dd></div>
+                    <div><dt>Schaatsen</dt><dd>Natuurijs op circa 50 minuten rijden</dd></div>
+                    <div class="deck-card__fact--more"><dt>Vervoer</dt><dd>Vlucht en huurauto inbegrepen</dd></div>
+                    <div class="deck-card__fact--more"><dt>Prijs</dt><dd>Vanaf €1.395</dd></div>
+                  </dl>
+                  <div class="deck-card__actions">
+                    <a class="btn btn--dark" href="wellness.html">Bekijk deze reis</a>
+                    <a class="link-arrow" href="wellness.html#data-en-prijs">Boek je reis</a>
+                  </div>
+                </div>
+                <template class="deck-card__gallery">
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/wellness-sauna-480.avif 480w, images/wellness-sauna-800.avif 800w, images/wellness-sauna-1200.avif 1200w, images/wellness-sauna.avif 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/wellness-sauna-480.webp 480w, images/wellness-sauna-800.webp 800w, images/wellness-sauna-1200.webp 1200w, images/wellness-sauna.webp 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img style="object-position: 50% 70%" loading="lazy" decoding="async" src="images/wellness-sauna-1200.jpg" alt="Houten sauna met stoom boven de saunakachel" srcset="images/wellness-sauna-480.jpg 480w, images/wellness-sauna-800.jpg 800w, images/wellness-sauna-1200.jpg 1200w, images/wellness-sauna.jpg 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                </template>
+              </div>
+            </article>
+          </li>
+          <li class="trip-deck__item">
+            <article class="deck-card" id="gidsreis-finland" aria-labelledby="gidsreis-finland-title" style="--accent: #c9aa72">
+              <div class="deck-card__shell">
+                <div class="deck-card__media">
+                  <div class="deck-card__photo">
+                    <picture><source type="image/avif" srcset="images/zwart-ijs-groep-480.avif 480w, images/zwart-ijs-groep-800.avif 800w, images/zwart-ijs-groep-1200.avif 1200w, images/zwart-ijs-groep.avif 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/zwart-ijs-groep-480.webp 480w, images/zwart-ijs-groep-800.webp 800w, images/zwart-ijs-groep-1200.webp 1200w, images/zwart-ijs-groep.webp 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img loading="lazy" decoding="async" src="images/zwart-ijs-groep.jpg" alt="Een kleine groep schaatsers, piepklein op een weids ijsvlak vol scheuren" srcset="images/zwart-ijs-groep-480.jpg 480w, images/zwart-ijs-groep-800.jpg 800w, images/zwart-ijs-groep-1200.jpg 1200w, images/zwart-ijs-groep.jpg 1600w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                    <span class="deck-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5"/></svg></span>
+                  </div>
+                  <p class="deck-card__price">Op aanvraag</p>
+                </div>
+                <div class="deck-card__body">
+                  <p class="deck-card__region">Omgeving Helsinki, Finland</p>
+                  <h3 class="deck-card__title" id="gidsreis-finland-title">Gidsreis Finland</h3>
+                  <div class="deck-card__text">
+                    <p>Een echte gidsreis: met een gids op zoek naar ongerept natuurijs in de omgeving van Helsinki.</p>
+                    <p>Geen geveegde ijsbaan en geen vaste route. We kiezen samen met de gids de plekken waar het ijs op dat moment het beste is.</p>
+                  </div>
+                  <button type="button" class="deck-card__more" aria-haspopup="dialog" aria-controls="tripSheet" hidden><span class="deck-card__more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span>Lees meer<span class="sr-only"> over Gidsreis Finland</span></button>
+                  <dl class="deck-card__facts">
+                    <div><dt>Soort reis</dt><dd>Gidsreis, met een gids</dd></div>
+                    <div class="deck-card__fact--more"><dt>Boeken</dt><dd>Op aanvraag</dd></div>
+                    <div><dt>Prijs</dt><dd>Volgt binnenkort</dd></div>
+                  </dl>
+                  <div class="deck-card__actions">
+                    <a class="btn btn--dark" href="gidsreis-schaatsen-finland.html">Bekijk deze reis</a>
+                    <a class="link-arrow" href="gidsreis-schaatsen-finland.html#aanvraag">Vraag je gidsreis aan</a>
+                  </div>
+                </div>
+                <template class="deck-card__gallery">
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/zwart-ijs-scheuren-480.avif 480w, images/zwart-ijs-scheuren-800.avif 800w, images/zwart-ijs-scheuren-1200.avif 1200w, images/zwart-ijs-scheuren.avif 1280w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/zwart-ijs-scheuren-480.webp 480w, images/zwart-ijs-scheuren-800.webp 800w, images/zwart-ijs-scheuren-1200.webp 1200w, images/zwart-ijs-scheuren.webp 1280w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/zwart-ijs-scheuren.jpg" alt="Zwart natuurijs met lange witte scheuren, in de verte twee schaatsers" srcset="images/zwart-ijs-scheuren-480.jpg 480w, images/zwart-ijs-scheuren-800.jpg 800w, images/zwart-ijs-scheuren-1200.jpg 1200w, images/zwart-ijs-scheuren.jpg 1280w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/schaatser-tegenlicht-480.avif 480w, images/schaatser-tegenlicht-800.avif 800w, images/schaatser-tegenlicht-1200.avif 1200w, images/schaatser-tegenlicht.avif 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/schaatser-tegenlicht-480.webp 480w, images/schaatser-tegenlicht-800.webp 800w, images/schaatser-tegenlicht-1200.webp 1200w, images/schaatser-tegenlicht.webp 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/schaatser-tegenlicht.jpg" alt="Een schaatser tegen de laagstaande zon op gouden ijs, voor een bos" srcset="images/schaatser-tegenlicht-480.jpg 480w, images/schaatser-tegenlicht-800.jpg 800w, images/schaatser-tegenlicht-1200.jpg 1200w, images/schaatser-tegenlicht.jpg 1600w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                </template>
+              </div>
+            </article>
+          </li>
+          <li class="trip-deck__item">
+            <article class="deck-card" id="weissensee" aria-labelledby="weissensee-title" style="--accent: #e39b4c">
+              <div class="deck-card__shell">
+                <div class="deck-card__media">
+                  <div class="deck-card__photo">
+                    <picture><source type="image/avif" srcset="images/weissensee-schaatsers-480.avif 480w, images/weissensee-schaatsers-800.avif 800w, images/weissensee-schaatsers.avif 999w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/weissensee-schaatsers-480.webp 480w, images/weissensee-schaatsers-800.webp 800w, images/weissensee-schaatsers.webp 999w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img style="object-position: 50% 30%" loading="lazy" decoding="async" src="images/weissensee-schaatsers.jpg" alt="Schaatsers op de Weissensee tussen de bergen" srcset="images/weissensee-schaatsers-480.jpg 480w, images/weissensee-schaatsers-800.jpg 800w, images/weissensee-schaatsers.jpg 999w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                    <span class="deck-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5"/></svg></span>
+                  </div>
+                  <p class="deck-card__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
+                  <p class="deck-card__price"><small>Vanaf</small> €1.095</p>
+                </div>
+                <div class="deck-card__body">
+                  <p class="deck-card__region">Weissensee, Oostenrijk</p>
+                  <h3 class="deck-card__title" id="weissensee-title">Weissensee</h3>
+                  <div class="deck-card__text">
+                    <p>Schaats tussen de bergen op de Weissensee in Oostenrijk, op ongeveer 930 meter hoogte.</p>
+                    <p>Het meer heeft een oppervlakte van ongeveer 6,5 km². Bij gunstige omstandigheden ontstaat hier een enorme geprepareerde natuurijsbaan. De Weissensee is vooral bekend als locatie van de Alternatieve Elfstedentocht.</p>
+                    <p>Je schaatst zelfstandig en deelt je dagen zelf in.</p>
+                  </div>
+                  <button type="button" class="deck-card__more" aria-haspopup="dialog" aria-controls="tripSheet" hidden><span class="deck-card__more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span>Lees meer<span class="sr-only"> over Weissensee</span></button>
+                  <dl class="deck-card__facts">
+                    <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
+                    <div><dt>Hoogte</dt><dd>Circa 930 meter</dd></div>
+                    <div class="deck-card__fact--more"><dt>Data</dt><dd>Zelf te bepalen</dd></div>
+                    <div class="deck-card__fact--more"><dt>Prijs</dt><dd>Vanaf €1.095</dd></div>
+                  </dl>
+                  <div class="deck-card__actions">
+                    <a class="btn btn--dark" href="weissensee.html">Bekijk deze reis</a>
+                    <a class="link-arrow" href="weissensee.html#data-en-prijs">Boek je reis</a>
+                  </div>
+                </div>
+                <template class="deck-card__gallery">
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/weissensee-baan-480.avif 480w, images/weissensee-baan-800.avif 800w, images/weissensee-baan.avif 1200w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/weissensee-baan-480.webp 480w, images/weissensee-baan-800.webp 800w, images/weissensee-baan.webp 1200w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/weissensee-baan.jpg" alt="Geveegde natuurijsbaan op de Weissensee" srcset="images/weissensee-baan-480.jpg 480w, images/weissensee-baan-800.jpg 800w, images/weissensee-baan.jpg 1200w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                </template>
+              </div>
+            </article>
+          </li>
+          <li class="trip-deck__item">
+            <article class="deck-card" id="lulea" aria-labelledby="lulea-title" style="--accent: #f2873a">
+              <div class="deck-card__shell">
+                <div class="deck-card__media">
+                  <div class="deck-card__photo">
+                    <picture><source type="image/avif" srcset="images/lulea-ijs-zonsondergang-480.avif 480w, images/lulea-ijs-zonsondergang-800.avif 800w, images/lulea-ijs-zonsondergang-1200.avif 1200w, images/lulea-ijs-zonsondergang-1600.avif 1600w, images/lulea-ijs-zonsondergang.avif 1800w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/lulea-ijs-zonsondergang-480.webp 480w, images/lulea-ijs-zonsondergang-800.webp 800w, images/lulea-ijs-zonsondergang-1200.webp 1200w, images/lulea-ijs-zonsondergang-1600.webp 1600w, images/lulea-ijs-zonsondergang.webp 1800w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img loading="lazy" decoding="async" src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij Luleå" srcset="images/lulea-ijs-zonsondergang-480.jpg 480w, images/lulea-ijs-zonsondergang-800.jpg 800w, images/lulea-ijs-zonsondergang-1200.jpg 1200w, images/lulea-ijs-zonsondergang-1600.jpg 1600w, images/lulea-ijs-zonsondergang.jpg 1800w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                    <span class="deck-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5"/></svg></span>
+                  </div>
+                  <p class="deck-card__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
+                  <p class="deck-card__price"><small>Vanaf</small> €1.095</p>
+                </div>
+                <div class="deck-card__body">
+                  <p class="deck-card__region">Luleå, Zweden</p>
+                  <h3 class="deck-card__title" id="lulea-title">Luleå</h3>
+                  <div class="deck-card__text">
+                    <p>Een bijzondere schaatservaring op de bevroren Botnische Golf.</p>
+                    <p>Bij Luleå ligt een openbare natuurijsroute waar je zelfstandig kunt schaatsen. Je rijdt of schaatst door het winterse landschap langs de kust en geniet van de ruimte en rust van Noord-Zweden.</p>
+                    <p>Deze reis is volledig individueel. Vlucht en hotel zitten in de prijs, je kiest zelf je reisduur en dagindeling.</p>
+                  </div>
+                  <button type="button" class="deck-card__more" aria-haspopup="dialog" aria-controls="tripSheet" hidden><span class="deck-card__more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span>Lees meer<span class="sr-only"> over Luleå</span></button>
+                  <dl class="deck-card__facts">
+                    <div><dt>Soort reis</dt><dd>Individueel en zelfstandig</dd></div>
+                    <div class="deck-card__fact--more"><dt>Reisduur</dt><dd>Zelf te bepalen</dd></div>
+                    <div><dt>Verblijf</dt><dd>Hotel, vlucht inbegrepen</dd></div>
+                    <div class="deck-card__fact--more"><dt>Prijs</dt><dd>Vanaf €1.095</dd></div>
+                  </dl>
+                  <div class="deck-card__actions">
+                    <a class="btn btn--dark" href="lulea.html">Bekijk deze reis</a>
+                    <a class="link-arrow" href="lulea.html#data-en-prijs">Boek je reis</a>
+                  </div>
+                </div>
+                <template class="deck-card__gallery">
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/lulea-berkenbomen-baai-480.avif 480w, images/lulea-berkenbomen-baai-800.avif 800w, images/lulea-berkenbomen-baai-1200.avif 1200w, images/lulea-berkenbomen-baai.avif 1400w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/lulea-berkenbomen-baai-480.webp 480w, images/lulea-berkenbomen-baai-800.webp 800w, images/lulea-berkenbomen-baai-1200.webp 1200w, images/lulea-berkenbomen-baai.webp 1400w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" srcset="images/lulea-berkenbomen-baai-480.jpg 480w, images/lulea-berkenbomen-baai-800.jpg 800w, images/lulea-berkenbomen-baai-1200.jpg 1200w, images/lulea-berkenbomen-baai.jpg 1400w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/lulea-rendiergewei-480.avif 480w, images/lulea-rendiergewei-800.avif 800w, images/lulea-rendiergewei.avif 1200w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/lulea-rendiergewei-480.webp 480w, images/lulea-rendiergewei-800.webp 800w, images/lulea-rendiergewei.webp 1200w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/lulea-rendiergewei.jpg" alt="Rendiergewei in de sneeuw bij Luleå" srcset="images/lulea-rendiergewei-480.jpg 480w, images/lulea-rendiergewei-800.jpg 800w, images/lulea-rendiergewei.jpg 1200w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                </template>
+              </div>
+            </article>
+          </li>
+          <li class="trip-deck__item">
+            <article class="deck-card" id="salen" aria-labelledby="salen-title" style="--accent: #ff761a">
+              <div class="deck-card__shell">
+                <div class="deck-card__media">
+                  <div class="deck-card__photo">
+                    <picture><source type="image/avif" srcset="images/geveegde-baan-schaatsers-480.avif 480w, images/geveegde-baan-schaatsers-800.avif 800w, images/geveegde-baan-schaatsers-1200.avif 1200w, images/geveegde-baan-schaatsers.avif 1366w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/geveegde-baan-schaatsers-480.webp 480w, images/geveegde-baan-schaatsers-800.webp 800w, images/geveegde-baan-schaatsers-1200.webp 1200w, images/geveegde-baan-schaatsers.webp 1366w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img class="is-mirrored" loading="lazy" decoding="async" src="images/geveegde-baan-schaatsers-1200.jpg" alt="Schaatsers op een geveegde baan met sneeuwranden over een bevroren Zweeds meer" srcset="images/geveegde-baan-schaatsers-480.jpg 480w, images/geveegde-baan-schaatsers-800.jpg 800w, images/geveegde-baan-schaatsers-1200.jpg 1200w, images/geveegde-baan-schaatsers.jpg 1366w" sizes="(min-width: 80rem) 23rem, (min-width: 64rem) calc(33vw - 3rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                    <span class="deck-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5"/></svg></span>
+                  </div>
+                  <p class="deck-card__price"><small>Vanaf</small> €90</p>
+                </div>
+                <div class="deck-card__body">
+                  <p class="deck-card__region">Sälen, Stöten en Tandådalen, Zweden</p>
+                  <h3 class="deck-card__title" id="salen-title">Dagtocht vanuit Sälen, Stöten en Tandådalen</h3>
+                  <div class="deck-card__text">
+                    <p>Ben je in de winter in Sälen, Stöten of Tandådalen? Verruil dan een dag je ski's voor schaatsen.</p>
+                    <p>Op ongeveer 1 uur en 10 minuten rijden ligt een prachtige geveegde natuurijsbaan van ongeveer 12 kilometer enkele reis. Je schaatst door het Zweedse winterlandschap en kunt onderweg genieten van de omgeving.</p>
+                    <p>Je kunt kiezen voor een halve of een hele dag.</p>
+                    <p>Tijdens deze dagtocht ga je samen met een gids het ijs op. Novakse is niet verantwoordelijk voor de veiligheid op het ijs.</p>
+                  </div>
+                  <button type="button" class="deck-card__more" aria-haspopup="dialog" aria-controls="tripSheet" hidden><span class="deck-card__more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span>Lees meer<span class="sr-only"> over Dagtocht vanuit Sälen, Stöten en Tandådalen</span></button>
+                  <dl class="deck-card__facts">
+                    <div><dt>Soort reis</dt><dd>Dagtocht, halve of hele dag</dd></div>
+                    <div><dt>Data</dt><dd>10 januari t/m 20 februari 2027</dd></div>
+                    <div class="deck-card__fact--more"><dt>Prijs</dt><dd>Vanaf €90</dd></div>
+                  </dl>
+                  <div class="deck-card__actions">
+                    <a class="btn btn--dark" href="schaatsen-salen.html">Bekijk deze reis</a>
+                    <a class="link-arrow" href="schaatsen-salen.html#boeken">Boek je dagtocht</a>
+                  </div>
+                </div>
+                <template class="deck-card__gallery">
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/kampvuur-fika-ijs-480.avif 480w, images/kampvuur-fika-ijs-800.avif 800w, images/kampvuur-fika-ijs.avif 1200w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/kampvuur-fika-ijs-480.webp 480w, images/kampvuur-fika-ijs-800.webp 800w, images/kampvuur-fika-ijs.webp 1200w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img style="object-position: 40% 50%" loading="lazy" decoding="async" src="images/kampvuur-fika-ijs.jpg" alt="Twee schaatsers warmen zich op en roosteren eten bij een kampvuur tussen de dennen, naast het ijs" srcset="images/kampvuur-fika-ijs-480.jpg 480w, images/kampvuur-fika-ijs-800.jpg 800w, images/kampvuur-fika-ijs.jpg 1200w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                <picture class="trip-sheet__photo trip-sheet__photo--thumb"><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /><img loading="lazy" decoding="async" src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 70rem) 18rem, (min-width: 56rem) 26vw, 50vw" /></picture>
+                </template>
+              </div>
+            </article>
+          </li>
+          <li class="trip-deck__item trip-deck__item--note">
+            <div class="deck-note">
+              <p>Van Zweedse meren tussen de besneeuwde bossen tot het indrukwekkende ijs van de Botnische Golf en de Weissensee tussen de bergen. Iedere bestemming heeft zijn eigen sfeer en mogelijkheden.</p>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Group trips: two fixed-date trips, each with its own page, as a
+             dark glass panel below the package trips. -->
+        <section class="deck-group" id="groepsreizen" aria-labelledby="groepsreizen-title">
+          <div class="deck-group__head">
+            <span class="eyebrow eyebrow--warm"><span class="dot"></span>Groepsreizen</span>
+            <h2 class="deck-group__title" id="groepsreizen-title">Samen schaatsen op een vaste datum</h2>
+            <p class="deck-group__lede">Bij een groepsreis reis je op een vaste datum, met begeleiding. Je meldt je aan, maar niet alleen (vanaf 2 personen).</p>
+            <p class="deck-group__lede">Liever in je eigen tempo en op je eigen datums? Kies dan hierboven een pakketreis. Je datums kies je zelf in de kalender.</p>
+          </div>
+          <div class="deck-group__list">
+            <article class="group-ticket" aria-labelledby="groepsreis-orsa-title">
+              <div class="group-ticket__shell">
+                <div class="group-ticket__media">
+                  <picture><source type="image/avif" srcset="images/orsa-group-silhouettes-black-ice-480.avif 480w, images/orsa-group-silhouettes-black-ice-800.avif 800w, images/orsa-group-silhouettes-black-ice-1200.avif 1200w, images/orsa-group-silhouettes-black-ice.avif 1600w" sizes="(min-width: 80rem) 24rem, (min-width: 64rem) calc(33vw - 3.5rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/orsa-group-silhouettes-black-ice-480.webp 480w, images/orsa-group-silhouettes-black-ice-800.webp 800w, images/orsa-group-silhouettes-black-ice-1200.webp 1200w, images/orsa-group-silhouettes-black-ice.webp 1600w" sizes="(min-width: 80rem) 24rem, (min-width: 64rem) calc(33vw - 3.5rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img src="images/orsa-group-silhouettes-black-ice-800.jpg" alt="Vijf schaatsers staan als silhouet in tegenlicht op glad donker ijs, met lange schaduwen en bomen op de oever" width="1600" height="1200" loading="lazy" decoding="async" srcset="images/orsa-group-silhouettes-black-ice-480.jpg 480w, images/orsa-group-silhouettes-black-ice-800.jpg 800w, images/orsa-group-silhouettes-black-ice-1200.jpg 1200w, images/orsa-group-silhouettes-black-ice.jpg 1600w" sizes="(min-width: 80rem) 24rem, (min-width: 64rem) calc(33vw - 3.5rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                  <p class="group-ticket__tag"><span class="dot" aria-hidden="true"></span>Groepsreis, begeleid</p>
+                </div>
+                <div class="group-ticket__body">
+                  <h3 class="group-ticket__title" id="groepsreis-orsa-title">Groepsreis Orsa</h3>
+                  <p class="group-ticket__dates"><time class="date-chip" datetime="2027-01-28"><span class="date-chip__wd">do</span> <span class="date-chip__day">28</span></time> <span class="group-ticket__to">t/m</span> <time class="date-chip date-chip--end" datetime="2027-01-31"><span class="date-chip__wd">zo</span> <span class="date-chip__day">31</span></time> <span class="group-ticket__month">januari 2027</span></p>
+                  <div class="group-ticket__stub">
+                    <p class="group-ticket__price"><span class="group-ticket__amount">€1.295</span> per persoon</p>
+                    <p class="group-ticket__terms">4 dagen, aanmelden vanaf 2 personen</p>
+                  </div>
+                  <p class="group-ticket__incl"><strong>Inbegrepen:</strong> vlucht, accommodatie, auto, gids en begeleiding en 3 dagen schaatsen.</p>
+                  <div class="group-ticket__actions">
+                    <a class="btn btn--warm" href="groepsreis-orsa.html">Bekijk en boek<span class="sr-only"> de groepsreis naar Orsa</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="group-ticket" aria-labelledby="groepsreis-falun-title">
+              <div class="group-ticket__shell">
+                <div class="group-ticket__media">
+                  <picture><source type="image/avif" srcset="images/falun-group-break-sun-480.avif 480w, images/falun-group-break-sun-800.avif 800w, images/falun-group-break-sun.avif 1086w" sizes="(min-width: 80rem) 24rem, (min-width: 64rem) calc(33vw - 3.5rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><source type="image/webp" srcset="images/falun-group-break-sun-480.webp 480w, images/falun-group-break-sun-800.webp 800w, images/falun-group-break-sun.webp 1086w" sizes="(min-width: 80rem) 24rem, (min-width: 64rem) calc(33vw - 3.5rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /><img src="images/falun-group-break-sun-800.jpg" alt="Vier mensen zitten naast elkaar op schopsleeën in de zon op het ijs, met dennenbomen en blauwe lucht achter hen" width="1086" height="724" loading="lazy" decoding="async" srcset="images/falun-group-break-sun-480.jpg 480w, images/falun-group-break-sun-800.jpg 800w, images/falun-group-break-sun.jpg 1086w" sizes="(min-width: 80rem) 24rem, (min-width: 64rem) calc(33vw - 3.5rem), (min-width: 40rem) calc(50vw - 3.5rem), calc(100vw - 4rem)" /></picture>
+                  <p class="group-ticket__tag"><span class="dot" aria-hidden="true"></span>Groepsreis, begeleid</p>
+                </div>
+                <div class="group-ticket__body">
+                  <h3 class="group-ticket__title" id="groepsreis-falun-title">Groepsreis Falun</h3>
+                  <p class="group-ticket__dates"><time class="date-chip" datetime="2027-02-04"><span class="date-chip__wd">do</span> <span class="date-chip__day">4</span></time> <span class="group-ticket__to">t/m</span> <time class="date-chip date-chip--end" datetime="2027-02-07"><span class="date-chip__wd">zo</span> <span class="date-chip__day">7</span></time> <span class="group-ticket__month">februari 2027</span></p>
+                  <div class="group-ticket__stub">
+                    <p class="group-ticket__price"><span class="group-ticket__amount">€1.295</span> per persoon</p>
+                    <p class="group-ticket__terms">4 dagen, aanmelden vanaf 2 personen</p>
+                  </div>
+                  <p class="group-ticket__incl"><strong>Inbegrepen:</strong> vlucht, accommodatie, auto, gids en begeleiding en 3 dagen schaatsen.</p>
+                  <div class="group-ticket__actions">
+                    <a class="btn btn--warm" href="groepsreis-falun.html">Bekijk en boek<span class="sr-only"> de groepsreis naar Falun</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
       </div>
-
-        <div class="trip-map__panels" id="tripPanels">
-          <article class="trip-map__panel" id="finland" aria-labelledby="finland-title">
-            <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/finland-schaatsbaan-bocht-480.avif 480w, images/finland-schaatsbaan-bocht-800.avif 800w, images/finland-schaatsbaan-bocht-1200.avif 1200w, images/finland-schaatsbaan-bocht.avif 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/finland-schaatsbaan-bocht-480.webp 480w, images/finland-schaatsbaan-bocht-800.webp 800w, images/finland-schaatsbaan-bocht-1200.webp 1200w, images/finland-schaatsbaan-bocht.webp 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/finland-schaatsbaan-bocht.jpg" alt="Geveegde schaatsbaan die langs de beboste oever van het Saimaameer buigt, met twee schaatsers" loading="lazy" srcset="images/finland-schaatsbaan-bocht-480.jpg 480w, images/finland-schaatsbaan-bocht-800.jpg 800w, images/finland-schaatsbaan-bocht-1200.jpg 1200w, images/finland-schaatsbaan-bocht.jpg 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <p class="trip-map__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
-              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/finland-huisjes-winter-480.avif 480w, images/finland-huisjes-winter-800.avif 800w, images/finland-huisjes-winter-1200.avif 1200w, images/finland-huisjes-winter.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/finland-huisjes-winter-480.webp 480w, images/finland-huisjes-winter-800.webp 800w, images/finland-huisjes-winter-1200.webp 1200w, images/finland-huisjes-winter.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/finland-huisjes-winter.jpg" alt="Houten huisjes in de sneeuw tussen de dennen bij Punkaharju" loading="lazy" srcset="images/finland-huisjes-winter-480.jpg 480w, images/finland-huisjes-winter-800.jpg 800w, images/finland-huisjes-winter-1200.jpg 1200w, images/finland-huisjes-winter.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/finland-sauna-ice-hole-480.avif 480w, images/finland-sauna-ice-hole-800.avif 800w, images/finland-sauna-ice-hole-1200.avif 1200w, images/finland-sauna-ice-hole.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/finland-sauna-ice-hole-480.webp 480w, images/finland-sauna-ice-hole-800.webp 800w, images/finland-sauna-ice-hole-1200.webp 1200w, images/finland-sauna-ice-hole.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/finland-sauna-ice-hole.jpg" alt="Saunagasten bij een wak in het ijs naast de buitensauna aan het meer bij Punkaharju" width="1600" height="1066" loading="lazy" srcset="images/finland-sauna-ice-hole-480.jpg 480w, images/finland-sauna-ice-hole-800.jpg 800w, images/finland-sauna-ice-hole-1200.jpg 1200w, images/finland-sauna-ice-hole.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-            </div>
-            <div class="trip-map__body">
-              <span class="trip-map__region">Punkaharju, Finland</span>
-              <h3 class="trip-map__title" id="finland-title">Punkaharju</h3>
-              <div class="trip-map__text">
-                <p>Schaats door het prachtige Finse merengebied bij Punkaharju. De natuurijsbaan op het Saimaameer loopt door een indrukwekkend winterlandschap, met bossen en bevroren water om je heen.</p>
-                <p>Je verblijft in een eigen huisje met sauna. Je gaat zelfstandig op pad en bepaalt zelf wanneer en hoe lang je het ijs op gaat.</p>
-              </div>
-              <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
-                <div><dt>Verblijf</dt><dd>Eigen huisje met sauna</dd></div>
-                <div><dt>Prijs</dt><dd>Vanaf €895</dd></div>
-              </dl>
-              <div class="trip-map__actions">
-                <a class="btn btn--dark" href="finland.html">Bekijk deze reis</a>
-                <a class="link-arrow" href="finland.html#prijzen">Boek je reis</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="trip-map__panel" id="orsa" aria-labelledby="orsa-title">
-            <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/orsa-zwart-ijs-baan-480.avif 480w, images/orsa-zwart-ijs-baan-800.avif 800w, images/orsa-zwart-ijs-baan.avif 1000w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/orsa-zwart-ijs-baan-480.webp 480w, images/orsa-zwart-ijs-baan-800.webp 800w, images/orsa-zwart-ijs-baan.webp 1000w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/orsa-zwart-ijs-baan.jpg" alt="Drie schaatsers op de geveegde baan van zwart ijs op het Orsameer" srcset="images/orsa-zwart-ijs-baan-480.jpg 480w, images/orsa-zwart-ijs-baan-800.jpg 800w, images/orsa-zwart-ijs-baan.jpg 1000w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <p class="trip-map__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
-              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/orsa-cabins-winter-480.avif 480w, images/orsa-cabins-winter-800.avif 800w, images/orsa-cabins-winter-1200.avif 1200w, images/orsa-cabins-winter.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/orsa-cabins-winter-480.webp 480w, images/orsa-cabins-winter-800.webp 800w, images/orsa-cabins-winter-1200.webp 1200w, images/orsa-cabins-winter.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/orsa-cabins-winter.jpg" alt="Houten huisjes in de sneeuw bij het bevroren Orsameer in Dalarna" loading="lazy" srcset="images/orsa-cabins-winter-480.jpg 480w, images/orsa-cabins-winter-800.jpg 800w, images/orsa-cabins-winter-1200.jpg 1200w, images/orsa-cabins-winter.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/orsa-baan-mora-480.avif 480w, images/orsa-baan-mora-800.avif 800w, images/orsa-baan-mora.avif 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/orsa-baan-mora-480.webp 480w, images/orsa-baan-mora-800.webp 800w, images/orsa-baan-mora.webp 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/orsa-baan-mora.jpg" alt="Natuurijsbaan bij Orsa, Zweden" loading="lazy" srcset="images/orsa-baan-mora-480.jpg 480w, images/orsa-baan-mora-800.jpg 800w, images/orsa-baan-mora.jpg 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-            </div>
-            <div class="trip-map__body">
-              <span class="trip-map__region">Orsa, Zweden</span>
-              <h3 class="trip-map__title" id="orsa-title">Orsa</h3>
-              <div class="trip-map__text">
-                <p>Schaats op het prachtige Orsameer in Dalarna. Bij goede omstandigheden ligt hier een geveegde baan van ongeveer 15 kilometer.</p>
-                <p>Je verblijft in je eigen huisje vlak bij het meer. Vlucht, verblijf en vervoer ter plaatse zijn inbegrepen.</p>
-                <p>Je schaatst zelfstandig, maar bij deze reis kun je een gids op het ijs bijboeken.</p>
-              </div>
-              <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs mogelijk</dd></div>
-                <div><dt>Verblijf</dt><dd>Eigen huisje bij het meer</dd></div>
-                <div><dt>Data</dt><dd>Zelf te bepalen</dd></div>
-                <div><dt>Prijs</dt><dd>Vanaf €995</dd></div>
-              </dl>
-              <div class="trip-map__actions">
-                <a class="btn btn--dark" href="orsa.html">Bekijk deze reis</a>
-                <a class="link-arrow" href="orsa.html#data-en-prijs">Boek je reis</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="trip-map__panel" id="falun" aria-labelledby="falun-title">
-            <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/falun-skaters-swept-track-sunset-480.avif 480w, images/falun-skaters-swept-track-sunset-800.avif 800w, images/falun-skaters-swept-track-sunset-1200.avif 1200w, images/falun-skaters-swept-track-sunset.avif 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/falun-skaters-swept-track-sunset-480.webp 480w, images/falun-skaters-swept-track-sunset-800.webp 800w, images/falun-skaters-swept-track-sunset-1200.webp 1200w, images/falun-skaters-swept-track-sunset.webp 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/falun-skaters-swept-track-sunset-1200.jpg" alt="Twee schaatsers op een geveegde baan bij Falun tijdens zonsondergang" loading="lazy" srcset="images/falun-skaters-swept-track-sunset-480.jpg 480w, images/falun-skaters-swept-track-sunset-800.jpg 800w, images/falun-skaters-swept-track-sunset-1200.jpg 1200w, images/falun-skaters-swept-track-sunset.jpg 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <p class="trip-map__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
-              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/falun-accommodatie-480.avif 480w, images/falun-accommodatie-800.avif 800w, images/falun-accommodatie.avif 900w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/falun-accommodatie-480.webp 480w, images/falun-accommodatie-800.webp 800w, images/falun-accommodatie.webp 900w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/falun-accommodatie.jpg" alt="Accommodatie bij Falun" loading="lazy" srcset="images/falun-accommodatie-480.jpg 480w, images/falun-accommodatie-800.jpg 800w, images/falun-accommodatie.jpg 900w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/falun-skaters-sunny-lake-480.avif 480w, images/falun-skaters-sunny-lake-800.avif 800w, images/falun-skaters-sunny-lake.avif 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/falun-skaters-sunny-lake-480.webp 480w, images/falun-skaters-sunny-lake-800.webp 800w, images/falun-skaters-sunny-lake.webp 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/falun-skaters-sunny-lake.jpg" alt="Groepje schaatsers op het bevroren meer bij Falun onder een blauwe lucht" loading="lazy" srcset="images/falun-skaters-sunny-lake-480.jpg 480w, images/falun-skaters-sunny-lake-800.jpg 800w, images/falun-skaters-sunny-lake.jpg 1000w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-            </div>
-            <div class="trip-map__body">
-              <span class="trip-map__region">Falun, Zweden</span>
-              <h3 class="trip-map__title" id="falun-title">Falun</h3>
-              <div class="trip-map__text">
-                <p>Een schaatsreis naar het historische Falun, midden in het Zweedse winterlandschap.</p>
-                <p>Je gaat met je eigen huurauto op pad en schaatst op natuurijs. Op de achtergrond zie je de karakteristieke rode gebouwen van Falun.</p>
-                <p>Vlucht, huurauto en verblijf zijn bij de reis inbegrepen.</p>
-                <p>Ook hier kun je een gids op het ijs bijboeken.</p>
-              </div>
-              <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Zelfstandig, begeleiding op het ijs mogelijk</dd></div>
-                <div><dt>Reisduur</dt><dd>Vanaf 4 dagen</dd></div>
-                <div><dt>Verblijf</dt><dd>Eigen huisjes</dd></div>
-                <div><dt>Data</dt><dd>Zelf te bepalen</dd></div>
-                <div><dt>Prijs</dt><dd>Vanaf €995</dd></div>
-              </dl>
-              <div class="trip-map__actions">
-                <a class="btn btn--dark" href="falun.html">Bekijk deze reis</a>
-                <a class="link-arrow" href="falun.html#data-en-prijs">Boek je reis</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="trip-map__panel" id="wellness" aria-labelledby="wellness-title">
-            <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/wellness-zwembad-480.avif 480w, images/wellness-zwembad-800.avif 800w, images/wellness-zwembad-1200.avif 1200w, images/wellness-zwembad.avif 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/wellness-zwembad-480.webp 480w, images/wellness-zwembad-800.webp 800w, images/wellness-zwembad-1200.webp 1200w, images/wellness-zwembad.webp 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/wellness-zwembad-1200.jpg" alt="Binnenzwembad met uitzicht op besneeuwde bomen" loading="lazy" srcset="images/wellness-zwembad-480.jpg 480w, images/wellness-zwembad-800.jpg 800w, images/wellness-zwembad-1200.jpg 1200w, images/wellness-zwembad.jpg 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <p class="trip-map__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
-              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/wellness-sauna-480.avif 480w, images/wellness-sauna-800.avif 800w, images/wellness-sauna-1200.avif 1200w, images/wellness-sauna.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/wellness-sauna-480.webp 480w, images/wellness-sauna-800.webp 800w, images/wellness-sauna-1200.webp 1200w, images/wellness-sauna.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/wellness-sauna-1200.jpg" alt="Houten sauna met stoom boven de saunakachel" loading="lazy" srcset="images/wellness-sauna-480.jpg 480w, images/wellness-sauna-800.jpg 800w, images/wellness-sauna-1200.jpg 1200w, images/wellness-sauna.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" loading="lazy" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-            </div>
-            <div class="trip-map__body">
-              <span class="trip-map__region">Zweden</span>
-              <h3 class="trip-map__title" id="wellness-title">Wellness &amp; schaatsen</h3>
-              <div class="trip-map__text">
-                <p>Een wintervakantie waarin schaatsen en ontspannen centraal staan.</p>
-                <p>Je verblijft in een comfortabel hotel met wellness, ontbijt en diner. Met je eigen huurauto rijd je naar het natuurijs, dat op ongeveer 50 minuten van je verblijf ligt.</p>
-                <p>Overdag lekker naar buiten en het ijs op, daarna heerlijk ontspannen in de wellness. Je bepaalt zelf hoe je je dagen invult.</p>
-              </div>
-              <dl class="trip-map__facts">
-                <div><dt>Verblijf</dt><dd>Hotel met wellness, ontbijt en diner</dd></div>
-                <div><dt>Schaatsen</dt><dd>Natuurijs op circa 50 minuten rijden</dd></div>
-                <div><dt>Vervoer</dt><dd>Vlucht en huurauto inbegrepen</dd></div>
-                <div><dt>Prijs</dt><dd>Vanaf €1.395</dd></div>
-              </dl>
-              <div class="trip-map__actions">
-                <a class="btn btn--dark" href="wellness.html">Bekijk deze reis</a>
-                <a class="link-arrow" href="wellness.html#data-en-prijs">Boek je reis</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="trip-map__panel" id="gidsreis-finland" aria-labelledby="gidsreis-finland-title">
-            <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/zwart-ijs-groep-480.avif 480w, images/zwart-ijs-groep-800.avif 800w, images/zwart-ijs-groep-1200.avif 1200w, images/zwart-ijs-groep.avif 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/zwart-ijs-groep-480.webp 480w, images/zwart-ijs-groep-800.webp 800w, images/zwart-ijs-groep-1200.webp 1200w, images/zwart-ijs-groep.webp 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/zwart-ijs-groep.jpg" alt="Een kleine groep schaatsers, piepklein op een weids ijsvlak vol scheuren" loading="lazy" srcset="images/zwart-ijs-groep-480.jpg 480w, images/zwart-ijs-groep-800.jpg 800w, images/zwart-ijs-groep-1200.jpg 1200w, images/zwart-ijs-groep.jpg 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/zwart-ijs-scheuren-480.avif 480w, images/zwart-ijs-scheuren-800.avif 800w, images/zwart-ijs-scheuren-1200.avif 1200w, images/zwart-ijs-scheuren.avif 1280w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/zwart-ijs-scheuren-480.webp 480w, images/zwart-ijs-scheuren-800.webp 800w, images/zwart-ijs-scheuren-1200.webp 1200w, images/zwart-ijs-scheuren.webp 1280w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/zwart-ijs-scheuren.jpg" alt="Zwart natuurijs met lange witte scheuren, in de verte twee schaatsers" loading="lazy" srcset="images/zwart-ijs-scheuren-480.jpg 480w, images/zwart-ijs-scheuren-800.jpg 800w, images/zwart-ijs-scheuren-1200.jpg 1200w, images/zwart-ijs-scheuren.jpg 1280w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/schaatser-tegenlicht-480.avif 480w, images/schaatser-tegenlicht-800.avif 800w, images/schaatser-tegenlicht-1200.avif 1200w, images/schaatser-tegenlicht.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/schaatser-tegenlicht-480.webp 480w, images/schaatser-tegenlicht-800.webp 800w, images/schaatser-tegenlicht-1200.webp 1200w, images/schaatser-tegenlicht.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/schaatser-tegenlicht.jpg" alt="Een schaatser tegen de laagstaande zon op gouden ijs, voor een bos" loading="lazy" srcset="images/schaatser-tegenlicht-480.jpg 480w, images/schaatser-tegenlicht-800.jpg 800w, images/schaatser-tegenlicht-1200.jpg 1200w, images/schaatser-tegenlicht.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-            </div>
-            <div class="trip-map__body">
-              <span class="trip-map__region">Omgeving Helsinki, Finland</span>
-              <h3 class="trip-map__title" id="gidsreis-finland-title">Gidsreis Finland</h3>
-              <div class="trip-map__text">
-                <p>Een echte gidsreis: met een gids op zoek naar ongerept natuurijs in de omgeving van Helsinki.</p>
-                <p>Geen geveegde ijsbaan en geen vaste route. We kiezen samen met de gids de plekken waar het ijs op dat moment het beste is.</p>
-              </div>
-              <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Gidsreis, met een gids</dd></div>
-                <div><dt>Boeken</dt><dd>Op aanvraag</dd></div>
-                <div><dt>Prijs</dt><dd>Volgt binnenkort</dd></div>
-              </dl>
-              <div class="trip-map__actions">
-                <a class="btn btn--dark" href="gidsreis-schaatsen-finland.html">Bekijk deze reis</a>
-                <a class="link-arrow" href="gidsreis-schaatsen-finland.html#aanvraag">Vraag je gidsreis aan</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="trip-map__panel" id="weissensee" aria-labelledby="weissensee-title">
-            <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/weissensee-schaatsers-480.avif 480w, images/weissensee-schaatsers-800.avif 800w, images/weissensee-schaatsers.avif 999w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/weissensee-schaatsers-480.webp 480w, images/weissensee-schaatsers-800.webp 800w, images/weissensee-schaatsers.webp 999w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/weissensee-schaatsers.jpg" alt="Schaatsers op de Weissensee tussen de bergen" loading="lazy" srcset="images/weissensee-schaatsers-480.jpg 480w, images/weissensee-schaatsers-800.jpg 800w, images/weissensee-schaatsers.jpg 999w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <p class="trip-map__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
-              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/weissensee-baan-480.avif 480w, images/weissensee-baan-800.avif 800w, images/weissensee-baan.avif 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/weissensee-baan-480.webp 480w, images/weissensee-baan-800.webp 800w, images/weissensee-baan.webp 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/weissensee-baan.jpg" alt="Geveegde natuurijsbaan op de Weissensee" loading="lazy" srcset="images/weissensee-baan-480.jpg 480w, images/weissensee-baan-800.jpg 800w, images/weissensee-baan.jpg 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-            </div>
-            <div class="trip-map__body">
-              <span class="trip-map__region">Weissensee, Oostenrijk</span>
-              <h3 class="trip-map__title" id="weissensee-title">Weissensee</h3>
-              <div class="trip-map__text">
-                <p>Schaats tussen de bergen op de Weissensee in Oostenrijk, op ongeveer 930 meter hoogte.</p>
-                <p>Het meer heeft een oppervlakte van ongeveer 6,5 km². Bij gunstige omstandigheden ontstaat hier een enorme geprepareerde natuurijsbaan. De Weissensee is vooral bekend als locatie van de Alternatieve Elfstedentocht.</p>
-                <p>Je schaatst zelfstandig en deelt je dagen zelf in.</p>
-              </div>
-              <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Zelfstandig, zonder begeleiding</dd></div>
-                <div><dt>Hoogte</dt><dd>Circa 930 meter</dd></div>
-                <div><dt>Data</dt><dd>Zelf te bepalen</dd></div>
-                <div><dt>Prijs</dt><dd>Vanaf €1.095</dd></div>
-              </dl>
-              <div class="trip-map__actions">
-                <a class="btn btn--dark" href="weissensee.html">Bekijk deze reis</a>
-                <a class="link-arrow" href="weissensee.html#data-en-prijs">Boek je reis</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="trip-map__panel" id="lulea" aria-labelledby="lulea-title">
-            <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/lulea-ijs-zonsondergang-480.avif 480w, images/lulea-ijs-zonsondergang-800.avif 800w, images/lulea-ijs-zonsondergang-1200.avif 1200w, images/lulea-ijs-zonsondergang-1600.avif 1600w, images/lulea-ijs-zonsondergang.avif 1800w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/lulea-ijs-zonsondergang-480.webp 480w, images/lulea-ijs-zonsondergang-800.webp 800w, images/lulea-ijs-zonsondergang-1200.webp 1200w, images/lulea-ijs-zonsondergang-1600.webp 1600w, images/lulea-ijs-zonsondergang.webp 1800w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/lulea-ijs-zonsondergang.jpg" alt="Sporen in het ijs op de bevroren Botnische Golf bij Luleå" loading="lazy" srcset="images/lulea-ijs-zonsondergang-480.jpg 480w, images/lulea-ijs-zonsondergang-800.jpg 800w, images/lulea-ijs-zonsondergang-1200.jpg 1200w, images/lulea-ijs-zonsondergang-1600.jpg 1600w, images/lulea-ijs-zonsondergang.jpg 1800w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <p class="trip-map__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
-              <picture class="trip-map__photo trip-map__photo--side"><source type="image/avif" srcset="images/lulea-berkenbomen-baai-480.avif 480w, images/lulea-berkenbomen-baai-800.avif 800w, images/lulea-berkenbomen-baai-1200.avif 1200w, images/lulea-berkenbomen-baai.avif 1400w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/lulea-berkenbomen-baai-480.webp 480w, images/lulea-berkenbomen-baai-800.webp 800w, images/lulea-berkenbomen-baai-1200.webp 1200w, images/lulea-berkenbomen-baai.webp 1400w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/lulea-berkenbomen-baai.jpg" alt="Berkenbomen langs de bevroren baai bij Luleå" loading="lazy" srcset="images/lulea-berkenbomen-baai-480.jpg 480w, images/lulea-berkenbomen-baai-800.jpg 800w, images/lulea-berkenbomen-baai-1200.jpg 1200w, images/lulea-berkenbomen-baai.jpg 1400w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/lulea-rendiergewei-480.avif 480w, images/lulea-rendiergewei-800.avif 800w, images/lulea-rendiergewei.avif 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/lulea-rendiergewei-480.webp 480w, images/lulea-rendiergewei-800.webp 800w, images/lulea-rendiergewei.webp 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/lulea-rendiergewei.jpg" alt="Rendiergewei in de sneeuw bij Luleå" loading="lazy" srcset="images/lulea-rendiergewei-480.jpg 480w, images/lulea-rendiergewei-800.jpg 800w, images/lulea-rendiergewei.jpg 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-            </div>
-            <div class="trip-map__body">
-              <span class="trip-map__region">Luleå, Zweden</span>
-              <h3 class="trip-map__title" id="lulea-title">Luleå</h3>
-              <div class="trip-map__text">
-                <p>Een bijzondere schaatservaring op de bevroren Botnische Golf.</p>
-                <p>Bij Luleå ligt een openbare natuurijsroute waar je zelfstandig kunt schaatsen. Je rijdt of schaatst door het winterse landschap langs de kust en geniet van de ruimte en rust van Noord-Zweden.</p>
-                <p>Deze reis is volledig individueel. Vlucht en hotel zitten in de prijs, je kiest zelf je reisduur en dagindeling.</p>
-              </div>
-              <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Individueel en zelfstandig</dd></div>
-                <div><dt>Reisduur</dt><dd>Zelf te bepalen</dd></div>
-                <div><dt>Verblijf</dt><dd>Hotel, vlucht inbegrepen</dd></div>
-                <div><dt>Prijs</dt><dd>Vanaf €1.095</dd></div>
-              </dl>
-              <div class="trip-map__actions">
-                <a class="btn btn--dark" href="lulea.html">Bekijk deze reis</a>
-                <a class="link-arrow" href="lulea.html#data-en-prijs">Boek je reis</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="trip-map__panel" id="salen" aria-labelledby="salen-title">
-            <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/geveegde-baan-schaatsers-480.avif 480w, images/geveegde-baan-schaatsers-800.avif 800w, images/geveegde-baan-schaatsers-1200.avif 1200w, images/geveegde-baan-schaatsers.avif 1366w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/geveegde-baan-schaatsers-480.webp 480w, images/geveegde-baan-schaatsers-800.webp 800w, images/geveegde-baan-schaatsers-1200.webp 1200w, images/geveegde-baan-schaatsers.webp 1366w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/geveegde-baan-schaatsers-1200.jpg" alt="Schaatsers op een geveegde baan met sneeuwranden over een bevroren Zweeds meer" loading="lazy" srcset="images/geveegde-baan-schaatsers-480.jpg 480w, images/geveegde-baan-schaatsers-800.jpg 800w, images/geveegde-baan-schaatsers-1200.jpg 1200w, images/geveegde-baan-schaatsers.jpg 1366w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/kampvuur-fika-ijs-480.avif 480w, images/kampvuur-fika-ijs-800.avif 800w, images/kampvuur-fika-ijs.avif 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/kampvuur-fika-ijs-480.webp 480w, images/kampvuur-fika-ijs-800.webp 800w, images/kampvuur-fika-ijs.webp 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/kampvuur-fika-ijs.jpg" alt="Twee schaatsers warmen zich op en roosteren eten bij een kampvuur tussen de dennen, naast het ijs" loading="lazy" srcset="images/kampvuur-fika-ijs-480.jpg 480w, images/kampvuur-fika-ijs-800.jpg 800w, images/kampvuur-fika-ijs.jpg 1200w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/geveegde-baan-luchtfoto-480.avif 480w, images/geveegde-baan-luchtfoto-800.avif 800w, images/geveegde-baan-luchtfoto.avif 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/geveegde-baan-luchtfoto-480.webp 480w, images/geveegde-baan-luchtfoto-800.webp 800w, images/geveegde-baan-luchtfoto.webp 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/geveegde-baan-luchtfoto.jpg" alt="Luchtfoto van een geveegde schaatsbaan die in een bocht over een besneeuwd meer loopt" loading="lazy" srcset="images/geveegde-baan-luchtfoto-480.jpg 480w, images/geveegde-baan-luchtfoto-800.jpg 800w, images/geveegde-baan-luchtfoto.jpg 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-            </div>
-            <div class="trip-map__body">
-              <span class="trip-map__region">Sälen, Stöten en Tandådalen, Zweden</span>
-              <h3 class="trip-map__title" id="salen-title">Dagtocht vanuit Sälen, Stöten en Tandådalen</h3>
-              <div class="trip-map__text">
-                <p>Ben je in de winter in Sälen, Stöten of Tandådalen? Verruil dan een dag je ski's voor schaatsen.</p>
-                <p>Op ongeveer 1 uur en 10 minuten rijden ligt een prachtige geveegde natuurijsbaan van ongeveer 12 kilometer enkele reis. Je schaatst door het Zweedse winterlandschap en kunt onderweg genieten van de omgeving.</p>
-                <p>Je kunt kiezen voor een halve of een hele dag.</p>
-                <p>Tijdens deze dagtocht ga je samen met een gids het ijs op. Novakse is niet verantwoordelijk voor de veiligheid op het ijs.</p>
-              </div>
-              <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Dagtocht, halve of hele dag</dd></div>
-                <div><dt>Data</dt><dd>10 januari t/m 20 februari 2027</dd></div>
-                <div><dt>Prijs</dt><dd>Vanaf €90</dd></div>
-              </dl>
-              <div class="trip-map__actions">
-                <a class="btn btn--dark" href="schaatsen-salen.html">Bekijk deze reis</a>
-                <a class="link-arrow" href="schaatsen-salen.html#boeken">Boek je dagtocht</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Guided group trips (Orsa and Falun) as one combined last trip;
-               content equals the group trip pages and the groepsreizen
-               section on reizen.html. Photos: groepsreis Orsa. -->
-          <article class="trip-map__panel" id="groepsreis" aria-labelledby="groepsreis-title">
-            <div class="trip-map__media">
-              <picture class="trip-map__photo trip-map__photo--main"><source type="image/avif" srcset="images/orsa-group-silhouettes-black-ice-480.avif 480w, images/orsa-group-silhouettes-black-ice-800.avif 800w, images/orsa-group-silhouettes-black-ice-1200.avif 1200w, images/orsa-group-silhouettes-black-ice.avif 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><source type="image/webp" srcset="images/orsa-group-silhouettes-black-ice-480.webp 480w, images/orsa-group-silhouettes-black-ice-800.webp 800w, images/orsa-group-silhouettes-black-ice-1200.webp 1200w, images/orsa-group-silhouettes-black-ice.webp 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /><img src="images/orsa-group-silhouettes-black-ice.jpg" alt="Vijf schaatsers staan als silhouet in tegenlicht op glad donker ijs, met lange schaduwen en bomen op de oever" width="1600" height="1200" loading="lazy" srcset="images/orsa-group-silhouettes-black-ice-480.jpg 480w, images/orsa-group-silhouettes-black-ice-800.jpg 800w, images/orsa-group-silhouettes-black-ice-1200.jpg 1200w, images/orsa-group-silhouettes-black-ice.jpg 1600w" sizes="(min-width: 80rem) 25.5rem, (min-width: 64rem) calc(36vw - 3.4rem), (min-width: 48rem) calc(62vw - 3.75rem), calc(100vw - 4.5rem)" /></picture>
-              <p class="trip-map__incl"><svg viewBox="0 0 56 24" aria-hidden="true" focusable="false"><path d="M2.5 13.5 21 6l-4.5 13-4-5.5-6 1z"/><path d="m12.5 13.5 8.5-7.5"/><path d="M23.5 15h6" stroke-dasharray="0.1 3"/><g transform="translate(31 0)"><path d="M3.6 17.5H2.5a1 1 0 0 1-1-1v-3.3c0-1 .8-1.8 1.8-1.8h15.9l2.4.6c.8.2 1.4 1 1.4 1.8v2.7a1 1 0 0 1-1 1h-1.4M9.4 17.5h5.2"/><path d="m5.6 11.4 3-3.9c.4-.5.9-.7 1.5-.7h5c.6 0 1.1.3 1.4.8l2.7 3.8M12.6 6.8v4.6"/><circle cx="6.5" cy="17.5" r="2.4"/><circle cx="17.5" cy="17.5" r="2.4"/></g></svg>Inclusief fly&nbsp;&amp;&nbsp;drive</p>
-              <picture class="trip-map__photo trip-map__photo--side trip-map__photo--square"><source type="image/avif" srcset="images/orsa-fika-shelter-480.avif 480w, images/orsa-fika-shelter-800.avif 800w, images/orsa-fika-shelter-1200.avif 1200w, images/orsa-fika-shelter.avif 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/orsa-fika-shelter-480.webp 480w, images/orsa-fika-shelter-800.webp 800w, images/orsa-fika-shelter-1200.webp 1200w, images/orsa-fika-shelter.webp 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/orsa-fika-shelter.jpg" alt="Een groep mensen in sportkleding pauzeert in de zon bij een open houten schuilhut, met een bevroren meer op de achtergrond" width="1600" height="1200" loading="lazy" srcset="images/orsa-fika-shelter-480.jpg 480w, images/orsa-fika-shelter-800.jpg 800w, images/orsa-fika-shelter-1200.jpg 1200w, images/orsa-fika-shelter.jpg 1600w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-              <picture class="trip-map__photo trip-map__photo--below"><source type="image/avif" srcset="images/orsa-two-skaters-golden-hour-480.avif 480w, images/orsa-two-skaters-golden-hour-800.avif 800w, images/orsa-two-skaters-golden-hour.avif 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><source type="image/webp" srcset="images/orsa-two-skaters-golden-hour-480.webp 480w, images/orsa-two-skaters-golden-hour-800.webp 800w, images/orsa-two-skaters-golden-hour.webp 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /><img src="images/orsa-two-skaters-golden-hour.jpg" alt="Twee schaatsers van achteren op een geveegde baan met een dun laagje sneeuw, richting de laagstaande zon" width="1080" height="1350" loading="lazy" srcset="images/orsa-two-skaters-golden-hour-480.jpg 480w, images/orsa-two-skaters-golden-hour-800.jpg 800w, images/orsa-two-skaters-golden-hour.jpg 1080w" sizes="(min-width: 80rem) 9rem, (min-width: 64rem) 12vw, (min-width: 48rem) calc(22vw - 2rem), calc(33vw - 1.5rem)" /></picture>
-            </div>
-            <div class="trip-map__body">
-              <span class="trip-map__region">Orsa &amp; Falun, Zweden</span>
-              <h3 class="trip-map__title" id="groepsreis-title">Groepsreizen</h3>
-              <div class="trip-map__text">
-                <p>Bij een groepsreis reis je op een vaste datum, met begeleiding. Je meldt je aan, maar niet alleen (vanaf 2 personen).</p>
-                <p><strong>Inbegrepen:</strong> vlucht, accommodatie, auto, gids en begeleiding en 3 dagen schaatsen.</p>
-              </div>
-              <dl class="trip-map__facts">
-                <div><dt>Soort reis</dt><dd>Groepsreis, begeleid</dd></div>
-                <div><dt>Groepsreis Orsa</dt><dd><time datetime="2027-01-28">do 28</time> t/m <time datetime="2027-01-31">zo 31 januari 2027</time></dd></div>
-                <div><dt>Groepsreis Falun</dt><dd><time datetime="2027-02-04">do 4</time> t/m <time datetime="2027-02-07">zo 7 februari 2027</time></dd></div>
-                <div><dt>Prijs</dt><dd>€1.295 per persoon, 4 dagen</dd></div>
-              </dl>
-              <div class="trip-map__actions">
-                <a class="btn btn--dark" href="groepsreis-orsa.html">Groepsreis Orsa<span class="sr-only"> bekijken en boeken</span></a>
-                <a class="link-arrow" href="groepsreis-falun.html">Groepsreis Falun<span class="sr-only"> bekijken en boeken</span></a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <!-- Short intro to the destinations, below the trips and their
-             buttons. -->
-        <div class="wrap trip-map__outro">
-          <p class="lede-text">Van Zweedse meren tussen de besneeuwde bossen tot het indrukwekkende ijs van de Botnische Golf en de Weissensee tussen de bergen. Iedere bestemming heeft zijn eigen sfeer en mogelijkheden.</p>
-        </div>
     </section>
 
-    <!-- Reiszoeker: geeft bestemming, datums en aantal reizigers door aan
-         boeken.html. Geen live beschikbaarheid - het is een keuzebalk. Het
-         schaatsseizoen staat in data-season-start en data-season-end. -->
-    <div class="trip-search-dock">
-      <div class="wrap">
-        <form class="trip-search" action="boeken.html" method="get"
-              data-season-start="2026-12-18" data-season-end="2027-03-15">
-          <p class="trip-search__title">Stel je schaatsreis samen</p>
-
-          <div class="trip-search__fields">
-            <div class="trip-search__field">
-              <label class="sr-only" for="tsReis">Bestemming</label>
-              <div class="trip-search__control">
-                <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-                <select class="trip-search__input" id="tsReis" name="reis">
-                  <option value="" data-target="reizen.html#bestemmingen">Alle bestemmingen</option>
-                  <option value="finland" data-target="finland.html#prijzen">Punkaharju, Finland</option>
-                  <option value="orsa" data-target="orsa.html#data-en-prijs">Orsa, Zweden</option>
-                  <option value="falun" data-target="falun.html#data-en-prijs">Falun, Zweden</option>
-                  <option value="wellness" data-target="wellness.html#data-en-prijs">Wellness &amp; schaatsen, Zweden</option>
-                  <option value="weissensee" data-target="weissensee.html#data-en-prijs">Weissensee, Oostenrijk</option>
-                  <option value="lulea" data-target="lulea.html#data-en-prijs">Luleå, Zweden</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Zonder JavaScript blijven dit twee gewone datumvelden; met
-                 JavaScript worden ze verborgen en komt er een kalender voor in
-                 de plaats (zie js/trip-search.js). -->
-            <div class="trip-search__field trip-search__field--native">
-              <label class="trip-search__label" for="tsVan">Aankomst</label>
-              <div class="trip-search__control">
-                <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
-                <input class="trip-search__input" type="date" id="tsVan" name="van" />
-              </div>
-            </div>
-
-            <div class="trip-search__field trip-search__field--native">
-              <label class="trip-search__label" for="tsTot">Vertrek</label>
-              <div class="trip-search__control">
-                <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
-                <input class="trip-search__input" type="date" id="tsTot" name="tot" />
-              </div>
-            </div>
-
-            <div class="trip-search__field trip-search__field--persons">
-              <span class="sr-only" id="tsPersonenLabel">Reizigers</span>
-              <div class="trip-search__control trip-search__stepper">
-                <svg class="trip-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20.5c0-4 3.2-7 7.2-7s7.2 3 7.2 7"/></svg>
-                <button type="button" class="trip-search__step-btn" data-persons="minus" aria-label="Eén reiziger minder">−</button>
-                <input class="trip-search__count" type="number" id="tsPersonen" name="personen" value="2" min="1" max="12" inputmode="numeric" aria-labelledby="tsPersonenLabel" />
-                <button type="button" class="trip-search__step-btn" data-persons="plus" aria-label="Eén reiziger meer">+</button>
-              </div>
-            </div>
-
-            <button class="trip-search__submit" type="submit">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8L20 20"/></svg>
-              <span>Bekijk je reis</span>
-            </button>
-          </div>
-        </form>
+    <!-- One trip in full, filled from its block by js/reizen-deck.js. -->
+    <dialog class="trip-sheet" id="tripSheet" aria-labelledby="tripSheetTitle">
+      <div class="trip-sheet__scrim" data-sheet-close></div>
+      <div class="trip-sheet__panel">
+        <div class="trip-sheet__bar">
+          <button type="button" class="trip-sheet__close" data-sheet-close aria-label="Sluiten" autofocus><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+        <div class="trip-sheet__media">
+          <div class="trip-sheet__photo trip-sheet__photo--main"></div>
+        </div>
+        <div class="trip-sheet__body">
+          <p class="trip-sheet__region"></p>
+          <h2 class="trip-sheet__title" id="tripSheetTitle"></h2>
+          <div class="trip-sheet__text"></div>
+          <dl class="trip-sheet__facts"></dl>
+          <div class="trip-sheet__actions"></div>
+        </div>
       </div>
-    </div>
+    </dialog>
 
     <div class="baanlijn baanlijn--on-light" aria-hidden="true">
       <svg viewBox="0 0 400 40" preserveAspectRatio="none">
         <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" fill="none" stroke="#7a4620" stroke-width="2" />
       </svg>
     </div>
-
-    <!-- 3c. Guided group trips: two fixed-date trips, each with its own
-         page, shown below the package trips (the trip map above). Styles in
-         css/groepsreizen-sectie.css. -->
-    <section class="group-trips" id="groepsreizen" aria-labelledby="groepsreizen-title">
-      <div class="wrap">
-        <div class="group-trips__head">
-          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Groepsreizen</span>
-          <h2 class="h-section" id="groepsreizen-title">Samen schaatsen op een vaste datum</h2>
-          <div class="group-trips__notes">
-            <p class="group-trips__lede">Bij een groepsreis reis je op een vaste datum, met begeleiding. Je meldt je aan, maar niet alleen (vanaf 2 personen).</p>
-            <p class="group-trips__lede">Liever in je eigen tempo en op je eigen datums? Kies dan hierboven een pakketreis. Je datums kies je zelf in de kalender.</p>
-          </div>
-        </div>
-
-        <div class="group-trips__list">
-          <article class="group-trip group-trip--orsa reveal" aria-labelledby="groepsreis-orsa-title">
-            <picture class="group-trip__media"><source type="image/avif" srcset="images/orsa-group-silhouettes-black-ice-480.avif 480w, images/orsa-group-silhouettes-black-ice-800.avif 800w, images/orsa-group-silhouettes-black-ice-1200.avif 1200w, images/orsa-group-silhouettes-black-ice.avif 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="images/orsa-group-silhouettes-black-ice-480.webp 480w, images/orsa-group-silhouettes-black-ice-800.webp 800w, images/orsa-group-silhouettes-black-ice-1200.webp 1200w, images/orsa-group-silhouettes-black-ice.webp 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><img src="images/orsa-group-silhouettes-black-ice-800.jpg" alt="Vijf schaatsers staan als silhouet in tegenlicht op glad donker ijs, met lange schaduwen en bomen op de oever" width="1600" height="1200" loading="lazy" decoding="async" srcset="images/orsa-group-silhouettes-black-ice-480.jpg 480w, images/orsa-group-silhouettes-black-ice-800.jpg 800w, images/orsa-group-silhouettes-black-ice-1200.jpg 1200w, images/orsa-group-silhouettes-black-ice.jpg 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /></picture>
-            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Groepsreis, begeleid</p>
-            <h3 class="group-trip__title" id="groepsreis-orsa-title">Groepsreis Orsa</h3>
-            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-01-28">do 28</time> t/m <time datetime="2027-01-31">zo 31 januari 2027</time></span></p>
-            <p class="group-trip__price"><span class="group-trip__amount">€1.295</span> per persoon</p>
-            <p class="group-trip__terms">4 dagen, aanmelden vanaf 2 personen</p>
-            <p class="group-trip__incl"><strong>Inbegrepen:</strong> vlucht, accommodatie, auto, gids en begeleiding en 3 dagen schaatsen.</p>
-            <a class="btn btn--dark group-trip__cta" href="groepsreis-orsa.html">Bekijk en boek<span class="sr-only"> de groepsreis naar Orsa</span></a>
-          </article>
-
-          <article class="group-trip group-trip--falun reveal" aria-labelledby="groepsreis-falun-title">
-            <picture class="group-trip__media"><source type="image/avif" srcset="images/falun-group-break-sun-480.avif 480w, images/falun-group-break-sun-800.avif 800w, images/falun-group-break-sun.avif 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><source type="image/webp" srcset="images/falun-group-break-sun-480.webp 480w, images/falun-group-break-sun-800.webp 800w, images/falun-group-break-sun.webp 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><img src="images/falun-group-break-sun-800.jpg" alt="Vier mensen zitten naast elkaar op schopsleeën in de zon op het ijs, met dennenbomen en blauwe lucht achter hen" width="1086" height="724" loading="lazy" decoding="async" srcset="images/falun-group-break-sun-480.jpg 480w, images/falun-group-break-sun-800.jpg 800w, images/falun-group-break-sun.jpg 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /></picture>
-            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Groepsreis, begeleid</p>
-            <h3 class="group-trip__title" id="groepsreis-falun-title">Groepsreis Falun</h3>
-            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-02-04">do 4</time> t/m <time datetime="2027-02-07">zo 7 februari 2027</time></span></p>
-            <p class="group-trip__price"><span class="group-trip__amount">€1.295</span> per persoon</p>
-            <p class="group-trip__terms">4 dagen, aanmelden vanaf 2 personen</p>
-            <p class="group-trip__incl"><strong>Inbegrepen:</strong> vlucht, accommodatie, auto, gids en begeleiding en 3 dagen schaatsen.</p>
-            <a class="btn btn--dark group-trip__cta" href="groepsreis-falun.html">Bekijk en boek<span class="sr-only"> de groepsreis naar Falun</span></a>
-          </article>
-        </div>
-      </div>
-    </section>
 
     <!-- 3b. Introduction, placed below the trips so the trips come first. -->
     <section class="intro">
@@ -848,7 +1739,9 @@
 
   <script defer src="js/main.js"></script>
   <script defer src="js/trip-search.js?v=2"></script>
-  <script defer src="js/reizen.js?v=6"></script>
+  <script defer src="js/vendor/gsap.min.js"></script>
+  <script defer src="js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="js/reizen-deck.js?v=3"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
