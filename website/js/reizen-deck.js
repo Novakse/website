@@ -352,10 +352,18 @@
   var animated = [];
   var waiting = [];     // blocks not in view yet (see onFirstView)
   var catchUpTimer = 0;
+  var catchUpOnScreen = false;
+  var reshaped = null;
   try {
     setupMotion();
     window.addEventListener("scroll", catchUpSoon, { passive: true });
     window.addEventListener("resize", catchUpSoon);
+    // The page can still change shape after it has loaded (the main
+    // stylesheet does not hold the page up): check again when it does.
+    if ("ResizeObserver" in window) {
+      reshaped = new ResizeObserver(function () { catchUpSoon(true); });
+      reshaped.observe(deck);
+    }
     if (document.readyState === "complete") catchUp(true);
     else window.addEventListener("load", function () { catchUp(true); });
   } catch (error) {
@@ -457,10 +465,10 @@
   }
 
   // Safety net: the positions above are measured while the page is still
-  // being built (photos and fonts arriving, the blocks being folded), so a
-  // block can be missed. Once the page has loaded every block on screen
-  // comes in; after a resize and whenever scrolling stops every block past
-  // the line does, and blocks scrolled past jump to the end.
+  // being built (stylesheets, photos and fonts arriving), so a block can
+  // be missed. Once the page has loaded or changed shape every block on
+  // screen comes in; after a resize and whenever scrolling stops every
+  // block past the line does, and blocks scrolled past jump to the end.
   function catchUp(onScreen) {
     var limit = window.innerHeight * (onScreen ? 1 : 0.92);
     var due = waiting.filter(function (item) {
@@ -472,12 +480,21 @@
     if (!waiting.length) {
       window.removeEventListener("scroll", catchUpSoon);
       window.removeEventListener("resize", catchUpSoon);
+      if (reshaped) reshaped.disconnect();
     }
   }
 
-  function catchUpSoon() {
+  // `onScreen` is true when the page changed shape.
+  function catchUpSoon(onScreen) {
+    if (onScreen === true) catchUpOnScreen = true;
     window.clearTimeout(catchUpTimer);
-    catchUpTimer = window.setTimeout(function () { catchUp(false); }, 200);
+    catchUpTimer = window.setTimeout(function () {
+      var all = catchUpOnScreen;
+      catchUpOnScreen = false;
+      // Blocks further down moved too: measure their lines again.
+      if (all) ScrollTrigger.refresh();
+      catchUp(all);
+    }, 200);
   }
 
   // A slanted band of light inside `host`; glint() slides it across.
