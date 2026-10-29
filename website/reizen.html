@@ -134,7 +134,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: scale(1.1);
     }
     /* A light wintry veil over the photo, fading into the white page at the
        bottom. */
@@ -187,14 +186,24 @@
       background: #c9d3d9;
       transform: translateZ(0);
     }
-    /* A little taller than its frame, so it can drift while the page
-       scrolls (laptops, js/reizen-deck.js) without showing an edge. */
     .deck-top__photo picture {
       position: absolute;
-      inset: -8% 0 0;
+      inset: 0;
       display: block;
     }
     .deck-top__photo img { width: 100%; height: 100%; object-fit: cover; }
+    .deck-top__photo--video { background: #14181a url("images/hero-video-novakse-poster.jpg") center / cover no-repeat; }
+    .deck-top__video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.26s ease;
+    }
+    .deck-top__video.is-looping { opacity: 0; }
+    /* Dark during the loop fade, as on the homepage: no flash of the poster. */
+    .deck-top__photo--video:has(> .is-looping) { background-image: none; }
     .deck-top .trip-search-dock {
       grid-area: search;
       margin: 0;
@@ -245,24 +254,26 @@
     }
 
     /* The panel comes in as soon as the page paints (no script needed): it
-       settles, the photo zooms out, the title slides up out of its mask,
-       then the rating's stars pop and the trip search follows. The photo
-       is never transparent, so it shows straight away. */
+       rises, the title slides up out of its mask, the rating's stars pop
+       and the trip search follows. The photo is never transparent, so it
+       shows straight away; it only settles (zooms out) once it has loaded
+       (is-loaded, set by its onload), so it never moves half-drawn. */
     @media (prefers-reduced-motion: no-preference) {
-      .deck-top { animation: deck-in 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
-      .deck-top__photo img { animation: photo-settle 1.1s 0.1s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
-      .deck-top__intro .eyebrow { animation: deck-up 0.6s 0.25s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
-      .deck-top__title > span { animation: title-up 1.1s 0.3s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
-      .deck-top__intro .page-hero__rating { animation: deck-up 0.6s 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
-      .deck-top__intro .page-hero__rating-stars svg { animation: star-pop 0.6s 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
-      .deck-top__intro .page-hero__rating-stars svg:nth-child(2) { animation-delay: 0.77s; }
-      .deck-top__intro .page-hero__rating-stars svg:nth-child(3) { animation-delay: 0.84s; }
-      .deck-top__intro .page-hero__rating-stars svg:nth-child(4) { animation-delay: 0.91s; }
-      .deck-top__intro .page-hero__rating-stars svg:nth-child(5) { animation-delay: 0.98s; }
-      .deck-top .trip-search { animation: deck-up 0.6s 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top { animation: deck-in 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__photo.is-loaded img,
+      .deck-top__photo.is-loaded video { animation: photo-settle 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__intro .eyebrow { animation: deck-up 0.6s 0.1s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__title > span { animation: title-up 0.6s 0.15s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__intro .page-hero__rating { animation: deck-up 0.6s 0.3s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__intro .page-hero__rating-stars svg { animation: star-pop 0.25s 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+      .deck-top__intro .page-hero__rating-stars svg:nth-child(2) { animation-delay: 0.45s; }
+      .deck-top__intro .page-hero__rating-stars svg:nth-child(3) { animation-delay: 0.5s; }
+      .deck-top__intro .page-hero__rating-stars svg:nth-child(4) { animation-delay: 0.55s; }
+      .deck-top__intro .page-hero__rating-stars svg:nth-child(5) { animation-delay: 0.6s; }
+      .deck-top .trip-search { animation: deck-up 0.6s 0.25s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
     }
-    @keyframes deck-in { from { transform: translateY(1.5rem) scale(0.985); } }
-    @keyframes photo-settle { from { transform: scale(1.15); } }
+    @keyframes deck-in { from { transform: translateY(1rem); } }
+    @keyframes photo-settle { from { transform: scale(1.06); } }
     @keyframes deck-up { from { opacity: 0; transform: translateY(1rem); } }
     @keyframes title-up { from { transform: translateY(105%); } }
     @keyframes star-pop { from { opacity: 0; transform: scale(0) rotate(-40deg); } }
@@ -494,29 +505,6 @@
     @media (hover: hover) {
       .deck-card__photo:hover .deck-card__zoom svg { transform: scale(1.15); }
     }
-    @media (hover: hover) and (pointer: fine) {
-      .deck-card__incl,
-      .deck-card__price,
-      .deck-card__zoom {
-        background: rgba(255, 255, 255, 0.74);
-        -webkit-backdrop-filter: blur(12px) saturate(160%);
-        backdrop-filter: blur(12px) saturate(160%);
-      }
-    }
-
-    /* Prices roll into place like a counter (js/reizen-deck.js); the real
-       text is restored once they have landed. */
-    .odo { display: inline-flex; }
-    .odo__face { display: inline-flex; align-items: flex-start; }
-    .odo__char,
-    .odo__digit,
-    .odo__reel > span {
-      display: block;
-      height: 1em;
-      line-height: 1;
-    }
-    .odo__digit { overflow: hidden; }
-    .odo__reel { display: flex; flex-direction: column; }
 
     .deck-card__body {
       display: flex;
@@ -648,7 +636,8 @@
       border-radius: 50%;
       background: radial-gradient(closest-side, rgba(255, 255, 255, 0.38), color-mix(in srgb, var(--accent) 14%, transparent) 55%, transparent);
     }
-    /* A glint of light that slides over a block, like sun on ice. */
+    /* A glint of light that slides over a block, like sun on ice. Hidden
+       until js/reizen-deck.js slides it across (and hides it again). */
     .deck-sheen {
       position: absolute;
       inset: 0;
@@ -663,8 +652,9 @@
       bottom: -10%;
       left: 0;
       width: 40%;
-      background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.28) 42%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.28) 58%, rgba(255, 255, 255, 0) 100%);
-      transform: translateX(-160%);
+      background: linear-gradient(105deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0.26) 44%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0.26) 56%, rgba(255, 255, 255, 0) 80%);
+      transform: translateX(-120%);
+      visibility: hidden;
     }
 
     /* ---- Group trips: a dark glass panel below the package trips -------- */
@@ -864,12 +854,6 @@
     }
     .group-ticket__incl strong { font-weight: 600; color: #fff; }
     .group-ticket__actions { margin-top: auto; padding-top: 1.1rem; }
-    @media (hover: hover) and (pointer: fine) {
-      .group-ticket__tag {
-        -webkit-backdrop-filter: blur(10px) saturate(150%);
-        backdrop-filter: blur(10px) saturate(150%);
-      }
-    }
 
     /* Blocks wait for the script to bring them in. If it never runs, they
        show up after 3 seconds anyway. */
@@ -1128,8 +1112,16 @@
                <span class="page-hero__rating-text" aria-hidden="true">25 Google-reviews</span>
                </a>
           </div>
-          <div class="deck-top__photo">
-            <picture><source type="image/avif" srcset="images/hero-baan-zonsondergang-480.avif 480w, images/hero-baan-zonsondergang-800.avif 800w, images/hero-baan-zonsondergang-1200.avif 1200w, images/hero-baan-zonsondergang-1600.avif 1600w, images/hero-baan-zonsondergang.avif 1920w" sizes="(min-width: 80rem) 42rem, (min-width: 48rem) 55vw, calc(100vw - 2rem)" /><source type="image/webp" srcset="images/hero-baan-zonsondergang-480.webp 480w, images/hero-baan-zonsondergang-800.webp 800w, images/hero-baan-zonsondergang-1200.webp 1200w, images/hero-baan-zonsondergang-1600.webp 1600w, images/hero-baan-zonsondergang.webp 1920w" sizes="(min-width: 80rem) 42rem, (min-width: 48rem) 55vw, calc(100vw - 2rem)" /><img src="images/hero-baan-zonsondergang.jpg" alt="Geveegde schaatsbaan over een bevroren meer bij zonsondergang" fetchpriority="high" srcset="images/hero-baan-zonsondergang-480.jpg 480w, images/hero-baan-zonsondergang-800.jpg 800w, images/hero-baan-zonsondergang-1200.jpg 1200w, images/hero-baan-zonsondergang-1600.jpg 1600w, images/hero-baan-zonsondergang.jpg 1920w" sizes="(min-width: 80rem) 42rem, (min-width: 48rem) 55vw, calc(100vw - 2rem)" /></picture>
+          <!-- The homepage's opening video (same file and URL, so a visitor
+               who saw the homepage already has it cached). The poster also
+               sits under the video, so the panel never shows an empty block.
+               It only plays when the visitor has no reduced-motion setting. -->
+          <div class="deck-top__photo deck-top__photo--video">
+            <video class="deck-top__video" muted loop playsinline preload="auto" aria-hidden="true"
+                   poster="images/hero-video-novakse-poster.jpg"
+                   src="images/hero-video-novakse-light.mp4?v=2"
+                   onloadeddata="this.parentNode.classList.add('is-loaded')"></video>
+            <script>(function(v){if(!v)return;var still=matchMedia("(prefers-reduced-motion: reduce)");var play=function(){if(still.matches||!v.paused)return;var p=v.play();if(p&&p.catch)p.catch(function(){});};play();/* Hide the short wrong-frame flash browsers show when an H.264 loop restarts. */v.addEventListener("timeupdate",function(){if(v.duration&&v.duration-v.currentTime<0.26)v.classList.add("is-looping");});v.addEventListener("seeked",function(){if(v.currentTime<0.26)requestAnimationFrame(function(){requestAnimationFrame(function(){v.classList.remove("is-looping");});});});v.addEventListener("pause",function(){v.classList.remove("is-looping");});/* Safari can stop it after the back button or a background tab, an iPhone in Low Power Mode until the page is touched: try again then. */addEventListener("pageshow",play);document.addEventListener("visibilitychange",function(){if(!document.hidden)play();});["touchend","click","keydown"].forEach(function(t){document.addEventListener(t,play,{passive:true});});})(document.querySelector(".deck-top__video"));</script>
           </div>
 
           <!-- Reiszoeker: geeft bestemming, datums en aantal reizigers door aan
@@ -1740,8 +1732,7 @@
   <script defer src="js/main.js"></script>
   <script defer src="js/trip-search.js?v=2"></script>
   <script defer src="js/vendor/gsap.min.js"></script>
-  <script defer src="js/vendor/ScrollTrigger.min.js"></script>
-  <script defer src="js/reizen-deck.js?v=5"></script>
+  <script defer src="js/reizen-deck.js?v=7"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>

@@ -7,17 +7,19 @@
    plain CSS, so it plays without waiting for this script). This script:
    1. folds each block to its first paragraph and two facts, and lets
       "Lees meer" (or a click on the photo) open the whole trip in a sheet;
-   2. adds the motion: blocks rise in row by row while their photo is swept
-      free, the prices roll into place like a counter and a glint of light
-      slides over the glass; blocks tilt towards the mouse; the group trips'
-      dates flip in like a desk calendar; the photo flies from the block
-      into the sheet and back; on laptops the top photo drifts slowly.
+   2. adds the motion: blocks rise in row by row, their photo is swept free
+      once it is in view and a glint of light slides over the glass; blocks
+      tilt towards the mouse; the group trips' dates flip in like a desk
+      calendar; the photo flies from the block into the sheet and back.
 
-   Motion uses GSAP + ScrollTrigger (js/vendor) and follows
-   MOTION-GUIDELINES.md: transform and opacity only, no scroll-linked motion
-   on phones, nothing at all with prefers-reduced-motion. Without GSAP the
-   blocks and the sheet still work, just without motion. Without this script
-   every block shows its full text and facts.
+   Motion uses GSAP (js/vendor/gsap.min.js) and follows MOTION-GUIDELINES.md:
+   transform and opacity only, 2D only for entrances, nothing tied to the
+   scroll position, nothing at all with prefers-reduced-motion. When a part
+   starts is decided by IntersectionObservers (checked again once scrolling
+   stops), so nothing is measured while scrolling. Every block always ends
+   up in view: without GSAP the blocks and the sheet still work, just
+   without motion. Without this script every block shows its full text and
+   facts.
    ========================================================================== */
 (function () {
   "use strict";
@@ -27,25 +29,26 @@
 
   var root = document.documentElement;
   var gsap = window.gsap;
-  var ScrollTrigger = window.ScrollTrigger;
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   var wideSheet = window.matchMedia("(min-width: 56rem)");
-  var motionOK = !!(gsap && ScrollTrigger) && !reducedMotion.matches;
+  var cards = Array.prototype.slice.call(deck.querySelectorAll(".deck-card"));
+  var forEach = Array.prototype.forEach;
+  var motionOK = !!gsap && "IntersectionObserver" in window && !reducedMotion.matches;
 
-  // The CSS keeps the blocks hidden until one of these classes is set.
-  root.classList.add(motionOK ? "deck-motion" : "deck-still");
+  // The CSS keeps the blocks hidden until "deck-motion" (set only once the
+  // motion in section 3 is ready) or "deck-still" is set, and shows them
+  // after 3 seconds if neither comes. A script that arrives after those 3
+  // seconds finds the blocks already in view: they stay that way.
+  if (motionOK && cards.length && getComputedStyle(cards[0]).opacity === "1") motionOK = false;
+  if (!motionOK) root.classList.add("deck-still");
 
   var sheet = document.getElementById("tripSheet");
   // No <dialog> support: keep the full blocks, as without JavaScript.
   if (!sheet || typeof sheet.showModal !== "function") {
-    root.classList.remove("deck-motion");
     root.classList.add("deck-still");
     return;
   }
-
-  var cards = Array.prototype.slice.call(deck.querySelectorAll(".deck-card"));
-  var forEach = Array.prototype.forEach;
 
   /* ------------------------------------------------------------------
      1. Fold the blocks and wire up the sheet
@@ -349,13 +352,19 @@
      ------------------------------------------------------------------ */
   if (!motionOK) return;
 
-  var animated = [];
-  var waiting = [];     // blocks not in view yet (see onFirstView)
+  // After a long frame (images decoding while the page loads) carry on
+  // where the motion was instead of jumping ahead: no visible skips.
+  gsap.ticker.lagSmoothing(120, 16);
+
+  // One IntersectionObserver per trigger line (see playAt).
+  var watchers = {};
   var catchUpTimer = 0;
   var catchUpOnScreen = false;
   var reshaped = null;
+
   try {
     setupMotion();
+    root.classList.add("deck-motion");
     window.addEventListener("scroll", catchUpSoon, { passive: true });
     window.addEventListener("resize", catchUpSoon);
     // The page can still change shape after it has loaded (the main
@@ -368,116 +377,134 @@
     else window.addEventListener("load", function () { catchUp(true); });
   } catch (error) {
     // Something went wrong: show everything as it is, without motion.
+    if (window.console) console.error(error);
     motionOK = false;
+    Object.keys(watchers).forEach(function (line) { watchers[line].observer.disconnect(); });
     root.classList.remove("deck-motion");
     root.classList.add("deck-still");
-    forEach.call(deck.querySelectorAll(".deck-card__curtain"), function (el) {
+    forEach.call(deck.querySelectorAll(".deck-card__curtain, .deck-sheen"), function (el) {
       el.parentNode.removeChild(el);
     });
-    try { gsap.set(animated, { clearProps: "opacity,transform" }); } catch (ignore) {}
+    try {
+      gsap.set(deck.querySelectorAll(".deck-card, .deck-card *, .deck-note, .deck-note *, .deck-group, .deck-group *"),
+        { clearProps: "opacity,transform" });
+    } catch (ignore) {}
   }
 
+  // All measuring happens first, in one go, before anything is changed:
+  // reading layout after writing styles would make the browser lay out the
+  // page again and again while it loads.
   function setupMotion() {
-    gsap.registerPlugin(ScrollTrigger);
+    var items = deck.querySelectorAll(".trip-deck__item");
+    var group = deck.querySelector(".deck-group");
+    var tickets = group ? group.querySelectorAll(".group-ticket") : [];
+    var itemColumns = columnsOf(items);
+    var ticketColumns = columnsOf(tickets);
 
     // Blocks in the same row come in one after the other.
-    var columnOf = {};
-    forEach.call(deck.querySelectorAll(".trip-deck__item"), function (item) {
+    forEach.call(items, function (item, index) {
       var block = item.firstElementChild;
       if (!block) return;
-      var top = Math.round(item.getBoundingClientRect().top + window.pageYOffset);
-      columnOf[top] = columnOf[top] === undefined ? 0 : columnOf[top] + 1;
-      var delay = columnOf[top] * 0.12;
-      animated.push(block);
-      onFirstView(block, function (passed) {
-        var wait = passed ? 0 : delay;
-        return block.classList.contains("deck-card") ? revealCard(block, wait) : revealNote(block, wait);
-      });
+      var offset = itemColumns[index] * 0.08;
+      if (block.classList.contains("deck-card")) prepareCard(block, offset);
+      else prepareNote(block, offset);
     });
-
-    var group = deck.querySelector(".deck-group");
-    if (group) {
-      animated.push(group);
-      onFirstView(group, function () { return revealGroup(group); });
-    }
+    if (group) prepareGroup(group, tickets, ticketColumns);
 
     if (finePointer.matches) {
       cards.forEach(tilt);
       forEach.call(deck.querySelectorAll(".group-ticket__shell"), function (shell) {
         var band = addSheen(shell);
         shell.addEventListener("pointerenter", function (event) {
-          if (event.pointerType === "mouse" && !gsap.isTweening(band)) glint(band);
+          if (event.pointerType === "mouse") glint(band);
         });
       });
     }
+  }
 
-    // Laptops and desktops only: the top photo drifts down a little inside
-    // its frame as the page scrolls, and the deck's backdrop slowly settles
-    // (scrubbed, one element each). Not on phones, where scroll-linked
-    // motion made scrolling stutter before.
-    gsap.matchMedia().add("(min-width: 64rem) and (hover: hover) and (pointer: fine)", function () {
-      var topPhoto = deck.querySelector(".deck-top__photo picture");
-      if (topPhoto) {
-        gsap.fromTo(topPhoto, { yPercent: 0 }, {
-          yPercent: 7,
-          ease: "none",
-          scrollTrigger: { trigger: topPhoto.parentNode, start: "clamp(top bottom)", end: "bottom top", scrub: 0.6 }
-        });
-      }
-      var backdrop = deck.querySelector(".trip-deck__backdrop img");
-      if (backdrop) {
-        gsap.fromTo(backdrop, { scale: 1.22 }, {
-          scale: 1.04,
-          ease: "none",
-          scrollTrigger: { trigger: deck, start: "top bottom", end: "bottom top", scrub: 0.6 }
-        });
-      }
+  // Column of each element within its row (same top = same row).
+  function columnsOf(els) {
+    var seen = {};
+    return Array.prototype.map.call(els, function (el) {
+      var top = Math.round(el.getBoundingClientRect().top + window.pageYOffset);
+      seen[top] = seen[top] === undefined ? 0 : seen[top] + 1;
+      return seen[top];
     });
   }
 
-  // Runs `play` once, when the element first comes into view. Elements that
-  // are already in view, or already scrolled past (a link to a trip further
-  // down), play straight away; scrolled-past ones jump to the end.
-  function onFirstView(el, play) {
-    var item = { el: el, play: play };
-    var rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.92) {
-      reveal(item, rect.bottom < 0);
+  // Plays the paused `animation` once, when `el` reaches `line` (in % from
+  // the top of the screen), so every part moves while it is actually in
+  // view instead of while it is still below the screen. What is already on
+  // screen when the page opens plays straight away; what is already
+  // scrolled past (a link to a trip further down) jumps to the end.
+  // `before` (optional) runs first and calls back when the part may start.
+  function playAt(el, line, animation, before) {
+    var watch = watchers[line];
+    if (!watch) {
+      watch = watchers[line] = { line: line, parts: new Map() };
+      watch.observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var part = watch.parts.get(entry.target);
+          if (!part) return;
+          var rect = entry.boundingClientRect;
+          var firstLook = !part.seen;
+          part.seen = true;
+          var passed = rect.bottom < 0;
+          if (!passed && !entry.isIntersecting && !(firstLook && rect.top < window.innerHeight)) return;
+          start(watch, entry.target, passed);
+        });
+      }, { rootMargin: "0px 0px -" + (100 - line) + "% 0px" });
+    }
+    watch.parts.set(el, { animation: animation, before: before, seen: false });
+    watch.observer.observe(el);
+  }
+
+  // Plays the part of `el` (or jumps it to the end when it is scrolled
+  // past) and stops watching it. Whatever holds the motion up, the part is
+  // fully shown a few seconds later.
+  function start(watch, el, passed) {
+    var part = watch.parts.get(el);
+    if (!part) return;
+    watch.parts.delete(el);
+    watch.observer.unobserve(el);
+    var animation = part.animation;
+    if (passed) {
+      animation.progress(1);
       return;
     }
-    waiting.push(item);
-    item.trigger = ScrollTrigger.create({
-      trigger: el,
-      start: "top 92%",
-      once: true,
-      onEnter: function () { reveal(item, false); }
-    });
+    function go() {
+      animation.play();
+      window.setTimeout(function () {
+        if (animation.progress() < 1) animation.progress(1);
+      }, 4000);
+    }
+    if (part.before) part.before(go);
+    else go();
   }
 
-  function reveal(item, passed) {
-    if (item.done) return;
-    item.done = true;
-    var index = waiting.indexOf(item);
-    if (index !== -1) waiting.splice(index, 1);
-    if (item.trigger) item.trigger.kill();
-    var animation = item.play(passed);
-    if (passed && animation) animation.progress(1);
-  }
-
-  // Safety net: the positions above are measured while the page is still
-  // being built (stylesheets, photos and fonts arriving), so a block can
-  // be missed. Once the page has loaded or changed shape every block on
-  // screen comes in; after a resize and whenever scrolling stops every
-  // block past the line does, and blocks scrolled past jump to the end.
+  // Safety net for the observers, which can miss a part: when the page
+  // jumps straight past it, or when the layout moves after the page opened
+  // (stylesheets, fonts and photos arriving). So after a resize and
+  // whenever scrolling stops, every part that is past its line plays and
+  // every part scrolled past jumps to the end; once the page has loaded or
+  // changed shape, everything on screen plays, as on opening. Nothing is
+  // measured while the page moves.
   function catchUp(onScreen) {
-    var limit = window.innerHeight * (onScreen ? 1 : 0.92);
-    var due = waiting.filter(function (item) {
-      var rect = item.el.getBoundingClientRect();
-      item.passed = rect.bottom < 0;
-      return rect.top < limit;
+    var height = window.innerHeight;
+    var due = [];
+    var waiting = 0;
+    Object.keys(watchers).forEach(function (line) {
+      var watch = watchers[line];
+      var limit = onScreen ? height : height * watch.line / 100;
+      watch.parts.forEach(function (part, el) {
+        var rect = el.getBoundingClientRect();
+        if (rect.top < limit) due.push([watch, el, rect.bottom < 0]);
+        else waiting += 1;
+      });
     });
-    due.forEach(function (item) { reveal(item, item.passed); });
-    if (!waiting.length) {
+    // Measured everything first, now change things.
+    due.forEach(function (item) { start(item[0], item[1], item[2]); });
+    if (!waiting) {
       window.removeEventListener("scroll", catchUpSoon);
       window.removeEventListener("resize", catchUpSoon);
       if (reshaped) reshaped.disconnect();
@@ -491,13 +518,27 @@
     catchUpTimer = window.setTimeout(function () {
       var all = catchUpOnScreen;
       catchUpOnScreen = false;
-      // Blocks further down moved too: measure their lines again.
-      if (all) ScrollTrigger.refresh();
       catchUp(all);
     }, 200);
   }
 
-  // A slanted band of light inside `host`; glint() slides it across.
+  // Calls `go` once `img` is decoded, so a photo never moves while the
+  // browser is still busy drawing it; after a short wait it goes anyway.
+  function whenDecoded(img, go) {
+    var done = false;
+    function once() {
+      if (done) return;
+      done = true;
+      go();
+    }
+    if (img && img.decode) img.decode().then(once, once);
+    else once();
+    window.setTimeout(once, 600);
+  }
+
+  // A slanted band of light inside `host`, hidden until glint() slides it
+  // across. It always ends well past the right edge and is hidden again,
+  // so it can never stay behind on the glass.
   function addSheen(host) {
     var clip = document.createElement("span");
     clip.className = "deck-sheen";
@@ -505,90 +546,48 @@
     var band = document.createElement("span");
     clip.appendChild(band);
     host.appendChild(clip);
-    gsap.set(band, { xPercent: -160, skewX: -14 });
+    gsap.set(band, { xPercent: -120, autoAlpha: 0 });
     return band;
   }
 
   function glint(band, tl, at) {
-    var from = { xPercent: -160 };
-    var to = { xPercent: 330, duration: 1.1, ease: "power1.inOut" };
-    if (tl) tl.fromTo(band, from, to, at);
-    else gsap.fromTo(band, from, to);
-  }
-
-  // Replaces the digits in `el` with rolling reels (0 to 9, twice). The
-  // real text stays for screen readers and comes back once they land.
-  function makeCounter(el) {
-    var reels = [];
-    var swaps = [];
-    var nodes = [];
-    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
-    while (walker.nextNode()) {
-      var node = walker.currentNode;
-      var inSmall = node.parentNode && node.parentNode.closest && node.parentNode.closest("small");
-      if (/\d/.test(node.nodeValue) && !inSmall) nodes.push(node);
-    }
-    nodes.forEach(function (node) {
-      var original = node.nodeValue;
-      var text = original.trim();
-      var counter = document.createElement("span");
-      counter.className = "odo";
-      var said = document.createElement("span");
-      said.className = "sr-only";
-      said.textContent = text;
-      var face = document.createElement("span");
-      face.className = "odo__face";
-      face.setAttribute("aria-hidden", "true");
-      text.split("").forEach(function (ch) {
-        if (/\d/.test(ch)) {
-          var win = document.createElement("span");
-          win.className = "odo__digit";
-          var reel = document.createElement("span");
-          reel.className = "odo__reel";
-          for (var i = 0; i < 20; i++) {
-            var digit = document.createElement("span");
-            digit.textContent = String(i % 10);
-            reel.appendChild(digit);
-          }
-          win.appendChild(reel);
-          face.appendChild(win);
-          reels.push({ reel: reel, digit: Number(ch) });
-        } else {
-          var char = document.createElement("span");
-          char.className = "odo__char";
-          char.textContent = ch === " " ? " " : ch;
-          face.appendChild(char);
-        }
-      });
-      counter.appendChild(said);
-      counter.appendChild(face);
-      node.parentNode.replaceChild(counter, node);
-      swaps.push([counter, document.createTextNode(original)]);
-    });
-    return {
-      roll: function (tl, at) {
-        reels.forEach(function (item, index) {
-          tl.fromTo(item.reel, { yPercent: 0 },
-            { yPercent: -(10 + item.digit) * 5, duration: 1.1, ease: "power2.out" }, at + index * 0.08);
-        });
-      },
-      restore: function () {
-        swaps.forEach(function (pair) {
-          if (pair[0].parentNode) pair[0].parentNode.replaceChild(pair[1], pair[0]);
-        });
-      }
+    var from = { xPercent: -120, autoAlpha: 1 };
+    var to = {
+      xPercent: 300,
+      duration: 0.9,
+      ease: "power1.inOut",
+      onComplete: function () { gsap.set(band, { xPercent: -120, autoAlpha: 0 }); }
     };
+    if (tl) {
+      // Stays hidden until this point of the timeline is reached.
+      to.immediateRender = false;
+      tl.fromTo(band, from, to, at);
+    } else if (!gsap.isTweening(band)) {
+      gsap.fromTo(band, from, to);
+    }
   }
 
-  // A block rises in with a slight backwards tilt, the photo is swept free
-  // from left to right (like snow off the ice) while it zooms out, the
-  // labels and text follow, the price rolls into place and a glint of light
-  // slides over the glass.
-  function revealCard(card, delay) {
+  // One sheen per block, shared by the entrance and the hover.
+  function sheenOf(card, shell) {
+    if (!card.deckSheen) card.deckSheen = addSheen(shell);
+    return card.deckSheen;
+  }
+
+  // A block in three parts, each when it is in view:
+  // 1. the block rises in as it reaches the screen, its photo still under a
+  //    layer of snow;
+  // 2. once the photo is well in view (and decoded) it is swept free from
+  //    left to right, like snow off the ice, while it settles, and the
+  //    labels with the price appear;
+  // 3. the text follows as it comes into view, ending with a glint of light
+  //    over the glass.
+  // `offset` staggers the blocks of one row.
+  function prepareCard(card, offset) {
     var shell = card.querySelector(".deck-card__shell");
     var photo = card.querySelector(".deck-card__photo");
+    var body = card.querySelector(".deck-card__body");
     var picture = photo && photo.querySelector("picture");
-    var price = card.querySelector(".deck-card__price");
+    var img = photo && photo.querySelector("img");
     var pills = card.querySelectorAll(".deck-card__incl, .deck-card__price, .deck-card__zoom");
     var bits = card.querySelectorAll(".deck-card__region, .deck-card__title, .deck-card__text, .deck-card__more, .deck-card__facts > div, .deck-card__actions");
     var curtain = null;
@@ -598,73 +597,76 @@
       curtain.setAttribute("aria-hidden", "true");
       photo.appendChild(curtain);
     }
-    var counter = price ? makeCounter(price) : null;
     var band = shell ? sheenOf(card, shell) : null;
 
-    var tl = gsap.timeline({
-      delay: delay,
+    var rise = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+    rise.fromTo(card, { opacity: 0, y: 48, scale: 0.97 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.6, clearProps: "transform" }, offset);
+
+    var sweep = gsap.timeline({
+      paused: true,
       defaults: { ease: "power2.out" },
       onComplete: function () {
         if (curtain && curtain.parentNode) curtain.parentNode.removeChild(curtain);
-        if (counter) counter.restore();
       }
     });
-    tl.fromTo(card,
-      { opacity: 0, y: 80, rotationX: 16, scale: 0.95, transformPerspective: 1200, transformOrigin: "50% 100%" },
-      { opacity: 1, y: 0, rotationX: 0, scale: 1, duration: 1.1, clearProps: "transform" }, 0);
-    if (curtain) tl.fromTo(curtain, { xPercent: 0 }, { xPercent: 100, duration: 1.1, ease: "power1.inOut" }, 0.2);
-    if (picture) tl.fromTo(picture, { scale: 1.22 }, { scale: 1, duration: 1.1 }, 0.2);
-    tl.fromTo(bits, { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.6, stagger: 0.04, clearProps: "opacity,transform" }, 0.35);
-    tl.fromTo(pills, { opacity: 0, y: 10, scale: 0.9 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.06, clearProps: "opacity,transform" }, 0.7);
-    if (counter) counter.roll(tl, 0.75);
-    if (band) glint(band, tl, 1.1);
-    return tl;
+    if (curtain) sweep.fromTo(curtain, { xPercent: 0 }, { xPercent: 100, duration: 0.6, ease: "power1.inOut" }, offset);
+    if (picture) sweep.fromTo(picture, { scale: 1.1 }, { scale: 1, duration: 1.1 }, offset);
+    sweep.fromTo(pills, { opacity: 0, y: 8 },
+      { opacity: 1, y: 0, duration: 0.6, stagger: 0.05, clearProps: "opacity,transform" }, offset + 0.3);
+
+    var text = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+    text.fromTo(bits, { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.6, stagger: 0.04, clearProps: "opacity,transform" }, offset);
+    if (band) glint(band, text, offset + 0.35);
+
+    playAt(card, 92, rise);
+    playAt(photo || card, 72, sweep, function (go) { whenDecoded(img, go); });
+    playAt(body || card, 88, text);
   }
 
-  // One sheen per block, shared by the entrance and the hover.
-  function sheenOf(card, shell) {
-    if (!card.deckSheen) card.deckSheen = addSheen(shell);
-    return card.deckSheen;
-  }
-
-  function revealNote(note, delay) {
+  // The intro tile rises in with its row; its text (at the bottom of the
+  // tile) follows when it is in view.
+  function prepareNote(note, offset) {
+    var words = note.querySelector("p");
     var band = addSheen(note);
-    var tl = gsap.timeline({ delay: delay, defaults: { ease: "power2.out" } });
-    tl.fromTo(note, { opacity: 0, y: 80, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 1.1, clearProps: "transform" }, 0)
-      .fromTo(note.querySelector("p"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, clearProps: "opacity,transform" }, 0.4);
-    glint(band, tl, 0.9);
-    return tl;
+    var rise = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+    rise.fromTo(note, { opacity: 0, y: 48, scale: 0.97 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.6, clearProps: "transform" }, offset);
+    var text = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+    text.fromTo(words, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, clearProps: "opacity,transform" }, offset);
+    glint(band, text, offset + 0.35);
+    playAt(note, 92, rise);
+    playAt(words || note, 85, text);
   }
 
-  // The dark panel rises in, then its tickets; the dates flip down like a
-  // desk calendar and the price rolls into place.
-  function revealGroup(group) {
+  // The dark panel rises in as it reaches the screen. Each ticket follows
+  // when it comes into view, and once its dates are well in view they flip
+  // down like a desk calendar.
+  function prepareGroup(group, tickets, columns) {
     var headBits = group.querySelectorAll(".deck-group__head > *");
-    var tickets = Array.prototype.slice.call(group.querySelectorAll(".group-ticket"));
-    var restores = [];
-    var tl = gsap.timeline({
-      defaults: { ease: "power2.out" },
-      onComplete: function () { restores.forEach(function (restore) { restore(); }); }
-    });
-    tl.fromTo(group, { opacity: 0, y: 60, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 1.1, clearProps: "transform" }, 0)
-      .fromTo(headBits, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.06, clearProps: "opacity,transform" }, 0.2)
-      .fromTo(tickets, { opacity: 0, y: 48, rotationX: 10, transformPerspective: 1000, transformOrigin: "50% 100%" },
-        { opacity: 1, y: 0, rotationX: 0, duration: 1.1, stagger: 0.14, clearProps: "opacity,transform" }, 0.25);
-    tickets.forEach(function (ticket, index) {
-      var at = 0.7 + index * 0.14;
-      tl.fromTo(ticket.querySelectorAll(".date-chip"),
+    var panelRise = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+    panelRise
+      .fromTo(group, { opacity: 0, y: 40, scale: 0.98 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, clearProps: "transform" }, 0)
+      .fromTo(headBits, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.05, clearProps: "opacity,transform" }, 0.1);
+    playAt(group, 92, panelRise);
+
+    forEach.call(tickets, function (ticket, index) {
+      var offset = columns[index] * 0.1;
+      var dates = ticket.querySelector(".group-ticket__dates");
+
+      var rise = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+      rise.fromTo(ticket, { opacity: 0, y: 36 },
+        { opacity: 1, y: 0, duration: 0.6, clearProps: "opacity,transform" }, 0.15 + offset);
+
+      var flip = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+      flip.fromTo(ticket.querySelectorAll(".date-chip"),
         { opacity: 0, rotationX: -90, transformPerspective: 400, transformOrigin: "50% 0%" },
-        { opacity: 1, rotationX: 0, duration: 0.6, stagger: 0.12, clearProps: "opacity,transform" }, at);
-      var amount = ticket.querySelector(".group-ticket__amount");
-      if (amount) {
-        var counter = makeCounter(amount);
-        counter.roll(tl, at + 0.1);
-        restores.push(counter.restore);
-      }
+        { opacity: 1, rotationX: 0, duration: 0.6, stagger: 0.1, clearProps: "opacity,transform" }, offset);
+
+      playAt(ticket, 92, rise);
+      playAt(dates || ticket, 80, flip);
     });
-    return tl;
   }
 
   // Mouse only: the block leans towards the pointer, lifts a little, the
@@ -698,7 +700,7 @@
       if (event.pointerType !== "mouse") return;
       lift(-6);
       gsap.to(glare, { opacity: 1, duration: 0.25, overwrite: true });
-      if (!gsap.isTweening(band)) glint(band);
+      glint(band);
     });
     card.addEventListener("pointermove", function (event) {
       if (event.pointerType !== "mouse") return;
