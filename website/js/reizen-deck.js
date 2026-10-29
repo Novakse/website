@@ -38,7 +38,11 @@
 
   var sheet = document.getElementById("tripSheet");
   // No <dialog> support: keep the full blocks, as without JavaScript.
-  if (!sheet || typeof sheet.showModal !== "function") return;
+  if (!sheet || typeof sheet.showModal !== "function") {
+    root.classList.remove("deck-motion");
+    root.classList.add("deck-still");
+    return;
+  }
 
   var cards = Array.prototype.slice.call(deck.querySelectorAll(".deck-card"));
   var forEach = Array.prototype.forEach;
@@ -346,8 +350,14 @@
   if (!motionOK) return;
 
   var animated = [];
+  var waiting = [];     // blocks not in view yet (see onFirstView)
+  var catchUpTimer = 0;
   try {
     setupMotion();
+    window.addEventListener("scroll", catchUpSoon, { passive: true });
+    window.addEventListener("resize", catchUpSoon);
+    if (document.readyState === "complete") catchUp(true);
+    else window.addEventListener("load", function () { catchUp(true); });
   } catch (error) {
     // Something went wrong: show everything as it is, without motion.
     motionOK = false;
@@ -421,19 +431,53 @@
   // are already in view, or already scrolled past (a link to a trip further
   // down), play straight away; scrolled-past ones jump to the end.
   function onFirstView(el, play) {
+    var item = { el: el, play: play };
     var rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.92) {
-      var passed = rect.bottom < 0;
-      var animation = play(passed);
-      if (passed && animation) animation.progress(1);
+      reveal(item, rect.bottom < 0);
       return;
     }
-    ScrollTrigger.create({
+    waiting.push(item);
+    item.trigger = ScrollTrigger.create({
       trigger: el,
       start: "top 92%",
       once: true,
-      onEnter: function () { play(false); }
+      onEnter: function () { reveal(item, false); }
     });
+  }
+
+  function reveal(item, passed) {
+    if (item.done) return;
+    item.done = true;
+    var index = waiting.indexOf(item);
+    if (index !== -1) waiting.splice(index, 1);
+    if (item.trigger) item.trigger.kill();
+    var animation = item.play(passed);
+    if (passed && animation) animation.progress(1);
+  }
+
+  // Safety net: the positions above are measured while the page is still
+  // being built (photos and fonts arriving, the blocks being folded), so a
+  // block can be missed. Once the page has loaded every block on screen
+  // comes in; after a resize and whenever scrolling stops every block past
+  // the line does, and blocks scrolled past jump to the end.
+  function catchUp(onScreen) {
+    var limit = window.innerHeight * (onScreen ? 1 : 0.92);
+    var due = waiting.filter(function (item) {
+      var rect = item.el.getBoundingClientRect();
+      item.passed = rect.bottom < 0;
+      return rect.top < limit;
+    });
+    due.forEach(function (item) { reveal(item, item.passed); });
+    if (!waiting.length) {
+      window.removeEventListener("scroll", catchUpSoon);
+      window.removeEventListener("resize", catchUpSoon);
+    }
+  }
+
+  function catchUpSoon() {
+    window.clearTimeout(catchUpTimer);
+    catchUpTimer = window.setTimeout(function () { catchUp(false); }, 200);
   }
 
   // A slanted band of light inside `host`; glint() slides it across.
