@@ -630,6 +630,11 @@ module.exports = async function handler(req, res) {
   // confirmation himself once the money is on his account. The booking only
   // counts when Joey's mail went out, otherwise the customer gets an error
   // and can try again.
+  // A payment link with a free amount (not from a price file) gets no
+  // customer mail: anyone can make such a link with any trip name, amount
+  // and email address, so otherwise this site could be used to send
+  // Novakse-looking mails to strangers. The customer sees the account
+  // details on screen; Joey's mail says the customer was not mailed.
   if (body.betaalmethode === "overschrijving") {
     var overschrijving = require("./_overschrijving.js");
     var referentie = overschrijving.maakReferentie();
@@ -641,7 +646,8 @@ module.exports = async function handler(req, res) {
       productNaam: productNaam,
       metadata: metadata,
       email: reisgegevens.email,
-      taal: taal
+      taal: taal,
+      klantMailen: serverBerekend
     });
     if (!verstuurd.joey) {
       res.status(502).json({ error: "De boeking kon niet worden verstuurd. Probeer het later opnieuw of mail naar " + overschrijving.NAAR_JOEY + "." });
@@ -655,6 +661,7 @@ module.exports = async function handler(req, res) {
         iban: overschrijving.BANK.iban,
         bic: overschrijving.BANK.bic,
         klantMail: verstuurd.klant,
+        klantMailOvergeslagen: !!verstuurd.klantOvergeslagen,
         email: reisgegevens.email
       }
     });

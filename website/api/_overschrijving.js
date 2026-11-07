@@ -137,7 +137,9 @@ async function stuurMail(resendKey, mail) {
 }
 
 /* Mails Joey (details, he needs these) and the customer (account details).
-   Returns { joey, klant }: the booking only counts when joey is true.
+   Returns { joey, klant, klantOvergeslagen }: the booking only counts when
+   joey is true. With klantMailen: false (a payment link with a free amount)
+   only Joey is mailed and klantOvergeslagen is true.
    Awaited by the caller: a serverless function may be frozen after the
    response. */
 async function stuurOverschrijvingMails(opties) {
@@ -148,17 +150,27 @@ async function stuurOverschrijvingMails(opties) {
   }
   var taal = opties.taal || "";
   var bedrag = bedragTekst(opties.bedragCenten, taal);
+  var klantMailen = opties.klantMailen !== false;
 
   var regels = [
     "Een klant heeft gekozen voor bankoverschrijving. De betaling is nog NIET binnen.",
     "Controleer je bank op dit betalingskenmerk en stuur daarna de bevestiging aan de klant.",
-    "",
+    ""
+  ];
+  if (!klantMailen) {
+    regels.push(
+      "LET OP: dit komt van een betaallink met een vrij bedrag. Reis en bedrag komen uit de link, niet uit een prijsbestand. Controleer of ze kloppen met wat je de klant hebt gestuurd.",
+      "De klant heeft hiervan geen mail gekregen. Het rekeningnummer en het betalingskenmerk stonden alleen op zijn scherm.",
+      ""
+    );
+  }
+  regels.push(
     "Betalingskenmerk: " + opties.referentie,
     "Reis: " + opties.productNaam,
     "Bedrag: " + bedragTekst(opties.bedragCenten, ""),
     "E-mail klant: " + opties.email,
     ""
-  ];
+  );
   Object.keys(opties.metadata || {}).forEach(function (sleutel) {
     regels.push(sleutel + ": " + opties.metadata[sleutel]);
   });
@@ -175,6 +187,9 @@ async function stuurOverschrijvingMails(opties) {
   // otherwise the page shows an error and the customer would hold a
   // reference nobody knows about.
   if (!joey) return { joey: false, klant: false };
+
+  // Free amount: no customer mail, see api/create-payment.js.
+  if (!klantMailen) return { joey: true, klant: false, klantOvergeslagen: true };
 
   var t = TEKSTEN[taal] || TEKSTEN.nl;
   var vul = { bedrag: bedrag, naam: BANK.naam, iban: BANK.iban, bic: BANK.bic, referentie: opties.referentie, reis: opties.productNaam };

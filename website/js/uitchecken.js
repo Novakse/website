@@ -138,6 +138,7 @@
       transferRefHint: "Vermeld dit betalingskenmerk bij je overschrijving.",
       transferMailed: function (email) { return "We hebben deze gegevens ook gemaild naar " + email + "."; },
       transferMailFailed: "Bewaar deze gegevens, de mail kon niet worden verstuurd.",
+      transferNotMailed: "Bewaar deze gegevens goed, je krijgt ze niet per mail.",
       busy: "Bezig...",
       somethingWrong: "Er ging iets mis.",
       priceChanged: "Het bedrag klopt niet meer met je keuze. Laad de pagina opnieuw en controleer het bedrag.",
@@ -215,6 +216,7 @@
       transferRefHint: "Include this payment reference with your transfer.",
       transferMailed: function (email) { return "We have also emailed these details to " + email + "."; },
       transferMailFailed: "Please save these details, the email could not be sent.",
+      transferNotMailed: "Please save these details, you will not receive them by email.",
       busy: "Please wait...",
       priceChanged: "The price has changed. Reload the page and check the amount.",
       payFailed: function (reden, mail) { return "Payment did not work: " + reden + ". Try again or contact us at " + mail + "."; },
@@ -305,6 +307,7 @@
       transferRefHint: "Gib bei der Überweisung diesen Verwendungszweck an.",
       transferMailed: function (email) { return "Wir haben dir diese Angaben auch an " + email + " gemailt."; },
       transferMailFailed: "Bitte speichere diese Angaben, die E-Mail konnte nicht gesendet werden.",
+      transferNotMailed: "Bitte speichere diese Angaben, du bekommst sie nicht per E-Mail.",
       busy: "Bitte warten...",
       priceChanged: "Der Preis hat sich geändert. Lade die Seite neu und prüfe den Betrag.",
       payFailed: function (reden, mail) { return "Die Zahlung hat nicht geklappt: " + reden + ". Versuche es erneut oder kontaktiere uns unter " + mail + "."; },
@@ -395,6 +398,7 @@
       transferRefHint: "Ange betalningsreferensen vid din överföring.",
       transferMailed: function (email) { return "Vi har också mejlat uppgifterna till " + email + "."; },
       transferMailFailed: "Spara uppgifterna, mejlet kunde inte skickas.",
+      transferNotMailed: "Spara uppgifterna, du får dem inte via mejl.",
       busy: "Vänta...",
       priceChanged: "Priset har ändrats. Ladda om sidan och kontrollera beloppet.",
       payFailed: function (reden, mail) { return "Betalningen gick inte igenom: " + reden + ". Försök igen eller kontakta oss på " + mail + "."; },
@@ -485,6 +489,7 @@
       transferRefHint: "Oppgi denne betalingsreferansen ved overføringen.",
       transferMailed: function (email) { return "Vi har også sendt opplysningene til " + email + " på e-post."; },
       transferMailFailed: "Ta vare på opplysningene, e-posten kunne ikke sendes.",
+      transferNotMailed: "Ta vare på opplysningene, du får dem ikke på e-post.",
       busy: "Vent litt...",
       priceChanged: "Prisen er endret. Last inn siden på nytt og kontroller beløpet.",
       payFailed: function (reden, mail) { return "Betalingen gikk ikke: " + reden + ". Prøv igjen eller kontakt oss på " + mail + "."; },
@@ -575,6 +580,7 @@
       transferRefHint: "Kirjoita tämä viite tilisiirtoon.",
       transferMailed: function (email) { return "Lähetimme tiedot myös sähköpostiin " + email + "."; },
       transferMailFailed: "Tallenna tiedot, sähköpostia ei voitu lähettää.",
+      transferNotMailed: "Tallenna tiedot, et saa niitä sähköpostiin.",
       busy: "Hetki...",
       priceChanged: "Hinta on muuttunut. Lataa sivu uudelleen ja tarkista summa.",
       payFailed: function (reden, mail) { return "Maksu ei onnistunut: " + reden + ". Yritä uudelleen tai ota yhteyttä osoitteeseen " + mail + "."; },
@@ -1722,7 +1728,10 @@
 
     var mailTekst = document.createElement("p");
     mailTekst.className = "booking__note";
-    mailTekst.textContent = o.klantMail ? T.transferMailed(o.email || "") : T.transferMailFailed;
+    // klantMailOvergeslagen: a payment link with a free amount, where the
+    // server deliberately mails only Joey (see api/create-payment.js).
+    mailTekst.textContent = o.klantMail ? T.transferMailed(o.email || "")
+      : o.klantMailOvergeslagen ? T.transferNotMailed : T.transferMailFailed;
     blok.appendChild(mailTekst);
 
     inhoud.parentNode.insertBefore(blok, inhoud);
