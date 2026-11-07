@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=3" />
   <script>document.documentElement.classList.add("js");/* Reveal blocks that are already on screen as soon as the HTML is parsed, without waiting for main.js (which handles everything further down the page). */document.addEventListener("readystatechange",function(){if(document.readyState!=="interactive")return;var h=window.innerHeight*0.92;document.querySelectorAll(".reveal,.stagger").forEach(function(e){var r=e.getBoundingClientRect();if(r.top<h&&r.bottom>0)e.classList.add("is-visible");});});</script>
   <title>Fullfør betalingen - Novakse Reizen</title>
-  <meta name="description" content="Fullfør betalingen for Novakse-turen din via Stripe: kredittkort." />
+  <meta name="description" content="Fullfør betalingen for Novakse-turen din via Stripe eller bankoverføring." />
   <meta name="robots" content="noindex" />
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -154,7 +154,7 @@
           <button type="submit" class="btn btn--dark booking__send" id="betaalKnop">Gå videre til betaling</button>
           <p class="booking__error" id="gegevensFout" role="alert" hidden></p>
           <p class="booking__error" id="betaalFout" role="alert" hidden></p>
-          <p class="booking__note">Du blir sendt videre til Stripes sikre betalingsside (kredittkort).</p>
+          <p class="booking__note" id="betaalNotitie">Du blir sendt videre til Stripes sikre betalingsside.</p>
         </form>
       </div>
 

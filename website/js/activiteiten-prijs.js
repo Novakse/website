@@ -47,8 +47,12 @@
                                 activiteitNaam, huur (true for a rental),
                                 naam (own name, or the activity's) and titel
                                 ("<activity> - <line>", or just the activity)
-     eenheidTekst(eenheid)   -> "per persoon per dag" | "per persoon" |
-                                "per scooter" ("" if unknown)
+     eenheidTekst(eenheid, taal?)
+                             -> "per persoon per dag" | "per persoon" |
+                                "per scooter" ("" if unknown), in the
+                                language taal ("nl", "en", "de", "sv", "no",
+                                "fi"); without taal the page language in the
+                                browser and always Dutch on the server
      max(regel, ctx)         -> highest quantity for one line, ctx =
                                 { personen, dagen }: persoonDag gives
                                 personen * dagen, persoon and scooter give
@@ -67,14 +71,27 @@
                                   huur, naam, detail, titel, productNaam,
                                   eenheidTekst, aantal, centenPerStuk,
                                   centen }], totaalCenten, samenvatting }
-                                or { fout: "Dutch message" }. Lines follow the
+                                or { fout: "Dutch message" }. Always Dutch
+                                (eenheidTekst, productNaam, samenvatting):
+                                Stripe and Joey read these. Lines follow the
                                 order of the JSON; quantities of 0 are left
                                 out. An empty or missing keuze gives
                                 { regels: [], totaalCenten: 0,
                                   samenvatting: "" }.
      naarQuery(keuze)        -> "id:2,id2:1" (zeros left out, "" if none)
      uitQuery(tekst)         -> { id: n }, tolerant: junk is ignored
-     euro(centen)            -> "€1.234,56", the format of js/uitchecken.js
+     euro(centen, taal?)     -> "€1.234,56", the format of js/uitchecken.js;
+                                in the language taal (default as for
+                                eenheidTekst): "€1,234.56" (en), "€1 234,56"
+                                (sv, no, fi with a no-break space)
+     vertaal(cat, taal)      -> a copy of the catalogue with the texts the
+                                visitor sees (naam, detail, gratis) taken
+                                from cat._vertalingen[taal], keyed by the
+                                Dutch text. A text without a translation
+                                stays Dutch. ids, prices, units and limits
+                                are copied unchanged, so bereken() gives
+                                exactly the same amounts. Display only: the
+                                server always prices the Dutch catalogue.
    ========================================================================== */
 (function (factory) {
   var api = factory();
@@ -95,6 +112,37 @@
     persoon: "per persoon",
     scooter: "per scooter"
   };
+  // The same units on the checkout pages in the language folders.
+  var EENHEID_VERTALING = {
+    en: { persoonDag: "per person per day", persoon: "per person", scooter: "per snowmobile" },
+    de: { persoonDag: "pro Person pro Tag", persoon: "pro Person", scooter: "pro Schneemobil" },
+    sv: { persoonDag: "per person per dag", persoon: "per person", scooter: "per snöskoter" },
+    no: { persoonDag: "per person per dag", persoon: "per person", scooter: "per snøscooter" },
+    fi: { persoonDag: "/ henkilö / päivä", persoon: "/ henkilö", scooter: "/ moottorikelkka" }
+  };
+  // Thousands and decimal separator per language for euro().
+  var SCHEIDING = {
+    nl: [".", ","],
+    en: [",", "."],
+    de: [".", ","],
+    sv: ["\u00a0", ","],
+    no: ["\u00a0", ","],
+    fi: ["\u00a0", ","]
+  };
+
+  /* The language of the texts: an explicit taal when it is a known one,
+     otherwise the page language (<html lang>) in the browser. On the server
+     there is no document, so it is always Dutch there. */
+  function taalVan(taal) {
+    if (typeof taal === "string" && heeft(SCHEIDING, taal)) return taal;
+    try {
+      if (typeof document !== "undefined" && document.documentElement) {
+        var pagina = String(document.documentElement.lang || "nl").slice(0, 2).toLowerCase();
+        if (heeft(SCHEIDING, pagina)) return pagina;
+      }
+    } catch (fout) { /* no page: Dutch */ }
+    return "nl";
+  }
 
   function heeft(object, sleutel) {
     return Object.prototype.hasOwnProperty.call(object, sleutel);
@@ -160,8 +208,10 @@
     return uit;
   }
 
-  function eenheidTekst(eenheid) {
-    return typeof eenheid === "string" && heeft(EENHEID_TEKST, eenheid) ? EENHEID_TEKST[eenheid] : "";
+  function eenheidTekst(eenheid, taal) {
+    if (typeof eenheid !== "string" || !heeft(EENHEID_TEKST, eenheid)) return "";
+    var tabel = EENHEID_VERTALING[taalVan(taal)];
+    return tabel && heeft(tabel, eenheid) ? tabel[eenheid] : EENHEID_TEKST[eenheid];
   }
 
   // Head count / days from ctx: a whole number >= 0, anything else is 0.
@@ -271,7 +321,7 @@
   }
 
   function productNaam(regel) {
-    return (regel.huur ? "Huur: " : "Activiteit: ") + regel.titel + " (" + eenheidTekst(regel.eenheid) + ")";
+    return (regel.huur ? "Huur: " : "Activiteit: ") + regel.titel + " (" + eenheidTekst(regel.eenheid, "nl") + ")";
   }
 
   function leeg() {
@@ -371,7 +421,7 @@
         detail: typeof lijn.detail === "string" ? lijn.detail : "",
         titel: lijn.titel,
         productNaam: productNaam(lijn),
-        eenheidTekst: eenheidTekst(lijn.eenheid),
+        eenheidTekst: eenheidTekst(lijn.eenheid, "nl"),
         aantal: stuks,
         centenPerStuk: perStuk,
         centen: perStuk * stuks
@@ -419,26 +469,60 @@
     return uit;
   }
 
-  // "1.234" style grouping of a whole number.
-  function groepeer(n) {
+  // "1.234" style grouping of a whole number ("1,234" or "1 234" with
+  // another separator).
+  function groepeer(n, scheiding) {
     var tekst = String(n);
     var uit = "";
     while (tekst.length > 3) {
-      uit = "." + tekst.slice(-3) + uit;
+      uit = (scheiding || ".") + tekst.slice(-3) + uit;
       tekst = tekst.slice(0, -3);
     }
     return tekst + uit;
   }
 
   // Cents -> "€1.234,56", exactly like euro() in js/uitchecken.js (which uses
-  // toLocaleString("nl-NL") with two decimals), but without depending on the
-  // runtime's locale data, so browser and server always agree.
-  function euro(centenBedrag) {
+  // toLocaleString with two decimals: "nl-NL", or the page's locale in a
+  // language folder), but without depending on the runtime's locale data,
+  // so browser and server always agree. The server is always Dutch.
+  function euro(centenBedrag, taal) {
+    var teken = SCHEIDING[taalVan(taal)];
     var c = typeof centenBedrag === "number" && isFinite(centenBedrag) ? Math.round(centenBedrag) : 0;
     var min = c < 0;
     if (min) c = -c;
     var rest = c % 100;
-    return "€" + (min ? "-" : "") + groepeer(Math.floor(c / 100)) + "," + (rest < 10 ? "0" : "") + rest;
+    return "€" + (min ? "-" : "") + groepeer(Math.floor(c / 100), teken[0]) + teken[1] + (rest < 10 ? "0" : "") + rest;
+  }
+
+  /* A copy of the catalogue for the checkout page in another language: the
+     texts the visitor sees come from cat._vertalingen[taal][<Dutch text>].
+     A Dutch text without a translation (for example one Joey just changed)
+     stays as it is, so a translation never shows an outdated text. Every
+     other field (ids, eur, eenheid, limiet, standaard) is copied unchanged.
+     Dutch, an unknown language or no translations: the catalogue itself. */
+  var VERTAALDE_VELDEN = ["naam", "detail", "gratis"];
+  function vertaal(cat, taal) {
+    var lijstVertaling = cat && typeof cat === "object" && cat._vertalingen && typeof cat._vertalingen === "object" &&
+      taal !== "nl" && heeft(cat._vertalingen, taal) ? cat._vertalingen[taal] : null;
+    if (!lijstVertaling || typeof lijstVertaling !== "object") return cat;
+    function tekst(waarde) {
+      return typeof waarde === "string" && heeft(lijstVertaling, waarde) &&
+        typeof lijstVertaling[waarde] === "string" && lijstVertaling[waarde] ? lijstVertaling[waarde] : waarde;
+    }
+    function kopieMet(object) {
+      if (Array.isArray(object)) return object.map(kopieMet);
+      if (!object || typeof object !== "object") return object;
+      var uit = {};
+      Object.keys(object).forEach(function (veld) {
+        uit[veld] = VERTAALDE_VELDEN.indexOf(veld) !== -1 ? tekst(object[veld]) : kopieMet(object[veld]);
+      });
+      return uit;
+    }
+    var uit = {};
+    Object.keys(cat).forEach(function (sleutel) {
+      uit[sleutel] = sleutel.charAt(0) === "_" ? cat[sleutel] : kopieMet(cat[sleutel]);
+    });
+    return uit;
   }
 
   return {
@@ -455,6 +539,7 @@
     bereken: bereken,
     naarQuery: naarQuery,
     uitQuery: uitQuery,
-    euro: euro
+    euro: euro,
+    vertaal: vertaal
   };
 });

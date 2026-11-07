@@ -258,7 +258,9 @@ module.exports = async function handler(req, res) {
   var basis = basisUrl(req);
   var sessieData = {
     mode: "payment",
-    payment_method_types: ["card"],
+    // No payment_method_types on purpose: Stripe shows the methods that are
+    // switched on in the Dashboard (Settings > Payment methods). Cards and
+    // Apple Pay are switched off there because of their fees.
     locale: "nl",
     customer_email: email,
     line_items: regels,

@@ -2268,9 +2268,10 @@
     }
 
     /* The link under the calendar on the trip page. Paying online: straight
-       to uitchecken.html (in the root, also from the language folders),
-       which recalculates the amount on the server. Otherwise, or when this
-       period has no price, the request form as before. */
+       to uitchecken.html in the page's own language folder (the root for
+       Dutch, en/uitchecken.html etc. for the translated pages), which
+       recalculates the amount on the server. Otherwise, or when this period
+       has no price, the request form as before. */
     function knopHtml(nachten) {
       var params = new URLSearchParams();
       if (data.reis) params.set("reis", data.reis);
@@ -2284,7 +2285,8 @@
         if (vluchtAftrek()) params.set("vlucht", "zelf");
         if (autoAftrek(nachten + 1)) params.set("auto", "zelf");
         if (metMateriaalKeuze && materiaalGekozen) params.set("materiaal", "ja");
-        return '<a class="btn btn--dark calendar__pay" href="' + mapVoorKalender() + 'uitchecken.html?' +
+        return '<a class="btn btn--dark calendar__pay" href="' + mapVoorKalender() +
+          (["en", "de", "sv", "no", "fi"].indexOf(LANG) !== -1 ? LANG + "/" : "") + 'uitchecken.html?' +
           params.toString().replace(/&/g, "&amp;") + '">' + T.bookPayBtn + '</a>';
       }
       // The booking page takes no requests; there the calendar is the form.

@@ -625,11 +625,49 @@ module.exports = async function handler(req, res) {
     metadata.activiteiten_eur = activiteiten.euro(activiteitenCenten).replace("€", "");
   }
 
+  // Bank transfer: no Stripe session. The amount above is the same one a
+  // Stripe payment would charge. Joey gets the booking by mail and sends the
+  // confirmation himself once the money is on his account. The booking only
+  // counts when Joey's mail went out, otherwise the customer gets an error
+  // and can try again.
+  if (body.betaalmethode === "overschrijving") {
+    var overschrijving = require("./_overschrijving.js");
+    var referentie = overschrijving.maakReferentie();
+    var totaalCenten = bedrag + activiteitenCenten;
+    metadata.betaalmethode = "bankoverschrijving";
+    var verstuurd = await overschrijving.stuurOverschrijvingMails({
+      referentie: referentie,
+      bedragCenten: totaalCenten,
+      productNaam: productNaam,
+      metadata: metadata,
+      email: reisgegevens.email,
+      taal: taal
+    });
+    if (!verstuurd.joey) {
+      res.status(502).json({ error: "De boeking kon niet worden verstuurd. Probeer het later opnieuw of mail naar " + overschrijving.NAAR_JOEY + "." });
+      return;
+    }
+    res.status(200).json({
+      overschrijving: {
+        referentie: referentie,
+        bedragCenten: totaalCenten,
+        naam: overschrijving.BANK.naam,
+        iban: overschrijving.BANK.iban,
+        bic: overschrijving.BANK.bic,
+        klantMail: verstuurd.klant,
+        email: reisgegevens.email
+      }
+    });
+    return;
+  }
+
   var basis = basisUrl(req);
 
   var sessieData = {
     mode: "payment",
-    payment_method_types: ["card"],
+    // No payment_method_types on purpose: Stripe shows the methods that are
+    // switched on in the Dashboard (Settings > Payment methods). Cards and
+    // Apple Pay are switched off there because of their fees.
     line_items: [
       {
         quantity: 1,

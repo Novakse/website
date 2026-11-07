@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png?v=3" />
   <script>document.documentElement.classList.add("js");/* Reveal blocks that are already on screen as soon as the HTML is parsed, without waiting for main.js (which handles everything further down the page). */document.addEventListener("readystatechange",function(){if(document.readyState!=="interactive")return;var h=window.innerHeight*0.92;document.querySelectorAll(".reveal,.stagger").forEach(function(e){var r=e.getBoundingClientRect();if(r.top<h&&r.bottom>0)e.classList.add("is-visible");});});</script>
   <title>Complete your payment - Novakse Reizen</title>
-  <meta name="description" content="Complete the payment for your Novakse trip via Stripe: credit card." />
+  <meta name="description" content="Complete the payment for your Novakse trip via Stripe or bank transfer." />
   <meta name="robots" content="noindex" />
 
   <link rel="preload" href="../fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -154,7 +154,7 @@
           <button type="submit" class="btn btn--dark booking__send" id="betaalKnop">Continue to payment</button>
           <p class="booking__error" id="gegevensFout" role="alert" hidden></p>
           <p class="booking__error" id="betaalFout" role="alert" hidden></p>
-          <p class="booking__note">You will be taken to Stripe's secure payment environment (credit card).</p>
+          <p class="booking__note" id="betaalNotitie">You will be taken to Stripe's secure payment environment.</p>
         </form>
       </div>
 
