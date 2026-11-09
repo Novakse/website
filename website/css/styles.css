@@ -2490,6 +2490,7 @@ button.calendar__cell.is-vertrekoptie { box-shadow: inset 0 0 0 2px var(--ink); 
 .falun-cal__group-total { margin-top: 0.2rem; font-size: 0.88rem; color: var(--ink-soft); text-align: right; }
 .falun-cal__book { margin-top: 1.25rem; justify-content: center; }
 .falun-cal__hint { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+.falun-cal__hint--day:not(:empty) { margin-top: 0.8rem; }
 .falun-cal__note {
   margin: -1.25rem 0 2rem;
   font-size: 0.88rem;

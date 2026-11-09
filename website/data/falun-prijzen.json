@@ -90,9 +90,10 @@
     }
   },
 
-  "//bezet": "Periodes waarin geen gewone aankomst mogelijk is. In februari en begin maart is er een groot evenement in Falun, dus daar valt niets normaals te boeken. Wil je die weken toch open zetten, haal dan de tweede regel hieronder weg. Het label (wat) staat per taal, zodat de Engelse en andere versies geen Nederlands tonen; een losse regel mag ook, die verschijnt dan in alle talen.",
+  "//bezet": "Periodes waarin geen gewone aankomst mogelijk is. van is de eerste nacht die dicht is, tot de eerste nacht die weer kan. In februari en begin maart is er een groot evenement in Falun, dus daar valt niets normaals te boeken. De nacht van 13 februari is ook dicht, zodat 13 februari de laatste vertrekdag is (vertrekken op 14 februari kan niet). Wil je die weken toch open zetten, haal dan de tweede regel hieronder weg. Het label (wat) staat per taal, zodat de Engelse en andere versies geen Nederlands tonen; een losse regel mag ook, die verschijnt dan in alle talen. Met vanafPersonen geldt een regel alleen voor groepen van dat aantal personen of meer; kleinere groepen kunnen dan gewoon boeken. De nachten van 11 en 12 februari zijn zo alleen nog vrij voor 1 of 2 personen, want dan is er alleen nog 1 tweepersoonshuisje. Is dat huisje geboekt, haal dan vanafPersonen weg, dan zijn die nachten voor iedereen dicht.",
   "bezet": [
     {"van": "2027-01-07", "tot": "2027-01-09", "wat": {"nl": "Geen aankomst mogelijk", "en": "No arrival possible", "de": "Keine Anreise möglich", "sv": "Ingen ankomst möjlig", "no": "Ingen ankomst mulig", "fi": "Saapuminen ei mahdollista"}},
-    {"van": "2027-02-14", "tot": "2027-03-08", "wat": {"nl": "Niet beschikbaar", "en": "Not available", "de": "Nicht verfügbar", "sv": "Inte tillgänglig", "no": "Ikke tilgjengelig", "fi": "Ei saatavilla"}}
+    {"van": "2027-02-11", "tot": "2027-02-13", "vanafPersonen": 3, "wat": {"nl": "Alleen voor 1 of 2 personen", "en": "Only for 1 or 2 people", "de": "Nur für 1 oder 2 Personen", "sv": "Endast för 1 eller 2 personer", "no": "Kun for 1 eller 2 personer", "fi": "Vain 1 tai 2 hengelle"}},
+    {"van": "2027-02-13", "tot": "2027-03-08", "wat": {"nl": "Niet beschikbaar", "en": "Not available", "de": "Nicht verfügbar", "sv": "Inte tillgänglig", "no": "Ikke tilgjengelig", "fi": "Ei saatavilla"}}
   ]
 }

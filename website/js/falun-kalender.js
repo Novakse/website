@@ -118,8 +118,13 @@
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " tot " + tot; },
       bookedSr: function (wat) { return " " + wat + ", niet beschikbaar"; },
       availableAria: function (datum) { return datum + ", beschikbaar"; },
+      departureOnly: "Deze dag kan alleen een vertrekdag zijn. Kies eerst je aankomstdag.",
+      departureOnlyAria: "alleen als vertrekdag",
+      departureTooShort: function (n) { return "Een verblijf duurt minimaal " + n + " dagen. Kies een latere vertrekdag."; },
+      departureNotFitting: "Deze dag kan alleen een vertrekdag zijn en past niet bij je gekozen aankomstdag.",
       tooLate: "In die periode past je verblijf niet meer binnen het seizoen.",
-      overlap: "In die periode zit een week die al bezet is."
+      overlap: "In die periode zit een week die al bezet is.",
+      groupNoLongerFits: "Voor dit aantal personen is je gekozen periode niet meer vrij. Kies andere dagen."
     },
     en: {
       months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -196,8 +201,13 @@
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " to " + tot; },
       bookedSr: function (wat) { return " " + wat + ", not available"; },
       availableAria: function (datum) { return datum + ", available"; },
+      departureOnly: "This day can only be a departure day. Choose your arrival day first.",
+      departureOnlyAria: "departure day only",
+      departureTooShort: function (n) { return "A stay is at least " + n + " days. Choose a later departure day."; },
+      departureNotFitting: "This day can only be a departure day and does not fit your chosen arrival day.",
       tooLate: "Your stay no longer fits within the season in that period.",
-      overlap: "That period includes a week that is already booked."
+      overlap: "That period includes a week that is already booked.",
+      groupNoLongerFits: "Your chosen period is no longer available for this number of people. Please choose other days."
     },
     de: {
       months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
@@ -274,8 +284,13 @@
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " bis " + tot; },
       bookedSr: function (wat) { return " " + wat + ", nicht verfügbar"; },
       availableAria: function (datum) { return datum + ", verfügbar"; },
+      departureOnly: "Dieser Tag kann nur ein Abreisetag sein. Wähle zuerst deinen Ankunftstag.",
+      departureOnlyAria: "nur als Abreisetag",
+      departureTooShort: function (n) { return "Ein Aufenthalt dauert mindestens " + n + " Tage. Wähle einen späteren Abreisetag."; },
+      departureNotFitting: "Dieser Tag kann nur ein Abreisetag sein und passt nicht zu deinem gewählten Ankunftstag.",
       tooLate: "In diesem Zeitraum passt dein Aufenthalt nicht mehr in die Saison.",
-      overlap: "In diesem Zeitraum liegt eine Woche, die schon belegt ist."
+      overlap: "In diesem Zeitraum liegt eine Woche, die schon belegt ist.",
+      groupNoLongerFits: "Für diese Personenzahl ist dein gewählter Zeitraum nicht mehr frei. Wähle andere Tage."
     },
     sv: {
       months: ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"],
@@ -352,8 +367,13 @@
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " till " + tot; },
       bookedSr: function (wat) { return " " + wat + ", inte tillgänglig"; },
       availableAria: function (datum) { return datum + ", tillgänglig"; },
+      departureOnly: "Den här dagen kan bara vara en avresedag. Välj först din ankomstdag.",
+      departureOnlyAria: "endast som avresedag",
+      departureTooShort: function (n) { return "En vistelse är minst " + n + " dagar. Välj en senare avresedag."; },
+      departureNotFitting: "Den här dagen kan bara vara en avresedag och passar inte med din valda ankomstdag.",
       tooLate: "Din vistelse ryms inte längre inom säsongen under den perioden.",
-      overlap: "Den perioden innehåller en vecka som redan är bokad."
+      overlap: "Den perioden innehåller en vecka som redan är bokad.",
+      groupNoLongerFits: "Din valda period är inte längre ledig för det här antalet personer. Välj andra dagar."
     },
     no: {
       months: ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"],
@@ -430,8 +450,13 @@
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " til " + tot; },
       bookedSr: function (wat) { return " " + wat + ", ikke tilgjengelig"; },
       availableAria: function (datum) { return datum + ", tilgjengelig"; },
+      departureOnly: "Denne dagen kan bare være en avreisedag. Velg ankomstdagen din først.",
+      departureOnlyAria: "kun som avreisedag",
+      departureTooShort: function (n) { return "Et opphold varer minst " + n + " dager. Velg en senere avreisedag."; },
+      departureNotFitting: "Denne dagen kan bare være en avreisedag og passer ikke med ankomstdagen du har valgt.",
       tooLate: "Oppholdet ditt passer ikke lenger inn i sesongen i den perioden.",
-      overlap: "Den perioden inneholder en uke som allerede er opptatt."
+      overlap: "Den perioden inneholder en uke som allerede er opptatt.",
+      groupNoLongerFits: "Perioden du valgte er ikke lenger ledig for dette antallet personer. Velg andre dager."
     },
     fi: {
       months: ["tammikuu", "helmikuu", "maaliskuu", "huhtikuu", "toukokuu", "kesäkuu", "heinäkuu", "elokuu", "syyskuu", "lokakuu", "marraskuu", "joulukuu"],
@@ -508,8 +533,13 @@
       bookedTitle: function (wat, van, tot) { return wat + ": " + van + " - " + tot; },
       bookedSr: function (wat) { return " " + wat + ", ei vapaa"; },
       availableAria: function (datum) { return datum + ", vapaa"; },
+      departureOnly: "Tämä päivä voi olla vain lähtöpäivä. Valitse ensin saapumispäivä.",
+      departureOnlyAria: "vain lähtöpäivänä",
+      departureTooShort: function (n) { return "Oleskelu kestää vähintään " + n + " päivää. Valitse myöhäisempi lähtöpäivä."; },
+      departureNotFitting: "Tämä päivä voi olla vain lähtöpäivä, eikä se sovi valitsemaasi saapumispäivään.",
       tooLate: "Oleskelusi ei enää mahdu kauteen kyseisenä ajankohtana.",
-      overlap: "Kyseiselle ajanjaksolle osuu jo varattu viikko."
+      overlap: "Kyseiselle ajanjaksolle osuu jo varattu viikko.",
+      groupNoLongerFits: "Valitsemasi ajanjakso ei ole enää vapaa tälle henkilömäärälle. Valitse toiset päivät."
     }
   };
 
@@ -713,7 +743,10 @@
     return wat || T.legendBooked;
   }
   var bezet = (data.bezet || []).map(function (blok) {
-    return { van: alsDatum(blok && blok.van), tot: alsDatum(blok && blok.tot), wat: labelVoor(blok && blok.wat) };
+    // vanafPersonen: the period only closes for groups of at least that many
+    // people (for example one small cabin left for 1 or 2 people).
+    var vanaf = blok && typeof blok.vanafPersonen === "number" && blok.vanafPersonen > 0 ? blok.vanafPersonen : null;
+    return { van: alsDatum(blok && blok.van), tot: alsDatum(blok && blok.tot), wat: labelVoor(blok && blok.wat), vanafPersonen: vanaf };
   }).filter(function (blok) {
     return blok.van && blok.tot && blok.tot > blok.van;
   });
@@ -821,11 +854,36 @@
     return Math.round(begeleidingKostenRuw(dagenBegeleid, personen));
   }
 
+  /* A booked period counts for every group, unless it has vanafPersonen:
+     then only for groups of at least that many people. Must stay identical
+     to geldtVoorGroep() in api/_falun-prijs.js. */
+  function geldtVoorGroep(blok) {
+    return !blok.vanafPersonen || personen >= blok.vanafPersonen;
+  }
+
   function bezetOp(datum) {
     for (var i = 0; i < bezet.length; i++) {
+      if (!geldtVoorGroep(bezet[i])) continue;
       if (datum >= bezet[i].van && datum < bezet[i].tot) return bezet[i];
     }
     return null;
+  }
+
+  /* After the number of people changes, a chosen period may cross nights
+     that are only free for a smaller group. Then the choice is cleared (or
+     only the departure day, when the arrival day itself still works) and a
+     line says why. */
+  function controleerKeuze() {
+    if (!aankomst) return;
+    if (duur !== null && kanAankomen(aankomst, duur)) return;
+    if (duur === null && kanAankomenOoit(aankomst)) return;
+    if (kanAankomenOoit(aankomst)) {
+      duur = null;
+    } else {
+      aankomst = null;
+      duur = null;
+    }
+    dagMelding.textContent = T.groupNoLongerFits;
   }
 
   /* Een aankomstdag kan alleen als het hele verblijf vrij is en binnen het
@@ -843,6 +901,22 @@
   // A day is clickable as arrival when at least the shortest trip fits.
   function kanAankomenOoit(datum) {
     return kanAankomen(datum, minDagen);
+  }
+
+  // A day is a possible departure day when the shortest trip can end on it,
+  // also when nobody can arrive on it (right before a closed period).
+  function kanVertrekkenOoit(datum) {
+    return kanAankomen(plusDagen(datum, -nachtenVan(minDagen)), minDagen);
+  }
+
+  /* Message for a departure-only day that cannot be used right now. Without
+     an arrival day the visitor has to pick one first; with an arrival day
+     the trip is either too short or the day does not fit that arrival. */
+  function alleenVertrekTekst(datum) {
+    if (!aankomst) return T.departureOnly;
+    var dagen = Math.round((datum - aankomst) / 86400000) + 1;
+    if (dagen > 1 && dagen < minDagen) return T.departureTooShort(minDagen);
+    return T.departureNotFitting;
   }
 
   /* Trip length (in days) that ends on this date for the chosen arrival day,
@@ -904,6 +978,12 @@
 
   var raster = document.createElement("div");
   raster.className = "calendar__months";
+
+  // Right under the month: says why a departure-only day does nothing when
+  // it is clicked as arrival day.
+  var dagMelding = document.createElement("p");
+  dagMelding.className = "falun-cal__hint falun-cal__hint--day";
+  dagMelding.setAttribute("aria-live", "polite");
 
   var legenda = document.createElement("div");
   legenda.className = "calendar__legend";
@@ -1181,6 +1261,7 @@
 
     maandBox.appendChild(dagen);
     raster.appendChild(maandBox);
+    raster.appendChild(dagMelding);
 
     // Na het doorklikken blijft de focus op het pijltje, zodat je met het
     // toetsenbord verder kunt klikken. Is dat pijltje nu uit, dan het andere.
@@ -1200,8 +1281,11 @@
     var vertrekDuur = duurTotVertrek(datum);
     var isVertrek = periodeKlaar() && vertrekDuur === duur;
     var isOptie = !!aankomst && duur === null && vertrekDuur > 0;
+    // Not an arrival day and no departure for the chosen arrival, but still a
+    // departure day for an earlier arrival: it looks available, not white.
+    var alleenVertrek = !kanStart && !vertrekDuur && binnenSeizoen && kanVertrekkenOoit(datum);
 
-    if (!kanStart && !vertrekDuur) {
+    if (!kanStart && !vertrekDuur && !alleenVertrek) {
       var uit = document.createElement("span");
       uit.className = "calendar__cell " + (blok ? "is-bezet" : "is-buiten");
       uit.innerHTML = '<span class="calendar__daynr">' + datum.getDate() + "</span>";
@@ -1229,8 +1313,11 @@
     // A possible departure day also says how long the trip would be.
     knop.setAttribute("aria-label", vertrekDuur
       ? T.availableAria(schrijfDatum(datum)) + ", " + T.days(vertrekDuur)
-      : T.availableAria(schrijfDatum(datum)));
+      : alleenVertrek
+        ? T.availableAria(schrijfDatum(datum)) + ", " + T.departureOnlyAria
+        : T.availableAria(schrijfDatum(datum)));
     if (isOptie) knop.title = T.lineTrip(vertrekDuur);
+    if (alleenVertrek) knop.title = alleenVertrekTekst(datum);
     if (onzekerOp(datum)) knop.classList.add("is-onzeker");
 
     var isAankomst = !!aankomst && datum.getTime() === aankomst.getTime();
@@ -1254,6 +1341,7 @@
         aankomst = datum;
         duur = null;
       } else {
+        if (alleenVertrek) dagMelding.textContent = alleenVertrekTekst(datum);
         return;
       }
       // Guiding days are kept while the visitor picks a new period, then
@@ -1578,6 +1666,8 @@
   });
 
   function tekenAlles() {
+    dagMelding.textContent = "";
+    controleerKeuze();
     if (!periodeModus) tekenPersonen();
     tekenRaster();
     if (vertrekHint) vertrekHint.textContent = aankomst && duur === null ? T.chooseDeparture : "";

@@ -55,6 +55,16 @@ function plusDagen(datum, aantal) {
   return new Date(datum.getTime() + aantal * 86400000);
 }
 
+/* A booked period counts for every group, unless it has vanafPersonen: then
+   it only counts for groups of at least that many people (for example only
+   one small cabin left, so 1 or 2 people can still book). Must stay identical
+   to geldtVoorGroep() in js/falun-kalender.js. */
+function geldtVoorGroep(blok, personen) {
+  var vanaf = blok && blok.vanafPersonen;
+  if (typeof vanaf !== "number" || !(vanaf > 0)) return true;
+  return personen >= vanaf;
+}
+
 /* Shortest trip in days. There is no maximum: the season and the booked
    periods are the only upper limit. Same as js/falun-kalender.js. */
 function minimumDagen(data) {
@@ -162,6 +172,9 @@ function berekenFalun(keuze) {
     for (var b2 = 0; b2 < bezet.length; b2++) {
       var van = alsDatum(bezet[b2].van);
       var tot = alsDatum(bezet[b2].tot);
+      // A period with vanafPersonen only closes for groups of that size or
+      // larger. Same as bezetOp() in js/falun-kalender.js.
+      if (!geldtVoorGroep(bezet[b2], personen)) continue;
       if (van && tot && nacht >= van && nacht < tot) return { fout: "Die periode is niet meer vrij." };
     }
     // The night's own surcharge when its date has one, else a normal night.
