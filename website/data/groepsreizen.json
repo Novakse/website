@@ -1,5 +1,5 @@
 {
-  "_opmerking": "Dates are for 2027. maxPersonen mirrors MAX_REIZIGERS in api/create-payment.js.",
+  "_opmerking": "Dates are for 2027. maxPersonen mirrors MAX_REIZIGERS in api/create-payment.js. naamPerTaal is display only (js/groepsreis.js on the translated pages); the server and Stripe use naam.",
 
   "groepsreis-orsa": {
     "naam": "Groepsreis Orsa",
@@ -14,7 +14,8 @@
     "minPersonen": 2,
     "maxPersonen": 20,
     "activiteitenDagen": 4,
-    "gidsen": "Joey en Vera"
+    "gidsen": "Joey en Vera",
+    "naamPerTaal": { "en": "Group trip Orsa", "de": "Gruppenreise Orsa", "sv": "Gruppresa Orsa", "no": "Gruppetur Orsa", "fi": "Ryhmämatka Orsaan" }
   },
 
   "groepsreis-falun": {
@@ -30,6 +31,7 @@
     "minPersonen": 2,
     "maxPersonen": 20,
     "activiteitenDagen": 4,
-    "gidsen": "Joey en Vera"
+    "gidsen": "Joey en Vera",
+    "naamPerTaal": { "en": "Group trip Falun", "de": "Gruppenreise Falun", "sv": "Gruppresa Falun", "no": "Gruppetur Falun", "fi": "Ryhmämatka Faluniin" }
   }
 }

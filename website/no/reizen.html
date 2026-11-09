@@ -24,6 +24,7 @@
   <link rel="preload" href="../css/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/fonts.css" /></noscript>
   <link rel="preload" href="../css/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/styles.css" /></noscript>
   <link rel="preload" href="../css/theme-groen.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/theme-groen.css" /></noscript>
+  <link rel="preload" href="../css/groepsreizen-sectie.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/groepsreizen-sectie.css" /></noscript>
   <link rel="canonical" href="https://www.novakse.com/no/reizen.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
@@ -291,6 +292,47 @@
           </div>
         </div>
       </article>
+    </section>
+
+    <!-- 3c. Guided group trips: two fixed-date trips, each with its own
+         page, shown below the package trips. Translation of the same
+         section on the Dutch reizen.html. Styles in
+         css/groepsreizen-sectie.css. -->
+    <section class="group-trips" id="groepsreizen" aria-labelledby="groepsreizen-title">
+      <div class="wrap">
+        <div class="group-trips__head">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Gruppeturer</span>
+          <h2 class="h-section" id="groepsreizen-title">Gå på skøyter sammen på en fast dato</h2>
+          <div class="group-trips__notes">
+            <p class="group-trips__lede">På en gruppetur reiser du på en fast dato, med veiledning. Du melder deg på, men ikke alene (fra 2 personer).</p>
+            <p class="group-trips__lede">Heller i ditt eget tempo og på dine egne datoer? Velg da en pakketur her over. Datoene dine velger du selv i kalenderen.</p>
+          </div>
+        </div>
+
+        <div class="group-trips__list">
+          <article class="group-trip group-trip--orsa reveal" aria-labelledby="groepsreis-orsa-title">
+            <picture class="group-trip__media"><source type="image/avif" srcset="../images/orsa-group-silhouettes-black-ice-480.avif 480w, ../images/orsa-group-silhouettes-black-ice-800.avif 800w, ../images/orsa-group-silhouettes-black-ice-1200.avif 1200w, ../images/orsa-group-silhouettes-black-ice.avif 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="../images/orsa-group-silhouettes-black-ice-480.webp 480w, ../images/orsa-group-silhouettes-black-ice-800.webp 800w, ../images/orsa-group-silhouettes-black-ice-1200.webp 1200w, ../images/orsa-group-silhouettes-black-ice.webp 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><img src="../images/orsa-group-silhouettes-black-ice-800.jpg" alt="Fem skøyteløpere står i silhuett i motlys på glatt, mørk is, med lange skygger og trær på bredden" width="1600" height="1200" loading="lazy" decoding="async" srcset="../images/orsa-group-silhouettes-black-ice-480.jpg 480w, ../images/orsa-group-silhouettes-black-ice-800.jpg 800w, ../images/orsa-group-silhouettes-black-ice-1200.jpg 1200w, ../images/orsa-group-silhouettes-black-ice.jpg 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /></picture>
+            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Gruppetur, ledet</p>
+            <h3 class="group-trip__title" id="groepsreis-orsa-title">Gruppetur Orsa</h3>
+            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-01-28">tor. 28.</time> til <time datetime="2027-01-31">søn. 31. januar 2027</time></span></p>
+            <p class="group-trip__price"><span class="group-trip__amount">€1&nbsp;295</span> per person</p>
+            <p class="group-trip__terms">4 dager, påmelding fra 2 personer</p>
+            <p class="group-trip__incl"><strong>Inkludert:</strong> fly, overnatting, bil, guiding og oppfølging og 3 dager på skøyter.</p>
+            <a class="btn btn--dark group-trip__cta" href="groepsreis-orsa.html">Se og bestill<span class="sr-only"> gruppeturen til Orsa</span></a>
+          </article>
+
+          <article class="group-trip group-trip--falun reveal" aria-labelledby="groepsreis-falun-title">
+            <picture class="group-trip__media"><source type="image/avif" srcset="../images/falun-group-break-sun-480.avif 480w, ../images/falun-group-break-sun-800.avif 800w, ../images/falun-group-break-sun.avif 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><source type="image/webp" srcset="../images/falun-group-break-sun-480.webp 480w, ../images/falun-group-break-sun-800.webp 800w, ../images/falun-group-break-sun.webp 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><img src="../images/falun-group-break-sun-800.jpg" alt="Fire personer sitter side om side på sparker i solen på isen, med furutrær og blå himmel bak seg" width="1086" height="724" loading="lazy" decoding="async" srcset="../images/falun-group-break-sun-480.jpg 480w, ../images/falun-group-break-sun-800.jpg 800w, ../images/falun-group-break-sun.jpg 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /></picture>
+            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Gruppetur, ledet</p>
+            <h3 class="group-trip__title" id="groepsreis-falun-title">Gruppetur Falun</h3>
+            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-02-04">tor. 4.</time> til <time datetime="2027-02-07">søn. 7. februar 2027</time></span></p>
+            <p class="group-trip__price"><span class="group-trip__amount">€1&nbsp;295</span> per person</p>
+            <p class="group-trip__terms">4 dager, påmelding fra 2 personer</p>
+            <p class="group-trip__incl"><strong>Inkludert:</strong> fly, overnatting, bil, guiding og oppfølging og 3 dager på skøyter.</p>
+            <a class="btn btn--dark group-trip__cta" href="groepsreis-falun.html">Se og bestill<span class="sr-only"> gruppeturen til Falun</span></a>
+          </article>
+        </div>
+      </div>
     </section>
 
     <!-- 3b. Introduction, placed below the trips so the trips come first. -->

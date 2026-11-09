@@ -172,7 +172,10 @@ async function stuurOverschrijvingMails(opties) {
     ""
   );
   Object.keys(opties.metadata || {}).forEach(function (sleutel) {
-    regels.push(sleutel + ": " + opties.metadata[sleutel]);
+    var waarde = opties.metadata[sleutel];
+    // Fields that do not apply to this trip are left out of the mail.
+    if (waarde === undefined || waarde === null || waarde === "") return;
+    regels.push(sleutel + ": " + waarde);
   });
 
   var joey = await stuurMail(resendKey, {

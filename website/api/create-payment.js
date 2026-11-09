@@ -24,6 +24,49 @@ var MAX_BEDRAG_CENTEN = 2000000; // €20.000 — ruim boven een reële boeking,
 // Stripe's own ceiling for a single payment (€999.999,99).
 var MAX_SERVER_BEDRAG_CENTEN = 99999999;
 
+var NAAR_BOEKING = "schaatsennovakse@outlook.com";
+var VAN_BOEKING = process.env.RESEND_FROM_EMAIL || "Novakse website <aanvraag@novakse.com>";
+
+// Mails Joey the moment a customer goes on to pay, so the details are known
+// even when the payment is never completed. Best effort: a failure here must
+// never block the checkout, so it only logs.
+async function meldBoekingGestart(metadata, productNaam, bedrag, email) {
+  var resendKey = process.env.RESEND_API_KEY;
+  if (!resendKey) return;
+  var regels = [
+    "Een klant heeft de gegevens ingevuld en is doorgegaan naar betalen.",
+    "De betaling is nog NIET bevestigd. Controleer in Stripe of hij is afgerond.",
+    "",
+    "Reis: " + productNaam,
+    "Bedrag: EUR " + (bedrag / 100).toFixed(2).replace(".", ","),
+    ""
+  ];
+  Object.keys(metadata).forEach(function (sleutel) {
+    var waarde = metadata[sleutel];
+    // Fields that do not apply to this trip (no children, no options) are
+    // left out, so the mail shows no "kinderen: undefined" lines.
+    if (waarde === undefined || waarde === null || waarde === "") return;
+    regels.push(sleutel + ": " + waarde);
+  });
+  try {
+    var respons = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + resendKey, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: VAN_BOEKING,
+        to: [NAAR_BOEKING],
+        reply_to: email,
+        subject: "Boeking gestart, nog niet betaald: " + String(productNaam).slice(0, 120),
+        text: regels.join("\n")
+      }),
+      signal: AbortSignal.timeout(4000)
+    });
+    if (!respons.ok) console.error("Boekingsmail mislukt: " + respons.status);
+  } catch (fout) {
+    console.error("Boekingsmail mislukt: " + fout.message);
+  }
+}
+
 var berekenFalun = require("./_falun-prijs.js").berekenFalun;
 
 // Trips whose price is calculated by api/_reis-prijs.js. The browser sends
@@ -729,6 +772,9 @@ module.exports = async function handler(req, res) {
       res.status(502).json({ error: (data.error && data.error.message) || "Stripe gaf een fout terug." });
       return;
     }
+
+    // Awaited on purpose: a serverless function may be frozen after the response.
+    await meldBoekingGestart(metadata, productNaam, bedrag + activiteitenCenten, reisgegevens.email);
 
     res.status(200).json({ checkoutUrl: data.url });
   } catch (fout) {

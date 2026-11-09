@@ -24,6 +24,7 @@
   <link rel="preload" href="../css/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/fonts.css" /></noscript>
   <link rel="preload" href="../css/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/styles.css" /></noscript>
   <link rel="preload" href="../css/theme-groen.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/theme-groen.css" /></noscript>
+  <link rel="preload" href="../css/groepsreizen-sectie.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/groepsreizen-sectie.css" /></noscript>
   <link rel="canonical" href="https://www.novakse.com/fi/reizen.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
@@ -290,6 +291,47 @@
           </div>
         </div>
       </article>
+    </section>
+
+    <!-- 3c. Guided group trips: two fixed-date trips, each with its own
+         page, shown below the package trips. Translation of the same
+         section on the Dutch reizen.html. Styles in
+         css/groepsreizen-sectie.css. -->
+    <section class="group-trips" id="groepsreizen" aria-labelledby="groepsreizen-title">
+      <div class="wrap">
+        <div class="group-trips__head">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Ryhmämatkat</span>
+          <h2 class="h-section" id="groepsreizen-title">Yhdessä luistellen kiinteinä päivämäärinä</h2>
+          <div class="group-trips__notes">
+            <p class="group-trips__lede">Ryhmämatkalla matkustat kiinteinä päivämäärinä, opastettuna. Ilmoittaudut mukaan, mutta et yksin (vähintään 2 henkilöä).</p>
+            <p class="group-trips__lede">Mieluummin omaan tahtiin ja omina päivinäsi? Valitse silloin yltä pakettimatka. Päivämäärät valitset itse kalenterista.</p>
+          </div>
+        </div>
+
+        <div class="group-trips__list">
+          <article class="group-trip group-trip--orsa reveal" aria-labelledby="groepsreis-orsa-title">
+            <picture class="group-trip__media"><source type="image/avif" srcset="../images/orsa-group-silhouettes-black-ice-480.avif 480w, ../images/orsa-group-silhouettes-black-ice-800.avif 800w, ../images/orsa-group-silhouettes-black-ice-1200.avif 1200w, ../images/orsa-group-silhouettes-black-ice.avif 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="../images/orsa-group-silhouettes-black-ice-480.webp 480w, ../images/orsa-group-silhouettes-black-ice-800.webp 800w, ../images/orsa-group-silhouettes-black-ice-1200.webp 1200w, ../images/orsa-group-silhouettes-black-ice.webp 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><img src="../images/orsa-group-silhouettes-black-ice-800.jpg" alt="Viisi luistelijaa seisoo siluettina vastavalossa sileällä, tummalla jäällä, pitkät varjot ja rannalla puita" width="1600" height="1200" loading="lazy" decoding="async" srcset="../images/orsa-group-silhouettes-black-ice-480.jpg 480w, ../images/orsa-group-silhouettes-black-ice-800.jpg 800w, ../images/orsa-group-silhouettes-black-ice-1200.jpg 1200w, ../images/orsa-group-silhouettes-black-ice.jpg 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /></picture>
+            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Ryhmämatka, opastettu</p>
+            <h3 class="group-trip__title" id="groepsreis-orsa-title">Ryhmämatka Orsaan</h3>
+            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-01-28">to 28.1.</time> - <time datetime="2027-01-31">su 31.1.2027</time></span></p>
+            <p class="group-trip__price"><span class="group-trip__amount">1&nbsp;295 €</span> / hlö</p>
+            <p class="group-trip__terms">4 päivää, ilmoittautuminen vähintään 2 hengelle</p>
+            <p class="group-trip__incl"><strong>Sisältyy:</strong> lento, majoitus, auto, opastus ja ohjaus sekä 3 luistelupäivää.</p>
+            <a class="btn btn--dark group-trip__cta" href="groepsreis-orsa.html">Katso ja varaa<span class="sr-only"> Orsan ryhmämatka</span></a>
+          </article>
+
+          <article class="group-trip group-trip--falun reveal" aria-labelledby="groepsreis-falun-title">
+            <picture class="group-trip__media"><source type="image/avif" srcset="../images/falun-group-break-sun-480.avif 480w, ../images/falun-group-break-sun-800.avif 800w, ../images/falun-group-break-sun.avif 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><source type="image/webp" srcset="../images/falun-group-break-sun-480.webp 480w, ../images/falun-group-break-sun-800.webp 800w, ../images/falun-group-break-sun.webp 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><img src="../images/falun-group-break-sun-800.jpg" alt="Neljä ihmistä istuu vierekkäin potkukelkoilla auringossa jäällä, taustalla mäntyjä ja sininen taivas" width="1086" height="724" loading="lazy" decoding="async" srcset="../images/falun-group-break-sun-480.jpg 480w, ../images/falun-group-break-sun-800.jpg 800w, ../images/falun-group-break-sun.jpg 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /></picture>
+            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Ryhmämatka, opastettu</p>
+            <h3 class="group-trip__title" id="groepsreis-falun-title">Ryhmämatka Faluniin</h3>
+            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-02-04">to 4.2.</time> - <time datetime="2027-02-07">su 7.2.2027</time></span></p>
+            <p class="group-trip__price"><span class="group-trip__amount">1&nbsp;295 €</span> / hlö</p>
+            <p class="group-trip__terms">4 päivää, ilmoittautuminen vähintään 2 hengelle</p>
+            <p class="group-trip__incl"><strong>Sisältyy:</strong> lento, majoitus, auto, opastus ja ohjaus sekä 3 luistelupäivää.</p>
+            <a class="btn btn--dark group-trip__cta" href="groepsreis-falun.html">Katso ja varaa<span class="sr-only"> Falunin ryhmämatka</span></a>
+          </article>
+        </div>
+      </div>
     </section>
 
     <!-- 3b. Introduction, placed below the trips so the trips come first. -->

@@ -26,6 +26,7 @@
   <link rel="preload" href="../css/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/fonts.css" /></noscript>
   <link rel="preload" href="../css/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/styles.css" /></noscript>
   <link rel="preload" href="../css/theme-groen.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/theme-groen.css" /></noscript>
+  <link rel="preload" href="../css/groepsreizen-sectie.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="../css/groepsreizen-sectie.css" /></noscript>
   <link rel="canonical" href="https://www.novakse.com/de/reizen.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novakse Reizen" />
@@ -301,6 +302,47 @@
           </div>
         </div>
       </article>
+    </section>
+
+    <!-- 3c. Guided group trips: two fixed-date trips, each with its own
+         page, shown below the package trips. Translation of the same
+         section on the Dutch reizen.html. Styles in
+         css/groepsreizen-sectie.css. -->
+    <section class="group-trips" id="groepsreizen" aria-labelledby="groepsreizen-title">
+      <div class="wrap">
+        <div class="group-trips__head">
+          <span class="eyebrow eyebrow--deep"><span class="dot"></span>Gruppenreisen</span>
+          <h2 class="h-section" id="groepsreizen-title">Gemeinsam Schlittschuh laufen, zu einem festen Termin</h2>
+          <div class="group-trips__notes">
+            <p class="group-trips__lede">Bei einer Gruppenreise reist du zu einem festen Termin, mit Begleitung. Du meldest dich an, aber nicht allein (ab 2 Personen).</p>
+            <p class="group-trips__lede">Lieber im eigenen Tempo und zu deinen eigenen Terminen? Dann wähle oben eine Pauschalreise. Deine Termine wählst du selbst im Kalender.</p>
+          </div>
+        </div>
+
+        <div class="group-trips__list">
+          <article class="group-trip group-trip--orsa reveal" aria-labelledby="groepsreis-orsa-title">
+            <picture class="group-trip__media"><source type="image/avif" srcset="../images/orsa-group-silhouettes-black-ice-480.avif 480w, ../images/orsa-group-silhouettes-black-ice-800.avif 800w, ../images/orsa-group-silhouettes-black-ice-1200.avif 1200w, ../images/orsa-group-silhouettes-black-ice.avif 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><source type="image/webp" srcset="../images/orsa-group-silhouettes-black-ice-480.webp 480w, ../images/orsa-group-silhouettes-black-ice-800.webp 800w, ../images/orsa-group-silhouettes-black-ice-1200.webp 1200w, ../images/orsa-group-silhouettes-black-ice.webp 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /><img src="../images/orsa-group-silhouettes-black-ice-800.jpg" alt="Fünf Schlittschuhläufer stehen als Silhouette im Gegenlicht auf glattem dunklem Eis, mit langen Schatten und Bäumen am Ufer" width="1600" height="1200" loading="lazy" decoding="async" srcset="../images/orsa-group-silhouettes-black-ice-480.jpg 480w, ../images/orsa-group-silhouettes-black-ice-800.jpg 800w, ../images/orsa-group-silhouettes-black-ice-1200.jpg 1200w, ../images/orsa-group-silhouettes-black-ice.jpg 1600w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 3rem)" /></picture>
+            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Gruppenreise, begleitet</p>
+            <h3 class="group-trip__title" id="groepsreis-orsa-title">Gruppenreise Orsa</h3>
+            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-01-28">Do., 28.</time> bis <time datetime="2027-01-31">So., 31. Januar 2027</time></span></p>
+            <p class="group-trip__price"><span class="group-trip__amount">€1.295</span> pro Person</p>
+            <p class="group-trip__terms">4 Tage, Anmeldung ab 2 Personen</p>
+            <p class="group-trip__incl"><strong>Inbegriffen:</strong> Flug, Unterkunft, Auto, Führung und Begleitung sowie 3 Tage Schlittschuhlaufen.</p>
+            <a class="btn btn--dark group-trip__cta" href="groepsreis-orsa.html">Ansehen und buchen<span class="sr-only">: Gruppenreise nach Orsa</span></a>
+          </article>
+
+          <article class="group-trip group-trip--falun reveal" aria-labelledby="groepsreis-falun-title">
+            <picture class="group-trip__media"><source type="image/avif" srcset="../images/falun-group-break-sun-480.avif 480w, ../images/falun-group-break-sun-800.avif 800w, ../images/falun-group-break-sun.avif 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><source type="image/webp" srcset="../images/falun-group-break-sun-480.webp 480w, ../images/falun-group-break-sun-800.webp 800w, ../images/falun-group-break-sun.webp 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /><img src="../images/falun-group-break-sun-800.jpg" alt="Vier Menschen sitzen nebeneinander auf Tretschlitten in der Sonne auf dem Eis, mit Kiefern und blauem Himmel hinter ihnen" width="1086" height="724" loading="lazy" decoding="async" srcset="../images/falun-group-break-sun-480.jpg 480w, ../images/falun-group-break-sun-800.jpg 800w, ../images/falun-group-break-sun.jpg 1086w" sizes="(min-width: 80rem) 35rem, (min-width: 48rem) calc(50vw - 4.5rem), calc(100vw - 1.5rem)" /></picture>
+            <p class="group-trip__tag"><span class="dot" aria-hidden="true"></span>Gruppenreise, begleitet</p>
+            <h3 class="group-trip__title" id="groepsreis-falun-title">Gruppenreise Falun</h3>
+            <p class="group-trip__date"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg><span><time datetime="2027-02-04">Do., 4.</time> bis <time datetime="2027-02-07">So., 7. Februar 2027</time></span></p>
+            <p class="group-trip__price"><span class="group-trip__amount">€1.295</span> pro Person</p>
+            <p class="group-trip__terms">4 Tage, Anmeldung ab 2 Personen</p>
+            <p class="group-trip__incl"><strong>Inbegriffen:</strong> Flug, Unterkunft, Auto, Führung und Begleitung sowie 3 Tage Schlittschuhlaufen.</p>
+            <a class="btn btn--dark group-trip__cta" href="groepsreis-falun.html">Ansehen und buchen<span class="sr-only">: Gruppenreise nach Falun</span></a>
+          </article>
+        </div>
+      </div>
     </section>
 
     <!-- 3b. Introduction, placed below the trips so the trips come first. -->

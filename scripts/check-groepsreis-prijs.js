@@ -4,8 +4,10 @@
 
    1. js/groepsreis-prijs.js against api/groepsreis-prijs.js (called with a
       mock req/res) for 0 to 30 persons on both trips: every answer must be
-      identical, and only 2, 4, ..., 20 may be bookable.
-   2. Invalid choices (1, odd, 22, unknown trip, junk) must give 400.
+      identical, and only minPersonen to maxPersonen in steps of "stap"
+      (data/groepsreizen.json, now 2 to 20 in steps of 1) may be bookable.
+   2. Invalid choices (1, 22, unknown trip, junk, and an odd number when
+      "stap" is 2) must give 400.
    3. The activity aliases in data/activiteiten.json give exactly Falun's
       list and prices, and scripts/build-activity-prices.js accepts them and
       would not rewrite them.
@@ -90,7 +92,11 @@ function reizigers(aantal, geboren) {
   for (var i = 0; i < aantal; i++) {
     lijst.push({ voornamen: "Test" + (i + 1), achternaam: "Reiziger", geboortedatum: geboren || "1980-05-01", nationaliteit: "Nederlandse" });
   }
-  return { reizigers: lijst, email: "test@example.invalid", telefoon: "0612345678", voorwaarden: true };
+  return {
+    reizigers: lijst, email: "test@example.invalid", telefoon: "0612345678", voorwaarden: true,
+    adres: { straat: "Teststraat 1", postcode: "1234 AB", plaats: "Teststad", land: "Nederland" },
+    hoofdboeker: 1
+  };
 }
 
 async function main() {
@@ -141,10 +147,11 @@ async function main() {
   console.log("   Voorbeeld 200: " + JSON.stringify(voorbeeld.body));
 
   // ---- 2. Invalid choices give 400 ------------------------------------------
+  // Odd numbers are only refused while a trip books in pairs (stap 2).
+  var stapOrsa = Groepsreis.reis(data, "groepsreis-orsa").stap;
+  var stapFalun = Groepsreis.reis(data, "groepsreis-falun").stap;
   var ongeldig = [
     ["groepsreis-orsa", "1", "teWeinig"],
-    ["groepsreis-orsa", "3", "oneven"],
-    ["groepsreis-falun", "7", "oneven"],
     ["groepsreis-orsa", "22", "teVeel"],
     ["groepsreis-falun", "21", "teVeel"],
     ["groepsreis-xyz", "4", "onbekendeReis"],
@@ -155,6 +162,8 @@ async function main() {
     ["groepsreis-orsa", "-2", "ongeldig"],
     ["groepsreis-orsa", "", "ongeldig"]
   ];
+  if (stapOrsa === 2) ongeldig.push(["groepsreis-orsa", "3", "oneven"]);
+  if (stapFalun === 2) ongeldig.push(["groepsreis-falun", "7", "oneven"]);
   ongeldig.forEach(function (geval) {
     var res = vraagPrijs({ reis: geval[0], personen: geval[1] });
     check(res.statusCode === 400 && res.body.code === geval[2],
@@ -241,8 +250,14 @@ async function main() {
       "Groepsreis Falun, donderdag 4 t/m zondag 7 februari 2027 (4 dagen), 20 personen, €1.295 p.p.", "product name Falun");
   }
 
+  // An odd group books normally when stap is 1 (3 x 1295 = 3885 euro).
+  if (stapOrsa === 1) {
+    r = await betaal({ reis: "groepsreis-orsa", personen: 3, verwachtCenten: 388500, reisgegevens: reizigers(3) });
+    check(r.res.statusCode === 200 && r.stripe && r.stripe.get("line_items[0][price_data][unit_amount]") === "388500",
+      "3 persons Orsa should charge 388500 cents, got " + r.res.statusCode + " " + JSON.stringify(r.res.body));
+  }
+
   var geweigerd = [
-    [{ reis: "groepsreis-orsa", personen: 3, bedrag: 388500, reisgegevens: reizigers(3) }, 400, "oneven"],
     [{ reis: "groepsreis-orsa", personen: 1, bedrag: 129500, reisgegevens: reizigers(1) }, 400, "1 persoon"],
     [{ reis: "groepsreis-orsa", personen: 22, bedrag: 2849000, reisgegevens: reizigers(20) }, 400, "22 personen"],
     [{ reis: "groepsreis-xyz", personen: 4, bedrag: 100, reisgegevens: reizigers(4) }, 400, "onbekende groepsreis"],
@@ -252,6 +267,9 @@ async function main() {
     [{ reis: "groepsreis-orsa", personen: 4, activiteiten: { "skipas-volw": 17 }, reisgegevens: reizigers(4) }, 400, "17 skipasdagen (max 4 x 4)"],
     [{ reis: "groepsreis-orsa", personen: 4, activiteiten: { "liftpas-volw": 1 }, reisgegevens: reizigers(4) }, 400, "wellness-activiteit"]
   ];
+  if (stapOrsa === 2) {
+    geweigerd.push([{ reis: "groepsreis-orsa", personen: 3, bedrag: 388500, reisgegevens: reizigers(3) }, 400, "oneven"]);
+  }
   for (var i = 0; i < geweigerd.length; i++) {
     var geval = geweigerd[i];
     r = await betaal(geval[0]);

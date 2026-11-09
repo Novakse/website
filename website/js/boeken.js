@@ -327,7 +327,9 @@
       // schrijfAdres() has just set.
       box.className = "falun-cal booking__calendar";
       box.setAttribute("data-falun-calendar", mapVoor() + gegevens.kalender);
-      box.setAttribute("data-betaalpagina", mapVoor() + "uitchecken.html");
+      // The checkout in this page's own language folder (root for Dutch).
+      box.setAttribute("data-betaalpagina", mapVoor() +
+        (["en", "de", "sv", "no", "fi"].indexOf(LANG) !== -1 ? LANG + "/" : "") + "uitchecken.html");
       var script = document.createElement("script");
       script.src = mapVoor() + "js/falun-kalender.js";
       document.body.appendChild(script);
