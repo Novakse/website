@@ -2559,6 +2559,50 @@ button.calendar__cell.is-duurder.is-gekozen::after { background: var(--warm); }
 
 .falun-cal .calendar__months { margin-bottom: 2.25rem; }
 
+/* Wide screens: the month grid stays narrow on the left and the choices
+   (persons, flight, guiding) stand next to it, instead of one long column
+   with the steppers far away at the right edge. Floats keep the script's
+   flat list of blocks as it is; the bar with the price clears them and
+   closes the section over the full width. Not for Wellness (own layout in
+   wellness-kalender.css) or the booking form (.booking__calendar). */
+@media (min-width: 64rem) {
+  :is(.pending, .prices) .calendar:not(.lx-booking),
+  :is(.pending, .prices) .falun-cal { --cal-side: 26rem; --cal-gutter: clamp(3rem, 6vw, 5.5rem); }
+  :is(.pending, .prices) .calendar:not(.lx-booking)::after,
+  :is(.pending, .prices) .falun-cal::after { content: ""; display: block; clear: both; }
+
+  :is(.pending, .prices) .calendar:not(.lx-booking) > .calendar__legend,
+  :is(.pending, .prices) .calendar:not(.lx-booking) > .calendar__months,
+  :is(.pending, .prices) .calendar:not(.lx-booking) > .falun-cal__note,
+  :is(.pending, .prices) .falun-cal > .calendar__legend,
+  :is(.pending, .prices) .falun-cal > .calendar__months,
+  :is(.pending, .prices) .falun-cal > .falun-cal__note {
+    float: left;
+    clear: left;
+    width: var(--cal-side);
+    max-width: none;
+  }
+  :is(.pending, .prices) .calendar:not(.lx-booking) > .falun-cal__block,
+  :is(.pending, .prices) .falun-cal > .falun-cal__block:not(:first-of-type) {
+    margin-top: 0;
+    margin-left: calc(var(--cal-side) + var(--cal-gutter));
+  }
+  :is(.pending, .prices) .calendar:not(.lx-booking) > .calendar__bar,
+  :is(.pending, .prices) .falun-cal > .falun-cal__summary { clear: both; }
+  /* A cleared bar loses its own top margin against the floats, so the left
+     column carries the space underneath itself (as .falun-cal already does). */
+  :is(.pending, .prices) .calendar:not(.lx-booking) > .calendar__months { margin-bottom: 2rem; }
+  :is(.pending, .prices) .calendar:not(.lx-booking) > .falun-cal__note { margin: -1.2rem 0 2rem; }
+
+  /* Falun asks for the persons first (they set the price in every day):
+     that block keeps the full width, with the three groups side by side. */
+  :is(.pending, .prices) .falun-cal > .falun-cal__block:first-of-type .calendar__persons-rows {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem clamp(1.5rem, 3.5vw, 3.5rem);
+  }
+  :is(.pending, .prices) .falun-cal > .falun-cal__block:first-of-type .calendar__person-row { flex-wrap: nowrap; }
+}
+
 /* --------------------------------------------------------------------------
    Aanvraagpagina
    -------------------------------------------------------------------------- */
@@ -3123,6 +3167,17 @@ button.calendar__cell {
 @media (min-width: 72rem) {
   .days__scroll { padding-inline: max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad))); }
   .day-card { flex: 0 0 25%; }
+}
+/* On the trip pages the strip sits inside the head's .wrap. It breaks out
+   to the full width there, so the padding above lines the first card up
+   with the heading (instead of indenting it twice) and the cards run off
+   the edge of the screen. It also gets the space under the intro that the
+   head's own bottom margin cannot give from the inside. */
+.days__head-wrap > .days__scroll { margin-top: 2.5rem; margin-inline: calc(50% - 50vw); scroll-padding-inline: var(--pad); }
+.days__head-wrap > .days__progress { padding-inline: 0; }
+@media (min-width: 72rem) {
+  /* Cards snap to the same line as the padding, not to the screen edge. */
+  .days__head-wrap > .days__scroll { scroll-padding-inline: max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad))); }
 }
 
 /* ==========================================================================

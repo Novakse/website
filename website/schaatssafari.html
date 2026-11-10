@@ -38,7 +38,7 @@
     .page-hero__bg { object-position: 50% 55%; }
     #waarom .why__reasons { grid-template-columns: 1fr; }
     @media (min-width: 48rem) { #waarom .why__reasons { grid-template-columns: repeat(2, 1fr); gap: 0 2.5rem; } }
-    .request-steps { margin-top: 1.4rem; display: grid; gap: 0.7rem; max-width: 46rem; counter-reset: step; }
+    .request-steps { margin-top: 1.4rem; padding-left: 0; list-style: none; display: grid; gap: 0.7rem; max-width: 46rem; counter-reset: step; }
     .request-steps li { position: relative; padding-left: 2.4rem; color: var(--ink-2); counter-increment: step; }
     .request-steps li::before { content: counter(step); position: absolute; left: 0; top: -0.05rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--warm); color: var(--ink); font-weight: 700; font-size: 0.85rem; display: grid; place-items: center; }
     .request-actions { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: 0.8rem; }

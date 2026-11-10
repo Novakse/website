@@ -58,7 +58,10 @@
        reispagina's voor dit blok gebruiken. */
     .split-photo--panorama { grid-template-columns: 1fr; gap: 2.25rem; }
     .split-photo--panorama .split-photo__media img { aspect-ratio: 2.8 / 1; border-radius: 1.25rem; }
-    .split-photo--panorama .split-photo__body { padding-inline: var(--pad); max-width: 42rem; }
+    /* Photo and text keep to the page column (.wrap), so they line up with
+       the sections above and below on wide screens. */
+    .split-photo--panorama .split-photo__media { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--pad); }
+    .split-photo--panorama .split-photo__body { padding-inline: var(--pad); max-width: 42rem; margin-left: max(0px, (100% - var(--wrap)) / 2); }
     @media (min-width: 60rem) {
       .split-photo--panorama { padding-block: 5rem 5.5rem; }
     }
