@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <!-- The personal code sits in the address bar: never pass it on to the map servers. -->
+  <meta name="referrer" content="no-referrer" />
+  <title>Reisgids - Novakse</title>
+  <meta name="description" content="Persoonlijke reisgids voor reizigers van Novakse." />
+  <meta name="theme-color" content="#0b1512" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Reisgids" />
+  <link rel="manifest" href="/reisgids/manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="preload" href="/fonts/cormorant-garamond-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/reisgids/vendor/maplibre-gl.css" />
+  <link rel="stylesheet" href="/reisgids/reisgids.css?v=202611101500" />
+</head>
+<body class="rg">
+
+  <!-- Opening screen: loading, asking for the code, or explaining an error. -->
+  <div class="rg-gate" id="gate" data-stand="laden">
+    <div class="rg-gate__inner">
+      <img class="rg-gate__logo" src="/reisgids/logo-woord-licht.webp" alt="Novakse" width="560" height="107" />
+      <h1 class="rg-gate__title">Jouw <em>reisgids</em></h1>
+      <svg class="rg-gate__line" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path class="rg-gate__lane" d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
+        <path class="rg-gate__stroke" d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
+      </svg>
+
+      <p class="rg-gate__status" id="gateStatus" role="status" aria-live="polite">Je reisgids wordt geopend...</p>
+
+      <form class="rg-gate__form" id="codeForm" hidden>
+        <label class="rg-gate__label" for="codeInput">Plak hier je persoonlijke code of link</label>
+        <input class="rg-gate__input" id="codeInput" name="code" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" required />
+        <button class="rg-btn rg-btn--warm" type="submit">Open reisgids</button>
+      </form>
+
+      <p class="rg-gate__help" id="gateHelp" hidden>
+        Kom je er niet uit? Bel of app Joey: <a href="tel:+31617467643">+31 6 17467643</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="rg-app" id="app" hidden>
+    <header class="rg-top">
+      <button class="rg-top__back" id="backBtn" type="button" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" /></svg>
+        <span>Zweden</span>
+      </button>
+      <p class="rg-top__brand"><span class="rg-top__word">Novakse</span> <span class="rg-top__sub">reisgids</span></p>
+      <button class="rg-top__menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">
+        <span class="sr-only">Menu</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14M5 16h14" /></svg>
+      </button>
+    </header>
+
+    <!-- The drawn map or the satellite pictures: the button shows the other one. -->
+    <button class="rg-layer" id="layerBtn" type="button" aria-label="Toon het satellietbeeld">
+      <span class="rg-layer__thumb" aria-hidden="true"></span>
+      <span class="rg-layer__label" aria-hidden="true">Satelliet</span>
+    </button>
+
+    <main class="rg-main">
+      <h1 class="sr-only" id="mainTitle">Reisgids</h1>
+      <div class="rg-map" id="kaart" role="region" aria-label="Kaart"></div>
+
+      <!-- Sweden view: greeting and the regions of this trip. -->
+      <section class="rg-welcome" id="welcome" aria-labelledby="welcomeTitle">
+        <p class="rg-eyebrow">Persoonlijke reisgids</p>
+        <h2 class="rg-welcome__title" id="welcomeTitle"></h2>
+        <p class="rg-welcome__text">Volg je reis stap voor stap, of kies je gebied op de kaart voor je verblijf, de opstapplekken en je activiteiten.</p>
+        <div class="rg-welcome__choices">
+          <ul class="rg-welcome__journeys" id="journeyList"></ul>
+          <ul class="rg-welcome__regions" id="regionList"></ul>
+        </div>
+      </section>
+
+      <!-- Region view: list of places, or the details of one place. -->
+      <section class="rg-sheet" id="sheet" aria-labelledby="sheetTitle" hidden>
+        <button class="rg-sheet__toggle" id="sheetToggle" type="button" aria-expanded="true" aria-controls="sheet">
+          <span class="rg-sheet__handle" aria-hidden="true"></span>
+          <span class="rg-peek"><span class="rg-peek__title"></span><span class="rg-peek__hint">Toon info</span></span>
+          <span class="sr-only">Info tonen of verbergen</span>
+        </button>
+
+        <div class="rg-sheet__list" id="sheetList">
+          <header class="rg-sheet__head">
+            <p class="rg-eyebrow" id="sheetEyebrow"></p>
+            <h2 class="rg-sheet__title" id="sheetTitle"></h2>
+          </header>
+          <div class="rg-carroutes" id="carRoutes" hidden></div>
+          <div class="rg-filters" id="filters" role="group" aria-label="Toon soort plek"></div>
+          <ul class="rg-places" id="placeList"></ul>
+        </div>
+
+        <article class="rg-detail" id="detail" hidden aria-labelledby="detailTitle">
+          <button class="rg-detail__close" id="detailClose" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" /></svg>
+            <span>Alle plekken</span>
+          </button>
+          <div class="rg-detail__art" id="detailArt" aria-hidden="true"></div>
+          <p class="rg-eyebrow" id="detailKind"></p>
+          <h2 class="rg-detail__title" id="detailTitle"></h2>
+          <p class="rg-detail__distance" id="detailDistance" hidden></p>
+          <div class="rg-detail__routes" id="detailRoutes" hidden></div>
+          <div class="rg-photos" id="detailPhotos" hidden>
+            <div class="rg-photos__strip" id="detailPhotoStrip"></div>
+            <div class="rg-photos__dots" id="detailPhotoDots" hidden></div>
+          </div>
+          <p class="rg-detail__info" id="detailInfo" hidden></p>
+          <ul class="rg-tracks" id="detailTracks" aria-label="Geveegde banen" hidden></ul>
+          <div class="rg-detail__tip" id="detailTipWrap" hidden>
+            <svg viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
+            </svg>
+            <p><strong>Tip van Joey</strong> <span id="detailTip"></span></p>
+          </div>
+          <dl class="rg-detail__facts" id="detailFacts"></dl>
+          <div class="rg-detail__actions">
+            <a class="rg-btn rg-btn--warm" id="routeGoogle" target="_blank" rel="noopener noreferrer">Route met Google Maps</a>
+            <a class="rg-btn rg-btn--line" id="routeApple" target="_blank" rel="noopener noreferrer" hidden>Apple Kaarten</a>
+            <button class="rg-btn rg-btn--line" id="zoomBtn" type="button">Bekijk van dichtbij</button>
+            <a class="rg-btn rg-btn--text" id="detailLink" target="_blank" rel="noopener noreferrer" hidden>Website</a>
+          </div>
+        </article>
+      </section>
+
+      <!-- Journey: the trip step by step (packing list, airport, car, check-in). -->
+      <section class="rg-journey" id="journey" aria-labelledby="stepTitle" hidden>
+        <button class="rg-sheet__toggle" id="journeyToggle" type="button" aria-expanded="true" aria-controls="journey">
+          <span class="rg-sheet__handle" aria-hidden="true"></span>
+          <span class="rg-peek"><span class="rg-peek__title"></span><span class="rg-peek__hint">Toon info</span></span>
+          <span class="sr-only">Info tonen of verbergen</span>
+        </button>
+        <header class="rg-journey__head">
+          <div class="rg-journey__meta">
+            <p class="rg-eyebrow" id="stepCount"></p>
+            <p class="rg-journey__name" id="journeyName"></p>
+          </div>
+          <button class="rg-journey__close" id="journeyClose" type="button">
+            <span class="sr-only">Sluit het reisverloop</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          </button>
+          <!-- Progress along the swept ice-rink line -->
+          <svg class="rg-journey__progress" viewBox="0 0 400 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path class="rg-journey__lane" d="M2,12 C100,2 160,22 260,11 C310,5 350,17 398,9" />
+            <path class="rg-journey__done" id="journeyDone" d="M2,12 C100,2 160,22 260,11 C310,5 350,17 398,9" pathLength="100" />
+          </svg>
+          <span class="rg-journey__puck" id="journeyPuck" aria-hidden="true"></span>
+        </header>
+
+        <div class="rg-journey__body" id="stepBody">
+          <div class="rg-detail__art" id="stepArt" aria-hidden="true"></div>
+          <h2 class="rg-journey__title" id="stepTitle"></h2>
+          <p class="rg-journey__text" id="stepText" hidden></p>
+          <div class="rg-pack" id="stepPack" hidden></div>
+          <h3 class="rg-journey__sub" id="stepListTitle" hidden>Nalopen voor vertrek</h3>
+          <ol class="rg-steps" id="stepList" hidden></ol>
+          <div class="rg-detail__tip" id="stepTipWrap" hidden>
+            <svg viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <path d="M0,20 C100,4 160,36 260,18 C310,8 350,26 400,14" />
+            </svg>
+            <p><strong>Tip van Joey</strong> <span id="stepTip"></span></p>
+          </div>
+          <dl class="rg-detail__facts" id="stepFacts"></dl>
+          <ul class="rg-journey__places" id="stepPlaces"></ul>
+          <div class="rg-detail__actions" id="stepActions" hidden>
+            <a class="rg-btn rg-btn--warm" id="stepRouteGoogle" target="_blank" rel="noopener noreferrer">Route met Google Maps</a>
+            <a class="rg-btn rg-btn--line" id="stepRouteApple" target="_blank" rel="noopener noreferrer" hidden>Apple Kaarten</a>
+          </div>
+        </div>
+
+        <nav class="rg-journey__nav" aria-label="Stappen">
+          <button class="rg-btn rg-btn--line" id="stepPrev" type="button">Vorige</button>
+          <button class="rg-btn rg-btn--dark" id="stepNext" type="button">Volgende stap</button>
+        </nav>
+      </section>
+    </main>
+
+    <!-- Menu -->
+    <div class="rg-menu" id="menu" hidden>
+      <div class="rg-menu__panel" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+        <button class="rg-menu__close" id="menuClose" type="button"><span class="sr-only">Sluit menu</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+        <p class="rg-eyebrow">Reisgids van</p>
+        <h2 class="rg-menu__title" id="menuTitle"></h2>
+        <p class="rg-menu__valid" id="menuValid"></p>
+
+        <div class="rg-menu__block" id="installBlock" hidden>
+          <h3>Zet de reisgids op je beginscherm</h3>
+          <p id="installText"></p>
+          <button class="rg-btn rg-btn--warm" id="installBtn" type="button" hidden>Installeer als app</button>
+        </div>
+
+        <div class="rg-menu__block">
+          <h3>Vragen onderweg?</h3>
+          <p><a href="tel:+31617467643">Bel Joey: +31 6 17467643</a></p>
+          <p><a href="https://wa.me/31617467643" target="_blank" rel="noopener noreferrer">App via WhatsApp</a></p>
+        </div>
+
+        <p class="rg-menu__note">Deze reisgids is persoonlijk en alleen bedoeld voor jouw reisgezelschap. Deel de link of de plekken niet met anderen.</p>
+        <button class="rg-btn rg-btn--text" id="logoutBtn" type="button">Reisgids van dit toestel verwijderen</button>
+      </div>
+    </div>
+
+    <div class="rg-shield" aria-hidden="true"><p>Reisgids verborgen</p></div>
+  </div>
+
+  <noscript><p class="rg-noscript">Zet JavaScript aan om je reisgids te openen.</p></noscript>
+
+  <script src="/reisgids/vendor/maplibre-gl.js" defer></script>
+  <script src="/reisgids/js/illustraties.js?v=202611081200" defer></script>
+  <script src="/reisgids/js/kaartstijl.js?v=202611042300" defer></script>
+  <script src="/reisgids/js/atlas.js?v=202611041900" defer></script>
+  <script src="/reisgids/js/reisgids.js?v=202611091200" defer></script>
+</body>
+</html>

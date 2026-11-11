@@ -1,0 +1,7 @@
+{
+ "bron": "Hoogte: Mapzen Terrain Tiles (SRTM, GMTED, ETOPO1 e.a., via AWS Open Data). Vooraf berekend reliëf voor de getekende overzichtskaart.",
+ "west": -11.25,
+ "oost": 39.375,
+ "noord": 72.39570570653261,
+ "zuid": 52.48278022207821
+}

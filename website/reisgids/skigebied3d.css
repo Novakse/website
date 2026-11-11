@@ -1,0 +1,303 @@
+/* ==========================================================================
+   Novakse reisgids: ski area in 3D (js/skigebied3d.js). Loaded together
+   with the 3D view. Uses the glass tokens of reisgids.css.
+   ========================================================================== */
+
+.rg3d {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  overflow: hidden;
+  background: #dce9f0;
+  color: var(--ink);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+}
+.rg3d.is-zichtbaar { opacity: 1; }
+.rg3d.is-weg { opacity: 0; transition-duration: 0.4s; }
+.rg3d:focus { outline: none; }
+
+.rg3d__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+.rg3d__canvas:active { cursor: grabbing; }
+
+/* Top: back to the map, the name, pause */
+.rg3d__top {
+  position: absolute;
+  top: calc(var(--safe-top) + 0.75rem);
+  left: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+.rg3d__top > * { pointer-events: auto; }
+.rg3d__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 2.9rem;
+  min-height: 2.9rem;
+  padding: 0 1rem 0 0.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--glass, rgba(250, 252, 252, 0.6));
+  -webkit-backdrop-filter: var(--glass-blur, blur(30px));
+  backdrop-filter: var(--glass-blur, blur(30px));
+  box-shadow: var(--glass-rim, none), 0 12px 28px -16px rgba(6, 34, 44, 0.55);
+  color: var(--ink);
+  font: 600 0.92rem/1 var(--display);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out), background-color 0.2s ease;
+}
+.rg3d__btn:hover { background: rgba(255, 255, 255, 0.82); }
+.rg3d__btn:active { transform: scale(0.95); }
+.rg3d__btn:focus-visible { outline: 3px solid var(--warm); outline-offset: 2px; }
+.rg3d__btn svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.rg3d__pause { grid-column: 3; grid-row: 1; padding: 0; width: 2.9rem; }
+.rg3d__pause svg { fill: currentColor; stroke: none; }
+
+.rg3d__title {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 0.4rem;
+  padding-left: 0.35rem;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(10, 40, 70, 0.35), 0 4px 18px rgba(10, 40, 70, 0.35);
+  pointer-events: none;
+  animation: rg3d-rise 0.9s var(--ease-expo) 0.5s backwards;
+}
+.rg3d__eyebrow {
+  margin: 0;
+  font: 600 0.72rem/1.2 var(--display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+.rg3d__name {
+  margin: 0.1rem 0 0;
+  font: italic 500 clamp(2.1rem, 7vw, 3.4rem)/1 var(--serif);
+  letter-spacing: -0.01em;
+}
+@keyframes rg3d-rise { from { opacity: 0; transform: translateY(0.9rem); } }
+
+/* Piste colours and the lift letter */
+.rg3d__legend {
+  position: absolute;
+  left: 0.75rem;
+  bottom: calc(var(--safe-bottom) + 0.75rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.85rem;
+  max-width: calc(100% - 1.5rem);
+  margin: 0;
+  padding: 0.6rem 0.95rem;
+  list-style: none;
+  border-radius: 1.1rem;
+  background: var(--glass, rgba(250, 252, 252, 0.6));
+  -webkit-backdrop-filter: var(--glass-blur, blur(30px));
+  backdrop-filter: var(--glass-blur, blur(30px));
+  box-shadow: var(--glass-rim, none), 0 12px 28px -18px rgba(6, 34, 44, 0.55);
+  font: 500 0.8rem/1.3 var(--sans);
+  animation: rg3d-rise 0.8s var(--ease-expo) 3.2s backwards;
+}
+.rg3d__legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
+.rg3d__dot { width: 0.8rem; height: 0.8rem; border-radius: 50%; box-shadow: 0 0 0 2px #fff; }
+.rg3d__lift-key {
+  display: inline-grid;
+  place-items: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 0.3rem;
+  background: var(--warm);
+  color: var(--night);
+  font: 700 0.62rem/1 var(--display);
+}
+
+.rg3d__hint,
+.rg3d__info {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--safe-bottom) + 6.2rem);
+  max-width: min(26rem, calc(100% - 2rem));
+  margin: 0;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: var(--glass-dark-tile, rgba(14, 26, 28, 0.8));
+  color: var(--snow);
+  font: 500 0.85rem/1.35 var(--sans);
+  text-align: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.rg3d__hint { animation: rg3d-hint 7s ease 4s both; }
+@keyframes rg3d-hint {
+  0% { opacity: 0; transform: translate(-50%, 0.6rem); }
+  8%, 85% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, 0); }
+}
+.rg3d__info { opacity: 0; transform: translate(-50%, 0.5rem); transition: opacity 0.25s ease, transform 0.35s var(--ease-out); }
+.rg3d__info.is-zichtbaar { opacity: 1; transform: translate(-50%, 0); }
+
+.rg3d__credit {
+  position: absolute;
+  right: 0.75rem;
+  bottom: calc(var(--safe-bottom) + 0.3rem);
+  margin: 0;
+  color: rgba(20, 24, 26, 0.6);
+  font: 400 0.62rem/1.2 var(--sans);
+  pointer-events: none;
+}
+@media (max-width: 40rem) {
+  .rg3d__legend { bottom: calc(var(--safe-bottom) + 1.4rem); }
+  .rg3d__hint, .rg3d__info { bottom: calc(var(--safe-bottom) + 6.8rem); }
+}
+
+/* Labels on the mountain (placed by the script) */
+.rg3d__labels { position: absolute; inset: 0; pointer-events: none; }
+.rg3d-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: var(--c, #222);
+  color: #fff;
+  box-shadow: 0 0 0 2px #fff, 0 6px 14px -6px rgba(6, 34, 44, 0.7);
+  font: 700 0.72rem/1 var(--display);
+  opacity: 0;
+  scale: 0.6;
+  visibility: hidden;
+  transition: opacity 0.3s ease, scale 0.35s var(--ease-land), visibility 0s linear 0.3s;
+  cursor: pointer;
+}
+.toon-labels .rg3d-label.is-zichtbaar {
+  opacity: 1;
+  scale: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: var(--d, 0ms), var(--d, 0ms), 0s;
+}
+.rg3d-label--lift {
+  border-radius: 0.4rem;
+  background: var(--warm);
+  color: var(--night);
+}
+/* Lifts without a letter (and the legend then): a small chair lift. */
+.rg3d-label--lift:empty::before,
+.rg3d__lift-key:empty::before {
+  content: "";
+  width: 0.95rem;
+  height: 0.95rem;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 6.5L22 2.5M12 4.5v7M7.5 11.5h9M8.5 11.5v6h7v-6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 6.5L22 2.5M12 4.5v7M7.5 11.5h9M8.5 11.5v6h7v-6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.rg3d__lift-key:empty::before { width: 0.78rem; height: 0.78rem; }
+
+.rg3d-label--top {
+  translate: -50% -100%;
+  height: auto;
+  padding: 0.3rem 0.65rem 0.32rem;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--ink);
+  box-shadow: 0 8px 18px -10px rgba(6, 34, 44, 0.7);
+  font: italic 600 0.95rem/1 var(--serif);
+}
+.rg3d-label--top::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.3rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: inherit;
+  transform: translateX(-50%) rotate(45deg);
+  z-index: -1;
+}
+
+/* Text for screen readers only */
+.rg3d__sr,
+.rg3d__sr-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Loading the 3D view (shown over the map by reisgids.js) */
+.rg3d-laden {
+  position: fixed;
+  left: 50%;
+  top: calc(var(--safe-top) + 5rem);
+  z-index: 46;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  background: var(--glass-dark-tile, rgba(14, 26, 28, 0.8));
+  color: var(--snow);
+  font: 500 0.88rem/1 var(--sans);
+  transform: translateX(-50%);
+  animation: rg3d-rise 0.4s var(--ease-out) both;
+}
+.rg3d-laden::before {
+  content: "";
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: rg3d-spin 0.8s linear infinite;
+}
+@keyframes rg3d-spin { to { transform: rotate(1turn); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .rg3d, .rg3d__info, .rg3d-label { transition-duration: 0.01ms; }
+  .rg3d__title, .rg3d__legend { animation: none; }
+  .rg3d__hint { animation: none; }
+  .rg3d-laden::before { animation-duration: 2.4s; }
+}
+
+/* The map switch (2026-11-07): drawn ground or the satellite picture. */
+.rg3d__top { grid-template-columns: auto 1fr auto auto; }
+.rg3d__pause { grid-column: 4; }
+.rg3d__layer { grid-column: 3; grid-row: 1; padding: 0 0.9rem 0 0.4rem; }
+.rg3d__layer-thumb {
+  display: block;
+  flex: none;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: #33464e url("/reisgids/satelliet/knop-satelliet.webp") center / cover no-repeat;
+  box-shadow: 0 0 0 1.5px #ffffff;
+}
+.rg3d__layer.is-satelliet .rg3d__layer-thumb {
+  background-color: #f4f1ea;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" fill="%23f7f5f0"/><path d="M-4 18c14-8 26 4 38-2s20-14 34-6 22 10 32 4v-20H-4z" fill="%23d9e3d8"/><path d="M60 96c-4-14 8-22 20-24s20 2 20 2v22z" fill="%23d9e3d8"/><path d="M30 30c10-6 24-2 26 10s-4 20-2 30-6 18-16 16-14-12-12-22-6-28 4-34z" fill="%236fa9bf" stroke="%23a9d0dd" stroke-width="2"/><path d="M-4 70c18-6 26-22 40-22s30 16 44 6 18-18 22-20" fill="none" stroke="%23d3cbbd" stroke-width="5" stroke-linecap="round"/><path d="M-4 70c18-6 26-22 40-22s30 16 44 6 18-18 22-20" fill="none" stroke="%23fff" stroke-width="3" stroke-linecap="round"/><path d="M72 -4c-2 16 6 26 2 40" fill="none" stroke="%2393a3ab" stroke-width="1.4" stroke-dasharray="4 3"/><circle cx="66" cy="26" r="3.2" fill="%23132f3a" stroke="%23fff" stroke-width="1.6"/></svg>');
+}
+/* Narrow phones: the picture alone (the button keeps its name for screen readers). */
+@media (max-width: 26rem) {
+  .rg3d__layer { padding: 0; width: 2.9rem; }
+  .rg3d__layer-text { display: none; }
+}
