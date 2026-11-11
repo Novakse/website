@@ -1,0 +1,331 @@
+/* ==========================================================================
+   Schaatsen met een gids (schaatsen-met-een-gids.html)
+   Overview of every trip with a guide on natural ice.
+
+   Builds on gidsreis.css (same sky / ice / white palette and hero as the
+   guided trips) and only adds what the overview needs:
+   - two trip types side by side, each with a small route drawing that shows
+     how you travel (point to point vs. out from one base);
+   - the guided trips by destination as rows with a large place name,
+     separated by the swept ice-track line;
+   - the other guided options, good-to-know points and request routes.
+
+   Everything lives under .page-metgids. Motion: only the route line in the
+   drawings is drawn once (stroke-dashoffset), and only with .gr-motion.
+   ========================================================================== */
+
+/* the facts band has four items here instead of five */
+@media (min-width: 52rem) {
+  .page-metgids .gr-facts__list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* the drone photo has its horizon high up: keep the skaters in frame */
+.page-metgids .gr-hero__photo img { object-position: 50% 62%; }
+
+/* --------------------------------------------------------------------------
+   Shared: section head and small fact pairs
+   -------------------------------------------------------------------------- */
+.mg-head { max-width: 46rem; }
+.mg-head__text {
+  max-width: 38rem;
+  margin-top: 1.25rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--gr-soft);
+}
+
+.mg-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 2rem;
+  margin-top: 1.25rem;
+}
+.mg-facts dt { font-size: 0.8rem; font-weight: 600; color: var(--warm-deep); }
+.mg-facts dd {
+  margin: 0.15rem 0 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--gr-ice);
+}
+
+/* --------------------------------------------------------------------------
+   1. Short answer
+   -------------------------------------------------------------------------- */
+.mg-intro { padding-bottom: clamp(3.5rem, 8vw, 6rem); }
+
+/* --------------------------------------------------------------------------
+   2. Two trip types: huttentocht and schaatssafari
+   -------------------------------------------------------------------------- */
+.page-metgids .mg-trips { background: var(--gr-pale); }
+
+.mg-trips__grid { display: grid; gap: 4rem; margin-top: clamp(2.75rem, 6vw, 4.5rem); }
+
+.mg-trip { position: relative; }
+.mg-trip__photo { aspect-ratio: 4 / 3; border-radius: 1.5rem; }
+
+/* the route drawing sits on a white panel that overlaps the foot of the photo */
+.mg-diagram {
+  position: relative;
+  z-index: 1;
+  margin: -3.25rem 1rem 0;
+  padding: 1rem 1.1rem 0.9rem;
+  border-radius: 1.25rem;
+  background: #fff;
+  border: 1px solid var(--gr-line);
+}
+.mg-diagram svg { display: block; width: 100%; height: auto; overflow: visible; }
+.mg-diagram__caption { margin-top: 0.6rem; font-size: 0.88rem; line-height: 1.45; color: var(--gr-soft); }
+
+.mg-diagram__ice { fill: var(--gr-haze); }
+.mg-diagram__lake { fill: var(--gr-sky); }
+.mg-diagram__lake--best { fill: var(--warm); }
+.mg-diagram__drive {
+  fill: none;
+  stroke: rgba(10, 37, 50, 0.38);
+  stroke-width: 1.6;
+  stroke-dasharray: 3 4;
+  stroke-linecap: round;
+}
+.mg-route {
+  fill: none;
+  stroke: var(--warm-deep);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+.mg-diagram__start { fill: var(--gr-ice); }
+.mg-diagram__stop { fill: #fff; stroke: var(--gr-ice); stroke-width: 1.6; }
+.mg-diagram__home { fill: var(--gr-ice); }
+
+.gr-motion .mg-route { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s var(--gr-ease) 0.35s; }
+.gr-motion .mg-diagram.is-visible .mg-route { stroke-dashoffset: 0; }
+
+.mg-trip__body { padding: 1.75rem 0.25rem 0; }
+.mg-trip__title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--gr-ice);
+}
+.mg-trip__quote {
+  margin-top: 0.75rem;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: var(--warm-deep);
+}
+.mg-trip__text { max-width: 34rem; margin-top: 0.75rem; line-height: 1.7; color: var(--gr-soft); }
+
+.mg-trips__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+}
+.mg-trips__foot p { max-width: 34rem; line-height: 1.6; color: var(--gr-soft); }
+
+@media (min-width: 60rem) {
+  .mg-trips__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(3rem, 6vw, 6rem);
+    align-items: start;
+  }
+  /* the second trip sits a little lower: two stops on a line, not a grid */
+  .mg-trip:nth-child(2) { margin-top: 6rem; }
+  .mg-diagram { margin-inline: 1.5rem; }
+}
+
+/* --------------------------------------------------------------------------
+   3. Guided trips by destination
+   -------------------------------------------------------------------------- */
+.mg-dest__list { margin-top: clamp(2.5rem, 6vw, 4rem); }
+
+.mg-dest__row {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+  padding-block: 2.25rem 2.5rem;
+}
+/* the swept ice-track line instead of a straight rule between the rows */
+.mg-dest__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1.2rem;
+  overflow: visible;
+}
+.mg-dest__line path {
+  fill: none;
+  stroke: rgba(10, 37, 50, 0.22);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.mg-dest__place { display: flex; flex-direction: column; gap: 0.35rem; padding-top: 0.5rem; }
+.mg-dest__name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 8vw, 4.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  color: var(--gr-ice);
+  text-wrap: balance;
+}
+.mg-dest__country { font-weight: 600; color: var(--warm-deep); }
+
+.mg-dest__photo { aspect-ratio: 3 / 2; border-radius: 1.25rem; }
+
+.mg-dest__title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--gr-ice);
+}
+/* the whole row is one link: the title link stretches over it */
+.mg-dest__title a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.mg-dest__title a:focus-visible { outline: none; }
+.mg-dest__row:has(a:focus-visible) {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: 1rem;
+}
+.mg-dest__text { max-width: 34rem; margin-top: 0.6rem; line-height: 1.7; color: var(--gr-soft); }
+.mg-dest__go {
+  display: inline-block;
+  margin-top: 1.1rem;
+  font-weight: 600;
+  color: var(--warm-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
+@media (hover: hover) {
+  .mg-dest__photo img { transition: transform 0.6s var(--gr-ease); }
+  .mg-dest__row:hover .mg-dest__photo img { transform: scale(1.04); }
+  .mg-dest__row:hover .mg-dest__go { text-decoration-thickness: 2px; }
+}
+
+@media (min-width: 60rem) {
+  .mg-dest__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) 17rem;
+    grid-template-areas: "place body photo";
+    column-gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+    padding-block: 2.75rem 3rem;
+  }
+  .mg-dest__place { grid-area: place; }
+  .mg-dest__body { grid-area: body; padding-top: 0.75rem; }
+  .mg-dest__photo { grid-area: photo; aspect-ratio: 4 / 3; }
+}
+
+/* --------------------------------------------------------------------------
+   4. Other trips with a guide
+   -------------------------------------------------------------------------- */
+.page-metgids .mg-more { background: var(--gr-sky); }
+.mg-more__grid { display: grid; gap: 2.25rem; margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+.mg-more__item h3 {
+  position: relative;
+  padding-left: 1.6rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  color: var(--gr-ice);
+}
+/* a small frozen lake as the marker, like the lists on the guided trips */
+.mg-more__item h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 0.95rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--warm);
+}
+.mg-more__item p { max-width: 30rem; margin-top: 0.6rem; line-height: 1.65; color: var(--gr-soft); }
+.mg-more__links { display: flex; flex-wrap: wrap; column-gap: 1.25rem; }
+.mg-more__links .gr-link { margin-top: 0; }
+.mg-more__foot { margin-top: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.6; color: var(--gr-soft); }
+
+@media (min-width: 60rem) {
+  .mg-more__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(2rem, 4vw, 3.5rem); }
+}
+
+/* --------------------------------------------------------------------------
+   5. Good to know
+   -------------------------------------------------------------------------- */
+.mg-know__grid { display: grid; gap: 2.75rem; }
+.mg-know__photo { aspect-ratio: 3 / 2; border-radius: 1.5rem; }
+.mg-know__list { display: grid; gap: 1.4rem; margin-top: 1.75rem; }
+.mg-know__list li {
+  position: relative;
+  max-width: 36rem;
+  padding-left: 2rem;
+  line-height: 1.7;
+  color: var(--gr-soft);
+}
+.mg-know__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.95rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--warm);
+}
+.mg-know__list strong { color: var(--gr-ice); font-weight: 600; }
+.mg-know__more { margin-top: 1.75rem; line-height: 1.6; color: var(--gr-soft); }
+
+@media (min-width: 60rem) {
+  .mg-know__grid {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    column-gap: clamp(3rem, 7vw, 7rem);
+    align-items: center;
+  }
+  /* square, so the sunny sky and the skaters fill the frame instead of the snow */
+  .mg-know__photo { aspect-ratio: 1 / 1; }
+  .mg-know__photo img { object-position: 50% 30%; }
+}
+
+/* --------------------------------------------------------------------------
+   6. Request: three routes on a white panel (instead of a form)
+   -------------------------------------------------------------------------- */
+.mg-ask {
+  display: grid;
+  padding: 0.5rem 1.25rem;
+  border-radius: 1.5rem;
+  background: #fff;
+  color: var(--ink);
+  --focus-ring: var(--warm-deep);
+}
+.mg-ask__item { padding-block: 1.5rem; }
+.mg-ask__item + .mg-ask__item { border-top: 1px solid var(--gr-line); }
+.mg-ask__item h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.25;
+  color: var(--gr-ice);
+}
+.mg-ask__item p { margin-top: 0.5rem; line-height: 1.6; color: var(--gr-soft); }
+.mg-ask__item .btn { margin-top: 1rem; }
+.mg-ask__links { display: flex; flex-wrap: wrap; column-gap: 1.25rem; margin-top: 0.25rem; }
+.mg-ask__links .gr-link { margin-top: 0; }
+
+@media (min-width: 40rem) {
+  .mg-ask { padding: 0.75rem 2rem; }
+}
+@media (min-width: 60rem) {
+  .mg-ask { padding: 1rem 2.25rem; }
+}
