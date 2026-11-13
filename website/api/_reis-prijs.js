@@ -82,6 +82,27 @@ function alsTekst(datum) {
 function plusDagen(datum, aantal) {
   return new Date(datum.getTime() + aantal * 86400000);
 }
+/* Trip days (arrival up to and including departure) that fall on a day
+   without guiding (begeleiding.nietOp, van and tot both inclusive). Each
+   trip day counts once, even when two periods overlap. Must stay identical
+   to dagenZonderBegeleiding() in js/main.js. */
+function dagenZonderBegeleiding(begeleiding, van, dagen) {
+  var lijst = begeleiding && Array.isArray(begeleiding.nietOp) ? begeleiding.nietOp : [];
+  var blokken = [];
+  lijst.forEach(function (blok) {
+    var begin = alsDatum(blok && blok.van);
+    var eind = alsDatum(blok && blok.tot);
+    if (begin && eind && begin <= eind) blokken.push({ van: begin, tot: eind });
+  });
+  var aantal = 0;
+  for (var i = 0; i < dagen; i++) {
+    var dag = plusDagen(van, i);
+    for (var b = 0; b < blokken.length; b++) {
+      if (dag >= blokken[b].van && dag <= blokken[b].tot) { aantal++; break; }
+    }
+  }
+  return aantal;
+}
 function dagenTussen(van, tot) {
   return Math.round((tot - van) / 86400000);
 }
@@ -340,6 +361,10 @@ function berekenReis(keuze) {
       return { fout: "Begeleiding kan niet in die periode." };
     }
     if (begeleidingDagen > dagen) return { fout: "Zoveel dagen begeleiding passen niet in de reis." };
+    // Days without guiding (nietOp) inside the trip lower the maximum.
+    if (begeleidingDagen > dagen - dagenZonderBegeleiding(begeleiding, van, dagen)) {
+      return { fout: "Op een deel van die dagen is er geen begeleiding." };
+    }
     var begOpbouw = Array.isArray(begeleiding.opbouwPerPersoon) ? begeleiding.opbouwPerPersoon : [];
     var begPerDag = begeleiding.prijsPerDag;
     for (var i = 1; i < personen; i++) {

@@ -72,6 +72,10 @@
       "perPersoon": false,
       "van": "2027-01-10",
       "tot": "2027-02-20",
+      "//nietOp": "Dagen waarop er geen begeleiding is (van en tot zijn hier allebei een dag, tot en met). Loopt een reis over zo'n dag, dan kun je zoveel dagen minder begeleiding kiezen. Zelfde lijst in orsa-prijzen.json. Weer vrij? Haal de regel weg. Een extra periode: {\"van\": \"2027-02-01\", \"tot\": \"2027-02-02\"}.",
+      "nietOp": [
+        {"van": "2027-01-16", "tot": "2027-01-18"}
+      ],
       "//inbegrepen": "Wat er bij begeleiding hoort. Deze regels komen klein onder de optie te staan in het aanvraagformulier.",
       "inbegrepen": [
         "kampvuurlunch",
@@ -92,9 +96,10 @@
     }
   },
 
-  "//bezet": "Periodes waarin geen gewone aankomst mogelijk is. van is de eerste nacht die dicht is, tot de eerste nacht die weer kan. In februari en begin maart is er een groot evenement in Falun, dus daar valt niets normaals te boeken. De nacht van 13 februari is ook dicht, zodat 13 februari de laatste vertrekdag is (vertrekken op 14 februari kan niet). Wil je die weken toch open zetten, haal dan de tweede regel hieronder weg. Het label (wat) staat per taal, zodat de Engelse en andere versies geen Nederlands tonen; een losse regel mag ook, die verschijnt dan in alle talen. Met vanafPersonen geldt een regel alleen voor groepen van dat aantal personen of meer; kleinere groepen kunnen dan gewoon boeken. De nachten van 11 en 12 februari zijn zo alleen nog vrij voor 1 of 2 personen, want dan is er alleen nog 1 tweepersoonshuisje. Is dat huisje geboekt, haal dan vanafPersonen weg, dan zijn die nachten voor iedereen dicht.",
+  "//bezet": "Periodes waarin geen gewone aankomst mogelijk is. van is de eerste nacht die dicht is, tot de eerste nacht die weer kan. Op 24 december en 6, 7 en 8 januari is bij het huisjespark geen aankomst mogelijk, en een verblijf dwars door 6-8 januari kon ook niet (gecontroleerd door Joey op 13 november 2026, voor 1 huisje met 4 personen en voor 2 huisjes met 8 personen). Daarom zijn die nachten dicht. In februari en begin maart is er een groot evenement in Falun, dus daar valt niets normaals te boeken. De nacht van 13 februari is ook dicht, zodat 13 februari de laatste vertrekdag is (vertrekken op 14 februari kan niet). Wil je die weken toch open zetten, haal dan de tweede regel hieronder weg. Het label (wat) staat per taal, zodat de Engelse en andere versies geen Nederlands tonen; een losse regel mag ook, die verschijnt dan in alle talen. Met vanafPersonen geldt een regel alleen voor groepen van dat aantal personen of meer; kleinere groepen kunnen dan gewoon boeken. De nachten van 11 en 12 februari zijn zo alleen nog vrij voor 1 of 2 personen, want dan is er alleen nog 1 tweepersoonshuisje. Is dat huisje geboekt, haal dan vanafPersonen weg, dan zijn die nachten voor iedereen dicht.",
   "bezet": [
-    {"van": "2027-01-07", "tot": "2027-01-09", "wat": {"nl": "Geen aankomst mogelijk", "en": "No arrival possible", "de": "Keine Anreise möglich", "sv": "Ingen ankomst möjlig", "no": "Ingen ankomst mulig", "fi": "Saapuminen ei mahdollista"}},
+    {"van": "2026-12-24", "tot": "2026-12-25", "wat": {"nl": "Geen aankomst mogelijk", "en": "No arrival possible", "de": "Keine Anreise möglich", "sv": "Ingen ankomst möjlig", "no": "Ingen ankomst mulig", "fi": "Saapuminen ei mahdollista"}},
+    {"van": "2027-01-06", "tot": "2027-01-09", "wat": {"nl": "Geen aankomst mogelijk", "en": "No arrival possible", "de": "Keine Anreise möglich", "sv": "Ingen ankomst möjlig", "no": "Ingen ankomst mulig", "fi": "Saapuminen ei mahdollista"}},
     {"van": "2027-02-11", "tot": "2027-02-13", "vanafPersonen": 3, "wat": {"nl": "Alleen voor 1 of 2 personen", "en": "Only for 1 or 2 people", "de": "Nur für 1 oder 2 Personen", "sv": "Endast för 1 eller 2 personer", "no": "Kun for 1 eller 2 personer", "fi": "Vain 1 tai 2 hengelle"}},
     {"van": "2027-02-13", "tot": "2027-03-08", "wat": {"nl": "Niet beschikbaar", "en": "Not available", "de": "Nicht verfügbar", "sv": "Inte tillgänglig", "no": "Ikke tilgjengelig", "fi": "Ei saatavilla"}}
   ]

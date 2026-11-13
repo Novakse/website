@@ -761,6 +761,14 @@
   var begeleidingPerDag = begeleiding && typeof begeleiding.prijsPerDag === "number" ? begeleiding.prijsPerDag : null;
   var begeleidingOpbouw = begeleiding && Array.isArray(begeleiding.opbouwPerPersoon) ? begeleiding.opbouwPerPersoon : [];
   var begeleidingPerPersoon = !begeleiding || begeleiding.perPersoon !== false;
+  // Days without guiding (van and tot both inclusive); unreadable lines are skipped.
+  var begeleidingNietOp = (begeleiding && Array.isArray(begeleiding.nietOp) ? begeleiding.nietOp : [])
+    .map(function (blok) {
+      var van = alsDatum(blok && blok.van);
+      var tot = alsDatum(blok && blok.tot);
+      return van && tot && van <= tot ? { van: van, tot: tot } : null;
+    })
+    .filter(Boolean);
 
   /* The label of a booked period may be one line or a block per language
      ({"nl": ..., "en": ...}), as in the other price files. A missing
@@ -976,12 +984,37 @@
     return totaal;
   }
 
-  function begeleidingKan(datum, dagen) {
+  // The whole trip lies inside the guiding window (van/tot).
+  function begeleidingInVenster(datum, dagen) {
     if (!datum || !dagen) return false;
     if (!begeleiding || begeleidingPerDag === null) return false;
     if (!begeleidingVan || !begeleidingTot) return false;
     var vertrek = plusDagen(datum, nachtenVan(dagen));
     return datum >= begeleidingVan && vertrek <= begeleidingTot;
+  }
+
+  /* Days without guiding (begeleiding.nietOp, van and tot both inclusive)
+     that fall inside a trip. Each trip day counts once. Must stay identical
+     to dagenZonderBegeleiding() in api/_falun-prijs.js. */
+  function zonderBegeleidingIn(datum, dagen) {
+    var uit = [];
+    for (var i = 0; i < dagen; i++) {
+      var dag = plusDagen(datum, i);
+      for (var b = 0; b < begeleidingNietOp.length; b++) {
+        if (dag >= begeleidingNietOp[b].van && dag <= begeleidingNietOp[b].tot) { uit.push(dag); break; }
+      }
+    }
+    return uit;
+  }
+
+  // Most guiding days that can be chosen for this trip.
+  function maxBegeleiding(datum, dagen) {
+    if (!begeleidingInVenster(datum, dagen)) return 0;
+    return Math.max(0, dagen - zonderBegeleidingIn(datum, dagen).length);
+  }
+
+  function begeleidingKan(datum, dagen) {
+    return maxBegeleiding(datum, dagen) > 0;
   }
 
   /* Het bedrag dat de bezoeker uiteindelijk betaalt. Dezelfde berekening
@@ -1377,8 +1410,7 @@
       // clamped to the new trip length (or cleared when guiding is not
       // possible in that period).
       if (periodeKlaar()) {
-        if (!begeleidingKan(aankomst, duur)) begeleidingDagen = 0;
-        else if (begeleidingDagen > duur) begeleidingDagen = duur;
+        begeleidingDagen = Math.min(begeleidingDagen, maxBegeleiding(aankomst, duur));
       }
       tekenAlles();
       // Keep keyboard focus on the day that was just clicked.
@@ -1461,10 +1493,12 @@
         "</p>";
       return;
     }
+    var maxDagen = maxBegeleiding(aankomst, duur);
 
     /* A stepper instead of one button per day: minus, the number of guiding
-       days with its price, plus. Range 0 to the trip length; the click
-       handler in tekenDag() clamps the value when the trip gets shorter. */
+       days with its price, plus. Range 0 to the trip length minus the days
+       without guiding (nietOp); the click handler in tekenDag() clamps the
+       value when the trip changes. */
     begeleidingBox.innerHTML =
       '<p class="falun-cal__legend" id="falunBegeleidingLabel">' + T.guidingLegend + "</p>" +
       '<div class="falun-cal__stepper" role="group" aria-labelledby="falunBegeleidingLabel">' +
@@ -1488,13 +1522,13 @@
       waarde.textContent = begeleidingDagen === 0 ? T.guidingNone : T.guidingDays(begeleidingDagen);
       prijs.textContent = begeleidingDagen === 0 ? "" : "+ " + T.perPersonPrice(getal(begeleidingKosten(begeleidingDagen, personen)));
       minder.disabled = begeleidingDagen <= 0;
-      meer.disabled = begeleidingDagen >= duur;
+      meer.disabled = begeleidingDagen >= maxDagen;
     }
     zetWaarde();
 
     [minder, meer].forEach(function (knop) {
       knop.addEventListener("click", function () {
-        var n = Math.min(duur, Math.max(0, begeleidingDagen + parseInt(knop.getAttribute("data-begeleiding-stap"), 10)));
+        var n = Math.min(maxDagen, Math.max(0, begeleidingDagen + parseInt(knop.getAttribute("data-begeleiding-stap"), 10)));
         if (n === begeleidingDagen) return;
         begeleidingDagen = n;
         zetWaarde();

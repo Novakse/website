@@ -55,7 +55,11 @@
     "prijsPerDag": 175,
     "opbouwPerPersoon": [50, 50, 50, 40],
     "van": "2027-01-10",
-    "tot": "2027-02-20"
+    "tot": "2027-02-20",
+    "//nietOp": "Dagen waarop er geen begeleiding is (van en tot zijn hier allebei een dag, tot en met). Loopt een reis over zo'n dag, dan kun je zoveel dagen minder begeleiding kiezen. Zelfde lijst in falun-prijzen.json. Weer vrij? Haal de regel weg.",
+    "nietOp": [
+      {"van": "2027-01-16", "tot": "2027-01-18"}
+    ]
   },
 
   "//bezet": "Periodes die niet te kiezen zijn. Zo zet je er een dicht: {\"van\": \"2027-01-16\", \"tot\": \"2027-01-23\", \"wat\": \"Niet beschikbaar\"}. Achter elke regel een komma, behalve achter de laatste. Het label mag ook een blokje per taal zijn, zoals in data/finland-prijzen.json. Er staat nu niets dicht.",

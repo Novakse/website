@@ -1593,6 +1593,14 @@
       ? data.begeleiding : null;
     var begeleidingVan = begeleiding ? alsDatum(begeleiding.van) : null;
     var begeleidingTot = begeleiding ? alsDatum(begeleiding.tot) : null;
+    // Days without guiding (van and tot both inclusive); unreadable lines are skipped.
+    var begeleidingNietOp = (begeleiding && Array.isArray(begeleiding.nietOp) ? begeleiding.nietOp : [])
+      .map(function (blok) {
+        var van = alsDatum(blok && blok.van);
+        var tot = alsDatum(blok && blok.tot);
+        return van && tot && van <= tot ? { van: van, tot: tot } : null;
+      })
+      .filter(Boolean);
     var begeleidingDagen = 0;
     function tekstInTaal(waarde) {
       if (waarde && typeof waarde === "object") return waarde[LANG] || waarde.nl || "";
@@ -1781,15 +1789,39 @@
     }
 
     // Guiding needs a complete period that lies inside its window (if any).
-    function begeleidingKan() {
+    function begeleidingInVenster() {
       if (!begeleiding || !keuzeVan || !keuzeTot) return false;
       if (begeleidingVan && keuzeVan < begeleidingVan) return false;
       if (begeleidingTot && keuzeTot > begeleidingTot) return false;
       return true;
     }
 
+    /* Days without guiding (begeleiding.nietOp) that fall inside the chosen
+       trip. Each trip day counts once. Must stay identical to
+       dagenZonderBegeleiding() in api/_reis-prijs.js. */
+    function zonderBegeleidingIn() {
+      var uit = [];
+      for (var i = 0; i < reisDagen(); i++) {
+        var dag = new Date(keuzeVan.getFullYear(), keuzeVan.getMonth(), keuzeVan.getDate() + i);
+        for (var b = 0; b < begeleidingNietOp.length; b++) {
+          if (dag >= begeleidingNietOp[b].van && dag <= begeleidingNietOp[b].tot) { uit.push(dag); break; }
+        }
+      }
+      return uit;
+    }
+
+    // Most guiding days that can be chosen for the chosen trip.
+    function maxBegeleiding() {
+      if (!begeleidingInVenster()) return 0;
+      return Math.max(0, reisDagen() - zonderBegeleidingIn().length);
+    }
+
+    function begeleidingKan() {
+      return maxBegeleiding() > 0;
+    }
+
     function gekozenBegeleiding() {
-      return begeleidingKan() ? Math.min(begeleidingDagen, reisDagen()) : 0;
+      return Math.min(begeleidingDagen, maxBegeleiding());
     }
 
     // Guiding for the whole group, in whole euros: per day prijsPerDag for
@@ -2262,7 +2294,7 @@
           [minder, meer].forEach(function (knop) {
             knop.addEventListener("click", function () {
               var stap = parseInt(knop.getAttribute("data-begeleiding-stap"), 10);
-              var n = Math.min(reisDagen(), Math.max(0, gekozenBegeleiding() + stap));
+              var n = Math.min(maxBegeleiding(), Math.max(0, gekozenBegeleiding() + stap));
               if (n === gekozenBegeleiding()) return;
               begeleidingDagen = n;
               toonBalk();
@@ -2281,7 +2313,7 @@
         begeleidingBox.querySelector(".falun-cal__stepper-price").textContent =
           dagen === 0 ? "" : "+ " + T.perPersonPrice(getal(begeleidingKosten(dagen, reizigers())));
         begeleidingBox.querySelector('[data-begeleiding-stap="-1"]').disabled = dagen <= 0;
-        begeleidingBox.querySelector('[data-begeleiding-stap="1"]').disabled = dagen >= reisDagen();
+        begeleidingBox.querySelector('[data-begeleiding-stap="1"]').disabled = dagen >= maxBegeleiding();
       }
     }
 

@@ -55,6 +55,28 @@ function plusDagen(datum, aantal) {
   return new Date(datum.getTime() + aantal * 86400000);
 }
 
+/* Trip days (arrival up to and including departure) that fall on a day
+   without guiding (begeleiding.nietOp, van and tot both inclusive). Each
+   trip day counts once, even when two periods overlap. Must stay identical
+   to dagenZonderBegeleiding() in js/falun-kalender.js. */
+function dagenZonderBegeleiding(beg, aankomst, dagen) {
+  var lijst = beg && Array.isArray(beg.nietOp) ? beg.nietOp : [];
+  var blokken = [];
+  lijst.forEach(function (blok) {
+    var van = alsDatum(blok && blok.van);
+    var tot = alsDatum(blok && blok.tot);
+    if (van && tot && van <= tot) blokken.push({ van: van, tot: tot });
+  });
+  var aantal = 0;
+  for (var i = 0; i < dagen; i++) {
+    var dag = plusDagen(aankomst, i);
+    for (var b = 0; b < blokken.length; b++) {
+      if (dag >= blokken[b].van && dag <= blokken[b].tot) { aantal++; break; }
+    }
+  }
+  return aantal;
+}
+
 /* A booked period counts for every group, unless it has vanafPersonen: then
    it only counts for groups of at least that many people (for example only
    one small cabin left, so 1 or 2 people can still book). Must stay identical
@@ -235,6 +257,10 @@ function berekenFalun(keuze) {
     // persoon een bedrag uit opbouwPerPersoon (de lijst loopt af; de laatste
     // waarde blijft gelden voor elke persoon daarna).
     if (begDagen > dagen) return { fout: "Zoveel dagen begeleiding passen niet in de reis." };
+    // Days without guiding (nietOp) inside the trip lower the maximum.
+    if (begDagen > dagen - dagenZonderBegeleiding(beg, aankomst, dagen)) {
+      return { fout: "Op een deel van die dagen is er geen begeleiding." };
+    }
     var begOpbouw = Array.isArray(beg.opbouwPerPersoon) ? beg.opbouwPerPersoon : [];
     var begPerDag = beg.prijsPerDag;
     for (var i = 1; i < personen; i++) {
