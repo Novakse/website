@@ -17,7 +17,9 @@
       Wellness & schaatsen, bijvoorbeeld
       uitchecken.html?reis=lulea&van=2027-01-10&tot=2027-01-14&personen=2
       (met &vlucht=zelf als de bezoeker zijn vlucht zelf regelt, en bij
-      Finland &materiaal=ja voor gehuurd schaatsmateriaal).
+      Finland &materiaal=ja voor gehuurd schaatsmateriaal, en bij Orsa,
+      Wellness en Falun &elektrisch=ja voor een volledig elektrische
+      huurauto: een wens zonder meerprijs).
       Ook hier staat geen bedrag in de link: dat komt van /api/reis-prijs, en
       /api/create-payment rekent het bij het betalen opnieuw uit.
 
@@ -113,6 +115,8 @@
       lineFlight: "Vlucht zelf geregeld",
       lineCar: "Vervoer zelf geregeld",
       lineGear: "Materiaal gehuurd",
+      lineRentalCar: "Huurauto",
+      electricValue: "Volledig elektrisch",
       yes: "Ja",
       minusPerPerson: function (bedrag) { return "- " + bedrag + " p.p."; },
       perAdult: "Per volwassene",
@@ -191,6 +195,8 @@
       lineFlight: "Own flight",
       lineCar: "Own transport",
       lineGear: "Equipment rented",
+      lineRentalCar: "Rental car",
+      electricValue: "Fully electric",
       yes: "Yes",
       minusPerPerson: function (bedrag) { return "- " + bedrag + " per person"; },
       perAdult: "Per adult",
@@ -231,6 +237,7 @@
         if (d.eigenVlucht) tekst += ", own flight";
         if (d.eigenVervoer) tekst += ", own transport";
         if (d.eigenVerzekering) tekst += ", rental car insurance";
+        if (d.elektrisch) tekst += ", fully electric rental car";
         if (d.begeleiding > 0) tekst += ", with " + d.begeleiding + (d.begeleiding === 1 ? " day" : " days") + " of guiding";
         tekst += ", " + (delen.length ? "adult " : "") + d.perPersoon + " per person";
         if (d.kinderen > 0 && d.perKind) tekst += ", child " + d.perKind + " per person";
@@ -282,6 +289,8 @@
       lineFlight: "Flug selbst gebucht",
       lineCar: "Transport selbst organisiert",
       lineGear: "Ausrüstung gemietet",
+      lineRentalCar: "Mietwagen",
+      electricValue: "Vollelektrisch",
       yes: "Ja",
       minusPerPerson: function (bedrag) { return "- " + bedrag + " pro Person"; },
       perAdult: "Pro Erwachsenen",
@@ -322,6 +331,7 @@
         if (d.eigenVlucht) tekst += ", Flug selbst gebucht";
         if (d.eigenVervoer) tekst += ", Transport selbst organisiert";
         if (d.eigenVerzekering) tekst += ", Mietwagenversicherung";
+        if (d.elektrisch) tekst += ", vollelektrischer Mietwagen";
         if (d.begeleiding > 0) tekst += ", mit " + d.begeleiding + (d.begeleiding === 1 ? " Tag" : " Tagen") + " Begleitung";
         tekst += ", " + (delen.length ? "Erwachsene " : "") + d.perPersoon + " pro Person";
         if (d.kinderen > 0 && d.perKind) tekst += ", Kind " + d.perKind + " pro Person";
@@ -373,6 +383,8 @@
       lineFlight: "Eget flyg",
       lineCar: "Egen transport",
       lineGear: "Utrustning hyrd",
+      lineRentalCar: "Hyrbil",
+      electricValue: "Helelektrisk",
       yes: "Ja",
       minusPerPerson: function (bedrag) { return "- " + bedrag + " per person"; },
       perAdult: "Per vuxen",
@@ -413,6 +425,7 @@
         if (d.eigenVlucht) tekst += ", eget flyg";
         if (d.eigenVervoer) tekst += ", egen transport";
         if (d.eigenVerzekering) tekst += ", hyrbilsförsäkring";
+        if (d.elektrisch) tekst += ", helelektrisk hyrbil";
         if (d.begeleiding > 0) tekst += ", med " + d.begeleiding + (d.begeleiding === 1 ? " dags" : " dagars") + " guidning";
         tekst += ", " + (delen.length ? "vuxen " : "") + d.perPersoon + " per person";
         if (d.kinderen > 0 && d.perKind) tekst += ", barn " + d.perKind + " per person";
@@ -464,6 +477,8 @@
       lineFlight: "Eget fly",
       lineCar: "Egen transport",
       lineGear: "Utstyr leid",
+      lineRentalCar: "Leiebil",
+      electricValue: "Helelektrisk",
       yes: "Ja",
       minusPerPerson: function (bedrag) { return "- " + bedrag + " per person"; },
       perAdult: "Per voksen",
@@ -504,6 +519,7 @@
         if (d.eigenVlucht) tekst += ", eget fly";
         if (d.eigenVervoer) tekst += ", egen transport";
         if (d.eigenVerzekering) tekst += ", forsikring leiebil";
+        if (d.elektrisch) tekst += ", helelektrisk leiebil";
         if (d.begeleiding > 0) tekst += ", med " + d.begeleiding + (d.begeleiding === 1 ? " dag" : " dager") + " veiledning";
         tekst += ", " + (delen.length ? "voksen " : "") + d.perPersoon + " per person";
         if (d.kinderen > 0 && d.perKind) tekst += ", barn " + d.perKind + " per person";
@@ -555,6 +571,8 @@
       lineFlight: "Oma lento",
       lineCar: "Oma kuljetus",
       lineGear: "Varusteet vuokrattu",
+      lineRentalCar: "Vuokra-auto",
+      electricValue: "Täyssähköinen",
       yes: "Kyllä",
       minusPerPerson: function (bedrag) { return "- " + bedrag + " / henkilö"; },
       perAdult: "Hinta / aikuinen",
@@ -595,6 +613,7 @@
         if (d.eigenVlucht) tekst += ", oma lento";
         if (d.eigenVervoer) tekst += ", oma kuljetus";
         if (d.eigenVerzekering) tekst += ", vuokra-auton vakuutus";
+        if (d.elektrisch) tekst += ", täyssähköinen vuokra-auto";
         if (d.begeleiding > 0) tekst += ", opastus " + d.begeleiding + (d.begeleiding === 1 ? " päivä" : " päivää");
         tekst += ", " + (delen.length ? "aikuinen " : "") + d.perPersoon + " / henkilö";
         if (d.kinderen > 0 && d.perKind) tekst += ", lapsi " + d.perKind + " / henkilö";
@@ -657,6 +676,8 @@
       vlucht: params.get("vlucht") || "",
       auto: params.get("auto") || "",
       verzekering: params.get("verzekering") || "",
+      // Fully electric rental car: a wish without surcharge; only "ja" counts.
+      elektrisch: params.get("elektrisch") === "ja" ? "ja" : "",
       begeleiding: params.get("begeleiding") || ""
     };
   }
@@ -721,7 +742,10 @@
       // Own transport from the calendar checkbox; only "zelf" counts.
       auto: !reisInfo.zonderEigenAuto && params.get("auto") === "zelf" ? "zelf" : "",
       // Gear rental from the calendar checkbox (Finland); only "ja" counts.
-      materiaal: reisInfo.materiaal && params.get("materiaal") === "ja" ? "ja" : ""
+      materiaal: reisInfo.materiaal && params.get("materiaal") === "ja" ? "ja" : "",
+      // Fully electric rental car (a wish without surcharge); only "ja" counts
+      // and the server decides whether it applies to this trip.
+      elektrisch: params.get("elektrisch") === "ja" ? "ja" : ""
     };
   }
 
@@ -1293,6 +1317,8 @@
       eigenVlucht: falunKeuze.vlucht === "zelf",
       eigenVervoer: falunKeuze.auto === "zelf",
       eigenVerzekering: falunKeuze.verzekering === "ja" && falunKeuze.auto !== "zelf",
+      // Only when the server confirmed it (the Dutch description has it too).
+      elektrisch: data.elektrischeAuto === true,
       begeleiding: parseInt(falunKeuze.begeleiding, 10) || 0,
       perPersoon: prijs(data.perPersoon),
       perKind: prijs(data.perKind),
@@ -1399,6 +1425,7 @@
       if (reisKeuze.vlucht) vraag.set("vlucht", "zelf");
       if (reisKeuze.auto) vraag.set("auto", "zelf");
       if (reisKeuze.materiaal) vraag.set("materiaal", "ja");
+      if (reisKeuze.elektrisch) vraag.set("elektrisch", "ja");
 
       fetch("/api/reis-prijs?" + vraag.toString())
         .then(function (respons) {
@@ -1460,6 +1487,10 @@
             var materiaalBedrag = typeof data.materiaalBedrag === "number" && isFinite(data.materiaalBedrag) && data.materiaalBedrag > 0
               ? " (" + euro(Math.round(data.materiaalBedrag * 100)) + ")" : "";
             regels.push([T.lineGear, T.yes + materiaalBedrag]);
+          }
+          // Fully electric rental car, as the server confirmed it (no amount).
+          if (data.elektrischeAuto === true) {
+            regels.push([T.lineRentalCar, T.electricValue]);
           }
           if (typeof data.perPersoon === "number" && isFinite(data.perPersoon) && data.perPersoon > 0) {
             var metKinderen = kinderenKeuze.kinderen + kinderenKeuze.baby > 0;
@@ -1774,6 +1805,7 @@
         vlucht: falunKeuze.vlucht,
         auto: falunKeuze.auto,
         verzekering: falunKeuze.verzekering,
+        elektrisch: falunKeuze.elektrisch,
         begeleiding: falunKeuze.begeleiding
       };
     } else if (reisKeuze) {
@@ -1787,7 +1819,8 @@
         begeleiding: reisKeuze.begeleiding,
         vlucht: reisKeuze.vlucht,
         auto: reisKeuze.auto,
-        materiaal: reisKeuze.materiaal
+        materiaal: reisKeuze.materiaal,
+        elektrisch: reisKeuze.elektrisch
       };
     } else if (groepKeuze) {
       // Only the trip and the head count: the server sets the amount.

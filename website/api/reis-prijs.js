@@ -11,7 +11,8 @@
         the total of all ages. The answer holds perPersoon, perKind and perBaby.
         Optional vlucht=zelf: the visitor arranges their own flight.
         Optional auto=zelf: the visitor arranges their own transport.
-        Optional materiaal=ja: gear rental, Finland only.)
+        Optional materiaal=ja: gear rental, Finland only.
+        Optional elektrisch=ja: fully electric rental car, no surcharge.)
    POST /api/reis-prijs with the same fields as a JSON body. */
 
 var berekenReis = require("./_reis-prijs.js").berekenReis;
@@ -67,7 +68,8 @@ module.exports = function handler(req, res) {
     begeleiding: bron.begeleiding,
     vlucht: bron.vlucht,
     auto: bron.auto,
-    materiaal: bron.materiaal
+    materiaal: bron.materiaal,
+    elektrisch: bron.elektrisch
   };
 
   var uitkomst = berekenReis(keuze);

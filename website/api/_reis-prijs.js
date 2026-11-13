@@ -20,12 +20,13 @@
                begeleiding: int,    // guiding days, Orsa only (optional)
                vlucht: "zelf",      // own flight (optional; any other value: flight included)
                auto: "zelf",        // own transport (optional; any other value: car included)
-               materiaal: "ja" }    // gear rental, Finland only (optional; any other value: no gear)
+               materiaal: "ja",     // gear rental, Finland only (optional; any other value: no gear)
+               elektrisch: "ja" }   // fully electric rental car, a wish without surcharge (optional)
      returns { bedrag, perPersoon, perKind, perBaby, nachten, dagen,
                personen, volwassenen, kinderen, baby,
                begeleidingDagen, begeleidingBedrag,
                eigenVlucht, vluchtAftrek, eigenAuto, autoAftrek,
-               materiaalGehuurd, materiaalBedrag, omschrijving }
+               materiaalGehuurd, materiaalBedrag, elektrischeAuto, omschrijving }
      or      { fout: "Dutch message" }
    bedrag is the whole group in whole euros: the price per person of every
    category times its head count, plus the guiding amount (a group amount).
@@ -304,6 +305,13 @@ function berekenReis(keuze) {
   if (eigenAuto && !autoBedragPerDag) return { fout: "Bij deze reis kun je het vervoer niet zelf regelen." };
   var autoAftrek = eigenAuto ? (autoBedragPerDag * dagen) / personen : 0;
 
+  // main.js elektrischGekozen: "Drive fully electric" (opties.elektrischeAuto
+  // in the price file) is a wish without a surcharge, so the price does not
+  // change. It only counts with the rental car included; in any other case
+  // (own transport, a trip without the option) it is ignored, not refused.
+  var elektrischeAuto = keuze.elektrisch === "ja" && !eigenAuto &&
+    Boolean(data.opties && data.opties.elektrischeAuto === true);
+
   // Dividing the car by the head count can leave a fraction of a euro
   // (3 people: 35 / 3 = 11.67); rounded to a whole euro here, same as the
   // final perPersoon in api/_falun-prijs.js, so every price on screen and at
@@ -364,6 +372,7 @@ function berekenReis(keuze) {
     kinderprijs.omschrijvingDeel(aantallen) +
     (eigenVlucht ? ", eigen vlucht" : "") +
     (eigenAuto ? ", eigen vervoer" : "") +
+    (elektrischeAuto ? ", volledig elektrische huurauto" : "") +
     ", " + (aantallen.kinderen + aantallen.baby > 0 ? "volwassene " : "") + euro(perPersoon) + " p.p.";
   if (aantallen.kinderen > 0) omschrijving += ", kind " + euro(prijzen.kind) + " p.p.";
   if (aantallen.baby > 0) omschrijving += ", baby " + euro(prijzen.baby) + " p.p.";
@@ -394,6 +403,7 @@ function berekenReis(keuze) {
     vluchtAftrek: vluchtAftrek,
     eigenAuto: eigenAuto,
     autoAftrek: autoAftrek,
+    elektrischeAuto: elektrischeAuto,
     omschrijving: omschrijving
   };
 }

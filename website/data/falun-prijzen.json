@@ -63,6 +63,8 @@
       "prijsPerDag": 18,
       "maxPersonenPerAuto": 4
     },
+    "//elektrischeAuto": "Vinkje \"Volledig elektrisch rijden\" (alleen als de huurauto erbij zit). Het is een wens zonder meerprijs: de prijs verandert niet, de keuze gaat mee naar de betaalpagina, Stripe en de boekingsmail aan Joey. Zet op false of haal de regel weg om het vinkje niet te tonen.",
+    "elektrischeAuto": true,
     "//begeleiding": "Joey schaatst mee, met kampvuur onderweg, lunch en fika's. De bezoeker kiest zelf voor hoeveel dagen hij begeleiding wil; dat hoeft niet de hele reis te zijn. Per dag kost begeleiding prijsPerDag voor 1 persoon, plus per extra persoon een bedrag uit opbouwPerPersoon: 2e, 3e en 4e persoon elk +50, 5e en elke volgende +40 (laatste waarde van de lijst blijft gelden als vloer). Dus 175 + 50 + 50 + 50 + 40 + 40... Dat dagbedrag geldt voor de hele groep en wordt over de deelnemers verdeeld (perPersoon false). Kan alleen als de hele reis binnen van/tot valt. Zet prijsPerDag op null om begeleiding helemaal weg te laten.",
     "begeleiding": {
       "prijsPerDag": 175,

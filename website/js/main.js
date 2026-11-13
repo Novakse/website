@@ -92,6 +92,9 @@
       carSelf: "Ik regel mijn eigen vervoer",
       carSelfHint: "De huurauto zit anders bij de prijs in. Zonder huurauto heb je ter plaatse de hele reis geen vervoer via ons.",
       lineCar: "Vervoer zelf geregeld",
+      electricCar: "Volledig elektrisch rijden",
+      electricCarHint: "Een volledig elektrische huurauto, zonder meerprijs.",
+      lineElectric: "Volledig elektrische huurauto",
       // Gear rental (Finland): same markup as the own-flight row above.
       gearRental: "Materiaal huren",
       gearRentalHint: "Noorse schaatsen, langlaufski's, sneeuwschoenen en een fatbike, per persoon voor de hele reis. Gebruik van de loipes is dan gratis; toegang tot de schaatsbaan zit al bij de reissom in.",
@@ -171,6 +174,9 @@
       carSelf: "I'll arrange my own transport",
       carSelfHint: "Otherwise the rental car is included in the price. Without it, you have no transport from us on location for the entire trip.",
       lineCar: "Own transport",
+      electricCar: "Drive fully electric",
+      electricCarHint: "A fully electric rental car, at no extra cost.",
+      lineElectric: "Fully electric rental car",
       gearRental: "Rent equipment",
       gearRentalHint: "Nordic skates, cross-country skis, snowshoes and a fatbike, per person for the whole trip. Use of the trails is then free; access to the skating rink is already included in the trip price.",
       lineGear: "Equipment rented",
@@ -249,6 +255,9 @@
       carSelf: "Jag ordnar min egen transport",
       carSelfHint: "Annars ingår hyrbilen i priset. Utan hyrbil har du ingen transport via oss på plats under hela resan.",
       lineCar: "Egen transport",
+      electricCar: "Kör helelektriskt",
+      electricCarHint: "En helelektrisk hyrbil, utan extra kostnad.",
+      lineElectric: "Helelektrisk hyrbil",
       gearRental: "Hyr utrustning",
       gearRentalHint: "Nordiska skridskor, längdskidor, snöskor och en fatbike, per person för hela resan. Längdskidspåren är då gratis att använda; tillträde till skridskobanan ingår redan i priset.",
       lineGear: "Utrustning hyrd",
@@ -327,6 +336,9 @@
       carSelf: "Ich organisiere meinen Transport selbst",
       carSelfHint: "Sonst ist der Mietwagen im Preis enthalten. Ohne Mietwagen hast du vor Ort während der ganzen Reise keinen Transport über uns.",
       lineCar: "Transport selbst organisiert",
+      electricCar: "Vollelektrisch fahren",
+      electricCarHint: "Ein vollelektrischer Mietwagen, ohne Aufpreis.",
+      lineElectric: "Vollelektrischer Mietwagen",
       gearRental: "Ausrüstung mieten",
       gearRentalHint: "Nordic-Schlittschuhe, Langlaufski, Schneeschuhe und ein Fatbike, pro Person für die ganze Reise. Die Loipen sind dann kostenlos; der Zugang zur Eisbahn ist bereits im Reisepreis enthalten.",
       lineGear: "Ausrüstung gemietet",
@@ -397,6 +409,9 @@
       carSelf: "Jeg ordner min egen transport",
       carSelfHint: "Ellers er leiebilen inkludert i prisen. Uten leiebil har du ingen transport via oss på stedet under hele reisen.",
       lineCar: "Egen transport",
+      electricCar: "Kjør helelektrisk",
+      electricCarHint: "En helelektrisk leiebil, uten ekstra kostnad.",
+      lineElectric: "Helelektrisk leiebil",
       gearRental: "Lei utstyr",
       gearRentalHint: "Nordiske skøyter, langrennski, truger og en fatbike, per person for hele turen. Langrennsløypene er da gratis å bruke; adgang til skøytebanen er allerede inkludert i reiseprisen.",
       lineGear: "Utstyr leid",
@@ -467,6 +482,9 @@
       carSelf: "Järjestän kuljetukseni itse",
       carSelfHint: "Muuten vuokra-auto sisältyy hintaan. Ilman vuokra-autoa sinulla ei ole perillä kuljetusta meidän kauttamme koko matkan aikana.",
       lineCar: "Oma kuljetus",
+      electricCar: "Aja täyssähköautolla",
+      electricCarHint: "Täyssähköinen vuokra-auto ilman lisähintaa.",
+      lineElectric: "Täyssähköinen vuokra-auto",
       gearRental: "Vuokraa varusteet",
       gearRentalHint: "Retkiluistimet, murtomaasukset, lumikengät ja fatbike, henkilöä kohden koko matkalle. Hiihtolatujen käyttö on silloin ilmaista; pääsy luistelurataan sisältyy jo matkan hintaan.",
       lineGear: "Varusteet vuokrattu",
@@ -1362,8 +1380,8 @@
     var opBoekpagina = Boolean(opties);
     var adres = new URLSearchParams(window.location.search);
     var vooraf = opBoekpagina
-      ? { van: opties.van, tot: opties.tot, personen: opties.personen, kinderen: opties.kinderen, baby: opties.baby, begeleiding: opties.begeleidingDagen, vlucht: opties.vlucht, auto: opties.auto, materiaal: opties.materiaal }
-      : { van: adres.get("van"), tot: adres.get("tot"), personen: adres.get("personen"), kinderen: adres.get("kinderen"), baby: adres.get("baby"), begeleiding: adres.get("begeleiding"), vlucht: adres.get("vlucht"), auto: adres.get("auto"), materiaal: adres.get("materiaal") };
+      ? { van: opties.van, tot: opties.tot, personen: opties.personen, kinderen: opties.kinderen, baby: opties.baby, begeleiding: opties.begeleidingDagen, vlucht: opties.vlucht, auto: opties.auto, materiaal: opties.materiaal, elektrisch: opties.elektrisch }
+      : { van: adres.get("van"), tot: adres.get("tot"), personen: adres.get("personen"), kinderen: adres.get("kinderen"), baby: adres.get("baby"), begeleiding: adres.get("begeleiding"), vlucht: adres.get("vlucht"), auto: adres.get("auto"), materiaal: adres.get("materiaal"), elektrisch: adres.get("elektrisch") };
 
     var seizoenVan = alsDatum(data.seizoenStart);
     var seizoenTot = alsDatum(data.seizoenEind);
@@ -1471,6 +1489,19 @@
     // 0 without the tick.
     function autoAftrek(dagen) {
       return metAutoKeuze && autoZelf && dagen > 0 ? (autoBedragPerDag * dagen) / Math.max(1, personen) : 0;
+    }
+
+    /* Optional ("opties.elektrischeAuto": true in the price file): tick to
+       drive a fully electric rental car. A wish without a surcharge: the
+       price does not change, the choice goes along to the payment page,
+       Stripe and Joey. Only with the rental car included, so the row is
+       hidden (and unticked) while "own transport" is ticked.
+       api/_reis-prijs.js applies the same rule. */
+    var metElektrischKeuze = afrekenen && Boolean(data.opties && data.opties.elektrischeAuto === true);
+    // A link or the booking page may bring it along ticked: only elektrisch=ja counts.
+    var elektrischGekozen = metElektrischKeuze && vooraf.elektrisch === "ja" && !autoZelf;
+    function elektrischActief() {
+      return metElektrischKeuze && elektrischGekozen && !autoZelf;
     }
 
     /* Optional ("materiaalHuur" in the price file, Finland): tick to rent
@@ -2058,7 +2089,9 @@
     var vluchtVeld = null;
     var autoVeld = null;
     var autoPrijsVeld = null;
-    if (metVluchtKeuze || metAutoKeuze) {
+    var elektrischVeld = null;
+    var elektrischRij = null;
+    if (metVluchtKeuze || metAutoKeuze || metElektrischKeuze) {
       var vluchtId = "calendarOptions" + (++vluchtTeller);
       vluchtBox = document.createElement("div");
       vluchtBox.className = "falun-cal__block calendar__flight";
@@ -2083,6 +2116,16 @@
             '<span class="extra__price"></span>' +
           '</label>';
       }
+      if (metElektrischKeuze) {
+        optieRegels +=
+          '<label class="extra">' +
+            '<input type="checkbox" class="extra__check" data-optie="elektrisch"' + (elektrischGekozen ? ' checked' : '') + ' />' +
+            '<span class="extra__name">' + T.electricCar +
+              '<span class="extra__hint">' + T.electricCarHint + '</span>' +
+            '</span>' +
+            '<span class="extra__price"></span>' +
+          '</label>';
+      }
       vluchtBox.innerHTML =
         '<p class="falun-cal__legend" id="' + vluchtId + '">' + T.optionsLegend + '</p>' +
         '<div class="booking__extras" role="group" aria-labelledby="' + vluchtId + '">' + optieRegels + '</div>';
@@ -2099,6 +2142,16 @@
         autoPrijsVeld = autoVeld.closest(".extra").querySelector(".extra__price");
         autoVeld.addEventListener("change", function () {
           autoZelf = autoVeld.checked;
+          // Without a rental car there is nothing to drive electric.
+          if (autoZelf) elektrischGekozen = false;
+          toonBalk();
+        });
+      }
+      if (metElektrischKeuze) {
+        elektrischVeld = vluchtBox.querySelector('[data-optie="elektrisch"]');
+        elektrischRij = elektrischVeld.closest(".extra");
+        elektrischVeld.addEventListener("change", function () {
+          elektrischGekozen = elektrischVeld.checked;
           toonBalk();
         });
       }
@@ -2116,6 +2169,11 @@
         if (autoVeld.checked !== autoZelf) autoVeld.checked = autoZelf;
         var bedrag = !verborgen && keuzeVan && keuzeTot ? (autoBedragPerDag * reisDagen()) / Math.max(1, personen) : 0;
         autoPrijsVeld.textContent = bedrag ? "- " + euroTekst(Math.round(bedrag)) : "";
+      }
+      if (elektrischVeld) {
+        // .extra has its own display value, so [hidden] alone would not hide it.
+        elektrischRij.style.display = autoZelf ? "none" : "";
+        if (elektrischVeld.checked !== elektrischActief()) elektrischVeld.checked = elektrischActief();
       }
     }
 
@@ -2243,6 +2301,7 @@
         vlucht: vluchtAftrek() ? "zelf" : "",
         auto: autoZelf ? "zelf" : "",
         materiaal: metMateriaalKeuze && materiaalGekozen ? "ja" : "",
+        elektrisch: elektrischActief() ? "ja" : "",
         // The "Book and pay" link is on screen (same test as knopHtml). False
         // for a complete period without a price to pay online, e.g. a group
         // size outside betaalPersonen (wellness: only 2 people).
@@ -2285,6 +2344,7 @@
         if (vluchtAftrek()) params.set("vlucht", "zelf");
         if (autoAftrek(nachten + 1)) params.set("auto", "zelf");
         if (metMateriaalKeuze && materiaalGekozen) params.set("materiaal", "ja");
+        if (elektrischActief()) params.set("elektrisch", "ja");
         return '<a class="btn btn--dark calendar__pay" href="' + mapVoorKalender() +
           (["en", "de", "sv", "no", "fi"].indexOf(LANG) !== -1 ? LANG + "/" : "") + 'uitchecken.html?' +
           params.toString().replace(/&/g, "&amp;") + '">' + T.bookPayBtn + '</a>';
@@ -2321,6 +2381,7 @@
       var vluchtRegel = ""; // own flight ticked: the amount per person that came off
       var autoRegel = ""; // own transport ticked: the amount per person that came off
       var materiaalRegel = ""; // gear rental ticked: the group amount that came on top
+      var elektrischRegel = ""; // fully electric rental car ticked: no amount, just the wish
       // A group size that cannot pay online (betaalPersonen): say why the
       // request button shows instead of the total.
       var betaalNotitie = afrekenen && !magBetalen(personen)
@@ -2345,6 +2406,9 @@
         if (bedragen.totaal && materiaalGroep(nachten + 1, personen, baby)) {
           materiaalRegel = '<span class="calendar__chosen-nights">' + T.lineGear + ': + ' +
             euroTekst(materiaalGroep(nachten + 1, personen, baby)) + '</span>';
+        }
+        if (bedragen.totaal && elektrischActief()) {
+          elektrischRegel = '<span class="calendar__chosen-nights">' + T.lineElectric + '</span>';
         }
         if (bedragen.totaal && kinderen + baby > 0) {
           // With children or babies the total comes from the server, which
@@ -2391,6 +2455,7 @@
           vluchtRegel +
           autoRegel +
           materiaalRegel +
+          elektrischRegel +
           toeslagRegel +
           betaalNotitie +
         '</div>' +

@@ -213,6 +213,11 @@ function berekenFalun(keuze) {
     totaal += (verzekeringPerDag * aantalAutos * dagen) / personen;
     omschrijving += ", verzekering huurauto";
   }
+  // "Volledig elektrisch rijden" (opties.elektrischeAuto): a wish without a
+  // surcharge, so the price does not change. Only with the rental car
+  // included; otherwise it is ignored, not refused. Same as js/falun-kalender.js.
+  var elektrischeAuto = keuze.elektrisch === "ja" && keuze.auto !== "zelf" && opties.elektrischeAuto === true;
+  if (elektrischeAuto) omschrijving += ", volledig elektrische huurauto";
   var leegBegeleiding = keuze.begeleiding === undefined || keuze.begeleiding === null || keuze.begeleiding === "";
   if (!leegBegeleiding && !/^\d+$/.test(String(keuze.begeleiding))) return { fout: "Ongeldig aantal dagen begeleiding." };
   var begDagen = leegBegeleiding ? 0 : parseInt(keuze.begeleiding, 10);
@@ -264,6 +269,7 @@ function berekenFalun(keuze) {
     baby: aantallen.baby,
     dagen: dagen,
     begeleidingDagen: begDagen > 0 ? begDagen : 0,
+    elektrischeAuto: elektrischeAuto,
     omschrijving: omschrijving
   };
 }

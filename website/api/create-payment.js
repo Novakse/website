@@ -424,6 +424,7 @@ module.exports = async function handler(req, res) {
     if (body.vlucht === "zelf") falunOpties.push("eigen vlucht");
     if (body.auto === "zelf") falunOpties.push("eigen vervoer");
     if (body.verzekering === "ja" && body.auto !== "zelf") falunOpties.push("verzekering huurauto");
+    if (falun.elektrischeAuto) falunOpties.push("volledig elektrische huurauto");
     if (falun.begeleidingDagen > 0) falunOpties.push("begeleiding " + falun.begeleidingDagen + " dagen");
     metadata = {
       reis: "Falun",
@@ -455,6 +456,7 @@ module.exports = async function handler(req, res) {
       vlucht: body.vlucht === "zelf" ? "zelf" : "",
       auto: body.auto === "zelf" ? "zelf" : "",
       verzekering: body.verzekering === "ja" && body.auto !== "zelf" ? "ja" : "",
+      elektrisch: falun.elektrischeAuto ? "ja" : "",
       begeleiding: falun.begeleidingDagen > 0 ? String(falun.begeleidingDagen) : "",
       act: activiteiten ? activiteiten.query : ""
     });
@@ -538,7 +540,9 @@ module.exports = async function handler(req, res) {
       // Own transport: only "zelf" counts, as in the Falun flow above.
       auto: body.auto === "zelf" ? "zelf" : "",
       // Gear rental (Finland): only "ja" counts.
-      materiaal: body.materiaal === "ja" ? "ja" : ""
+      materiaal: body.materiaal === "ja" ? "ja" : "",
+      // Fully electric rental car: a wish without surcharge, only "ja" counts.
+      elektrisch: body.elektrisch === "ja" ? "ja" : ""
     };
 
     var reisPrijs;
@@ -575,6 +579,7 @@ module.exports = async function handler(req, res) {
     if (reisPrijs.eigenAuto) reisOpties.push("eigen vervoer");
     if (reisPrijs.begeleidingDagen > 0) reisOpties.push("begeleiding " + reisPrijs.begeleidingDagen + " dagen");
     if (reisPrijs.materiaalGehuurd) reisOpties.push("materiaal gehuurd");
+    if (reisPrijs.elektrischeAuto) reisOpties.push("volledig elektrische huurauto");
     metadata = {
       reis: naam,
       van: kort(alleenDatum(body.van)),
@@ -608,6 +613,7 @@ module.exports = async function handler(req, res) {
       vlucht: reisPrijs.eigenVlucht ? "zelf" : "",
       auto: reisPrijs.eigenAuto ? "zelf" : "",
       materiaal: reisPrijs.materiaalGehuurd ? "ja" : "",
+      elektrisch: reisPrijs.elektrischeAuto ? "ja" : "",
       act: activiteiten ? activiteiten.query : ""
     });
   } else {

@@ -8,7 +8,8 @@
    De prijs verschilt per datum. Daarnaast kan de bezoeker dingen aanvinken die het
    bedrag veranderen: de vlucht zelf regelen, de huurauto zelf regelen, de
    volledige verzekering voor de huurauto erbij nemen en begeleiding op het
-   ijs erbij nemen.
+   ijs erbij nemen. "Volledig elektrisch rijden" (opties.elektrischeAuto) is
+   een wens zonder meerprijs: het bedrag verandert er niet door.
 
    ALLES WAT JOEY BIJWERKT, STAAT IN data/falun-prijzen.json, niet in dit
    bestand. Daar staan het seizoen, de basisprijzen, de toeslag per nacht en
@@ -83,6 +84,10 @@
       carSelfHint: "De huurauto zit anders bij de prijs in. Zonder huurauto heb je ter plaatse de hele reis geen vervoer via ons.",
       insurance: "Volledige verzekering voor de huurauto",
       insuranceHint: "Dekt schade en diefstal aan de huurauto voor de hele huurperiode, voor de hele groep samen",
+      electricCar: "Volledig elektrisch rijden",
+      electricCarHint: "Een volledig elektrische huurauto, zonder meerprijs",
+      lineRentalCar: "Huurauto",
+      electricValue: "Volledig elektrisch",
       guiding: "Begeleiding op het ijs",
       guidingLegend: "Wil je begeleiding op het ijs?",
       guidingNone: "Geen",
@@ -166,6 +171,10 @@
       carSelfHint: "Otherwise the rental car is included in the price. Without it, you have no transport from us on location for the entire trip.",
       insurance: "Full insurance for the rental car",
       insuranceHint: "Covers damage and theft for the rental car for the whole rental period, for the whole group together",
+      electricCar: "Drive fully electric",
+      electricCarHint: "A fully electric rental car, at no extra cost",
+      lineRentalCar: "Rental car",
+      electricValue: "Fully electric",
       guiding: "Guiding on the ice",
       guidingLegend: "Do you want guiding on the ice?",
       guidingNone: "None",
@@ -249,6 +258,10 @@
       carSelfHint: "Sonst ist der Mietwagen im Preis enthalten. Ohne Mietwagen hast du vor Ort während der ganzen Reise keinen Transport über uns.",
       insurance: "Vollversicherung für den Mietwagen",
       insuranceHint: "Deckt Schäden und Diebstahl am Mietwagen für die ganze Mietdauer, für die ganze Gruppe zusammen",
+      electricCar: "Vollelektrisch fahren",
+      electricCarHint: "Ein vollelektrischer Mietwagen, ohne Aufpreis",
+      lineRentalCar: "Mietwagen",
+      electricValue: "Vollelektrisch",
       guiding: "Begleitung auf dem Eis",
       guidingLegend: "Möchtest du Begleitung auf dem Eis?",
       guidingNone: "Keine",
@@ -332,6 +345,10 @@
       carSelfHint: "Annars ingår hyrbilen i priset. Utan hyrbil har du ingen transport via oss på plats under hela resan.",
       insurance: "Fullständig försäkring för hyrbilen",
       insuranceHint: "Täcker skador och stöld på hyrbilen under hela hyrperioden, för hela gruppen tillsammans",
+      electricCar: "Kör helelektriskt",
+      electricCarHint: "En helelektrisk hyrbil, utan extra kostnad",
+      lineRentalCar: "Hyrbil",
+      electricValue: "Helelektrisk",
       guiding: "Guidning på isen",
       guidingLegend: "Vill du ha guidning på isen?",
       guidingNone: "Ingen",
@@ -415,6 +432,10 @@
       carSelfHint: "Ellers er leiebilen inkludert i prisen. Uten leiebil har du ingen transport via oss på stedet under hele reisen.",
       insurance: "Full forsikring for leiebilen",
       insuranceHint: "Dekker skade og tyveri på leiebilen for hele leieperioden, for hele gruppen samlet",
+      electricCar: "Kjør helelektrisk",
+      electricCarHint: "En helelektrisk leiebil, uten ekstra kostnad",
+      lineRentalCar: "Leiebil",
+      electricValue: "Helelektrisk",
       guiding: "Guiding på isen",
       guidingLegend: "Vil du ha veiledning på isen?",
       guidingNone: "Ingen",
@@ -498,6 +519,10 @@
       carSelfHint: "Muuten vuokra-auto sisältyy hintaan. Ilman vuokra-autoa sinulla ei ole perillä kuljetusta meidän kauttamme koko matkan aikana.",
       insurance: "Vuokra-auton täysvakuutus",
       insuranceHint: "Kattaa vuokra-auton vahingot ja varkauden koko vuokra-ajalta, koko ryhmälle yhteensä",
+      electricCar: "Aja täyssähköautolla",
+      electricCarHint: "Täyssähköinen vuokra-auto ilman lisähintaa",
+      lineRentalCar: "Vuokra-auto",
+      electricValue: "Täyssähköinen",
       guiding: "Opastus jäällä",
       guidingLegend: "Haluatko opastusta jäällä?",
       guidingNone: "Ei",
@@ -723,6 +748,9 @@
   var vluchtBedrag = Math.abs(opties.vluchtZelf || 0);
   var groterAuto = opties.groterAuto || null;
   var groterAutoPrijs = groterAuto && typeof groterAuto.prijs === "number" ? groterAuto.prijs : null;
+  // "Volledig elektrisch rijden": a wish without a surcharge, only with the
+  // rental car included. Same rule as api/_falun-prijs.js.
+  var elektrischMogelijk = opties.elektrischeAuto === true;
   var autoVerzekering = opties.autoVerzekering || null;
   var verzekeringPerDag = autoVerzekering && typeof autoVerzekering.prijsPerDag === "number" ? autoVerzekering.prijsPerDag : null;
   var maxPersonenPerAuto = autoVerzekering && typeof autoVerzekering.maxPersonenPerAuto === "number" && autoVerzekering.maxPersonenPerAuto > 0
@@ -822,6 +850,7 @@
   var vluchtZelf = false;
   var autoZelf = false;
   var verzekering = false;
+  var elektrisch = false;
   var begeleidingDagen = 0;
 
   function nachtenVan(dagen) { return dagen - 1; }
@@ -1369,6 +1398,7 @@
     if (sleutel === "vlucht") return vluchtZelf;
     if (sleutel === "auto") return autoZelf;
     if (sleutel === "verzekering") return verzekering;
+    if (sleutel === "elektrisch") return elektrisch;
     return false;
   }
 
@@ -1402,10 +1432,14 @@
           autoZelf = veld.checked;
           // Zonder huurauto is er niets te verzekeren: het vinkje verdwijnt
           // en de kosten vervallen (zie optieLijst() en totaalPrijs()).
-          if (autoZelf) verzekering = false;
+          if (autoZelf) {
+            verzekering = false;
+            elektrisch = false;
+          }
           tekenOpties();
         }
         if (welke === "verzekering") verzekering = veld.checked;
+        if (welke === "elektrisch") elektrisch = veld.checked;
         tekenSamenvatting();
       });
     });
@@ -1517,6 +1551,7 @@
     if (vluchtZelf) regels += "<dt>" + T.lineFlight + "</dt><dd>- " + euro(vluchtBedrag) + "</dd>";
     if (autoZelf) regels += "<dt>" + T.lineCar + "</dt><dd>- " + euro(autoDeel(personen, duur)) + "</dd>";
     if (verzekering && !autoZelf) regels += "<dt>" + T.lineInsurance + "</dt><dd>+ " + euro(verzekeringKosten(duur, personen)) + "</dd>";
+    if (elektrisch && elektrischMogelijk && !autoZelf) regels += "<dt>" + T.lineRentalCar + "</dt><dd>" + T.electricValue + "</dd>";
     if (begeleidingDagen && begeleidingKan(aankomst, duur)) {
       regels += "<dt>" + T.lineGuiding + " (" + T.guidingDays(begeleidingDagen) + ")</dt><dd>+ " +
         T.perPersonPrice(getal(begeleidingKosten(begeleidingDagen, personen))) + "</dd>";
@@ -1535,6 +1570,7 @@
     if (vluchtZelf) params.set("vlucht", "zelf");
     if (autoZelf) params.set("auto", "zelf");
     if (verzekering && !autoZelf) params.set("verzekering", "ja");
+    if (elektrisch && elektrischMogelijk && !autoZelf) params.set("elektrisch", "ja");
     if (begeleidingDagen && begeleidingKan(aankomst, duur)) params.set("begeleiding", String(begeleidingDagen));
 
     // The price per person comes first; for a group the total for everyone
@@ -1609,6 +1645,18 @@
         toelichting: T.insuranceHint,
         teken: "+",
         bedrag: verzekeringKosten(duur || minDagen, personen)
+      });
+    }
+
+    // Fully electric rental car: no surcharge, so no amount (bedrag null
+    // shows an empty price). Left out while "auto zelf" is checked.
+    if (elektrischMogelijk && !autoZelf) {
+      lijst.push({
+        sleutel: "elektrisch",
+        naam: T.electricCar,
+        toelichting: T.electricCarHint,
+        teken: "",
+        bedrag: null
       });
     }
 

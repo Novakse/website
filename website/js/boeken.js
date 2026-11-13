@@ -248,7 +248,9 @@
     // Own transport ticked in the calendar (auto=zelf, nothing else counts).
     auto: params.get("auto") === "zelf" ? "zelf" : null,
     // Gear rental ticked in the calendar (Finland; materiaal=ja, nothing else counts).
-    materiaal: params.get("materiaal") === "ja" ? "ja" : null
+    materiaal: params.get("materiaal") === "ja" ? "ja" : null,
+    // Fully electric rental car ticked in the calendar (elektrisch=ja, nothing else counts).
+    elektrisch: params.get("elektrisch") === "ja" ? "ja" : null
   };
   var reisSleutel = "";
   var reis = null;
@@ -257,7 +259,7 @@
     if (!window.history || !window.history.replaceState) return;
     var nieuw = new URLSearchParams();
     if (reisSleutel) nieuw.set("reis", reisSleutel);
-    ["van", "tot", "personen", "kinderen", "baby", "begeleiding", "dagen", "vlucht", "auto", "materiaal"].forEach(function (sleutel) {
+    ["van", "tot", "personen", "kinderen", "baby", "begeleiding", "dagen", "vlucht", "auto", "materiaal", "elektrisch"].forEach(function (sleutel) {
       var waarde = keuze[sleutel];
       if (waarde !== null && waarde !== undefined && waarde !== "" && waarde !== 0) nieuw.set(sleutel, String(waarde));
     });
@@ -346,6 +348,7 @@
         vlucht: keuze.vlucht,
         auto: keuze.auto,
         materiaal: keuze.materiaal,
+        elektrisch: keuze.elektrisch,
         onWijzig: function (info) {
           laatsteKeuze[sleutel] = info;
           // Another trip may be open by now; its address stays as it is.
@@ -370,6 +373,7 @@
     keuze.vlucht = info.vlucht === "zelf" ? "zelf" : null;
     keuze.auto = info.auto === "zelf" ? "zelf" : null;
     keuze.materiaal = info.materiaal === "ja" ? "ja" : null;
+    keuze.elektrisch = info.elektrisch === "ja" ? "ja" : null;
   }
 
   /* A trip without a fixed price, all from the data block. With
@@ -534,6 +538,7 @@
       keuze.vlucht = null;
       keuze.auto = null;
       keuze.materiaal = null;
+      keuze.elektrisch = null;
       laatsteKeuze[sleutel] = { van: keuze.van, tot: keuze.tot, personen: personen, dagen: keuze.dagen, begeleidingDagen: null };
       if (reisSleutel === sleutel) schrijfAdres();
     }
@@ -658,6 +663,7 @@
         keuze.vlucht = null;
         keuze.auto = null;
         keuze.materiaal = null;
+        keuze.elektrisch = null;
       }
     }
     schrijfAdres();

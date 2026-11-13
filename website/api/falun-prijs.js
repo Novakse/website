@@ -46,6 +46,7 @@ module.exports = function handler(req, res) {
     volwassenen: uitkomst.volwassenen,
     kinderen: uitkomst.kinderen,
     baby: uitkomst.baby,
+    elektrischeAuto: uitkomst.elektrischeAuto,
     omschrijving: uitkomst.omschrijving
   });
 };
